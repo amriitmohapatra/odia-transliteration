@@ -153,6 +153,10 @@ selected mode → engine → dictionary data on first need.
 | `SINGLE_FILE=1 … && node Appv2/scripts/make-single-file.mjs` | one `.html` (fonts and dictionary inlined) | AirDrop / offline file |
 
 `web/` stays as the builder of the legacy `docs/odia-app.html`. V1 does not use it.
+**From the V1 UI work (2026-10-04) `web/` is frozen**: it gets engine and safety fixes only.
+`web/src/inline.ts` and `Appv2/src/inline.ts` were byte-identical until then; they now
+diverge on purpose. Do not "re-sync" them. The theme checker reads Appv2's `style.css`
+and `dictionary/overlay.css` together.
 
 ## 6. Hosting and deployment (V1)
 
