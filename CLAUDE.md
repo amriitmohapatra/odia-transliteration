@@ -78,6 +78,9 @@ built, Rust stays limited to roughly 150 lines of clipboard and hotkey glue.
 | Candidate ranking feels wrong | `[weights]` in `core/rules/symbols.toml` |
 | Strict ITRANS/ISO-15919 mapping | `core/rules/itrans.toml` |
 | Segmentation or orthography assembly logic | `core/src/segment.ts` (rare) |
+| "For this roman key, this word comes first" (owner decision) | `core/data/preferences.tsv` |
+| A word is offensive / coarse / spoken / slang / dialect (owner-curated, whole words) | `core/data/labels.tsv` |
+| The derived everyday test expects the wrong word for an ambiguous key (owner decision) | `core/test/golden/everyday-overrides.tsv` |
 
 `core/src/rules.ts` validates rule files on load and **fails loudly** on a typo or a
 non-canonical Odia string. Do not soften that into a warning.

@@ -4,6 +4,7 @@
  *   score = weights.rule * (ruleScore + lexScore)
  *         + weights.freq * logfreq(word)
  *         + weights.user * log(1 + userCount)
+ *         + weights.pref * prefWeight          (owner preference, data/preferences.tsv)
  *
  * `ruleScore` and `lexScore` are each 0-1 and are ADDED rather than maxed.
  * That is the whole point: a spelling the segmenter produced *and* the lexicon
@@ -28,6 +29,15 @@ export interface RankInput {
   lexiconEntries: readonly LexiconEntry[];
   /** Canonical Odia word -> times the user chose it for this key. */
   userCounts?: Record<string, number>;
+  /** Canonical Odia word -> owner preference weight for this key. */
+  prefWeights?: Readonly<Record<string, number>>;
+  /**
+   * Family-safe filter, present only when it is on. A candidate for which this
+   * returns true is dropped UNLESS the lexicon, the user or the owner vouches
+   * for it under this exact key. So a word typed by its own spelling still
+   * appears, but never as a rule-generated near miss for an innocent input.
+   */
+  isOffensive?: (word: string) => boolean;
   unigrams: Unigrams;
   weights: RankWeights;
   /** Maximum ranked candidates before the verbatim token is appended. */
@@ -38,6 +48,7 @@ interface Evidence {
   rule: number;
   lex: number;
   user: number;
+  pref: number;
 }
 
 /**
@@ -56,7 +67,7 @@ export function rank(input: RankInput): Candidate[] {
     const key = canonical(text);
     const existing = evidence.get(key);
     if (existing === undefined) {
-      const fresh: Evidence = { rule: 0, lex: 0, user: 0 };
+      const fresh: Evidence = { rule: 0, lex: 0, user: 0, pref: 0 };
       fresh[field] = value;
       evidence.set(key, fresh);
     } else if (value > existing[field]) {
@@ -83,14 +94,30 @@ export function rank(input: RankInput): Candidate[] {
     for (const [word, count] of Object.entries(input.userCounts)) bump(word, 'user', count);
   }
 
+  if (input.prefWeights !== undefined) {
+    for (const [word, weight] of Object.entries(input.prefWeights)) bump(word, 'pref', weight);
+  }
+
   const scored: (Candidate & { fromRules: boolean })[] = [];
   for (const [text, sources] of evidence) {
+    // Before the slice, so a dropped word frees its slot for the next one.
+    if (
+      input.isOffensive !== undefined &&
+      sources.lex === 0 &&
+      sources.user === 0 &&
+      sources.pref === 0 &&
+      input.isOffensive(text)
+    ) {
+      continue;
+    }
     scored.push({
       text,
       score:
         input.weights.rule * (sources.rule + sources.lex) +
         input.weights.freq * input.unigrams.logfreq(text) +
-        input.weights.user * Math.log(1 + sources.user),
+        input.weights.user * Math.log(1 + sources.user) +
+        // Guarded so callers built before `pref` existed still score as before.
+        (sources.pref > 0 ? input.weights.pref * sources.pref : 0),
       source: sourceOf(sources),
       fromRules: sources.rule > 0,
     });
@@ -156,11 +183,12 @@ export function rank(input: RankInput): Candidate[] {
 
 /**
  * Which source to report when several agree. User choice is the strongest
- * claim, then the lexicon, then the rules — the order in which a UI should
+ * claim, then the owner's preference, then the lexicon, then the rules — the order in which a UI should
  * explain where a suggestion came from.
  */
 function sourceOf(sources: Evidence): CandidateSource {
   if (sources.user > 0) return 'user';
+  if (sources.pref > 0) return 'preference';
   if (sources.lex > 0) return 'lexicon';
   return 'rule';
 }

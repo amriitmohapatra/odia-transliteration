@@ -11,6 +11,8 @@
  * which reads the shipped `rules/` and `data/` files.
  */
 
+import { emptyLabels, emptyPreferences, parseLabels, parsePreferences } from './curation.js';
+import type { Labels, Preferences } from './curation.js';
 import { canonical } from './normalize.js';
 import { emptyLexicon, parseLexicon } from './lexicon.js';
 import { rank } from './rank.js';
@@ -53,6 +55,9 @@ export class Engine {
   private readonly lexicon: Lexicon;
   private readonly unigrams: Unigrams;
   private readonly learnStore: LearnStore | undefined;
+  private readonly preferences: Preferences;
+  private readonly labels: Labels;
+  private familySafeOn: boolean;
   private readonly digitMode: DigitMode;
   private readonly beam: number;
   private readonly topk: number;
@@ -62,6 +67,9 @@ export class Engine {
     this.lexicon = cfg.lexicon;
     this.unigrams = cfg.unigrams;
     this.learnStore = cfg.learnStore;
+    this.preferences = cfg.preferences ?? emptyPreferences();
+    this.labels = cfg.labels ?? emptyLabels();
+    this.familySafeOn = cfg.familySafe ?? true;
     this.digitMode = cfg.digits ?? 'arabic';
     this.beam = cfg.beam ?? DEFAULT_BEAM;
     this.topk = cfg.topk ?? DEFAULT_TOPK;
@@ -123,6 +131,9 @@ export class Engine {
       }),
       lexiconEntries: this.lexicon.lookup(key),
       userCounts: this.learnStore?.get(key),
+      prefWeights: this.preferences.get(key),
+      isOffensive:
+        this.familySafeOn && this.labels.size > 0 ? (word) => this.labels.isOffensive(word) : undefined,
       unigrams: this.unigrams,
       weights: this.rules.weights,
       topk: wanted,
@@ -138,6 +149,20 @@ export class Engine {
    */
   learn(roman: string, chosen: string): void {
     this.learnStore?.record(roman, canonical(chosen));
+  }
+
+  /** Family-safe filter: on by default (owner decision D-0). See rank.ts. */
+  get familySafe(): boolean {
+    return this.familySafeOn;
+  }
+
+  setFamilySafe(on: boolean): void {
+    this.familySafeOn = on;
+  }
+
+  /** Labels for a canonical Odia word, for display (e.g. an "offensive" badge). */
+  labelsOf(word: string): ReadonlySet<string> | undefined {
+    return this.labels.get(canonical(word));
   }
 
   /** Deterministic ITRANS. Case-sensitive, one answer, no candidates. */
@@ -199,6 +224,12 @@ export interface CreateEngineOptions {
   lexiconTsv?: string;
   /** Contents of `data/unigrams.tsv`. Absent means the frequency term is 0 everywhere. */
   unigramsTsv?: string;
+  /** Contents of `data/preferences.tsv` (owner-curated). Absent means none. */
+  preferencesTsv?: string;
+  /** Contents of `data/labels.tsv` (owner-curated). Absent means none. */
+  labelsTsv?: string;
+  /** Family-safe filter. Default true. */
+  familySafe?: boolean;
   learnStore?: LearnStore;
   digits?: DigitMode;
   beam?: number;
@@ -217,6 +248,9 @@ export function createEngine(opts: CreateEngineOptions): Engine {
     rules: loadRules(opts.rulesToml, opts.itransToml),
     lexicon: opts.lexiconTsv === undefined ? emptyLexicon() : parseLexicon(opts.lexiconTsv),
     unigrams: opts.unigramsTsv === undefined ? emptyUnigrams() : parseUnigrams(opts.unigramsTsv),
+    preferences: opts.preferencesTsv === undefined ? undefined : parsePreferences(opts.preferencesTsv),
+    labels: opts.labelsTsv === undefined ? undefined : parseLabels(opts.labelsTsv),
+    familySafe: opts.familySafe,
     learnStore: opts.learnStore,
     digits: opts.digits,
     beam: opts.beam,
@@ -241,6 +275,8 @@ export {
   DDHA_NUKTA,
 } from './normalize.js';
 export { loadRules, loadStrictScheme, optionContext } from './rules.js';
+export { parsePreferences, parseLabels, LABELS } from './curation.js';
+export type { Preferences, Labels, Label } from './curation.js';
 export type { PositionContext, PositionedOption } from './rules.js';
 export { tokenize } from './tokenize.js';
 export type { Token, TokenKind } from './tokenize.js';

@@ -20,7 +20,7 @@
  *   npx tsx tools/eval/everyday.ts [--topk 5] [--verbose]
  */
 
-import { readFileSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, resolve } from 'node:path';
 import { createEngineFromDisk } from '@odia/core/node';
@@ -162,6 +162,19 @@ const words = Array.from(
 
 const engine = createEngineFromDisk();
 
+// Owner decisions that accept another word for an ambiguous derived roman key.
+// See the file header. Each applied row is counted and printed.
+const OVERRIDES = resolve(dirname(SOURCE), 'everyday-overrides.tsv');
+const overrides = new Map<string, string[]>();
+for (const line of (existsSync(OVERRIDES) ? readFileSync(OVERRIDES, 'utf8') : '').split('\n')) {
+  if (!line.trim() || line.startsWith('#')) continue;
+  const [roman, register, odia] = line.split('\t');
+  if (!roman || !register || !odia) throw new Error(`bad row in ${OVERRIDES}: ${line}`);
+  const key = `${register}\t${roman}`;
+  overrides.set(key, [...(overrides.get(key) ?? []), canonical(odia)]);
+}
+let overridesApplied = 0;
+
 interface Row { odia: string; roman: string; rank: number }
 const run = (mode: 'careful' | 'casual') => {
   const rows: Row[] = [];
@@ -170,7 +183,15 @@ const run = (mode: 'careful' | 'casual') => {
     if (mode === 'casual') roman = casual(roman);
     if (!roman) continue;
     const cands = engine.transliterateWord(roman, TOPK).map((c) => canonical(c.text));
-    rows.push({ odia, roman, rank: cands.indexOf(odia) });
+    let rank = cands.indexOf(odia);
+    const accepted = overrides.get(`${mode}\t${roman}`);
+    if (accepted !== undefined) {
+      const ranks = [rank, ...accepted.map((w) => cands.indexOf(w))].filter((r) => r >= 0);
+      const best = ranks.length ? Math.min(...ranks) : -1;
+      if (best !== rank) overridesApplied += 1;
+      rank = best;
+    }
+    rows.push({ odia, roman, rank });
   }
   return rows;
 };
@@ -194,6 +215,10 @@ for (const mode of ['careful', 'casual'] as const) {
     `  ${mode.padEnd(10)} ${pct(t1, rows.length).padEnd(9)} ${pct(t3, rows.length).padEnd(9)} ` +
       `${pct(t5, rows.length).padEnd(9)} ${miss}/${rows.length}`,
   );
+}
+
+if (overrides.size > 0) {
+  console.log(`\n  owner overrides applied: ${overridesApplied} (core/test/golden/everyday-overrides.tsv)`);
 }
 
 const misses = (results['casual'] ?? []).filter((r) => r.rank < 0);

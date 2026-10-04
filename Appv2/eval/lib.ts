@@ -18,7 +18,16 @@ import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-import { Engine, loadRules, emptyLexicon, emptyUnigrams, parseLexicon, parseUnigrams } from '../../core/src/index.js';
+import {
+  Engine,
+  loadRules,
+  emptyLexicon,
+  emptyUnigrams,
+  parseLexicon,
+  parseUnigrams,
+  parseLabels,
+  parsePreferences,
+} from '../../core/src/index.js';
 import type { Lexicon, Unigrams } from '../../core/src/types.js';
 
 import { mergeLexicons, mergeUnigrams } from '../src/compose.js';
@@ -44,6 +53,8 @@ const PATHS: Record<AssetKey, string> = {
   sanskritLexicon: resolve(APPV2, 'data/sanskrit-lexicon.tsv'),
   coreUnigrams: resolve(ROOT, 'core/data/unigrams.tsv'),
   sanskritUnigrams: resolve(APPV2, 'data/sanskrit-unigrams.tsv'),
+  preferences: resolve(ROOT, 'core/data/preferences.tsv'),
+  labels: resolve(ROOT, 'core/data/labels.tsv'),
 };
 
 const rawCache = new Map<AssetKey, string | undefined>();
@@ -108,6 +119,9 @@ export function engineFor(id: ProfileId, opts: EvalEngineOptions = {}): Engine {
           })),
         ),
     unigrams: opts.rulesOnly ? emptyUnigrams() : mergeUnigrams(profile.unigrams.map(unigrams)),
+    // Same owner data the app loads, so evals measure what users get.
+    preferences: opts.rulesOnly ? undefined : parsePreferences(raw('preferences') ?? ''),
+    labels: parseLabels(raw('labels') ?? ''),
   });
 }
 

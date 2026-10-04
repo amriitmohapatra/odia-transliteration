@@ -17,7 +17,16 @@
  * referenced here.
  */
 
-import { Engine, loadRules, emptyLexicon, emptyUnigrams, parseLexicon, parseUnigrams } from '@odia/core';
+import {
+  Engine,
+  loadRules,
+  emptyLexicon,
+  emptyUnigrams,
+  parseLexicon,
+  parseUnigrams,
+  parseLabels,
+  parsePreferences,
+} from '@odia/core';
 import type { DigitMode, LearnStore, Lexicon, Unigrams } from '@odia/core/types';
 
 import { mergeLexicons, mergeUnigrams, type LexiconSource } from './compose.js';
@@ -62,6 +71,14 @@ const GLOBS: Record<AssetKey, RawGlob> = {
     query: '?raw',
     import: 'default',
   }),
+  preferences: import.meta.glob('../../core/data/preferences.tsv', {
+    query: '?raw',
+    import: 'default',
+  }),
+  labels: import.meta.glob('../../core/data/labels.tsv', {
+    query: '?raw',
+    import: 'default',
+  }),
 };
 
 /** The palette is not an engine asset, but it loads the same way. */
@@ -96,6 +113,8 @@ export async function loadProfileAssets(id: ProfileId): Promise<void> {
     'itrans',
     ...profile.lexicons.map((l) => l.asset),
     ...profile.unigrams,
+    'preferences',
+    'labels',
   ];
   await Promise.all(wanted.map(readAsset));
 }
@@ -124,6 +143,7 @@ export function buildEngine(
   id: ProfileId,
   digits: DigitMode,
   learnStore: LearnStore,
+  familySafe = true,
 ): EngineHandle {
   const profile = PROFILES[id];
 
@@ -151,6 +171,9 @@ export function buildEngine(
       unigrams: mergeUnigrams(profile.unigrams.map(unigramsFor)),
       learnStore,
       digits,
+      preferences: parsePreferences(rawCache.get('preferences') ?? '', 'core/data/preferences.tsv'),
+      labels: parseLabels(rawCache.get('labels') ?? '', 'core/data/labels.tsv'),
+      familySafe,
     });
 
     const note = sources.every((s) => s.lexicon.size === 0)

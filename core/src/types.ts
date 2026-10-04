@@ -23,7 +23,9 @@
  * untouched Latin token with source `'verbatim'`, so mixed English input
  * ("PCR", "Bayesian") never needs a language-detection heuristic.
  */
-export type CandidateSource = 'user' | 'lexicon' | 'rule' | 'verbatim';
+import type { Labels, Preferences } from './curation.js';
+
+export type CandidateSource = 'user' | 'preference' | 'lexicon' | 'rule' | 'verbatim';
 
 export interface Candidate {
   /** Canonical Odia text (or the verbatim Latin token). */
@@ -116,6 +118,8 @@ export interface RankWeights {
   rule: number;
   freq: number;
   user: number;
+  /** Owner preferences (data/preferences.tsv). Kept below one user pick. */
+  pref: number;
 }
 
 /**
@@ -272,4 +276,10 @@ export interface EngineConfig {
   unigrams: Unigrams;
   learnStore?: LearnStore;
   digits?: DigitMode;
+  /** Owner-curated "put this word first" rows. See curation.ts. */
+  preferences?: Preferences;
+  /** Whole-word labels; `offensive` drives the family-safe filter. */
+  labels?: Labels;
+  /** Family-safe filter. Default true. Has no effect while `labels` is empty. */
+  familySafe?: boolean;
 }

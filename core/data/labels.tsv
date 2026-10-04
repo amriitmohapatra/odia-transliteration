@@ -1,0 +1,11 @@
+# labels.tsv — owner-curated whole-word labels.
+#
+# Format: odia <TAB> label      labels: offensive, coarse, spoken, slang, dialect
+# Whole words only, never substrings. The Odia cell must be canonical.
+# Only `offensive` changes ranking: with the family-safe filter on (the default),
+# an offensive word is never offered as a near miss; it still appears when the
+# lexicon, the user or a preference lists it under the exact roman key typed.
+#
+# Empty on purpose. The owner curates this list after the basic V1 app is built
+# (plan/06-owner-followups.md, C-1 and C-2). No abusive word is ever added by an
+# agent. Licence: MIT (this project).

@@ -35,7 +35,10 @@ export type AssetKey =
   | 'coreLexicon'
   | 'sanskritLexicon'
   | 'coreUnigrams'
-  | 'sanskritUnigrams';
+  | 'sanskritUnigrams'
+  // Owner-curated, shared by every profile: core/data/preferences.tsv, labels.tsv.
+  | 'preferences'
+  | 'labels';
 
 export interface LexiconRef {
   asset: AssetKey;

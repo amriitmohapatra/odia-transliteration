@@ -5,7 +5,7 @@
 #
 # profile      = unified
 # base         = core/rules/symbols.toml
-# base-sha256  = a73475ef29cf10bbde77a5bca4088b954605a691f31a06ff3232e0b740b6a0ee
+# base-sha256  = 7e6afa632dedbee84c4858703ca2bfcec8c7a7ea3da1b5a100a9f55d0cf3f62e
 # delta        = rules/unified.delta.toml
 # delta-sha256 = 57646b55f8b73a962fc6378046364b81e4bdf0a61c3a02ce377560ab1d741f8b
 #
@@ -76,6 +76,11 @@ version = "0.1"
 rule = 1.0
 freq = 1.5
 user = 2.0
+# Owner preferences (core/data/preferences.tsv), added as pref * row weight.
+# 1.0 settles a near tie between two real words (raja: the Raja festival over
+# "king", a 0.06 gap), but stays below one user pick (user * ln 2 = 1.39), so
+# the user's own choice still wins. Measured by core/test/curation.test.ts.
+pref = 1.0
 
 # Structural preferences the segmenter applies on top of the per-letter weights.
 #

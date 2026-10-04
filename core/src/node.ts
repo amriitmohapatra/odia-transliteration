@@ -45,6 +45,8 @@ export const ITRANS_PATH = 'rules/itrans.toml';
 export const LEXICON_PATH = 'data/lexicon.tsv';
 export const LEXICON_WEB_PATH = 'data/lexicon-web.tsv';
 export const UNIGRAMS_PATH = 'data/unigrams.tsv';
+export const PREFERENCES_PATH = 'data/preferences.tsv';
+export const LABELS_PATH = 'data/labels.tsv';
 
 export interface CreateEngineFromDiskOptions
   extends Omit<CreateEngineOptions, 'rulesToml' | 'itransToml' | 'lexiconTsv' | 'unigramsTsv'> {
@@ -73,6 +75,8 @@ export function createEngineFromDisk(opts: CreateEngineFromDiskOptions = {}): En
     itransToml: readCoreFile(ITRANS_PATH),
     lexiconTsv: readCoreFile(web === true ? LEXICON_WEB_PATH : LEXICON_PATH),
     unigramsTsv: readCoreFile(UNIGRAMS_PATH),
+    preferencesTsv: readCoreFile(PREFERENCES_PATH),
+    labelsTsv: readCoreFile(LABELS_PATH),
   });
 }
 

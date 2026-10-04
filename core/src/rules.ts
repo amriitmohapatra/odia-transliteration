@@ -323,11 +323,12 @@ function readSegmentWeights(raw: unknown): SegmentWeights {
 
 function readWeights(raw: unknown): RankWeights {
   const table = requireTable(raw, 'symbols.toml [weights]');
-  rejectUnknownKeys(table, ['rule', 'freq', 'user'], 'symbols.toml [weights]');
+  rejectUnknownKeys(table, ['rule', 'freq', 'user', 'pref'], 'symbols.toml [weights]');
   return {
     rule: readWeight(table, 'rule', 'symbols.toml [weights]'),
     freq: readWeight(table, 'freq', 'symbols.toml [weights]'),
     user: readWeight(table, 'user', 'symbols.toml [weights]'),
+    pref: readWeight(table, 'pref', 'symbols.toml [weights]'),
   };
 }
 

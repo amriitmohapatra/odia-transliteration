@@ -56,11 +56,23 @@ const unigramsTsv: RawGlob = import.meta.glob('../../core/data/unigrams-web.tsv'
   import: 'default',
 });
 
+// Owner-curated data (see core/src/curation.ts): small, so loaded with the rest.
+const preferencesTsv: RawGlob = import.meta.glob('../../core/data/preferences.tsv', {
+  query: '?raw',
+  import: 'default',
+});
+const labelsTsv: RawGlob = import.meta.glob('../../core/data/labels.tsv', {
+  query: '?raw',
+  import: 'default',
+});
+
 export interface LoadedAssets {
   rulesToml?: string;
   itransToml?: string;
   lexiconTsv?: string;
   unigramsTsv?: string;
+  preferencesTsv?: string;
+  labelsTsv?: string;
 }
 
 export interface EngineHandle {
@@ -74,13 +86,15 @@ export interface EngineHandle {
 
 let assetsPromise: Promise<LoadedAssets> | undefined;
 
-/** Read all four optional assets once; later calls reuse the same strings. */
+/** Read all optional assets once; later calls reuse the same strings. */
 export function loadAssets(): Promise<LoadedAssets> {
   assetsPromise ??= (async () => ({
     rulesToml: await firstRaw(symbolsToml),
     itransToml: await firstRaw(itransToml),
     lexiconTsv: await firstRaw(lexiconTsv),
     unigramsTsv: await firstRaw(unigramsTsv),
+    preferencesTsv: await firstRaw(preferencesTsv),
+    labelsTsv: await firstRaw(labelsTsv),
   }))();
   return assetsPromise;
 }
@@ -111,6 +125,8 @@ export function buildEngine(assets: LoadedAssets, digits: DigitMode, learnStore:
       itransToml: assets.itransToml,
       lexiconTsv: assets.lexiconTsv,
       unigramsTsv: assets.unigramsTsv,
+      preferencesTsv: assets.preferencesTsv,
+      labelsTsv: assets.labelsTsv,
       learnStore,
       digits,
     });
