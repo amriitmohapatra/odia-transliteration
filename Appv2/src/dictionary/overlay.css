@@ -85,7 +85,7 @@ body.dict-open #dict-panel { display: flex; }
 }
 .dict-head h2 {
   margin: 0;
-  font-size: 1.05rem;
+  font-size: var(--fs-body);
   font-weight: 650;
 }
 .dict-head h2 .odia { margin-right: 0.35em; }
@@ -109,9 +109,9 @@ body.dict-open #dict-panel { display: flex; }
 
 .dict-search {
   width: 100%;
-  font-size: 1rem;
+  font-size: var(--fs-body); /* >= 16px: iOS zooms on smaller inputs */
   padding: 8px 10px;
-  border: 1px solid var(--line);
+  border: 1px solid var(--line-strong);
   border-radius: 10px;
   background: var(--card);
   color: var(--text);
@@ -122,7 +122,7 @@ body.dict-open #dict-panel { display: flex; }
 .dict-state {
   margin: 0;
   font-size: var(--fs-sm);
-  color: var(--warn, #8a4a00);
+  color: var(--warn);
 }
 
 .dict-body {
@@ -168,7 +168,7 @@ body.dict-open #dict-panel { display: flex; }
   font-weight: 700;
 }
 .dict-word {
-  font-size: 1.2rem;
+  font-size: var(--fs-lg);
   font-weight: 600;
 }
 .dict-tag {
@@ -196,12 +196,12 @@ body.dict-open #dict-panel { display: flex; }
   right: max(14px, env(safe-area-inset-right));
   bottom: max(14px, env(safe-area-inset-bottom));
   z-index: 30; /* under every sheet; it used to cover the Alternatives sheet (B4) */
-  border: 1px solid var(--line);
+  border: 1px solid var(--line-strong);
   background: var(--panel);
   color: var(--text);
   border-radius: 999px;
   padding: 10px 14px;
-  font-size: 0.95rem;
+  font-size: var(--fs-sm);
   font-family: var(--ui-font);
   box-shadow: 0 6px 20px rgb(0 0 0 / 18%);
   cursor: pointer;
