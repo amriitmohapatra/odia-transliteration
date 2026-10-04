@@ -136,7 +136,7 @@ and unpacks in ~½ s on load).
 | the app itself | MIT (this repo) |
 | Praharaj dictionary text | public domain (author d. 1946) |
 | indic-dict digitisation | freely redistributable |
-| MTEnglish2Odia / OdiaNLP pairs | MIT |
+| OdiaNLP `dictionary` pairs | repository MIT; origin of the text unknown — see `PROVENANCE.md` |
 | Unicode CLDR data | Unicode licence |
 | CMUdict (loan detection, build-time only) | BSD |
 | pako (inflate) | MIT |

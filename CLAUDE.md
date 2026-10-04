@@ -179,7 +179,8 @@ Rows marked unknown or unverified below are open items, not exceptions:
 The dictionary sources and their checksums are in `Odia_Sanskrit_Appv2/PROVENANCE.md`.
 
 **Varnam/govarnam and Aksharamukha are AGPL.** Study their architecture; copy no code.
-Record every data source, its licence and a checksum in `core/data/PROVENANCE.md`.
+Record every data source, its licence and a checksum in the `PROVENANCE.md` of the folder
+that owns the data: `core/data/`, `Appv2/data/` or `Odia_Sanskrit_Appv2/`.
 
 ---
 
