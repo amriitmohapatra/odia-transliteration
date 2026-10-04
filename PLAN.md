@@ -32,7 +32,7 @@ whenever a task changes status. Last updated: 2026-10-04 (V1 in progress).
 | Stage | Content | Status |
 |---|---|---|
 | V0 Clean-up | Cache scoping, English word in the bar, `rank()` learning bug, bundled font, dictionary provenance, `j` → ଯ | **Done** 2026-10-04 (D-10 open) |
-| **V1 Web app on Vercel** | One merged app; dictionary as a module; owner preferences; family-safe filter; romanised read-back; colloquial tests; UI/UX pass; PWA + `vercel.json`; CI | **In progress** |
+| **V1 Web app on Vercel** | One merged app; dictionary as a module; owner preferences; family-safe filter; romanised read-back; colloquial tests; UI/UX pass; PWA + `vercel.json`; CI | **Code nearly done** — left: 2.6 report button, A-7 timing. Then owner: D-10, deploy, phone test |
 | V2 Better words | IndicXlit lexicon fill, bigram ranking, owner phrase table, new modern glosses, **owner gloss file** (e.g. ରଜ shows "Dust." today, not the festival), Hindi/Urdu layer, `j`-keys in lexicon | Not started |
 | V3 Assist layer | `/api/speak`, `/api/listen`, `/api/translate` behind switches | Not started |
 | V4 Lens | Browser extension, then camera/screenshot input | Not started |
@@ -60,8 +60,8 @@ whenever a task changes status. Last updated: 2026-10-04 (V1 in progress).
 | 2.2 | Family-safe switch in settings, stored as `odia.pref.familySafe`, plain label | **Done** (Run A: "Hide rude words", on) |
 | 2.3 | Romanised read-back line under the output (copy of the eval romaniser) | **Done** (Run A: "Reads as" line, tap a word for alternatives) |
 | 2.4 | PWA: manifest, icons, Apple tags in `Appv2/` | **Done** |
-| 2.5 | UI/UX pass from the design proposal (§5) | **Run A done** (items 1–5, 8 + mode names). Run B to do: Share/Undo, full tokens, first-run card, desktop popover + meanings column, screen-reader fixes, text-size setting |
-| 2.6 | "Report this word" button: copies word, output, code points, version; opens an email link. No network call. | To do |
+| 2.5 | UI/UX pass from the design proposal (§5) | **Done** — Run A (items 1–5, 8, mode names) and Run B (6 Share/Copy/Undo, 7 tokens + text size, 9 first-run card + Help, 10 desktop list + meanings column, 11 screen reader + keyboard). Open: M9 "Show full entry"; phone Meanings panel above the iOS keyboard |
+| 2.6 | "Report this word" button: copies word, output, code points, version; opens an email link. No network call. | To do (last V1 code item) |
 
 ### 3.3 Backend
 
@@ -89,16 +89,16 @@ V1 is done when every row passes. Each row says how it is checked.
 
 | # | Claim | How it is checked |
 |---|---|---|
-| A-1 | `kemiti achha` → କେମିତି ଅଛ | Unit test + browser test |
+| A-1 | `kemiti achha` → କେମିତି ଅଛ | Unit test + browser test — **passes** |
 | A-2 | Works offline after the first load | Playwright: load, go offline, reload, type — **passes** (after fixing a registration bug, 2026-10-04) |
 | A-3 | Family-safe filter is on by default and can be turned off | Unit tests + browser test of the switch — **passes** (Run A check-a5, 16/16) |
 | A-4 | The meaning shows under candidates (e.g. `dina` → "Day", "Poor") | Playwright — **passes** |
 | A-5 | "Dictionary loading" and "dictionary failed" look different | Playwright with the data file blocked — **passes** (Run A check-a6) |
-| A-6 | Learned words survive the move from the old app to V1 | Same storage key `odia.userdict`; browser test |
+| A-6 | Learned words survive the move from the old app to V1 | Same storage key `odia.userdict` (unchanged); learning checked in the browser — **passes** on the same origin. Moving from the old *file* to the hosted site is a new origin: learned words do not carry over (no export yet) |
 | A-7 | Typing never freezes while the dictionary loads | Playwright timing on a throttled CPU |
-| A-8 | Usable with the keyboard alone | Manual + Playwright key sequence |
-| A-9 | Phone layout: inputs ≥16 px, tap targets ≥44 px, safe areas | Playwright at 390×844 + design checklist |
-| A-10 | No metric regression | `npm run eval`, `everyday.ts`, `Appv2/eval/run.ts` |
+| A-8 | Usable with the keyboard alone | Playwright key sequence — **passes** (Run B check-b6: text box → Copy in 5 Tab stops, focus ring ≥7.37:1) |
+| A-9 | Phone layout: inputs ≥16 px, tap targets ≥44 px, safe areas | Playwright at 390×844 and 390×480 — **passes** in Chromium; real phones: owner test |
+| A-10 | No metric regression | `npm run eval`, `everyday.ts`, `Appv2/eval/run.ts` — **passes** (unchanged after both UI runs) |
 | A-11 | Safari engine | `webkit-check.py` on the owner's Mac (follow-up A-3) |
 | A-12 | No analytics, no network call in V1 | Network log in Playwright is empty after load — **passes** (0 requests off the origin) |
 
@@ -166,6 +166,7 @@ Agents do not commit; the lead reviews, measures and commits.
 
 | Date | Change |
 |---|---|
+| 2026-10-04 | UI Run B merged (6 commits): Share/Undo, tokens (70/70 contrast pairs pass), text size, first-run card + Help, desktop list + meanings column, screen-reader path. A-1, A-6, A-8, A-9, A-10 pass. |
 | 2026-10-04 | Owner meanings file (1.6) done: wrong meanings from the audit fixed as seed rows. |
 | 2026-10-04 | UI Run A merged (8 commits, `--no-ff`): B1–B4 fixed, phone strip, one text box + "Reads as", readable meanings, "Hide rude words", states, mode names. A-3, A-4, A-5 pass. |
 | 2026-10-04 | Design proposal in (`plan/design/`). V1 UI work list added (§5). Romanizer for the read-back line done. |

@@ -148,7 +148,20 @@ disappears, so a Playwright check guards each):
 | `div.inline-candidates > button.inline-candidate > .inline-text \| .inline-latin` | `inline.ts` (inside `#kb-bar`) | `dictionary/overlay.ts` gloss chips |
 | `#picker-list > li > button.candidate > .text` | `main.ts` alternatives sheet | `overlay.ts` |
 | `#readback .rb-word[data-odia]` (replaced `#output .word`) | `readback.ts` | `overlay.ts` tooltips |
-| `body.kb-docked` | `inline.ts` | CSS hides `#dict-toggle` |
+| `body.kb-docked` | `inline.ts` | CSS (phone strip state) |
+| `data-label` on `button.inline-candidate` and `button.candidate` | `inline.ts`, `main.ts` | `overlay.ts` sets `aria-label` = label + ", " + meaning |
+| `[aria-controls="dict-panel"]`: `#dict-toggle` (in `index.html`), `#meanings-dock` | `index.html` | `overlay.ts` keeps `aria-expanded` in step; `dictionary/index.ts` exports `setMeaningsOpen` / `meaningsOpen` |
+
+**Layout:** at ≥1100 px `body` is a two-column grid and `#dict-panel` is a sticky meanings
+column. The desktop caret popover is a vertical list that opens below or above the caret
+(`keepClear()`), so it never covers the "Reads as" line. Help (header button) holds the
+first-run card and the cheat sheets.
+
+**Accessibility:** the text box has `aria-controls`, `aria-activedescendant`,
+`aria-autocomplete`, `aria-describedby`; options have `tabindex=-1` and are named "word,
+meaning"; `#inline-live` is a polite live region; the palette is one `role=toolbar` tab
+stop; one global `:focus-visible` ring. Design tokens follow
+`plan/design/v1-ux-proposal.md` §4 (70/70 contrast pairs pass; table in commit f2e0ee8).
 
 **Layers (z-index):** strip/popover 20 · meanings toggle 30 · meanings panel 35 · sheets 40 ·
 toast 50.
@@ -163,6 +176,8 @@ selected mode → engine → dictionary data on first need.
 | `odia.userdict` | Learned picks `{roman: {odia: count}}` |
 | `odia.pref.profile`, `odia.pref.digits`, `odia.pref.strict` | Settings |
 | `odia.pref.familySafe` | "Hide rude words" switch: `'1'`/`'0'`, missing = on |
+| `odia.pref.textSize` | `normal` / `large` / `xl` (scales every `--fs-*` by 1 / 1.15 / 1.3; applied by an inline head script before first paint) |
+| `odia.pref.seenIntro` | `'1'` once the first-run card is dismissed |
 | Cache Storage `odia-appv2-<rev>` | Offline copy of the app; each app touches only its own prefix |
 
 **Builds:**
