@@ -142,6 +142,15 @@ export function rank(input: RankInput): Candidate[] {
   // The verbatim token goes last and exactly once. A ranked candidate that is
   // character-for-character the input (an all-digit token in arabic mode, say)
   // would otherwise appear twice.
+  //
+  // One exception: the user already taught this exact token — picked "bus" for
+  // "bus" before. Then it keeps the rank it earned, with source 'user', and no
+  // verbatim copy is appended. Dropping it here (the earlier rule) put a taught
+  // English word back at the end every time, so learning it did nothing, and
+  // the dropped entry also cost the list one slot. Exact comparison, no case
+  // folding: a taught "PCR" and a typed "pcr" are different strings.
+  const taught = out.find((c) => c.text === input.roman && c.source === 'user');
+  if (taught !== undefined) return out;
   return [...out.filter((c) => c.text !== input.roman), { text: input.roman, score: 0, source: 'verbatim' }];
 }
 

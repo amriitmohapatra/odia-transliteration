@@ -101,16 +101,16 @@ describe('Engine: orthography through the public API', () => {
   // YE (U+0B2F U+0B47) is the 5th most frequent word and was unreachable from "j".
   it('lets "j" reach YA at the start of a word: "je" offers YE, "jiba" offers YIBAA', () => {
     const engine = ruleOnlyEngine();
-    expect(textsOf(engine.transliterateWord('je', 9))).toContain('ଯେ');
-    expect(textsOf(engine.transliterateWord('jiba', 9))).toContain('ଯିବା');
+    expect(textsOf(engine.transliterateWord('je', 9))).toContain('\u0B2F\u0B47');
+    expect(textsOf(engine.transliterateWord('jiba', 9))).toContain('\u0B2F\u0B3F\u0B2C\u0B3E');
   });
 
   it('keeps JA as the rule default for "j", and never reads a non-initial "j" as YA', () => {
     const engine = ruleOnlyEngine();
-    expect(engine.transliterateWord('je', 9)[0]?.text).toBe('ଜେ');
+    expect(engine.transliterateWord('je', 9)[0]?.text).toBe('\u0B1C\u0B47');
     // "raja": the j is not word-initial, so no candidate may contain YA at all.
     const raja = textsOf(engine.transliterateWord('raja', 40));
-    expect(raja.some((t) => t.includes('ଯ'))).toBe(false);
+    expect(raja.some((t) => t.includes('\u0B2F'))).toBe(false);
   });
 });
 
@@ -146,6 +146,35 @@ describe('Engine: mixed English', () => {
       expect(last?.source, `no verbatim fallback for "${word.roman}"`).toBe('verbatim');
       expect(last?.text).toBe(word.roman);
     }
+  });
+
+  // "Pick it once and learn() remembers it" (rank.ts header, AGENTS.md section 5).
+  // rank() used to drop a taught token that equals the input and re-append it
+  // last, so teaching an English word did nothing and cost the list a slot.
+  it('moves an English word the user taught to the top, keeps the list full, and does not repeat it', () => {
+    const engine = createEngine({ rulesToml: SYMBOLS_TOML, learnStore: new MemoryLearnStore() });
+    const before = engine.transliterateWord('bus', 5);
+    expect(before[before.length - 1]?.source).toBe('verbatim');
+
+    engine.learn('bus', 'bus');
+
+    const after = engine.transliterateWord('bus', 5);
+    expect(after[0]?.text).toBe('bus');
+    expect(after[0]?.source).toBe('user');
+    expect(after).toHaveLength(5);
+    expect(after.filter((c) => c.text === 'bus')).toHaveLength(1);
+    expect(after.filter((c) => c.source === 'verbatim')).toHaveLength(0);
+  });
+
+  it('still offers what was typed, verbatim and last, when it differs from the taught spelling', () => {
+    const engine = createEngine({ rulesToml: SYMBOLS_TOML, learnStore: new MemoryLearnStore() });
+    engine.learn('PCR', 'PCR');
+
+    const lower = engine.transliterateWord('pcr', 5);
+    expect(lower[0]?.text).toBe('PCR');
+    const last = lower[lower.length - 1];
+    expect(last?.text).toBe('pcr');
+    expect(last?.source).toBe('verbatim');
   });
 });
 

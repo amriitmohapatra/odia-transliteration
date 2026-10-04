@@ -135,8 +135,11 @@ is positional (only directly after a consonant).
 - **The rescue drops the LOWEST-SCORING entries.** An earlier version kept every
   rule-bearing candidate and evicted lexicon-only ones, which threw away the correct
   answer: `jagannatha` lost ଜଗନ୍ନାଥ and led with ଜଗଣଥ. Do not reintroduce that.
-- **The candidate list always ends with the verbatim Latin token.** That is how mixed
-  English works — you pick it for "PCR", and `learn()` remembers. No language detection.
+- **The candidate list ends with the verbatim Latin token**, unless the user already
+  taught that exact token: then it sits at the rank it earned, with source `user`, and is
+  not repeated at the end. That is how mixed English works — you pick it once for "PCR",
+  and `learn()` remembers. No language detection. (Before 2026-10-04 `rank()` dropped the
+  taught token and re-appended it last, so learning an English word did nothing.)
 
 ---
 
