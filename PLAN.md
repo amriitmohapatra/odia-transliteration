@@ -70,7 +70,7 @@ layer, `ARCHITECTURE.md` §7). Two things are set up now so V3 starts safely:
 | # | Task | Status |
 |---|---|---|
 | 3.1 | `.env*` in `.gitignore` | **Done** |
-| 3.2 | `vercel.json`: build, output, `sw.js` headers | To do |
+| 3.2 | `vercel.json`: build, output, `sw.js` headers | **Done** (deploy itself is the owner's action, after D-10) |
 
 ### 3.4 Quality, CI and release
 

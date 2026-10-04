@@ -157,6 +157,12 @@ selected mode → engine → dictionary data on first need.
 - Every push to a branch gets a Vercel preview address. The owner checks the preview.
   Promote to production = release. Rollback = promote the previous deployment.
 - No analytics script. "Nothing sent online" is part of the value proposition.
+- `vercel.json` today: install `npm ci`; build `npx vite build --config Appv2/vite.config.ts`
+  (Appv2 reads `core/src` directly, so no separate engine build); output `Appv2/dist`;
+  `sw.js` and `index.html` revalidate on every load; hashed `assets/` cache for a year;
+  `nosniff`, `no-referrer`, and a `Permissions-Policy` that blocks camera, microphone and
+  location. **V3 and V4 must relax that policy** (`microphone=(self)` for speak-to-write,
+  `camera=(self)` for the lens) in the same commit that adds the feature.
 
 ## 7. The assist layer (V3, planned)
 
