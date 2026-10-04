@@ -8,9 +8,20 @@
  * (praharaj.bin / modern.bin are the base64-decoded payloads recorded there).
  *
  * It is layered on top of the app by watching the DOM the app renders (the
- * caret candidate bar, the alternatives picker, the output words), so the app
- * modules do not need to know it exists. Everything is defensive: if any of
- * this fails, the app underneath keeps working exactly as before.
+ * caret candidate bar, the alternatives picker, the read-back words), so the
+ * app modules do not need to know it exists. Everything is defensive: if any
+ * of this fails, the app underneath keeps working exactly as before.
+ *
+ * DOM CONTRACT (the other end is commented in the file named):
+ *   div.inline-candidates > button.inline-candidate > .inline-text
+ *       the suggestion bar / phone strip            (Appv2/src/inline.ts)
+ *       `.inline-latin` items (kept English) are skipped.
+ *   #picker-list > li > button.candidate > .text
+ *       the Alternatives sheet                       (Appv2/src/main.ts)
+ *   #readback .rb-word[data-odia]
+ *       the "Reads as" words; the Odia word is in data-odia because the
+ *       button text is Latin                         (Appv2/src/main.ts,
+ *       Appv2/index.html). Until V1 this was #output .word.
  *
  * The module reads no script tags and no window globals. Its data arrives
  * through the `load` callback passed to `initDictionary()`, which is called
@@ -140,7 +151,7 @@ function parsePayload(gz: Uint8Array): Dict {
 function loadData(): void {
   if (state !== 'idle' || loader === null) return;
   state = 'loading';
-  panelStatus('Unpacking dictionaries…');
+  panelStatus('Unpacking dictionaries\u2026');
   let pending: Promise<DictionaryBytes>;
   try {
     pending = loader();
@@ -310,7 +321,7 @@ function modernChip(mo: ModernEntry | null): string | null {
 
 /* Short English gloss for the inline chip.
  *
- * Entries open "<headword> — Translit …", so the FIRST Latin run is the
+ * Entries open "<headword> — Translit \u2026", so the FIRST Latin run is the
  * romanisation, not the meaning. Skip that, then prefer the English text of
  * sense 1 ("1. Trouble; distress"), then any Latin run after a dash. */
 const glossCache = Object.create(null) as Record<string, string | null>;
@@ -377,7 +388,7 @@ function buildPanel(): void {
   const search = document.createElement('input');
   search.type = 'search';
   search.className = 'dict-search odia';
-  search.placeholder = '\u0b16\u0b4b\u0b1c\u0b28\u0b4d\u0b24\u0b41…  (search any Odia word)';
+  search.placeholder = '\u0b16\u0b4b\u0b1c\u0b28\u0b4d\u0b24\u0b41\u2026  (search any Odia word)';
   search.setAttribute('aria-label', 'Search the dictionary');
   search.addEventListener('input', debounce(onSearch, 160));
   searchInput = search;
@@ -543,6 +554,7 @@ function refreshAll(): void {
   else renderCandidates();
   reglossInline();
   augmentPicker();
+  augmentReadback();
 }
 
 /* ------------------------------------------------------------ *
@@ -614,20 +626,22 @@ function augmentPicker(): void {
   }
 }
 
-let outputTimer: ReturnType<typeof setTimeout> | null = null;
-function augmentOutput(): void {
+/* Read-back words: the gloss as a tooltip. The button text is the Latin
+ * reading, so the Odia word comes from data-odia (contract above). */
+let readbackTimer: ReturnType<typeof setTimeout> | null = null;
+function augmentReadback(): void {
   if (state !== 'ready') return;
-  if (outputTimer) return;
-  outputTimer = setTimeout(() => {
-    outputTimer = null;
-    const out = document.getElementById('output');
-    if (!out) return;
-    const words = out.querySelectorAll<HTMLElement>('.word');
+  if (readbackTimer) return;
+  readbackTimer = setTimeout(() => {
+    readbackTimer = null;
+    const line = document.getElementById('readback');
+    if (!line) return;
+    const words = line.querySelectorAll<HTMLElement>('.rb-word');
     for (let i = 0; i < words.length; i++) {
       const el = words[i] as HTMLElement;
       if (el.getAttribute('data-glossed') === '1') continue;
       el.setAttribute('data-glossed', '1');
-      const g = chipFor(el.textContent || '');
+      const g = chipFor(el.getAttribute('data-odia') || '');
       if (g) el.title = g;
     }
   }, 120);
@@ -675,9 +689,9 @@ function observe(): void {
     new MutationObserver(() => augmentPicker()).observe(picker, { childList: true });
   }
 
-  const out = document.getElementById('output');
-  if (out) {
-    new MutationObserver(() => augmentOutput()).observe(out, { childList: true, subtree: true });
+  const line = document.getElementById('readback');
+  if (line) {
+    new MutationObserver(() => augmentReadback()).observe(line, { childList: true, subtree: true });
   }
 }
 

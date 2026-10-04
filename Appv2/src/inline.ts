@@ -141,6 +141,9 @@ export class InlineCandidates {
       if (this.blurTimer !== undefined) window.clearTimeout(this.blurTimer);
       this.blurTimer = undefined;
       if (this.docked) this.openDock();
+      // Coming back to the box (after Copy, say) with the caret after a roman
+      // word: offer its suggestions again, or Space would leave it in English.
+      this.refresh();
     });
     area.addEventListener('blur', () => {
       this.blurTimer = window.setTimeout(() => {

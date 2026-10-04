@@ -1,9 +1,10 @@
 /**
  * Wiring for Appv2.
  *
- * Forked from web/src/main.ts. The structure, the clipboard handling and the
- * picker are unchanged; what is new is the profile selector, the preprocess
- * step, and the insert palette.
+ * Forked from web/src/main.ts; the clipboard handling is unchanged. Appv2
+ * added the profile selector, the preprocess step and the insert palette. V1
+ * made the text box the only composing surface: the separate ODIA output box
+ * is gone, replaced by the "Reads as" line (readback.ts) and copyText().
  *
  * No framework, for the same reason as before: every kilobyte here is a
  * kilobyte JavaScriptCore has to interpret on an iPhone.
@@ -15,7 +16,7 @@ import { InlineCandidates } from './inline.js';
 import { startDictionary } from './dictionary/index.js';
 
 import { LocalStorageLearnStore } from '@odia/core';
-import type { Candidate, DigitMode, WordResult } from '@odia/core/types';
+import type { DigitMode, WordResult } from '@odia/core/types';
 
 import {
   buildEngine,
@@ -25,6 +26,8 @@ import {
 } from './engine.js';
 import { describeEntry, displayText, loadPalette, type PaletteEntry } from './palette.js';
 import { preprocess, PREPROCESS_HINTS } from './preprocess.js';
+import { buildSlots, hasWords, readbackText, type Slot } from './readback.js';
+import { casual } from './romanize.js';
 import {
   DEFAULT_PROFILE,
   isProfileId,
@@ -39,8 +42,8 @@ import {
  * ------------------------------------------------------------------ */
 
 const romanEl = must<HTMLTextAreaElement>('roman');
-const outputEl = must<HTMLDivElement>('output');
-const outputHintEl = must<HTMLElement>('output-hint');
+const readbackRowEl = must<HTMLDivElement>('readback-row');
+const readbackEl = must<HTMLDivElement>('readback');
 const statusEl = must<HTMLParagraphElement>('status');
 const copyEl = must<HTMLButtonElement>('copy');
 const clearEl = must<HTMLButtonElement>('clear');
@@ -77,9 +80,12 @@ let profileId: ProfileId = DEFAULT_PROFILE;
 let handle: EngineHandle | undefined;
 let inline: InlineCandidates | undefined;
 
-let lastWords: readonly WordResult[] = [];
-const overrides = new Map<string, string>();
-let openWordButton: HTMLElement | undefined;
+/** The text box cut into read-back slots (readback.ts), as last rendered. */
+let slots: Slot[] = [];
+/** Odia word -> the English key it was committed under, this session. */
+const commitKeys = new Map<string, string>();
+/** Odia words converted in bulk (paste, late word list) and not yet picked. */
+const uncheckedWords = new Set<string>();
 
 /* ------------------------------------------------------------------ *
  * Boot
@@ -101,6 +107,8 @@ async function boot(): Promise<void> {
       guard(() => handle?.engine.transliterateWord(roman, 9) ?? [], []),
     onCommit: (roman, text) => {
       guard(() => handle?.engine.learn(roman, text), undefined);
+      commitKeys.set(text, roman);
+      uncheckedWords.delete(text);
       render();
     },
   });
@@ -122,6 +130,10 @@ async function boot(): Promise<void> {
 
   await loadProfileAssets(profileId);
   rebuildEngine();
+  // Words typed while the word list loaded convert now, in place, and the
+  // word at the caret gets its suggestions.
+  convertInPlace();
+  inline.setEnabled(!strictEl.checked);
   render();
   startDictionary(); // glosses + side panel; its data loads lazily
 
@@ -146,7 +158,7 @@ function rebuildEngine(): void {
 }
 
 /* ------------------------------------------------------------------ *
- * Rendering
+ * Rendering: the read-back line
  * ------------------------------------------------------------------ */
 
 let renderQueued = false;
@@ -160,110 +172,160 @@ function scheduleRender(): void {
   });
 }
 
+/**
+ * The text box is the only composing surface (audit H1). What used to be the
+ * ODIA output box is now two things: copyText(), which converts whatever is
+ * still roman exactly as that box did, and the "Reads as" line, which shows
+ * how the result reads.
+ */
 function render(): void {
-  const engine = handle?.engine;
-
   if (handle) setStatus(handle.note, !handle.ready || handle.note.length > 0);
 
-  if (!engine) {
-    outputEl.textContent = '';
-    lastWords = [];
-    return;
+  const engine = handle?.engine;
+  const raw = romanEl.value;
+  const caret = document.activeElement === romanEl ? romanEl.selectionEnd : null;
+
+  let words: readonly WordResult[] = [];
+  if (engine) {
+    // ONE preprocessed string for the engine. Roman words are ASCII letter
+    // runs that preprocess never touches, so buildSlots finds each of them in
+    // the raw box value in order, and the slot offsets are offsets in the box.
+    const input = preprocess(raw, PROFILES[profileId].preprocess);
+    words = guard(() => engine.transliterate(input, { topk: TOPK }).words, []);
   }
 
-  // ONE preprocessed string, computed once, used for BOTH the engine call and
-  // the offset recovery in buildOutput(). They must be the same string: `||`
-  // collapses to a single `॥`, so passing the raw value to one and the
-  // preprocessed value to the other desynchronises locate()'s offsets and the
-  // output silently duplicates or drops text.
-  const input = preprocess(romanEl.value, PROFILES[profileId].preprocess);
-
-  if (strictEl.checked) {
-    outputHintEl.textContent = 'strict ITRANS — one spelling, one answer';
-    lastWords = [];
-    outputEl.textContent = guard(() => engine.strict(input, 'itrans'), input);
-    return;
-  }
-
-  outputHintEl.textContent = 'tap a word for alternatives';
-
-  const result = guard(() => engine.transliterate(input, { topk: TOPK }), undefined);
-  if (!result) {
-    outputEl.textContent = input;
-    lastWords = [];
-    return;
-  }
-
-  lastWords = result.words;
-  outputEl.replaceChildren(buildOutput(input, result.words));
+  const display = strictEl.checked && engine
+    ? (word: WordResult) => guard(() => engine.strict(word.roman, 'itrans'), word.roman)
+    : undefined;
+  slots = buildSlots(raw, words, caret, display);
+  renderReadback();
 }
 
-function buildOutput(input: string, words: readonly WordResult[]): DocumentFragment {
+function renderReadback(): void {
   const fragment = document.createDocumentFragment();
-  const offsets = locate(input, words);
 
-  if (!offsets) {
-    words.forEach((word, index) => {
-      if (index > 0) fragment.append(' ');
-      fragment.append(renderWord(word, index));
-    });
-    return fragment;
-  }
+  slots.forEach((slot, index) => {
+    if (slot.kind === 'text') {
+      fragment.append(slot.text);
+      return;
+    }
+    if (slot.kind === 'latin') {
+      const span = document.createElement('span');
+      span.className = 'rb-latin';
+      span.textContent = slot.text;
+      fragment.append(span);
+      return;
+    }
 
-  let cursor = 0;
-  words.forEach((word, index) => {
-    const at = offsets[index];
-    if (at > cursor) fragment.append(input.slice(cursor, at));
-    fragment.append(renderWord(word, index));
-    cursor = at + word.roman.length;
+    // DOM CONTRACT with dictionary/overlay.ts: `.rb-word` inside #readback,
+    // with the Odia word in data-odia (the visible text is Latin).
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'rb-word';
+    button.dataset.slot = String(index);
+    button.dataset.odia = slot.odia;
+    button.textContent = slot.reads;
+    const unchecked = slot.kind === 'roman' || uncheckedWords.has(slot.odia);
+    if (unchecked) button.classList.add('rb-unchecked');
+    if (slot.kind === 'roman' && slot.pending) button.classList.add('rb-pending');
+    if (strictEl.checked && slot.kind === 'roman') button.disabled = true;
+    button.setAttribute(
+      'aria-label',
+      `${slot.reads}${unchecked ? ', not checked yet' : ''}. Change this word`,
+    );
+    fragment.append(button);
   });
 
-  if (cursor < input.length) fragment.append(input.slice(cursor));
-  return fragment;
+  readbackEl.replaceChildren(fragment);
+  readbackRowEl.hidden = !hasWords(slots);
+  inline?.setNote(hasWords(slots) ? `Reads as: ${tail(readbackText(slots), 60)}` : '');
 }
 
-/** Byte offset of each roman token in the input, or undefined if any is missing. */
-function locate(input: string, words: readonly WordResult[]): number[] | undefined {
-  const offsets: number[] = [];
-  let cursor = 0;
+/** The last `max` characters, with an ellipsis at the start when cut. */
+function tail(text: string, max: number): string {
+  return text.length <= max ? text : `\u2026${text.slice(text.length - max + 1)}`;
+}
 
-  for (const word of words) {
-    const at = input.indexOf(word.roman, cursor);
-    if (at < 0) return undefined;
-    offsets.push(at);
-    cursor = at + word.roman.length;
+/**
+ * What Copy puts on the clipboard: the box with every roman word that is
+ * still there converted to its top candidate (or strict ITRANS), and the
+ * preprocess marks (| -> danda and so on) applied. Byte-for-byte what the old
+ * output box showed, so copying never regresses.
+ */
+function copyText(): string {
+  const engine = handle?.engine;
+  const input = preprocess(romanEl.value, PROFILES[profileId].preprocess);
+  if (!engine) return input;
+  if (strictEl.checked) return guard(() => engine.strict(input, 'itrans'), input);
+  return guard(() => engine.transliterate(input, { topk: 1 }).text, input);
+}
+
+/** Convert one stretch of the box the way copyText() would. */
+function convertStretch(text: string, engine: EngineHandle['engine']): string {
+  if (!/[A-Za-z]/.test(text)) return text;
+  const input = preprocess(text, PROFILES[profileId].preprocess);
+  if (strictEl.checked) return guard(() => engine.strict(input, 'itrans'), text);
+  const result = guard(() => engine.transliterate(input, { topk: 1 }), undefined);
+  if (!result) return text;
+  for (const word of result.words) {
+    const top = word.candidates[0]?.text;
+    if (top !== undefined && /[\u0B00-\u0B7F]/.test(top)) uncheckedWords.add(top);
   }
-
-  return offsets;
+  return result.text;
 }
 
-function renderWord(word: WordResult, index: number): Node {
-  const text = chosenText(word);
-  const alternatives = word.candidates.length > 1;
+/**
+ * Convert roman words in the box to Odia IN PLACE, except the word still being
+ * typed at the caret (the suggestion bar owns that one). Runs when the word
+ * list becomes ready (text typed while it loaded) and after a paste. Converted
+ * words are marked "not checked yet" in the read-back until the user picks.
+ */
+function convertInPlace(): void {
+  const engine = handle?.engine;
+  if (!engine || !handle?.ready) return;
+  const raw = romanEl.value;
+  if (!/[A-Za-z]/.test(raw)) return;
 
-  if (!alternatives) {
-    const span = document.createElement('span');
-    span.className = 'word word-static';
-    span.textContent = text;
-    return span;
-  }
+  const focused = document.activeElement === romanEl;
+  const caret = focused ? (romanEl.selectionEnd ?? raw.length) : raw.length;
+  const before = raw.slice(0, caret);
+  const after = raw.slice(caret);
+  const pending = focused ? (/[A-Za-z_~]+$/.exec(before)?.[0] ?? '') : '';
+  const head = before.slice(0, before.length - pending.length);
 
-  const button = document.createElement('button');
-  button.type = 'button';
-  button.className = 'word ambiguous';
-  if (overrides.has(word.roman)) button.classList.add('chosen');
-  button.textContent = text;
-  button.dataset.index = String(index);
-  button.setAttribute('aria-label', `${text} — alternatives for ${word.roman}`);
-  return button;
+  const newHead = convertStretch(head, engine);
+  const newAfter = convertStretch(after, engine);
+  if (newHead === head && newAfter === after) return;
+
+  romanEl.value = newHead + pending + newAfter;
+  const at = newHead.length + pending.length;
+  if (focused) romanEl.setSelectionRange(at, at);
+  render();
 }
 
-function chosenText(word: WordResult): string {
-  return overrides.get(word.roman) ?? word.candidates[0]?.text ?? word.roman;
-}
+/**
+ * Strict mode has no suggestion bar, so on Space or Enter the run before the
+ * caret is replaced by its strict ITRANS result in place, before the key's
+ * own character goes in. ITRANS uses `.` `^` `~` and capitals, so the run is
+ * everything back to the previous whitespace.
+ */
+function strictCommit(event: KeyboardEvent): void {
+  if (!strictEl.checked || (event.key !== ' ' && event.key !== 'Enter')) return;
+  if (event.metaKey || event.ctrlKey || event.altKey) return;
+  const engine = handle?.engine;
+  const { value, selectionStart, selectionEnd } = romanEl;
+  if (!engine || selectionStart === null || selectionStart !== selectionEnd) return;
 
-function outputText(): string {
-  return outputEl.textContent ?? '';
+  let start = selectionStart;
+  while (start > 0 && !/\s/.test(value[start - 1] as string)) start -= 1;
+  const run = value.slice(start, selectionStart);
+  if (!/[A-Za-z]/.test(run)) return;
+
+  const input = preprocess(run, PROFILES[profileId].preprocess);
+  const odia = guard(() => engine.strict(input, 'itrans'), run);
+  romanEl.value = value.slice(0, start) + odia + value.slice(selectionStart);
+  const caret = start + odia.length;
+  romanEl.setSelectionRange(caret, caret);
 }
 
 /* ------------------------------------------------------------------ *
@@ -389,22 +451,44 @@ function buildShortcutHints(): void {
 }
 
 /* ------------------------------------------------------------------ *
- * Candidate picker
+ * Candidate picker (the Alternatives sheet), opened from a read-back word
  * ------------------------------------------------------------------ */
 
-function openPicker(index: number, trigger: HTMLElement): void {
-  const word = lastWords[index];
-  if (!word || word.candidates.length < 2) return;
+interface PickerRow {
+  text: string;
+  source: string;
+}
 
-  pickerTitleEl.replaceChildren('Alternatives for ', romanLabel(word.roman));
-  pickerListEl.replaceChildren(
-    ...word.candidates.map((candidate) => candidateRow(word, candidate)),
-  );
+/** The slot whose alternatives are showing, with the box text it stood for. */
+let openSlot: { start: number; end: number; was: string; key: string } | undefined;
+let openTrigger: HTMLElement | undefined;
+
+function openPicker(index: number, trigger: HTMLElement): void {
+  const slot = slots[index];
+  const engine = handle?.engine;
+  if (!slot || !engine || (slot.kind !== 'odia' && slot.kind !== 'roman')) return;
+
+  // The English key: the word as typed for a roman slot; for a committed word,
+  // the key it was committed under in this session, else its romanisation in
+  // the way people type it (long vowels short).
+  const key = slot.kind === 'roman' ? slot.word.roman : commitKeys.get(slot.odia) ?? casual(slot.reads);
+  const candidates: PickerRow[] =
+    slot.kind === 'roman'
+      ? slot.word.candidates.map((c) => ({ text: c.text, source: c.source }))
+      : guard(() => engine.transliterateWord(key, TOPK + 1), []).map((c) => ({ text: c.text, source: c.source }));
+  // The current word is always on the list, so the sheet can say "this one".
+  if (!candidates.some((c) => c.text === slot.odia)) candidates.unshift({ text: slot.odia, source: 'current' });
+
+  openSlot = { start: slot.start, end: slot.end, was: romanEl.value.slice(slot.start, slot.end), key };
+  pickerTitleEl.replaceChildren('Alternatives for ', romanLabel(key));
+  // DOM CONTRACT with dictionary/overlay.ts: #picker-list > li > button.candidate
+  // with the Odia word in a `.text` child; the overlay appends .dict-gloss.
+  pickerListEl.replaceChildren(...candidates.map((c) => candidateRow(c, c.text === slot.odia)));
 
   pickerEl.hidden = false;
   document.documentElement.style.overflow = 'hidden';
   trigger.classList.add('open');
-  openWordButton = trigger;
+  openTrigger = trigger;
 
   const first = pickerListEl.querySelector<HTMLButtonElement>('button.candidate');
   first?.focus();
@@ -417,16 +501,17 @@ function romanLabel(roman: string): HTMLElement {
   return span;
 }
 
-function candidateRow(word: WordResult, candidate: Candidate): HTMLLIElement {
+function candidateRow(candidate: PickerRow, current: boolean): HTMLLIElement {
   const item = document.createElement('li');
   const button = document.createElement('button');
 
   button.type = 'button';
   button.className = 'candidate';
-  if (chosenText(word) === candidate.text) button.setAttribute('aria-current', 'true');
+  if (current) button.setAttribute('aria-current', 'true');
 
   const text = document.createElement('span');
-  text.className = 'text';
+  text.className = /[\u0B00-\u0B7F]/.test(candidate.text) ? 'text' : 'text text-latin';
+  if (/[\u0B00-\u0B7F]/.test(candidate.text)) text.lang = 'or';
   text.textContent = candidate.text;
 
   const source = document.createElement('span');
@@ -434,23 +519,53 @@ function candidateRow(word: WordResult, candidate: Candidate): HTMLLIElement {
   source.textContent = candidate.source;
 
   button.append(text, source);
-  button.addEventListener('click', () => choose(word.roman, candidate.text));
+  button.addEventListener('click', () => choose(candidate.text));
   item.append(button);
   return item;
 }
 
-function choose(roman: string, text: string): void {
-  overrides.set(roman, text);
-  guard(() => handle?.engine.learn(roman, text), undefined);
-  closePicker();
+/** Replace the open slot's text in the box with the chosen word. */
+function choose(text: string): void {
+  const slot = openSlot;
+  const index = openTrigger?.dataset.slot;
+  closePicker(false);
+  if (!slot) return;
+
+  const value = romanEl.value;
+  // The box may have changed under the sheet; never replace the wrong text.
+  if (value.slice(slot.start, slot.end) !== slot.was) {
+    render();
+    return;
+  }
+
+  romanEl.value = value.slice(0, slot.start) + text + value.slice(slot.end);
+  guard(() => handle?.engine.learn(slot.key, text), undefined);
+  commitKeys.set(text, slot.key);
+  uncheckedWords.delete(text);
+  uncheckedWords.delete(slot.was);
+
+  // Keep the caret where it was, shifted by the change in length.
+  const caret = romanEl.selectionEnd ?? value.length;
+  const shifted = caret >= slot.end ? caret + text.length - (slot.end - slot.start) : caret;
+  romanEl.setSelectionRange(shifted, shifted);
   render();
+  focusReadbackWord(index);
 }
 
-function closePicker(): void {
+function closePicker(restoreFocus = true): void {
   pickerEl.hidden = true;
   document.documentElement.style.overflow = '';
-  openWordButton?.classList.remove('open');
-  openWordButton = undefined;
+  openTrigger?.classList.remove('open');
+  const index = openTrigger?.dataset.slot;
+  openTrigger = undefined;
+  openSlot = undefined;
+  if (restoreFocus) focusReadbackWord(index);
+}
+
+/** Focus goes back to the read-back word that opened the sheet. */
+function focusReadbackWord(index: string | undefined): void {
+  if (index === undefined) return;
+  readbackEl.querySelector<HTMLElement>(`.rb-word[data-slot="${index}"]`)?.focus();
 }
 
 /* ------------------------------------------------------------------ *
@@ -460,11 +575,11 @@ function closePicker(): void {
 /**
  * On iOS the Clipboard API only works when `writeText` is reached inside the
  * user gesture that triggered it. Anything awaited first — even a microtask —
- * loses the gesture. So `outputText()` is synchronous and `writeText` is the
+ * loses the gesture. So `copyText()` is synchronous and `writeText` is the
  * first async thing in this handler.
  */
 function onCopy(): void {
-  const text = outputText();
+  const text = copyText();
   if (text.length === 0) {
     toast('Nothing to copy', true);
     return;
@@ -597,11 +712,20 @@ function writeProfilePref(id: ProfileId): void {
  * ------------------------------------------------------------------ */
 
 function bindEvents(): void {
-  romanEl.addEventListener('input', scheduleRender);
+  romanEl.addEventListener('input', (event) => {
+    const kind = (event as InputEvent).inputType;
+    if (kind === 'insertFromPaste' || kind === 'insertFromDrop') convertInPlace();
+    scheduleRender();
+  });
+  // The caret moving changes which word is "being typed".
+  romanEl.addEventListener('keyup', scheduleRender);
+  romanEl.addEventListener('click', scheduleRender);
+  romanEl.addEventListener('blur', scheduleRender);
+  romanEl.addEventListener('keydown', strictCommit);
 
-  outputEl.addEventListener('click', (event) => {
-    const target = (event.target as HTMLElement | null)?.closest<HTMLElement>('button.word');
-    const index = target?.dataset.index;
+  readbackEl.addEventListener('click', (event) => {
+    const target = (event.target as HTMLElement | null)?.closest<HTMLElement>('button.rb-word');
+    const index = target?.dataset.slot;
     if (target && index !== undefined) openPicker(Number(index), target);
   });
 
@@ -609,7 +733,7 @@ function bindEvents(): void {
 
   clearEl.addEventListener('click', () => {
     romanEl.value = '';
-    overrides.clear();
+    uncheckedWords.clear();
     render();
     romanEl.focus();
   });
@@ -630,7 +754,7 @@ function bindEvents(): void {
   profileEl.addEventListener('change', () => void onProfileChange());
 
   for (const closer of document.querySelectorAll('[data-picker-close]')) {
-    closer.addEventListener('click', closePicker);
+    closer.addEventListener('click', () => closePicker());
   }
 
   document.addEventListener('keydown', (event) => {

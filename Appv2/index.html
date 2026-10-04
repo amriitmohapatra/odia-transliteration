@@ -58,6 +58,27 @@
             enterkeyhint="enter"
             placeholder="dhyaana balaatitam naanyam balam |"
           ></textarea>
+          <!--
+            "Reads as": one romanised word per Odia word in the box, worked out
+            from the Odia letters (src/readback.ts). Each word is a button that
+            opens the Alternatives sheet for it. Replaces the separate ODIA
+            output box (audit H1): the text box is the only composing surface.
+            DOM CONTRACT: src/dictionary/overlay.ts reads #readback .rb-word and
+            its data-odia attribute (the Odia word; the button text is Latin).
+          -->
+          <div class="readback" id="readback-row" hidden>
+            <div class="readback-head">
+              <span class="readback-label" id="readback-label">Reads as</span>
+              <span class="readback-hint">tap a word to change it</span>
+            </div>
+            <div
+              id="readback"
+              class="readback-words"
+              lang="en"
+              translate="no"
+              aria-labelledby="readback-label"
+            ></div>
+          </div>
           <p class="mode-hint" id="profile-hint"></p>
         </section>
 
@@ -71,19 +92,6 @@
           nine candidate slots, and the fix is to stop making them compete.
         -->
         <div id="palette" class="palette" aria-label="Insert a rare mark" hidden></div>
-
-        <section class="pane">
-          <div class="pane-head">
-            <span class="pane-label" id="output-label">Odia</span>
-            <span class="pane-hint" id="output-hint">tap a word for alternatives</span>
-          </div>
-          <div
-            id="output"
-            class="output odia"
-            aria-labelledby="output-label"
-            data-placeholder="ଧ୍ୟାନ ବଳାତିତଂ ନାନ୍ୟଂ ବଳଂ ।"
-          ></div>
-        </section>
 
         <div class="actions">
           <button type="button" id="copy" class="btn btn-primary">Copy Odia</button>
@@ -279,7 +287,7 @@
           <ul class="shortcuts" id="shortcuts"></ul>
 
           <p class="note">
-            Anything rarer is on the palette above the output. Hover or long-press a key to
+            Anything rarer is on the palette under the text box. Hover or long-press a key to
             see what it is and how else to reach it.
           </p>
 
