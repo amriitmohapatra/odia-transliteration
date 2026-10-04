@@ -1,0 +1,28 @@
+{
+  "extends": "../tsconfig.base.json",
+  "compilerOptions": {
+    // Vite bundles src/, so extensionless relative imports are fine here even
+    // though core/ and cli/ require explicit ".js" extensions. scripts/ and
+    // eval/ run under tsx and DO use explicit ".js" on relative imports into
+    // core/ — tsx follows Node resolution for those.
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    // "node" is for vite.config.ts, scripts/ and eval/, which read the
+    // filesystem. src/ itself must never touch node: APIs.
+    "types": ["vite/client", "node"],
+
+    // Mirrors the aliases in vite.config.ts, so typecheck does not require
+    // core/dist to have been compiled first.
+    "paths": {
+      "@odia/core": ["../core/src/index.ts"],
+      "@odia/core/types": ["../core/src/types.ts"],
+      "@odia/core/normalize": ["../core/src/normalize.ts"]
+    },
+
+    "noEmit": true,
+    "declaration": false,
+    "sourceMap": false
+  },
+  "include": ["src/**/*.ts", "scripts/**/*.ts", "eval/**/*.ts", "test/**/*.ts", "vite.config.ts"]
+}

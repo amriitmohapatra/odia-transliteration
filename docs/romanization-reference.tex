@@ -1,0 +1,409 @@
+% =============================================================================
+% Odia Phonetic Romanization — Reference Sheet
+% Compile with LuaLaTeX (NOT pdflatex — Odia requires Unicode + HarfBuzz shaping):
+%     lualatex romanization-reference.tex
+% =============================================================================
+\documentclass[11pt, a4paper]{article}
+
+\usepackage[margin=1.9cm, headheight=15pt]{geometry}
+\usepackage{microtype}
+\usepackage{parskip}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{enumitem}
+\usepackage{mdframed}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+
+% --- Fonts: Odia needs HarfBuzz shaping for conjuncts and nukta ---------------
+\usepackage{fontspec}
+\newfontfamily\odiafont{Oriya Sangam MN}[Renderer=HarfBuzz, Script=Oriya, Scale=1.18]
+\newcommand{\od}[1]{{\odiafont #1}}          % inline Odia
+\newcommand{\odb}[1]{{\odiafont\large #1}}   % Odia, display size for tables
+
+% --- House palette (MIDSEA accent variant) -----------------------------------
+\definecolor{headerblue}{RGB}{0,70,127}
+\definecolor{noteblue}{RGB}{220,235,245}
+\definecolor{warnyellow}{RGB}{255,248,220}
+\definecolor{codegrey}{RGB}{245,245,245}
+\definecolor{midseapurple}{RGB}{75,0,130}
+\definecolor{midseamagenta}{RGB}{199,21,133}
+\definecolor{midseaorange}{RGB}{230,126,0}
+\definecolor{midseagreen}{RGB}{0,140,90}
+\definecolor{keygreen}{RGB}{223,242,233}
+
+\titleformat{\section}{\large\bfseries\color{midseapurple}}{\thesection}{0.6em}{}[{\color{midseamagenta}\titlerule[1.2pt]}]
+\titleformat{\subsection}{\normalsize\bfseries\color{headerblue}}{\thesubsection}{0.5em}{}
+
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{\small\color{midseapurple}Odia Romanization Reference}
+\lhead{\small\color{midseapurple}Odia\_transliteration}
+\rfoot{\small Page \thepage}
+\lfoot{\small v0.1 draft --- see \texttt{core/rules/symbols.toml}}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.2pt}
+
+\newmdenv[backgroundcolor=keygreen, linecolor=midseagreen, linewidth=1pt, roundcorner=4pt,
+  innerleftmargin=10pt, innerrightmargin=10pt, innertopmargin=8pt, innerbottommargin=8pt]{keybox}
+\newmdenv[backgroundcolor=warnyellow, linecolor=midseaorange, linewidth=1pt, roundcorner=4pt,
+  innerleftmargin=10pt, innerrightmargin=10pt, innertopmargin=8pt, innerbottommargin=8pt]{warnbox}
+\newmdenv[backgroundcolor=noteblue, linecolor=headerblue, linewidth=1pt, roundcorner=4pt,
+  innerleftmargin=10pt, innerrightmargin=10pt, innertopmargin=8pt, innerbottommargin=8pt]{notebox}
+
+\newcommand{\kidea}{{\color{midseagreen}\textbf{\textsf{Key idea.}}}\ }
+\newcommand{\kpit}{{\color{midseaorange!85!black}\textbf{\textsf{Pitfall.}}}\ }
+\newcommand{\knote}{{\color{headerblue}\textbf{\textsf{Note.}}}\ }
+
+\usepackage{hyperref}
+\hypersetup{
+  colorlinks = true, linkcolor = midseapurple, urlcolor = headerblue,
+  pdftitle = {Odia Phonetic Romanization Reference Sheet},
+  pdfauthor = {Amrit Mohapatra}
+}
+
+\setlength{\tabcolsep}{5pt}
+\renewcommand{\arraystretch}{1.35}
+
+% =============================================================================
+\begin{document}
+% =============================================================================
+
+\begin{center}
+  {\LARGE\bfseries\color{midseapurple} Typing Odia Phonetically}\\[0.3em]
+  {\large A reference sheet: what to type in English to get \od{ଓଡ଼ିଆ}}\\[0.5em]
+  {\small Draft v0.1 \quad$\cdot$\quad \today}
+\end{center}
+
+\vspace{0.5em}
+
+\begin{warnbox}
+\kpit This sheet is a \textbf{v0.1 draft scheme}, derived from ITRANS conventions and
+published Odia orthography references. It has \textbf{not been reviewed by a native Odia
+speaker}. Treat every mapping as a proposal, not a fact. Where it is wrong, fix it in
+\texttt{core/rules/symbols.toml} --- that file is the single source of truth, and this
+sheet should be regenerated to match.
+\end{warnbox}
+
+% =============================================================================
+\section{How it works}
+% =============================================================================
+
+Odia is an \emph{abugida}, not an alphabet. That one fact explains most of the rules
+below.
+
+\begin{keybox}
+\kidea Every consonant already carries a built-in vowel. \od{କ} on its own is
+\texttt{ka}, not \texttt{k}. To attach a different vowel you add a \textbf{matra}
+(a vowel sign). To attach \emph{no} vowel --- so the consonant joins the next one ---
+the script uses a \textbf{halant}, which produces a conjunct.
+\end{keybox}
+
+There are two typing modes.
+
+\begin{description}[leftmargin=1.4cm, style=nextline, itemsep=0.3em]
+  \item[Natural mode \normalfont(default)] Type it the way it sounds. Case is ignored.
+  Several spellings reach the same word, and the engine offers a ranked candidate list
+  --- you pick. This is what you will use day to day.
+  \item[Strict mode \normalfont(\texttt{-{}-strict})] Full ITRANS. Case matters. Exactly
+  one deterministic answer, no candidates. Use it when you need a specific character and
+  do not want to argue with the ranking.
+\end{description}
+
+In the tables below, the \textbf{Type} column is natural mode and \textbf{Strict} is the
+ITRANS form. Where they are identical, Strict is left blank.
+
+% =============================================================================
+\section{Vowels}
+% =============================================================================
+
+Each vowel has two shapes: an \textbf{independent} letter, used at the start of a word or
+after another vowel, and a \textbf{matra}, used after a consonant. You type the same
+thing for both --- the engine picks the right shape from context.
+
+\begin{center}
+\begin{tabular}{c c l l l}
+\toprule
+Independent & On \od{କ} & Type & Strict & Example \\
+\midrule
+\odb{ଅ}  & \odb{କ}   & \texttt{a}   &                & \od{ଅଛ} \texttt{achha} \\
+\odb{ଆ}  & \odb{କା}  & \texttt{aa}  & \texttt{A}     & \od{ଆମ} \texttt{aama} \\
+\odb{ଇ}  & \odb{କି}  & \texttt{i}   &                & \od{ଇଏ} \texttt{ie} \\
+\odb{ଈ}  & \odb{କୀ}  & \texttt{ii}, \texttt{ee} & \texttt{I} & \od{ନଈ} \texttt{naii} \\
+\odb{ଉ}  & \odb{କୁ}  & \texttt{u}   &                & \od{ଉଠ} \texttt{utha} \\
+\odb{ଊ}  & \odb{କୂ}  & \texttt{uu}, \texttt{oo} & \texttt{U} & \od{ମୂଳ} \texttt{muula} \\
+\odb{ଋ}  & \odb{କୃ}  & \texttt{ru}, \texttt{ri} & \texttt{R\^{}i} & \od{ଋଷି} \texttt{rushi} \\
+\odb{ଏ}  & \odb{କେ}  & \texttt{e}   &                & \od{ଏକ} \texttt{eka} \\
+\odb{ଐ}  & \odb{କୈ}  & \texttt{ai}, \texttt{oi} &     & \od{ଐକ୍ୟ} \texttt{aikya} \\
+\odb{ଓ}  & \odb{କୋ}  & \texttt{o}   &                & \od{ଓଠ} \texttt{otha} \\
+\odb{ଔ}  & \odb{କୌ}  & \texttt{au}, \texttt{ou} &     & \od{ଔଷଧ} \texttt{aushadha} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{warnbox}
+\kpit \textbf{Double the vowel to lengthen it.} This is the single most common reason a
+word comes out wrong. \texttt{a} is \od{ଅ} but \texttt{aa} is \od{ଆ}, so \od{ଭାଗ୍ୟ} is
+\texttt{bhaagya}, not \texttt{bhagya}. Likewise \texttt{ii}/\texttt{ee} for \od{ଈ} and
+\texttt{uu}/\texttt{oo} for \od{ଊ}. Frequent words are recognised either way, but for
+anything else the doubling matters.
+\end{warnbox}
+
+\begin{notebox}
+\knote The rare vowels \od{ୠ}~\texttt{RR}, \od{ଌ}~\texttt{Lu} and \od{ୡ}~\texttt{LL}
+exist in the scheme but almost never appear in modern Odia. They are available in strict
+mode only.
+\end{notebox}
+
+% =============================================================================
+\section{Consonants}
+% =============================================================================
+
+The five \emph{vargas} (articulation groups). Read each row left to right: unaspirated,
+aspirated, voiced, voiced-aspirated, nasal.
+
+\begin{center}
+\begin{tabular}{l c c c c c}
+\toprule
+& \multicolumn{5}{c}{\textit{Position in the mouth}} \\
+\cmidrule(l){2-6}
+Group & \multicolumn{2}{c}{voiceless} & \multicolumn{2}{c}{voiced} & nasal \\
+\midrule
+Velar     & \odb{କ} \texttt{ka} & \odb{ଖ} \texttt{kha} & \odb{ଗ} \texttt{ga} & \odb{ଘ} \texttt{gha} & \odb{ଙ} \texttt{nga} \\
+Palatal   & \odb{ଚ} \texttt{cha} & \odb{ଛ} \texttt{chha} & \odb{ଜ} \texttt{ja} & \odb{ଝ} \texttt{jha} & \odb{ଞ} \texttt{nya} \\
+Retroflex & \odb{ଟ} \texttt{Ta} & \odb{ଠ} \texttt{Tha} & \odb{ଡ} \texttt{Da} & \odb{ଢ} \texttt{Dha} & \odb{ଣ} \texttt{Na} \\
+Dental    & \odb{ତ} \texttt{ta} & \odb{ଥ} \texttt{tha} & \odb{ଦ} \texttt{da} & \odb{ଧ} \texttt{dha} & \odb{ନ} \texttt{na} \\
+Labial    & \odb{ପ} \texttt{pa} & \odb{ଫ} \texttt{pha} & \odb{ବ} \texttt{ba} & \odb{ଭ} \texttt{bha} & \odb{ମ} \texttt{ma} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{warnbox}
+\kpit \textbf{Retroflex vs dental} is the one distinction English does not have, and the
+main reason you will see multiple candidates. Retroflex (\od{ଟ ଠ ଡ ଢ ଣ}) is made with the
+tongue curled back; dental (\od{ତ ଥ ଦ ଧ ନ}) with the tongue on the teeth. In strict mode a
+\textbf{capital} letter means retroflex: \texttt{Ta} is \od{ଟ}, \texttt{ta} is \od{ତ}. In
+natural mode case is ignored and both are offered --- the dictionary decides which is
+more likely.
+\end{warnbox}
+
+\subsection*{Everything else}
+
+\begin{center}
+\begin{tabular}{c l l c l l}
+\toprule
+Letter & Type & Notes & Letter & Type & Notes \\
+\midrule
+\odb{ଯ} & \texttt{ya} & sounds like \emph{ja} & \odb{ଶ} & \texttt{sha} & palatal \\
+\odb{ର} & \texttt{ra} &                        & \odb{ଷ} & \texttt{Sha} & retroflex \\
+\odb{ଲ} & \texttt{la} &                        & \odb{ସ} & \texttt{sa}  & dental \\
+\odb{ଳ} & \texttt{La} & retroflex \emph{l}     & \odb{ହ} & \texttt{ha}  & \\
+\odb{ବ} & \texttt{ba}, \texttt{va} &           & \odb{ୱ} & \texttt{wa}  & \od{ସ୍ୱର} \texttt{swara} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection*{The three special letters}
+
+These carry a \emph{nukta} (a dot below) or are otherwise distinct. They matter more in
+Odia than in most Indic scripts --- the first one appears in the name of the language.
+
+\begin{center}
+\begin{tabular}{c l l l}
+\toprule
+Letter & Type & Sound & Example \\
+\midrule
+\odb{ଡ଼} & \texttt{rr}, \texttt{d}    & retroflex flap        & \od{ଓଡ଼ିଶା} \texttt{odishaa}, \od{ବଡ଼} \texttt{bada} \\
+\odb{ଢ଼} & \texttt{rh}, \texttt{dh}   & aspirated flap        & \od{ପଢ଼ା} \texttt{paRhaa} \\
+\odb{ୟ}  & \texttt{y} (not word-initial) & true \emph{y} sound & \od{ରାଜ୍ୟ} \texttt{raajya} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{warnbox}
+\kpit \od{ଯ} and \od{ୟ} are different letters, and Odia uses them the opposite way round
+from Hindi. \od{ଯ} is pronounced like \emph{ja}; \od{ୟ} is the one that actually sounds
+like \emph{y}. So typing \texttt{y} gives \od{ଯ} at the \emph{start} of a word
+(\texttt{yoga} \(\rightarrow\) \od{ଯୋଗ}) and \od{ୟ} anywhere else
+(\texttt{raajya} \(\rightarrow\) \od{ରାଜ୍ୟ}, \texttt{nyaaya} \(\rightarrow\) \od{ନ୍ୟାୟ}).
+Both stay in the candidate list, so you can override either way.
+\end{warnbox}
+
+% =============================================================================
+\section{Signs and marks}
+% =============================================================================
+
+These are combining marks, so they are shown here attached to \od{କ} --- on their own
+they would be almost invisible.
+
+\begin{center}
+\begin{tabular}{c c l l l}
+\toprule
+Mark & On \od{କ} & Name & Type & Example \\
+\midrule
+\odb{ଂ} & \odb{କଂ} & anusvara     & \texttt{n}, \texttt{m}, \texttt{M} & \od{ଅଂଶ} \texttt{ansha} \\
+\odb{ଁ} & \odb{କଁ} & candrabindu  & \texttt{n\textasciitilde}, \texttt{Mn} & \od{ମୁଁ} \texttt{mun} \\
+\odb{ଃ} & \odb{କଃ} & visarga      & \texttt{H}                         & \od{ଦୁଃଖ} \texttt{duHkha} \\
+\odb{୍}  & \odb{କ୍} & halant       & automatic                          & see below \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Anusvara nasalises \emph{before a following consonant}; candrabindu nasalises the vowel
+itself; visarga is a breathy release; halant strips the built-in vowel so a conjunct can
+form.
+
+% =============================================================================
+\section{Conjuncts}
+% =============================================================================
+
+When two consonants meet with no vowel between them, they fuse into a single conjunct
+glyph. \textbf{You do not type the halant} --- just type the consonants back to back and
+the engine forms the conjunct.
+
+\begin{center}
+\begin{tabular}{l c l c l c}
+\toprule
+Type & Get & Type & Get & Type & Get \\
+\midrule
+\texttt{kta}  & \odb{କ୍ତ} & \texttt{pra}  & \odb{ପ୍ର} & \texttt{nta}  & \odb{ନ୍ତ} \\
+\texttt{ksha} & \odb{କ୍ଷ} & \texttt{shra} & \odb{ଶ୍ର} & \texttt{Nda}  & \odb{ଣ୍ଡ} \\
+\texttt{jny}  & \odb{ଜ୍ଞ} & \texttt{swa}  & \odb{ସ୍ୱ} & \texttt{mbha} & \odb{ମ୍ଭ} \\
+\texttt{tra}  & \odb{ତ୍ର} & \texttt{nka}  & \odb{ଙ୍କ} & \texttt{ddha} & \odb{ଦ୍ଧ} \\
+\texttt{sta}  & \odb{ସ୍ତ} & \texttt{ShTa} & \odb{ଷ୍ଟ} & \texttt{lla}  & \odb{ଲ୍ଲ} \\
+\texttt{gya}  & \odb{ଗ୍ୟ} & \texttt{nya}  & \odb{ନ୍ୟ} & \texttt{dya}  & \odb{ଦ୍ୟ} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{keybox}
+\kidea \textbf{A typed \texttt{n} is five different letters}, depending on what
+follows it, because a nasal takes the place of articulation of the next consonant:
+\texttt{n}+\texttt{k/g} \(\rightarrow\) \od{ଙ} (\od{ଙ୍କ}, \od{ଗଙ୍ଗ});
+\texttt{n}+\texttt{ch/j} \(\rightarrow\) \od{ଞ} (\od{ପଞ୍ଚମ});
+\texttt{n}+\texttt{T/D} \(\rightarrow\) \od{ଣ} (\od{ମୁଣ୍ଡ});
+\texttt{n}+\texttt{t/d} \(\rightarrow\) \od{ନ} (\od{ଅନ୍ତ});
+\texttt{n}+\texttt{p/b} \(\rightarrow\) \od{ମ} (\od{ସମ୍ବାଦ}).
+The anusvara \od{ଂ} is offered alongside all of them (\od{ସଂସ୍କାର}).
+So the honorific is simply \texttt{nka}: \texttt{baabunka} \(\rightarrow\) \od{ବାବୁଙ୍କ}.
+\end{keybox}
+
+\begin{warnbox}
+\kpit \texttt{ny} and \texttt{gy} are read as \emph{two} letters, not as \od{ଞ} and
+\od{ଜ୍ଞ}, because in real words that is nearly always what they are ---
+\texttt{dhanyabaada} \(\rightarrow\) \od{ଧନ୍ୟବାଦ}, \texttt{bhaagya} \(\rightarrow\)
+\od{ଭାଗ୍ୟ}. For the single letters type \texttt{\textasciitilde n} \(\rightarrow\) \od{ଞ}
+and \texttt{jny} \(\rightarrow\) \od{ଜ୍ଞ}.
+\end{warnbox}
+
+\begin{notebox}
+\knote To force a bare consonant with a visible halant and \emph{no} conjunct --- which
+you occasionally want at the end of a word --- append an underscore:
+\texttt{kamal\_} gives \od{କମଲ୍} rather than \od{କମଲ}.
+\end{notebox}
+
+% =============================================================================
+\section{Numerals}
+% =============================================================================
+
+\begin{center}
+\begin{tabular}{l c c c c c c c c c c}
+\toprule
+Type   & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 \\
+Get    & \odb{୦} & \odb{୧} & \odb{୨} & \odb{୩} & \odb{୪} & \odb{୫} & \odb{୬} & \odb{୭} & \odb{୮} & \odb{୯} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Odia numerals are \textbf{off by default} --- modern written Odia overwhelmingly uses
+Arabic digits. Turn them on with the \texttt{digits = "odia"} setting.
+
+% =============================================================================
+\newpage
+\section{Worked examples}
+% =============================================================================
+
+\begin{center}
+\begin{tabular}{l l l}
+\toprule
+Type this & Get this & Meaning \\
+\midrule
+\texttt{namaskaara}   & \odb{ନମସ୍କାର}      & hello \\
+\texttt{kemiti achha} & \odb{କେମିତି ଅଛ}     & how are you \\
+\texttt{dhanyabaada}  & \odb{ଧନ୍ୟବାଦ}      & thank you \\
+\texttt{mun bhala achhi} & \odb{ମୁଁ ଭଲ ଅଛି} & I am well \\
+\texttt{odishaa}      & \odb{ଓଡ଼ିଶା}        & Odisha \\
+\texttt{odiaa}        & \odb{ଓଡ଼ିଆ}         & Odia (the language) \\
+\texttt{bhubaneswara} & \odb{ଭୁବନେଶ୍ୱର}    & Bhubaneswar \\
+\texttt{paani}        & \odb{ପାଣି}          & water \\
+\texttt{tume}         & \odb{ତୁମେ}          & you \\
+\texttt{bhaagya}      & \odb{ଭାଗ୍ୟ}         & fate, luck \\
+\texttt{raajya}       & \odb{ରାଜ୍ୟ}         & state \\
+\texttt{nyaaya}       & \odb{ନ୍ୟାୟ}         & justice \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{keybox}
+\kidea You are not expected to spell these correctly on the first try. The engine offers
+a ranked list, you choose, and it remembers your choice. Accuracy on the words
+\emph{you} personally use climbs quickly --- that is the whole design.
+\end{keybox}
+
+% =============================================================================
+\section{Five things that trip people up}
+% =============================================================================
+
+\begin{enumerate}[leftmargin=1.4cm, itemsep=0.45em]
+  \item \textbf{Double the vowel to lengthen it.} By far the most common mistake.
+        \od{ଭାଗ୍ୟ} is \texttt{bhaagya}; \texttt{bhagya} would be \od{ଭଗ୍ୟ}, which is not a
+        word. Same for \texttt{ii}/\texttt{ee} and \texttt{uu}/\texttt{oo}.
+
+  \item \textbf{The built-in vowel is not silent.} \od{ଭଲ} is \texttt{bhala}, not
+        \texttt{bhal}. It is also pronounced closer to \emph{o} than \emph{a} --- which is
+        why \od{ଓଡ଼ିଶା} is written ``Odisha'' in English, not ``Adisha''.
+  \item \textbf{\od{ଡ଼} is not \od{ଡ}.} The flap \od{ଡ଼} is extremely common in Odia
+        (\od{ବଡ଼}, \od{ପଢ଼ା}, \od{ଓଡ଼ିଶା}). Internally it is always stored as \od{ଡ} plus a
+        separate nukta character, never as a single precomposed character --- they look
+        identical on screen but do not match each other in a search.
+  \item \textbf{\od{ଳ} is a real letter,} not a typo for \od{ଲ}. Retroflex \emph{l},
+        common in Odia: \od{ମୂଳ}, \od{ଫଳ}, \od{କାଳ}. Type \texttt{La}.
+  \item \textbf{Case only matters in strict mode.} In natural mode \texttt{Ta} and
+        \texttt{ta} are the same input and you disambiguate by picking a candidate.
+\end{enumerate}
+
+% =============================================================================
+\section{Fixing this sheet}
+% =============================================================================
+
+Every mapping above corresponds to an entry in \texttt{core/rules/symbols.toml}. When a
+common word comes out wrong, adjust the weight there rather than working around it:
+
+\begin{center}
+\begin{minipage}{0.72\textwidth}
+\ttfamily\small
+\color{midseapurple}[[consonant]]\color{black}\\
+roman = "s"\\
+odia~~= [\\
+\hspace*{2em}\{ text = "\od{ସ}", w = 1.0 \},\\
+\hspace*{2em}\{ text = "\od{ଶ}", w = 0.5 \},\\
+\hspace*{2em}\{ text = "\od{ଷ}", w = 0.4 \},\\
+]
+\end{minipage}
+\end{center}
+
+Raising a weight promotes that character in the candidate ranking. After any change, run
+\texttt{npm run eval} and confirm the accuracy delta against the committed baseline
+before keeping it --- a fix for one word often costs you three others.
+
+\vfill
+\begin{center}
+\small\color{gray}
+Generated from \texttt{docs/romanization-reference.tex} \quad$\cdot$\quad
+compile with \texttt{lualatex} \quad$\cdot$\quad
+font: Oriya Sangam MN
+\end{center}
+
+\end{document}

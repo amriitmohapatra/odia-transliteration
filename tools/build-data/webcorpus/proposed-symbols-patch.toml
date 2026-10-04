@@ -1,0 +1,66 @@
+# Proposed additions to core/rules/symbols.toml, from the web-corpus audit.
+# TRIALLED IN MEMORY ONLY (tools/build-data/webcorpus/fix_trial.ts). Not applied.
+# Run `npm run eval` and compare tools/eval/baseline.json before committing.
+
+# --- D1. ଙ + velar. 669,096 tokens (3.6%); ଙ୍କ alone is the #3 conjunct. ------
+# "taanka" gave ତାନ୍କ; ଙ୍କ was unreachable at any depth.
+[[consonant]]
+roman = "nk"
+odia = [{ text = "ଙ୍କ", w = 1.0 }]
+
+[[consonant]]
+roman = "nkh"
+odia = [{ text = "ଙ୍ଖ", w = 1.0 }]
+
+# merge into the existing "ng" entry rather than duplicating the block
+[[consonant]]
+roman = "ng"
+odia = [{ text = "ଙ୍ଗ", w = 0.95 }]
+
+[[consonant]]
+roman = "ngh"
+odia = [{ text = "ଙ୍ଘ", w = 1.0 }]
+
+# --- D2. ଞ + palatal. 117,928 tokens. ---------------------------------------
+[[consonant]]
+roman = "nch"
+odia = [{ text = "ଞ୍ଚ", w = 1.0 }]
+
+[[consonant]]
+roman = "nchh"
+odia = [{ text = "ଞ୍ଛ", w = 1.0 }]
+
+[[consonant]]
+roman = "nj"
+odia = [{ text = "ଞ୍ଜ", w = 1.0 }]
+
+# --- D3. word-final ଁ. 378,255 tokens: ମୁଁ ପାଇଁ ନାହିଁ all unreachable. ------
+[[sign]]
+roman = "n"
+odia = [{ text = "ଁ", w = 0.9, context = "word_final" }]
+
+# --- D4. word-final ଂ from "ng". ଏବଂ is the #3 word in Odia. ----------------
+[[sign]]
+roman = "ng"
+odia = [{ text = "ଂ", w = 0.9, context = "word_final" }]
+
+# --- D5. ଯ from "j" word-initially. 463,912 tokens of word-initial ଯ, and the
+# sheet itself says ଯ "sounds like ja". "je" could not reach ଯେ (#5 word).
+[[consonant]]
+roman = "j"
+odia = [{ text = "ଯ", w = 0.6, context = "word_initial" }]
+
+# --- D6. ଳ is 33% of all l, and 59% of WORD-FINAL l. w=0.5 flat is too low. --
+[[consonant]]
+roman = "l"
+odia = [
+  { text = "ଳ", w = 0.9, context = "intervocalic" },
+  { text = "ଳ", w = 0.9, context = "word_final" },
+  { text = "ଳ", w = 0.02, context = "word_initial" },
+]
+
+# --- D7. roman "v" transcribes ବ, not ୱ. ବ 3.65M tokens vs ୱ 157k. ----------
+# replaces the existing v entry's { ୱ w=0.9 } / { ବ w=0.7 } ordering
+[[consonant]]
+roman = "v"
+odia = [{ text = "ବ", w = 1.0 }]

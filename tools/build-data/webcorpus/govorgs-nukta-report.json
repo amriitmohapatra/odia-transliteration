@@ -1,0 +1,388 @@
+{
+  "corpus": "Odisha government + institutional web pages (this lane)",
+  "types": 13767,
+  "tokens": 71105,
+  "nukta_inventory_by_codepoint": {
+    "U+0B21 U+0B3C (ଡ଼) tokens": 1454,
+    "U+0B22 U+0B3C (ଢ଼) tokens": 43,
+    "precomposed U+0B5C seen": 0,
+    "precomposed U+0B5D seen": 0,
+    "note": "counts taken after NFC; see precomposed-probe.json for what the servers actually put on the wire"
+  },
+  "corrupt_nukta": {
+    "types": 65,
+    "tokens": 105,
+    "by_base": {
+      "U+0B2F ଯ": 40,
+      "U+0B1A ଚ": 27,
+      "U+0B1C ଜ": 13,
+      "U+0B30 ର": 6,
+      "U+0B3E ା": 4,
+      "U+0B13 ଓ": 3,
+      "U+0B26 ଦ": 3,
+      "U+0B4B ୋ": 2,
+      "U+0B41 ୁ": 2,
+      "U+0B2B ଫ": 1,
+      "U+0B47 େ": 1,
+      "U+0B2C ବ": 1
+    },
+    "comment": "legacy ISCII/legacy-font conversion debris; stripped before any rate below is computed"
+  },
+  "word_initial_nukta": {
+    "types": 13,
+    "tokens": 25,
+    "word_initial_bare_tokens": 765,
+    "illegal_share_of_word_initial": 0.0316,
+    "examples": [
+      [
+        "ଡ଼ି",
+        6,
+        "ଡି",
+        41
+      ],
+      [
+        "ଡ଼",
+        4,
+        "ଡ",
+        13
+      ],
+      [
+        "ଡ଼ିଗ୍ରୀ",
+        3,
+        "ଡିଗ୍ରୀ",
+        25
+      ],
+      [
+        "ଡ଼ଗୁଡୁ",
+        2,
+        "ଡଗୁଡୁ",
+        0
+      ],
+      [
+        "ଡ଼ଙ୍ଗାବୁଡି",
+        2,
+        "ଡଙ୍ଗାବୁଡି",
+        0
+      ],
+      [
+        "ଡ଼ିସପ୍ୟାଚ",
+        1,
+        "ଡିସପ୍ୟାଚ",
+        0
+      ],
+      [
+        "ଢ଼େଙ୍କାନାଳ",
+        1,
+        "ଢେଙ୍କାନାଳ",
+        62
+      ],
+      [
+        "ଡ଼ଃ",
+        1,
+        "ଡଃ",
+        8
+      ],
+      [
+        "ଡ଼ିଓ",
+        1,
+        "ଡିଓ",
+        1
+      ],
+      [
+        "ଡ଼ିଜାଇନ",
+        1,
+        "ଡିଜାଇନ",
+        0
+      ],
+      [
+        "ଡ଼ଙ୍ଗାଘାଟ",
+        1,
+        "ଡଙ୍ଗାଘାଟ",
+        1
+      ],
+      [
+        "ଡ଼ାଇମଣ୍ଡ",
+        1,
+        "ଡାଇମଣ୍ଡ",
+        0
+      ]
+    ]
+  },
+  "minimal_pairs": {
+    "all_pairs": 117,
+    "naive_drop_rate_token_weighted": 0.498,
+    "naive_comment": "CONTAMINATED - mixes drops and spurious adds",
+    "orthographically_legal_pairs": 110,
+    "native_words_nukta_dominant": {
+      "pair_types": 32,
+      "nukta_tokens": 860,
+      "bare_tokens": 460,
+      "DROP_RATE": 0.3485,
+      "comment": "THE number to compare against Aksharantar's ~63%"
+    },
+    "loanwords_bare_dominant": {
+      "pair_types": 78,
+      "bare_tokens": 488,
+      "spurious_nukta_tokens": 231,
+      "SPURIOUS_ADD_RATE": 0.6787
+    }
+  },
+  "top40_native_nukta_words": [
+    {
+      "nukta": "ଓଡ଼ିଶା",
+      "n": 348,
+      "bare": "ଓଡିଶା",
+      "n_bare": 269,
+      "drop_rate": 0.436,
+      "codepoints": "U+0B13 U+0B21 U+0B3C U+0B3F U+0B36 U+0B3E"
+    },
+    {
+      "nukta": "ଓଡ଼ିଆ",
+      "n": 176,
+      "bare": "ଓଡିଆ",
+      "n_bare": 59,
+      "drop_rate": 0.2511,
+      "codepoints": "U+0B13 U+0B21 U+0B3C U+0B3F U+0B06"
+    },
+    {
+      "nukta": "କେନ୍ଦ୍ରାପଡ଼ା",
+      "n": 66,
+      "bare": "କେନ୍ଦ୍ରାପଡା",
+      "n_bare": 12,
+      "drop_rate": 0.1538,
+      "codepoints": "U+0B15 U+0B47 U+0B28 U+0B4D U+0B26 U+0B4D U+0B30 U+0B3E U+0B2A U+0B21 U+0B3C U+0B3E"
+    },
+    {
+      "nukta": "କ୍ରୀଡ଼ା",
+      "n": 40,
+      "bare": "କ୍ରୀଡା",
+      "n_bare": 20,
+      "drop_rate": 0.3333,
+      "codepoints": "U+0B15 U+0B4D U+0B30 U+0B40 U+0B21 U+0B3C U+0B3E"
+    },
+    {
+      "nukta": "ବରଗଡ଼",
+      "n": 40,
+      "bare": "ବରଗଡ",
+      "n_bare": 12,
+      "drop_rate": 0.2308,
+      "codepoints": "U+0B2C U+0B30 U+0B17 U+0B21 U+0B3C"
+    },
+    {
+      "nukta": "ଓଡ଼ିଶାରେ",
+      "n": 23,
+      "bare": "ଓଡିଶାରେ",
+      "n_bare": 16,
+      "drop_rate": 0.4103,
+      "codepoints": "U+0B13 U+0B21 U+0B3C U+0B3F U+0B36 U+0B3E U+0B30 U+0B47"
+    },
+    {
+      "nukta": "ଗୁଡ଼ିକର",
+      "n": 24,
+      "bare": "ଗୁଡିକର",
+      "n_bare": 11,
+      "drop_rate": 0.3143,
+      "codepoints": "U+0B17 U+0B41 U+0B21 U+0B3C U+0B3F U+0B15 U+0B30"
+    },
+    {
+      "nukta": "ଚୂଡ଼ାନ୍ତ",
+      "n": 16,
+      "bare": "ଚୂଡାନ୍ତ",
+      "n_bare": 5,
+      "drop_rate": 0.2381,
+      "codepoints": "U+0B1A U+0B42 U+0B21 U+0B3C U+0B3E U+0B28 U+0B4D U+0B24"
+    },
+    {
+      "nukta": "ବଡ଼",
+      "n": 12,
+      "bare": "ବଡ",
+      "n_bare": 9,
+      "drop_rate": 0.4286,
+      "codepoints": "U+0B2C U+0B21 U+0B3C"
+    },
+    {
+      "nukta": "ସୁନ୍ଦରଗଡ଼",
+      "n": 15,
+      "bare": "ସୁନ୍ଦରଗଡ",
+      "n_bare": 5,
+      "drop_rate": 0.25,
+      "codepoints": "U+0B38 U+0B41 U+0B28 U+0B4D U+0B26 U+0B30 U+0B17 U+0B21 U+0B3C"
+    },
+    {
+      "nukta": "ନୟାଗଡ଼",
+      "n": 12,
+      "bare": "ନୟାଗଡ",
+      "n_bare": 7,
+      "drop_rate": 0.3684,
+      "codepoints": "U+0B28 U+0B5F U+0B3E U+0B17 U+0B21 U+0B3C"
+    },
+    {
+      "nukta": "ଗାଡ଼ି",
+      "n": 8,
+      "bare": "ଗାଡି",
+      "n_bare": 4,
+      "drop_rate": 0.3333,
+      "codepoints": "U+0B17 U+0B3E U+0B21 U+0B3C U+0B3F"
+    },
+    {
+      "nukta": "ଏଗୁଡ଼ିକ",
+      "n": 9,
+      "bare": "ଏଗୁଡିକ",
+      "n_bare": 1,
+      "drop_rate": 0.1,
+      "codepoints": "U+0B0F U+0B17 U+0B41 U+0B21 U+0B3C U+0B3F U+0B15"
+    },
+    {
+      "nukta": "ଓଡ଼ିଆରେ",
+      "n": 7,
+      "bare": "ଓଡିଆରେ",
+      "n_bare": 3,
+      "drop_rate": 0.3,
+      "codepoints": "U+0B13 U+0B21 U+0B3C U+0B3F U+0B06 U+0B30 U+0B47"
+    },
+    {
+      "nukta": "ଭଡ଼ାରେ",
+      "n": 7,
+      "bare": "ଭଡାରେ",
+      "n_bare": 2,
+      "drop_rate": 0.2222,
+      "codepoints": "U+0B2D U+0B21 U+0B3C U+0B3E U+0B30 U+0B47"
+    },
+    {
+      "nukta": "ଯୋଡ଼ା",
+      "n": 6,
+      "bare": "ଯୋଡା",
+      "n_bare": 2,
+      "drop_rate": 0.25,
+      "codepoints": "U+0B2F U+0B4B U+0B21 U+0B3C U+0B3E"
+    },
+    {
+      "nukta": "ଜୁନାଗଡ଼",
+      "n": 5,
+      "bare": "ଜୁନାଗଡ",
+      "n_bare": 2,
+      "drop_rate": 0.2857,
+      "codepoints": "U+0B1C U+0B41 U+0B28 U+0B3E U+0B17 U+0B21 U+0B3C"
+    },
+    {
+      "nukta": "ଷଡ଼ଙ୍ଗୀ",
+      "n": 4,
+      "bare": "ଷଡଙ୍ଗୀ",
+      "n_bare": 3,
+      "drop_rate": 0.4286,
+      "codepoints": "U+0B37 U+0B21 U+0B3C U+0B19 U+0B4D U+0B17 U+0B40"
+    },
+    {
+      "nukta": "ଗୁଡ଼ିକରେ",
+      "n": 5,
+      "bare": "ଗୁଡିକରେ",
+      "n_bare": 1,
+      "drop_rate": 0.1667,
+      "codepoints": "U+0B17 U+0B41 U+0B21 U+0B3C U+0B3F U+0B15 U+0B30 U+0B47"
+    },
+    {
+      "nukta": "ସୁଦୃଢ଼",
+      "n": 4,
+      "bare": "ସୁଦୃଢ",
+      "n_bare": 2,
+      "drop_rate": 0.3333,
+      "codepoints": "U+0B38 U+0B41 U+0B26 U+0B43 U+0B22 U+0B3C"
+    },
+    {
+      "nukta": "କାର୍ଯ୍ୟଗୁଡ଼ିକ",
+      "n": 4,
+      "bare": "କାର୍ଯ୍ୟଗୁଡିକ",
+      "n_bare": 2,
+      "drop_rate": 0.3333,
+      "codepoints": "U+0B15 U+0B3E U+0B30 U+0B4D U+0B2F U+0B4D U+0B5F U+0B17 U+0B41 U+0B21 U+0B3C U+0B3F U+0B15"
+    },
+    {
+      "nukta": "କଲେଜଗୁଡ଼ିକର",
+      "n": 4,
+      "bare": "କଲେଜଗୁଡିକର",
+      "n_bare": 1,
+      "drop_rate": 0.2,
+      "codepoints": "U+0B15 U+0B32 U+0B47 U+0B1C U+0B17 U+0B41 U+0B21 U+0B3C U+0B3F U+0B15 U+0B30"
+    },
+    {
+      "nukta": "ଯୋଡ଼ିବା",
+      "n": 3,
+      "bare": "ଯୋଡିବା",
+      "n_bare": 2,
+      "drop_rate": 0.4,
+      "codepoints": "U+0B2F U+0B4B U+0B21 U+0B3C U+0B3F U+0B2C U+0B3E"
+    },
+    {
+      "nukta": "ସେଗୁଡ଼ିକ",
+      "n": 3,
+      "bare": "ସେଗୁଡିକ",
+      "n_bare": 2,
+      "drop_rate": 0.4,
+      "codepoints": "U+0B38 U+0B47 U+0B17 U+0B41 U+0B21 U+0B3C U+0B3F U+0B15"
+    },
+    {
+      "nukta": "ରାୟଗଡ଼",
+      "n": 3,
+      "bare": "ରାୟଗଡ",
+      "n_bare": 1,
+      "drop_rate": 0.25,
+      "codepoints": "U+0B30 U+0B3E U+0B5F U+0B17 U+0B21 U+0B3C"
+    },
+    {
+      "nukta": "କାର୍ଯ୍ୟକ୍ରମଗୁଡ଼ିକର",
+      "n": 3,
+      "bare": "କାର୍ଯ୍ୟକ୍ରମଗୁଡିକର",
+      "n_bare": 1,
+      "drop_rate": 0.25,
+      "codepoints": "U+0B15 U+0B3E U+0B30 U+0B4D U+0B2F U+0B4D U+0B5F U+0B15 U+0B4D U+0B30 U+0B2E U+0B17 U+0B41 U+0B21 U+0B3C U+0B3F U+0B15 U+0B30"
+    },
+    {
+      "nukta": "ଶେରଗଡ଼",
+      "n": 3,
+      "bare": "ଶେରଗଡ",
+      "n_bare": 1,
+      "drop_rate": 0.25,
+      "codepoints": "U+0B36 U+0B47 U+0B30 U+0B17 U+0B21 U+0B3C"
+    },
+    {
+      "nukta": "ତିହିଡ଼ି",
+      "n": 2,
+      "bare": "ତିହିଡି",
+      "n_bare": 1,
+      "drop_rate": 0.3333,
+      "codepoints": "U+0B24 U+0B3F U+0B39 U+0B3F U+0B21 U+0B3C U+0B3F"
+    },
+    {
+      "nukta": "ପିଢ଼ିର",
+      "n": 2,
+      "bare": "ପିଢିର",
+      "n_bare": 1,
+      "drop_rate": 0.3333,
+      "codepoints": "U+0B2A U+0B3F U+0B22 U+0B3C U+0B3F U+0B30"
+    },
+    {
+      "nukta": "ପିଢ଼ି",
+      "n": 2,
+      "bare": "ପିଢି",
+      "n_bare": 1,
+      "drop_rate": 0.3333,
+      "codepoints": "U+0B2A U+0B3F U+0B22 U+0B3C U+0B3F"
+    },
+    {
+      "nukta": "କଣ୍ଟାପଡ଼ା",
+      "n": 2,
+      "bare": "କଣ୍ଟାପଡା",
+      "n_bare": 1,
+      "drop_rate": 0.3333,
+      "codepoints": "U+0B15 U+0B23 U+0B4D U+0B1F U+0B3E U+0B2A U+0B21 U+0B3C U+0B3E"
+    },
+    {
+      "nukta": "କେତେଗୁଡ଼ିଏ",
+      "n": 2,
+      "bare": "କେତେଗୁଡିଏ",
+      "n_bare": 1,
+      "drop_rate": 0.3333,
+      "codepoints": "U+0B15 U+0B47 U+0B24 U+0B47 U+0B17 U+0B41 U+0B21 U+0B3C U+0B3F U+0B0F"
+    }
+  ]
+}

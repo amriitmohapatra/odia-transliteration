@@ -1,0 +1,296 @@
+[
+ {
+  "handle": "Naveen_Odisha",
+  "who": "Naveen Patnaik (ex-CM, BJD)",
+  "status": 200,
+  "note": "ok",
+  "odia_posts": 4
+ },
+ {
+  "handle": "MohanMOdisha",
+  "who": "Mohan Charan Majhi (CM)",
+  "status": 200,
+  "note": "ok",
+  "odia_posts": 4
+ },
+ {
+  "handle": "dpradhanbjp",
+  "who": "Dharmendra Pradhan (Union Minister)",
+  "status": 200,
+  "note": "ok",
+  "odia_posts": 4
+ },
+ {
+  "handle": "PandaJay",
+  "who": "Baijayant Jay Panda (BJP)",
+  "status": 200,
+  "note": "ok",
+  "odia_posts": 2
+ },
+ {
+  "handle": "pinakimisra",
+  "who": "Pinaki Misra (ex-MP)",
+  "status": 200,
+  "note": "ok",
+  "odia_posts": 0
+ },
+ {
+  "handle": "VKPandian_",
+  "who": "V K Pandian",
+  "status": 404,
+  "note": "HTTPError 404 Not Found",
+  "odia_posts": 0
+ },
+ {
+  "handle": "SnehanginiC",
+  "who": "Snehangini Chhuria (Minister)",
+  "status": 404,
+  "note": "HTTPError 404 Not Found",
+  "odia_posts": 0
+ },
+ {
+  "handle": "KVSinghdeo",
+  "who": "K V Singh Deo (Dy CM)",
+  "status": 200,
+  "note": "ok",
+  "odia_posts": 0
+ },
+ {
+  "handle": "PravatiParida",
+  "who": "Pravati Parida (Dy CM)",
+  "status": 200,
+  "note": "ok",
+  "odia_posts": 0
+ },
+ {
+  "handle": "SureshPujari_",
+  "who": "Suresh Pujari (Minister)",
+  "status": 404,
+  "note": "HTTPError 404 Not Found",
+  "odia_posts": 0
+ },
+ {
+  "handle": "BhartruhariMj",
+  "who": "Bhartruhari Mahtab (MP)",
+  "status": 404,
+  "note": "HTTPError 404 Not Found",
+  "odia_posts": 0
+ },
+ {
+  "handle": "sasmitpatra",
+  "who": "Sasmit Patra (MP, BJD)",
+  "status": 200,
+  "note": "ok",
+  "odia_posts": 2
+ },
+ {
+  "handle": "achyuta_samanta",
+  "who": "Achyuta Samanta (MP)",
+  "status": 200,
+  "note": "ok",
+  "odia_posts": 0
+ },
+ {
+  "handle": "Sarangi_Odisha",
+  "who": "Aparajita Sarangi (MP)",
+  "status": 404,
+  "note": "HTTPError 404 Not Found",
+  "odia_posts": 0
+ },
+ {
+  "handle": "BJPMukeshMahali",
+  "who": "Mukesh Mahaling (Health Minister)",
+  "status": 404,
+  "note": "HTTPError 404 Not Found",
+  "odia_posts": 0
+ },
+ {
+  "handle": "krushnachandra_",
+  "who": "Krushna Chandra Patra",
+  "status": 200,
+  "note": "ok",
+  "odia_posts": 0
+ },
+ {
+  "handle": "CMO_Odisha",
+  "who": "Odisha CMO",
+  "status": 200,
+  "note": "ok",
+  "odia_posts": 4
+ },
+ {
+  "handle": "bjd_odisha",
+  "who": "Biju Janata Dal",
+  "status": 200,
+  "note": "ok",
+  "odia_posts": 4
+ },
+ {
+  "handle": "BJP4Odisha",
+  "who": "BJP Odisha",
+  "status": 200,
+  "note": "ok",
+  "odia_posts": 5
+ },
+ {
+  "handle": "INCOdisha",
+  "who": "Congress Odisha",
+  "status": 200,
+  "note": "ok",
+  "odia_posts": 3
+ },
+ {
+  "handle": "IPR_Odisha",
+  "who": "I&PR Dept, Govt of Odisha",
+  "status": 200,
+  "note": "ok",
+  "odia_posts": 3
+ },
+ {
+  "handle": "HFWOdisha",
+  "who": "Health & Family Welfare Odisha",
+  "status": 200,
+  "note": "ok",
+  "odia_posts": 5
+ },
+ {
+  "handle": "SRC_Odisha",
+  "who": "Special Relief Commissioner Odisha",
+  "status": 200,
+  "note": "ok",
+  "odia_posts": 1
+ },
+ {
+  "handle": "odisha_police",
+  "who": "Odisha Police",
+  "status": 200,
+  "note": "ok",
+  "odia_posts": 3
+ },
+ {
+  "handle": "Commissionerate",
+  "who": "Commissionerate Police BBSR",
+  "status": 200,
+  "note": "ok",
+  "odia_posts": 0
+ },
+ {
+  "handle": "SchoolEduOdisha",
+  "who": "School & Mass Education Odisha",
+  "status": 200,
+  "note": "ok",
+  "odia_posts": 0
+ },
+ {
+  "handle": "AgriOdisha",
+  "who": "Agriculture Dept Odisha",
+  "status": 404,
+  "note": "HTTPError 404 Not Found",
+  "odia_posts": 0
+ },
+ {
+  "handle": "OdishaTourism",
+  "who": "Odisha Tourism",
+  "status": 200,
+  "note": "ok",
+  "odia_posts": 0
+ },
+ {
+  "handle": "PanchayatOdisha",
+  "who": "Panchayati Raj Odisha",
+  "status": 404,
+  "note": "HTTPError 404 Not Found",
+  "odia_posts": 0
+ },
+ {
+  "handle": "WCDOdisha",
+  "who": "Women & Child Development Odisha",
+  "status": 200,
+  "note": "ok",
+  "odia_posts": 5
+ },
+ {
+  "handle": "SSEPD_Odisha",
+  "who": "SSEPD Odisha",
+  "status": 404,
+  "note": "HTTPError 404 Not Found",
+  "odia_posts": 0
+ },
+ {
+  "handle": "EnergyOdisha",
+  "who": "Energy Dept Odisha",
+  "status": 200,
+  "note": "ok",
+  "odia_posts": 2
+ },
+ {
+  "handle": "otvnews",
+  "who": "OTV",
+  "status": 200,
+  "note": "ok",
+  "odia_posts": 0
+ },
+ {
+  "handle": "KanakNews",
+  "who": "Kanak News",
+  "status": 200,
+  "note": "ok",
+  "odia_posts": 0
+ },
+ {
+  "handle": "NandighoshaTV",
+  "who": "Nandighosha TV",
+  "status": 200,
+  "note": "ok",
+  "odia_posts": 3
+ },
+ {
+  "handle": "news18odia",
+  "who": "News18 Odia",
+  "status": 200,
+  "note": "ok",
+  "odia_posts": 5
+ },
+ {
+  "handle": "Sambad_Odisha",
+  "who": "Sambad",
+  "status": 200,
+  "note": "ok",
+  "odia_posts": 5
+ },
+ {
+  "handle": "dharitri_odisha",
+  "who": "Dharitri",
+  "status": 404,
+  "note": "HTTPError 404 Not Found",
+  "odia_posts": 0
+ },
+ {
+  "handle": "ZeeOdisha",
+  "who": "Zee Odisha",
+  "status": 200,
+  "note": "ok",
+  "odia_posts": 5
+ },
+ {
+  "handle": "argusnews_in",
+  "who": "Argus News",
+  "status": 200,
+  "note": "ok",
+  "odia_posts": 0
+ },
+ {
+  "handle": "odishareporter",
+  "who": "Odisha Reporter",
+  "status": 200,
+  "note": "ok",
+  "odia_posts": 6
+ },
+ {
+  "handle": "nnsodia",
+  "who": "NNS Odia TV",
+  "status": 200,
+  "note": "ok",
+  "odia_posts": 5
+ }
+]

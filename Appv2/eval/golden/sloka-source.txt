@@ -1,0 +1,98 @@
+# Sanskritized Odia, as actually published. Appv2/eval/sloka.ts derives the
+# roman from these lines by inverting the romanization scheme, feeds it back,
+# and checks whether the original returns.
+#
+# KEEP IT VERBATIM. Do not tidy the spelling, do not normalise ଳ to ଲ or ୱ to
+# ବ, do not add or remove an anusvara. The whole value of this file is that it
+# records what is really written; an "improved" line measures nothing.
+# Same discipline as core/test/golden/everyday-source.txt.
+#
+# ---------------------------------------------------------------------------
+# Provenance and licence
+#
+# Everything below the user's own line is Sanskrit verse in Odia script, taken
+# from Odia Wikisource via the corpus already harvested into
+# tools/build-data/webcorpus/raw-lit.jsonl (sweep dated 2026-07-27). Each block
+# carries the page URL it came from.
+#
+# The underlying texts — the Bhāgavata Purāṇa, Jayadeva's Gīta Govinda, the
+# Harivaṃśa — are ancient and in the public domain. The Wikisource
+# TRANSCRIPTIONS are CC BY-SA 4.0, which core/data/PROVENANCE-webcorpus.md
+# correctly flags as outside the MIT / CC0 / CC-BY set CLAUDE.md allows for
+# SHIPPED artefacts. Two things keep that distinction intact here:
+#
+#   1. This file is a TEST FIXTURE. It is read only by Appv2/eval/sloka.ts. It
+#      is not bundled into the app, not converted into lexicon rows, and does
+#      not reach core/data/. The vite globs in Appv2/src/engine.ts reference
+#      rules/ and data/ only.
+#   2. Attribution is per block, by URL, which is what BY asks for.
+#
+# If that trade is not wanted, delete every block except the first — the
+# harness handles a short file and says so rather than reporting a percentage
+# it cannot support.
+#
+# Every line was checked at selection time: NFC-canonical, no precomposed
+# U+0B5C/U+0B5D, and no `ଣ୍ତ` (the giveaway OCR error for ଣ୍ଡ in the scanned
+# 1921 Gīta Govinda). Lines that failed any of those were dropped.
+# ---------------------------------------------------------------------------
+
+
+# supplied by the user, 2026-07-29 — the line that prompted this whole feature
+ଧ୍ୟାନ ବଳାତିତଂ ନାନ୍ୟଂ ବଳଂ ।
+
+
+# ଶ୍ରୀମଦ୍ଭାଗବତ — maṅgalācaraṇa and stuti
+# https://or.wikisource.org/wiki/ଓଡ଼ିଆ_ଭାଗବତ
+ଜନ୍ମାଦ୍ୟସ୍ୟ ଯତୋଽନ୍ୱୟାଦିତରତଶ୍ଚାର୍ଥେଷ୍ୱଭିଜ୍ଞଃ ସ୍ୱରାଟ୍
+ତେଜୋ ବାରିମୃଦାଂ ଯଥା ବିନିମୟୋ ଯତ୍ର ତ୍ରିସର୍ଗୋଽମୃଷା
+ପିବତ ଭାଗବତଂ ରସମାଳୟଂ ମୁହୁରହୋ ରସିକା ଭୁବି ଭାବୁକାଃ
+ସର୍ବାଣି ତୀର୍ଥାନି ବସନ୍ତି ତତ୍ର ଯତ୍ରାଚ୍ୟୂତୋଦାରକଥା ପ୍ରସଙ୍ଗଃ ।
+ଆଦୌ ଚାନ୍ତେ ଚ ମଧ୍ୟେ ଚ ହରିଃ ସର୍ବତ୍ର ଗୀୟତେ ।।
+
+
+# ଶ୍ରୀମଦ୍ଭାଗବତ — chapter colophons
+# https://or.wikisource.org/wiki/ଓଡ଼ିଆ_ଭାଗବତ
+# Dense in exactly what broke before: ଽ, word-final ଂ and ଃ, ଡ଼, ୱ, ଯ/ୟ.
+ପ୍ରଥମସ୍କନ୍ଧେ ଦୌଣିନିଗ୍ରହୋ ନାମ ସପ୍ତମୋଽଧ୍ୟାୟଃ ॥
+ପ୍ରଥମସ୍କନ୍ଧେ ନୈମିଷୀୟୋପାଖ୍ୟାନେ ଶ୍ରୀକୃଷ୍ଣ ଦ୍ୱାରକା ଗମନଂ ନାମ ଦଶମୋଽଧ୍ୟାୟଃ ॥
+ଦ୍ୱିତୀୟସ୍କନ୍ଧେ ବ୍ରହ୍ମାନାରଦସମ୍ବାଦେ ସପ୍ତମୋଽଧ୍ୟାୟଃ ॥
+ଦ୍ୱିତୀୟସ୍କନ୍ଧେ ଅଷ୍ଟାଦଶସାହସ୍ର୍ୟାଂ ସଂହିତାୟାଂ ପୁରୁଷସଂସ୍ଥାନୁବର୍ଣ୍ଣନଂ ନାମ ଦଶମୋଽଧ୍ୟାୟଃ ॥
+ତୃତୀୟସ୍କନ୍ଧେ କାପିଳେୟେ ତତ୍ତ୍ବସମାମ୍ନାୟେ ଷଡ୍ବିଂଶୋଽଧ୍ୟାୟଃ ।
+ସଂହିତାୟାଂ ଚତୁର୍ଥସ୍କନ୍ଧେ ପୃଥୁ ଚରିତେ ନିଷାଦୋତ୍ପତ୍ତିର୍ନାମ ଷୋଡଶୋଽଧ୍ୟାୟଃ ॥
+ପଞ୍ଚମସ୍କନ୍ଧେ ଜ୍ୟୋତିଶ୍ଚକ୍ରବର୍ଣ୍ଣନେ ଦ୍ୱାବିଂଶୋଽଧ୍ୟାୟଃ ॥
+ଷଷ୍ଠସ୍କନ୍ଧେ ନାରାୟଣବର୍ମ କଥନଂ ନାମ ଅଷ୍ଟମୋଽଧ୍ୟାୟଃ ॥
+ସପ୍ତମସ୍କନ୍ଧେ ପ୍ରହ୍ଲାଦାନୁଚରିତେ ଦୈତ୍ୟପୁତ୍ରାନୁଶାସନଂ ନାମ ସପ୍ତମୋଽଧ୍ୟାୟଃ ॥
+ଅଷ୍ଟମସ୍କନ୍ଧେ ଗଜେନ୍ଦ୍ର ମୋକ୍ଷଣଂ ନାମ ଚତୁର୍ଥୋଽଧ୍ୟାୟଃ ॥
+ଦଶମସ୍କନ୍ଧେ ପୂର୍ବାର୍ଦ୍ଧେ ରାସକ୍ରୀଡ଼ାୟାଂ ଗୋପୀଗୀତଂ ନାମ ଦ୍ୱାତ୍ରିଂଶୋଽଧ୍ୟାୟଃ ॥
+ଦଶମସ୍କନ୍ଧେ ପୂର୍ବାର୍ଦ୍ଧେ ଶ୍ରୀକୃଷ୍ଣ ବିଜୟେ ସୁଦର୍ଶନ ମୋକ୍ଷଣଂ ନାମ ପଞ୍ଚତ୍ରିଂଶୋଽଧ୍ୟାୟଃ ॥
+ଇତି ଶ୍ରୀମଦ୍ଭାଗବତେ ମହାପୁରାଣେ ପାରମହଂସ୍ୟାଂ ସଂହିତାୟାଂ ଏକାଦଶସ୍କନ୍ଧେ ଭଗବଦ୍ ଉଦ୍ଧବ ସମ୍ବାଦେ ଏକାଦଶୋଦ୍ଧଧ୍ୟାୟଃ ॥
+
+
+# ଗୀତଗୋବିନ୍ଦ — Jayadeva
+# https://or.wikisource.org/wiki/ପୃଷ୍ଠା:Gita_Gobinda_1921.pdf
+# Scanned 1921 edition, so a few readings are OCR-soft. Lines carrying the
+# unmistakable ଣ୍ତ-for-ଣ୍ଡ error were dropped rather than silently corrected.
+ମ୍ଲେଚ୍ଛାନ୍ ମୂର୍ଚ୍ଛୟତେ ଦଶାକୃତି କୃତେ କୃଷ୍ଣାୟ ତୁଭ୍ୟଂ ନମଃ
+ଶୃଙ୍ଗାରଃସଖି ମୂର୍ତ୍ତିମାନିବ ମଧୌ ମୁଗ୍ଧୋ ହରିଃ କ୍ରୀଡ଼ତି ।
+ସ୍ୱଚ୍ଛନ୍ଦଂବ୍ରଜସୁନ୍ଦରୀଭିରଭିତଃ ପ୍ରତ୍ୟଙ୍ଗ ମାଲିଙ୍ଗିତଃ ।
+ନାୟାତଃ ସଖି ନିର୍ଦ୍ଦୟୋ ଯଦି ଶଠସ୍ତ୍ୱଂ ଦୂତି କିଂ ଦୂୟସେ ।
+ବାଚଃ ପଲ୍ଲବୟତ୍ତୁମାପତିଧରଃ ସନ୍ଦର୍ଭଶୁଦ୍ଧିଂ ଗିରାଂ
+ପ୍ରାତର୍ନୀଳନିଚୋଳମଚ୍ୟୁତମୁରଃ ସମ୍ବୀତପୀତାଂଶୁକଂ
+ଦାନମ୍ରୈର୍ମୁକୁଟେନ୍ଦ୍ରନୀଳମଣିଭିଃ ସନ୍ଦର୍ଶିତେନ୍ଦୀବରଂ ।
+ଗୋବିନ୍ଦସ୍ୟ ମନୋରଥେନ ଚ ସମଂ ପ୍ରାପ୍ତଂ ତମଃସାନ୍ଦ୍ରତା ।।
+କୁବଳୟଦଳଶ୍ରେଣୀ କଣ୍ଠେ ନ ସା ଗରଳଦ୍ୟୁତିଃ ।
+ଗୋପୀନାଂ ନିଭୃତଂ ନିରୀକ୍ଷ୍ୟ ଗମିତାକାଂକ୍ଷଶ୍ଚିରଂ ଚିନ୍ତୟନ୍
+
+
+# ହରିବଂଶ — invocation
+# https://or.wikisource.org/wiki/ହରିବଂଶ
+ନାରାୟଣଂ ନମସ୍କୃତ୍ୟଂ ନରଂ ଚୈବ ନରୋତ୍ତମଂ।
+ବ୍ୟାସଂ ବଶିଷ୍ଠନପ୍ତାରଂ ଶକ୍ତେଃ ପୌତ୍ରମକଳ୍ମଷଂ
+ଯସ୍ୟାନ୍ତଂ ନ ବିଦୁଃ ସୁରାସୁରଗଣାଃ ଦେବାୟ ତସ୍ମୈ ନମଃ ।।
+
+
+# ---------------------------------------------------------------------------
+# Room for more. Anything you paste below is treated the same way; blank lines
+# and #-comments are skipped. Your own writing is the most valuable material
+# here, because it is the register the app actually has to serve.
+# ---------------------------------------------------------------------------

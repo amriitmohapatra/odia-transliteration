@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Odia">
+<meta name="theme-color" content="#4b0082">
+<link rel="apple-touch-icon" href="data:image/png;base64,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">
+<link rel="icon" type="image/png" href="data:image/png;base64,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">
+<title>Odia Phonetic Typing</title>
+<style>
+  :root {
+    --bg: #ffffff; --fg: #1a1a1a; --muted: #666; --line: #ddd;
+    --accent: #4b0082; --panel: #f7f7f9; --ok: #008c5a;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#16161a; --fg:#eceff4; --muted:#9aa0aa; --line:#33343b;
+            --accent:#c9a3ff; --panel:#1f1f26; --ok:#4ade9b; }
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0; background: var(--bg); color: var(--fg);
+    font: 16px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+    padding: env(safe-area-inset-top) env(safe-area-inset-right)
+             env(safe-area-inset-bottom) env(safe-area-inset-left);
+  }
+  .wrap { max-width: 720px; margin: 0 auto; padding: 16px 16px 48px; }
+  h1 { font-size: 1.25rem; margin: 8px 0 2px; color: var(--accent); }
+  .sub { color: var(--muted); font-size: .875rem; margin: 0 0 16px; }
+
+  .odia {
+    font-family: "Noto Sans Oriya", "Oriya Sangam MN", "Kalinga", "Oriya MN", sans-serif;
+    font-size: 1.35em; line-height: 1.85;
+  }
+
+  label { display: block; font-size: .8rem; color: var(--muted);
+          text-transform: uppercase; letter-spacing: .05em; margin: 16px 0 6px; }
+
+  textarea {
+    width: 100%; min-height: 110px; padding: 12px; border: 1px solid var(--line);
+    border-radius: 10px; background: var(--bg); color: var(--fg);
+    font-size: 16px; /* < 16px makes iOS Safari zoom on focus */
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace; resize: vertical;
+  }
+  textarea:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+
+  #out {
+    min-height: 110px; padding: 12px; border: 1px solid var(--line);
+    border-radius: 10px; background: var(--panel); white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+  #out .w { cursor: pointer; border-radius: 4px; padding: 0 1px; }
+  #out .w:active, #out .w.sel { background: var(--accent); color: var(--bg); }
+  #out .amb { border-bottom: 2px dotted var(--accent); }
+
+  .row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-top: 14px; }
+  button {
+    min-height: 44px; padding: 0 18px; font-size: 16px; border-radius: 10px;
+    border: 1px solid var(--line); background: var(--panel); color: var(--fg);
+    cursor: pointer; font-weight: 500;
+  }
+  button.primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+  button:active { opacity: .75; }
+  .toggle { display: inline-flex; align-items: center; gap: 7px;
+            min-height: 44px; font-size: .9rem; color: var(--muted); cursor: pointer; }
+  .toggle input { width: 20px; height: 20px; accent-color: var(--accent); }
+
+  #alts { display: none; gap: 8px; flex-wrap: wrap; margin-top: 12px;
+          padding: 12px; background: var(--panel); border-radius: 10px;
+          border: 1px solid var(--line); }
+  #alts.on { display: flex; }
+  #alts button { min-width: 56px; display: inline-flex; align-items: center; gap: 7px; }
+  #alts .num {
+    font-family: ui-monospace, Menlo, monospace; font-size: .72rem;
+    color: var(--muted); border: 1px solid var(--line); border-radius: 4px;
+    padding: 0 4px; line-height: 1.5;
+  }
+  #alts button.primary .num { color: #fff; border-color: rgba(255,255,255,.5); }
+  #alts button.verbatim {
+    font-family: ui-monospace, Menlo, monospace; font-size: .9rem;
+    opacity: .75; border-style: dashed;
+  }
+
+  #toast { position: fixed; left: 50%; transform: translateX(-50%);
+           bottom: calc(24px + env(safe-area-inset-bottom));
+           background: var(--ok); color: #fff; padding: 11px 20px; border-radius: 22px;
+           font-size: .9rem; opacity: 0; pointer-events: none; transition: opacity .18s; }
+  #toast.on { opacity: 1; }
+
+  details { margin-top: 28px; border-top: 1px solid var(--line); padding-top: 14px; }
+  summary { cursor: pointer; color: var(--accent); font-weight: 600; min-height: 44px;
+            display: flex; align-items: center; }
+  table { border-collapse: collapse; width: 100%; font-size: .9rem; margin: 8px 0 18px; }
+  td, th { padding: 5px 8px; border-bottom: 1px solid var(--line); text-align: left; }
+  th { color: var(--muted); font-weight: 600; font-size: .78rem;
+       text-transform: uppercase; letter-spacing: .04em; }
+  code { font-family: ui-monospace, Menlo, monospace; font-size: .92em;
+         background: var(--panel); padding: 1px 5px; border-radius: 4px; }
+  .note { font-size: .85rem; color: var(--muted); margin-top: 10px; }
+  .scroll { overflow-x: auto; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <h1>Odia Phonetic Typing</h1>
+  <p class="sub">Type it how it sounds. Works offline &mdash; this whole page is one file.</p>
+
+  <label for="in">English (phonetic)</label>
+  <textarea id="in" autocapitalize="off" autocorrect="off" autocomplete="off"
+            spellcheck="false" placeholder="kemiti achha"></textarea>
+
+  <label for="out">Odia &mdash; tap a dotted word for alternatives</label>
+  <div id="out" class="odia" aria-live="polite"></div>
+
+  <div id="alts" class="odia"></div>
+
+  <div class="row">
+    <button id="copy" class="primary">Copy Odia</button>
+    <button id="clear">Clear</button>
+    <label class="toggle"><input type="checkbox" id="odigits"> Odia numerals</label>
+  </div>
+
+  <details>
+    <summary>What to type</summary>
+
+    <p class="note">Case is ignored, so <code>Ta</code> and <code>ta</code> behave the same.</p>
+
+    <p class="note"><strong>Picking a word.</strong> Any word with more than one plausible
+    spelling is underlined with dots. Tap it and you get the whole-word options, numbered
+    &mdash; tap one, or press its number key. The same roman can be several different Odia
+    words (<code>kala</code> is <span class="odia">କଳା</span>,
+    <span class="odia">କାଳ</span>, <span class="odia">କଲା</span> &hellip;), so you choose
+    rather than fight the default. <strong>Your choice is remembered</strong>, and that word
+    leads the list next time. The dashed button on the end keeps the English spelling, for
+    names and acronyms.</p>
+
+    <div class="scroll">
+    <table>
+      <tr><th>Vowel</th><th>Type</th><th>On କ</th>
+          <th>Vowel</th><th>Type</th><th>On କ</th></tr>
+      <tr><td class="odia">ଅ</td><td><code>a</code></td><td class="odia">କ</td>
+          <td class="odia">ଏ</td><td><code>e</code></td><td class="odia">କେ</td></tr>
+      <tr><td class="odia">ଆ</td><td><code>aa</code></td><td class="odia">କା</td>
+          <td class="odia">ଐ</td><td><code>ai</code></td><td class="odia">କୈ</td></tr>
+      <tr><td class="odia">ଇ</td><td><code>i</code></td><td class="odia">କି</td>
+          <td class="odia">ଓ</td><td><code>o</code></td><td class="odia">କୋ</td></tr>
+      <tr><td class="odia">ଈ</td><td><code>ii</code> <code>ee</code></td><td class="odia">କୀ</td>
+          <td class="odia">ଔ</td><td><code>au</code></td><td class="odia">କୌ</td></tr>
+      <tr><td class="odia">ଉ</td><td><code>u</code></td><td class="odia">କୁ</td>
+          <td class="odia">ଋ</td><td><code>ru</code></td><td class="odia">କୃ</td></tr>
+      <tr><td class="odia">ଊ</td><td><code>uu</code> <code>oo</code></td><td class="odia">କୂ</td>
+          <td></td><td></td><td></td></tr>
+    </table>
+    </div>
+
+    <div class="scroll">
+    <table>
+      <tr><th>Group</th><th colspan="5">Consonants</th></tr>
+      <tr><td>Velar</td>
+          <td class="odia">କ <code>k</code></td><td class="odia">ଖ <code>kh</code></td>
+          <td class="odia">ଗ <code>g</code></td><td class="odia">ଘ <code>gh</code></td>
+          <td class="odia">ଙ <code>ng</code></td></tr>
+      <tr><td>Palatal</td>
+          <td class="odia">ଚ <code>ch</code></td><td class="odia">ଛ <code>chh</code></td>
+          <td class="odia">ଜ <code>j</code></td><td class="odia">ଝ <code>jh</code></td>
+          <td class="odia">ଞ <code>~n</code></td></tr>
+      <tr><td>Retroflex</td>
+          <td class="odia">ଟ <code>T</code></td><td class="odia">ଠ <code>Th</code></td>
+          <td class="odia">ଡ <code>D</code></td><td class="odia">ଢ <code>Dh</code></td>
+          <td class="odia">ଣ <code>N</code></td></tr>
+      <tr><td>Dental</td>
+          <td class="odia">ତ <code>t</code></td><td class="odia">ଥ <code>th</code></td>
+          <td class="odia">ଦ <code>d</code></td><td class="odia">ଧ <code>dh</code></td>
+          <td class="odia">ନ <code>n</code></td></tr>
+      <tr><td>Labial</td>
+          <td class="odia">ପ <code>p</code></td><td class="odia">ଫ <code>ph</code></td>
+          <td class="odia">ବ <code>b</code></td><td class="odia">ଭ <code>bh</code></td>
+          <td class="odia">ମ <code>m</code></td></tr>
+      <tr><td>Other</td>
+          <td class="odia">ଯ ୟ <code>y</code></td><td class="odia">ର <code>r</code></td>
+          <td class="odia">ଲ <code>l</code></td><td class="odia">ଳ <code>L</code></td>
+          <td class="odia">ବ <code>v</code> ୱ <code>w</code></td></tr>
+      <tr><td>Sibilant</td>
+          <td class="odia">ଶ <code>sh</code></td><td class="odia">ଷ <code>Sh</code></td>
+          <td class="odia">ସ <code>s</code></td><td class="odia">ହ <code>h</code></td>
+          <td></td></tr>
+    </table>
+    </div>
+
+    <div class="scroll">
+    <table>
+      <tr><th>Special</th><th>Type</th><th>Example</th></tr>
+      <tr><td class="odia">ଡ଼</td><td><code>R</code> &mdash; or just <code>d</code>, see below</td>
+          <td class="odia">ଓଡ଼ିଶା <code>odisha</code></td></tr>
+      <tr><td class="odia">ଢ଼</td><td><code>Rh</code></td>
+          <td class="odia">ପଢ଼ା <code>paRhaa</code></td></tr>
+      <tr><td class="odia">ଂ</td><td><code>M</code></td>
+          <td class="odia">ଅଂଶ <code>aMsha</code></td></tr>
+      <tr><td class="odia">ଁ</td><td><code>~</code></td>
+          <td class="odia">ମୁଁ <code>mu~</code></td></tr>
+      <tr><td class="odia">ଃ</td><td><code>H</code></td>
+          <td class="odia">ଦୁଃଖ <code>duHkha</code></td></tr>
+      <tr><td>halant</td><td><code>_</code></td>
+          <td class="odia">କମଲ୍ <code>kamal_</code></td></tr>
+    </table>
+    </div>
+
+    <p class="note"><strong>About ଡ଼.</strong> This letter is everywhere in Odia
+    (ଓଡ଼ିଶା, ଓଡ଼ିଆ, ବଡ଼) so you should not have to work for it. Common words are
+    recognised automatically, and elsewhere a <code>d</code> in the middle of a word offers
+    ଡ଼ as an alternative &mdash; tap the dotted word to pick it. Type <code>R</code> if you
+    want it outright.</p>
+
+    <p class="note">Conjuncts form on their own: type consonants back to back and the halant
+    is inserted for you. <code>namaskaara</code> &rarr;
+    <span class="odia">ନମସ୍କାର</span>, <code>ksha</code> &rarr;
+    <span class="odia">କ୍ଷ</span>, <code>bhaagya</code> &rarr;
+    <span class="odia">ଭାଗ୍ୟ</span>.</p>
+
+    <p class="note"><strong>Double the vowel to lengthen it.</strong> This is the most
+    common reason a word comes out wrong. <code>a</code> is
+    <span class="odia">ଅ</span> but <code>aa</code> is <span class="odia">ଆ</span>, so
+    <span class="odia">ଭାଗ୍ୟ</span> is <code>bhaagya</code>, not <code>bhagya</code>.
+    Likewise <code>ii</code>/<code>ee</code> for <span class="odia">ଈ</span> and
+    <code>uu</code>/<code>oo</code> for <span class="odia">ଊ</span>. Very common words are
+    recognised either way.</p>
+
+    <p class="note"><strong>ଯ and ୟ are different letters.</strong> Odia
+    <span class="odia">ଯ</span> sounds like <em>ja</em> &mdash; the opposite of the Hindi
+    intuition &mdash; while <span class="odia">ୟ</span> is the true <em>ya</em>. Typing
+    <code>y</code> gives <span class="odia">ଯ</span> at the start of a word
+    (<code>yoga</code> &rarr; <span class="odia">ଯୋଗ</span>) and
+    <span class="odia">ୟ</span> anywhere else (<code>raajya</code> &rarr;
+    <span class="odia">ରାଜ୍ୟ</span>). Tap the word to swap.</p>
+
+    <p class="note"><code>ny</code> and <code>gy</code> are treated as two letters, because
+    that is what they nearly always are (<code>dhanyabaada</code> &rarr;
+    <span class="odia">ଧନ୍ୟବାଦ</span>). For the single letters
+    <span class="odia">ଞ</span> and <span class="odia">ଜ୍ଞ</span> type <code>~n</code> and
+    <code>jny</code>.</p>
+  </details>
+
+  <p class="note">Draft scheme, not yet checked by a native speaker. Corrections welcome.</p>
+</div>
+
+<div id="toast">Copied</div>
+
+<script>
+"use strict";
+
+/* ---------------------------------------------------------------------------
+   Odia is an abugida: a consonant carries an inherent vowel, a following vowel
+   becomes a matra, and consonant+consonant fuses with a halant.
+
+   INVARIANT: the nukta letters are ALWAYS stored decomposed,
+   ଡ଼ = U+0B21 U+0B3C and ଢ଼ = U+0B22 U+0B3C, never the precomposed U+0B5C/U+0B5D
+   (those decompose under NFC, so a precomposed form would silently fail to match).
+   They are written as escapes below so the encoding is visible in the source.
+--------------------------------------------------------------------------- */
+
+var DDA  = "ଡ଼";   // ଡ଼
+var DDHA = "ଢ଼";   // ଢ଼
+var HALANT = "୍";
+
+/* vowels: independent form, matra form */
+var V = {
+  "aa": ["ଆ", "ା"], "ai": ["ଐ", "ୈ"],
+  "au": ["ଔ", "ୌ"], "ou": ["ଔ", "ୌ"],
+  "ee": ["ଈ", "ୀ"], "ii": ["ଈ", "ୀ"],
+  "oo": ["ଊ", "ୂ"], "uu": ["ଊ", "ୂ"],
+  "ru": ["ଋ", "ୃ"], "ri": ["ଋ", "ୃ"],
+  "a":  ["ଅ", ""  ], "i":  ["ଇ", "ି"],
+  "u":  ["ଉ", "ୁ"], "e":  ["ଏ", "େ"],
+  "o":  ["ଓ", "ୋ"]
+};
+
+/* consonants, plus the alternatives offered when a letter is ambiguous */
+var C = {
+  "chh": ["ଛ"], "ksh": ["କ" + HALANT + "ଷ"],
+  "jny": ["ଜ" + HALANT + "ଞ"],
+  /* NOTE: "gy" deliberately does NOT map to ଜ୍ଞ. In real words g and y are separate
+     ("bhaagya" -> ଭାଗ୍ୟ, "yogya" -> ଯୋଗ୍ୟ). Type "jny" for ଜ୍ଞ. Same reasoning as "ny". */
+  "kh": ["ଖ"], "gh": ["ଘ"],
+  "ch": ["ଚ"], "jh": ["ଝ"], "~n": ["ଞ"],
+  /* NOTE: "ng" is deliberately NOT a key, for the same reason as "ny" and "gy".
+     It swallowed the following consonant — "ganga" became ଗଙ, losing the second
+     ଗ entirely. ଙ is reached through nasal assimilation below, which is where it
+     actually occurs in Odia (ଗଙ୍ଗ, ଙ୍କ); standalone ଙ is vanishingly rare. */
+  /* NOTE: "ny" deliberately does NOT map to ଞ. In real words it is almost always
+     n + y ("dhanyabaada" -> ଧନ୍ୟବାଦ), and ଞ is rare. Type "~n" for ଞ. */
+  "th": ["ଥ", "ଠ"],            // ଥ dental / ଠ retroflex
+  "dh": ["ଧ", "ଢ", DDHA],      // ଧ / ଢ / ଢ଼
+  "rh": [DDHA], "ph": ["ଫ"], "bh": ["ଭ"],
+  "sh": ["ଶ", "ଷ"],            // ଶ / ଷ
+  "k": ["କ"], "g": ["ଗ"], "c": ["ଚ"], "j": ["ଜ"],
+  "t": ["ତ", "ଟ"],             // ତ / ଟ
+  "d": ["ଦ", "ଡ", DDA],        // ଦ / ଡ / ଡ଼
+  "n": ["ନ", "ଣ"],             // ନ / ଣ
+  "p": ["ପ"], "b": ["ବ"], "m": ["ମ"],
+  "y": ["ଯ", "ୟ"], "r": ["ର", DDA],
+  "l": ["ଲ", "ଳ"],             // ଲ / ଳ
+  "w": ["ୱ", "ବ"], "v": ["ବ", "ୱ"],   // Odia writes most "v" sounds as ବ
+  "s": ["ସ", "ଶ", "ଷ"],   // ସ / ଶ / ଷ
+  "h": ["ହ"],
+  "f": ["ଫ"], "z": ["ଜ"], "x": ["କ" + HALANT + "ଷ"], "q": ["କ"]
+};
+
+/* case-sensitive overrides: capitals mean retroflex, ITRANS style */
+var UPPER = {
+  "Th": "ଠ", "Dh": "ଢ", "Rh": DDHA, "Sh": "ଷ",
+  "T": "ଟ", "D": "ଡ", "N": "ଣ", "L": "ଳ", "R": DDA
+};
+
+var SIGN = { "M": "ଂ", "H": "ଃ", "~": "ଁ" };
+var ODIA_DIGITS = "୦୧୨୩୪୫୬୭୮୯";
+
+/* Words the rules alone cannot get right, for two reasons:
+     1. the nukta is not predictable from spelling (ଓଡ଼ିଶା, ବଡ଼)
+     2. people rarely double a long vowel — "bhagya" is typed for ଭାଗ୍ୟ (bhāgya)
+   Small on purpose. The full engine in core/ replaces this with a 346k-word
+   lexicon plus fuzzy key aliases that collapse aa->a, ee->i, oo->u. */
+var EXCEPT = {
+  /* nukta */
+  "odisha": "ଓ" + DDA + "ିଶା",  "odishaa": "ଓ" + DDA + "ିଶା",
+  "odia": "ଓ" + DDA + "ିଆ",     "odiaa": "ଓ" + DDA + "ିଆ",
+  "bada": "ବ" + DDA,            "bado": "ବ" + DDA,
+  "ghoda": "ଘୋ" + DDA + "ା",    "ghodaa": "ଘୋ" + DDA + "ା",
+  "padha": "ପ" + DDHA,          "padhaa": "ପ" + DDHA + "ା",
+  "gada": "ଗ" + DDA,            "jhada": "ଝ" + DDA,
+  "kadhi": "କ" + DDHA + "ି",
+
+  /* under-typed long vowels */
+  "bhagya": "ଭାଗ୍ୟ",   "rajya": "ରାଜ୍ୟ",     "sahitya": "ସାହିତ୍ୟ",
+  "nyaya": "ନ୍ୟାୟ",   "vidya": "ବିଦ୍ୟା",    "gyana": "ଜ୍ଞାନ",
+  "jnana": "ଜ୍ଞାନ",   "namaskar": "ନମସ୍କାର", "dhanyabad": "ଧନ୍ୟବାଦ",
+  "pani": "ପାଣି",     "bhubaneswar": "ଭୁବନେଶ୍ୱର",
+  "bhubaneshwar": "ଭୁବନେଶ୍ୱର",
+
+  /* Sanskrit-derived names, where the vocalic ୃ competes with an ordinary ର+ି
+     and the sibilants are ambiguous. Three coin-flips in one short word is more
+     than rules should be asked to win. */
+  "shri": "ଶ୍ରୀ",      "shree": "ଶ୍ରୀ",     "sri": "ଶ୍ରୀ",
+  "krishna": "କୃଷ୍ଣ",  "krushna": "କୃଷ୍ଣ",  "krisna": "କୃଷ୍ଣ",
+  "jagannatha": "ଜଗନ୍ନାଥ", "jagannath": "ଜଗନ୍ନାଥ",
+  "rushi": "ଋଷି",      "rishi": "ଋଷି",
+  "puri": "ପୁରୀ",      "mruta": "ମୃତ",
+  "odissi": "ଓଡ଼ିଶୀ",   "odishi": "ଓଡ଼ିଶୀ"
+};
+
+var KEYS = [];  /* all roman keys, longest first */
+(function () {
+  var k;
+  for (k in C) KEYS.push(k);
+  for (k in V) KEYS.push(k);
+  for (k in UPPER) KEYS.push(k);
+  for (k in SIGN) KEYS.push(k);
+  KEYS.push("_");
+
+  /* Case-SENSITIVE keys are tried before case-insensitive ones, and only then
+     is length considered. Typing a capital is a deliberate signal, so it has to
+     beat a lowercase key even when the lowercase key is longer.
+     Sorting by length first broke both of these:
+        "H"  lost to "h"   -> duHkha gave ଦୁହ୍ଖ, not ଦୁଃଖ
+        "R"  lost to "ri"  -> Ri gave ଋ (the vowel), not ଡ଼ି
+     Within each group the longest key still wins, so "Th" beats "T" and
+     "chh" beats "ch". */
+  function strictKey(k) {
+    return (Object.prototype.hasOwnProperty.call(UPPER, k) ||
+            Object.prototype.hasOwnProperty.call(SIGN, k)) ? 0 : 1;
+  }
+  KEYS.sort(function (a, b) {
+    return (strictKey(a) - strictKey(b)) || (b.length - a.length);
+  });
+})();
+
+function isVowelKey(k) { return Object.prototype.hasOwnProperty.call(V, k.toLowerCase()); }
+
+/* ---------------------------------------------------------------- nasals
+   A nasal takes the place of articulation of the consonant that follows it,
+   so a typed "n" is five different letters depending on what comes next:
+
+     n + k g      velar       ଙ    ଙ୍କ  ଗଙ୍ଗ
+     n + ch j     palatal     ଞ    ଚଞ୍ଚଳ  ପଞ୍ଚମ
+     n + T D      retroflex   ଣ    ପଣ୍ଡିତ  ମୁଣ୍ଡ
+     n + t d      dental      ନ    ଅନ୍ତ
+     n + p b      labial      ମ    ସମ୍ବାଦ
+
+   The anusvara ଂ is an equally common spelling for all of them (ସଂଖ୍ୟା), so it
+   is always offered. It behaves differently though: it hangs off the preceding
+   vowel rather than joining the next consonant, so it takes NO halant.        */
+
+var PLACE_OF = {
+  "k": "velar", "kh": "velar", "g": "velar", "gh": "velar", "q": "velar",
+  "ch": "palatal", "chh": "palatal", "j": "palatal", "jh": "palatal",
+  "T": "retroflex", "Th": "retroflex", "D": "retroflex", "Dh": "retroflex",
+  "t": "dental", "th": "dental", "d": "dental", "dh": "dental",
+  "p": "labial", "ph": "labial", "b": "labial", "bh": "labial",
+  "m": "labial", "f": "labial"
+};
+var NASAL = {
+  velar: "ଙ", palatal: "ଞ", retroflex: "ଣ", dental: "ନ", labial: "ମ"
+};
+var ANUSVARA = "ଂ";
+
+/* Consonants with no place of articulation to assimilate to. Sibilants and ହ
+   take the anusvara (ସଂସ୍କାର, ସଂହିତା); semivowels take ନ and conjoin
+   (ଧନ୍ୟବାଦ, ନ୍ୟାୟ). */
+var SIBILANT_OR_H = { "s": true, "sh": true, "Sh": true, "h": true };
+
+/** The consonant key beginning at `pos`, or null if none does. */
+function nextConsonantKey(roman, pos) {
+  if (pos >= roman.length) return null;
+  for (var n = 0; n < KEYS.length; n++) {
+    var k = KEYS[n];
+    var seg = roman.substr(pos, k.length);
+    var strict = Object.prototype.hasOwnProperty.call(UPPER, k) ||
+                 Object.prototype.hasOwnProperty.call(SIGN, k);
+    if (strict) { if (seg === k) return k; continue; }
+    if (seg.toLowerCase() === k.toLowerCase()) {
+      return isVowelKey(k) ? null : k;
+    }
+  }
+  return null;
+}
+
+/**
+ * Readings of a typed "n", best first.
+ * Each is { text, joins } — `joins` false means it takes no halant, which is
+ * how the anusvara behaves.
+ */
+function nasalOptions(roman, pos) {
+  var key = nextConsonantKey(roman, pos);
+
+  // Nothing follows: a plain word-final nasal.
+  if (key === null) return [{ text: "ନ", joins: true }, { text: "ଣ", joins: true }];
+
+  var place = PLACE_OF[key];
+
+  // Consonants with no place to assimilate to split two ways.
+  //   before a sibilant or ହ, Odia writes the anusvara:  ସଂସ୍କାର, ସଂହିତା
+  //   before a semivowel, it writes ନ and conjoins:      ଧନ୍ୟବାଦ, ନ୍ୟାୟ, ଅନ୍ୱୟ
+  if (place === undefined) {
+    var anusvaraFirst = SIBILANT_OR_H[key] === true;
+    return anusvaraFirst
+      ? [{ text: ANUSVARA, joins: false }, { text: "ନ", joins: true }, { text: "ଣ", joins: true }]
+      : [{ text: "ନ", joins: true }, { text: ANUSVARA, joins: false }, { text: "ଣ", joins: true }];
+  }
+
+  var out = [{ text: NASAL[place], joins: true }, { text: ANUSVARA, joins: false }];
+
+  // Lowercase t/d are themselves dental-or-retroflex in natural mode, so the
+  // nasal inherits that ambiguity.
+  if (place === "dental") out.push({ text: "ଣ", joins: true });
+  else if (NASAL[place] !== "ନ") out.push({ text: "ନ", joins: true });
+
+  return out;
+}
+
+/* Weight of the Nth alternative for an ambiguous letter. The first reading is
+   the default; the rest stay reachable but ranked below it. */
+var ALT_WEIGHT = [1, 0.55, 0.35, 0.22];
+function altWeight(i) { return ALT_WEIGHT[i] !== undefined ? ALT_WEIGHT[i] : 0.15; }
+
+/* A short vowel key may really have been a long one that the typist did not
+   double. Mapping short -> long lets the lattice offer both readings. */
+var LONG_PARTNER = { "a": "aa", "i": "ii", "u": "uu" };
+var VOWEL_LENGTH_ALT = 0.45;
+
+/* Beam width. Ambiguity multiplies, so without a cap a long word explodes. */
+var BEAM = 40;
+
+function prune(states) {
+  states.sort(function (a, b) { return b.score - a.score; });
+  return states.length > BEAM ? states.slice(0, BEAM) : states;
+}
+
+/**
+ * All plausible whole-word spellings of one roman token, best first.
+ *
+ * This is the Pinyin model: rather than making the user fix one letter at a
+ * time, enumerate complete words and let them pick. Each ambiguous letter fans
+ * the lattice out, a path's score is the product of its choices, and the beam
+ * keeps it finite.
+ *
+ * Returns [{ text, score }].
+ */
+function candidates(roman, limit) {
+  limit = limit || 8;
+  var low = roman.toLowerCase();
+
+  var states = [{ out: "", score: 1, afterCons: false }];
+  var i = 0;
+
+  while (i < roman.length) {
+    var matched = null, key = null, upper = false;
+
+    for (var n = 0; n < KEYS.length; n++) {
+      var k = KEYS[n];
+      var seg = roman.substr(i, k.length);
+
+      /* Capitals and signs are case-SENSITIVE: "H" is visarga ଃ, "h" is ହ;
+         "D" is ଡ, "d" is ଦ. Everything else folds case. */
+      var strict = Object.prototype.hasOwnProperty.call(UPPER, k) ||
+                   Object.prototype.hasOwnProperty.call(SIGN, k);
+
+      if (strict) {
+        if (seg === k) { matched = k; key = k; upper = !SIGN[k]; break; }
+        continue;
+      }
+      if (seg.toLowerCase() === k.toLowerCase()) { matched = k; key = k; break; }
+    }
+
+    /* Nothing matched — pass the character through unchanged. */
+    if (matched === null) {
+      for (var s0 = 0; s0 < states.length; s0++) {
+        states[s0].out += roman[i];
+        states[s0].afterCons = false;
+      }
+      i += 1;
+      continue;
+    }
+
+    var startedAt = i;
+    i += matched.length;
+
+    /* Unambiguous emissions: apply in place, no fan-out.
+       A capital key is still a CONSONANT, so it must join a preceding consonant
+       with a halant exactly as the lowercase path does. Without this,
+       "ShaNDha" gave ଷଣଢ instead of ଷଣ୍ଢ — every retroflex conjunct
+       (ମୁଣ୍ଡ, ପଣ୍ଡିତ, କଣ୍ଠ) came out unjoined. */
+    if (upper) {
+      for (var s1 = 0; s1 < states.length; s1++) {
+        var st1 = states[s1];
+        st1.out += (st1.afterCons ? HALANT : "") + UPPER[key];
+        st1.afterCons = true;
+      }
+      continue;
+    }
+    if (key === "_") {
+      for (var s2 = 0; s2 < states.length; s2++) {
+        states[s2].out += HALANT; states[s2].afterCons = false;
+      }
+      continue;
+    }
+    if (Object.prototype.hasOwnProperty.call(SIGN, key)) {
+      for (var s3 = 0; s3 < states.length; s3++) states[s3].out += SIGN[key];
+      continue;
+    }
+
+    var lk = key.toLowerCase();
+
+    /* "ri" and "ru" are ambiguous in a way that matters enormously.
+       They are the vocalic vowel ଋ / ୃ (କୃଷ୍ଣ, ଋଷି) — but far more often they
+       are simply the consonant ର followed by a vowel. କରି alone occurs 77,908
+       times in the web corpus, and ଗୁରୁ, ପୁରୀ, ଧରି, ହରି, ନାରୀ all have the same
+       shape. Reading them only as the vocalic vowel turned every one of those
+       into nonsense: kari -> କଋ, guru -> ଗୁଋ.
+       So both readings are generated, with the consonant first, and the long
+       vowel offered too (shri -> ଶ୍ରି and ଶ୍ରୀ). */
+    if (lk === "ri" || lk === "ru") {
+      var isI = (lk === "ri");
+      var mShort = isI ? "ି" : "ୁ";   // ର is a consonant, so the vowel is always a matra
+      var mLong  = isI ? "ୀ" : "ୂ";
+
+      /* "rii" and "ruu" are ର plus an explicitly LONG vowel, not "ri" followed
+         by a stray "i". Without this, naarii came out as ନାରିଇ. */
+      var doubled = roman[i] !== undefined &&
+                    roman[i].toLowerCase() === (isI ? "i" : "u");
+      if (doubled) i += 1;
+
+      var nextR = [];
+      for (var s7 = 0; s7 < states.length; s7++) {
+        var st7 = states[s7];
+        var j7 = st7.afterCons ? HALANT : "";
+
+        if (doubled) {
+          nextR.push({ out: st7.out + j7 + "ର" + mLong,
+                       score: st7.score, afterCons: false });
+          continue;
+        }
+
+        nextR.push({ out: st7.out + j7 + "ର" + mShort,
+                     score: st7.score, afterCons: false });
+        nextR.push({ out: st7.out + j7 + "ର" + mLong,
+                     score: st7.score * VOWEL_LENGTH_ALT, afterCons: false });
+
+        /* The vocalic vowel is strongly positional. As a matra it can only sit
+           on a consonant (କୃଷ୍ଣ, ମୃତ), where it is a real competitor. As an
+           independent letter it is essentially word-initial only (ଋଷି); in the
+           middle of a word ଋ is almost always wrong, which is what produced
+           କଋ for "kari". */
+        var vocalic = st7.afterCons ? 0.75 : (st7.out === "" ? 0.6 : 0.03);
+        nextR.push({ out: st7.out + (st7.afterCons ? "ୃ" : "ଋ"),
+                     score: st7.score * vocalic, afterCons: false });
+      }
+      states = prune(nextR);
+      continue;
+    }
+
+    if (isVowelKey(lk)) {
+      /* People rarely double a long vowel — "kala" is typed for କଳା, କାଳ and
+         କଲା alike. So a SHORT vowel key branches into its short and long
+         readings; that branching is what turns the candidate list into a list
+         of real words instead of one spelling. An explicitly long key ("aa")
+         is unambiguous and does not branch. */
+      var lengthen = LONG_PARTNER[lk];
+      var forms = [lk];
+      if (lengthen !== undefined) forms.push(lengthen);
+
+      var nextV = [];
+      for (var s4 = 0; s4 < states.length; s4++) {
+        var st4 = states[s4];
+        for (var f = 0; f < forms.length; f++) {
+          var pair = V[forms[f]];
+          nextV.push({
+            out: st4.out + (st4.afterCons ? pair[1] : pair[0]),
+            score: st4.score * (f === 0 ? 1 : VOWEL_LENGTH_ALT),
+            afterCons: false,
+          });
+        }
+      }
+      states = prune(nextV);
+      continue;
+    }
+
+    /* Consonant — the only place that fans out. */
+    var base = C[lk].slice();
+
+    /* ଯ vs ୟ. Unlike Hindi, Odia ଯ sounds like "ja"; ୟ is the true "ya".
+       Word-initially the convention is ଯ (ଯୋଗ), elsewhere ୟ (ଭାଗ୍ୟ, ରାଜ୍ୟ). */
+    if (lk === "y") base = (startedAt === 0) ? ["ଯ", "ୟ"] : ["ୟ", "ଯ"];
+
+    /* A retroflex-ambiguous stop inside a word is very often the flap in Odia
+       (ଓଡ଼ିଶା, ବଡ଼). Empirically 99.6% of ଡ଼ is typed "d", so promote the flap to
+       second place mid-word — one pick away, never the silent default. */
+    if ((lk === "d" || lk === "dh") && startedAt > 0) {
+      var flap = (lk === "d") ? DDA : DDHA;
+      var at = base.indexOf(flap);
+      if (at > 1) { base.splice(at, 1); base.splice(1, 0, flap); }
+    }
+
+    /* Every option carries whether it behaves as a consonant. The anusvara ଂ
+       does not: it hangs off the preceding vowel and takes no halant. */
+    var opts = [];
+    if (lk === "n") {
+      opts = nasalOptions(roman, i);
+    } else {
+      for (var b = 0; b < base.length; b++) opts.push({ text: base[b], joins: true });
+    }
+
+    var next = [];
+    for (var s5 = 0; s5 < states.length; s5++) {
+      var st5 = states[s5];
+      for (var o = 0; o < opts.length; o++) {
+        var opt = opts[o];
+        var join = (st5.afterCons && opt.joins) ? HALANT : "";
+        next.push({
+          out: st5.out + join + opt.text,
+          score: st5.score * altWeight(o),
+          afterCons: opt.joins,
+        });
+      }
+    }
+    states = prune(next);
+  }
+
+  /* Dedupe, keeping the best score for each distinct spelling. */
+  var seen = {}, out = [];
+  states.sort(function (a, b) { return b.score - a.score; });
+  for (var s6 = 0; s6 < states.length; s6++) {
+    var t = states[s6].out;
+    if (t === "" || Object.prototype.hasOwnProperty.call(seen, t)) continue;
+    seen[t] = true;
+    out.push({ text: t, score: states[s6].score });
+  }
+
+  /* A known word outranks anything the rules invent. This is the stand-in for
+     a real lexicon; the full engine in core/ uses a 440k-row one. */
+  if (Object.prototype.hasOwnProperty.call(EXCEPT, low)) {
+    var known = EXCEPT[low];
+    out = out.filter(function (c) { return c.text !== known; });
+    out.unshift({ text: known, score: 2 });
+  }
+
+  /* A remembered choice wins outright. */
+  var learned = recall(low);
+  if (learned) {
+    out = out.filter(function (c) { return c.text !== learned; });
+    out.unshift({ text: learned, score: 3 });
+  }
+
+  return out.slice(0, limit);
+}
+
+/** Convenience: the single best spelling. */
+function word(roman) {
+  var c = candidates(roman, 1);
+  return { text: c.length ? c[0].text : roman };
+}
+
+/* ------------------------------------------------- learned choices (localStorage) */
+
+var LEARN_KEY = "odia.learn.v1";
+var learnMap = {};
+try { learnMap = JSON.parse(localStorage.getItem(LEARN_KEY) || "{}"); } catch (e) { learnMap = {}; }
+
+function recall(romanLower) {
+  return Object.prototype.hasOwnProperty.call(learnMap, romanLower) ? learnMap[romanLower] : null;
+}
+function remember(romanLower, odia) {
+  learnMap[romanLower] = odia;
+  try { localStorage.setItem(LEARN_KEY, JSON.stringify(learnMap)); } catch (e) { /* private mode */ }
+}
+
+/* ------------------------------------------------------------------ UI */
+
+var inEl = document.getElementById("in");
+var outEl = document.getElementById("out");
+var altsEl = document.getElementById("alts");
+var toastEl = document.getElementById("toast");
+var digitsEl = document.getElementById("odigits");
+
+var picks = {};        /* wordIndex -> chosen Odia string */
+var activeWord = -1;
+var activeOpts = [];   /* candidates currently on screen, for number-key select */
+
+function digits(s) {
+  if (!digitsEl.checked) return s;
+  return s.replace(/[0-9]/g, function (d) { return ODIA_DIGITS[+d]; });
+}
+
+function render() {
+  var src = inEl.value;
+  outEl.textContent = "";
+  altsEl.className = "";
+  altsEl.textContent = "";
+  activeOpts = [];
+
+  var parts = src.split(/(\s+)/);
+  var wi = 0;
+
+  parts.forEach(function (part) {
+    if (part === "") return;
+    if (/^\s+$/.test(part)) { outEl.appendChild(document.createTextNode(part)); return; }
+
+    if (!/[A-Za-z]/.test(part)) {
+      outEl.appendChild(document.createTextNode(digits(part)));
+      return;
+    }
+
+    var idx = wi; wi += 1;
+    var cands = candidates(part, 9);
+    var text = picks[idx] !== undefined ? picks[idx]
+             : (cands.length ? cands[0].text : part);
+
+    var span = document.createElement("span");
+    span.className = "w" + (cands.length > 1 ? " amb" : "");
+    span.textContent = digits(text);
+    span.dataset.i = String(idx);
+    span.dataset.raw = part;
+    if (idx === activeWord) span.classList.add("sel");
+    outEl.appendChild(span);
+  });
+
+  if (activeWord >= 0) showAlts();
+}
+
+/* Whole-word options, numbered, the way a Pinyin IME does it. */
+function showAlts() {
+  var span = outEl.querySelector('.w[data-i="' + activeWord + '"]');
+  if (!span) { activeWord = -1; return; }
+
+  var raw = span.dataset.raw;
+  var cands = candidates(raw, 9);
+  if (cands.length < 2) { activeWord = -1; return; }
+
+  activeOpts = cands;
+  var current = picks[activeWord] !== undefined ? picks[activeWord] : cands[0].text;
+
+  altsEl.textContent = "";
+  cands.forEach(function (c, n) {
+    var b = document.createElement("button");
+    var num = document.createElement("span");
+    num.className = "num";
+    num.textContent = String(n + 1);
+    b.appendChild(num);
+    b.appendChild(document.createTextNode(c.text));
+    if (c.text === current) b.className = "primary";
+    b.addEventListener("click", function () { choose(n); });
+    altsEl.appendChild(b);
+  });
+
+  var keep = document.createElement("button");
+  keep.className = "verbatim";
+  keep.textContent = raw;
+  keep.title = "Keep the English spelling";
+  keep.addEventListener("click", function () {
+    picks[activeWord] = raw;
+    activeWord = -1;
+    render();
+  });
+  altsEl.appendChild(keep);
+
+  altsEl.className = "on odia";
+}
+
+function choose(n) {
+  var c = activeOpts[n];
+  if (!c || activeWord < 0) return;
+  var span = outEl.querySelector('.w[data-i="' + activeWord + '"]');
+  picks[activeWord] = c.text;
+  if (span) remember(span.dataset.raw.toLowerCase(), c.text);
+  activeWord = -1;
+  render();
+}
+
+outEl.addEventListener("click", function (e) {
+  var t = e.target;
+  if (!t.classList || !t.classList.contains("w")) return;
+  var i = +t.dataset.i;
+  activeWord = (activeWord === i) ? -1 : i;
+  render();
+});
+
+/* 1-9 pick a candidate while a word is open; Escape closes. */
+document.addEventListener("keydown", function (e) {
+  if (activeWord < 0) return;
+  if (e.key === "Escape") { activeWord = -1; render(); return; }
+  if (document.activeElement === inEl) return;   // typing, not selecting
+  var n = parseInt(e.key, 10);
+  if (n >= 1 && n <= activeOpts.length) { e.preventDefault(); choose(n - 1); }
+});
+
+inEl.addEventListener("input", function () { picks = {}; activeWord = -1; render(); });
+digitsEl.addEventListener("change", render);
+
+document.getElementById("clear").addEventListener("click", function () {
+  inEl.value = ""; picks = {}; activeWord = -1; render(); inEl.focus();
+});
+
+/* iOS Safari only allows clipboard writes inside a real user gesture, and only
+   if nothing is awaited first. So: no async before the write, with a synchronous
+   execCommand fallback for older WebKit. */
+document.getElementById("copy").addEventListener("click", function () {
+  var text = outEl.textContent || "";
+  if (!text) return;
+
+  var done = function () {
+    toastEl.className = "on";
+    setTimeout(function () { toastEl.className = ""; }, 1300);
+  };
+
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(done, function () { legacyCopy(text, done); });
+  } else {
+    legacyCopy(text, done);
+  }
+});
+
+function legacyCopy(text, done) {
+  var ta = document.createElement("textarea");
+  ta.value = text;
+  ta.setAttribute("readonly", "");
+  ta.style.position = "fixed";
+  ta.style.top = "0";
+  ta.style.opacity = "0";
+  document.body.appendChild(ta);
+  ta.select();
+  ta.setSelectionRange(0, text.length);
+  try { document.execCommand("copy"); done(); } catch (err) { /* nothing else to try */ }
+  document.body.removeChild(ta);
+}
+
+inEl.value = "kemiti achha";
+render();
+</script>
+</body>
+</html>

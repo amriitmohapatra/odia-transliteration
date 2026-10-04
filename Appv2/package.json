@@ -1,0 +1,31 @@
+{
+  "name": "@odia/appv2",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Sanskrit-in-Odia-script upgrade of the web app. Adds a Sanskrit lexicon, a sloka rule profile and an insert palette for rare liturgical marks.",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc -p tsconfig.json",
+    "build:single": "SINGLE_FILE=1 vite build && node scripts/make-single-file.mjs",
+    "gen-rules": "tsx scripts/gen-rules.ts",
+    "gen-rules:check": "tsx scripts/gen-rules.ts --check",
+    "eval": "tsx eval/run.ts",
+    "test": "vitest run"
+  },
+  "//dependencies": [
+    "Deliberately empty. Appv2 is NOT a member of the root package.json",
+    "'workspaces' array, because adding it there would mean editing an existing",
+    "file. @odia/core is reached through the vite alias and the tsconfig",
+    "'paths' entry (both point at ../core/src/index.ts), and the eval harnesses",
+    "import ../../core/src/*.js by relative path under tsx.",
+    "",
+    "vite, tsx, vitest and smol-toml all resolve from the repo-root",
+    "node_modules/ by Node's upward walk, so there is nothing to install here.",
+    "Run from the repo root:  npx vite --config Appv2/vite.config.ts",
+    "                         npx tsx Appv2/eval/run.ts"
+  ]
+}

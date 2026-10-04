@@ -1,0 +1,24 @@
+{
+  "generatedAt": "2026-07-27T06:11:28.678Z",
+  "golden": "core/test/golden/heldout.tsv",
+  "buckets": {
+    "inLexicon": {
+      "keys": 1125,
+      "top1": 0.6328888888888888,
+      "top5": 0.8204444444444444,
+      "meanEditDistance": 1.5980629539951574
+    },
+    "oov": {
+      "keys": 3076,
+      "top1": 0.06924577373211964,
+      "top5": 0.14759427828348504,
+      "meanEditDistance": 3.3674467341949006
+    },
+    "overall": {
+      "keys": 4201,
+      "top1": 0.22018567007855272,
+      "top5": 0.32777910021423473,
+      "meanEditDistance": 3.1443833943833943
+    }
+  }
+}

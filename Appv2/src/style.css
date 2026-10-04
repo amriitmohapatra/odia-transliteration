@@ -1,0 +1,797 @@
+/*
+ * Odia Phonetic — PWA styles.
+ *
+ * Two constraints shape almost everything here:
+ *
+ *   1. iOS Safari zooms the viewport when a focused input has a font-size below
+ *      16px, so no control anywhere drops below 16px.
+ *   2. Odia needs more vertical room and a larger optical size than Latin at the
+ *      same nominal font-size. `--odia-scale` handles that in one place.
+ *
+ * Safe-area insets are applied at the outermost padding so the layout survives
+ * the notch and the Home indicator in standalone mode.
+ */
+
+:root {
+  color-scheme: light dark;
+
+  --bg: #f7f6fa;
+  --surface: #ffffff;
+  --surface-soft: #f1eff7;
+  --text: #1b1b21;
+  --muted: #63636f;
+  --line: #dedbe8;
+  --accent: #5b2a9a;
+  --accent-text: #ffffff;
+  --accent-soft: #ece3fb;
+  --ok: #0a7050;
+  --warn: #8a4a00;
+
+  /* Floating surfaces that sit ABOVE the page: the caret candidate bar, the
+   * palette keys. Previously these were written `var(--panel, #fff)` against a
+   * token that was never defined, so the fallback applied unconditionally and
+   * the candidate bar stayed white in dark mode — with dark-mode --muted text
+   * on it, which is the "hard to read when typing" report.
+   *
+   * A missing custom property fails SILENTLY to its fallback. Nothing warns.
+   * Appv2/eval/check-theme.mjs now fails the build on an undefined token. */
+  --panel: #ffffff;
+  --card: #f1eff7;
+
+  --radius: 14px;
+  --tap: 44px;
+  --odia-scale: 1.32;
+  --odia-font: 'Noto Sans Oriya', 'Oriya Sangam MN', 'Kalinga', 'Oriya MN', sans-serif;
+  --ui-font: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  --mono-font: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #131318;
+    --surface: #1c1c23;
+    --surface-soft: #23232c;
+    --text: #ecebf2;
+    --muted: #9b9aa9;
+    --line: #32323e;
+    --accent: #c3a4f4;
+    --accent-text: #1a1024;
+    --accent-soft: #2a2138;
+    --ok: #59d5a0;
+    --warn: #e0aa62;
+    /* Lighter than --surface, not darker: a popover floating above the page
+     * reads as elevated when it catches more light, which is the opposite of
+     * the light-mode instinct to make it whiter than white. */
+    --panel: #272733;
+    --card: #24242e;
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  /* Stop iOS Safari inflating text in landscape. */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font: 17px/1.55 var(--ui-font);
+  /* No horizontal scrolling in portrait, ever. */
+  overflow-x: hidden;
+  overscroll-behavior-y: contain;
+  padding:
+    env(safe-area-inset-top)
+    env(safe-area-inset-right)
+    env(safe-area-inset-bottom)
+    env(safe-area-inset-left);
+}
+
+.app {
+  max-width: 46rem;
+  margin: 0 auto;
+  padding: 1rem 1rem 3rem;
+}
+
+/* ------------------------------------------------------------------ *
+ * Masthead
+ * ------------------------------------------------------------------ */
+
+.masthead {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.25rem 0 1.25rem;
+}
+
+.masthead .mark {
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  width: 46px;
+  height: 46px;
+  border-radius: 12px;
+  background: var(--accent);
+  color: var(--accent-text);
+  font-size: 1.6rem;
+  line-height: 1;
+  padding-bottom: 0.15em;
+}
+
+.masthead h1 {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 650;
+  letter-spacing: -0.01em;
+}
+
+.tagline {
+  margin: 0.1rem 0 0;
+  color: var(--muted);
+  font-size: 0.875rem;
+}
+
+/* ------------------------------------------------------------------ *
+ * Odia text
+ * ------------------------------------------------------------------ */
+
+.odia {
+  font-family: var(--odia-font);
+  font-size: calc(1em * var(--odia-scale));
+  line-height: 1.75;
+}
+
+/* ------------------------------------------------------------------ *
+ * Panes
+ * ------------------------------------------------------------------ */
+
+.pane {
+  margin-bottom: 1rem;
+}
+
+.pane-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.pane-label {
+  display: block;
+  margin: 0 0 0.4rem;
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+}
+
+.pane-hint {
+  margin-bottom: 0.4rem;
+  color: var(--muted);
+  font-size: 0.78rem;
+}
+
+textarea {
+  display: block;
+  width: 100%;
+  min-height: 6.5rem;
+  padding: 0.75rem 0.85rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--text);
+  /* Must stay at or above 16px: below it, iOS Safari zooms on focus. */
+  font: 17px/1.6 var(--mono-font);
+  resize: vertical;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+textarea:focus-visible,
+textarea:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+.output {
+  min-height: 6.5rem;
+  padding: 0.6rem 0.7rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface-soft);
+  /* pre-wrap preserves the writer's own spacing and line breaks; anywhere stops
+     a long unbroken token from forcing the page sideways. */
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.output:empty::before {
+  content: attr(data-placeholder);
+  color: var(--muted);
+}
+
+/* A word in the output. Words with alternatives are buttons; words with only
+   one reading are inert spans, so nothing looks tappable that is not. At the
+   Odia size and line-height above, each line box clears 44px on a phone. */
+.word {
+  display: inline-block;
+  margin: 0;
+  padding: 0.1em 0.12em;
+  border: 0;
+  border-radius: 5px;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: inherit;
+}
+
+button.word {
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Dotted underline marks a word the engine is not certain about. */
+.word.ambiguous {
+  border-bottom: 2px dotted var(--accent);
+}
+
+.word.chosen {
+  background: var(--accent-soft);
+}
+
+button.word:active,
+button.word.open {
+  background: var(--accent);
+  color: var(--accent-text);
+}
+
+button.word:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+/* ------------------------------------------------------------------ *
+ * Buttons and toggles
+ * ------------------------------------------------------------------ */
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin: 0.25rem 0 1rem;
+}
+
+.btn {
+  min-height: var(--tap);
+  min-width: var(--tap);
+  padding: 0 1.15rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--text);
+  font: 600 17px/1 var(--ui-font);
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.btn:active {
+  opacity: 0.7;
+}
+
+.btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.btn-primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-text);
+  flex: 1 1 12rem;
+}
+
+.btn-small {
+  min-height: 38px;
+  padding: 0 0.9rem;
+  font-size: 16px;
+}
+
+.toggles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1.25rem;
+  margin-bottom: 0.75rem;
+}
+
+.switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  min-height: var(--tap);
+  color: var(--muted);
+  font-size: 16px;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.switch input {
+  width: 22px;
+  height: 22px;
+  margin: 0;
+  accent-color: var(--accent);
+  flex: 0 0 auto;
+}
+
+.status {
+  margin: 0 0 1.25rem;
+  min-height: 1.2em;
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+
+.status.warn {
+  color: var(--warn);
+}
+
+/* ------------------------------------------------------------------ *
+ * Candidate picker — a bottom sheet, so it is reachable one-handed
+ * ------------------------------------------------------------------ */
+
+.picker {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.picker[hidden] {
+  display: none;
+}
+
+.picker-scrim {
+  position: absolute;
+  inset: 0;
+  background: rgb(0 0 0 / 45%);
+}
+
+.picker-panel {
+  position: relative;
+  max-height: 70vh;
+  max-height: 70dvh;
+  display: flex;
+  flex-direction: column;
+  background: var(--surface);
+  border-top: 1px solid var(--line);
+  border-radius: 18px 18px 0 0;
+  box-shadow: 0 -8px 30px rgb(0 0 0 / 22%);
+  padding-bottom: max(0.75rem, env(safe-area-inset-bottom));
+  margin: 0 auto;
+  width: 100%;
+  max-width: 46rem;
+  animation: rise 0.16s ease-out;
+}
+
+@keyframes rise {
+  from {
+    transform: translateY(12%);
+    opacity: 0.4;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .picker-panel {
+    animation: none;
+  }
+}
+
+.picker-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.85rem 1rem 0.6rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.picker-head h2 {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.picker-head h2 .roman {
+  font-family: var(--mono-font);
+  color: var(--accent);
+}
+
+.picker-list {
+  list-style: none;
+  margin: 0;
+  padding: 0.35rem 0.5rem 0;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.picker-list li {
+  margin: 0;
+}
+
+.candidate {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  width: 100%;
+  min-height: 52px;
+  padding: 0.5rem 0.75rem;
+  border: 0;
+  border-radius: 10px;
+  background: none;
+  color: var(--text);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.candidate:active {
+  background: var(--accent-soft);
+}
+
+.candidate[aria-current='true'] {
+  background: var(--accent-soft);
+}
+
+.candidate .text {
+  font-family: var(--odia-font);
+  font-size: calc(1rem * var(--odia-scale));
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+
+.candidate .source {
+  flex: 0 0 auto;
+  color: var(--muted);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* ------------------------------------------------------------------ *
+ * Cheat sheet
+ * ------------------------------------------------------------------ */
+
+.guide {
+  margin-top: 1.5rem;
+  border-top: 1px solid var(--line);
+  padding-top: 0.25rem;
+}
+
+.guide summary {
+  display: flex;
+  align-items: center;
+  min-height: var(--tap);
+  color: var(--accent);
+  font-weight: 600;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.guide h3 {
+  margin: 1.4rem 0 0.4rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+}
+
+/* Wide tables scroll inside their own box; the page never scrolls sideways. */
+.scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 0.92rem;
+}
+
+th,
+td {
+  padding: 0.35rem 0.5rem;
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+  white-space: nowrap;
+}
+
+thead th {
+  color: var(--muted);
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+tbody th {
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+code {
+  padding: 0.05em 0.35em;
+  border-radius: 4px;
+  background: var(--surface-soft);
+  font-family: var(--mono-font);
+  font-size: 0.88em;
+}
+
+.note {
+  margin: 0.85rem 0;
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
+/* ------------------------------------------------------------------ *
+ * Colophon and toast
+ * ------------------------------------------------------------------ */
+
+.colophon {
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+
+.colophon p {
+  margin: 0 0 0.5rem;
+}
+
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: calc(1.5rem + env(safe-area-inset-bottom));
+  z-index: 30;
+  transform: translateX(-50%) translateY(0.4rem);
+  padding: 0.7rem 1.25rem;
+  border-radius: 999px;
+  background: var(--ok);
+  /* Same flip as .inline-candidate.is-active: in dark mode --ok is a light
+   * mint (#59d5a0) and white text on it is unreadable. */
+  color: var(--accent-text);
+  font-size: 0.9rem;
+  font-weight: 600;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.18s ease, transform 0.18s ease;
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+.toast.error {
+  background: var(--warn);
+}
+
+/* Visually hidden but reachable: the clipboard fallback textarea has to be
+   selectable, so it cannot use display:none or visibility:hidden. */
+.offscreen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  border: 0;
+  opacity: 0;
+  font-size: 16px;
+  pointer-events: none;
+}
+
+/* ---------------------------------------------------------------- inline
+   Live candidate bar at the caret — the Windows IME interaction. Positioned
+   in page coordinates by inline.ts, so it must sit above everything and must
+   not inherit the pane's overflow clipping. */
+
+/* `display: flex` below outranks the UA rule for [hidden], so hiding has to be
+   restated explicitly or the bar never goes away after a commit. */
+.inline-candidates[hidden] { display: none; }
+
+.inline-candidates {
+  position: absolute;
+  z-index: 60;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  max-width: min(92vw, 640px);
+  padding: 6px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--panel);
+  box-shadow: 0 6px 24px rgb(0 0 0 / 18%);
+}
+
+.inline-candidate {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 34px;
+  padding: 2px 10px 2px 6px;
+  border: 1px solid transparent;
+  border-radius: 7px;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+
+.inline-candidate:hover { background: rgb(0 0 0 / 6%); }
+
+.inline-candidate.is-active {
+  background: var(--accent);
+  /* NOT #fff. In dark mode --accent is a light lavender (#c3a4f4), so white
+   * text on it is barely legible. --accent-text is the token that already
+   * flips: white on light, near-black on dark. */
+  color: var(--accent-text);
+}
+
+/* The unselected candidates inherit --text, which is correct, but they sit on
+ * --panel rather than the page background, so give them a little more contrast
+ * than the surrounding chrome rather than less. */
+.inline-candidate { color: var(--text); }
+
+.inline-num {
+  min-width: 1.35em;
+  padding: 0 3px;
+  border: 1px solid currentColor;
+  border-radius: 4px;
+  opacity: 0.65;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.72rem;
+  line-height: 1.5;
+  text-align: center;
+}
+
+.inline-text { font-size: 1.15em; }
+
+/* Hidden twin of the textarea, used only to measure where the caret is. */
+.caret-mirror {
+  position: absolute;
+  top: -9999px;
+  left: -9999px;
+  visibility: hidden;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  pointer-events: none;
+}
+
+@media (prefers-color-scheme: dark) {
+  .inline-candidate:hover { background: rgb(255 255 255 / 10%); }
+}
+
+/* ==========================================================================
+ * Appv2 additions: the mode selector, the insert palette, shortcut hints.
+ *
+ * Appended rather than woven in, so a diff against web/src/style.css shows
+ * exactly what Appv2 adds and nothing else.
+ * ========================================================================== */
+
+.mode-label {
+  margin-right: 0.4rem;
+  opacity: 0.75;
+}
+
+.mode-select {
+  font: inherit;
+  /* 16px, unconditionally.
+   *
+   * iOS Safari zooms the whole page when a form control smaller than 16px
+   * takes focus. This was first written as 0.9rem with a
+   * `@media (pointer: coarse)` bump to 1rem, on the theory that only the touch
+   * path matters — and tools/eval/webkit-check.py failed it at 14.4px. The
+   * check is right and the media query was too clever: the rule the project
+   * enforces is flat, so this is flat. */
+  font-size: 1rem;
+  padding: 0.15rem 0.4rem;
+  border-radius: 0.4rem;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: inherit;
+  min-height: 2rem;
+}
+
+.mode-hint {
+  margin: 0.45rem 0 0;
+  font-size: 0.82rem;
+  opacity: 0.7;
+}
+
+/* The palette is a horizontally scrolling strip. It must never widen the page:
+ * wide content scrolls inside its own container, the body never scrolls
+ * sideways. */
+.palette {
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 0.5rem 0.1rem;
+  margin: -0.25rem 0 0.75rem;
+  scrollbar-width: thin;
+}
+
+.palette-group {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  flex: 0 0 auto;
+}
+
+.palette-name {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  opacity: 0.55;
+  margin-right: 0.15rem;
+  white-space: nowrap;
+}
+
+.palette-key {
+  font-family: var(--odia-font);
+  font-size: 1.15rem;
+  line-height: 1;
+  /* 44px: the minimum comfortable touch target. */
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0 0.35rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--line);
+  background: var(--card);
+  color: inherit;
+  cursor: pointer;
+}
+
+.palette-key:hover { background: var(--accent-soft); }
+.palette-key:active { transform: translateY(1px); }
+
+.shortcuts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1.1rem;
+  list-style: none;
+  padding: 0;
+  margin: 0.5rem 0 0.9rem;
+}
+
+.shortcuts li {
+  display: flex;
+  align-items: baseline;
+  gap: 0.3rem;
+  font-size: 0.9rem;
+}
+
+.shortcuts .gives {
+  font-family: var(--odia-font);
+  font-size: 1.05rem;
+}

@@ -1,0 +1,16 @@
+# Real Odia supplied by the user, 2026-07-27.
+#
+# This matters more than it looks. Aksharantar's Odia split is 95.7% IndicCorp-mined
+# surface forms with a mean word length of 8.7 characters, and only 2 of 25 common
+# everyday words appear in it (see plan/03-spikes.md, S2b). This file is therefore the
+# project's only source of ordinary, connected Odia — the register the tool actually has
+# to handle.
+#
+# Keep it verbatim. Do not "tidy" the spelling: the nukta in ବଡ଼ପଣ and the conjuncts in
+# ରାଜଯୋଗଟି, ଜନ୍ମିଲେ, ଚିରସ୍ଥାୟୀ are exactly the cases that break naive engines.
+
+ଷଣ୍ଢ ମୁଣ୍ଡେ ଚାନ୍ଦ ଉଇଁ ଆସୁଅଛି, କଣା କେରାଣ୍ଡି ଦରାଣ୍ଡି ଧରିଛି। ଏମିତି ଯୋଗେ ସୁତ ଜନ୍ମିଲେ ରାଜଯୋଗଟି ହୁଏ ଭଳେ।
+
+ସମୟର ଚକ ଘୁରୁଛି, ଏହି ଚକ ସହିତ କାହାର ଭାଗ୍ୟ ବଦଳୁଛି। ରାଜା ରାମଚନ୍ଦ୍ର ଯାଆନ୍ତି ବନବାସ, ନଳ ରାଜା କାଟନ୍ତି ଘାସ। ଅଶୋକ ବନେ ଜନକ ରାଜକୁମାରୀ ଲୋତକ ଝରାଉଛନ୍ତି। ଏହି ତ ସମୟର ଚକ ଘୁରୁଛି, ଏହି ଚକ ସହିତ କାହାର ଭାଗ୍ୟ ବଦଳୁଛି।
+
+କର୍ମ ଫଳେ ଭବେ ବଡ଼ପଣ ପାଇ। ଧର୍ମ ଫଳେ ତାହାକୁ କର ଚିରସ୍ଥାୟୀ।

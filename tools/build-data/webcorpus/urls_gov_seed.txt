@@ -1,0 +1,6 @@
+# seed probe: mixed government / institutional Odia pages
+https://odisha.gov.in/or
+https://khordha.odisha.gov.in/od/
+https://culture.odisha.gov.in/od
+https://dhe.odisha.gov.in/
+https://odishaassembly.nic.in/

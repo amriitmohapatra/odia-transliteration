@@ -1,0 +1,105 @@
+# =============================================================================
+# The unified profile — everyday Odia that can ALSO reach Sanskrit.
+#
+# This is the default. It extends the śloka delta rather than restating it, so
+# the two profiles cannot drift apart on the items they share: change S4 once,
+# in sanskrit.delta.toml, and both files get it.
+#
+# The difference is entirely one of RANKING, not reachability. Everything the
+# śloka profile can produce, this can produce too — just further down the list.
+# The user's own framing: "suggest them as more numbered options when one types."
+#
+# Compile with:  npx tsx Appv2/scripts/gen-rules.ts
+# =============================================================================
+
+[meta]
+profile = "unified"
+extends = "sanskrit.delta.toml"
+note = """
+Everyday Odia with Sanskrit reachable one or two slots down.
+Extends sanskrit.delta.toml; re-weights S1/S2/S3 and drops the śloka-only
+vocalics. Guarded by Appv2/eval/no-regression.ts against the existing
+everyday numbers (casual top-3 95.7%, careful top-1 89.1%).
+"""
+
+# Excluded because they are genuinely wrong for everyday Odia, not merely
+# aggressive:
+#
+#   S6a-S6e  the "rri" / "lri" / "llri" vowel keys sit on top of the existing
+#            2-char consonant key "rr" -> ଡ଼, which AGENTS.md §5 records as the
+#            fix that made 47 conjuncts reachable. ୠ has 22 attestations in
+#            527k types; ଡ଼ is in the language's own name. Bad trade here.
+#
+#   S6f/S6g  raising ru/ri to the vocalic ଋ reverses a measured decision:
+#            AGENTS.md §4 records that reading them only as ୃ turned "kari"
+#            into କଋ, and କରି alone occurs 77,908 times.
+#
+# S0 is absent by omission rather than by exclusion: [set] is not inherited
+# through `extends` (only blocks are), so leaving out a [set] table here keeps
+# [weights] freq at the base 1.5.
+exclude = ["S6a", "S6b", "S6c", "S6d", "S6e", "S6f", "S6g"]
+
+
+# --------------------------------------------------------------------------
+# S1 — word-final anusvara, ranked second instead of first.
+#
+# Śloka mode uses w=1.6, which beats the ମ consonant outright. That is right
+# for verse and wrong for prose: everyday Odia word-final -m is usually ମ.
+# 0.55 puts ଂ just behind ମ — present, visible, one keystroke away — which is
+# exactly the behaviour asked for.
+# --------------------------------------------------------------------------
+[[sign.replace]]
+id = "S1"
+roman = "m"
+odia = [
+  { text = "ଂ", w = 0.55, context = "word_final" },
+  { text = "ଁ", w = 0.25, context = "word_final" },
+  { text = "ଂ", w = 0.5, context = "before_consonant" },
+  { text = "ଁ", w = 0.2, context = "before_consonant" },
+]
+
+
+# --------------------------------------------------------------------------
+# S2 — ଳ at the weights D6 actually measured.
+#
+# Śloka mode pushes ଳ above ଲ outright (1.15 / 1.05). Here it sits at 0.9, the
+# value trialled in tools/build-data/webcorpus/fix_trial.ts: ଳ is 33% of all l
+# and 59% of word-final l, so it belongs high — but ଲ is still the plurality
+# reading and should keep rank 1 in prose.
+#
+# The non_initial and word_initial rows are inherited unchanged from the śloka
+# delta: non_initial keeps ଳ reachable inside a conjunct (without it coverage
+# pass D regresses), and word_initial at 0.02 suppresses a form that never
+# occurs.
+# --------------------------------------------------------------------------
+[[consonant.replace]]
+id = "S2"
+roman = "l"
+odia = [
+  { text = "ଲ", w = 1.0 },
+  { text = "ଳ", w = 0.9, context = "word_final" },
+  { text = "ଳ", w = 0.9, context = "intervocalic" },
+  { text = "ଳ", w = 0.35, context = "non_initial" },
+  { text = "ଳ", w = 0.02, context = "word_initial" },
+]
+
+
+# --------------------------------------------------------------------------
+# S3 — medial visarga, halved.
+#
+# The spurious readings this creates (କଃଅ for "kha", ଅଚଃହ for "achha") are a
+# tax paid on every aspirate digraph, and everyday Odia is full of those while
+# needing medial ଃ rarely. 0.25 keeps ଦୁଃଖ reachable without the noise showing
+# up in a five-item list. Typing ":" explicitly is the reliable route either
+# way — see Appv2/src/preprocess.ts.
+# --------------------------------------------------------------------------
+[[sign.merge]]
+id = "S3"
+roman = "h"
+odia = [{ text = "ଃ", w = 0.25, context = "before_consonant" }]
+
+
+# Everything else — S1b, S1c, S4a-S4d, S5a-S5e, S7-S7h, S8 — is inherited
+# verbatim from sanskrit.delta.toml. Those blocks are either measured on the
+# Odia web corpus already (the D1-D5, D7 patch) or weighted so low they cannot
+# change rank 1 (S5e at 0.06).

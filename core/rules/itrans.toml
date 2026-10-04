@@ -1,0 +1,112 @@
+# itrans.toml — strict mode. Deterministic, case-sensitive, one answer only.
+#
+# This is not a competitor to the fuzzy engine, it is its correctness oracle:
+# a scheme where every roman string has exactly one Odia spelling, so a
+# regression in segment.ts shows up as a disagreement rather than as a vague
+# feeling that the candidates got worse.
+#
+# Seeded from the MIT-licensed indic-transliteration `common_maps/oriya.toml`
+# conventions. Case matters here and only here — natural mode folds it.
+#
+# `core/src/rules.ts` compiles these three tables into the single flat
+# longest-match map that `StrictScheme` declares:
+#
+#   consonant alone       "k"    -> କ + virama
+#   consonant + vowel     "ki"   -> କ + i-matra          (generated pairwise)
+#   vowel alone           "i"    -> ଇ, the independent form
+#   sign                  "M"    -> ଂ
+#
+# Generating the consonant x vowel product at load time is what lets strict.ts
+# be a plain longest-match loop with no state machine: "ka" can only be
+# matched by the combined key, so a bare consonant key is only ever reached
+# when the consonant really is followed by another consonant or by the end of
+# the word, which is exactly when the virama belongs there.
+#
+# The two nukta letters are written as \u escapes. See symbols.toml for why.
+
+[meta]
+name = "itrans"
+
+[vowels]
+a = { independent = "ଅ", matra = "" }
+A = { independent = "ଆ", matra = "ା" }
+aa = { independent = "ଆ", matra = "ା" }
+i = { independent = "ଇ", matra = "ି" }
+I = { independent = "ଈ", matra = "ୀ" }
+ii = { independent = "ଈ", matra = "ୀ" }
+ee = { independent = "ଈ", matra = "ୀ" }
+u = { independent = "ଉ", matra = "ୁ" }
+U = { independent = "ଊ", matra = "ୂ" }
+uu = { independent = "ଊ", matra = "ୂ" }
+oo = { independent = "ଊ", matra = "ୂ" }
+RRi = { independent = "ଋ", matra = "ୃ" }
+RRI = { independent = "ୠ", matra = "ୄ" }
+e = { independent = "ଏ", matra = "େ" }
+ai = { independent = "ଐ", matra = "ୈ" }
+o = { independent = "ଓ", matra = "ୋ" }
+au = { independent = "ଔ", matra = "ୌ" }
+
+[consonants]
+k = "କ"
+kh = "ଖ"
+g = "ଗ"
+gh = "ଘ"
+"~N" = "ଙ"
+
+ch = "ଚ"
+Ch = "ଛ"
+chh = "ଛ"
+j = "ଜ"
+jh = "ଝ"
+"~n" = "ଞ"
+
+T = "ଟ"
+Th = "ଠ"
+D = "ଡ"
+Dh = "ଢ"
+N = "ଣ"
+
+t = "ତ"
+th = "ଥ"
+d = "ଦ"
+dh = "ଧ"
+n = "ନ"
+
+p = "ପ"
+ph = "ଫ"
+b = "ବ"
+bh = "ଭ"
+m = "ମ"
+
+y = "ଯ"
+Y = "ୟ"
+r = "ର"
+l = "ଲ"
+L = "ଳ"
+v = "ୱ"
+w = "ୱ"
+sh = "ଶ"
+Sh = "ଷ"
+shh = "ଷ"
+s = "ସ"
+h = "ହ"
+
+# Conjuncts that ITRANS treats as single letters.
+x = "କ୍ଷ"
+ksh = "କ୍ଷ"
+kSh = "କ୍ଷ"
+GY = "ଜ୍ଞ"
+"j~n" = "ଜ୍ଞ"
+dny = "ଜ୍ଞ"
+
+# The nukta flaps. Decomposed, always.
+".D" = "\u0B21\u0B3C"   # RRA
+".Dh" = "\u0B22\u0B3C"  # RHA
+
+[signs]
+M = "ଂ"
+".m" = "ଂ"
+H = "ଃ"
+".h" = "ଃ"
+".N" = "ଁ"
+".n" = "ଁ"

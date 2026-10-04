@@ -1,0 +1,464 @@
+{
+  "aggregate": {
+    "pre_0B5C": 86,
+    "pre_0B5D": 3,
+    "dec_DDA_NUKTA": 698,
+    "dec_DDHA_NUKTA": 6,
+    "nukta_total": 714,
+    "is_nfc": 8,
+    "pages": 50,
+    "nfc_pages": 8
+  },
+  "pages": [
+    {
+      "url": "https://sdte.odisha.gov.in/or",
+      "pre_0B5C": 0,
+      "pre_0B5D": 0,
+      "dec_DDA_NUKTA": 10,
+      "dec_DDHA_NUKTA": 1,
+      "nukta_total": 11,
+      "is_nfc": false
+    },
+    {
+      "url": "https://gajapati.odisha.gov.in/or",
+      "pre_0B5C": 2,
+      "pre_0B5D": 1,
+      "dec_DDA_NUKTA": 14,
+      "dec_DDHA_NUKTA": 0,
+      "nukta_total": 15,
+      "is_nfc": false
+    },
+    {
+      "url": "https://wcd.odisha.gov.in/or",
+      "pre_0B5C": 2,
+      "pre_0B5D": 0,
+      "dec_DDA_NUKTA": 10,
+      "dec_DDHA_NUKTA": 0,
+      "nukta_total": 10,
+      "is_nfc": false
+    },
+    {
+      "url": "https://odisha.gov.in/or",
+      "pre_0B5C": 5,
+      "pre_0B5D": 0,
+      "dec_DDA_NUKTA": 25,
+      "dec_DDHA_NUKTA": 0,
+      "nukta_total": 25,
+      "is_nfc": false
+    },
+    {
+      "url": "https://puri.odisha.gov.in/or",
+      "pre_0B5C": 0,
+      "pre_0B5D": 0,
+      "dec_DDA_NUKTA": 12,
+      "dec_DDHA_NUKTA": 0,
+      "nukta_total": 13,
+      "is_nfc": true
+    },
+    {
+      "url": "https://law.odisha.gov.in/or",
+      "pre_0B5C": 0,
+      "pre_0B5D": 0,
+      "dec_DDA_NUKTA": 12,
+      "dec_DDHA_NUKTA": 0,
+      "nukta_total": 12,
+      "is_nfc": false
+    },
+    {
+      "url": "https://panchayat.odisha.gov.in/or",
+      "pre_0B5C": 3,
+      "pre_0B5D": 0,
+      "dec_DDA_NUKTA": 8,
+      "dec_DDHA_NUKTA": 0,
+      "nukta_total": 8,
+      "is_nfc": false
+    },
+    {
+      "url": "https://handloom.odisha.gov.in/or",
+      "pre_0B5C": 0,
+      "pre_0B5D": 0,
+      "dec_DDA_NUKTA": 10,
+      "dec_DDHA_NUKTA": 0,
+      "nukta_total": 10,
+      "is_nfc": false
+    },
+    {
+      "url": "https://rayagada.odisha.gov.in/or",
+      "pre_0B5C": 1,
+      "pre_0B5D": 0,
+      "dec_DDA_NUKTA": 30,
+      "dec_DDHA_NUKTA": 0,
+      "nukta_total": 31,
+      "is_nfc": false
+    },
+    {
+      "url": "https://district.odisha.gov.in/or",
+      "pre_0B5C": 0,
+      "pre_0B5D": 0,
+      "dec_DDA_NUKTA": 4,
+      "dec_DDHA_NUKTA": 0,
+      "nukta_total": 4,
+      "is_nfc": true
+    },
+    {
+      "url": "https://missionshakti.odisha.gov.in/or",
+      "pre_0B5C": 0,
+      "pre_0B5D": 0,
+      "dec_DDA_NUKTA": 4,
+      "dec_DDHA_NUKTA": 0,
+      "nukta_total": 4,
+      "is_nfc": false
+    },
+    {
+      "url": "https://it.odisha.gov.in/or",
+      "pre_0B5C": 0,
+      "pre_0B5D": 0,
+      "dec_DDA_NUKTA": 8,
+      "dec_DDHA_NUKTA": 1,
+      "nukta_total": 9,
+      "is_nfc": false
+    },
+    {
+      "url": "https://anugola.odisha.gov.in/or",
+      "pre_0B5C": 0,
+      "pre_0B5D": 0,
+      "dec_DDA_NUKTA": 14,
+      "dec_DDHA_NUKTA": 0,
+      "nukta_total": 14,
+      "is_nfc": true
+    },
+    {
+      "url": "https://khordha.odisha.gov.in/or",
+      "pre_0B5C": 0,
+      "pre_0B5D": 0,
+      "dec_DDA_NUKTA": 12,
+      "dec_DDHA_NUKTA": 0,
+      "nukta_total": 12,
+      "is_nfc": true
+    },
+    {
+      "url": "https://debagada.odisha.gov.in/or",
+      "pre_0B5C": 5,
+      "pre_0B5D": 0,
+      "dec_DDA_NUKTA": 38,
+      "dec_DDHA_NUKTA": 0,
+      "nukta_total": 38,
+      "is_nfc": false
+    },
+    {
+      "url": "https://urban.odisha.gov.in/or",
+      "pre_0B5C": 1,
+      "pre_0B5D": 0,
+      "dec_DDA_NUKTA": 13,
+      "dec_DDHA_NUKTA": 1,
+      "nukta_total": 15,
+      "is_nfc": false
+    },
+    {
+      "url": "https://cm.odisha.gov.in/or",
+      "pre_0B5C": 6,
+      "pre_0B5D": 0,
+      "dec_DDA_NUKTA": 4,
+      "dec_DDHA_NUKTA": 0,
+      "nukta_total": 6,
+      "is_nfc": false
+    },
+    {
+      "url": "https://culture.odisha.gov.in/or",
+      "pre_0B5C": 6,
+      "pre_0B5D": 0,
+      "dec_DDA_NUKTA": 42,
+      "dec_DDHA_NUKTA": 0,
+      "nukta_total": 42,
+      "is_nfc": false
+    },
+    {
+      "url": "https://dot.odisha.gov.in/or",
+      "pre_0B5C": 2,
+      "pre_0B5D": 1,
+      "dec_DDA_NUKTA": 16,
+      "dec_DDHA_NUKTA": 0,
+      "nukta_total": 16,
+      "is_nfc": false
+    },
+    {
+      "url": "https://pe.odisha.gov.in/or",
+      "pre_0B5C": 1,
+      "pre_0B5D": 0,
+      "dec_DDA_NUKTA": 11,
+      "dec_DDHA_NUKTA": 0,
+      "nukta_total": 11,
+      "is_nfc": false
+    },
+    {
+      "url": "https://subarnapur.odisha.gov.in/or",
+      "pre_0B5C": 2,
+      "pre_0B5D": 1,
+      "dec_DDA_NUKTA": 17,
+      "dec_DDHA_NUKTA": 0,
+      "nukta_total": 17,
+      "is_nfc": false
+    },
+    {
+      "url": "https://kandhamala.odisha.gov.in/or",
+      "pre_0B5C": 1,
+      "pre_0B5D": 0,
+      "dec_DDA_NUKTA": 11,
+      "dec_DDHA_NUKTA": 0,
+      "nukta_total": 11,
+      "is_nfc": false
+    },
+    {
+      "url": "https://labour.odisha.gov.in/or",
+      "pre_0B5C": 5,
+      "pre_0B5D": 0,
+      "dec_DDA_NUKTA": 8,
+      "dec_DDHA_NUKTA": 0,
+      "nukta_total": 8,
+      "is_nfc": false
+    },
+    {
+      "url": "https://msme.odisha.gov.in/or",
+      "pre_0B5C": 0,
+      "pre_0B5D": 0,
+      "dec_DDA_NUKTA": 7,
+      "dec_DDHA_NUKTA": 0,
+      "nukta_total": 7,
+      "is_nfc": false
+    },
+    {
+      "url": "https://dhe.odisha.gov.in/or",
+      "pre_0B5C": 0,
+      "pre_0B5D": 0,
+      "dec_DDA_NUKTA": 27,
+      "dec_DDHA_NUKTA": 0,
+      "nukta_total": 27,
+      "is_nfc": false
+    },
+    {
+      "url": "https://ga.odisha.gov.in/or",
+      "pre_0B5C": 3,
+      "pre_0B5D": 0,
+      "dec_DDA_NUKTA": 11,
+      "dec_DDHA_NUKTA": 0,
+      "nukta_total": 11,
+      "is_nfc": false
+    },
+    {
+      "url": "https://balangir.odisha.gov.in/or",
+      "pre_0B5C": 0,
+      "pre_0B5D": 0,
+      "dec_DDA_NUKTA": 19,
+      "dec_DDHA_NUKTA": 0,
+      "nukta_total": 19,
+      "is_nfc": true
+    },
+    {
+      "url": "https://agri.odisha.gov.in/or",
+      "pre_0B5C": 0,
+      "pre_0B5D": 0,
+      "dec_DDA_NUKTA": 12,
+      "dec_DDHA_NUKTA": 0,
+      "nukta_total": 12,
+      "is_nfc": false
+    },
+    {
+      "url": "https://energy.odisha.gov.in/or",
+      "pre_0B5C": 0,
+      "pre_0B5D": 0,
+      "dec_DDA_NUKTA": 14,
+      "dec_DDHA_NUKTA": 0,
+      "nukta_total": 14,
+      "is_nfc": false
+    },
+    {
+      "url": "https://industries.odisha.gov.in/or",
+      "pre_0B5C": 0,
+      "pre_0B5D": 0,
+      "dec_DDA_NUKTA": 7,
+      "dec_DDHA_NUKTA": 0,
+      "nukta_total": 7,
+      "is_nfc": false
+    },
+    {
+      "url": "https://ganjam.odisha.gov.in/or",
+      "pre_0B5C": 1,
+      "pre_0B5D": 0,
+      "dec_DDA_NUKTA": 10,
+      "dec_DDHA_NUKTA": 0,
+      "nukta_total": 10,
+      "is_nfc": false
+    },
+    {
+      "url": "https://baleshwar.odisha.gov.in/or",
+      "pre_0B5C": 0,
+      "pre_0B5D": 0,
+      "dec_DDA_NUKTA": 13,
+      "dec_DDHA_NUKTA": 0,
+      "nukta_total": 15,
+      "is_nfc": true
+    },
+    {
+      "url": "https://nuapada.odisha.gov.in/or",
+      "pre_0B5C": 5,
+      "pre_0B5D": 0,
+      "dec_DDA_NUKTA": 20,
+      "dec_DDHA_NUKTA": 0,
+      "nukta_total": 20,
+      "is_nfc": false
+    },
+    {
+      "url": "https://home.odisha.gov.in/or",
+      "pre_0B5C": 1,
+      "pre_0B5D": 0,
+      "dec_DDA_NUKTA": 12,
+      "dec_DDHA_NUKTA": 0,
+      "nukta_total": 12,
+      "is_nfc": false
+    },
+    {
+      "url": "https://koraput.odisha.gov.in/or",
+      "pre_0B5C": 0,
+      "pre_0B5D": 0,
+      "dec_DDA_NUKTA": 13,
+      "dec_DDHA_NUKTA": 0,
+      "nukta_total": 13,
+      "is_nfc": true
+    },
+    {
+      "url": "https://sambalpur.odisha.gov.in/or",
+      "pre_0B5C": 2,
+      "pre_0B5D": 0,
+      "dec_DDA_NUKTA": 12,
+      "dec_DDHA_NUKTA": 2,
+      "nukta_total": 14,
+      "is_nfc": false
+    },
+    {
+      "url": "https://finance.odisha.gov.in/or",
+      "pre_0B5C": 1,
+      "pre_0B5D": 0,
+      "dec_DDA_NUKTA": 7,
+      "dec_DDHA_NUKTA": 0,
+      "nukta_total": 7,
+      "is_nfc": false
+    },
+    {
+      "url": "https://health.odisha.gov.in/or",
+      "pre_0B5C": 0,
+      "pre_0B5D": 0,
+      "dec_DDA_NUKTA": 10,
+      "dec_DDHA_NUKTA": 0,
+      "nukta_total": 10,
+      "is_nfc": false
+    },
+    {
+      "url": "https://forest.odisha.gov.in/or",
+      "pre_0B5C": 0,
+      "pre_0B5D": 0,
+      "dec_DDA_NUKTA": 14,
+      "dec_DDHA_NUKTA": 0,
+      "nukta_total": 14,
+      "is_nfc": false
+    },
+    {
+      "url": "https://malkangiri.odisha.gov.in/or",
+      "pre_0B5C": 1,
+      "pre_0B5D": 0,
+      "dec_DDA_NUKTA": 14,
+      "dec_DDHA_NUKTA": 0,
+      "nukta_total": 14,
+      "is_nfc": false
+    },
+    {
+      "url": "https://kalahandi.odisha.gov.in/or",
+      "pre_0B5C": 0,
+      "pre_0B5D": 0,
+      "dec_DDA_NUKTA": 26,
+      "dec_DDHA_NUKTA": 0,
+      "nukta_total": 26,
+      "is_nfc": true
+    },
+    {
+      "url": "https://inpr.odisha.gov.in/or",
+      "pre_0B5C": 0,
+      "pre_0B5D": 0,
+      "dec_DDA_NUKTA": 7,
+      "dec_DDHA_NUKTA": 0,
+      "nukta_total": 7,
+      "is_nfc": false
+    },
+    {
+      "url": "https://food.odisha.gov.in/or",
+      "pre_0B5C": 0,
+      "pre_0B5D": 0,
+      "dec_DDA_NUKTA": 10,
+      "dec_DDHA_NUKTA": 0,
+      "nukta_total": 10,
+      "is_nfc": false
+    },
+    {
+      "url": "https://baragada.odisha.gov.in/or",
+      "pre_0B5C": 12,
+      "pre_0B5D": 0,
+      "dec_DDA_NUKTA": 12,
+      "dec_DDHA_NUKTA": 1,
+      "nukta_total": 13,
+      "is_nfc": false
+    },
+    {
+      "url": "https://works.odisha.gov.in/or",
+      "pre_0B5C": 1,
+      "pre_0B5D": 0,
+      "dec_DDA_NUKTA": 11,
+      "dec_DDHA_NUKTA": 0,
+      "nukta_total": 11,
+      "is_nfc": false
+    },
+    {
+      "url": "https://fard.odisha.gov.in/or",
+      "pre_0B5C": 2,
+      "pre_0B5D": 0,
+      "dec_DDA_NUKTA": 11,
+      "dec_DDHA_NUKTA": 0,
+      "nukta_total": 11,
+      "is_nfc": false
+    },
+    {
+      "url": "https://ct.odisha.gov.in/or",
+      "pre_0B5C": 0,
+      "pre_0B5D": 0,
+      "dec_DDA_NUKTA": 10,
+      "dec_DDHA_NUKTA": 0,
+      "nukta_total": 10,
+      "is_nfc": false
+    },
+    {
+      "url": "https://sundaragada.odisha.gov.in/or",
+      "pre_0B5C": 5,
+      "pre_0B5D": 0,
+      "dec_DDA_NUKTA": 27,
+      "dec_DDHA_NUKTA": 0,
+      "nukta_total": 27,
+      "is_nfc": false
+    },
+    {
+      "url": "https://ssepd.odisha.gov.in/or",
+      "pre_0B5C": 0,
+      "pre_0B5D": 0,
+      "dec_DDA_NUKTA": 7,
+      "dec_DDHA_NUKTA": 0,
+      "nukta_total": 7,
+      "is_nfc": false
+    },
+    {
+      "url": "https://jharsuguda.odisha.gov.in/or",
+      "pre_0B5C": 10,
+      "pre_0B5D": 0,
+      "dec_DDA_NUKTA": 22,
+      "dec_DDHA_NUKTA": 0,
+      "nukta_total": 24,
+      "is_nfc": false
+    }
+  ]
+}

@@ -1,0 +1,537 @@
+{
+  "seed_pages_attempted": 75,
+  "seed_pages_ok": 57,
+  "article_urls_attempted": 1353,
+  "article_urls_ok": 1042,
+  "distinct_hosts_ok": 19,
+  "hosts_ok": {
+    "sambad.in": 110,
+    "dharitri.com": 109,
+    "news18.com": 107,
+    "odishabhaskar.com": 101,
+    "odishareporter.in": 90,
+    "prameya.com": 87,
+    "kanaknews.com": 83,
+    "nandighoshatv.com": 82,
+    "odishasambad.in": 79,
+    "odishanewslens.com": 65,
+    "etvbharat.com": 56,
+    "odishakhabar.in": 43,
+    "khabar.odishatv.in": 13,
+    "naxatranews.com": 9,
+    "newsroomodisha.com": 4,
+    "odishalive.tv": 1,
+    "argusnews.in": 1,
+    "odisha.news": 1,
+    "prameyanews.com": 1
+  },
+  "failures": {
+    "too-little-odia": 287,
+    "http-500": 3,
+    "http-404": 1,
+    "http-000": 20
+  },
+  "fail_by_host": {
+    "dharitri.com": {
+      "too-little-odia": 1
+    },
+    "news18.com": {
+      "too-little-odia": 3
+    },
+    "etvbharat.com": {
+      "too-little-odia": 13
+    },
+    "odishanewslens.com": {
+      "too-little-odia": 2
+    },
+    "odishakhabar.in": {
+      "http-500": 3
+    },
+    "odishasambad.in": {
+      "http-404": 1
+    },
+    "naxatranews.com": {
+      "too-little-odia": 5
+    },
+    "argusnews.in": {
+      "too-little-odia": 7
+    },
+    "newsroomodisha.com": {
+      "too-little-odia": 43,
+      "http-000": 20
+    },
+    "odisha.news": {
+      "too-little-odia": 3
+    },
+    "prameyanews.com": {
+      "too-little-odia": 88
+    },
+    "thesamaja.in": {
+      "too-little-odia": 1
+    },
+    "odishatv.in": {
+      "too-little-odia": 61
+    },
+    "odishabytes.com": {
+      "too-little-odia": 60
+    }
+  },
+  "seed_status": [
+    {
+      "url": "https://www.dharitri.com/",
+      "host": "dharitri.com",
+      "status": "ok",
+      "bytes": 263695
+    },
+    {
+      "url": "https://www.dharitri.com/category/state-news/",
+      "host": "dharitri.com",
+      "status": "ok",
+      "bytes": 110046
+    },
+    {
+      "url": "https://www.dharitri.com/category/district-news/",
+      "host": "dharitri.com",
+      "status": "ok",
+      "bytes": 107815
+    },
+    {
+      "url": "https://www.dharitri.com/category/national-news/",
+      "host": "dharitri.com",
+      "status": "ok",
+      "bytes": 110761
+    },
+    {
+      "url": "https://www.dharitri.com/category/sports-news/",
+      "host": "dharitri.com",
+      "status": "ok",
+      "bytes": 106384
+    },
+    {
+      "url": "https://www.dharitri.com/category/entertainment/",
+      "host": "dharitri.com",
+      "status": "ok",
+      "bytes": 107554
+    },
+    {
+      "url": "https://www.dharitri.com/category/editorial/",
+      "host": "dharitri.com",
+      "status": "ok",
+      "bytes": 103637
+    },
+    {
+      "url": "https://www.dharitri.com/category/business/",
+      "host": "dharitri.com",
+      "status": "ok",
+      "bytes": 108411
+    },
+    {
+      "url": "https://sambad.in/",
+      "host": "sambad.in",
+      "status": "ok",
+      "bytes": 333928
+    },
+    {
+      "url": "https://sambad.in/state",
+      "host": "sambad.in",
+      "status": "ok",
+      "bytes": 206741
+    },
+    {
+      "url": "https://sambad.in/district",
+      "host": "sambad.in",
+      "status": "ok",
+      "bytes": 218263
+    },
+    {
+      "url": "https://sambad.in/sports",
+      "host": "sambad.in",
+      "status": "ok",
+      "bytes": 207661
+    },
+    {
+      "url": "https://sambad.in/entertainment",
+      "host": "sambad.in",
+      "status": "ok",
+      "bytes": 207100
+    },
+    {
+      "url": "https://sambad.in/business",
+      "host": "sambad.in",
+      "status": "ok",
+      "bytes": 206820
+    },
+    {
+      "url": "https://sambad.in/crime",
+      "host": "sambad.in",
+      "status": "ok",
+      "bytes": 207673
+    },
+    {
+      "url": "https://sambad.in/metro",
+      "host": "sambad.in",
+      "status": "ok",
+      "bytes": 207268
+    },
+    {
+      "url": "https://sambad.in/india-and-beyond",
+      "host": "sambad.in",
+      "status": "ok",
+      "bytes": 209362
+    },
+    {
+      "url": "https://sambad.in/politics",
+      "host": "sambad.in",
+      "status": "ok",
+      "bytes": 208092
+    },
+    {
+      "url": "https://sambad.in/punascha-pruthibi",
+      "host": "sambad.in",
+      "status": "ok",
+      "bytes": 214403
+    },
+    {
+      "url": "https://sambad.in/special",
+      "host": "sambad.in",
+      "status": "ok",
+      "bytes": 205897
+    },
+    {
+      "url": "https://khabar.odishatv.in/",
+      "host": "khabar.odishatv.in",
+      "status": "ok",
+      "bytes": 234872
+    },
+    {
+      "url": "https://khabar.odishatv.in/odisha",
+      "host": "khabar.odishatv.in",
+      "status": "ok",
+      "bytes": 117236
+    },
+    {
+      "url": "https://khabar.odishatv.in/india",
+      "host": "khabar.odishatv.in",
+      "status": "ok",
+      "bytes": 178601
+    },
+    {
+      "url": "https://khabar.odishatv.in/sports",
+      "host": "khabar.odishatv.in",
+      "status": "ok",
+      "bytes": 113806
+    },
+    {
+      "url": "https://khabar.odishatv.in/entertainment",
+      "host": "khabar.odishatv.in",
+      "status": "ok",
+      "bytes": 117237
+    },
+    {
+      "url": "https://khabar.odishatv.in/crime",
+      "host": "khabar.odishatv.in",
+      "status": "ok",
+      "bytes": 113264
+    },
+    {
+      "url": "https://kanaknews.com/",
+      "host": "kanaknews.com",
+      "status": "ok",
+      "bytes": 317018
+    },
+    {
+      "url": "https://kanaknews.com/news/odisha",
+      "host": "kanaknews.com",
+      "status": "http-404",
+      "bytes": 0
+    },
+    {
+      "url": "https://kanaknews.com/news/national",
+      "host": "kanaknews.com",
+      "status": "http-404",
+      "bytes": 0
+    },
+    {
+      "url": "https://kanaknews.com/news/sports",
+      "host": "kanaknews.com",
+      "status": "http-404",
+      "bytes": 0
+    },
+    {
+      "url": "https://odia.news18.com/",
+      "host": "news18.com",
+      "status": "ok",
+      "bytes": 941640
+    },
+    {
+      "url": "https://odia.news18.com/news/",
+      "host": "news18.com",
+      "status": "ok",
+      "bytes": 544597
+    },
+    {
+      "url": "https://odia.news18.com/news/odisha/",
+      "host": "news18.com",
+      "status": "ok",
+      "bytes": 537828
+    },
+    {
+      "url": "https://odia.news18.com/news/national/",
+      "host": "news18.com",
+      "status": "http-404",
+      "bytes": 0
+    },
+    {
+      "url": "https://odia.news18.com/news/sports/",
+      "host": "news18.com",
+      "status": "http-404",
+      "bytes": 0
+    },
+    {
+      "url": "https://odia.news18.com/news/entertainment/",
+      "host": "news18.com",
+      "status": "ok",
+      "bytes": 551612
+    },
+    {
+      "url": "https://www.etvbharat.com/or/odisha",
+      "host": "etvbharat.com",
+      "status": "ok",
+      "bytes": 421307
+    },
+    {
+      "url": "https://www.etvbharat.com/or/bharat",
+      "host": "etvbharat.com",
+      "status": "ok",
+      "bytes": 245376
+    },
+    {
+      "url": "https://www.etvbharat.com/or/sports",
+      "host": "etvbharat.com",
+      "status": "ok",
+      "bytes": 245376
+    },
+    {
+      "url": "https://nandighoshatv.com/",
+      "host": "nandighoshatv.com",
+      "status": "ok",
+      "bytes": 704512
+    },
+    {
+      "url": "https://nandighoshatv.com/category/odisha/",
+      "host": "nandighoshatv.com",
+      "status": "ok",
+      "bytes": 263184
+    },
+    {
+      "url": "https://nandighoshatv.com/category/national/",
+      "host": "nandighoshatv.com",
+      "status": "http-404",
+      "bytes": 0
+    },
+    {
+      "url": "https://www.odishanewslens.com/",
+      "host": "odishanewslens.com",
+      "status": "ok",
+      "bytes": 237254
+    },
+    {
+      "url": "https://www.odishanewslens.com/category/odisha",
+      "host": "odishanewslens.com",
+      "status": "ok",
+      "bytes": 237314
+    },
+    {
+      "url": "https://www.prameya.com/",
+      "host": "prameya.com",
+      "status": "ok",
+      "bytes": 505829
+    },
+    {
+      "url": "https://www.prameya.com/odisha",
+      "host": "prameya.com",
+      "status": "http-404",
+      "bytes": 0
+    },
+    {
+      "url": "https://www.prameya.com/national",
+      "host": "prameya.com",
+      "status": "http-404",
+      "bytes": 0
+    },
+    {
+      "url": "https://www.prameya.com/sports",
+      "host": "prameya.com",
+      "status": "http-404",
+      "bytes": 0
+    },
+    {
+      "url": "https://odishalive.tv/",
+      "host": "odishalive.tv",
+      "status": "ok",
+      "bytes": 389923
+    },
+    {
+      "url": "https://odishabhaskar.com/",
+      "host": "odishabhaskar.com",
+      "status": "ok",
+      "bytes": 258081
+    },
+    {
+      "url": "https://odishabhaskar.com/category/odisha/",
+      "host": "odishabhaskar.com",
+      "status": "ok",
+      "bytes": 97153
+    },
+    {
+      "url": "https://odishareporter.in/",
+      "host": "odishareporter.in",
+      "status": "ok",
+      "bytes": 195733
+    },
+    {
+      "url": "https://odishareporter.in/category/odisha/",
+      "host": "odishareporter.in",
+      "status": "ok",
+      "bytes": 114026
+    },
+    {
+      "url": "https://odishareporter.in/category/national/",
+      "host": "odishareporter.in",
+      "status": "ok",
+      "bytes": 105459
+    },
+    {
+      "url": "https://odishakhabar.in/",
+      "host": "odishakhabar.in",
+      "status": "ok",
+      "bytes": 108386
+    },
+    {
+      "url": "https://odishakhabar.in/category/odisha/",
+      "host": "odishakhabar.in",
+      "status": "ok",
+      "bytes": 77840
+    },
+    {
+      "url": "https://odishasambad.in/",
+      "host": "odishasambad.in",
+      "status": "ok",
+      "bytes": 131339
+    },
+    {
+      "url": "https://odishasambad.in/category/odisha/",
+      "host": "odishasambad.in",
+      "status": "ok",
+      "bytes": 85840
+    },
+    {
+      "url": "https://naxatranews.com/",
+      "host": "naxatranews.com",
+      "status": "ok",
+      "bytes": 246202
+    },
+    {
+      "url": "https://argusnews.in/",
+      "host": "argusnews.in",
+      "status": "ok",
+      "bytes": 156740
+    },
+    {
+      "url": "https://newsroomodisha.com/",
+      "host": "newsroomodisha.com",
+      "status": "ok",
+      "bytes": 225901
+    },
+    {
+      "url": "https://odisha.news/",
+      "host": "odisha.news",
+      "status": "ok",
+      "bytes": 331752
+    },
+    {
+      "url": "https://www.prameyanews.com/",
+      "host": "prameyanews.com",
+      "status": "ok",
+      "bytes": 266676
+    },
+    {
+      "url": "https://thesamaja.in/",
+      "host": "thesamaja.in",
+      "status": "ok",
+      "bytes": 12725
+    },
+    {
+      "url": "https://odishatv.in/",
+      "host": "odishatv.in",
+      "status": "ok",
+      "bytes": 196699
+    },
+    {
+      "url": "https://pragativadi.com/odia/",
+      "host": "pragativadi.com",
+      "status": "http-500",
+      "bytes": 0
+    },
+    {
+      "url": "https://nitidina.com/",
+      "host": "nitidina.com",
+      "status": "http-000",
+      "bytes": 0
+    },
+    {
+      "url": "https://sanmarga.in/",
+      "host": "sanmarga.in",
+      "status": "http-000",
+      "bytes": 0
+    },
+    {
+      "url": "https://odia.kalingatv.com/",
+      "host": "kalingatv.com",
+      "status": "http-000",
+      "bytes": 0
+    },
+    {
+      "url": "https://anupambharat.in/",
+      "host": "anupambharat.in",
+      "status": "http-000",
+      "bytes": 0
+    },
+    {
+      "url": "https://zeenews.india.com/odia",
+      "host": "zeenews.india.com",
+      "status": "http-403",
+      "bytes": 0
+    },
+    {
+      "url": "https://odishabytes.com/",
+      "host": "odishabytes.com",
+      "status": "ok",
+      "bytes": 398082
+    },
+    {
+      "url": "https://www.focusodisha.com/",
+      "host": "focusodisha.com",
+      "status": "http-000",
+      "bytes": 0
+    },
+    {
+      "url": "https://www.samayaodisha.com/",
+      "host": "samayaodisha.com",
+      "status": "http-000",
+      "bytes": 0
+    },
+    {
+      "url": "https://www.utkalprasanga.in/",
+      "host": "utkalprasanga.in",
+      "status": "http-000",
+      "bytes": 0
+    }
+  ],
+  "total_tokens_raw": 557120,
+  "total_tokens_boilerplate_stripped": 350217,
+  "distinct_words_raw": 31010,
+  "distinct_words_stripped": 30766,
+  "boilerplate_segments_removed": 733,
+  "corpus_chars_odia": 3828591
+}

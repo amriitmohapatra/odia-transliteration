@@ -1,0 +1,1010 @@
+{
+ "refined_drop_rate_all": {
+  "pairs": 44,
+  "tokens_with_nukta": 3272,
+  "tokens_without_nukta": 1685,
+  "nukta_drop_rate": 0.3399233407302804,
+  "top_pairs": [
+   {
+    "with": "ଓଡ଼ିଶା",
+    "n_with": 857,
+    "without": "ଓଡିଶା",
+    "n_without": 451
+   },
+   {
+    "with": "ବଡ଼",
+    "n_with": 666,
+    "without": "ବଡ",
+    "n_without": 14
+   },
+   {
+    "with": "ଓଡ଼ିଶାର",
+    "n_with": 395,
+    "without": "ଓଡିଶାର",
+    "n_without": 83
+   },
+   {
+    "with": "ଓଡ଼ିଆ",
+    "n_with": 178,
+    "without": "ଓଡିଆ",
+    "n_without": 121
+   },
+   {
+    "with": "ଗୁଡ଼ିକ",
+    "n_with": 14,
+    "without": "ଗୁଡିକ",
+    "n_without": 227
+   },
+   {
+    "with": "ରେକର୍ଡ଼",
+    "n_with": 47,
+    "without": "ରେକର୍ଡ",
+    "n_without": 110
+   },
+   {
+    "with": "ଓଡ଼ିଶାରେ",
+    "n_with": 116,
+    "without": "ଓଡିଶାରେ",
+    "n_without": 22
+   },
+   {
+    "with": "ଡ଼ି",
+    "n_with": 54,
+    "without": "ଡି",
+    "n_without": 70
+   },
+   {
+    "with": "ବରଗଡ଼",
+    "n_with": 97,
+    "without": "ବରଗଡ",
+    "n_without": 6
+   },
+   {
+    "with": "କେନ୍ଦ୍ରାପଡ଼ା",
+    "n_with": 86,
+    "without": "କେନ୍ଦ୍ରାପଡା",
+    "n_without": 16
+   },
+   {
+    "with": "ସଡ଼କ",
+    "n_with": 39,
+    "without": "ସଡକ",
+    "n_without": 62
+   },
+   {
+    "with": "ବାହୁଡ଼ା",
+    "n_with": 63,
+    "without": "ବାହୁଡା",
+    "n_without": 13
+   },
+   {
+    "with": "ଜଣାପଡ଼ିଛି",
+    "n_with": 52,
+    "without": "ଜଣାପଡିଛି",
+    "n_without": 23
+   },
+   {
+    "with": "ଝାରସୁଗୁଡ଼ା",
+    "n_with": 58,
+    "without": "ଝାରସୁଗୁଡା",
+    "n_without": 15
+   },
+   {
+    "with": "ବିଜେଡ଼ି",
+    "n_with": 23,
+    "without": "ବିଜେଡି",
+    "n_without": 43
+   },
+   {
+    "with": "ପଢ଼ନ୍ତୁ",
+    "n_with": 10,
+    "without": "ପଢନ୍ତୁ",
+    "n_without": 54
+   },
+   {
+    "with": "ଜଡ଼ିତ",
+    "n_with": 31,
+    "without": "ଜଡିତ",
+    "n_without": 32
+   },
+   {
+    "with": "ପଡ଼ିବ",
+    "n_with": 30,
+    "without": "ପଡିବ",
+    "n_without": 33
+   },
+   {
+    "with": "ଗାଡ଼ି",
+    "n_with": 50,
+    "without": "ଗାଡି",
+    "n_without": 7
+   },
+   {
+    "with": "କ୍ରୀଡ଼ା",
+    "n_with": 37,
+    "without": "କ୍ରୀଡା",
+    "n_without": 12
+   },
+   {
+    "with": "ଛାଡ଼ି",
+    "n_with": 25,
+    "without": "ଛାଡି",
+    "n_without": 21
+   },
+   {
+    "with": "ମିଡ଼ିଆରେ",
+    "n_with": 5,
+    "without": "ମିଡିଆରେ",
+    "n_without": 41
+   },
+   {
+    "with": "ସୁନ୍ଦରଗଡ଼",
+    "n_with": 32,
+    "without": "ସୁନ୍ଦରଗଡ",
+    "n_without": 10
+   },
+   {
+    "with": "ବଢ଼ିବ",
+    "n_with": 27,
+    "without": "ବଢିବ",
+    "n_without": 14
+   },
+   {
+    "with": "ପଡ଼ିଛି",
+    "n_with": 27,
+    "without": "ପଡିଛି",
+    "n_without": 13
+   },
+   {
+    "with": "ଅଙ୍ଗନବାଡ଼ି",
+    "n_with": 17,
+    "without": "ଅଙ୍ଗନବାଡି",
+    "n_without": 17
+   },
+   {
+    "with": "ଦେବଗଡ଼",
+    "n_with": 21,
+    "without": "ଦେବଗଡ",
+    "n_without": 10
+   },
+   {
+    "with": "ଦାରିଙ୍ଗବାଡ଼ି",
+    "n_with": 17,
+    "without": "ଦାରିଙ୍ଗବାଡି",
+    "n_without": 14
+   },
+   {
+    "with": "ପରିଡ଼ା",
+    "n_with": 22,
+    "without": "ପରିଡା",
+    "n_without": 8
+   },
+   {
+    "with": "ପାହାଡ଼",
+    "n_with": 19,
+    "without": "ପାହାଡ",
+    "n_without": 7
+   }
+  ]
+ },
+ "refined_drop_rate_x_only": {
+  "pairs": 2,
+  "tokens_with_nukta": 21,
+  "tokens_without_nukta": 6,
+  "nukta_drop_rate": 0.2222222222222222,
+  "top_pairs": [
+   {
+    "with": "ଓଡ଼ିଶା",
+    "n_with": 19,
+    "without": "ଓଡିଶା",
+    "n_without": 4
+   },
+   {
+    "with": "ଡ଼",
+    "n_with": 2,
+    "without": "ଡ",
+    "n_without": 2
+   }
+  ]
+ },
+ "everyday_word_coverage": {
+  "ଭଲ": {
+   "all": 219,
+   "x_only": 4
+  },
+  "ମୁଁ": {
+   "all": 209,
+   "x_only": 10
+  },
+  "ପାଣି": {
+   "all": 122,
+   "x_only": 3
+  },
+  "ଘର": {
+   "all": 179,
+   "x_only": 4
+  },
+  "ଦିନ": {
+   "all": 526,
+   "x_only": 3
+  },
+  "ବଡ଼": {
+   "all": 666,
+   "x_only": 7
+  },
+  "ଅଛି": {
+   "all": 146,
+   "x_only": 1
+  },
+  "କଣ": {
+   "all": 61,
+   "x_only": 1
+  },
+  "କେମିତି": {
+   "all": 17,
+   "x_only": 4
+  },
+  "ତୁମେ": {
+   "all": 2,
+   "x_only": 2
+  },
+  "ମୋର": {
+   "all": 62,
+   "x_only": 10
+  },
+  "ନାହିଁ": {
+   "all": 336,
+   "x_only": 8
+  },
+  "ଆଉ": {
+   "all": 222,
+   "x_only": 6
+  },
+  "ହେଲା": {
+   "all": 195,
+   "x_only": 5
+  },
+  "ରାତି": {
+   "all": 59,
+   "x_only": 1
+  },
+  "ସକାଳ": {
+   "all": 46,
+   "x_only": 0
+  },
+  "ଝିଅ": {
+   "all": 262,
+   "x_only": 7
+  },
+  "ପୁଅ": {
+   "all": 169,
+   "x_only": 2
+  },
+  "ମା": {
+   "all": 95,
+   "x_only": 18
+  },
+  "ଯାଇ": {
+   "all": 39,
+   "x_only": 0
+  }
+ },
+ "short_word_type_share_le4": 16.31,
+ "mean_type_length": 7.24,
+ "mean_token_length_freq_weighted": 5.76,
+ "docs_by_bucket": {
+  "x_social": 279,
+  "news_quoting_social": 212,
+  "news": 220
+ },
+ "tokens_all": 260348,
+ "types_all": 25002,
+ "tokens_x_only": 7100,
+ "types_x_only": 2782,
+ "nukta_all": {
+  "decomposed_DDA_U+0B21_U+0B3C": 5896,
+  "decomposed_DDHA_U+0B22_U+0B3C": 823,
+  "total_U+0B3C_nukta_signs": 6750,
+  "precomposed_U+0B5C": 0,
+  "precomposed_U+0B5D": 0,
+  "bare_DA_U+0B21_total": 14053,
+  "bare_DDHA_U+0B22_total": 1112,
+  "YYA_U+0B5F": 28759,
+  "nukta_on_other_bases": 31,
+  "preceding_codepoint_of_U+0B3C": {
+   "U+0B21": 5896,
+   "U+0B22": 823,
+   "U+0B3F": 8,
+   "U+0B47": 8,
+   "U+0B1C": 5,
+   "U+0B3E": 2,
+   "U+0B13": 2,
+   "U+0B1A": 1,
+   "U+0B23": 1,
+   "U+0B30": 1,
+   "U+0020": 1,
+   "U+0B0B": 1,
+   "U+0B2F": 1
+  }
+ },
+ "nukta_x_only": {
+  "decomposed_DDA_U+0B21_U+0B3C": 142,
+  "decomposed_DDHA_U+0B22_U+0B3C": 23,
+  "total_U+0B3C_nukta_signs": 170,
+  "precomposed_U+0B5C": 0,
+  "precomposed_U+0B5D": 0,
+  "bare_DA_U+0B21_total": 274,
+  "bare_DDHA_U+0B22_total": 34,
+  "YYA_U+0B5F": 807,
+  "nukta_on_other_bases": 5,
+  "preceding_codepoint_of_U+0B3C": {
+   "U+0B21": 142,
+   "U+0B22": 23,
+   "U+0B1C": 2,
+   "U+0B1A": 1,
+   "U+0B3E": 1,
+   "U+0B3F": 1
+  }
+ },
+ "nukta_social_only": {
+  "decomposed_DDA_U+0B21_U+0B3C": 3460,
+  "decomposed_DDHA_U+0B22_U+0B3C": 646,
+  "total_U+0B3C_nukta_signs": 4122,
+  "precomposed_U+0B5C": 0,
+  "precomposed_U+0B5D": 0,
+  "bare_DA_U+0B21_total": 8063,
+  "bare_DDHA_U+0B22_total": 817,
+  "YYA_U+0B5F": 16816,
+  "nukta_on_other_bases": 16,
+  "preceding_codepoint_of_U+0B3C": {
+   "U+0B21": 3460,
+   "U+0B22": 646,
+   "U+0B3F": 4,
+   "U+0B1C": 2,
+   "U+0B47": 2,
+   "U+0B13": 2,
+   "U+0B1A": 1,
+   "U+0B3E": 1,
+   "U+0B23": 1,
+   "U+0B30": 1,
+   "U+0020": 1,
+   "U+0B0B": 1
+  }
+ },
+ "drop_rate_all": {
+  "distinct_nukta_words": 1136,
+  "tokens_written_with_nukta": 6710,
+  "tokens_written_without_nukta": 5467,
+  "nukta_drop_rate": 0.44896115627822947,
+  "top_minimal_pairs": [
+   {
+    "with": "ଓ଼",
+    "n_with": 1,
+    "without": "ଓ",
+    "n_without": 2057
+   },
+   {
+    "with": "ଓଡ଼ିଶା",
+    "n_with": 857,
+    "without": "ଓଡିଶା",
+    "n_without": 451
+   },
+   {
+    "with": "ବଡ଼",
+    "n_with": 666,
+    "without": "ବଡ",
+    "n_without": 14
+   },
+   {
+    "with": "ଓଡ଼ିଶାର",
+    "n_with": 395,
+    "without": "ଓଡିଶାର",
+    "n_without": 83
+   },
+   {
+    "with": "ଓଡି଼ଶା",
+    "n_with": 1,
+    "without": "ଓଡିଶା",
+    "n_without": 451
+   },
+   {
+    "with": "ଜ଼ିଲ୍ଲା",
+    "n_with": 3,
+    "without": "ଜିଲ୍ଲା",
+    "n_without": 372
+   },
+   {
+    "with": "ଓଡ଼ିଆ",
+    "n_with": 178,
+    "without": "ଓଡିଆ",
+    "n_without": 121
+   },
+   {
+    "with": "ଗୁଡ଼ିକ",
+    "n_with": 14,
+    "without": "ଗୁଡିକ",
+    "n_without": 227
+   },
+   {
+    "with": "ରେକର୍ଡ଼",
+    "n_with": 47,
+    "without": "ରେକର୍ଡ",
+    "n_without": 110
+   },
+   {
+    "with": "ଓଡ଼ିଶାରେ",
+    "n_with": 116,
+    "without": "ଓଡିଶାରେ",
+    "n_without": 22
+   },
+   {
+    "with": "ଡ଼ି",
+    "n_with": 54,
+    "without": "ଡି",
+    "n_without": 70
+   },
+   {
+    "with": "ବରଗଡ଼",
+    "n_with": 97,
+    "without": "ବରଗଡ",
+    "n_without": 6
+   },
+   {
+    "with": "କେନ୍ଦ୍ରାପଡ଼ା",
+    "n_with": 86,
+    "without": "କେନ୍ଦ୍ରାପଡା",
+    "n_without": 16
+   },
+   {
+    "with": "ସଡ଼କ",
+    "n_with": 39,
+    "without": "ସଡକ",
+    "n_without": 62
+   },
+   {
+    "with": "ଭିଡ଼ିଓ",
+    "n_with": 3,
+    "without": "ଭିଡିଓ",
+    "n_without": 83
+   },
+   {
+    "with": "ଜ଼ିଲ୍ଲାପାଳ",
+    "n_with": 1,
+    "without": "ଜିଲ୍ଲାପାଳ",
+    "n_without": 80
+   },
+   {
+    "with": "ବାହୁଡ଼ା",
+    "n_with": 63,
+    "without": "ବାହୁଡା",
+    "n_without": 13
+   },
+   {
+    "with": "ଜଣାପଡ଼ିଛି",
+    "n_with": 52,
+    "without": "ଜଣାପଡିଛି",
+    "n_without": 23
+   },
+   {
+    "with": "ଝାରସୁଗୁଡ଼ା",
+    "n_with": 58,
+    "without": "ଝାରସୁଗୁଡା",
+    "n_without": 15
+   },
+   {
+    "with": "ବିଜେଡ଼ି",
+    "n_with": 23,
+    "without": "ବିଜେଡି",
+    "n_without": 43
+   },
+   {
+    "with": "ଢେ଼ଙ୍କାନାଳ",
+    "n_with": 3,
+    "without": "ଢେଙ୍କାନାଳ",
+    "n_without": 63
+   },
+   {
+    "with": "ପଢ଼ନ୍ତୁ",
+    "n_with": 10,
+    "without": "ପଢନ୍ତୁ",
+    "n_without": 54
+   },
+   {
+    "with": "ଢ଼େଙ୍କାନାଳ",
+    "n_with": 1,
+    "without": "ଢେଙ୍କାନାଳ",
+    "n_without": 63
+   },
+   {
+    "with": "ଜଡ଼ିତ",
+    "n_with": 31,
+    "without": "ଜଡିତ",
+    "n_without": 32
+   },
+   {
+    "with": "ପଡ଼ିବ",
+    "n_with": 30,
+    "without": "ପଡିବ",
+    "n_without": 33
+   }
+  ]
+ },
+ "drop_rate_x_only": {
+  "distinct_nukta_words": 86,
+  "tokens_written_with_nukta": 169,
+  "tokens_written_without_nukta": 94,
+  "nukta_drop_rate": 0.3574144486692015,
+  "top_minimal_pairs": [
+   {
+    "with": "ଜ଼ିଲ୍ଲାପାଳ",
+    "n_with": 1,
+    "without": "ଜିଲ୍ଲାପାଳ",
+    "n_without": 41
+   },
+   {
+    "with": "ଜ଼ିଲ୍ଲା",
+    "n_with": 1,
+    "without": "ଜିଲ୍ଲା",
+    "n_without": 35
+   },
+   {
+    "with": "ଓଡ଼ିଶା",
+    "n_with": 19,
+    "without": "ଓଡିଶା",
+    "n_without": 4
+   },
+   {
+    "with": "ଓଡ଼ିଆ",
+    "n_with": 11,
+    "without": "ଓଡିଆ",
+    "n_without": 1
+   },
+   {
+    "with": "ଅଙ୍ଗନୱାଡ଼ି",
+    "n_with": 5,
+    "without": "ଅଙ୍ଗନୱାଡି",
+    "n_without": 1
+   },
+   {
+    "with": "ଓଡି଼ଶା",
+    "n_with": 1,
+    "without": "ଓଡିଶା",
+    "n_without": 4
+   },
+   {
+    "with": "ଡ଼",
+    "n_with": 2,
+    "without": "ଡ",
+    "n_without": 2
+   },
+   {
+    "with": "ଅଙ୍ଗନବାଡ଼ି",
+    "n_with": 1,
+    "without": "ଅଙ୍ଗନବାଡି",
+    "n_without": 2
+   },
+   {
+    "with": "ବରଗଡ଼",
+    "n_with": 2,
+    "without": "ବରଗଡ",
+    "n_without": 1
+   },
+   {
+    "with": "ଗାଡ଼ି",
+    "n_with": 2,
+    "without": "ଗାଡି",
+    "n_without": 1
+   },
+   {
+    "with": "ଚିତ୍ରଡ଼ା",
+    "n_with": 2,
+    "without": "ଚିତ୍ରଡା",
+    "n_without": 1
+   }
+  ]
+ },
+ "top60": [
+  [
+   "ଏବଂ",
+   3455
+  ],
+  [
+   "ପାଇଁ",
+   2531
+  ],
+  [
+   "ଏହି",
+   2064
+  ],
+  [
+   "ଓ",
+   2057
+  ],
+  [
+   "ଏକ",
+   1888
+  ],
+  [
+   "ପରେ",
+   1029
+  ],
+  [
+   "ଓଡ଼ିଶା",
+   857
+  ],
+  [
+   "ଉପରେ",
+   805
+  ],
+  [
+   "କୃଷି",
+   796
+  ],
+  [
+   "ସେ",
+   775
+  ],
+  [
+   "ମଧ୍ୟ",
+   770
+  ],
+  [
+   "କରି",
+   759
+  ],
+  [
+   "କରନ୍ତୁ",
+   738
+  ],
+  [
+   "ଏହା",
+   712
+  ],
+  [
+   "କରିବା",
+   711
+  ],
+  [
+   "ରାଜ୍ୟ",
+   708
+  ],
+  [
+   "ଭାରତୀୟ",
+   683
+  ],
+  [
+   "ବଡ଼",
+   666
+  ],
+  [
+   "ସହିତ",
+   666
+  ],
+  [
+   "ସରକାର",
+   649
+  ],
+  [
+   "ଆଜି",
+   626
+  ],
+  [
+   "ମଧ୍ୟରେ",
+   613
+  ],
+  [
+   "ନେଇ",
+   602
+  ],
+  [
+   "ଯେ",
+   582
+  ],
+  [
+   "କରିଛନ୍ତି",
+   574
+  ],
+  [
+   "ସହ",
+   566
+  ],
+  [
+   "ମନ୍ଦିର",
+   555
+  ],
+  [
+   "ହୋଇଛି",
+   554
+  ],
+  [
+   "ସେବା",
+   541
+  ],
+  [
+   "ବର୍ଷା",
+   527
+  ],
+  [
+   "ଦିନ",
+   526
+  ],
+  [
+   "୭",
+   519
+  ],
+  [
+   "ହେବ",
+   502
+  ],
+  [
+   "ର",
+   501
+  ],
+  [
+   "ସମୟରେ",
+   489
+  ],
+  [
+   "ଭୁବନେଶ୍ୱର",
+   483
+  ],
+  [
+   "ଅଧିକ",
+   473
+  ],
+  [
+   "କରିଥିଲେ",
+   470
+  ],
+  [
+   "ମୁଖ୍ୟ",
+   464
+  ],
+  [
+   "ତାଙ୍କ",
+   459
+  ],
+  [
+   "ପୋଲିସ",
+   456
+  ],
+  [
+   "ଓଡିଶା",
+   451
+  ],
+  [
+   "ଥିବା",
+   448
+  ],
+  [
+   "ହେଉଛି",
+   447
+  ],
+  [
+   "ଆମ",
+   445
+  ],
+  [
+   "ପ୍ରଥମ",
+   440
+  ],
+  [
+   "କେନ୍ଦ୍ର",
+   424
+  ],
+  [
+   "କରିଛି",
+   421
+  ],
+  [
+   "ରହିଛି",
+   410
+  ],
+  [
+   "ଭାରତ",
+   409
+  ],
+  [
+   "ଆରମ୍ଭ",
+   408
+  ],
+  [
+   "ପର୍ଯ୍ୟଟନ",
+   400
+  ],
+  [
+   "ବିଭାଗ",
+   399
+  ],
+  [
+   "ଓଡ଼ିଶାର",
+   395
+  ],
+  [
+   "ଇସ୍ତଫା",
+   395
+  ],
+  [
+   "ଆପଣଙ୍କ",
+   393
+  ],
+  [
+   "ସରକାରୀ",
+   391
+  ],
+  [
+   "କୌଣସି",
+   390
+  ],
+  [
+   "ପ୍ରବଳ",
+   388
+  ],
+  [
+   "ଜଣେ",
+   378
+  ]
+ ],
+ "top40_x_only": [
+  [
+   "ଓ",
+   169
+  ],
+  [
+   "ପାଇଁ",
+   76
+  ],
+  [
+   "ଏବଂ",
+   58
+  ],
+  [
+   "ସହ",
+   53
+  ],
+  [
+   "ଏହି",
+   51
+  ],
+  [
+   "ଅବସରରେ",
+   42
+  ],
+  [
+   "ଜିଲ୍ଲାପାଳ",
+   41
+  ],
+  [
+   "ଏକ",
+   38
+  ],
+  [
+   "ଶ୍ରୀ",
+   37
+  ],
+  [
+   "ଜିଲ୍ଲା",
+   35
+  ],
+  [
+   "ଆଜି",
+   35
+  ],
+  [
+   "କରିବା",
+   33
+  ],
+  [
+   "ପବିତ୍ର",
+   32
+  ],
+  [
+   "କରି",
+   32
+  ],
+  [
+   "କରିଥିଲେ",
+   31
+  ],
+  [
+   "ଶୁଭେଚ୍ଛା",
+   29
+  ],
+  [
+   "ଜୟ",
+   28
+  ],
+  [
+   "ତଥା",
+   26
+  ],
+  [
+   "ଅନୁଷ୍ଠିତ",
+   26
+  ],
+  [
+   "ଜଗନ୍ନାଥ",
+   25
+  ],
+  [
+   "ସମସ୍ତ",
+   24
+  ],
+  [
+   "ହାର୍ଦ୍ଦିକ",
+   23
+  ],
+  [
+   "ବିଭିନ୍ନ",
+   23
+  ],
+  [
+   "ସମୀକ୍ଷା",
+   23
+  ],
+  [
+   "କରନ୍ତୁ",
+   21
+  ],
+  [
+   "ଜୀବନ",
+   20
+  ],
+  [
+   "ପରିଦର୍ଶନ",
+   20
+  ],
+  [
+   "ତାଙ୍କର",
+   19
+  ],
+  [
+   "ଓଡ଼ିଶା",
+   19
+  ],
+  [
+   "ମହାପ୍ରଭୁ",
+   19
+  ],
+  [
+   "ଶାନ୍ତି",
+   18
+  ],
+  [
+   "ମହାପ୍ରଭୁଙ୍କ",
+   18
+  ],
+  [
+   "ରେ",
+   18
+  ],
+  [
+   "ହୋଇଯାଇଛି",
+   18
+  ],
+  [
+   "କରାଯାଇଥିଲା",
+   18
+  ],
+  [
+   "ମା",
+   18
+  ],
+  [
+   "ବୈଠକ",
+   18
+  ],
+  [
+   "ଅଭିନନ୍ଦନ",
+   17
+  ],
+  [
+   "ଅଧ୍ୟକ୍ଷତାରେ",
+   17
+  ],
+  [
+   "ମନ୍ତ୍ରୀ",
+   16
+  ]
+ ]
+}

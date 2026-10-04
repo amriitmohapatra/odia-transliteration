@@ -1,0 +1,215 @@
+{"url": "https://ova.gov.in/", "status": 200, "ok": true, "odia_chars": 2735, "lines": 156}
+{"url": "https://ova.gov.in/or", "ok": false, "reason": "HTTPError: HTTP Error 404: Not Found"}
+{"url": "https://odisha.neva.gov.in/", "status": 200, "ok": true, "odia_chars": 1079, "lines": 91}
+{"url": "https://odishaassembly.nic.in/", "status": 200, "ok": false, "reason": "too-little-odia(0)"}
+{"url": "https://rajbhavanodisha.gov.in/or", "ok": false, "reason": "URLError: <urlopen error [Errno 61] Connection refused>"}
+{"url": "https://rajbhavanodisha.gov.in/", "ok": false, "reason": "URLError: <urlopen error [Errno 61] Connection refused>"}
+{"url": "https://odishatourism.gov.in/or", "ok": false, "reason": "HTTPError: HTTP Error 404: Not Found"}
+{"url": "https://odishatourism.gov.in/", "status": 200, "ok": false, "reason": "too-little-odia(0)"}
+{"url": "https://www.opsc.gov.in/", "status": 200, "ok": false, "reason": "too-little-odia(0)"}
+{"url": "https://odishapolice.gov.in/", "ok": false, "reason": "URLError: <urlopen error timed out>"}
+{"url": "https://police.odisha.gov.in/or", "status": 200, "ok": false, "reason": "too-little-odia(0)"}
+{"url": "https://police.odisha.gov.in/", "status": 200, "ok": false, "reason": "too-little-odia(0)"}
+{"url": "https://odiabibhaba.in/", "status": 200, "ok": true, "odia_chars": 2287, "lines": 32}
+{"url": "https://odiabibhaba.in/or/", "ok": false, "reason": "HTTPError: HTTP Error 404: Not Found"}
+{"url": "https://www.odiabookslibrary.com/", "status": 200, "ok": false, "reason": "too-little-odia(0)"}
+{"url": "https://srujanika.org.in/", "status": 200, "ok": false, "reason": "too-little-odia(0)"}
+{"url": "https://bhulekh.ori.nic.in/", "status": 200, "ok": false, "reason": "too-little-odia(0)"}
+{"url": "https://sec.odisha.gov.in/or", "ok": false, "reason": "HTTPError: HTTP Error 404: Not Found"}
+{"url": "https://govtpress.odisha.gov.in/or", "status": 200, "ok": false, "reason": "too-little-odia(0)"}
+{"url": "https://magazines.odisha.gov.in/or", "ok": false, "reason": "HTTPError: HTTP Error 404: Not Found"}
+{"url": "https://suchana.odisha.gov.in/or", "ok": false, "reason": "HTTPError: HTTP Error 404: Not Found"}
+{"url": "https://odishatax.gov.in/", "status": 200, "ok": true, "odia_chars": 2042, "lines": 136}
+{"url": "https://www.samsodisha.gov.in/", "status": 200, "ok": false, "reason": "too-little-odia(0)"}
+{"url": "https://pdsodisha.gov.in/or", "status": 200, "ok": false, "reason": "too-little-odia(0)"}
+{"url": "https://odishaone.gov.in/or", "ok": false, "reason": "HTTPError: HTTP Error 404: Not Found"}
+{"url": "https://www.bmc.gov.in/", "status": 200, "ok": false, "reason": "too-little-odia(0)"}
+{"url": "https://www.bda.gov.in/", "status": 200, "ok": false, "reason": "too-little-odia(0)"}
+{"url": "https://orissahighcourt.nic.in/", "status": 200, "ok": false, "reason": "too-little-odia(0)"}
+{"url": "https://osssc.gov.in/", "status": 200, "ok": false, "reason": "too-little-odia(0)"}
+{"url": "https://www.osepa.odisha.gov.in/", "ok": false, "reason": "URLError: <urlopen error [Errno 8] nodename nor servname provided, or not known>"}
+{"url": "https://odishasahityaakademi.gov.in/", "ok": false, "reason": "URLError: <urlopen error [Errno 8] nodename nor servname provided, or not known>"}
+{"url": "https://utkaluniversity.ac.in/", "status": 200, "ok": true, "odia_chars": 51, "lines": 3}
+{"url": "https://www.pib.gov.in/indexd.aspx?reg=48&lang=6", "status": 200, "ok": false, "reason": "too-little-odia(0)"}
+{"url": "https://www.pib.gov.in/indexd.aspx?reg=48&lang=13", "status": 200, "ok": false, "reason": "too-little-odia(0)"}
+{"url": "https://www.pib.gov.in/PressReleasePage.aspx?PRID=2235470&reg=48&lang=2", "status": 200, "ok": false, "reason": "too-little-odia(0)"}
+{"url": "https://rathjatra.nic.in/", "status": 200, "ok": false, "reason": "too-little-odia(0)"}
+{"url": "https://taratarini.nic.in/", "status": 200, "ok": false, "reason": "too-little-odia(0)"}
+{"url": "https://janasunani.odisha.gov.in/or", "ok": false, "reason": "HTTPError: HTTP Error 404: Not Found"}
+{"url": "https://missionshakti.odisha.gov.in/or", "status": 200, "ok": true, "odia_chars": 2442, "lines": 99}
+{"url": "https://statedashboard.odisha.gov.in/or", "ok": false, "reason": "HTTPError: HTTP Error 404: Not Found"}
+{"url": "https://vision.odisha.gov.in/or", "ok": false, "reason": "HTTPError: HTTP Error 404: Not Found"}
+{"url": "https://startupodisha.gov.in/or", "status": 200, "ok": false, "reason": "too-little-odia(5)"}
+{"url": "https://investodisha.gov.in/or", "status": 200, "ok": false, "reason": "too-little-odia(0)"}
+{"url": "https://or.wikisource.org/wiki/ପ୍ରଧାନ_ପୃଷ୍ଠା", "ok": false, "reason": "UnicodeEncodeError: 'ascii' codec can't encode characters in position 10-15: ordinal not in range(128)"}
+{"url": "https://or.wikibooks.org/wiki/ପ୍ରଧାନ_ପୃଷ୍ଠା", "ok": false, "reason": "UnicodeEncodeError: 'ascii' codec can't encode characters in position 10-15: ordinal not in range(128)"}
+{"url": "https://ova.gov.in/", "ok": true, "odia_chars": 2735}
+{"url": "https://odisha.neva.gov.in/", "ok": true, "odia_chars": 1079}
+{"url": "https://odiabibhaba.in/", "ok": true, "odia_chars": 2287}
+{"url": "https://odishatax.gov.in/", "ok": true, "odia_chars": 2042}
+{"url": "https://missionshakti.odisha.gov.in/or", "ok": true, "odia_chars": 2442}
+{"url": "https://ova.gov.in/en/Index", "ok": true, "odia_chars": 233}
+{"url": "https://ova.gov.in/Sitemap", "ok": false, "reason": "HTTPError: HTTP Error 404: Not Found"}
+{"url": "https://ova.gov.in/ContactUs", "ok": false, "reason": "HTTPError: HTTP Error 404: Not Found"}
+{"url": "https://ova.gov.in/Showpage?page=12", "ok": false, "reason": "HTTPError: HTTP Error 404: Not Found"}
+{"url": "https://ova.gov.in/WelcomeQuotations", "ok": false, "reason": "HTTPError: HTTP Error 404: Not Found"}
+{"url": "https://ova.gov.in/AddNewContent", "ok": false, "reason": "HTTPError: HTTP Error 404: Not Found"}
+{"url": "https://ova.gov.in/PragatiPrabaha", "ok": false, "reason": "HTTPError: HTTP Error 404: Not Found"}
+{"url": "https://ova.gov.in/Token_Of_Thanks", "ok": false, "reason": "HTTPError: HTTP Error 404: Not Found"}
+{"url": "https://ova.gov.in/de", "ok": true, "odia_chars": 2735}
+{"url": "https://ova.gov.in/Index", "ok": true, "odia_chars": 2735}
+{"url": "https://ova.gov.in/Page?keyData=WscGJLC4Acw=", "ok": false, "reason": "HTTPError: HTTP Error 404: Not Found"}
+{"url": "https://ova.gov.in/Page?keyData=9BeRDn0cN20=", "ok": false, "reason": "HTTPError: HTTP Error 404: Not Found"}
+{"url": "https://ova.gov.in/Page?keyData=KId09nxctK8=", "ok": false, "reason": "HTTPError: HTTP Error 404: Not Found"}
+{"url": "https://ova.gov.in/Page?keyData=h1uArHUD1r4=", "ok": false, "reason": "HTTPError: HTTP Error 404: Not Found"}
+{"url": "https://ova.gov.in/Page?keyData=KD3Jc1t+AUc=", "ok": false, "reason": "HTTPError: HTTP Error 404: Not Found"}
+{"url": "https://ova.gov.in/Page?keyData=phgp28TYVCI=", "ok": false, "reason": "HTTPError: HTTP Error 404: Not Found"}
+{"url": "https://ova.gov.in/Page?keyData=FGuTnv5Ri3o=", "ok": false, "reason": "HTTPError: HTTP Error 404: Not Found"}
+{"url": "https://ova.gov.in/Page?keyData=P9yx8PJr7Qg=", "ok": false, "reason": "HTTPError: HTTP Error 404: Not Found"}
+{"url": "https://ova.gov.in/Page?keyData=QpBHQv6Jx08=", "ok": false, "reason": "HTTPError: HTTP Error 404: Not Found"}
+{"url": "https://ova.gov.in/Page?keyData=t/DUzzRDOPQ=", "ok": false, "reason": "HTTPError: HTTP Error 404: Not Found"}
+{"url": "https://ova.gov.in/Page?keyData=2RyD5qRoMIQ=", "ok": false, "reason": "HTTPError: HTTP Error 404: Not Found"}
+{"url": "https://ova.gov.in/Page?keyData=YYDJiqo6bjg=", "ok": false, "reason": "HTTPError: HTTP Error 404: Not Found"}
+{"url": "https://ova.gov.in/Page?keyData=7uZa3yZmjg0=", "ok": false, "reason": "HTTPError: HTTP Error 404: Not Found"}
+{"url": "https://ova.gov.in/Page?keyData=hqyHm9/MQ/8=", "ok": false, "reason": "HTTPError: HTTP Error 404: Not Found"}
+{"url": "https://ova.gov.in/Page?keyData=OdwZTwHnUtg=", "ok": false, "reason": "HTTPError: HTTP Error 404: Not Found"}
+{"url": "https://ova.gov.in/Page?keyData=gCfkOg1Da/4=", "ok": false, "reason": "HTTPError: HTTP Error 404: Not Found"}
+{"url": "https://ova.gov.in/Page?keyData=EKHSMVgU19I=", "ok": false, "reason": "HTTPError: HTTP Error 404: Not Found"}
+{"url": "https://ova.gov.in/Page?keyData=pRwI6eDUVug=", "ok": false, "reason": "HTTPError: HTTP Error 404: Not Found"}
+{"url": "https://ova.gov.in/Page?keyData=2cBGH1uIpY0=", "ok": false, "reason": "HTTPError: HTTP Error 404: Not Found"}
+{"url": "https://ova.gov.in/Page?keyData=T739we0SpDw=", "ok": false, "reason": "HTTPError: HTTP Error 404: Not Found"}
+{"url": "https://ova.gov.in/Page?keyData=Bv79kn7op8U=", "ok": false, "reason": "HTTPError: HTTP Error 404: Not Found"}
+{"url": "https://ova.gov.in/Page?keyData=A4Zp3d2I1/8=", "ok": false, "reason": "HTTPError: HTTP Error 404: Not Found"}
+{"url": "https://ova.gov.in/Page?keyData=3oSu3NDkJL8=", "ok": false, "reason": "HTTPError: HTTP Error 404: Not Found"}
+{"url": "https://ova.gov.in/Page?keyData=VvvZUeToa3k=", "ok": false, "reason": "HTTPError: HTTP Error 404: Not Found"}
+{"url": "https://ova.gov.in/Page?keyData=JTh/JmLAGZU=", "ok": false, "reason": "HTTPError: HTTP Error 404: Not Found"}
+{"url": "https://ova.gov.in/Page?keyData=Ya4k0ROh1lg=", "ok": false, "reason": "HTTPError: HTTP Error 404: Not Found"}
+{"url": "https://ova.gov.in/Page?keyData=db79E7Mv570=", "ok": false, "reason": "HTTPError: HTTP Error 404: Not Found"}
+{"url": "https://ova.gov.in/Page?keyData=YK73oPaqQ+E=", "ok": false, "reason": "HTTPError: HTTP Error 404: Not Found"}
+{"url": "https://ova.gov.in/Page?keyData=1b1ALNQyB60=", "ok": false, "reason": "HTTPError: HTTP Error 404: Not Found"}
+{"url": "https://odisha.neva.gov.in/Today", "ok": false, "reason": "too-little-odia(15)"}
+{"url": "https://odisha.neva.gov.in/Business", "ok": false, "reason": "too-little-odia(15)"}
+{"url": "https://odisha.neva.gov.in/Questions", "ok": false, "reason": "too-little-odia(15)"}
+{"url": "https://odisha.neva.gov.in/Bill", "ok": false, "reason": "too-little-odia(15)"}
+{"url": "https://odisha.neva.gov.in/Committee", "ok": false, "reason": "too-little-odia(15)"}
+{"url": "https://odisha.neva.gov.in/ContactDirectory/MenuContactDirec", "ok": false, "reason": "too-little-odia(15)"}
+{"url": "https://odisha.neva.gov.in/Home/DigitalLibrary", "ok": false, "reason": "too-little-odia(15)"}
+{"url": "https://odisha.neva.gov.in/Debates", "ok": false, "reason": "too-little-odia(15)"}
+{"url": "https://odisha.neva.gov.in/ContactDirectory", "ok": false, "reason": "too-little-odia(0)"}
+{"url": "https://odisha.neva.gov.in/Home/ChangeInEngCulture?langCulCode=or-IN", "ok": true, "odia_chars": 1079}
+{"url": "https://odisha.neva.gov.in/Member/GovDetails/3", "ok": false, "reason": "too-little-odia(0)"}
+{"url": "https://odisha.neva.gov.in/Member/Details/64", "ok": false, "reason": "too-little-odia(0)"}
+{"url": "https://odisha.neva.gov.in/Member/Details/1383", "ok": false, "reason": "too-little-odia(0)"}
+{"url": "https://odisha.neva.gov.in/Member/Details/21", "ok": false, "reason": "too-little-odia(0)"}
+{"url": "https://odisha.neva.gov.in/Member/Details/2", "ok": false, "reason": "too-little-odia(0)"}
+{"url": "https://odisha.neva.gov.in/Member/SecDetails/2", "ok": false, "reason": "too-little-odia(0)"}
+{"url": "https://odisha.neva.gov.in/Notice/Index/OR", "ok": false, "reason": "too-little-odia(0)"}
+{"url": "https://odisha.neva.gov.in/Home/GetAllSpeechList", "ok": false, "reason": "too-little-odia(0)"}
+{"url": "https://odisha.neva.gov.in/Questions?IsStateDashBoard=True", "ok": false, "reason": "too-little-odia(15)"}
+{"url": "https://odisha.neva.gov.in/Bill?IsStateDashBoard=True", "ok": false, "reason": "too-little-odia(15)"}
+{"url": "https://odisha.neva.gov.in/Business?LstItem=4&amp;IsStateDashBoard=True", "ok": false, "reason": "too-little-odia(15)"}
+{"url": "https://odisha.neva.gov.in/Committee?ItemId=2&amp;IsStateDashBoard=True", "ok": false, "reason": "too-little-odia(15)"}
+{"url": "https://odisha.neva.gov.in/ContactDirectory/MenuContactDirec?IsStateDashBoard=True", "ok": false, "reason": "too-little-odia(15)"}
+{"url": "https://odisha.neva.gov.in/News", "ok": false, "reason": "too-little-odia(0)"}
+{"url": "https://odisha.neva.gov.in/News/NewsDetails/7261", "ok": false, "reason": "too-little-odia(0)"}
+{"url": "https://odisha.neva.gov.in/News/NewsDetails/7262", "ok": false, "reason": "too-little-odia(0)"}
+{"url": "https://odisha.neva.gov.in/News/NewsDetails/7263", "ok": false, "reason": "too-little-odia(0)"}
+{"url": "https://odisha.neva.gov.in/News/NewsDetails/7258", "ok": false, "reason": "too-little-odia(0)"}
+{"url": "https://odisha.neva.gov.in/News/NewsDetails/7259", "ok": false, "reason": "too-little-odia(0)"}
+{"url": "https://odisha.neva.gov.in/News/NewsDetails/7260", "ok": false, "reason": "too-little-odia(0)"}
+{"url": "https://odisha.neva.gov.in/News/NewsDetails/7257", "ok": false, "reason": "too-little-odia(0)"}
+{"url": "https://odisha.neva.gov.in/News/NewsDetails/7256", "ok": false, "reason": "too-little-odia(0)"}
+{"url": "https://odisha.neva.gov.in/News/NewsDetails/7254", "ok": false, "reason": "too-little-odia(0)"}
+{"url": "https://odisha.neva.gov.in/News/NewsDetails/7255", "ok": false, "reason": "too-little-odia(0)"}
+{"url": "https://odisha.neva.gov.in/ContactDirectory/MenuContactDirec?MLT=4&amp;MSLT=54", "ok": false, "reason": "too-little-odia(15)"}
+{"url": "https://odisha.neva.gov.in/ContactDirectory/MenuContactDirec?MLT=4&amp;MSLT=53", "ok": false, "reason": "too-little-odia(15)"}
+{"url": "https://odisha.neva.gov.in/ContactDirectory/MenuContactDirec?MLT=4&amp;MSLT=2", "ok": false, "reason": "too-little-odia(15)"}
+{"url": "https://odisha.neva.gov.in/ContactDirectory/MenuContactDirec?MLT=4&amp;MSLT=4", "ok": false, "reason": "too-little-odia(15)"}
+{"url": "https://odisha.neva.gov.in/ContactDirectory/MenuContactDirec?MLT=4&amp;MSLT=19", "ok": false, "reason": "too-little-odia(15)"}
+{"url": "https://odiabibhaba.in/parichiti/", "ok": true, "odia_chars": 3259}
+{"url": "https://odiabibhaba.in/pathagara/", "ok": true, "odia_chars": 878}
+{"url": "https://odiabibhaba.in/bisesa/", "ok": true, "odia_chars": 1801}
+{"url": "https://odiabibhaba.in/sabdartha/", "ok": true, "odia_chars": 1665}
+{"url": "https://odiabibhaba.in/bhashakosha/", "ok": true, "odia_chars": 1551}
+{"url": "https://odiabibhaba.in/charitakosha/", "ok": true, "odia_chars": 221}
+{"url": "https://odiabibhaba.in/sadhana/", "ok": true, "odia_chars": 5356}
+{"url": "https://odiabibhaba.in/jogajoga/", "ok": true, "odia_chars": 449}
+{"url": "https://odiabibhaba.in/amakatha/", "ok": true, "odia_chars": 5793}
+{"url": "https://odiabibhaba.in/khabarakagaja/", "ok": true, "odia_chars": 1432}
+{"url": "https://odiabibhaba.in/patrika/", "ok": true, "odia_chars": 2790}
+{"url": "https://odiabibhaba.in/bahi/", "ok": true, "odia_chars": 1720}
+{"url": "https://odiabibhaba.in/sankalana/", "ok": true, "odia_chars": 1693}
+{"url": "https://odiabibhaba.in/reference/", "ok": true, "odia_chars": 2028}
+{"url": "https://odiabibhaba.in/bisesa/gitagobinda/", "ok": true, "odia_chars": 2082}
+{"url": "https://odiabibhaba.in/bisesa/sidhhanta-darpana/", "ok": true, "odia_chars": 1779}
+{"url": "https://odiabibhaba.in/sankalana/srujanika-prakasana/", "ok": true, "odia_chars": 2506}
+{"url": "https://odishatax.gov.in/screen_reader.html", "ok": false, "reason": "too-little-odia(5)"}
+{"url": "https://odishatax.gov.in/?lang=en", "ok": false, "reason": "too-little-odia(5)"}
+{"url": "https://odishatax.gov.in/?lang=or", "ok": true, "odia_chars": 2042}
+{"url": "https://odishatax.gov.in/index.php", "ok": true, "odia_chars": 2042}
+{"url": "https://odishatax.gov.in/commissionerate.php", "ok": true, "odia_chars": 1354}
+{"url": "https://odishatax.gov.in/office_lists.php", "ok": true, "odia_chars": 1346}
+{"url": "https://odishatax.gov.in/contact_us_web_directory.php", "ok": true, "odia_chars": 1346}
+{"url": "https://odishatax.gov.in/ogst_notification.php", "ok": true, "odia_chars": 1346}
+{"url": "https://odishatax.gov.in/ogst_act.php", "ok": true, "odia_chars": 1346}
+{"url": "https://odishatax.gov.in/ogst_rules.php", "ok": true, "odia_chars": 1346}
+{"url": "https://odishatax.gov.in/gst_audit.php", "ok": true, "odia_chars": 1346}
+{"url": "https://odishatax.gov.in/ogst_rates.php", "ok": true, "odia_chars": 1346}
+{"url": "https://odishatax.gov.in/gst_adavance_rulling_orders.php", "ok": true, "odia_chars": 1346}
+{"url": "https://odishatax.gov.in/gst_appellate_adavance_rulling_orders.php", "ok": true, "odia_chars": 1346}
+{"url": "https://odishatax.gov.in/gst_advance_ruling.php", "ok": true, "odia_chars": 1346}
+{"url": "https://odishatax.gov.in/gst_clarification.php", "ok": true, "odia_chars": 1346}
+{"url": "https://odishatax.gov.in/gsthelpdesk.php", "ok": true, "odia_chars": 1346}
+{"url": "https://odishatax.gov.in/ovat_act.php", "ok": true, "odia_chars": 1346}
+{"url": "https://odishatax.gov.in/ovat_rules.php", "ok": true, "odia_chars": 1346}
+{"url": "https://odishatax.gov.in/ovat_schedule.php", "ok": true, "odia_chars": 1346}
+{"url": "https://odishatax.gov.in/ovat_notification.php", "ok": true, "odia_chars": 1346}
+{"url": "https://odishatax.gov.in/ovat_forms.php", "ok": true, "odia_chars": 1346}
+{"url": "https://odishatax.gov.in/cst_act.php", "ok": true, "odia_chars": 1346}
+{"url": "https://odishatax.gov.in/cst_rules.php", "ok": true, "odia_chars": 1346}
+{"url": "https://odishatax.gov.in/cst_notice.php", "ok": true, "odia_chars": 1346}
+{"url": "https://odishatax.gov.in/cst_forms.php", "ok": true, "odia_chars": 1346}
+{"url": "https://odishatax.gov.in/oet_act.php", "ok": true, "odia_chars": 1346}
+{"url": "https://odishatax.gov.in/oet_rules.php", "ok": true, "odia_chars": 1346}
+{"url": "https://odishatax.gov.in/oet_schedule.php", "ok": true, "odia_chars": 1346}
+{"url": "https://odishatax.gov.in/oet_notification.php", "ok": true, "odia_chars": 1346}
+{"url": "https://odishatax.gov.in/oet_forms.php", "ok": true, "odia_chars": 1346}
+{"url": "https://odishatax.gov.in/opt_act.php", "ok": true, "odia_chars": 1346}
+{"url": "https://odishatax.gov.in/opt_rules.php", "ok": true, "odia_chars": 1346}
+{"url": "https://odishatax.gov.in/opt_notification.php", "ok": true, "odia_chars": 1346}
+{"url": "https://odishatax.gov.in/oent_act.php", "ok": true, "odia_chars": 1346}
+{"url": "https://odishatax.gov.in/oent_rules.php", "ok": true, "odia_chars": 1346}
+{"url": "https://odishatax.gov.in/oent_notice.php", "ok": true, "odia_chars": 1346}
+{"url": "https://odishatax.gov.in/oent_forms.php", "ok": true, "odia_chars": 1346}
+{"url": "https://odishatax.gov.in/advance_ruling.php", "ok": true, "odia_chars": 1346}
+{"url": "https://missionshakti.odisha.gov.in/or/screen-reader", "ok": true, "odia_chars": 986}
+{"url": "https://missionshakti.odisha.gov.in/or/sitemap", "ok": true, "odia_chars": 996}
+{"url": "https://missionshakti.odisha.gov.in/en", "ok": false, "reason": "too-little-odia(11)"}
+{"url": "https://missionshakti.odisha.gov.in/or/node/52819", "ok": true, "odia_chars": 1093}
+{"url": "https://missionshakti.odisha.gov.in/or/about-us/darasana-ebam-maisana", "ok": true, "odia_chars": 1605}
+{"url": "https://missionshakti.odisha.gov.in/or/taxonomy/term/3859", "ok": true, "odia_chars": 1120}
+{"url": "https://missionshakti.odisha.gov.in/or/node/53107", "ok": true, "odia_chars": 1105}
+{"url": "https://missionshakti.odisha.gov.in/or/taxonomy/term/3909", "ok": true, "odia_chars": 1804}
+{"url": "https://missionshakti.odisha.gov.in/or/taxonomy/term/3910", "ok": true, "odia_chars": 1341}
+{"url": "https://missionshakti.odisha.gov.in/or/guidelines", "ok": true, "odia_chars": 2906}
+{"url": "https://missionshakti.odisha.gov.in/or/publication/activity-reports", "ok": true, "odia_chars": 1144}
+{"url": "https://missionshakti.odisha.gov.in/or/taxonomy/term/6194", "ok": true, "odia_chars": 1037}
+{"url": "https://missionshakti.odisha.gov.in/or/node/92504", "ok": true, "odia_chars": 1040}
+{"url": "https://missionshakti.odisha.gov.in/or/publications/posters", "ok": true, "odia_chars": 1036}
+{"url": "https://missionshakti.odisha.gov.in/or/taxonomy/term/3911", "ok": true, "odia_chars": 1070}
+{"url": "https://missionshakti.odisha.gov.in/or/taxonomy/term/3912", "ok": true, "odia_chars": 1184}
+{"url": "https://missionshakti.odisha.gov.in/or/programme/anausathaana-nairamaana", "ok": true, "odia_chars": 1191}
+{"url": "https://missionshakti.odisha.gov.in/or/node/53115", "ok": true, "odia_chars": 1159}
+{"url": "https://missionshakti.odisha.gov.in/or/node/53113", "ok": true, "odia_chars": 1155}
+{"url": "https://missionshakti.odisha.gov.in/or/node/57940", "ok": true, "odia_chars": 1159}
+{"url": "https://missionshakti.odisha.gov.in/or/node/57939", "ok": true, "odia_chars": 1158}
+{"url": "https://missionshakti.odisha.gov.in/or/programme/dakasataa-bardadhai", "ok": true, "odia_chars": 1182}
+{"url": "https://missionshakti.odisha.gov.in/or/programme/arathaika-anatarabhaukataikarana", "ok": true, "odia_chars": 1230}
+{"url": "https://missionshakti.odisha.gov.in/or/programme/maisana-sakatai-rna-raajaya-saudha-arathaika-saahaayaya", "ok": true, "odia_chars": 1278}
+{"url": "https://missionshakti.odisha.gov.in/or/programme/jaibaikaa-dakasataa-baikaasa-ebam-bajaara-lainakaeja", "ok": true, "odia_chars": 1282}
+{"url": "https://missionshakti.odisha.gov.in/or/convergence/khaadaya-saamagarai-o-garaahaka-kalayaana-baibhaaga", "ok": true, "odia_chars": 1304}
+{"url": "https://missionshakti.odisha.gov.in/or/convergence/sakatai-baibhaaga", "ok": true, "odia_chars": 1215}
+{"url": "https://missionshakti.odisha.gov.in/or/convergence/baidayaalaya-o-ganasaikasaa-baibhaaga", "ok": true, "odia_chars": 1273}
+{"url": "https://missionshakti.odisha.gov.in/or/convergence/mahailaa-o-saisau-baikaasa-baibhaaga", "ok": true, "odia_chars": 1969}
+{"url": "https://missionshakti.odisha.gov.in/or/convergence/matasaya-baibhaagara-nairadadaesaalaya", "ok": true, "odia_chars": 1281}
+{"url": "https://missionshakti.odisha.gov.in/or/convergence/pasaupaalana-o-paraanai-caikaitasaa-saebaa-nairadadaesaalaya", "ok": true, "odia_chars": 1337}

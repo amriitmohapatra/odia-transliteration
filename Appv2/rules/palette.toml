@@ -1,0 +1,136 @@
+# =============================================================================
+# The insert palette — marks too rare to deserve a keystroke.
+#
+# Rules and lexicon cannot reach a standalone mark: core/src/segment.ts
+# expandSign returns false when state.last === 'start', so anything that opens
+# a token is unreachable regardless of its key. Frequent cases get a typed
+# shortcut in Appv2/src/preprocess.ts ( | ' : ); everything else lives here and
+# is inserted by tapping.
+#
+# This is also the "dedicated letter-insert path rather than borrowing from the
+# candidate list" that AGENTS.md open problem #1 asks for. That problem — rare
+# letters and correct answers competing for the same nine candidate slots — is
+# resolved by not making them compete.
+#
+# CONVENTION: every combining mark is written as a \u escape. A combining mark
+# rendered alone in a text editor is either invisible or lands on the preceding
+# character, so these cannot be reviewed by eye — the same reasoning that makes
+# core/rules/symbols.toml write ଡ଼ as ଡ଼. Independent letters and
+# punctuation, which ARE visible standalone, are written literally.
+#
+# `combining = true` tells the UI to render the entry on a dotted circle
+# (U+25CC) so the button shows where the mark attaches.
+# =============================================================================
+
+[meta]
+version = "0.1"
+
+
+# --------------------------------------------------------------------------
+# Sanskrit vocalics.
+#
+# r12a's Odia orthography notes: only ୃ is regularly used in modern Odia. The
+# rest "exist in the script, in independent and vowel sign forms, but are used
+# for Sanskrit transcriptions" — which is exactly what this app is now for.
+# ୠ is attested 22 times in core/data/webfreq.tsv (ୠଷି, ୠତୁ), ଌ 5 times, ୡ twice.
+# The śloka rule profile also gives these roman keys (rri/rru/lri/lru/llri);
+# the palette is the route that works in every profile.
+# --------------------------------------------------------------------------
+[[group]]
+name = "Vocalics"
+hint = "Sanskrit vowels. Only ୃ is common in modern Odia."
+entries = [
+  { text = "ଋ", label = "vocalic r", roman = "ri / ru" },
+  { text = "ୃ", label = "vocalic r sign", roman = "ri / ru", combining = true },
+  { text = "ୠ", label = "vocalic rr", roman = "rri" },
+  { text = "ୄ", label = "vocalic rr sign", roman = "rri", combining = true },
+  { text = "ଌ", label = "vocalic l", roman = "lri" },
+  { text = "ୢ", label = "vocalic l sign", roman = "lri", combining = true },
+  { text = "ୡ", label = "vocalic ll", roman = "llri" },
+  { text = "ୣ", label = "vocalic ll sign", roman = "llri", combining = true },
+]
+
+
+# --------------------------------------------------------------------------
+# Signs. ଂ ଁ ଃ are reachable from the rules; they are here anyway because in a
+# verse you often want to place one deliberately rather than hunt the candidate
+# list for it. ଽ has no rule route at all.
+# --------------------------------------------------------------------------
+[[group]]
+name = "Signs"
+hint = "Anusvara, candrabindu, visarga, avagraha."
+entries = [
+  { text = "ଂ", label = "anusvara", roman = "m / n", combining = true },
+  { text = "ଁ", label = "candrabindu", roman = "n", combining = true },
+  { text = "ଃ", label = "visarga", roman = "h  or  :", combining = true },
+  { text = "ଽ", label = "avagraha (elision)", roman = "'", combining = true },
+  { text = "୍", label = "virama / halanta", roman = "_", combining = true },
+  { text = "଼", label = "nukta", roman = "", combining = true },
+]
+
+
+# --------------------------------------------------------------------------
+# Letters with no reliable keystroke.
+#
+# ଞ standalone has NO roman key, in the base or in Appv2. Giving it one was
+# tried and reverted — see the S5e block in sanskrit.delta.toml: a "ny" key
+# makes the correct ନ୍ୟ conjunct pay segment.ts's digraph_split penalty and
+# drops it out of the candidate list entirely. The palette is the right home
+# for a letter that is genuinely rare outside ଜ୍ଞ.
+# --------------------------------------------------------------------------
+[[group]]
+name = "Letters"
+hint = "Reachable here when the keystroke is unreliable."
+entries = [
+  { text = "ଞ", label = "nya", roman = "— palette only" },
+  { text = "ଙ", label = "nga", roman = "ng" },
+  { text = "ୱ", label = "wa", roman = "w" },
+  { text = "ଡ଼", label = "rra (flap)", roman = "d / rr" },
+  { text = "ଢ଼", label = "rha (flap)", roman = "dh / rh" },
+]
+
+
+# --------------------------------------------------------------------------
+# Verse punctuation. Both danda are Devanagari-block code points, which Unicode
+# and r12a both record as shared with Odia: "sentence and verse final
+# punctuation (usually preceded by a space)".
+#
+# Odia has no dedicated OM sign — U+0B70 is not one — so the pranava is written
+# ଓ + candrabindu, which is what webfreq attests (ଓଁ, 2,916 occurrences).
+# --------------------------------------------------------------------------
+[[group]]
+name = "Verse"
+hint = "Danda and the pranava."
+entries = [
+  { text = "।", label = "danda", roman = "|" },
+  { text = "॥", label = "double danda", roman = "||" },
+  { text = "ଓଁ", label = "om (pranava)", roman = "om" },
+]
+
+
+# --------------------------------------------------------------------------
+# Vedic accents, for swara-marked chanting text.
+#
+# U+0951 and U+0952 sit in the Devanagari block but are script-neutral: the
+# Unicode core spec states these tone marks "may also occur in the
+# representation of Vedic texts written in other scripts, including
+# transliterations in the Latin script". sanskritdocuments.org's Odia-script
+# collection explicitly ships documents "displayed with the vedic accent (swara
+# marks) for easy chanting", so this is real usage, not a theoretical case.
+#
+# NOT INCLUDED, deliberately, so nobody re-adds them:
+#   U+0B55 ORIYA SIGN OVERLINE — reads like a Vedic mark and is not one. It was
+#     added in Unicode 13.0 for the KUI language.
+#   U+0B56 / U+0B57 — ai and au length marks, i.e. pieces of a decomposed ୈ/ୌ.
+#     Unicode recommends the precomposed forms, which the vowel rules produce.
+#   U+0B72-U+0B77 — Odia fraction signs. Not liturgical.
+#   U+0B70 ORIYA ISSHAR — omitted because I could not confirm its editorial use
+#     from a primary source. Add it once someone can say what it means.
+# --------------------------------------------------------------------------
+[[group]]
+name = "Vedic"
+hint = "Swara marks for chanting. Rare outside Vedic text."
+entries = [
+  { text = "॑", label = "udatta", roman = "", combining = true },
+  { text = "॒", label = "anudatta", roman = "", combining = true },
+]

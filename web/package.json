@@ -1,0 +1,22 @@
+{
+  "name": "@odia/web",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Offline PWA front end (Safari on macOS, Add-to-Home-Screen on iOS).",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc -p tsconfig.json",
+    "build:single": "SINGLE_FILE=1 vite build && node scripts/make-single-file.mjs",
+    "build:legacy": "LEGACY=1 SINGLE_FILE=1 vite build && LEGACY=1 node scripts/make-single-file.mjs"
+  },
+  "dependencies": {
+    "@odia/core": "*"
+  },
+  "devDependencies": {
+    "vite": "^7.3.6"
+  }
+}

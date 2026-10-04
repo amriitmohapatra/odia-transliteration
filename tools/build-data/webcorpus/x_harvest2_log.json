@@ -1,0 +1,542 @@
+[
+ {
+  "handle": "dm_puri",
+  "status": 200,
+  "note": "ok",
+  "odia_posts": 3
+ },
+ {
+  "handle": "districtadmndkl",
+  "status": 200,
+  "note": "ok",
+  "odia_posts": 5
+ },
+ {
+  "handle": "DM_Rayagada",
+  "status": 200,
+  "note": "ok",
+  "odia_posts": 2
+ },
+ {
+  "handle": "DBalasore",
+  "status": 404,
+  "note": "HTTPError 404 Not Found",
+  "odia_posts": 0
+ },
+ {
+  "handle": "dm_jharsuguda",
+  "status": 200,
+  "note": "ok",
+  "odia_posts": 4
+ },
+ {
+  "handle": "Ganjam_Admin",
+  "status": 200,
+  "note": "ok",
+  "odia_posts": 5
+ },
+ {
+  "handle": "GovernorOdisha",
+  "status": 200,
+  "note": "ok",
+  "odia_posts": 1
+ },
+ {
+  "handle": "DM_Kendrapara",
+  "status": 404,
+  "note": "HTTPError 404 Not Found",
+  "odia_posts": 0
+ },
+ {
+  "handle": "Collector_Angul",
+  "status": 404,
+  "note": "HTTPError 404 Not Found",
+  "odia_posts": 0
+ },
+ {
+  "handle": "dm_bargarh",
+  "status": 404,
+  "note": "HTTPError 404 Not Found",
+  "odia_posts": 0
+ },
+ {
+  "handle": "DM_Bolangir",
+  "status": 404,
+  "note": "HTTPError 404 Not Found",
+  "odia_posts": 0
+ },
+ {
+  "handle": "Collectorbhadrak",
+  "status": 404,
+  "note": "HTTPError 404 Not Found",
+  "odia_posts": 0
+ },
+ {
+  "handle": "dm_boudh",
+  "status": 404,
+  "note": "HTTPError 404 Not Found",
+  "odia_posts": 0
+ },
+ {
+  "handle": "dm_cuttack",
+  "status": 404,
+  "note": "HTTPError 404 Not Found",
+  "odia_posts": 0
+ },
+ {
+  "handle": "DeogarhDist",
+  "status": 404,
+  "note": "HTTPError 404 Not Found",
+  "odia_posts": 0
+ },
+ {
+  "handle": "dm_gajapati",
+  "status": 200,
+  "note": "ok",
+  "odia_posts": 4
+ },
+ {
+  "handle": "DM_Jagatsinghpur",
+  "status": 404,
+  "note": "HTTPError 404 Not Found",
+  "odia_posts": 0
+ },
+ {
+  "handle": "dm_jajpur",
+  "status": 200,
+  "note": "ok",
+  "odia_posts": 5
+ },
+ {
+  "handle": "dm_kalahandi",
+  "status": 404,
+  "note": "HTTPError 404 Not Found",
+  "odia_posts": 0
+ },
+ {
+  "handle": "DM_Kandhamal",
+  "status": 404,
+  "note": "HTTPError 404 Not Found",
+  "odia_posts": 0
+ },
+ {
+  "handle": "DM_Keonjhar",
+  "status": 404,
+  "note": "HTTPError 404 Not Found",
+  "odia_posts": 0
+ },
+ {
+  "handle": "Khordha_Admin",
+  "status": 404,
+  "note": "HTTPError 404 Not Found",
+  "odia_posts": 0
+ },
+ {
+  "handle": "DM_Koraput",
+  "status": 404,
+  "note": "HTTPError 404 Not Found",
+  "odia_posts": 0
+ },
+ {
+  "handle": "dm_malkangiri",
+  "status": 200,
+  "note": "ok",
+  "odia_posts": 4
+ },
+ {
+  "handle": "DM_Mayurbhanj",
+  "status": 200,
+  "note": "ok",
+  "odia_posts": 3
+ },
+ {
+  "handle": "dm_nabarangpur",
+  "status": 404,
+  "note": "HTTPError 404 Not Found",
+  "odia_posts": 0
+ },
+ {
+  "handle": "DM_Nayagarh",
+  "status": 404,
+  "note": "HTTPError 404 Not Found",
+  "odia_posts": 0
+ },
+ {
+  "handle": "DM_Nuapada",
+  "status": 200,
+  "note": "ok",
+  "odia_posts": 5
+ },
+ {
+  "handle": "dm_sambalpur",
+  "status": 404,
+  "note": "HTTPError 404 Not Found",
+  "odia_posts": 0
+ },
+ {
+  "handle": "DM_Sonepur",
+  "status": 404,
+  "note": "HTTPError 404 Not Found",
+  "odia_posts": 0
+ },
+ {
+  "handle": "DM_Sundargarh",
+  "status": 404,
+  "note": "HTTPError 404 Not Found",
+  "odia_posts": 0
+ },
+ {
+  "handle": "dm_bhubaneswar",
+  "status": 404,
+  "note": "HTTPError 404 Not Found",
+  "odia_posts": 0
+ },
+ {
+  "handle": "dm_nabarangapur",
+  "status": 404,
+  "note": "HTTPError 404 Not Found",
+  "odia_posts": 0
+ },
+ {
+  "handle": "MohanMajhiBJP",
+  "status": 404,
+  "note": "HTTPError 404 Not Found",
+  "odia_posts": 0
+ },
+ {
+  "handle": "PrithvirajHarich",
+  "status": 404,
+  "note": "HTTPError 404 Not Found",
+  "odia_posts": 0
+ },
+ {
+  "handle": "Nityananda_Gond",
+  "status": 404,
+  "note": "HTTPError 404 Not Found",
+  "odia_posts": 0
+ },
+ {
+  "handle": "BJPKrushnaPatra",
+  "status": 404,
+  "note": "HTTPError 404 Not Found",
+  "odia_posts": 0
+ },
+ {
+  "handle": "surama_padhy",
+  "status": 404,
+  "note": "HTTPError 404 Not Found",
+  "odia_posts": 0
+ },
+ {
+  "handle": "drpradeepbjp",
+  "status": 404,
+  "note": "HTTPError 404 Not Found",
+  "odia_posts": 0
+ },
+ {
+  "handle": "RabiNarayanNaik",
+  "status": 404,
+  "note": "HTTPError 404 Not Found",
+  "odia_posts": 0
+ },
+ {
+  "handle": "GaneshRamSingh",
+  "status": 200,
+  "note": "ok",
+  "odia_posts": 0
+ },
+ {
+  "handle": "BibhutiJena",
+  "status": 404,
+  "note": "HTTPError 404 Not Found",
+  "odia_posts": 0
+ },
+ {
+  "handle": "SambitPatra",
+  "status": 200,
+  "note": "ok",
+  "odia_posts": 0
+ },
+ {
+  "handle": "JualOram",
+  "status": 200,
+  "note": "ok",
+  "odia_posts": 0
+ },
+ {
+  "handle": "drarunkumarsahu",
+  "status": 404,
+  "note": "HTTPError 404 Not Found",
+  "odia_posts": 0
+ },
+ {
+  "handle": "Rudra_Narayan_",
+  "status": 200,
+  "note": "ok",
+  "odia_posts": 0
+ },
+ {
+  "handle": "baijayantjaypanda",
+  "status": 404,
+  "note": "HTTPError 404 Not Found",
+  "odia_posts": 0
+ },
+ {
+  "handle": "PradeepPurohit",
+  "status": 200,
+  "note": "ok",
+  "odia_posts": 0
+ },
+ {
+  "handle": "NityanandaGond",
+  "status": 200,
+  "note": "ok",
+  "odia_posts": 0
+ },
+ {
+  "handle": "kanak_vardhan",
+  "status": 200,
+  "note": "ok",
+  "odia_posts": 0
+ },
+ {
+  "handle": "BJDLive",
+  "status": 200,
+  "note": "ok",
+  "odia_posts": 0
+ },
+ {
+  "handle": "BJD_Youth",
+  "status": 404,
+  "note": "HTTPError 404 Not Found",
+  "odia_posts": 0
+ },
+ {
+  "handle": "OdishaCongress",
+  "status": 404,
+  "note": "HTTPError 404 Not Found",
+  "odia_posts": 0
+ },
+ {
+  "handle": "OdiaOdisha",
+  "status": 200,
+  "note": "ok",
+  "odia_posts": 6
+ },
+ {
+  "handle": "odishabytes",
+  "status": 200,
+  "note": "ok",
+  "odia_posts": 0
+ },
+ {
+  "handle": "kalingatv",
+  "status": 200,
+  "note": "ok",
+  "odia_posts": 0
+ },
+ {
+  "handle": "PrameyaNews7",
+  "status": 404,
+  "note": "HTTPError 404 Not Found",
+  "odia_posts": 0
+ },
+ {
+  "handle": "SamayaOdia",
+  "status": 404,
+  "note": "HTTPError 404 Not Found",
+  "odia_posts": 0
+ },
+ {
+  "handle": "OdishaSunTimes",
+  "status": 404,
+  "note": "HTTPError 404 Not Found",
+  "odia_posts": 0
+ },
+ {
+  "handle": "TheOdishaNews",
+  "status": 404,
+  "note": "HTTPError 404 Not Found",
+  "odia_posts": 0
+ },
+ {
+  "handle": "OdiaLive",
+  "status": 200,
+  "note": "ok",
+  "odia_posts": 1
+ },
+ {
+  "handle": "AmaOdisha",
+  "status": 200,
+  "note": "ok",
+  "odia_posts": 0
+ },
+ {
+  "handle": "OdishaDiary",
+  "status": 200,
+  "note": "ok",
+  "odia_posts": 0
+ },
+ {
+  "handle": "OdishaBhaskar",
+  "status": 200,
+  "note": "ok",
+  "odia_posts": 0
+ },
+ {
+  "handle": "sambadodia",
+  "status": 200,
+  "note": "ok",
+  "odia_posts": 0
+ },
+ {
+  "handle": "DharitriOdia",
+  "status": 404,
+  "note": "HTTPError 404 Not Found",
+  "odia_posts": 0
+ },
+ {
+  "handle": "OTVKhabar",
+  "status": 200,
+  "note": "ok",
+  "odia_posts": 6
+ },
+ {
+  "handle": "News7Odia",
+  "status": 200,
+  "note": "ok",
+  "odia_posts": 4
+ },
+ {
+  "handle": "OdiaSahitya",
+  "status": 200,
+  "note": "ok",
+  "odia_posts": 0
+ },
+ {
+  "handle": "JagannathTemple",
+  "status": 200,
+  "note": "ok",
+  "odia_posts": 0
+ },
+ {
+  "handle": "SJTA_Puri",
+  "status": 200,
+  "note": "ok",
+  "odia_posts": 5
+ },
+ {
+  "handle": "ShreeJagannathaP",
+  "status": 404,
+  "note": "HTTPError 404 Not Found",
+  "odia_posts": 0
+ },
+ {
+  "handle": "odisha_yuva",
+  "status": 200,
+  "note": "ok",
+  "odia_posts": 0
+ },
+ {
+  "handle": "OdiaBhasa",
+  "status": 404,
+  "note": "HTTPError 404 Not Found",
+  "odia_posts": 0
+ },
+ {
+  "handle": "AmaOdiaBhasa",
+  "status": 404,
+  "note": "HTTPError 404 Not Found",
+  "odia_posts": 0
+ },
+ {
+  "handle": "OdishaLive",
+  "status": 200,
+  "note": "ok",
+  "odia_posts": 5
+ },
+ {
+  "handle": "OdiaTrolls",
+  "status": 404,
+  "note": "HTTPError 404 Not Found",
+  "odia_posts": 0
+ },
+ {
+  "handle": "OdiaMemes",
+  "status": 200,
+  "note": "ok",
+  "odia_posts": 0
+ },
+ {
+  "handle": "OdiaPua",
+  "status": 200,
+  "note": "ok",
+  "odia_posts": 0
+ },
+ {
+  "handle": "OdiaJhia",
+  "status": 200,
+  "note": "ok",
+  "odia_posts": 0
+ },
+ {
+  "handle": "OdiaStatus",
+  "status": 200,
+  "note": "ok",
+  "odia_posts": 0
+ },
+ {
+  "handle": "OdiaShayari",
+  "status": 200,
+  "note": "ok",
+  "odia_posts": 0
+ },
+ {
+  "handle": "odia_kabita",
+  "status": 404,
+  "note": "HTTPError 404 Not Found",
+  "odia_posts": 0
+ },
+ {
+  "handle": "OdiaGapa",
+  "status": 200,
+  "note": "ok",
+  "odia_posts": 0
+ },
+ {
+  "handle": "utkal_odisha",
+  "status": 200,
+  "note": "ok",
+  "odia_posts": 0
+ },
+ {
+  "handle": "UtkalDivas",
+  "status": 200,
+  "note": "ok",
+  "odia_posts": 0
+ },
+ {
+  "handle": "OdiaGourav",
+  "status": 404,
+  "note": "HTTPError 404 Not Found",
+  "odia_posts": 0
+ },
+ {
+  "handle": "JaiJagannath",
+  "status": 200,
+  "note": "ok",
+  "odia_posts": 0
+ },
+ {
+  "handle": "OdishaWeather",
+  "status": 404,
+  "note": "HTTPError 404 Not Found",
+  "odia_posts": 0
+ },
+ {
+  "handle": "IMD_Bhubaneswar",
+  "status": 404,
+  "note": "HTTPError 404 Not Found",
+  "odia_posts": 0
+ }
+]

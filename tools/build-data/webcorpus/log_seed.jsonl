@@ -1,0 +1,5 @@
+{"url": "https://odisha.gov.in/or", "status": 200, "ok": true, "odia_chars": 4376, "lines": 245}
+{"url": "https://khordha.odisha.gov.in/od/", "ok": false, "reason": "HTTPError: HTTP Error 404: Not Found"}
+{"url": "https://culture.odisha.gov.in/od", "ok": false, "reason": "HTTPError: HTTP Error 404: Not Found"}
+{"url": "https://dhe.odisha.gov.in/", "status": 200, "ok": true, "odia_chars": 6871, "lines": 382}
+{"url": "https://odishaassembly.nic.in/", "status": 200, "ok": false, "reason": "too-little-odia(0)"}

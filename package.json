@@ -1,0 +1,32 @@
+{
+  "name": "odia-transliteration",
+  "version": "0.1.0",
+  "private": true,
+  "description": "English -> Odia (ଓଡ଼ିଆ) phonetic transliteration: offline TypeScript engine, CLI and PWA.",
+  "license": "MIT",
+  "author": "Amrit Mohapatra",
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "workspaces": [
+    "core",
+    "cli",
+    "web"
+  ],
+  "scripts": {
+    "test": "npm run test --workspace @odia/core",
+    "build": "npm run build --workspaces --if-present",
+    "eval": "tsx tools/eval/run_eval.ts",
+    "dev:web": "npm run dev --workspace @odia/web",
+    "clean": "rm -rf core/dist cli/dist web/dist **/*.tsbuildinfo",
+    "build:app": "npm run build:single --workspace @odia/web",
+    "build:app:legacy": "npm run build:legacy --workspace @odia/web"
+  },
+  "devDependencies": {
+    "@types/node": "^25.9.5",
+    "tsx": "^4.23.1",
+    "typescript": "^5.9.3",
+    "vitest": "^3.2.7"
+  }
+}

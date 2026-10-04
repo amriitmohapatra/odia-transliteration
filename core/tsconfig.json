@@ -1,0 +1,12 @@
+{
+  "extends": "../tsconfig.base.json",
+  "compilerOptions": {
+    "rootDir": "src",
+    "outDir": "dist",
+
+    // The engine is environment-agnostic: it must run under node, in a
+    // browser, and inside JavaScriptCore. No ambient Node or DOM globals.
+    "types": []
+  },
+  "include": ["src/**/*.ts"]
+}

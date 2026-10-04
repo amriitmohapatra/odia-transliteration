@@ -1,0 +1,25 @@
+{
+  "pages": 486,
+  "lines_total": 62013,
+  "lines_after_dedup": 10222,
+  "tokens_raw": 224680,
+  "tokens_dedup": 71105,
+  "types_raw": 13802,
+  "types_dedup": 13802,
+  "nukta": {
+    "U+0B3C_total": 1605,
+    "DDA+NUKTA (ଡ଼)": 1454,
+    "DDHA+NUKTA (ଢ଼)": 43,
+    "NUKTA_on_other_base": 108,
+    "precomposed_U+0B5C": 0,
+    "precomposed_U+0B5D": 0,
+    "U+0B5F (ୟ, atomic)": 9924
+  },
+  "nukta_drop": {
+    "types_with_nukta": 452,
+    "types_also_seen_bare": 152,
+    "tokens_with_nukta": 1593,
+    "tokens_bare_variant": 2766,
+    "drop_rate": 0.6345
+  }
+}

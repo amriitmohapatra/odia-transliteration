@@ -1,0 +1,636 @@
+# GENERATED FILE - DO NOT EDIT.
+#
+# Edit rules/unified.delta.toml and regenerate:
+#     npx tsx Appv2/scripts/gen-rules.ts
+#
+# profile      = unified
+# base         = core/rules/symbols.toml
+# base-sha256  = b0f91251c673787e0180779154d72a66c6d2f72d8ec4863e379a5ee2d6964b6f
+# delta        = rules/unified.delta.toml
+# delta-sha256 = f05e463186c85403f5098944d9c44e928c45b24a1cacb8839804b925d5db7365
+#
+# There is deliberately no timestamp here: generation is deterministic, so
+# `gen-rules.ts --check` can be a plain byte comparison.
+#
+# Everyday Odia with Sanskrit reachable one or two slots down.
+# Extends sanskrit.delta.toml; re-weights S1/S2/S3 and drops the śloka-only
+# vocalics. Guarded by Appv2/eval/no-regression.ts against the existing
+# everyday numbers (casual top-3 95.7%, careful top-1 89.1%).
+
+# symbols.toml — the natural-mode roman -> Odia map.
+#
+# ALL linguistic behaviour lives here. Do not move any of it into TypeScript.
+# `core/src/rules.ts` validates this file on load and throws if anything is
+# wrong; a typo must fail at startup, not degrade quality quietly.
+#
+# ---------------------------------------------------------------------------
+# The nukta invariant
+# ---------------------------------------------------------------------------
+# The two flap letters MUST be stored decomposed:
+#
+#     RRA   ଡ଼   =  U+0B21 + U+0B3C      never the precomposed U+0B5C
+#     RHA   ଢ଼   =  U+0B22 + U+0B3C      never the precomposed U+0B5D
+#
+# NFC pulls the precomposed forms apart and never puts them back, so a
+# precomposed spelling here would silently stop matching the lexicon. The two
+# spellings are visually identical, so those entries are written as \u escapes
+# rather than literals: they are the only strings in this file you cannot
+# review by eye. Everything else is a single unambiguous code point.
+#
+# ---------------------------------------------------------------------------
+# Case
+# ---------------------------------------------------------------------------
+# Natural mode folds case before matching, so every roman key here is
+# lowercase. The retroflex/dental distinction that ITRANS spells with capitals
+# (T vs t, D vs d, N vs n) is expressed here as weighted alternates of one
+# lowercase key: "t" reaches both ତ and ଟ. Strict mode, which does honour
+# case, lives in itrans.toml.
+#
+# ---------------------------------------------------------------------------
+# Weights
+# ---------------------------------------------------------------------------
+# `w` is a relative preference within one roman key, roughly 0-1. A path
+# through the segmenter scores as the product of its edge weights, so a 0.85
+# alternate costs about 15% per use and still surfaces in the candidate list.
+#
+# ---------------------------------------------------------------------------
+# Context
+# ---------------------------------------------------------------------------
+# An option may carry `context`, a positional predicate evaluated against the
+# ROMAN input (never against the half-built Odia string):
+#
+#   any            always fires; the default when `context` is omitted
+#   word_initial   the key matches at offset 0
+#   intervocalic   a roman vowel immediately precedes and follows the key
+#   word_final     the key match ends at the end of the token
+#
+# Signs use a different, smaller vocabulary: any / before_consonant /
+# before_vowel / word_final.
+
+[meta]
+scheme = "odia-natural"
+version = "0.1"
+
+# The ranking mix used by rank.ts. Tunable with no code change.
+[weights]
+rule = 1.0
+freq = 1.5
+user = 2.0
+
+# Structural preferences the segmenter applies on top of the per-letter weights.
+#
+# `hiatus` is the cost of writing an independent vowel directly after another
+# vowel. Without it "aa" scores identically through the single `aa` -> ା rule
+# and through `a` + `a` -> inherent + ଅ; the tie then falls to code point
+# order, which puts ଅ (U+0B05) first. That is how "paani" came out as ପଅନି and
+# "bhaagya" as ଭଅଗ୍ଯ. It stays close to 1 because real vowel hiatus exists in
+# Odia (ହୋଇ); at 0.85 the ହୋଇ reading still outranks the ହୈ diphthong (0.8).
+#
+# `digraph_split` is the cost of reading a consonant with a SHORTER key when a
+# longer consonant key also matched here. "bh" is the single letter ଭ, but
+# nothing stopped the lattice from also reading b + h and joining them with a
+# virama, giving ବ୍ହ — not a word, and it was ranking SECOND for "bhagya", above
+# the correct ଭାଗ୍ୟ. "chanda" likewise produced ଚ୍ହନ୍ଦ.
+# This can be aggressive where hiatus cannot: a real consonant+h cluster
+# essentially does not occur in romanized Odia, because the aspirate digraphs
+# are precisely what people mean when they type them.
+[segment]
+hiatus = 0.85
+digraph_split = 0.12
+
+[digits]
+odia = ["୦", "୧", "୨", "୩", "୪", "୫", "୬", "୭", "୮", "୯"]
+
+
+# ===========================================================================
+# Vowels
+# ===========================================================================
+# `independent` is used word-initially or after another vowel; `matra` after a
+# consonant. The inherent vowel "a" has an empty matra, which is how "emit no
+# sign at all" is expressed. A roman key may appear more than once: the
+# segmenter fans the alternates out into separate lattice edges.
+
+[[vowel]]
+roman = "a"
+independent = "ଅ"
+matra = ""
+w = 1.0
+
+# "rama" is far more often ରାମ than ରମ, so plain "a" can also reach the long
+# vowel, at a cost.
+[[vowel]]
+roman = "a"
+independent = "ଆ"
+matra = "ା"
+w = 0.35
+
+[[vowel]]
+roman = "aa"
+independent = "ଆ"
+matra = "ା"
+w = 1.0
+
+[[vowel]]
+roman = "i"
+independent = "ଇ"
+matra = "ି"
+w = 1.0
+
+[[vowel]]
+roman = "i"
+independent = "ଈ"
+matra = "ୀ"
+w = 0.4
+
+[[vowel]]
+roman = "ii"
+independent = "ଈ"
+matra = "ୀ"
+w = 1.0
+
+[[vowel]]
+roman = "ee"
+independent = "ଈ"
+matra = "ୀ"
+w = 0.9
+
+[[vowel]]
+roman = "ee"
+independent = "ଇ"
+matra = "ି"
+w = 0.5
+
+[[vowel]]
+roman = "u"
+independent = "ଉ"
+matra = "ୁ"
+w = 1.0
+
+[[vowel]]
+roman = "u"
+independent = "ଊ"
+matra = "ୂ"
+w = 0.35
+
+[[vowel]]
+roman = "uu"
+independent = "ଊ"
+matra = "ୂ"
+w = 1.0
+
+[[vowel]]
+roman = "oo"
+independent = "ଊ"
+matra = "ୂ"
+w = 0.9
+
+[[vowel]]
+roman = "oo"
+independent = "ଉ"
+matra = "ୁ"
+w = 0.5
+
+# Vocalic r. Both spellings also decompose into consonant + vowel through the
+# consonant table, so the lattice carries ର + ୁ as well.
+[[vowel]]
+roman = "ru"
+independent = "ଋ"
+matra = "ୃ"
+w = 0.7
+
+[[vowel]]
+roman = "ri"
+independent = "ଋ"
+matra = "ୃ"
+w = 0.6
+
+[[vowel]]
+roman = "e"
+independent = "ଏ"
+matra = "େ"
+w = 1.0
+
+[[vowel]]
+roman = "ai"
+independent = "ଐ"
+matra = "ୈ"
+w = 1.0
+
+[[vowel]]
+roman = "oi"
+independent = "ଐ"
+matra = "ୈ"
+w = 0.8
+
+[[vowel]]
+roman = "o"
+independent = "ଓ"
+matra = "ୋ"
+w = 1.0
+
+[[vowel]]
+roman = "au"
+independent = "ଔ"
+matra = "ୌ"
+w = 1.0
+
+[[vowel]]
+roman = "ou"
+independent = "ଔ"
+matra = "ୌ"
+w = 0.8
+
+
+# ===========================================================================
+# Consonants — velar varga
+# ===========================================================================
+
+[[consonant]]
+roman = "k"
+odia = [{ text = "କ", w = 1.0 }]
+
+[[consonant]]
+roman = "kh"
+odia = [{ text = "ଖ", w = 1.0 }]
+
+[[consonant]]
+roman = "g"
+odia = [{ text = "ଗ", w = 1.0 }]
+
+[[consonant]]
+roman = "gh"
+odia = [{ text = "ଘ", w = 1.0 }]
+
+[[consonant]]
+roman = "ng"
+odia = [  # [unified S4d]
+  { text = "ଙ", w = 1.0 },
+  { text = "ଙ୍ଗ", w = 0.95 },
+]
+
+# The conjunct ksha, spelled out so "lakshmi" and "rakshaa" work in one edge.
+[[consonant]]
+roman = "ksh"
+odia = [{ text = "କ୍ଷ", w = 1.0 }]
+
+[[consonant]]
+roman = "x"
+odia = [
+  { text = "କ୍ଷ", w = 0.8 },
+  { text = "କ୍ସ", w = 0.6 },
+]
+
+[[consonant]]
+roman = "q"
+odia = [{ text = "କ", w = 1.0 }]
+
+
+# ===========================================================================
+# Consonants — palatal varga
+# ===========================================================================
+
+[[consonant]]
+roman = "ch"
+odia = [
+  { text = "ଚ", w = 1.0 },
+  { text = "ଛ", w = 0.55 },
+]
+
+[[consonant]]
+roman = "chh"
+odia = [{ text = "ଛ", w = 1.0 }]
+
+[[consonant]]
+roman = "c"
+odia = [
+  { text = "ଚ", w = 0.8 },
+  { text = "କ", w = 0.45 },
+]
+
+[[consonant]]
+roman = "j"
+odia = [  # [unified S8]
+  { text = "ଜ", w = 1.0 },
+  { text = "ଯ", w = 0.6, context = "word_initial" },
+]
+
+[[consonant]]
+roman = "jh"
+odia = [{ text = "ଝ", w = 1.0 }]
+
+[[consonant]]
+roman = "z"
+odia = [{ text = "ଜ", w = 1.0 }]
+
+# "ny" and "gy" are deliberately NOT keys.
+#
+# Both are ITRANS conventions for single letters (ଞ and ଜ୍ଞ), and both are
+# actively harmful here, because longest-match-first means they swallow the far
+# commoner two-letter reading:
+#
+#   dhanyabaada  ->  ଧଞବାଦ   instead of  ଧନ୍ୟବାଦ
+#   bhaagya      ->  ଭଜ୍ଞ     instead of  ଭାଗ୍ୟ
+#
+# n+y and g+y are ordinary consonant clusters in Odia and vastly outnumber the
+# single letters. ଜ୍ଞ keeps its own unambiguous key below. Standalone ଞ is
+# vanishingly rare outside that conjunct, so it is reachable only through "jny".
+[[consonant]]
+roman = "jny"
+odia = [{ text = "ଜ୍ଞ", w = 1.0 }]
+
+
+# ===========================================================================
+# Consonants — retroflex and dental varga
+# ===========================================================================
+# Case is folded, so one lowercase key carries both series. The dental is the
+# safer default in romanised Odia, the retroflex follows closely behind.
+
+[[consonant]]
+roman = "t"
+odia = [
+  { text = "ତ", w = 1.0 },
+  { text = "ଟ", w = 0.85 },
+]
+
+[[consonant]]
+roman = "th"
+odia = [
+  { text = "ଥ", w = 1.0 },
+  { text = "ଠ", w = 0.8 },
+]
+
+# ---------------------------------------------------------------------------
+# "d" — and the flap ଡ଼, which is where the positional weighting earns its keep
+# ---------------------------------------------------------------------------
+# ଡ଼ is rare word-initially and common between vowels or at the end of a word
+# (ଓଡ଼ିଆ, ଓଡ଼ିଶା, ଗଡ଼, ବଡ଼). Bare ଡ is the normal word-initial form. Weighting
+# by position means plain "d" lands on the right letter most of the time with
+# the user doing nothing special.
+[[consonant]]
+roman = "d"
+odia = [
+  { text = "ଦ", w = 1.0 },
+  { text = "ଡ", w = 0.85 },
+  { text = "\u0B21\u0B3C", w = 0.85, context = "intervocalic" }, # RRA
+  { text = "\u0B21\u0B3C", w = 0.55, context = "word_final" },   # RRA
+  { text = "\u0B21\u0B3C", w = 0.05, context = "word_initial" }, # RRA
+]
+
+[[consonant]]
+roman = "dh"
+odia = [
+  { text = "ଧ", w = 1.0 },
+  { text = "ଢ", w = 0.75 },
+  { text = "\u0B22\u0B3C", w = 0.6, context = "intervocalic" },  # RHA
+  { text = "\u0B22\u0B3C", w = 0.5, context = "word_final" },    # RHA
+  { text = "\u0B22\u0B3C", w = 0.04, context = "word_initial" }, # RHA
+]
+
+# An explicit spelling for the flaps, for when the weighted default guesses
+# wrong: "paRhiba", "gaRa". Case is folded, so "R" arrives here as "r".
+[[consonant]]
+roman = "rh"
+odia = [{ text = "\u0B22\u0B3C", w = 1.0 }] # RHA
+
+# ଡ଼ needs an unambiguous key of its own, exactly as ଢ଼ has "rh" above.
+# Without one the flap was reachable only through the contextual options on "d"
+# and "r", which fire intervocalically and word-finally — so it could not be
+# written word-initially, before a complex matra, or as a member of a conjunct.
+# The orthographic coverage audit found 47 conjuncts unreachable for this reason.
+[[consonant]]
+roman = "rr"
+odia = [{ text = "\u0B21\u0B3C", w = 1.0 }] # RRA
+
+[[consonant]]
+roman = "rrh"
+odia = [{ text = "\u0B22\u0B3C", w = 1.0 }] # RHA
+
+[[consonant]]
+roman = "n"
+odia = [
+  { text = "ନ", w = 1.0 },
+  { text = "ଣ", w = 0.55 },
+]
+
+[[consonant]]
+roman = "nn"
+odia = [{ text = "ଣ", w = 1.0 }]
+
+
+# ===========================================================================
+# Consonants — labial varga
+# ===========================================================================
+
+[[consonant]]
+roman = "p"
+odia = [{ text = "ପ", w = 1.0 }]
+
+[[consonant]]
+roman = "ph"
+odia = [{ text = "ଫ", w = 1.0 }]
+
+[[consonant]]
+roman = "f"
+odia = [{ text = "ଫ", w = 1.0 }]
+
+[[consonant]]
+roman = "b"
+odia = [{ text = "ବ", w = 1.0 }]
+
+[[consonant]]
+roman = "bh"
+odia = [{ text = "ଭ", w = 1.0 }]
+
+[[consonant]]
+roman = "m"
+odia = [{ text = "ମ", w = 1.0 }]
+
+
+# ===========================================================================
+# Consonants — semivowels, sibilants, ha
+# ===========================================================================
+
+# ୟ (U+0B5F) is the usual second member of a ya-phala conjunct in modern
+# Odia — ସଂଖ୍ୟା is spelled with it — so it sits close behind ଯ.
+# ଯ vs ୟ is positional, and Odia uses these the opposite way round from Hindi:
+# ଯ is pronounced like "ja", while ୟ is the true "ya". The spelling convention
+# is ଯ word-initially (ଯୋଗ) and ୟ everywhere else — including inside conjuncts,
+# which is the common case: ରାଜ୍ୟ, ନ୍ୟାୟ, ଭାଗ୍ୟ, ଧନ୍ୟବାଦ, ସାହିତ୍ୟ.
+# Both stay reachable at lower weight so the lexicon and the user can override.
+[[consonant]]
+roman = "y"
+odia = [
+  { text = "ଯ", w = 1.0,  context = "word_initial" },
+  { text = "ୟ", w = 0.5,  context = "word_initial" },
+  { text = "ୟ", w = 1.0,  context = "non_initial" },
+  { text = "ଯ", w = 0.5,  context = "non_initial" },
+]
+
+# "r" can also reach the flap between vowels, because people write ଓଡ଼ିଆ as
+# "oria" about as often as "odia".
+[[consonant]]
+roman = "r"
+odia = [
+  { text = "ର", w = 1.0 },
+  { text = "\u0B21\u0B3C", w = 0.3, context = "intervocalic" }, # RRA
+]
+
+[[consonant]]
+roman = "l"
+odia = [  # [unified S2]
+  { text = "ଲ", w = 1.0 },
+  { text = "ଳ", w = 0.9, context = "word_final" },
+  { text = "ଳ", w = 0.9, context = "intervocalic" },
+  { text = "ଳ", w = 0.35, context = "non_initial" },
+  { text = "ଳ", w = 0.02, context = "word_initial" },
+]
+
+[[consonant]]
+roman = "ll"
+odia = [{ text = "ଳ", w = 1.0 }]
+
+[[consonant]]
+roman = "w"
+odia = [{ text = "ୱ", w = 1.0 }]
+
+[[consonant]]
+roman = "v"
+odia = [  # [unified S7]
+  { text = "ବ", w = 1.0 },
+  { text = "ୱ", w = 0.4 },
+]
+
+[[consonant]]
+roman = "sh"
+odia = [
+  { text = "ଶ", w = 1.0 },
+  { text = "ଷ", w = 0.6 },
+]
+
+[[consonant]]
+roman = "s"
+odia = [
+  { text = "ସ", w = 1.0 },
+  { text = "ଶ", w = 0.45 },
+  { text = "ଷ", w = 0.3 },
+]
+
+[[consonant]]
+roman = "ss"
+odia = [{ text = "ଷ", w = 1.0 }]
+
+# Discounted, and the discount matters more than it looks. Every aspirate is
+# spelled with a following "h", so "achha" can be read as ଅଛ or as ଅ + ଚ + ହ,
+# and "odisha" as ଓଦିଶ or ଓଦିସ୍ହ. A bare ହ straight after another consonant is
+# almost always the second half of a digraph the segmenter has already
+# matched, so it loses the tie here rather than in TypeScript. A word that
+# genuinely needs ହ pays the same discount on every one of its paths, and path
+# scores are normalised per word, so nothing is lost.
+[[consonant]]
+roman = "h"
+odia = [{ text = "ହ", w = 0.55 }]
+
+
+# ===========================================================================
+# Signs
+# ===========================================================================
+# Signs attach to whatever precedes them and never start a token. The
+# segmenter also adds its own low-weight anusvara edge for a nasal before a
+# consonant; these entries are what it draws the actual characters from.
+
+[[sign]]
+roman = "n"
+odia = [  # [unified S1b]
+  { text = "ଂ", w = 0.9, context = "word_final" },
+  { text = "ଁ", w = 0.9, context = "word_final" },
+  { text = "ଂ", w = 0.5, context = "before_consonant" },
+  { text = "ଁ", w = 0.22, context = "before_consonant" },
+]
+
+[[sign]]
+roman = "m"
+odia = [  # [unified S1]
+  { text = "ଂ", w = 0.55, context = "word_final" },
+  { text = "ଁ", w = 0.25, context = "word_final" },
+  { text = "ଂ", w = 0.5, context = "before_consonant" },
+  { text = "ଁ", w = 0.2, context = "before_consonant" },
+]
+
+[[sign]]
+roman = "h"
+odia = [  # [unified S3]
+  { text = "ଃ", w = 0.3, context = "word_final" },
+  { text = "ଃ", w = 0.25, context = "before_consonant" },
+]
+
+
+# ===========================================================================
+# Added by the unified profile. See Appv2/rules/*.delta.toml.
+# ===========================================================================
+
+# ଙ୍କ — the #3 conjunct in Odia. "taanka" previously gave ତାନ୍କ.
+[[consonant]]
+roman = "nk"
+odia = [{ text = "ଙ୍କ", w = 1.0 }]  # [unified S4a]
+
+[[consonant]]
+roman = "nkh"
+odia = [{ text = "ଙ୍ଖ", w = 1.0 }]  # [unified S4b]
+
+[[consonant]]
+roman = "ngh"
+odia = [{ text = "ଙ୍ଘ", w = 1.0 }]  # [unified S4c]
+
+[[consonant]]
+roman = "nch"
+odia = [{ text = "ଞ୍ଚ", w = 1.0 }]  # [unified S5a]
+
+[[consonant]]
+roman = "nchh"
+odia = [{ text = "ଞ୍ଛ", w = 1.0 }]  # [unified S5b]
+
+[[consonant]]
+roman = "nj"
+odia = [{ text = "ଞ୍ଜ", w = 1.0 }]  # [unified S5c]
+
+[[consonant]]
+roman = "njh"
+odia = [{ text = "ଞ୍ଝ", w = 1.0 }]  # [unified S5d]
+
+# Subjoined व is ୱ, not ବ: ସ୍ୱାମୀ 2764 vs ସ୍ବାମୀ 845.
+[[consonant]]
+roman = "sv"
+odia = [{ text = "ସ୍ୱ", w = 1.0 }]  # [unified S7a]
+
+[[consonant]]
+roman = "sw"
+odia = [{ text = "ସ୍ୱ", w = 1.0 }]  # [unified S7b]
+
+[[consonant]]
+roman = "dv"
+odia = [{ text = "ଦ୍ୱ", w = 1.0 }]  # [unified S7c]
+
+[[consonant]]
+roman = "dw"
+odia = [{ text = "ଦ୍ୱ", w = 1.0 }]  # [unified S7d]
+
+[[consonant]]
+roman = "tv"
+odia = [{ text = "ତ୍ୱ", w = 1.0 }]  # [unified S7e]
+
+[[consonant]]
+roman = "tw"
+odia = [{ text = "ତ୍ୱ", w = 1.0 }]  # [unified S7f]
+
+[[consonant]]
+roman = "dhv"
+odia = [{ text = "ଧ୍ୱ", w = 1.0 }]  # [unified S7g]
+
+[[consonant]]
+roman = "shv"
+odia = [{ text = "ଶ୍ୱ", w = 1.0 }]  # [unified S7h]
+
+# Word-final ଂ from "ng" — ଏବଂ, ଯେଉଁଥିରେ. Recovers D4 of the unapplied patch.
+[[sign]]
+roman = "ng"
+odia = [{ text = "ଂ", w = 0.9, context = "word_final" }]  # [unified S1c]

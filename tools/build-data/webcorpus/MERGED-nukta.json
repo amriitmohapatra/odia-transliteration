@@ -1,0 +1,848 @@
+{
+ "merged_with_ocr": {
+  "label": "merged (incl. archive OCR, count>=5)",
+  "types": 527477,
+  "tokens": 18363293,
+  "precomposed_types": 0,
+  "precomposed_tokens": 0,
+  "nukta_types_all": 22142,
+  "nukta_tokens_all": 433087,
+  "nukta_types_legal": 20996,
+  "nukta_tokens_legal": 428359,
+  "nukta_types_illegal": 1146,
+  "nukta_tokens_illegal": 4728,
+  "illegal_base_tokens": {
+   "ଜ": 853,
+   "ଦ": 664,
+   "ି": 517,
+   "େ": 435,
+   "ଚ": 414,
+   "ହ": 347,
+   "ଯ": 310,
+   "ା": 224,
+   "ତ": 205,
+   "କ": 151,
+   "ଭ": 100,
+   "଼": 100,
+   "ଳ": 85,
+   "ନ": 58,
+   "ଓ": 30,
+   "ଵ": 25,
+   "ୟ": 20,
+   "ଉ": 19,
+   "ୀ": 19,
+   "ୁ": 19,
+   "ଞ": 18,
+   "ବ": 18,
+   "ଝ": 15,
+   "ର": 13,
+   "ଣ": 13
+  },
+  "misordered_after_vowel_sign_tokens": 100,
+  "contested_types": 5994,
+  "contested_pct_of_legal": 28.5,
+  "uncontested_types": 15002,
+  "word_initial_pairs": 483,
+  "word_initial_nukta_tokens": 8590,
+  "word_initial_bare_tokens": 66958,
+  "all_pairs_rate": [
+   372526,
+   155797,
+   29.5
+  ],
+  "medial_pairs": 5511,
+  "medial_rate": [
+   363936,
+   88839,
+   19.6
+  ],
+  "native_pairs": 4344,
+  "native_nukta_tokens": 353117,
+  "native_bare_tokens": 54108,
+  "native_drop_pct": 13.3,
+  "loan_pairs": 1167,
+  "loan_nukta_tokens": 10819,
+  "loan_bare_tokens": 34731,
+  "loan_spurious_add_pct": 23.8,
+  "robust_pairs": 1730,
+  "robust_rate": [
+   327160,
+   75395,
+   18.7
+  ],
+  "robust_native_pairs": 1369,
+  "robust_native_rate": [
+   317594,
+   49311,
+   13.4
+  ],
+  "top_medial_pairs": [
+   {
+    "nukta": "ଓଡ଼ିଆ",
+    "n": 42729,
+    "bare": "ଓଡିଆ",
+    "b": 1400,
+    "drop": 3.2
+   },
+   {
+    "nukta": "ବଡ଼",
+    "n": 19543,
+    "bare": "ବଡ",
+    "b": 1785,
+    "drop": 8.4
+   },
+   {
+    "nukta": "ଓଡ଼ିଶା",
+    "n": 19359,
+    "bare": "ଓଡିଶା",
+    "b": 1120,
+    "drop": 5.5
+   },
+   {
+    "nukta": "ଓଡ଼ିଶାର",
+    "n": 10787,
+    "bare": "ଓଡିଶାର",
+    "b": 415,
+    "drop": 3.7
+   },
+   {
+    "nukta": "ଛାଡ଼ି",
+    "n": 5168,
+    "bare": "ଛାଡି",
+    "b": 1126,
+    "drop": 17.9
+   },
+   {
+    "nukta": "ଓଡ଼ିଶାରେ",
+    "n": 5335,
+    "bare": "ଓଡିଶାରେ",
+    "b": 191,
+    "drop": 3.5
+   },
+   {
+    "nukta": "ପଡ଼ି",
+    "n": 3691,
+    "bare": "ପଡି",
+    "b": 561,
+    "drop": 13.2
+   },
+   {
+    "nukta": "ପଡ଼ିଲା",
+    "n": 3130,
+    "bare": "ପଡିଲା",
+    "b": 681,
+    "drop": 17.9
+   },
+   {
+    "nukta": "ପଡ଼େ",
+    "n": 2730,
+    "bare": "ପଡେ",
+    "b": 453,
+    "drop": 14.2
+   },
+   {
+    "nukta": "ଆଡ଼କୁ",
+    "n": 2585,
+    "bare": "ଆଡକୁ",
+    "b": 455,
+    "drop": 15.0
+   },
+   {
+    "nukta": "ଗୋଡ଼",
+    "n": 2632,
+    "bare": "ଗୋଡ",
+    "b": 394,
+    "drop": 13.0
+   },
+   {
+    "nukta": "ଏକାଡ଼େମୀ",
+    "n": 754,
+    "bare": "ଏକାଡେମୀ",
+    "b": 2232,
+    "drop": 74.7
+   },
+   {
+    "nukta": "ଏଡ଼େ",
+    "n": 2409,
+    "bare": "ଏଡେ",
+    "b": 354,
+    "drop": 12.8
+   },
+   {
+    "nukta": "ଗୁଡ଼ିକ",
+    "n": 2118,
+    "bare": "ଗୁଡିକ",
+    "b": 524,
+    "drop": 19.8
+   },
+   {
+    "nukta": "ପଡ଼ିବ",
+    "n": 2260,
+    "bare": "ପଡିବ",
+    "b": 372,
+    "drop": 14.1
+   },
+   {
+    "nukta": "ଓଡ଼ଆ",
+    "n": 2559,
+    "bare": "ଓଡଆ",
+    "b": 34,
+    "drop": 1.3
+   },
+   {
+    "nukta": "ଛଡ଼ା",
+    "n": 2144,
+    "bare": "ଛଡା",
+    "b": 433,
+    "drop": 16.8
+   },
+   {
+    "nukta": "ଓଡ଼ିଆରେ",
+    "n": 2448,
+    "bare": "ଓଡିଆରେ",
+    "b": 115,
+    "drop": 4.5
+   },
+   {
+    "nukta": "କୁଆଡ଼େ",
+    "n": 2117,
+    "bare": "କୁଆଡେ",
+    "b": 210,
+    "drop": 9.0
+   },
+   {
+    "nukta": "ପଡ଼ିଲେ",
+    "n": 1961,
+    "bare": "ପଡିଲେ",
+    "b": 348,
+    "drop": 15.1
+   },
+   {
+    "nukta": "ଜଡ଼ିତ",
+    "n": 1670,
+    "bare": "ଜଡିତ",
+    "b": 559,
+    "drop": 25.1
+   },
+   {
+    "nukta": "ଦୃଢ଼",
+    "n": 1819,
+    "bare": "ଦୃଢ",
+    "b": 268,
+    "drop": 12.8
+   },
+   {
+    "nukta": "କେଡ଼େ",
+    "n": 1501,
+    "bare": "କେଡେ",
+    "b": 347,
+    "drop": 18.8
+   },
+   {
+    "nukta": "ଗଡ଼",
+    "n": 1410,
+    "bare": "ଗଡ",
+    "b": 297,
+    "drop": 17.4
+   },
+   {
+    "nukta": "ମାଡ଼",
+    "n": 1465,
+    "bare": "ମାଡ",
+    "b": 226,
+    "drop": 13.4
+   },
+   {
+    "nukta": "ବୁଢ଼ା",
+    "n": 1473,
+    "bare": "ବୁଢା",
+    "b": 177,
+    "drop": 10.7
+   },
+   {
+    "nukta": "ଯୋଡ଼ି",
+    "n": 1378,
+    "bare": "ଯୋଡି",
+    "b": 258,
+    "drop": 15.8
+   },
+   {
+    "nukta": "ପଢ଼ି",
+    "n": 1309,
+    "bare": "ପଢି",
+    "b": 316,
+    "drop": 19.4
+   },
+   {
+    "nukta": "ପଡ଼ିଛି",
+    "n": 1406,
+    "bare": "ପଡିଛି",
+    "b": 207,
+    "drop": 12.8
+   },
+   {
+    "nukta": "ପଢ଼ନ୍ତୁ",
+    "n": 343,
+    "bare": "ପଢନ୍ତୁ",
+    "b": 1250,
+    "drop": 78.5
+   }
+  ]
+ },
+ "merged_no_ocr": {
+  "label": "merged (born-digital lanes only)",
+  "types": 454750,
+  "tokens": 8689747,
+  "precomposed_types": 0,
+  "precomposed_tokens": 0,
+  "nukta_types_all": 19787,
+  "nukta_tokens_all": 187715,
+  "nukta_types_legal": 18855,
+  "nukta_tokens_legal": 185878,
+  "nukta_types_illegal": 932,
+  "nukta_tokens_illegal": 1837,
+  "illegal_base_tokens": {
+   "ି": 517,
+   "େ": 435,
+   "ଯ": 268,
+   "ା": 224,
+   "଼": 100,
+   "ଚ": 92,
+   "ଜ": 39,
+   "ୟ": 20,
+   "ୀ": 19,
+   "ୁ": 19,
+   "ର": 13,
+   "ଣ": 13,
+   "ବ": 10,
+   "ଲ": 9,
+   "ଓ": 7,
+   "ୋ": 7,
+   "ସ": 7,
+   "ନ": 6,
+   "କ": 5,
+   "ପ": 5,
+   "ଦ": 4,
+   "ମ": 4,
+   "ଫ": 4,
+   "ଅ": 3,
+   "ଶ": 3
+  },
+  "misordered_after_vowel_sign_tokens": 100,
+  "contested_types": 5350,
+  "contested_pct_of_legal": 28.4,
+  "uncontested_types": 13505,
+  "word_initial_pairs": 330,
+  "word_initial_nukta_tokens": 1500,
+  "word_initial_bare_tokens": 29652,
+  "all_pairs_rate": [
+   158875,
+   85242,
+   34.9
+  ],
+  "medial_pairs": 5020,
+  "medial_rate": [
+   157375,
+   55590,
+   26.1
+  ],
+  "native_pairs": 3864,
+  "native_nukta_tokens": 150854,
+  "native_bare_tokens": 31255,
+  "native_drop_pct": 17.2,
+  "loan_pairs": 1156,
+  "loan_nukta_tokens": 6521,
+  "loan_bare_tokens": 24335,
+  "loan_spurious_add_pct": 21.1,
+  "robust_pairs": 1139,
+  "robust_rate": [
+   135313,
+   41572,
+   23.5
+  ],
+  "robust_native_pairs": 893,
+  "robust_native_rate": [
+   130243,
+   26390,
+   16.8
+  ],
+  "top_medial_pairs": [
+   {
+    "nukta": "ଓଡ଼ିଶା",
+    "n": 15349,
+    "bare": "ଓଡିଶା",
+    "b": 951,
+    "drop": 5.8
+   },
+   {
+    "nukta": "ଓଡ଼ିଆ",
+    "n": 13720,
+    "bare": "ଓଡିଆ",
+    "b": 387,
+    "drop": 2.7
+   },
+   {
+    "nukta": "ବଡ଼",
+    "n": 8589,
+    "bare": "ବଡ",
+    "b": 951,
+    "drop": 10.0
+   },
+   {
+    "nukta": "ଓଡ଼ିଶାର",
+    "n": 5301,
+    "bare": "ଓଡିଶାର",
+    "b": 249,
+    "drop": 4.5
+   },
+   {
+    "nukta": "ଛାଡ଼ି",
+    "n": 2618,
+    "bare": "ଛାଡି",
+    "b": 884,
+    "drop": 25.2
+   },
+   {
+    "nukta": "ଓଡ଼ିଶାରେ",
+    "n": 2547,
+    "bare": "ଓଡିଶାରେ",
+    "b": 93,
+    "drop": 3.5
+   },
+   {
+    "nukta": "ଏକାଡ଼େମୀ",
+    "n": 307,
+    "bare": "ଏକାଡେମୀ",
+    "b": 1808,
+    "drop": 85.5
+   },
+   {
+    "nukta": "ପଡ଼ିଲା",
+    "n": 1507,
+    "bare": "ପଡିଲା",
+    "b": 521,
+    "drop": 25.7
+   },
+   {
+    "nukta": "ପଡ଼ି",
+    "n": 1601,
+    "bare": "ପଡି",
+    "b": 391,
+    "drop": 19.6
+   },
+   {
+    "nukta": "ଜଡ଼ିତ",
+    "n": 1071,
+    "bare": "ଜଡିତ",
+    "b": 529,
+    "drop": 33.1
+   },
+   {
+    "nukta": "ପଢ଼ନ୍ତୁ",
+    "n": 310,
+    "bare": "ପଢନ୍ତୁ",
+    "b": 1250,
+    "drop": 80.1
+   },
+   {
+    "nukta": "ପଡ଼େ",
+    "n": 1075,
+    "bare": "ପଡେ",
+    "b": 295,
+    "drop": 21.5
+   },
+   {
+    "nukta": "ଆଡ଼କୁ",
+    "n": 942,
+    "bare": "ଆଡକୁ",
+    "b": 348,
+    "drop": 27.0
+   },
+   {
+    "nukta": "ଗୁଡ଼ିକ",
+    "n": 932,
+    "bare": "ଗୁଡିକ",
+    "b": 336,
+    "drop": 26.5
+   },
+   {
+    "nukta": "ପଡ଼ିବ",
+    "n": 805,
+    "bare": "ପଡିବ",
+    "b": 309,
+    "drop": 27.7
+   },
+   {
+    "nukta": "ପଡ଼ିଲେ",
+    "n": 850,
+    "bare": "ପଡିଲେ",
+    "b": 256,
+    "drop": 23.1
+   },
+   {
+    "nukta": "ଯୋଡ଼ି",
+    "n": 763,
+    "bare": "ଯୋଡି",
+    "b": 221,
+    "drop": 22.5
+   },
+   {
+    "nukta": "ଏଡ଼େ",
+    "n": 883,
+    "bare": "ଏଡେ",
+    "b": 80,
+    "drop": 8.3
+   },
+   {
+    "nukta": "ରେକର୍ଡ଼",
+    "n": 242,
+    "bare": "ରେକର୍ଡ",
+    "b": 721,
+    "drop": 74.9
+   },
+   {
+    "nukta": "କ୍ରୀଡ଼ା",
+    "n": 710,
+    "bare": "କ୍ରୀଡା",
+    "b": 224,
+    "drop": 24.0
+   },
+   {
+    "nukta": "ଦୃଢ଼",
+    "n": 792,
+    "bare": "ଦୃଢ",
+    "b": 136,
+    "drop": 14.7
+   },
+   {
+    "nukta": "ଛଡ଼ା",
+    "n": 623,
+    "bare": "ଛଡା",
+    "b": 273,
+    "drop": 30.5
+   },
+   {
+    "nukta": "ଓଡ଼ିଶୀ",
+    "n": 832,
+    "bare": "ଓଡିଶୀ",
+    "b": 23,
+    "drop": 2.7
+   },
+   {
+    "nukta": "ଗୋଡ଼",
+    "n": 723,
+    "bare": "ଗୋଡ",
+    "b": 127,
+    "drop": 14.9
+   },
+   {
+    "nukta": "ମାଡ଼ି",
+    "n": 683,
+    "bare": "ମାଡି",
+    "b": 131,
+    "drop": 16.1
+   },
+   {
+    "nukta": "ପାହାଡ଼",
+    "n": 628,
+    "bare": "ପାହାଡ",
+    "b": 170,
+    "drop": 21.3
+   },
+   {
+    "nukta": "ଗାଡ଼ି",
+    "n": 640,
+    "bare": "ଗାଡି",
+    "b": 127,
+    "drop": 16.6
+   },
+   {
+    "nukta": "ବୁଢ଼ା",
+    "n": 644,
+    "bare": "ବୁଢା",
+    "b": 122,
+    "drop": 15.9
+   },
+   {
+    "nukta": "ଭିଡ଼ିଓ",
+    "n": 141,
+    "bare": "ଭିଡିଓ",
+    "b": 602,
+    "drop": 81.0
+   },
+   {
+    "nukta": "ଝାଡ଼ା",
+    "n": 700,
+    "bare": "ଝାଡା",
+    "b": 30,
+    "drop": 4.1
+   }
+  ]
+ },
+ "aksharantar": {
+  "label": "Aksharantar ori_train native words (count = #pairs)",
+  "types": 342866,
+  "tokens": 346492,
+  "precomposed_types": 0,
+  "precomposed_tokens": 0,
+  "nukta_types_all": 6540,
+  "nukta_tokens_all": 6553,
+  "nukta_types_legal": 6539,
+  "nukta_tokens_legal": 6552,
+  "nukta_types_illegal": 1,
+  "nukta_tokens_illegal": 1,
+  "illegal_base_tokens": {
+   "େ": 1
+  },
+  "misordered_after_vowel_sign_tokens": 0,
+  "contested_types": 4143,
+  "contested_pct_of_legal": 63.4,
+  "uncontested_types": 2396,
+  "word_initial_pairs": 100,
+  "word_initial_nukta_tokens": 101,
+  "word_initial_bare_tokens": 105,
+  "all_pairs_rate": [
+   4154,
+   4167,
+   50.1
+  ],
+  "medial_pairs": 4043,
+  "medial_rate": [
+   4053,
+   4062,
+   50.1
+  ],
+  "native_pairs": 4028,
+  "native_nukta_tokens": 4038,
+  "native_bare_tokens": 4032,
+  "native_drop_pct": 50.0,
+  "loan_pairs": 15,
+  "loan_nukta_tokens": 15,
+  "loan_bare_tokens": 30,
+  "loan_spurious_add_pct": 33.3,
+  "robust_pairs": 0,
+  "robust_rate": [
+   0,
+   0,
+   0.0
+  ],
+  "robust_native_pairs": 0,
+  "robust_native_rate": [
+   0,
+   0,
+   0.0
+  ],
+  "top_medial_pairs": [
+   {
+    "nukta": "ଗଡ଼ତିଆ",
+    "n": 2,
+    "bare": "ଗଡତିଆ",
+    "b": 2,
+    "drop": 50.0
+   },
+   {
+    "nukta": "ମହାକାଳପଡ଼ା",
+    "n": 2,
+    "bare": "ମହାକାଳପଡା",
+    "b": 2,
+    "drop": 50.0
+   },
+   {
+    "nukta": "ଅନଲୋଡ଼",
+    "n": 2,
+    "bare": "ଅନଲୋଡ",
+    "b": 2,
+    "drop": 50.0
+   },
+   {
+    "nukta": "ମହେନ୍ଦ୍ରଗଡ଼",
+    "n": 3,
+    "bare": "ମହେନ୍ଦ୍ରଗଡ",
+    "b": 1,
+    "drop": 25.0
+   },
+   {
+    "nukta": "ସୁନ୍ଦରଗଡ଼",
+    "n": 2,
+    "bare": "ସୁନ୍ଦରଗଡ",
+    "b": 2,
+    "drop": 50.0
+   },
+   {
+    "nukta": "ରାଇଡ଼ୁ",
+    "n": 1,
+    "bare": "ରାଇଡୁ",
+    "b": 2,
+    "drop": 66.7
+   },
+   {
+    "nukta": "ଏକାଡ଼େମୀ",
+    "n": 1,
+    "bare": "ଏକାଡେମୀ",
+    "b": 2,
+    "drop": 66.7
+   },
+   {
+    "nukta": "ଗଡ଼ନାୟକ",
+    "n": 2,
+    "bare": "ଗଡନାୟକ",
+    "b": 1,
+    "drop": 33.3
+   },
+   {
+    "nukta": "କୋଷ୍ଟଗାର୍ଡ଼",
+    "n": 1,
+    "bare": "କୋଷ୍ଟଗାର୍ଡ",
+    "b": 2,
+    "drop": 66.7
+   },
+   {
+    "nukta": "ଅପଗ୍ରେଡ଼",
+    "n": 1,
+    "bare": "ଅପଗ୍ରେଡ",
+    "b": 2,
+    "drop": 66.7
+   },
+   {
+    "nukta": "ଝାରସୁଗଡ଼ା",
+    "n": 2,
+    "bare": "ଝାରସୁଗଡା",
+    "b": 1,
+    "drop": 33.3
+   },
+   {
+    "nukta": "ଓଡ଼୍ରାଫ୍",
+    "n": 1,
+    "bare": "ଓଡ୍ରାଫ୍",
+    "b": 2,
+    "drop": 66.7
+   },
+   {
+    "nukta": "ଗାର୍ଡ଼ିଆନ",
+    "n": 1,
+    "bare": "ଗାର୍ଡିଆନ",
+    "b": 2,
+    "drop": 66.7
+   },
+   {
+    "nukta": "ରାୟଗଡ଼ା",
+    "n": 1,
+    "bare": "ରାୟଗଡା",
+    "b": 2,
+    "drop": 66.7
+   },
+   {
+    "nukta": "ଡିଭିଡ଼େଣ୍ଡ",
+    "n": 1,
+    "bare": "ଡିଭିଡେଣ୍ଡ",
+    "b": 2,
+    "drop": 66.7
+   },
+   {
+    "nukta": "ବଢ଼ିଆ",
+    "n": 2,
+    "bare": "ବଢିଆ",
+    "b": 1,
+    "drop": 33.3
+   },
+   {
+    "nukta": "ବଡ଼କଳାକୋଟ",
+    "n": 1,
+    "bare": "ବଡକଳାକୋଟ",
+    "b": 2,
+    "drop": 66.7
+   },
+   {
+    "nukta": "ଗଡ଼କରୀ",
+    "n": 1,
+    "bare": "ଗଡକରୀ",
+    "b": 2,
+    "drop": 66.7
+   },
+   {
+    "nukta": "ମେକାନାଇଜଡ଼",
+    "n": 2,
+    "bare": "ମେକାନାଇଜଡ",
+    "b": 1,
+    "drop": 33.3
+   },
+   {
+    "nukta": "ଭୋଡ଼ାଫୋନ",
+    "n": 1,
+    "bare": "ଭୋଡାଫୋନ",
+    "b": 2,
+    "drop": 66.7
+   },
+   {
+    "nukta": "ସୋରଡ଼ା",
+    "n": 1,
+    "bare": "ସୋରଡା",
+    "b": 2,
+    "drop": 66.7
+   },
+   {
+    "nukta": "କାଦୁଅପଡ଼ା",
+    "n": 1,
+    "bare": "କାଦୁଅପଡା",
+    "b": 2,
+    "drop": 66.7
+   },
+   {
+    "nukta": "ଅନବୋର୍ଡ଼",
+    "n": 1,
+    "bare": "ଅନବୋର୍ଡ",
+    "b": 2,
+    "drop": 66.7
+   },
+   {
+    "nukta": "ଗୁଡ଼ୁ",
+    "n": 1,
+    "bare": "ଗୁଡୁ",
+    "b": 2,
+    "drop": 66.7
+   },
+   {
+    "nukta": "ଚାର୍ଟାର୍ଡ଼",
+    "n": 1,
+    "bare": "ଚାର୍ଟାର୍ଡ",
+    "b": 1,
+    "drop": 50.0
+   },
+   {
+    "nukta": "ହୁଡ଼ା",
+    "n": 1,
+    "bare": "ହୁଡା",
+    "b": 1,
+    "drop": 50.0
+   },
+   {
+    "nukta": "ନୋଡ଼ାଲ",
+    "n": 1,
+    "bare": "ନୋଡାଲ",
+    "b": 1,
+    "drop": 50.0
+   },
+   {
+    "nukta": "ଅର୍ଡ଼ନାନ୍ସ",
+    "n": 1,
+    "bare": "ଅର୍ଡନାନ୍ସ",
+    "b": 1,
+    "drop": 50.0
+   },
+   {
+    "nukta": "ଓଲ୍ଡ଼ି",
+    "n": 1,
+    "bare": "ଓଲ୍ଡି",
+    "b": 1,
+    "drop": 50.0
+   },
+   {
+    "nukta": "ପେଡ଼ନେକର",
+    "n": 1,
+    "bare": "ପେଡନେକର",
+    "b": 1,
+    "drop": 50.0
+   }
+  ]
+ }
+}

@@ -1,0 +1,25 @@
+{
+  "extends": "../tsconfig.base.json",
+  "compilerOptions": {
+    // Vite bundles this workspace, so extensionless relative imports are fine
+    // here even though core/ and cli/ require explicit ".js" extensions.
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    // "node" is for vite.config.ts only, which reads the filesystem to decide
+    // which build of the engine to alias and to emit the service worker.
+    "types": ["vite/client", "node"],
+
+    // Mirrors the aliases in vite.config.ts, so typecheck does not require
+    // core/dist to have been compiled first.
+    "paths": {
+      "@odia/core": ["../core/src/index.ts"],
+      "@odia/core/types": ["../core/src/types.ts"]
+    },
+
+    "noEmit": true,
+    "declaration": false,
+    "sourceMap": false
+  },
+  "include": ["src/**/*.ts", "vite.config.ts"]
+}

@@ -1,0 +1,423 @@
+# =============================================================================
+# The śloka profile — Sanskrit written in Odia script.
+#
+# This is a DELTA against core/rules/symbols.toml. Nothing here edits that file.
+# Compile with:  npx tsx Appv2/scripts/gen-rules.ts
+#
+# Every weight below was adjudicated against core/data/webfreq.tsv — 527k Odia
+# word types over 18.4M tokens of real web text. Where a number is asserted, the
+# counts that produced it are in the comment. Do not tune one without re-running
+# Appv2/eval/no-regression.ts.
+#
+# Ops:  .add      key must NOT already exist for that kind
+#       .merge    append options to the existing block
+#       .replace  swap the whole options array
+#       .drop     remove exactly one option by (text, context)
+# =============================================================================
+
+[meta]
+profile = "sloka"
+note = """
+Sanskrit-in-Odia-script rule profile.
+Generated from core/rules/symbols.toml + Appv2/rules/sanskrit.delta.toml.
+Orthography follows Odia tatsama convention (ବଳ, ଜଳ, ଦେବ), not a 1:1
+Devanagari transposition — see Appv2/data/lla-preference.tsv for the evidence.
+"""
+
+
+# --------------------------------------------------------------------------
+# S0 — let the corpus outweigh a single rule-weight difference.
+#
+# Sanskrit spelling is lexically determined far more than everyday Odia is:
+# there IS a right answer for ବଳ vs ବଲ, and it is in the lexicon rather than
+# derivable from the roman. Base [weights] freq is 1.5.
+#
+# ŚLOKA-ONLY. In the unified profile this stays at the base value, because
+# raising it there would re-rank everyday Odia too.
+# --------------------------------------------------------------------------
+[set]
+"weights.freq" = 2.2
+
+
+# ==========================================================================
+# S1 — word-final anusvara. THE headline fix.
+# ==========================================================================
+
+# The user could not type ବଳଂ. Base gives word-final ଂ w=0.2 against the ମ
+# consonant at w=1.0, so "balam" scores ବଲମ five times higher than ବଲଂ and the
+# right answer sits far down the list.
+#
+# In Sanskrit verse a word-final -m is almost always ଂ (accusative and neuter
+# nominative singular, and every pada-final in a śloka). webfreq has 4,567 types
+# ending in ଂ: ଏବଂ 102739, କିଂ 5789, ଇଦଂ 1520, ସଂହିତାୟାଂ 962.
+#
+# w=1.6 is above 1.0 deliberately. core/src/rules.ts readWeight only requires
+# finite and >= 0, and segment.ts finish() normalises every path against the
+# best one, so absolute magnitude is meaningless and only ratios matter. 1.6
+# simply makes the anusvara the best path rather than the fifth-best.
+[[sign.replace]]
+id = "S1"
+roman = "m"
+odia = [
+  { text = "ଂ", w = 1.6, context = "word_final" },
+  { text = "ଁ", w = 0.25, context = "word_final" },
+  { text = "ଂ", w = 0.6, context = "before_consonant" },
+  { text = "ଁ", w = 0.2, context = "before_consonant" },
+]
+
+# Word-final ଁ is 378,255 tokens in the web corpus — ମୁଁ, ପାଇଁ, ନାହିଁ, ଗାଁ — and
+# ଓଁ alone is 2,916. Word-final ଂ from "n" covers the sandhi spellings people
+# actually type for -ଂ (they hear a nasal, not specifically /m/).
+# Recovers D3 from tools/build-data/webcorpus/proposed-symbols-patch.toml.
+[[sign.replace]]
+id = "S1b"
+roman = "n"
+odia = [
+  { text = "ଂ", w = 0.9, context = "word_final" },
+  { text = "ଁ", w = 0.9, context = "word_final" },
+  { text = "ଂ", w = 0.5, context = "before_consonant" },
+  { text = "ଁ", w = 0.22, context = "before_consonant" },
+]
+
+# ଏବଂ is the #3 word in Odia and could not be typed "ebang". Note this is a
+# SIGN with key "ng"; the consonant "ng" -> ଙ is a separate block (S4d), and
+# core/src/rules.ts keys entries by roman across kinds, so both fire.
+# Recovers D4.
+[[sign.add]]
+id = "S1c"
+roman = "ng"
+note = "Word-final ଂ from \"ng\" — ଏବଂ, ଯେଉଁଥିରେ. Recovers D4 of the unapplied patch."
+odia = [{ text = "ଂ", w = 0.9, context = "word_final" }]
+
+
+# ==========================================================================
+# S2 — ଲ vs ଳ. The second half of the user's failing line.
+# ==========================================================================
+
+# Measured by Appv2/scripts/measure_lla_prior.py over all 527k types in
+# core/data/webfreq.tsv, token-weighted, ଳ : ଲ by position —
+#
+#     intervocalic   1.37x  ->  ଳ        word_initial  0.05x  ->  ଲ
+#     word_final     2.37x  ->  ଳ        subjoined     0.23x  ->  ଲ
+#     conjunct       1.21x  ->  ଳ
+#
+# The individual tatsama words are far more lopsided than the aggregate —
+# ଜଳ 6615:861 (7.7x), ଫଳ 5925:639 (9.3x), ବଳ 3645:1015 (3.6x) — but the
+# aggregate is the number these weights are answerable to, so it is the one
+# quoted here. Appv2/data/lla-preference.tsv has the full per-word table.
+#
+# Note the position vocabulary is core's, i.e. evaluated against the ROMAN
+# string: ଥିଲା is typed "thilaa", so its ଲ is INTERVOCALIC, not word-final.
+# Measuring it the Odia-script way instead sweeps every -ଲା verb form into the
+# word-final bucket and drags that prior from 2.37 down to 0.99, which would
+# have justified the opposite weight.
+#
+# MUST be .replace, not .merge. The base's flat { ଳ, w = 0.5 } carries no
+# context, so merging contextual options on top would leave it alive and keep ଳ
+# reachable word-initially — which is wrong, ଳ never opens an Odia word.
+#
+# The non_initial row is NOT in D6 of the old patch and is required: without it
+# a ଳ inside a conjunct is neither intervocalic nor word-final, so it becomes
+# unreachable and coverage pass D regresses.
+[[consonant.replace]]
+id = "S2"
+roman = "l"
+odia = [
+  { text = "ଲ", w = 1.0 },
+  { text = "ଳ", w = 1.15, context = "word_final" },
+  { text = "ଳ", w = 1.05, context = "intervocalic" },
+  { text = "ଳ", w = 0.35, context = "non_initial" },
+  { text = "ଳ", w = 0.02, context = "word_initial" },
+]
+
+
+# ==========================================================================
+# S3 — medial visarga
+# ==========================================================================
+
+# ଦୁଃଖ 7364, ଦୁଃଖୀ 909, ନିଃଶ୍ବାସ 276 — all unreachable today, because the base
+# declares ଃ only in context "word_final".
+#
+# Not free. "h" is also a consonant, and segment.ts evaluates before_consonant
+# as "next roman char exists and is not a vowel" — which is TRUE at the h of
+# every aspirate digraph's split path. So this hands "kha" a spurious କଃଅ and
+# "achha" a spurious ଅଚଃହ. Hence the modest weight, and hence the explicit ":"
+# route in Appv2/src/preprocess.ts for when you actually mean it.
+# no-regression.ts carries named cases for both spurious readings.
+[[sign.merge]]
+id = "S3"
+roman = "h"
+odia = [{ text = "ଃ", w = 0.45, context = "before_consonant" }]
+
+
+# ==========================================================================
+# S4 — ଙ + velar. Homorganic nasal clusters.
+# ==========================================================================
+#
+# r12a's Odia orthography notes: "the velar and palatal nasals only occur in
+# homorganic clusters". 669,096 tokens (3.6% of the corpus); ଙ୍କ alone is the
+# #3 conjunct in Odia. "taanka" gave ତାନ୍କ — ଙ୍କ was unreachable at any depth.
+# Sanskrit needs these constantly: ଶଙ୍କର, ଗଙ୍ଗା, ଅଙ୍ଗ, ଲିଙ୍ଗ, ଶୃଙ୍ଗାର.
+# Recovers D1.
+
+[[consonant.add]]
+id = "S4a"
+roman = "nk"
+note = "ଙ୍କ — the #3 conjunct in Odia. \"taanka\" previously gave ତାନ୍କ."
+odia = [{ text = "ଙ୍କ", w = 1.0 }]
+
+[[consonant.add]]
+id = "S4b"
+roman = "nkh"
+odia = [{ text = "ଙ୍ଖ", w = 1.0 }]
+
+[[consonant.add]]
+id = "S4c"
+roman = "ngh"
+odia = [{ text = "ଙ୍ଘ", w = 1.0 }]
+
+# .merge, not .add: "ng" already exists as a consonant mapping to bare ଙ.
+# Kept below 1.0 so the bare letter still wins where it should (ରଙ୍ଗ vs ରଙ).
+[[consonant.merge]]
+id = "S4d"
+roman = "ng"
+odia = [{ text = "ଙ୍ଗ", w = 0.95 }]
+
+
+# ==========================================================================
+# S5 — ଞ + palatal, and standalone ଞ
+# ==========================================================================
+#
+# 117,928 tokens. Sanskrit: ପଞ୍ଚ, ସଞ୍ଜୟ, ମଞ୍ଜୁ, ଅଞ୍ଜଳି, ପଞ୍ଚାକ୍ଷର.
+# Recovers D2.
+
+[[consonant.add]]
+id = "S5a"
+roman = "nch"
+odia = [{ text = "ଞ୍ଚ", w = 1.0 }]
+
+[[consonant.add]]
+id = "S5b"
+roman = "nchh"
+odia = [{ text = "ଞ୍ଛ", w = 1.0 }]
+
+[[consonant.add]]
+id = "S5c"
+roman = "nj"
+odia = [{ text = "ଞ୍ଜ", w = 1.0 }]
+
+[[consonant.add]]
+id = "S5d"
+roman = "njh"
+odia = [{ text = "ଞ୍ଝ", w = 1.0 }]
+
+# S5e — standalone ଞ as a "ny" key — WAS TRIED AND REMOVED. Do not re-add it.
+#
+# Standalone ଞ has no key in the base at all, and tools/eval/coverage.ts does
+# not report the hole: its gap check builds the "producible" set by iterating
+# the CHARACTERS of each option text, so the conjunct "ଜ୍ଞ" credits ଜ, ୍ and ଞ
+# individually. Running the engine (Appv2/eval/sanskrit-coverage.ts) shows ଞ is
+# genuinely unreachable on its own.
+#
+# The obvious fix — { text = "ଞ", w = 0.06 } under key "ny" — is worse than the
+# hole. AGENTS.md §4 records that "ny" at w=1.0 ATE the following letter
+# (dhanyabaada -> ଧଞବାଦ). At w=0.06 it cannot win, but it still does damage,
+# through a second and subtler mechanism:
+#
+#     core/src/segment.ts:138 penalises any consonant whose key is SHORTER than
+#     the longest consonant key matching at the same offset, by
+#     [segment] digraph_split = 0.12. Adding "ny" makes the longest consonant
+#     key at that offset 2, so the CORRECT single-ନ reading is taxed 0.12 —
+#     while the anusvara, being a SIGN, is exempt from the penalty entirely.
+#
+# Measured: "naanyam" went from ନାନ୍ୟମ at rank 1 to ନାଂୟଂ at rank 1, with the
+# correct ନ୍ୟ conjunct falling out of the top 5 altogether.
+#
+# The general rule this yields, which applies to every consonant key added here:
+#   a multi-character consonant key is only safe if its own weight is high
+#   enough to WIN the position it taxes. S4a-S4d and S5a-S5d all sit at
+#   0.95-1.0 and produce the correct homorganic conjunct, so they are safe.
+#   A deliberately-losing key like this one is not.
+#
+# Bare ଞ is reachable instead through Appv2/rules/palette.toml — which is the
+# right home for a letter that is genuinely rare outside ଜ୍ଞ, and is the
+# "dedicated letter-insert path rather than borrowing from the candidate list"
+# that AGENTS.md open problem #1 asks for.
+
+
+# ==========================================================================
+# S6 — the Sanskrit vocalics.  ŚLOKA-ONLY.
+# ==========================================================================
+#
+# r12a's Odia orthography notes: only ୃ is regularly used in modern Odia; ଋ ୠ ଌ
+# ୡ and the signs ୄ ୢ ୣ "exist in the script, in independent and vowel sign
+# forms, but are used for Sanskrit transcriptions". That is exactly this
+# profile's job. webfreq attests ୠ in 22 types (ୠଷି 10, ୠତୁ 3), ଌ in 5, ୡ in 2.
+#
+# WHY ŚLOKA-ONLY: the 3-char vowel key "rri" sits on top of the existing 2-char
+# consonant key "rr" -> ଡ଼, which AGENTS.md §5 records as the fix that made 47
+# conjuncts reachable. Both entries fire (matchAt returns every key length), so
+# it is not fatal — but paying candidate-list noise on ଡ଼, a letter in the
+# language's own name, to reach a letter with 22 attestations is a bad trade in
+# everyday mode.
+
+[[vowel.add]]
+id = "S6a"
+roman = "rri"
+independent = "ୠ"
+matra = "ୄ"
+w = 0.5
+
+[[vowel.add]]
+id = "S6b"
+roman = "rru"
+independent = "ୠ"
+matra = "ୄ"
+w = 0.45
+
+[[vowel.add]]
+id = "S6c"
+roman = "lri"
+independent = "ଌ"
+matra = "ୢ"
+w = 0.5
+
+[[vowel.add]]
+id = "S6d"
+roman = "lru"
+independent = "ଌ"
+matra = "ୢ"
+w = 0.45
+
+[[vowel.add]]
+id = "S6e"
+roman = "llri"
+independent = "ୡ"
+matra = "ୣ"
+w = 0.4
+
+# Sanskrit is dense in ୃ: କୃଷ୍ଣ, ମୃତ୍ୟୁ, ହୃଦୟ, ଅମୃତ, ଋଷି, ଦୃଷ୍ଟି, ପୃଥିବୀ.
+#
+# The base tunes these DOWN (ru 0.7, ri 0.6) for a good reason recorded in
+# AGENTS.md §4: in everyday Odia "ri"/"ru" are ର + vowel far more often than the
+# vocalic — କରି alone occurs 77,908 times, and reading them only as ୃ turned
+# "kari" into କଋ. In verse the balance flips, so this is śloka-only too.
+[[vowel.replace]]
+id = "S6f"
+roman = "ru"
+independent = "ଋ"
+matra = "ୃ"
+w = 0.95
+
+[[vowel.replace]]
+id = "S6g"
+roman = "ri"
+independent = "ଋ"
+matra = "ୃ"
+w = 0.9
+
+
+# ==========================================================================
+# S7 — roman "v", and the correction the old patch was missing
+# ==========================================================================
+
+# D7 of the unapplied patch proposed v -> ବ only, on the grounds that ବ is
+# 3.65M tokens against ୱ's 157k. The direction is right and the patch as written
+# would REGRESS, because Odia writes SUBJOINED व as ୱ:
+#     ସ୍ୱାମୀ 2764 : ସ୍ବାମୀ 845      ବିଶ୍ୱ 3022 : ବିଶ୍ବ 394
+#     ଦ୍ୱାର   779 : ଦ୍ବାର  348      ସ୍ୱର  1346 : ସ୍ବର  824
+# The ୱ form wins 2-8x in exactly the position D7 would have made unreachable.
+#
+# There is no PositionContext meaning "immediately after a virama" —
+# core/src/rules.ts offers any / word_initial / non_initial / intervocalic /
+# word_final, all evaluated against the ROMAN string. So the subjoined case is
+# spelled out as explicit conjunct keys (S7a-S7h) instead. Adding such a context
+# to core is the one change worth proposing upstream later.
+[[consonant.replace]]
+id = "S7"
+roman = "v"
+odia = [
+  { text = "ବ", w = 1.0 },
+  { text = "ୱ", w = 0.4 },
+]
+
+[[consonant.add]]
+id = "S7a"
+roman = "sv"
+note = "Subjoined व is ୱ, not ବ: ସ୍ୱାମୀ 2764 vs ସ୍ବାମୀ 845."
+odia = [{ text = "ସ୍ୱ", w = 1.0 }]
+
+[[consonant.add]]
+id = "S7b"
+roman = "sw"
+odia = [{ text = "ସ୍ୱ", w = 1.0 }]
+
+[[consonant.add]]
+id = "S7c"
+roman = "dv"
+odia = [{ text = "ଦ୍ୱ", w = 1.0 }]
+
+[[consonant.add]]
+id = "S7d"
+roman = "dw"
+odia = [{ text = "ଦ୍ୱ", w = 1.0 }]
+
+[[consonant.add]]
+id = "S7e"
+roman = "tv"
+odia = [{ text = "ତ୍ୱ", w = 1.0 }]
+
+[[consonant.add]]
+id = "S7f"
+roman = "tw"
+odia = [{ text = "ତ୍ୱ", w = 1.0 }]
+
+[[consonant.add]]
+id = "S7g"
+roman = "dhv"
+odia = [{ text = "ଧ୍ୱ", w = 1.0 }]
+
+[[consonant.add]]
+id = "S7h"
+roman = "shv"
+odia = [{ text = "ଶ୍ୱ", w = 1.0 }]
+
+
+# ==========================================================================
+# S8 — ଯ word-initially from "j"
+# ==========================================================================
+
+# 463,912 tokens of word-initial ଯ, and docs/romanization-reference.tex itself
+# says ଯ "sounds like ja" — AGENTS.md §4 records that ଯ vs ୟ is the opposite of
+# the Hindi intuition. "je" could not reach ଯେ, the #5 word in Odia.
+# Sanskrit needs it constantly: ଯଥା, ଯତ୍ର, ଯଜ୍ଞ, ଯୋଗ, ଯମ, ଯଦା.
+# Recovers D5.
+[[consonant.merge]]
+id = "S8"
+roman = "j"
+odia = [{ text = "ଯ", w = 0.6, context = "word_initial" }]
+
+
+# ==========================================================================
+# Deliberately NOT here — recorded so nobody re-derives them
+# ==========================================================================
+#
+# ଽ avagraha, । danda, ॥ double danda
+#     Blocked twice over: core/src/rules.ts readRomanKey requires /^[a-z]+$/ so
+#     they can never be TOML keys, AND core/src/segment.ts expandSign returns
+#     false when state.last === 'start', so a mark that opens a token is
+#     unreachable whatever its key. Handled in Appv2/src/preprocess.ts as
+#     input-layer substitutions ('  |  || ) and in the insert palette.
+#
+# Subjoined व as a RULE rather than as S7a-S7h conjunct keys
+#     Needs a "post-virama" PositionContext, i.e. a core edit.
+#
+# Sign after sign (ଂ then ଃ)
+#     expandSign returns false when state.last === 'sign'. Narrower than it
+#     sounds: a sign after a MATRA is fine (last === 'vowel'), so ାଁ ୀଁ ୁଁ all
+#     work. Genuine sign+sign remains reachable through the lexicon, which
+#     bypasses the segmenter entirely.
+#
+# ଯ/ୟ positional weights
+#     No change needed. Measured ଧ୍ୟାନ 1800 : ଧ୍ଯାନ 346, so the base's
+#     word_initial ଯ / non_initial ୟ rule already holds for Sanskrit.

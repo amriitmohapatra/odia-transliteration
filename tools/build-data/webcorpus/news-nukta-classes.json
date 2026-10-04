@@ -1,0 +1,494 @@
+{
+  "paired_types": 351,
+  "nukta_dominant_types": 261,
+  "nukta_dominant_drop_rate": 0.1285,
+  "bare_dominant_types": 90,
+  "bare_dominant_spurious_nukta_rate": 0.1421,
+  "combined_drop_rate_misleading": 0.2778,
+  "types_only_ever_nukta": 1015,
+  "nukta_bearing_types": 1366,
+  "bare_dominant_examples": [
+    {
+      "bare": "ଭିଡିଓ",
+      "n_bare": 992,
+      "nukta": "ଭିଡ଼ିଓ",
+      "n_nukta": 138
+    },
+    {
+      "bare": "କ୍ରୀଡାରେ",
+      "n_bare": 440,
+      "nukta": "କ୍ରୀଡ଼ାରେ",
+      "n_nukta": 70
+    },
+    {
+      "bare": "ବିଜେଡି",
+      "n_bare": 355,
+      "nukta": "ବିଜେଡ଼ି",
+      "n_nukta": 9
+    },
+    {
+      "bare": "ପଢନ୍ତୁ",
+      "n_bare": 181,
+      "nukta": "ପଢ଼ନ୍ତୁ",
+      "n_nukta": 125
+    },
+    {
+      "bare": "ରେକର୍ଡ",
+      "n_bare": 165,
+      "nukta": "ରେକର୍ଡ଼",
+      "n_nukta": 2
+    },
+    {
+      "bare": "ମିଡିଆ",
+      "n_bare": 153,
+      "nukta": "ମିଡ଼ିଆ",
+      "n_nukta": 1
+    },
+    {
+      "bare": "ମିଡିଆରେ",
+      "n_bare": 118,
+      "nukta": "ମିଡ଼ିଆରେ",
+      "n_nukta": 4
+    },
+    {
+      "bare": "ଡି",
+      "n_bare": 115,
+      "nukta": "ଡ଼ି",
+      "n_nukta": 1
+    },
+    {
+      "bare": "ପଢିବା",
+      "n_bare": 67,
+      "nukta": "ପଢ଼ିବା",
+      "n_nukta": 8
+    },
+    {
+      "bare": "ମେଡିକାଲ",
+      "n_bare": 64,
+      "nukta": "ମେଡ଼ିକାଲ",
+      "n_nukta": 1
+    },
+    {
+      "bare": "ଛାଡପତ୍ର",
+      "n_bare": 30,
+      "nukta": "ଛାଡ଼ପତ୍ର",
+      "n_nukta": 24
+    },
+    {
+      "bare": "ବିଜେଡିର",
+      "n_bare": 44,
+      "nukta": "ବିଜେଡ଼ିର",
+      "n_nukta": 4
+    },
+    {
+      "bare": "ଡ",
+      "n_bare": 36,
+      "nukta": "ଡ଼",
+      "n_nukta": 10
+    },
+    {
+      "bare": "ଡିଗ୍ରୀ",
+      "n_bare": 44,
+      "nukta": "ଡ଼ିଗ୍ରୀ",
+      "n_nukta": 1
+    },
+    {
+      "bare": "ଓଡିଶାଭାସ୍କର",
+      "n_bare": 42,
+      "nukta": "ଓଡ଼ିଶାଭାସ୍କର",
+      "n_nukta": 1
+    },
+    {
+      "bare": "ଭିଡିଓରେ",
+      "n_bare": 36,
+      "nukta": "ଭିଡ଼ିଓରେ",
+      "n_nukta": 2
+    },
+    {
+      "bare": "ବୋର୍ଡ",
+      "n_bare": 37,
+      "nukta": "ବୋର୍ଡ଼",
+      "n_nukta": 1
+    },
+    {
+      "bare": "ପଢିଛନ୍ତି",
+      "n_bare": 36,
+      "nukta": "ପଢ଼ିଛନ୍ତି",
+      "n_nukta": 1
+    },
+    {
+      "bare": "ପଡୁଛି",
+      "n_bare": 21,
+      "nukta": "ପଡ଼ୁଛି",
+      "n_nukta": 9
+    },
+    {
+      "bare": "ମାଡରେ",
+      "n_bare": 16,
+      "nukta": "ମାଡ଼ରେ",
+      "n_nukta": 11
+    },
+    {
+      "bare": "ବଲିଉଡ୍",
+      "n_bare": 26,
+      "nukta": "ବଲିଉଡ଼୍",
+      "n_nukta": 1
+    },
+    {
+      "bare": "କପଡା",
+      "n_bare": 19,
+      "nukta": "କପଡ଼ା",
+      "n_nukta": 7
+    },
+    {
+      "bare": "ଡକ୍ଟର",
+      "n_bare": 24,
+      "nukta": "ଡ଼କ୍ଟର",
+      "n_nukta": 2
+    },
+    {
+      "bare": "ୱାର୍ଡ",
+      "n_bare": 21,
+      "nukta": "ୱାର୍ଡ଼",
+      "n_nukta": 4
+    },
+    {
+      "bare": "ଅଢେଇ",
+      "n_bare": 14,
+      "nukta": "ଅଢ଼େଇ",
+      "n_nukta": 10
+    },
+    {
+      "bare": "ଅଡୁଆ",
+      "n_bare": 11,
+      "nukta": "ଅଡ଼ୁଆ",
+      "n_nukta": 10
+    },
+    {
+      "bare": "ବଢାଇଛି",
+      "n_bare": 13,
+      "nukta": "ବଢ଼ାଇଛି",
+      "n_nukta": 8
+    },
+    {
+      "bare": "ବଲିଉଡ",
+      "n_bare": 14,
+      "nukta": "ବଲିଉଡ଼",
+      "n_nukta": 6
+    },
+    {
+      "bare": "ଲର୍ଡସରେ",
+      "n_bare": 18,
+      "nukta": "ଲର୍ଡ଼ସରେ",
+      "n_nukta": 1
+    },
+    {
+      "bare": "କଚାଡି",
+      "n_bare": 13,
+      "nukta": "କଚାଡ଼ି",
+      "n_nukta": 4
+    },
+    {
+      "bare": "ଏକାଡେମୀର",
+      "n_bare": 16,
+      "nukta": "ଏକାଡ଼େମୀର",
+      "n_nukta": 1
+    },
+    {
+      "bare": "ଡବଲ",
+      "n_bare": 16,
+      "nukta": "ଡ଼ବଲ",
+      "n_nukta": 1
+    },
+    {
+      "bare": "ଲଡୁ",
+      "n_bare": 8,
+      "nukta": "ଲଡ଼ୁ",
+      "n_nukta": 7
+    },
+    {
+      "bare": "ଢଙ୍ଗରେ",
+      "n_bare": 12,
+      "nukta": "ଢ଼ଙ୍ଗରେ",
+      "n_nukta": 2
+    },
+    {
+      "bare": "ଛେନାପୋଡ",
+      "n_bare": 9,
+      "nukta": "ଛେନାପୋଡ଼",
+      "n_nukta": 4
+    },
+    {
+      "bare": "ହଲିଉଡ୍",
+      "n_bare": 12,
+      "nukta": "ହଲିଉଡ଼୍",
+      "n_nukta": 1
+    },
+    {
+      "bare": "ବଲିଉଡର",
+      "n_bare": 8,
+      "nukta": "ବଲିଉଡ଼ର",
+      "n_nukta": 3
+    },
+    {
+      "bare": "ଧାରୱାଡ",
+      "n_bare": 8,
+      "nukta": "ଧାରୱାଡ଼",
+      "n_nukta": 3
+    },
+    {
+      "bare": "ତାମିଲନାଡୁ",
+      "n_bare": 10,
+      "nukta": "ତାମିଲନାଡ଼ୁ",
+      "n_nukta": 1
+    },
+    {
+      "bare": "ବଲିଉଡରେ",
+      "n_bare": 10,
+      "nukta": "ବଲିଉଡ଼ରେ",
+      "n_nukta": 1
+    }
+  ],
+  "nukta_dominant_examples": [
+    {
+      "nukta": "ଓଡ଼ିଶା",
+      "n_nukta": 2033,
+      "bare": "ଓଡିଶା",
+      "n_bare": 417
+    },
+    {
+      "nukta": "ବଡ଼",
+      "n_nukta": 2152,
+      "bare": "ବଡ",
+      "n_bare": 76
+    },
+    {
+      "nukta": "କେନ୍ଦ୍ରାପଡ଼ା",
+      "n_nukta": 541,
+      "bare": "କେନ୍ଦ୍ରାପଡା",
+      "n_bare": 154
+    },
+    {
+      "nukta": "ଓଡ଼ିଆ",
+      "n_nukta": 570,
+      "bare": "ଓଡିଆ",
+      "n_bare": 72
+    },
+    {
+      "nukta": "ସୁନ୍ଦରଗଡ଼",
+      "n_nukta": 446,
+      "bare": "ସୁନ୍ଦରଗଡ",
+      "n_bare": 159
+    },
+    {
+      "nukta": "ଭିଡ଼",
+      "n_nukta": 512,
+      "bare": "ଭିଡ",
+      "n_bare": 9
+    },
+    {
+      "nukta": "ଝାରସୁଗୁଡ଼ା",
+      "n_nukta": 463,
+      "bare": "ଝାରସୁଗୁଡା",
+      "n_bare": 7
+    },
+    {
+      "nukta": "ନୟାଗଡ଼",
+      "n_nukta": 455,
+      "bare": "ନୟାଗଡ",
+      "n_bare": 3
+    },
+    {
+      "nukta": "ରଥାରୁଢ଼",
+      "n_nukta": 453,
+      "bare": "ରଥାରୁଢ",
+      "n_bare": 1
+    },
+    {
+      "nukta": "ରାୟଗଡ଼ା",
+      "n_nukta": 325,
+      "bare": "ରାୟଗଡା",
+      "n_bare": 115
+    },
+    {
+      "nukta": "ନୂଆପଡ଼ା",
+      "n_nukta": 422,
+      "bare": "ନୂଆପଡା",
+      "n_bare": 4
+    },
+    {
+      "nukta": "କଡ଼ା",
+      "n_nukta": 329,
+      "bare": "କଡା",
+      "n_bare": 10
+    },
+    {
+      "nukta": "ଓଡ଼ିଶାର",
+      "n_nukta": 313,
+      "bare": "ଓଡିଶାର",
+      "n_bare": 8
+    },
+    {
+      "nukta": "ବଢ଼ୁଛି",
+      "n_nukta": 258,
+      "bare": "ବଢୁଛି",
+      "n_bare": 34
+    },
+    {
+      "nukta": "ଅଙ୍ଗନବାଡ଼ି",
+      "n_nukta": 246,
+      "bare": "ଅଙ୍ଗନବାଡି",
+      "n_bare": 17
+    },
+    {
+      "nukta": "ପଡ଼ିଲା",
+      "n_nukta": 197,
+      "bare": "ପଡିଲା",
+      "n_bare": 10
+    },
+    {
+      "nukta": "ଯୁବପିଢ଼ି",
+      "n_nukta": 192,
+      "bare": "ଯୁବପିଢି",
+      "n_bare": 2
+    },
+    {
+      "nukta": "ଆଷାଢ଼",
+      "n_nukta": 144,
+      "bare": "ଆଷାଢ",
+      "n_bare": 3
+    },
+    {
+      "nukta": "ଦୃଢ଼",
+      "n_nukta": 138,
+      "bare": "ଦୃଢ",
+      "n_bare": 9
+    },
+    {
+      "nukta": "କ୍ରୀଡ଼ା",
+      "n_nukta": 90,
+      "bare": "କ୍ରୀଡା",
+      "n_bare": 52
+    },
+    {
+      "nukta": "ବାହୁଡ଼ା",
+      "n_nukta": 118,
+      "bare": "ବାହୁଡା",
+      "n_bare": 21
+    },
+    {
+      "nukta": "ଓଡ଼ିଶାରେ",
+      "n_nukta": 123,
+      "bare": "ଓଡିଶାରେ",
+      "n_bare": 5
+    },
+    {
+      "nukta": "ମାଡ଼ି",
+      "n_nukta": 110,
+      "bare": "ମାଡି",
+      "n_bare": 14
+    },
+    {
+      "nukta": "ଜଣାପଡ଼ିଛି",
+      "n_nukta": 90,
+      "bare": "ଜଣାପଡିଛି",
+      "n_bare": 24
+    },
+    {
+      "nukta": "ପଡ଼ିଲେ",
+      "n_nukta": 105,
+      "bare": "ପଡିଲେ",
+      "n_bare": 7
+    },
+    {
+      "nukta": "ପଡ଼ିବ",
+      "n_nukta": 67,
+      "bare": "ପଡିବ",
+      "n_bare": 41
+    },
+    {
+      "nukta": "ଆଡ଼ପ",
+      "n_nukta": 89,
+      "bare": "ଆଡପ",
+      "n_bare": 9
+    },
+    {
+      "nukta": "ବଢ଼ିଲା",
+      "n_nukta": 82,
+      "bare": "ବଢିଲା",
+      "n_bare": 11
+    },
+    {
+      "nukta": "ଗାଡ଼ି",
+      "n_nukta": 77,
+      "bare": "ଗାଡି",
+      "n_bare": 16
+    },
+    {
+      "nukta": "ଜଡ଼ିତ",
+      "n_nukta": 56,
+      "bare": "ଜଡିତ",
+      "n_bare": 37
+    },
+    {
+      "nukta": "ସୁଦୃଢ଼",
+      "n_nukta": 82,
+      "bare": "ସୁଦୃଢ",
+      "n_bare": 4
+    },
+    {
+      "nukta": "ଛାଡ଼ି",
+      "n_nukta": 60,
+      "bare": "ଛାଡି",
+      "n_bare": 23
+    },
+    {
+      "nukta": "ମାଡ଼",
+      "n_nukta": 63,
+      "bare": "ମାଡ",
+      "n_bare": 13
+    },
+    {
+      "nukta": "ବାହୁଡ଼ି",
+      "n_nukta": 71,
+      "bare": "ବାହୁଡି",
+      "n_bare": 1
+    },
+    {
+      "nukta": "ସାଢ଼େ",
+      "n_nukta": 63,
+      "bare": "ସାଢେ",
+      "n_bare": 3
+    },
+    {
+      "nukta": "ବଢ଼ିବ",
+      "n_nukta": 30,
+      "bare": "ବଢିବ",
+      "n_bare": 30
+    },
+    {
+      "nukta": "କେନ୍ଦ୍ରାପଡ଼ାରେ",
+      "n_nukta": 53,
+      "bare": "କେନ୍ଦ୍ରାପଡାରେ",
+      "n_bare": 1
+    },
+    {
+      "nukta": "ଚଢ଼ାଉ",
+      "n_nukta": 45,
+      "bare": "ଚଢାଉ",
+      "n_bare": 6
+    },
+    {
+      "nukta": "ବଡ଼ଦାଣ୍ଡରେ",
+      "n_nukta": 40,
+      "bare": "ବଡଦାଣ୍ଡରେ",
+      "n_bare": 8
+    },
+    {
+      "nukta": "ପଡ଼ିଥିଲା",
+      "n_nukta": 31,
+      "bare": "ପଡିଥିଲା",
+      "n_bare": 17
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+node_modules/
+dist/
+*.tsbuildinfo
+.DS_Store
+tools/build-data/raw/
+*.log
+*.aux
+*.out
+__pycache__/
+# 224 MB, over GitHub's 100 MB per-file limit; stays on the Mac
+tools/build-data/webcorpus/raw-archive-books.jsonl

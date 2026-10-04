@@ -1,0 +1,438 @@
+{
+  "corpus": "or.wikipedia + or.wikisource dumps 2026-07-02",
+  "word_initial_nukta": {
+    "types": 329,
+    "tokens": 874,
+    "comment": "orthographically illegal in Odia; ~all are loanwords given a spurious nukta",
+    "word_initial_bare_DDA_DDHA_tokens": 34305,
+    "illegal_share_of_word_initial": 0.0248,
+    "examples": [
+      [
+        "ଡ଼ି",
+        53,
+        "ଡି",
+        1160
+      ],
+      [
+        "ଡ଼ଲାର",
+        27,
+        "ଡଲାର",
+        1854
+      ],
+      [
+        "ଡ଼ରେ",
+        24,
+        "ଡରେ",
+        136
+      ],
+      [
+        "ଡ଼",
+        22,
+        "ଡ",
+        170
+      ],
+      [
+        "ଡ଼ାକନ୍ତି",
+        22,
+        "ଡାକନ୍ତି",
+        91
+      ],
+      [
+        "ଡ଼ିମ୍ବ",
+        22,
+        "ଡିମ୍ବ",
+        24
+      ],
+      [
+        "ଡ଼ଃ",
+        21,
+        "ଡଃ",
+        183
+      ],
+      [
+        "ଡ଼ିଗ୍ରୀ",
+        20,
+        "ଡିଗ୍ରୀ",
+        1434
+      ],
+      [
+        "ଢ଼ଙ୍ଗରେ",
+        15,
+        "ଢଙ୍ଗରେ",
+        50
+      ],
+      [
+        "ଡ଼ା",
+        15,
+        "ଡା",
+        50
+      ],
+      [
+        "ଡ଼ାକଇ",
+        15,
+        "ଡାକଇ",
+        34
+      ],
+      [
+        "ଡ଼ରି",
+        14,
+        "ଡରି",
+        61
+      ]
+    ]
+  },
+  "nukta_on_other_bases": {
+    "U+0B3F ି": 373,
+    "U+0B2F ଯ": 265,
+    "U+0B3E ା": 195,
+    "U+0B47 େ": 179,
+    "U+0B3C ଼": 97,
+    "U+0B1A ଚ": 37,
+    "U+0B1C ଜ": 30,
+    "U+0B5F ୟ": 18,
+    "U+0B40 ୀ": 12,
+    "U+0B32 ଲ": 9
+  },
+  "minimal_pairs": {
+    "all_pairs": 3690,
+    "naive_drop_rate_token_weighted": 0.3905,
+    "naive_comment": "CONTAMINATED - mixes drops and spurious adds",
+    "orthographically_legal_pairs": 3465,
+    "native_words_nukta_dominant": {
+      "pair_types": 1827,
+      "nukta_tokens": 77516,
+      "bare_tokens": 13418,
+      "DROP_RATE": 0.1476,
+      "comment": "THE number to compare against Aksharantar's ~63%"
+    },
+    "loanwords_bare_dominant": {
+      "pair_types": 1638,
+      "bare_tokens": 19851,
+      "spurious_nukta_tokens": 5662,
+      "SPURIOUS_ADD_RATE": 0.7781
+    }
+  },
+  "at_risk_types": 6885,
+  "top40_native_nukta_words": [
+    {
+      "nukta": "ଓଡ଼ିଶା",
+      "n": 11902,
+      "bare": "ଓଡିଶା",
+      "n_bare": 78,
+      "drop_rate": 0.0065,
+      "codepoints": "U+0B13 U+0B21 U+0B3C U+0B3F U+0B36 U+0B3E"
+    },
+    {
+      "nukta": "ଓଡ଼ିଆ",
+      "n": 9159,
+      "bare": "ଓଡିଆ",
+      "n_bare": 24,
+      "drop_rate": 0.0026,
+      "codepoints": "U+0B13 U+0B21 U+0B3C U+0B3F U+0B06"
+    },
+    {
+      "nukta": "ବଡ଼",
+      "n": 3536,
+      "bare": "ବଡ",
+      "n_bare": 289,
+      "drop_rate": 0.0756,
+      "codepoints": "U+0B2C U+0B21 U+0B3C"
+    },
+    {
+      "nukta": "ଓଡ଼ିଶାର",
+      "n": 3384,
+      "bare": "ଓଡିଶାର",
+      "n_bare": 16,
+      "drop_rate": 0.0047,
+      "codepoints": "U+0B13 U+0B21 U+0B3C U+0B3F U+0B36 U+0B3E U+0B30"
+    },
+    {
+      "nukta": "ଛାଡ଼ି",
+      "n": 1096,
+      "bare": "ଛାଡି",
+      "n_bare": 478,
+      "drop_rate": 0.3037,
+      "codepoints": "U+0B1B U+0B3E U+0B21 U+0B3C U+0B3F"
+    },
+    {
+      "nukta": "ଓଡ଼ିଶାରେ",
+      "n": 1472,
+      "bare": "ଓଡିଶାରେ",
+      "n_bare": 3,
+      "drop_rate": 0.002,
+      "codepoints": "U+0B13 U+0B21 U+0B3C U+0B3F U+0B36 U+0B3E U+0B30 U+0B47"
+    },
+    {
+      "nukta": "ଜଡ଼ିତ",
+      "n": 790,
+      "bare": "ଜଡିତ",
+      "n_bare": 414,
+      "drop_rate": 0.3439,
+      "codepoints": "U+0B1C U+0B21 U+0B3C U+0B3F U+0B24"
+    },
+    {
+      "nukta": "ଗୁଡ଼ିକ",
+      "n": 790,
+      "bare": "ଗୁଡିକ",
+      "n_bare": 13,
+      "drop_rate": 0.0162,
+      "codepoints": "U+0B17 U+0B41 U+0B21 U+0B3C U+0B3F U+0B15"
+    },
+    {
+      "nukta": "ପଡ଼ି",
+      "n": 638,
+      "bare": "ପଡି",
+      "n_bare": 160,
+      "drop_rate": 0.2005,
+      "codepoints": "U+0B2A U+0B21 U+0B3C U+0B3F"
+    },
+    {
+      "nukta": "ପଡ଼ିଲା",
+      "n": 505,
+      "bare": "ପଡିଲା",
+      "n_bare": 231,
+      "drop_rate": 0.3139,
+      "codepoints": "U+0B2A U+0B21 U+0B3C U+0B3F U+0B32 U+0B3E"
+    },
+    {
+      "nukta": "ଓଡ଼ିଶୀ",
+      "n": 725,
+      "bare": "ଓଡିଶୀ",
+      "n_bare": 9,
+      "drop_rate": 0.0123,
+      "codepoints": "U+0B13 U+0B21 U+0B3C U+0B3F U+0B36 U+0B40"
+    },
+    {
+      "nukta": "ଝାଡ଼ା",
+      "n": 685,
+      "bare": "ଝାଡା",
+      "n_bare": 30,
+      "drop_rate": 0.042,
+      "codepoints": "U+0B1D U+0B3E U+0B21 U+0B3C U+0B3E"
+    },
+    {
+      "nukta": "ଲଢ଼ିଥିଲେ",
+      "n": 658,
+      "bare": "ଲଢିଥିଲେ",
+      "n_bare": 21,
+      "drop_rate": 0.0309,
+      "codepoints": "U+0B32 U+0B22 U+0B3C U+0B3F U+0B25 U+0B3F U+0B32 U+0B47"
+    },
+    {
+      "nukta": "ପଡ଼େ",
+      "n": 495,
+      "bare": "ପଡେ",
+      "n_bare": 181,
+      "drop_rate": 0.2678,
+      "codepoints": "U+0B2A U+0B21 U+0B3C U+0B47"
+    },
+    {
+      "nukta": "କ୍ରୀଡ଼ା",
+      "n": 452,
+      "bare": "କ୍ରୀଡା",
+      "n_bare": 150,
+      "drop_rate": 0.2492,
+      "codepoints": "U+0B15 U+0B4D U+0B30 U+0B40 U+0B21 U+0B3C U+0B3E"
+    },
+    {
+      "nukta": "ଉଇକିପିଡ଼ିଆ",
+      "n": 521,
+      "bare": "ଉଇକିପିଡିଆ",
+      "n_bare": 28,
+      "drop_rate": 0.051,
+      "codepoints": "U+0B09 U+0B07 U+0B15 U+0B3F U+0B2A U+0B3F U+0B21 U+0B3C U+0B3F U+0B06"
+    },
+    {
+      "nukta": "ଆଡ଼କୁ",
+      "n": 340,
+      "bare": "ଆଡକୁ",
+      "n_bare": 209,
+      "drop_rate": 0.3807,
+      "codepoints": "U+0B06 U+0B21 U+0B3C U+0B15 U+0B41"
+    },
+    {
+      "nukta": "ଛଡ଼ା",
+      "n": 305,
+      "bare": "ଛଡା",
+      "n_bare": 212,
+      "drop_rate": 0.4101,
+      "codepoints": "U+0B1B U+0B21 U+0B3C U+0B3E"
+    },
+    {
+      "nukta": "ପାହାଡ଼",
+      "n": 359,
+      "bare": "ପାହାଡ",
+      "n_bare": 133,
+      "drop_rate": 0.2703,
+      "codepoints": "U+0B2A U+0B3E U+0B39 U+0B3E U+0B21 U+0B3C"
+    },
+    {
+      "nukta": "ଯୋଡ଼ି",
+      "n": 334,
+      "bare": "ଯୋଡି",
+      "n_bare": 143,
+      "drop_rate": 0.2998,
+      "codepoints": "U+0B2F U+0B4B U+0B21 U+0B3C U+0B3F"
+    },
+    {
+      "nukta": "ପଡ଼ିଲେ",
+      "n": 352,
+      "bare": "ପଡିଲେ",
+      "n_bare": 114,
+      "drop_rate": 0.2446,
+      "codepoints": "U+0B2A U+0B21 U+0B3C U+0B3F U+0B32 U+0B47"
+    },
+    {
+      "nukta": "ସେଗୁଡ଼ିକ",
+      "n": 250,
+      "bare": "ସେଗୁଡିକ",
+      "n_bare": 206,
+      "drop_rate": 0.4518,
+      "codepoints": "U+0B38 U+0B47 U+0B17 U+0B41 U+0B21 U+0B3C U+0B3F U+0B15"
+    },
+    {
+      "nukta": "ଦୃଢ଼",
+      "n": 393,
+      "bare": "ଦୃଢ",
+      "n_bare": 54,
+      "drop_rate": 0.1208,
+      "codepoints": "U+0B26 U+0B43 U+0B22 U+0B3C"
+    },
+    {
+      "nukta": "ଏଡ଼େ",
+      "n": 414,
+      "bare": "ଏଡେ",
+      "n_bare": 29,
+      "drop_rate": 0.0655,
+      "codepoints": "U+0B0F U+0B21 U+0B3C U+0B47"
+    },
+    {
+      "nukta": "କନ୍ନଡ଼",
+      "n": 263,
+      "bare": "କନ୍ନଡ",
+      "n_bare": 176,
+      "drop_rate": 0.4009,
+      "codepoints": "U+0B15 U+0B28 U+0B4D U+0B28 U+0B21 U+0B3C"
+    },
+    {
+      "nukta": "ପଡ଼ିଥିଲା",
+      "n": 303,
+      "bare": "ପଡିଥିଲା",
+      "n_bare": 134,
+      "drop_rate": 0.3066,
+      "codepoints": "U+0B2A U+0B21 U+0B3C U+0B3F U+0B25 U+0B3F U+0B32 U+0B3E"
+    },
+    {
+      "nukta": "ଓଡ଼ିଆରେ",
+      "n": 429,
+      "bare": "ଓଡିଆରେ",
+      "n_bare": 1,
+      "drop_rate": 0.0023,
+      "codepoints": "U+0B13 U+0B21 U+0B3C U+0B3F U+0B06 U+0B30 U+0B47"
+    },
+    {
+      "nukta": "ପଢ଼ିଥିଲେ",
+      "n": 392,
+      "bare": "ପଢିଥିଲେ",
+      "n_bare": 24,
+      "drop_rate": 0.0577,
+      "codepoints": "U+0B2A U+0B22 U+0B3C U+0B3F U+0B25 U+0B3F U+0B32 U+0B47"
+    },
+    {
+      "nukta": "ପରିଡ଼ା",
+      "n": 343,
+      "bare": "ପରିଡା",
+      "n_bare": 13,
+      "drop_rate": 0.0365,
+      "codepoints": "U+0B2A U+0B30 U+0B3F U+0B21 U+0B3C U+0B3E"
+    },
+    {
+      "nukta": "ଗୋଡ଼",
+      "n": 273,
+      "bare": "ଗୋଡ",
+      "n_bare": 81,
+      "drop_rate": 0.2288,
+      "codepoints": "U+0B17 U+0B4B U+0B21 U+0B3C"
+    },
+    {
+      "nukta": "ପଢ଼ିବା",
+      "n": 325,
+      "bare": "ପଢିବା",
+      "n_bare": 22,
+      "drop_rate": 0.0634,
+      "codepoints": "U+0B2A U+0B22 U+0B3C U+0B3F U+0B2C U+0B3E"
+    },
+    {
+      "nukta": "ହାଡ଼",
+      "n": 275,
+      "bare": "ହାଡ",
+      "n_bare": 69,
+      "drop_rate": 0.2006,
+      "codepoints": "U+0B39 U+0B3E U+0B21 U+0B3C"
+    },
+    {
+      "nukta": "ନଡ଼ିଆ",
+      "n": 273,
+      "bare": "ନଡିଆ",
+      "n_bare": 54,
+      "drop_rate": 0.1651,
+      "codepoints": "U+0B28 U+0B21 U+0B3C U+0B3F U+0B06"
+    },
+    {
+      "nukta": "ଗୀତଗୁଡ଼ିକ",
+      "n": 296,
+      "bare": "ଗୀତଗୁଡିକ",
+      "n_bare": 6,
+      "drop_rate": 0.0199,
+      "codepoints": "U+0B17 U+0B40 U+0B24 U+0B17 U+0B41 U+0B21 U+0B3C U+0B3F U+0B15"
+    },
+    {
+      "nukta": "ପୀଡ଼ିତ",
+      "n": 271,
+      "bare": "ପୀଡିତ",
+      "n_bare": 31,
+      "drop_rate": 0.1026,
+      "codepoints": "U+0B2A U+0B40 U+0B21 U+0B3C U+0B3F U+0B24"
+    },
+    {
+      "nukta": "ପଡ଼ିବ",
+      "n": 195,
+      "bare": "ପଡିବ",
+      "n_bare": 105,
+      "drop_rate": 0.35,
+      "codepoints": "U+0B2A U+0B21 U+0B3C U+0B3F U+0B2C"
+    },
+    {
+      "nukta": "ପାଢ଼ୀ",
+      "n": 286,
+      "bare": "ପାଢୀ",
+      "n_bare": 9,
+      "drop_rate": 0.0305,
+      "codepoints": "U+0B2A U+0B3E U+0B22 U+0B3C U+0B40"
+    },
+    {
+      "nukta": "ଗୁଡ଼ିକର",
+      "n": 158,
+      "bare": "ଗୁଡିକର",
+      "n_bare": 132,
+      "drop_rate": 0.4552,
+      "codepoints": "U+0B17 U+0B41 U+0B21 U+0B3C U+0B3F U+0B15 U+0B30"
+    },
+    {
+      "nukta": "କେନ୍ଦ୍ରାପଡ଼ା",
+      "n": 278,
+      "bare": "କେନ୍ଦ୍ରାପଡା",
+      "n_bare": 10,
+      "drop_rate": 0.0347,
+      "codepoints": "U+0B15 U+0B47 U+0B28 U+0B4D U+0B26 U+0B4D U+0B30 U+0B3E U+0B2A U+0B21 U+0B3C U+0B3E"
+    },
+    {
+      "nukta": "ଘୋଡ଼ା",
+      "n": 262,
+      "bare": "ଘୋଡା",
+      "n_bare": 24,
+      "drop_rate": 0.0839,
+      "codepoints": "U+0B18 U+0B4B U+0B21 U+0B3C U+0B3E"
+    }
+  ]
+}

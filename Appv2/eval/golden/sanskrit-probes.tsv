@@ -1,0 +1,61 @@
+# Reachability probes for Appv2/eval/sanskrit-coverage.ts
+#
+# Each row: what you type, what must come back, and a label.
+# A probe PASSES when the expected word appears anywhere in the top-K.
+#
+# The Odia column is the point of the file, so it must be checkable. Anything
+# carrying a nukta is written with \u escapes in the rule files for that reason;
+# here the harness prints code points for every failure instead, so a mismatch
+# names itself rather than looking identical on screen.
+#
+# roman	expected	label
+#
+# --- the verse that started this -----------------------------------------
+dhyaana	ଧ୍ୟାନ	dhyana
+balaatitam	ବଳାତିତଂ	balatitam (word-final anusvara + ଳ)
+naanyam	ନାନ୍ୟଂ	nanyam (ନ୍ୟ conjunct must survive)
+balam	ବଳଂ	balam
+#
+# --- anusvara, candrabindu, visarga ---------------------------------------
+namah	ନମଃ	visarga, word-final
+om	ଓଁ	pranava (candrabindu, not anusvara)
+kim	କିଂ	anusvara
+#
+# --- the vocalics ----------------------------------------------------------
+krushna	କୃଷ୍ଣ	vocalic r sign
+rushi	ଋଷି	vocalic r independent
+amruta	ଅମୃତ	vocalic r, medial
+hrudaya	ହୃଦୟ	vocalic r + ୟ
+#
+# --- homorganic nasal clusters --------------------------------------------
+shankara	ଶଙ୍କର	ଙ୍କ
+ganga	ଗଙ୍ଗା	ଙ୍ଗ
+pancha	ପଞ୍ଚ	ଞ୍ଚ
+sanjaya	ସଞ୍ଜୟ	ଞ୍ଜ
+#
+# --- subjoined ୱ, which S7a-S7h exist for ---------------------------------
+svaamii	ସ୍ୱାମୀ	ସ୍ୱ
+bishva	ବିଶ୍ୱ	ଶ୍ୱ
+dvaara	ଦ୍ୱାର	ଦ୍ୱ
+#
+# --- the sibilants and the marked conjuncts -------------------------------
+srushti	ସୃଷ୍ଟି	ଷ୍ଟ
+shiva	ଶିବ	ଶ
+lakshmii	ଲକ୍ଷ୍ମୀ	କ୍ଷ
+yajna	ଯଜ୍ଞ	ଜ୍ଞ
+#
+# --- ଡ଼ / ଢ଼, the invariant that must not regress -------------------------
+odisha	ଓଡ଼ିଶା	ଡ଼ (U+0B21 U+0B3C, never U+0B5C)
+padhaa	ପଢ଼ା	ଢ଼ (U+0B22 U+0B3C, never U+0B5D)
+#
+# --- ଯ vs ୟ ---------------------------------------------------------------
+yathaa	ଯଥା	word-initial ଯ
+maayaa	ମାୟା	non-initial ୟ
+#
+# --- ଳ, in each position that matters -------------------------------------
+jala	ଜଳ	word-final ଳ
+mangala	ମଙ୍ଗଳ	ଙ୍ଗ + word-final ଳ
+#
+# --- bare letters, so S-B can tell "typeable" from "conjunct-only" ---------
+nga	ଙ	bare ଙ
+wa	ୱ	bare ୱ

@@ -1,0 +1,13 @@
+{
+  // The eval harness runs under tsx and emits nothing, but it is still
+  // TypeScript that should be checked. Without this file nothing ever
+  // typechecks it: tools/ is not an npm workspace, so no build touches it.
+  //
+  //     npx tsc -p tools/eval --noEmit
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "types": ["node"]
+  },
+  "include": ["*.ts"]
+}
