@@ -22,6 +22,16 @@ Multiple keys per word on purpose: people do not double long vowels, and they do
 not distinguish retroflex from dental. "janmadina", "janmadin" and "janmodina"
 should all reach ଜନ୍ମଦିନ.
 
+It then merges the result into the lexicons the engine loads:
+
+    lexicon.tsv      = lexicon.tsv.aksharantar-only      + lexicon-common.tsv
+    lexicon-web.tsv  = lexicon-web.tsv.aksharantar-only  + lexicon-common-web.tsv
+
+per (key, word) keeping the higher weight. The `.aksharantar-only` files are the
+untouched output of build_lexicon.py and are only ever read here, never written,
+so the merge is idempotent and the output is a pure function of committed inputs.
+Output is deterministic: no set or dict iteration order reaches the files.
+
     python3 tools/build-data/build_common_lexicon.py
 """
 
@@ -36,6 +46,15 @@ ROOT = Path(__file__).resolve().parents[2]
 WEBFREQ = ROOT / "core" / "data" / "webfreq.tsv"
 OUT_FULL = ROOT / "core" / "data" / "lexicon-common.tsv"
 OUT_WEB = ROOT / "core" / "data" / "lexicon-common-web.tsv"
+
+# (aksharantar-only input, common input, merged output). The merged files are the
+# ones core/src/node.ts loads.
+MERGES = (
+    (ROOT / "core" / "data" / "lexicon.tsv.aksharantar-only", OUT_FULL,
+     ROOT / "core" / "data" / "lexicon.tsv"),
+    (ROOT / "core" / "data" / "lexicon-web.tsv.aksharantar-only", OUT_WEB,
+     ROOT / "core" / "data" / "lexicon-web.tsv"),
+)
 
 # How many word types to romanize. The full file backs the CLI and desktop; the
 # web file is what a phone loads, so it stays small.
@@ -77,6 +96,12 @@ MATRA = {
 ANUSVARA_MARK = "\x01"
 CANDRABINDU_MARK = "\x02"
 SIGN = {"ଂ": ANUSVARA_MARK, "ଁ": CANDRABINDU_MARK, "ଃ": "h"}
+
+# How the EXACT romanization spells each placeholder: ଂ -> "m", ଁ -> "n", the
+# same as the careful register of tools/eval/everyday.ts and this script's own
+# first seed. The other expansions ("n" for ଂ, or the sign dropped) are looser
+# variants. docs/romanization-reference accepts both "n" and "m" for ଂ.
+EXACT_SIGN = {ANUSVARA_MARK: "m", CANDRABINDU_MARK: "n"}
 
 ODIA_RANGE = range(0x0B00, 0x0B80)
 
@@ -158,13 +183,27 @@ NASAL_COLLAPSE = (
 )
 
 
+def exact(roman: str) -> str:
+    """The one careful spelling of a word: what the scheme itself prescribes."""
+    return roman.replace(ANUSVARA_MARK, EXACT_SIGN[ANUSVARA_MARK]).replace(
+        CANDRABINDU_MARK, EXACT_SIGN[CANDRABINDU_MARK]
+    )
+
+
 def variants(roman: str, has_vocalic: bool) -> list[str]:
-    """The spellings a person might actually type for this word."""
-    # Expand the sign placeholders both ways before anything else.
+    """The spellings a person might actually type for this word, sorted.
+
+    The order carries no meaning; callers that need to know which form is the
+    exact romanization compare against `exact(roman)`.
+    """
+    # Expand the sign placeholders both ways before anything else. The exact
+    # seed is the base for the derived variants below; it used to be "the
+    # longest seed", which tied between the "m" and "n" expansions and was then
+    # broken by set iteration order, i.e. by PYTHONHASHSEED.
     seeds = {roman}
     if ANUSVARA_MARK in roman or CANDRABINDU_MARK in roman:
         seeds = {
-            roman.replace(ANUSVARA_MARK, "m").replace(CANDRABINDU_MARK, "n"),
+            exact(roman),
             roman.replace(ANUSVARA_MARK, "n").replace(CANDRABINDU_MARK, "n"),
             roman.replace(ANUSVARA_MARK, "").replace(CANDRABINDU_MARK, ""),
         }
@@ -174,7 +213,7 @@ def variants(roman: str, has_vocalic: bool) -> list[str]:
         for long_form, short_form in NASAL_COLLAPSE:
             if long_form in seed:
                 forms.add(seed.replace(long_form, short_form))
-    roman = sorted(seeds, key=len, reverse=True)[0]
+    roman = exact(roman)
 
     # The vocalic vowel ୃ is written "ru" above, but "ri" is at least as common
     # in practice — କୃଷ୍ଣ is typed "krishna" far more often than "krushna".
@@ -199,7 +238,56 @@ def variants(roman: str, has_vocalic: bool) -> list[str]:
         forms.add(roman.replace("w", "v"))
         forms.add(casual.replace("w", "v"))
 
-    return [f for f in forms if 1 < len(f) <= 40 and "\x01" not in f and "\x02" not in f]
+    return sorted(f for f in forms if 1 < len(f) <= 40 and "\x01" not in f and "\x02" not in f)
+
+
+def assert_canonical(path: Path, key: str, word: str) -> None:
+    if canonical(word) != word or "\u0b5c" in word or "\u0b5d" in word:
+        raise SystemExit(f"error: non-canonical Odia {word!r} for key {key!r} in {path}")
+
+
+def read_lexicon(path: Path, table: dict[str, dict[str, float]]) -> int:
+    """Fold `key \t word \t weight` rows into `table`, keeping the max weight."""
+    n = 0
+    with path.open(encoding="utf-8") as fh:
+        for line in fh:
+            line = line.rstrip("\n")
+            if not line or line.startswith("#"):
+                continue
+            key, word, weight = line.split("\t")
+            word = canonical(word)
+            w = float(weight)
+            slot = table.setdefault(key, {})
+            if w > slot.get(word, float("-inf")):
+                slot[word] = w
+            n += 1
+    return n
+
+
+def write_lexicon(path: Path, table: dict[str, dict[str, float]], comments: tuple[str, ...]) -> int:
+    """Keys ascending, then weight descending.
+
+    Equal weights keep insertion order, which is deterministic: rows are read from
+    files in order and `variants` is sorted. Python's sort is stable.
+    """
+    written = 0
+    with path.open("w", encoding="utf-8", newline="\n") as out:
+        out.write("# romanKey\todiaWord\tweight\n")
+        for c in comments:
+            out.write(f"# {c}\n")
+        for key in sorted(table):
+            for word, w in sorted(table[key].items(), key=lambda kv: -kv[1]):
+                assert_canonical(path, key, word)
+                out.write(f"{key}\t{word}\t{w:.4f}\n")
+                written += 1
+    return written
+
+
+def merge(aksharantar: Path, common: Path, out: Path) -> tuple[int, int, int]:
+    table: dict[str, dict[str, float]] = {}
+    n_a = read_lexicon(aksharantar, table)
+    n_c = read_lexicon(common, table)
+    return n_a, n_c, write_lexicon(out, table, ())
 
 
 def main() -> int:
@@ -240,22 +328,18 @@ def main() -> int:
             # Same 0..2.303 scale the unigrams use, so ranking stays comparable.
             weight = (math.log1p(count) / math.log1p(peak)) * 2.303
             has_vocalic = ("ୃ" in word) or ("ଋ" in word)
-            for n, key in enumerate(variants(roman, has_vocalic)):
+            exact_key = exact(roman)
+            for key in variants(roman, has_vocalic):
                 # the exact romanization outranks its looser variants
-                w = weight if n == 0 else weight * 0.9
+                w = weight if key == exact_key else weight * 0.9
                 slot = table.setdefault(key, {})
                 if w > slot.get(word, 0.0):
                     slot[word] = w
 
-        written = 0
-        with path.open("w", encoding="utf-8") as out:
-            out.write("# romanKey\todiaWord\tweight\n")
-            out.write("# Everyday Odia, romanized from core/data/webfreq.tsv.\n")
-            out.write("# Rebuild: python3 tools/build-data/build_common_lexicon.py\n")
-            for key in sorted(table):
-                for word, w in sorted(table[key].items(), key=lambda kv: -kv[1]):
-                    out.write(f"{key}\t{word}\t{w:.4f}\n")
-                    written += 1
+        written = write_lexicon(path, table, (
+            "Everyday Odia, romanized from core/data/webfreq.tsv.",
+            "Rebuild: python3 tools/build-data/build_common_lexicon.py",
+        ))
         return written, skipped
 
     n_full, skip_full = emit(OUT_FULL, TOP_FULL)
@@ -266,6 +350,16 @@ def main() -> int:
     print(f"{OUT_WEB.name:<26}: {n_web:,} rows from top {TOP_WEB:,} ({skip_web:,} unromanizable)")
     for p in (OUT_FULL, OUT_WEB):
         print(f"  {p.name:<26} {p.stat().st_size / 1048576:.2f} MB")
+
+    for aksharantar, common, out in MERGES:
+        if not aksharantar.exists():
+            print(f"error: {aksharantar} not found — it is build_lexicon.py's output, "
+                  "kept under that name so this merge never reads its own output",
+                  file=sys.stderr)
+            return 1
+        n_a, n_c, n_out = merge(aksharantar, common, out)
+        print(f"{out.name:<26}: {n_out:,} rows = merge of {aksharantar.name} ({n_a:,}) "
+              f"+ {common.name} ({n_c:,})")
     return 0
 
 
