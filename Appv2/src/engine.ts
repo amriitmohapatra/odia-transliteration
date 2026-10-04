@@ -150,6 +150,7 @@ export function buildEngine(
   digits: DigitMode,
   learnStore: LearnStore,
   familySafe = true,
+  kids = false,
 ): EngineHandle {
   const profile = PROFILES[id];
 
@@ -179,7 +180,8 @@ export function buildEngine(
       digits,
       preferences: parsePreferences(rawCache.get('preferences') ?? '', 'core/data/preferences.tsv'),
       labels: parseLabels(rawCache.get('labels') ?? '', 'core/data/labels.tsv'),
-      familySafe,
+      // Kids edition: offensive and coarse words never appear, whatever the switch.
+      filter: kids ? 'kids' : familySafe ? 'family' : 'off',
     });
 
     // Every word list the profile names must have loaded: a missing one is a

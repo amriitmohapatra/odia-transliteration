@@ -94,10 +94,12 @@ score = rule × (ruleScore + lexScore) + freq × logfreq + user × ln(1 + picks)
 
 Order of trust when sources agree: user > owner preference > lexicon > rules.
 
-**Family-safe filter** (on by default): with labels loaded, a word labelled `offensive` is
-dropped unless the lexicon, the user or a preference lists it under the exact key typed.
-It runs before the list is cut to `topk`, so the list stays full. Strict mode is not
-filtered.
+**Content filter** (`filter: off | family | kids`, default family): `family` drops a word
+labelled `offensive` unless the key typed is one of its own keys in `labels.tsv`, the user
+taught it, or a preference lists it. The lexicon key alone does NOT exempt (the lexicon
+files words under loose casual keys). `kids` drops `offensive` and `coarse` words with no
+exemption, and `learn()` refuses them. It runs before the list is cut to `topk`. Strict
+mode is not filtered.
 
 ## 4. Data
 
@@ -201,6 +203,16 @@ and `dictionary/overlay.css` together.
 - Every push to a branch gets a Vercel preview address. The owner checks the preview.
   Promote to production = release. Rollback = promote the previous deployment.
 - No analytics script. "Nothing sent online" is part of the value proposition.
+- **Two editions from one repository** (owner, 2026-10-04): adult (default) and kids. Set
+  `APP_EDITION=kids` at build time for the kids app: core filter level `kids` (offensive
+  and coarse words never suggested, never learned, never explained by the dictionary), no
+  "Hide rude words" switch, name "Odia Phonetic Kids". On Vercel the kids app is a second
+  project on the same repository with the environment variable `APP_EDITION=kids`, so it
+  has its own address. Single file: `APP_EDITION=kids SINGLE_FILE=1 npx vite build --config
+  Appv2/vite.config.ts && APP_EDITION=kids node Appv2/scripts/make-single-file.mjs` writes
+  `docs/odia-app-kids.html`. Known gap: about 348 Praharaj entries with offensive markers
+  stay searchable in kids until they are labelled (C-1). The verbatim Latin item is not
+  filtered (English abuse is outside this filter).
 - `vercel.json` today: install `npm ci`; build `npx vite build --config Appv2/vite.config.ts`
   (Appv2 reads `core/src` directly, so no separate engine build); output `Appv2/dist`;
   `sw.js` and `index.html` revalidate on every load; hashed `assets/` cache for a year;

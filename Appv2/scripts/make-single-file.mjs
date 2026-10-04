@@ -34,7 +34,11 @@ const DIST = resolve(APPV2, LEGACY ? 'dist-legacy' : 'dist-single');
 const OUT = resolve(
   ROOT,
   'docs',
-  LEGACY ? 'odia-app-sanskrit-legacy.html' : 'odia-app-sanskrit.html',
+  LEGACY
+    ? 'odia-app-sanskrit-legacy.html'
+    : process.env.APP_EDITION === 'kids'
+      ? 'odia-app-kids.html'
+      : 'odia-app-sanskrit.html',
 );
 
 if (!existsSync(join(DIST, 'index.html'))) {

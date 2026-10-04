@@ -340,7 +340,12 @@ function ownerGloss(word: string): { meaning: string; status: string } | undefin
   return OWNER.get(canonical(word));
 }
 
+/* Kids edition: words the app must never explain (labelled offensive or coarse).
+ * Set by initDictionary; the default hides nothing. */
+let hidden: (word: string) => boolean = () => false;
+
 function chipFor(word: string): string | null {
+  if (hidden(word)) return null;
   const own = ownerGloss(word);
   if (own) return tidyGloss(own.meaning, false);
   const m = modernChip(lookupModern(word));
@@ -613,6 +618,7 @@ function renderCandidates(): void {
   label.textContent = 'Suggestions under the caret:';
   panelBody.appendChild(label);
   for (const c of lastCandidates) {
+    if (hidden(c.text)) continue;
     panelBody.appendChild(entryBlock(c.text, c.num, lookup(c.text), lookupModern(c.text)));
   }
 }
@@ -629,8 +635,9 @@ function onSearch(): void {
     return;
   }
   panelBody.textContent = '';
-  const entry = lookup(q);
-  const modern = lookupModern(q);
+  const blocked = hidden(canonical(q));
+  const entry = blocked ? null : lookup(q);
+  const modern = blocked ? null : lookupModern(q);
   const label = document.createElement('p');
   label.className = 'dict-hint';
   label.textContent = entry || modern ? 'Search result:' : 'Nothing found for that spelling.';
@@ -812,11 +819,16 @@ let started = false;
  * opens or the candidate bar first appears. Call once, after the app has
  * rendered its shell; later calls are ignored.
  */
-export function initDictionary(load: DictionaryLoader, onStateChange?: (s: DictionaryState) => void): void {
+export function initDictionary(
+  load: DictionaryLoader,
+  onStateChange?: (s: DictionaryState) => void,
+  hideWord?: (word: string) => boolean,
+): void {
   if (started) return;
   started = true;
   try {
     loader = load;
+    if (hideWord) hidden = hideWord;
     onState = onStateChange ?? null;
     buildPanel();
     observe();

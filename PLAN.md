@@ -49,7 +49,10 @@ whenever a task changes status. Last updated: 2026-10-04 (V1 in progress).
 | 1.2 | Family-safe filter (`core/data/labels.tsv`, on by default, `setFamilySafe`) | **Done** (list empty until C-1) |
 | 1.3 | Eval overrides for owner decisions (`everyday-overrides.tsv`) | **Done** |
 | 1.4 | Colloquial test set `core/test/golden/colloquial.tsv` + `tools/eval/colloquial.ts` (seeded, marked unvalidated) | **Done** — 26 rows; spoken top-1 71.4%, top-3 95.2%; 7 misses are the V2 work list |
-| 1.5 | Guard test for the filter with real data (after C-1) | Later |
+| 1.5 | Guard test for the filter with real data (after C-1) | **Done** — `Appv2/test/family-guard.test.ts` on the owner's list (17 rows) and the full lexicon |
+| 1.7 | Keyed exemptions in `labels.tsv` (the lexicon key alone let 6 listed words through for everyday keys) | **Done** |
+| 1.8 | Kids edition: filter level `kids`, `APP_EDITION=kids` build, no switch, dictionary hides labelled words | **Done** — `Appv2/eval/browser/kids-check.mjs` |
+| 1.9 | Inflected forms of offensive words (C-2 review file, 109 rows) | Waiting for the owner |
 | 1.6 | Owner meanings `core/data/glosses.tsv` (audit B5): shown first under suggestions and in the panel; 4 `seed` rows (ରଜ festival, କେମିତି how, ଆଛା okay, ଦିନ day) | **Done** — rows wait for the owner's check (C-7) |
 
 ### 3.2 Frontend (`Appv2/` → the V1 app)
@@ -169,6 +172,7 @@ Agents do not commit; the lead reviews, measures and commits.
 | Date | Change |
 |---|---|
 | 2026-10-04 | Browser checks moved into the repo (4.6). Docs pointers updated (CLAUDE.md, AGENTS.md, docs/README.md). |
+| 2026-10-04 | `main` (PR #1) merged in. Owner decisions applied: meanings (C-7), report email, D-10 public site. Owner's offensive lists labelled with keyed exemptions; kids edition. |
 | 2026-10-04 | A-7 measured (passes, start-up limit noted). **V1 code done.** |
 | 2026-10-04 | 2.6 report button done. |
 | 2026-10-04 | UI Run B merged (6 commits): Share/Undo, tokens (70/70 contrast pairs pass), text size, first-run card + Help, desktop list + meanings column, screen-reader path. A-1, A-6, A-8, A-9, A-10 pass. |

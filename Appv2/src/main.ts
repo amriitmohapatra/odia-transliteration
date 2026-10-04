@@ -59,6 +59,10 @@ const modeEverydayEl = must<HTMLInputElement>('mode-everyday');
 const modeSlokaEl = must<HTMLInputElement>('mode-sloka');
 const classicEl = must<HTMLInputElement>('toggle-classic');
 const familySafeEl = must<HTMLInputElement>('toggle-family-safe');
+
+/** Kids edition (APP_EDITION=kids at build time): abuses removed, no switch. */
+declare const __APP_EDITION__: 'adult' | 'kids';
+const KIDS = __APP_EDITION__ === 'kids';
 const textSizeEls = Array.from(document.querySelectorAll<HTMLInputElement>('input[name="text-size"]'));
 const profileHintEl = must<HTMLElement>('profile-hint');
 const paletteEl = must<HTMLDivElement>('palette');
@@ -181,7 +185,12 @@ void boot();
 async function boot(): Promise<void> {
   digitsEl.checked = readPref(PREF_DIGITS);
   strictEl.checked = readPref(PREF_STRICT);
-  familySafeEl.checked = readPref(PREF_FAMILY_SAFE, true);
+  familySafeEl.checked = KIDS ? true : readPref(PREF_FAMILY_SAFE, true);
+  // Kids edition: the filter is fixed, so the switch is not shown at all.
+  if (KIDS) {
+    const row = familySafeEl.closest<HTMLElement>('.setting');
+    if (row) row.hidden = true;
+  }
   applyTextSize(readTextSize());
   introEl.hidden = readPref(PREF_SEEN_INTRO);
   profileId = readProfilePref();
@@ -249,10 +258,14 @@ async function boot(): Promise<void> {
   convertInPlace();
   inline.setEnabled(!strictEl.checked);
   render();
-  startDictionary((s) => {
-    dictPhase = s;
-    updateStates();
-  }); // glosses + side panel; its data loads lazily
+  startDictionary(
+    (s) => {
+      dictPhase = s;
+      updateStates();
+    },
+    // Kids edition: the dictionary never explains a labelled word either.
+    KIDS ? { hide: (w) => isKidsHidden(w) } : {},
+  ); // glosses + side panel; its data loads lazily
 
   void buildPalette();
   registerServiceWorker();
@@ -268,9 +281,15 @@ function digitMode(): DigitMode {
  * engine.ts, so switching between "Odia + Sanskrit" and "Śloka" reuses both
  * tables and costs only a rule parse.
  */
+/** Kids edition: a word labelled offensive or coarse is never shown or explained. */
+function isKidsHidden(word: string): boolean {
+  const labels = handle?.engine.labelsOf?.(word);
+  return labels !== undefined && (labels.has('offensive') || labels.has('coarse'));
+}
+
 function rebuildEngine(): void {
   // familySafe on EVERY rebuild (digits, mode), or it would silently reset.
-  handle = buildEngine(profileId, digitMode(), learnStore, familySafeEl.checked);
+  handle = buildEngine(profileId, digitMode(), learnStore, familySafeEl.checked, KIDS);
   enginePhase = handle.ready && handle.wordList ? 'ready' : 'failed';
   loadingText = LOADING_WORDS;
   // The degraded engine's own note is for engineers; the banner says it plainly.
@@ -742,7 +761,7 @@ function reportText(): string | undefined {
     `Typed: ${slot.key}`,
     `Shown: ${slot.was}   (${codepoints(slot.was)})`,
     `Offered: ${offered.join(', ')}`,
-    `Mode: ${profileId}; Hide rude words: ${familySafeEl.checked ? 'on' : 'off'}`,
+    `Mode: ${profileId}; ${KIDS ? 'Kids edition' : `Hide rude words: ${familySafeEl.checked ? 'on' : 'off'}`}`,
     `App: ${__APP_VERSION__}`,
     '',
     'The word I wanted (English letters or Odia):',

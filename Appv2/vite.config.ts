@@ -23,6 +23,39 @@ import { defineConfig, type Plugin } from 'vite';
 
 const appDir = fileURLToPath(new URL('.', import.meta.url));
 
+/**
+ * Edition, chosen at build time (owner, 2026-10-04): APP_EDITION=kids builds the
+ * kids app, where abuses are removed completely (core filter level 'kids') and
+ * there is no switch to turn that off. A separate build gives it its own URL.
+ */
+const edition: 'adult' | 'kids' = process.env.APP_EDITION === 'kids' ? 'kids' : 'adult';
+
+/** Kids build: its own name in the page title and the install manifest. */
+function editionPlugin(): Plugin {
+  let outDir = '';
+  return {
+    name: 'odia-appv2-edition',
+    configResolved(config) {
+      outDir = config.build.outDir;
+    },
+    transformIndexHtml(html) {
+      if (edition !== 'kids') return html;
+      return html
+        .replace(/<title>[^<]*<\/title>/, '<title>Odia Phonetic Kids</title>')
+        .replace(/(name="apple-mobile-web-app-title" content=")[^"]*"/, '$1Odia Kids"');
+    },
+    writeBundle() {
+      if (edition !== 'kids') return;
+      const file = join(outDir, 'manifest.webmanifest');
+      if (!existsSync(file)) return;
+      const manifest = JSON.parse(readFileSync(file, 'utf8')) as Record<string, unknown>;
+      manifest.name = 'Odia Phonetic Kids';
+      manifest.short_name = 'Odia Kids';
+      writeFileSync(file, JSON.stringify(manifest, null, 2) + '\n', 'utf8');
+    },
+  };
+}
+
 /** "V1 <commit>" for the "Report this word" text: Vercel's commit, else git, else "dev". */
 function appVersion(): string {
   let sha = process.env.VERCEL_GIT_COMMIT_SHA?.slice(0, 7);
@@ -35,7 +68,7 @@ function appVersion(): string {
       sha = 'dev';
     }
   }
-  return `V1 ${sha}`;
+  return `V1${edition === 'kids' ? ' kids' : ''} ${sha}`;
 }
 const repoRoot = resolve(appDir, '..');
 const coreDir = resolve(repoRoot, 'core');
@@ -268,6 +301,7 @@ export default defineConfig({
   define: {
     __CORE_MODE__: JSON.stringify(coreMode),
     __APP_VERSION__: JSON.stringify(appVersion()),
+    __APP_EDITION__: JSON.stringify(edition),
   },
   build: {
     outDir: legacy ? 'dist-legacy' : singleFile ? 'dist-single' : 'dist',
@@ -293,5 +327,5 @@ export default defineConfig({
     // server needs permission to read them.
     fs: { allow: [repoRoot] },
   },
-  plugins: singleFile || legacy ? [] : [serviceWorkerPlugin()],
+  plugins: singleFile || legacy ? [editionPlugin()] : [editionPlugin(), serviceWorkerPlugin()],
 });

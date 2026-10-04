@@ -38,6 +38,9 @@ export function loadDictionaryBytes(): Promise<DictionaryBytes> {
  * Start the overlay with the bundled data. Data loads lazily, after start-up.
  * `onState` hears 'loading' / 'ready' / 'failed' (V1 loading and failure lines).
  */
-export function startDictionary(onState?: (s: DictionaryState) => void): void {
-  initDictionary(loadDictionaryBytes, onState);
+export function startDictionary(
+  onState?: (s: DictionaryState) => void,
+  options: { hide?: (word: string) => boolean } = {},
+): void {
+  initDictionary(loadDictionaryBytes, onState, options.hide);
 }

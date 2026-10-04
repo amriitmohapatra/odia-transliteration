@@ -327,6 +327,11 @@ body {
   background: var(--surface);
 }
 
+/* Kids edition hides the "Hide rude words" row: the filter is fixed there. */
+.setting[hidden] {
+  display: none;
+}
+
 .intro[hidden] {
   display: none;
 }
