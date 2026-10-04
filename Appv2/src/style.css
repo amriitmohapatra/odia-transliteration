@@ -1010,9 +1010,11 @@ code {
   min-height: var(--tap);
 }
 
-/* Three cards across a 390px phone (each about 119px), the rest by swipe or
- * the arrow buttons above. No number badges: phone keyboards have no number
- * row by default. */
+/* Three cards across a 390px phone (each at least about 119px), the rest by
+ * swipe or the arrow buttons above. A card grows to fit its word, so a long
+ * word (the word for "university", say) is never cut; three across is a floor for
+ * ordinary words. No number badges: phone keyboards have no number row by
+ * default. */
 .kb-bar[data-mode='docked'] .inline-candidates {
   position: static;
   display: flex;
@@ -1035,13 +1037,14 @@ code {
 .kb-bar[data-mode='docked'] .inline-candidates::-webkit-scrollbar { display: none; }
 
 .kb-bar[data-mode='docked'] .inline-candidate {
-  flex: 0 0 calc((100% - 2 * var(--space-2)) / 3);
+  flex: 0 0 auto;
+  min-width: calc((100% - 2 * var(--space-2)) / 3);
+  max-width: 100%;
   flex-direction: column;
   flex-wrap: nowrap;
   align-items: flex-start;
   justify-content: center;
   gap: 2px;
-  min-width: 0;
   min-height: 64px;
   padding: 6px 10px;
   overflow: hidden;
@@ -1069,7 +1072,7 @@ code {
   overflow: hidden;
   font-size: var(--fs-input);
   white-space: nowrap;
-  text-overflow: ellipsis;
+  text-overflow: ellipsis; /* only past the full strip width */
 }
 
 /* Hidden twin of the textarea, used only to measure where the caret is. */

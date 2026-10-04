@@ -765,7 +765,6 @@ function updateStates(): void {
   statusEl.textContent = status?.text ?? '';
   statusEl.className = `status status-${status?.kind ?? 'note'}`;
   bannerEl.hidden = enginePhase !== 'failed';
-  document.body.classList.toggle('dict-failed', dictPhase === 'failed');
   updateStripNote();
 }
 

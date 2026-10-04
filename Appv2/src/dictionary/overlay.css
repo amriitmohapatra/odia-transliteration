@@ -212,8 +212,13 @@ body.dict-open #dict-toggle { display: none; }
  * strip is showing; the floating button would sit on top of the strip. */
 body.kb-docked #dict-toggle { display: none; }
 
-/* Phone strip (inline.ts docked layout): one gloss line, ellipsis, 15px. */
+/* Phone strip (inline.ts docked layout): one gloss line, ellipsis, 15px.
+ * width 0 + min-width 100%: the gloss takes the card's width but never
+ * widens it; the card is sized by its Odia word. */
 .kb-bar[data-mode='docked'] .inline-candidate .dict-gloss {
+  align-self: stretch;
+  width: 0;
+  min-width: 100%;
   max-width: 100%;
   margin: 0;
   overflow: hidden;
