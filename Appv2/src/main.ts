@@ -106,7 +106,18 @@ async function boot(): Promise<void> {
   });
   inline.setEnabled(!strictEl.checked);
 
-  setStatus('Loading dictionary…', false);
+  // Copy rides on the phone strip too, so it stays reachable with the
+  // keyboard open (finish gate 2). Acts on click: the iOS clipboard needs the
+  // click as its user gesture; the strip's mousedown handler only keeps focus.
+  const dockCopy = document.createElement('button');
+  dockCopy.type = 'button';
+  dockCopy.id = 'copy-dock';
+  dockCopy.className = 'btn btn-primary';
+  dockCopy.textContent = 'Copy';
+  dockCopy.addEventListener('click', onCopy);
+  inline.toolbar.append(dockCopy);
+
+  setStatus('Loading dictionary\u2026', false);
   render(); // paint the empty shell immediately
 
   await loadProfileAssets(profileId);
@@ -282,7 +293,7 @@ async function onProfileChange(): Promise<void> {
   // The Sanskrit lexicon is its own lazily-globbed chunk, so the first switch
   // into a profile that uses it is a fetch. Say so rather than appearing to
   // hang: on a cold load over a slow link it is a megabyte.
-  setStatus('Switching mode…', false);
+  setStatus('Switching mode\u2026', false);
   await loadProfileAssets(profileId);
 
   rebuildEngine();

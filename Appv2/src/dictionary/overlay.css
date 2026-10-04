@@ -196,6 +196,19 @@ body.dict-open #dict-panel { display: flex; }
 }
 #dict-toggle .odia { color: var(--accent); font-weight: 700; }
 body.dict-open #dict-toggle { display: none; }
+/* body.kb-docked is set by Appv2/src/inline.ts while the phone suggestion
+ * strip is showing; the floating button would sit on top of the strip. */
+body.kb-docked #dict-toggle { display: none; }
+
+/* Phone strip (inline.ts docked layout): one gloss line, ellipsis, 15px. */
+.kb-bar[data-mode='docked'] .inline-candidate .dict-gloss {
+  max-width: 100%;
+  margin: 0;
+  overflow: hidden;
+  font-size: var(--fs-sm);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
 
 /* --- wide screens: panel sits beside the app column, not over it --- */
 @media (min-width: 1100px) {

@@ -63,6 +63,17 @@
   --radius: 14px;
   --tap: 44px;
   --odia-scale: 1.32;
+
+  /* V1 size scale (plan/design/v1-ux-proposal.md 4.3-4.4). Only the steps the
+   * V1 UI uses so far; the full scale lands with the token pass. Non-colour, so
+   * check-theme.mjs needs no dark value for these. --fs-sm is the floor for any
+   * text a user must read. */
+  --fs-sm: 15px;
+  --fs-input: 18px;
+  --fs-odia-cand: calc(18px * var(--odia-scale));
+  --space-2: 8px;
+  --radius-sm: 8px;
+  --tap-lg: 52px;
   --odia-font: 'Noto Sans Oriya', 'Oriya Sangam MN', 'Kalinga', 'Oriya MN', sans-serif;
   --ui-font: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
   --mono-font: ui-monospace, SFMono-Regular, Menlo, monospace;
@@ -726,6 +737,144 @@ code {
 
 /* On the highlighted item, use the same text colour as the Odia candidates. */
 .inline-candidate.is-active .inline-latin { color: inherit; }
+
+/* The typed English word: "Keep" plus the word in quotes, so it reads as an
+ * action rather than as a misspelt candidate. */
+.inline-keep {
+  color: var(--muted);
+  font-size: var(--fs-sm);
+}
+.inline-candidate.is-active .inline-keep { color: inherit; }
+.inline-latin::before { content: '\201C'; }
+.inline-latin::after { content: '\201D'; }
+
+/* ---------------------------------------------------------------- strip
+   Phone suggestion strip (inline.ts "docked" layout, audit B1). It rides on
+   the on-screen keyboard: inline.ts pins it to the bottom of
+   window.visualViewport and reserves room for it with body padding.
+   In the desktop "popover" layout the wrapper is display: contents, so the
+   list above is positioned against the page exactly as before. */
+
+.kb-bar[data-mode='popover'] { display: contents; }
+.kb-bar[data-mode='popover'] .kb-bar-top { display: none; }
+
+.kb-bar[data-mode='docked'] {
+  display: none;
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 20; /* strip level: see the scale at .picker */
+  padding: 4px var(--space-2) calc(var(--space-2) + env(safe-area-inset-bottom));
+  border-top: 1px solid var(--line);
+  background: var(--panel);
+  box-shadow: 0 -6px 20px rgb(0 0 0 / 14%);
+}
+.kb-bar[data-mode='docked'].is-open { display: block; }
+
+.kb-bar-top {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: var(--tap);
+}
+
+.kb-bar-note {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  color: var(--muted);
+  font-size: var(--fs-sm);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.kb-bar-page {
+  flex: none;
+  min-width: var(--tap);
+  min-height: var(--tap);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  color: var(--text);
+  font: 700 22px/1 var(--ui-font);
+  cursor: pointer;
+  touch-action: manipulation;
+}
+.kb-bar-page[hidden] { display: none; }
+.kb-bar-page:disabled { color: var(--muted); cursor: default; }
+
+.kb-bar-tools {
+  display: flex;
+  flex: none;
+  gap: var(--space-2);
+}
+.kb-bar-tools .btn {
+  flex: none;
+  min-height: var(--tap);
+}
+
+/* Three cards across a 390px phone (each about 119px), the rest by swipe or
+ * the arrow buttons above. No number badges: phone keyboards have no number
+ * row by default. */
+.kb-bar[data-mode='docked'] .inline-candidates {
+  position: static;
+  display: flex;
+  flex-wrap: nowrap;
+  gap: var(--space-2);
+  max-width: none;
+  margin-top: 4px;
+  padding: 0;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+.kb-bar[data-mode='docked'] .inline-candidates[hidden] { display: none; }
+.kb-bar[data-mode='docked'] .inline-candidates::-webkit-scrollbar { display: none; }
+
+.kb-bar[data-mode='docked'] .inline-candidate {
+  flex: 0 0 calc((100% - 2 * var(--space-2)) / 3);
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 2px;
+  min-width: 0;
+  min-height: 64px;
+  padding: 6px 10px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--surface);
+  text-align: left;
+  scroll-snap-align: start;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+.kb-bar[data-mode='docked'] .inline-candidate.is-active {
+  border-color: var(--accent);
+  background: var(--accent);
+}
+.kb-bar[data-mode='docked'] .inline-num { display: none; }
+.kb-bar[data-mode='docked'] .inline-text {
+  max-width: 100%;
+  font-size: var(--fs-odia-cand);
+  line-height: 1.3;
+  white-space: nowrap;
+}
+.kb-bar[data-mode='docked'] .inline-latin {
+  max-width: 100%;
+  overflow: hidden;
+  font-size: var(--fs-input);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
 
 /* Hidden twin of the textarea, used only to measure where the caret is. */
 .caret-mirror {
