@@ -676,6 +676,15 @@ code {
 
 .inline-text { font-size: 1.15em; }
 
+/* The typed English word, last in the bar. UI font, not the Odia one. */
+.inline-latin {
+  font-family: var(--ui-font);
+  color: var(--muted);
+}
+
+/* On the highlighted item, use the same text colour as the Odia candidates. */
+.inline-candidate.is-active .inline-latin { color: inherit; }
+
 /* Hidden twin of the textarea, used only to measure where the caret is. */
 .caret-mirror {
   position: absolute;
