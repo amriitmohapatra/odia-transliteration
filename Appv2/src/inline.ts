@@ -12,7 +12,13 @@
  *
  * Two layouts share one candidate list (plan/design/v1-ux-proposal.md 3.4/3.5):
  *
- *   popover  desktop. The list floats just under the caret. Caret position is
+ *   popover  desktop. A vertical list at the caret: number, Odia word,
+ *            one-line meaning in a fixed column, "Keep ..." last (proposal
+ *            3.5), so numbers line up with keys 1-9 and nothing jumps when
+ *            the meanings arrive. It opens under the caret line, or above it
+ *            when below would cover the elements the host keeps clear (the
+ *            "Reads as" line); if neither side has room it takes the larger
+ *            side and scrolls. Caret position is
  *            measured with a mirror element — a hidden div given the
  *            textarea's exact metrics, filled with the text up to the caret,
  *            with a marker span at the end. Reading that span's offset is the
@@ -32,8 +38,17 @@
  *     and children are observed), in both layouts;
  *   - items are `button.inline-candidate`; an Odia item has a `.inline-text`
  *     child holding the word; the typed-English item has `.inline-latin`
- *     instead and is skipped by the overlay (no gloss).
+ *     instead and is skipped by the overlay (no gloss);
+ *   - each item's `data-label` is its accessible name without the meaning
+ *     (the word, plus a flag badge); the overlay sets aria-label to
+ *     data-label + ", " + the meaning when it adds the gloss (V1 B6).
  * Rename any of these only together with overlay.ts.
+ *
+ * Screen readers (proposal 5, audit M5): the list is a listbox the text box
+ * points at (aria-controls, aria-activedescendant on the highlighted
+ * option); options are not tab stops (focus stays in the text box). A
+ * polite live region says how many suggestions there are after a pause in
+ * typing, and which word (with its meaning) was chosen.
  */
 
 import type { Candidate } from '@odia/core/types';
@@ -47,6 +62,11 @@ export interface InlineHost {
   onCommit(roman: string, text: string): void;
   /** A text badge ("offensive", "can be rude") for an Odia candidate, if flagged. */
   badge?(text: string): Badge | undefined;
+  /**
+   * Elements the desktop popover must never cover (the "Reads as" line and
+   * the state lines under the text box). Hidden ones are ignored.
+   */
+  keepClear?(): readonly (HTMLElement | null)[];
 }
 
 /** Roman word immediately before the caret, and where it starts. */
@@ -58,11 +78,14 @@ interface Pending {
 
 const MAX_SHOWN = 9;
 
+/** Quiet time before the suggestion count is announced (not on every key). */
+const ANNOUNCE_MS = 900;
+
 /**
  * Where the strip replaces the popover: phone widths, and touch-first screens
  * up to a small tablet. Matches the layout breakpoints in style.css.
  */
-const DOCK_QUERY = '(max-width: 699px), (pointer: coarse) and (max-width: 1023px)';
+export const DOCK_QUERY = '(max-width: 699px), (pointer: coarse) and (max-width: 1023px)';
 
 /** True when a candidate has no Odia in it: the typed English word, or one taught earlier. */
 const isLatin = (text: string): boolean => !/[\u0B00-\u0B7F]/.test(text);
@@ -87,7 +110,9 @@ export class InlineCandidates {
   private readonly next: HTMLButtonElement;
   private readonly box: HTMLDivElement;
   private readonly mirror: HTMLDivElement;
+  private readonly live: HTMLDivElement;
   private readonly dockQuery: MediaQueryList | undefined;
+  private announceTimer: number | undefined;
 
   private shown: Candidate[] = [];
   private pending: Pending | undefined;
@@ -114,7 +139,8 @@ export class InlineCandidates {
     top.className = 'kb-bar-top';
     this.note = document.createElement('span');
     this.note.className = 'kb-bar-note';
-    this.note.setAttribute('aria-live', 'polite');
+    // Not a live region: it changes on every key. The state line under the
+    // text box (#status) and this module's own live region speak instead.
     this.prev = scrollButton('\u2039', 'Earlier suggestions');
     this.next = scrollButton('\u203A', 'More suggestions');
     this.toolbar = document.createElement('div');
@@ -135,6 +161,16 @@ export class InlineCandidates {
     this.mirror.className = 'caret-mirror';
     this.mirror.setAttribute('aria-hidden', 'true');
     document.body.appendChild(this.mirror);
+
+    this.live = document.createElement('div');
+    this.live.id = 'inline-live';
+    this.live.className = 'sr-only';
+    this.live.setAttribute('role', 'status');
+    this.live.setAttribute('aria-live', 'polite');
+    document.body.appendChild(this.live);
+
+    area.setAttribute('aria-controls', this.box.id);
+    area.setAttribute('aria-autocomplete', 'list');
 
     area.addEventListener('input', () => this.refresh());
     area.addEventListener('click', () => this.refresh());
@@ -258,9 +294,16 @@ export class InlineCandidates {
     const candidates =
       verbatim === undefined ? ranked.slice(0, MAX_SHOWN) : [...ranked.slice(0, MAX_SHOWN - 1), verbatim];
 
+    // The same word re-read (the keyup after an arrow key, a click in the
+    // box) keeps its highlight; a new word starts at the top. Resetting here
+    // used to undo every arrow-key move on the keyup that followed it.
+    const same =
+      this.pending !== undefined && !this.box.hidden &&
+      this.pending.start === pending.start && this.pending.roman === pending.roman &&
+      this.shown.length === candidates.length;
     this.pending = pending;
     this.shown = candidates;
-    this.active = 0;
+    if (!same) this.active = 0;
     this.draw();
   }
 
@@ -327,8 +370,34 @@ export class InlineCandidates {
     const caret = pending.start + replaced.length;
     this.area.setSelectionRange(caret, caret);
 
+    // The chosen word and its meaning, from the option's accessible name
+    // (the overlay adds the meaning to it), read before the list is cleared.
+    const item = this.box.children[index] as HTMLElement | undefined;
+    const said = item?.getAttribute('aria-label') ?? chosen.text;
+
     this.hide();
+    this.say(`Chosen: ${said}`);
     this.host.onCommit(pending.roman, chosen.text);
+  }
+
+  /** Polite announcement; the same text twice is still spoken. */
+  private say(text: string): void {
+    if (this.announceTimer !== undefined) window.clearTimeout(this.announceTimer);
+    this.announceTimer = undefined;
+    this.live.textContent = '';
+    window.setTimeout(() => (this.live.textContent = text), 50);
+  }
+
+  /** After a pause in typing: how many suggestions, and the first one. */
+  private announceLater(): void {
+    if (this.announceTimer !== undefined) window.clearTimeout(this.announceTimer);
+    this.announceTimer = window.setTimeout(() => {
+      this.announceTimer = undefined;
+      if (this.box.hidden) return;
+      const first = this.box.children[0] as HTMLElement | undefined;
+      const n = this.shown.length;
+      this.live.textContent = `${n} suggestion${n === 1 ? '' : 's'}. 1: ${first?.getAttribute('aria-label') ?? ''}`;
+    }, ANNOUNCE_MS);
   }
 
   /* ---------------------------------------------------------------- view */
@@ -337,6 +406,9 @@ export class InlineCandidates {
     this.box.hidden = true;
     this.shown = [];
     this.pending = undefined;
+    this.area.removeAttribute('aria-activedescendant');
+    if (this.announceTimer !== undefined) window.clearTimeout(this.announceTimer);
+    this.announceTimer = undefined;
     if (this.dockOpen) {
       this.updatePaging();
       this.queuePosition();
@@ -358,10 +430,13 @@ export class InlineCandidates {
       item.id = `inline-candidate-${i}`;
       item.setAttribute('role', 'option');
       item.setAttribute('aria-selected', String(i === this.active));
+      // Not a tab stop: focus stays in the text box, which points here.
+      item.tabIndex = -1;
 
       const num = document.createElement('span');
       num.className = 'inline-num';
       num.textContent = String(i + 1);
+      num.setAttribute('aria-hidden', 'true');
       item.append(num);
 
       // Latin gets its own class, not '.odia' or '.inline-text': it must not be
@@ -382,10 +457,16 @@ export class InlineCandidates {
       item.append(text);
       const badge = latin ? undefined : this.host.badge?.(candidate.text);
       if (badge) item.append(badgeElement(badge));
+      // Accessible name: "<word>, <badge>"; the overlay appends the meaning.
+      const label = latin ? `Keep "${candidate.text}", as typed` : candidate.text + (badge ? `, ${badge.text}` : '');
+      item.dataset.label = label;
+      item.setAttribute('aria-label', label);
       this.box.appendChild(item);
     });
 
     this.box.hidden = false;
+    this.area.setAttribute('aria-activedescendant', `inline-candidate-${this.active}`);
+    if (!sameWord) this.announceLater();
     if (this.docked) {
       // Arrow keys (a Bluetooth keyboard on a phone) keep the highlight visible;
       // a new word starts at the left.
@@ -397,15 +478,19 @@ export class InlineCandidates {
     }
   }
 
-  /** Position the popover just under the caret, kept inside the text box's column. */
+  /**
+   * Position the popover at the caret, kept inside the text box's column and
+   * clear of the host's keep-clear elements: under the caret line if it fits
+   * there, else above it, else on the roomier side with its own scroll.
+   */
   private place(): void {
     const rect = this.area.getBoundingClientRect();
     const style = window.getComputedStyle(this.area);
     const marker = this.measureCaret(style);
 
-    const top =
-      rect.top + window.scrollY + marker.offsetTop - this.area.scrollTop +
-      parseFloat(style.lineHeight || '20');
+    const lineHeight = parseFloat(style.lineHeight || '20') || 20;
+    const caretTop = rect.top + window.scrollY + marker.offsetTop - this.area.scrollTop;
+    const caretBottom = caretTop + lineHeight;
     const left = rect.left + window.scrollX + marker.offsetLeft;
 
     // Keep the bar inside the text box's column: never wider than it, and
@@ -416,12 +501,43 @@ export class InlineCandidates {
     const columnLeft = rect.left + window.scrollX;
     const columnRight = Math.min(rect.right, window.innerWidth - 8) + window.scrollX;
     this.box.style.maxWidth = `${Math.round(columnRight - columnLeft)}px`;
-    this.box.style.top = `${Math.round(top)}px`;
     this.box.style.left = `${Math.round(left)}px`;
+    this.box.style.maxHeight = '';
 
     const width = this.box.getBoundingClientRect().width;
     const overflow = left + width - columnRight;
     if (overflow > 0) this.box.style.left = `${Math.round(Math.max(columnLeft, left - overflow))}px`;
+
+    // Vertical: below the caret line down to the first keep-clear element
+    // (or the window bottom), else above it up to the window top.
+    const natural = this.box.getBoundingClientRect().height;
+    const gap = 4;
+    let limitBelow = window.scrollY + window.innerHeight - gap;
+    for (const el of this.host.keepClear?.() ?? []) {
+      if (!el || el.hidden) continue;
+      const r = el.getBoundingClientRect();
+      if (r.height === 0) continue;
+      const top = r.top + window.scrollY;
+      if (top >= caretBottom - 1) limitBelow = Math.min(limitBelow, top - gap);
+    }
+    const roomBelow = limitBelow - caretBottom;
+    const roomAbove = caretTop - (window.scrollY + gap);
+
+    let top: number;
+    let maxHeight: number | undefined;
+    if (natural <= roomBelow) top = caretBottom;
+    else if (natural <= roomAbove) top = caretTop - natural;
+    else if (roomBelow >= roomAbove) {
+      top = caretBottom;
+      maxHeight = Math.max(0, roomBelow);
+    } else {
+      maxHeight = Math.max(0, roomAbove);
+      top = caretTop - maxHeight;
+    }
+    this.box.style.top = `${Math.round(top)}px`;
+    this.box.style.maxHeight = maxHeight === undefined ? '' : `${Math.floor(maxHeight)}px`;
+    this.box.dataset.side = top < caretTop ? 'above' : 'below';
+    this.revealActive();
   }
 
   /** Fill the mirror up to the caret and return the marker span at its end. */
@@ -454,6 +570,7 @@ export class InlineCandidates {
     this.box.style.top = '';
     this.box.style.left = '';
     this.box.style.maxWidth = '';
+    this.box.style.maxHeight = '';
     if (on && document.activeElement === this.area) this.openDock();
     if (!on) this.closeDock();
   }
@@ -533,7 +650,8 @@ export class InlineCandidates {
   private page(direction: 1 | -1): void {
     const step = Math.max(1, this.box.clientWidth - 8);
     const left = this.box.scrollLeft + direction * step;
-    if (typeof this.box.scrollTo === 'function') this.box.scrollTo({ left, behavior: 'smooth' });
+    const still = typeof window.matchMedia === 'function' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (typeof this.box.scrollTo === 'function') this.box.scrollTo({ left, behavior: still ? 'auto' : 'smooth' });
     else this.box.scrollLeft = left;
   }
 
@@ -547,10 +665,20 @@ export class InlineCandidates {
     this.next.disabled = this.box.scrollLeft + this.box.clientWidth >= this.box.scrollWidth - 1;
   }
 
-  /** Bring the highlighted card into the strip without scrolling the page. */
+  /**
+   * Bring the highlighted item into view inside the list (sideways in the
+   * strip, up/down in a popover that had to scroll) without scrolling the page.
+   */
   private revealActive(): void {
     const item = this.box.children[this.active] as HTMLElement | undefined;
     if (!item) return;
+    if (!this.docked) {
+      const top = item.offsetTop;
+      const bottom = top + item.offsetHeight;
+      if (top < this.box.scrollTop) this.box.scrollTop = top;
+      else if (bottom > this.box.scrollTop + this.box.clientHeight) this.box.scrollTop = bottom - this.box.clientHeight;
+      return;
+    }
     const left = item.offsetLeft - this.box.offsetLeft;
     const right = left + item.offsetWidth;
     if (left < this.box.scrollLeft) this.box.scrollLeft = left;

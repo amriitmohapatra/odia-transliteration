@@ -18,10 +18,19 @@
  *       `.inline-latin` items (kept English) are skipped.
  *   #picker-list > li > button.candidate > .text
  *       the Alternatives sheet                       (Appv2/src/main.ts)
+ *   [data-label] on those two kinds of button
+ *       their accessible name without the meaning; when a gloss is added,
+ *       aria-label becomes data-label + ", " + the gloss, so a screen reader
+ *       hears "<word>, day" (V1 B6).
  *   #readback .rb-word[data-odia]
  *       the "Reads as" words; the Odia word is in data-odia because the
  *       button text is Latin                         (Appv2/src/main.ts,
  *       Appv2/index.html). Until V1 this was #output .word.
+ *   [aria-controls="dict-panel"]
+ *       the "Meanings" buttons main.ts makes (#dict-toggle in the actions
+ *       row, #meanings-dock on the phone strip); they call
+ *       setMeaningsOpen() and this module keeps their aria-expanded in
+ *       step. Until V1 B5 this module drew its own floating #dict-toggle.
  *
  * The module reads no script tags and no window globals. Its data arrives
  * through the `load` callback passed to `initDictionary()`, which is called
@@ -414,8 +423,17 @@ function buildPanel(): void {
   close.type = 'button';
   close.className = 'dict-close';
   close.textContent = '×';
-  close.setAttribute('aria-label', 'Close dictionary panel');
-  close.addEventListener('click', () => setPanelOpen(false));
+  close.setAttribute('aria-label', 'Close meanings');
+  // mousedown: opened from the phone strip, the text box keeps focus (and
+  // the keyboard stays up) through the close.
+  close.addEventListener('mousedown', (event) => {
+    if (document.activeElement && document.activeElement.tagName === 'TEXTAREA') event.preventDefault();
+  });
+  close.addEventListener('click', () => {
+    setPanelOpen(false);
+    if (opener && document.activeElement !== opener && opener.isConnected) opener.focus();
+    opener = null;
+  });
   head.appendChild(title);
   head.appendChild(close);
 
@@ -447,27 +465,37 @@ function buildPanel(): void {
   panel.appendChild(body);
   document.body.appendChild(panel);
 
-  const toggleBtn = document.createElement('button');
-  toggleBtn.type = 'button';
-  toggleBtn.id = 'dict-toggle';
-  const bOdia = document.createElement('span');
-  bOdia.className = 'odia';
-  bOdia.textContent = '\u0b05'; /* the letter a */
-  toggleBtn.appendChild(bOdia);
-  toggleBtn.appendChild(document.createTextNode('→A'));
-  toggleBtn.setAttribute('aria-label', 'Toggle dictionary panel');
-  toggleBtn.addEventListener('click', () => {
-    setPanelOpen(!document.body.classList.contains('dict-open'));
-  });
-  document.body.appendChild(toggleBtn);
-
   setPanelOpen(window.innerWidth >= 1100);
   renderEmpty();
 }
 
+/** The button that opened the panel on a narrow screen; focus returns there on close. */
+let opener: HTMLElement | null = null;
+
 function setPanelOpen(open: boolean): void {
   document.body.classList.toggle('dict-open', open);
+  const controls = document.querySelectorAll('[aria-controls="dict-panel"]');
+  for (let i = 0; i < controls.length; i++) controls[i]?.setAttribute('aria-expanded', String(open));
   if (open && state === 'idle') loadData();
+}
+
+/**
+ * Open or close the Meanings panel (the "Meanings" buttons in main.ts).
+ * At 1100px and wider the panel is a fixed column and always shown.
+ * Opened from a button (not from the strip, where the text box keeps focus),
+ * focus moves to the panel's close button and comes back on close.
+ */
+export function setMeaningsOpen(open: boolean, from?: HTMLElement): void {
+  if (!started) return;
+  setPanelOpen(open);
+  if (open && from && document.activeElement === from) {
+    opener = from;
+    document.querySelector<HTMLElement>('#dict-panel .dict-close')?.focus();
+  }
+}
+
+export function meaningsOpen(): boolean {
+  return document.body.classList.contains('dict-open');
 }
 
 function panelStatus(text: string): void {
@@ -501,6 +529,7 @@ function entryBlock(word: string, num: number | null, entry: Entry | null, moder
   }
   const w = document.createElement('span');
   w.className = 'dict-word odia';
+  w.lang = 'or';
   w.textContent = word;
   h.appendChild(w);
 
@@ -656,6 +685,7 @@ function augmentInlineBar(): void {
       span.className = 'dict-gloss' + (g ? '' : ' dict-gloss-none');
       span.textContent = g ? g : NO_ENTRY;
       btn.appendChild(span);
+      nameWithGloss(btn, span.textContent);
     }
     lastCandidates = next;
   } finally {
@@ -663,6 +693,12 @@ function augmentInlineBar(): void {
   }
   if (!searchInput || searchInput.value.trim().length === 0) renderCandidates();
   if (state === 'idle') loadData();
+}
+
+/** aria-label = the app's data-label + ", " + the gloss (contract above). */
+function nameWithGloss(btn: Element, gloss: string): void {
+  const base = btn.getAttribute('data-label');
+  if (base) btn.setAttribute('aria-label', base + ', ' + gloss);
 }
 
 let pickerAugmenting = false;
@@ -683,6 +719,7 @@ function augmentPicker(): void {
       span.className = 'dict-gloss dict-gloss-picker' + (g ? '' : ' dict-gloss-none');
       span.textContent = g ? g : NO_ENTRY;
       row.appendChild(span);
+      nameWithGloss(row, span.textContent);
     }
   } finally {
     pickerAugmenting = false;
