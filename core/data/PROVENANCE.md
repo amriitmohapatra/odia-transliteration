@@ -142,6 +142,11 @@ fully-collapsed skeleton; aliases carry 0.6x the weight of the attested spelling
 
 ## Artifacts
 
+These are `build_lexicon.py`'s outputs. Its two lexicon files have since been
+renamed to `lexicon.tsv.aksharantar-only` and `lexicon-web.tsv.aksharantar-only`
+(checksums unchanged). The `lexicon.tsv` and `lexicon-web.tsv` the engine loads are
+now merges, described under [Everyday lexicon and the merge](#everyday-lexicon-and-the-merge).
+
 | File | Rows | Size | sha256 |
 |---|---|---|---|
 | `core/data/lexicon.tsv` | 440,351 | 20,017,610 B | `b49bfb887ed0b642e7ed3e73c0b25c0df38655b52aa975e4c45d9440ee7e647e` |
@@ -152,6 +157,61 @@ fully-collapsed skeleton; aliases carry 0.6x the weight of the attested spelling
 `lexicon-web.tsv` is the pruned artifact a future iOS keyboard extension loads
 under a ~48 MB process memory ceiling. It holds the top **26,848** words by
 weight (cutoff 0.9645), giving 35,653 rows within a 1.50 MB budget.
+
+## Everyday lexicon and the merge
+
+Added after the Aksharantar build, by `tools/build-data/build_common_lexicon.py`
+(Python 3 stdlib), on 2026-10-04. Input: `core/data/webfreq.tsv` (sha256
+`0d3049dd420058e26b4dd9ae16a59c59929daa49c4da7edf75f6f4bd5716d8d2`), whose provenance is in
+`PROVENANCE-webcorpus.md`. It does two things.
+
+**1. Romanize the top web-corpus words.** It covers the top 120,000 types for
+`lexicon-common.tsv` and the top 30,000 for `lexicon-common-web.tsv`. Each word gets
+the spellings a person plausibly types: long vowels collapsed, `ee`/`oo`, a dropped
+final `a`, `v` for `w`, `ri` for `ru` on vocalic words, and nasal-cluster collapse.
+The weight is `ln(1+count) / ln(1+peak) * 2.303`. The **exact** romanization gets
+the full weight and every looser variant gets 0.9x.
+
+"Exact" is the careful spelling with ଂ → `m` and ଁ → `n`. That matches the careful
+register of `tools/eval/everyday.ts`. `docs/romanization-reference` accepts both `n`
+and `m` for ଂ. When a word has an anusvara or candrabindu, `ଂ`→`n` and the dropped
+sign are variants. Treating all three expansions as exact was tried. It
+gave identical held-out and everyday metrics, so the single-exact definition was kept.
+
+Until 2026-10-04 the build was **not reproducible**. The full-weight form was
+`variants(...)[0]`, the first element of a Python `set`, so it changed with
+`PYTHONHASHSEED`. The `ri`/`v` variants also branched off a seed picked by set
+order. A rerun of the unchanged script changed about 31,000 of 88,193 rows in
+`lexicon-common-web.tsv`. Both now use the exact form and `variants()` returns a
+sorted list. Output is byte-identical across hash seeds and across reruns.
+
+**2. Merge into the lexicons the engine loads.**
+
+```
+lexicon.tsv      = lexicon.tsv.aksharantar-only      ∪ lexicon-common.tsv
+lexicon-web.tsv  = lexicon-web.tsv.aksharantar-only  ∪ lexicon-common-web.tsv
+```
+
+For each (key, word) pair the merge keeps the higher weight. It writes one
+`# romanKey\todiaWord\tweight` header, sorts keys ascending and then weight
+descending (equal weights keep input order), and formats weights as `{w:.4f}`.
+Odia is passed through `canonical()` on read and asserted canonical on write. The
+`.aksharantar-only` inputs are only ever read, so the merge is idempotent. On the
+pre-fix common files, this merge reproduces the earlier committed
+`lexicon.tsv`/`lexicon-web.tsv` byte for byte.
+
+**Order matters.** `build_lexicon.py` still writes `lexicon.tsv`, `lexicon-web.tsv`
+and this file directly. After rerunning it, rename its two lexicon outputs to
+`*.aksharantar-only`, run `build_common_lexicon.py`, and restore this section.
+
+| File | Rows | Size | sha256 |
+|---|---|---|---|
+| `core/data/lexicon-common.tsv` | 369,672 | 14,329,498 B | `3d02fafe0912337da4fe98a4839e9028bfc76398dd6c7d4921e51264122bcdb1` |
+| `core/data/lexicon-common-web.tsv` | 88,193 | 3,193,190 B | `37f8fbba5d879e6caf21852af652d982d5c9c06aa54b8ef6a3f8d16549c625b5` |
+| `core/data/lexicon.tsv` (merged) | 774,496 | 33,061,457 B | `b39bed5ed7a249c31f387ac2177a14852aa409406d92aa0b4fd5faca01c09be7` |
+| `core/data/lexicon-web.tsv` (merged) | 121,774 | 4,678,925 B | `849878370300ac92bc6807e49b3b4cfda99997594e33d6fb0fb8ae6193df0af2` |
+
+Precomposed U+0B5C / U+0B5D in all four files: 0.
 
 ## Licence note
 
