@@ -56,10 +56,10 @@ whenever a task changes status. Last updated: 2026-10-04 (V1 in progress).
 | # | Task | Status |
 |---|---|---|
 | 2.1 | Dictionary as a module of the app; data as cached binary files; retire `build_app.py` | **Done** — 157/157 glosses identical to the old file; lazy load after the page; works over HTTP and from one file (Chromium) |
-| 2.2 | Family-safe switch in settings, stored as `odia.pref.familySafe`, plain label | To do |
-| 2.3 | Romanised read-back line under the output (copy of the eval romaniser) | To do |
+| 2.2 | Family-safe switch in settings, stored as `odia.pref.familySafe`, plain label | **Done** (Run A: "Hide rude words", on) |
+| 2.3 | Romanised read-back line under the output (copy of the eval romaniser) | **Done** (Run A: "Reads as" line, tap a word for alternatives) |
 | 2.4 | PWA: manifest, icons, Apple tags in `Appv2/` | **Done** |
-| 2.5 | UI/UX pass from the design proposal (§5) | To do (design in progress) |
+| 2.5 | UI/UX pass from the design proposal (§5) | **Run A done** (items 1–5, 8 + mode names). Run B to do: Share/Undo, full tokens, first-run card, desktop popover + meanings column, screen-reader fixes, text-size setting |
 | 2.6 | "Report this word" button: copies word, output, code points, version; opens an email link. No network call. | To do |
 
 ### 3.3 Backend
@@ -90,9 +90,9 @@ V1 is done when every row passes. Each row says how it is checked.
 |---|---|---|
 | A-1 | `kemiti achha` → କେମିତି ଅଛ | Unit test + browser test |
 | A-2 | Works offline after the first load | Playwright: load, go offline, reload, type — **passes** (after fixing a registration bug, 2026-10-04) |
-| A-3 | Family-safe filter is on by default and can be turned off | Unit tests (done) + browser test of the switch |
-| A-4 | The meaning shows under candidates (e.g. `dina` → "Day", "Poor") | Playwright |
-| A-5 | "Dictionary loading" and "dictionary failed" look different | Playwright with the data file blocked |
+| A-3 | Family-safe filter is on by default and can be turned off | Unit tests + browser test of the switch — **passes** (Run A check-a5, 16/16) |
+| A-4 | The meaning shows under candidates (e.g. `dina` → "Day", "Poor") | Playwright — **passes** |
+| A-5 | "Dictionary loading" and "dictionary failed" look different | Playwright with the data file blocked — **passes** (Run A check-a6) |
 | A-6 | Learned words survive the move from the old app to V1 | Same storage key `odia.userdict`; browser test |
 | A-7 | Typing never freezes while the dictionary loads | Playwright timing on a throttled CPU |
 | A-8 | Usable with the keyboard alone | Manual + Playwright key sequence |
@@ -165,6 +165,7 @@ Agents do not commit; the lead reviews, measures and commits.
 
 | Date | Change |
 |---|---|
+| 2026-10-04 | UI Run A merged (8 commits, `--no-ff`): B1–B4 fixed, phone strip, one text box + "Reads as", readable meanings, "Hide rude words", states, mode names. A-3, A-4, A-5 pass. |
 | 2026-10-04 | Design proposal in (`plan/design/`). V1 UI work list added (§5). Romanizer for the read-back line done. |
 | 2026-10-04 | 2.4 done. Service-worker registration bug fixed: offline now works (A-2, A-12 pass). |
 | 2026-10-04 | 2.1 done (dictionary module). Owner gloss file added to V2. |

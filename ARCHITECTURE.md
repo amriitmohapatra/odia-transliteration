@@ -125,13 +125,32 @@ caret bar, the picker and the output, plus a side panel with search. It imports
 
 ```
 index.html ─ main.ts ─┬─ engine.ts      loads assets per mode (lazy chunks), builds Engine
-                      ├─ profiles.ts    Everyday | Odia+Sanskrit (default) | Śloka
+                      ├─ profiles.ts    ids: everyday | unified | sloka. Shown as: "Everyday"
+                      │                 (= unified, default), "Śloka (verse)", and "Classic
+                      │                 engine" (= everyday) under Settings → Advanced
                       ├─ preprocess.ts  | → ।  || → ॥  ' → ଽ  (before the engine)
-                      ├─ inline.ts      caret suggestion bar (1–8 Odia + typed word as 9)
+                      ├─ inline.ts      caret popover (desktop) / strip docked on the phone
+                      │                 keyboard via visualViewport (1–8 Odia + "Keep" as 9)
+                      ├─ readback.ts    the "Reads as" line; tap a word → alternatives
+                      ├─ romanize.ts    Odia → Latin for the read-back (copy of the eval one)
+                      ├─ badges.ts      "offensive" / "can be rude" badges, from engine.labelsOf()
                       ├─ palette.ts     insert strip for rare marks
                       ├─ dictionary/    gloss chips, side panel, search (lazy, ~6 MB)
                       └─ sw.js          generated service worker (offline)
 ```
+
+**DOM contracts** (commented at both ends in the code; break one and a gloss silently
+disappears, so a Playwright check guards each):
+
+| Selector | Producer | Consumer |
+|---|---|---|
+| `div.inline-candidates > button.inline-candidate > .inline-text \| .inline-latin` | `inline.ts` (inside `#kb-bar`) | `dictionary/overlay.ts` gloss chips |
+| `#picker-list > li > button.candidate > .text` | `main.ts` alternatives sheet | `overlay.ts` |
+| `#readback .rb-word[data-odia]` (replaced `#output .word`) | `readback.ts` | `overlay.ts` tooltips |
+| `body.kb-docked` | `inline.ts` | CSS hides `#dict-toggle` |
+
+**Layers (z-index):** strip/popover 20 · meanings toggle 30 · meanings panel 35 · sheets 40 ·
+toast 50.
 
 **Loading order** (keeps the first screen fast): page shell → engine assets for the
 selected mode → engine → dictionary data on first need.
@@ -142,7 +161,7 @@ selected mode → engine → dictionary data on first need.
 |---|---|
 | `odia.userdict` | Learned picks `{roman: {odia: count}}` |
 | `odia.pref.profile`, `odia.pref.digits`, `odia.pref.strict` | Settings |
-| `odia.pref.familySafe` | Family-safe switch (V1, default on) |
+| `odia.pref.familySafe` | "Hide rude words" switch: `'1'`/`'0'`, missing = on |
 | Cache Storage `odia-appv2-<rev>` | Offline copy of the app; each app touches only its own prefix |
 
 **Builds:**
