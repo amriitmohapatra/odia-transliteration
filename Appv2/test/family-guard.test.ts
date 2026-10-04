@@ -66,6 +66,32 @@ describe('content filter on the real labels and lexicon', { timeout: 60_000 }, (
     }
   });
 
+  it('with bigrams on: a previous word that often precedes a labelled word does not bring it back', () => {
+    // The previous words are read from the shipped pair counts: every word
+    // that precedes a labelled word there (no word is written in this test).
+    const BIGRAMS_TSV = read('../../core/data/bigrams.tsv');
+    const flagged = new Set(listed.map((l) => l.word).filter((w) => labels.isOffensive(w) || labels.isCoarse(w)));
+    const prevs = new Set<string>();
+    for (const line of BIGRAMS_TSV.split('\n')) {
+      const [prev, next] = line.split('\t');
+      if (prev && next && flagged.has(next)) prevs.add(prev);
+    }
+    expect(prevs.size).toBeGreaterThan(0);
+    const ctxFamily = createEngine({ ...BASE, bigramsTsv: BIGRAMS_TSV, labelsTsv: LABELS_TSV, filter: 'family' });
+    const ctxKids = createEngine({ ...BASE, bigramsTsv: BIGRAMS_TSV, labelsTsv: LABELS_TSV, filter: 'kids' });
+    const listedKeys = listed.flatMap((l) => l.keys);
+    for (const prev of prevs) {
+      for (const k of INNOCENT) {
+        const got = ctxFamily.transliterateWord(k, TOP, { prev }).map((c) => c.text);
+        expect(got.filter((w) => labels.isOffensive(w)), k).toEqual([]);
+      }
+      for (const k of [...INNOCENT, ...listedKeys]) {
+        const got = ctxKids.transliterateWord(k, TOP, { prev }).map((c) => c.text);
+        expect(got.filter((w) => labels.isOffensive(w) || labels.isCoarse(w)), k).toEqual([]);
+      }
+    }
+  });
+
   it('off: identical to an engine with no labels at all', () => {
     const plain = createEngine({ ...BASE });
     for (const k of INNOCENT) expect(off.transliterateWord(k, TOP), k).toEqual(plain.transliterateWord(k, TOP));

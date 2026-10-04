@@ -62,6 +62,17 @@ user = 2.0
 # "king", a 0.06 gap), but stays below one user pick (user * ln 2 = 1.39), so
 # the user's own choice still wins. Measured by core/test/curation.test.ts.
 pref = 1.0
+# Context from the previous word (core/data/bigrams.tsv), added as
+# bigram * ln(1 + count(prev, word)) / ln(1 + total(prev)), a 0..1 term (see
+# core/src/rank.ts). Only when the previous word is known (transliterate() on a
+# sentence, or transliterateWord(roman, k, { prev })); single words are not
+# affected. Tuned 2026-10-04 on a held-out split of the corpus (tools/eval/
+# context.ts, 23,481 tokens, casual top-1 with the engine's own previous word):
+#   0 -> 83.2%   0.5 -> 83.6   1 -> 83.9   2 -> 84.3   3 -> 84.5   4 -> 84.7
+#   6 -> 84.8    8 -> 84.8     (careful 92.4% -> 92.5% from 0.5 on)
+# 2 takes about 70% of the gain at a better won/lost ratio, and keeps the usual
+# term (0.3-0.6 x 2) below one user pick (user * ln 2 = 1.39).
+bigram = 2.0
 
 # Structural preferences the segmenter applies on top of the per-letter weights.
 #
@@ -103,12 +114,16 @@ matra = ""
 w = 1.0
 
 # "rama" is far more often ରାମ than ରମ, so plain "a" can also reach the long
-# vowel, at a cost.
+# vowel, at a cost. 0.35 until 2026-10-04 (V2.3). Swept on the corpus dev split
+# (tools/eval/context.ts, 23,481 tokens, no context), careful / casual top-1:
+#   0.35 92.4 / 83.2   0.45 92.3 / 83.6   0.55 92.2 / 84.0   0.65 91.9 / 84.4
+# 0.55 made the conjunct ଡ୍ଯ unreachable for "dya" (tools/eval/coverage.ts) and
+# 0.65 cost careful top-3; 0.45 keeps reachability and raja -> ରଜ (preference).
 [[vowel]]
 roman = "a"
 independent = "ଆ"
 matra = "ା"
-w = 0.35
+w = 0.45
 
 [[vowel]]
 roman = "aa"

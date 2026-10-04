@@ -20,14 +20,16 @@
 import {
   Engine,
   loadRules,
+  emptyBigrams,
   emptyLexicon,
   emptyUnigrams,
+  parseBigrams,
   parseLexicon,
   parseUnigrams,
   parseLabels,
   parsePreferences,
 } from '@odia/core';
-import type { DigitMode, LearnStore, Lexicon, Unigrams } from '@odia/core/types';
+import type { Bigrams, DigitMode, LearnStore, Lexicon, Unigrams } from '@odia/core/types';
 
 import { mergeLexicons, mergeUnigrams, type LexiconSource } from './compose.js';
 import { PROFILES, type AssetKey, type Profile, type ProfileId } from './profiles.js';
@@ -71,6 +73,10 @@ const GLOBS: Record<AssetKey, RawGlob> = {
     query: '?raw',
     import: 'default',
   }),
+  coreBigrams: import.meta.glob('../../core/data/bigrams-web.tsv', {
+    query: '?raw',
+    import: 'default',
+  }),
   preferences: import.meta.glob('../../core/data/preferences.tsv', {
     query: '?raw',
     import: 'default',
@@ -105,6 +111,7 @@ export interface EngineHandle {
 const rawCache = new Map<AssetKey, string | undefined>();
 const lexiconCache = new Map<AssetKey, Lexicon>();
 const unigramCache = new Map<AssetKey, Unigrams>();
+const bigramCache = new Map<AssetKey, Bigrams>();
 
 /**
  * Fetch the assets a profile needs.
@@ -119,6 +126,7 @@ export async function loadProfileAssets(id: ProfileId): Promise<void> {
     'itrans',
     ...profile.lexicons.map((l) => l.asset),
     ...profile.unigrams,
+    'coreBigrams',
     'preferences',
     'labels',
   ];
@@ -176,6 +184,9 @@ export function buildEngine(
       rules: loadRules(rulesToml, rawCache.get('itrans')),
       lexicon: mergeLexicons(sources),
       unigrams: mergeUnigrams(profile.unigrams.map(unigramsFor)),
+      // Context ranking for engine.transliterate(sentence). A missing chunk
+      // means no context term; a malformed file throws, like a bad rule file.
+      bigrams: bigramsFor('coreBigrams'),
       learnStore,
       digits,
       preferences: parsePreferences(rawCache.get('preferences') ?? '', 'core/data/preferences.tsv'),
@@ -215,6 +226,16 @@ function unigramsFor(key: AssetKey): Unigrams {
     const raw = rawCache.get(key);
     parsed = raw === undefined ? emptyUnigrams() : parseUnigrams(raw);
     unigramCache.set(key, parsed);
+  }
+  return parsed;
+}
+
+function bigramsFor(key: AssetKey): Bigrams {
+  let parsed = bigramCache.get(key);
+  if (parsed === undefined) {
+    const raw = rawCache.get(key);
+    parsed = raw === undefined ? emptyBigrams() : parseBigrams(raw, 'core/data/bigrams-web.tsv');
+    bigramCache.set(key, parsed);
   }
   return parsed;
 }

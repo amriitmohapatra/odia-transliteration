@@ -25,6 +25,7 @@ import { fileURLToPath } from 'node:url';
 import { dirname, resolve } from 'node:path';
 import { createEngineFromDisk } from '@odia/core/node';
 import { canonical } from '@odia/core/normalize';
+import { casual, romanize } from './roundtrip.js';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(HERE, '../..');
@@ -33,116 +34,6 @@ const SOURCE = resolve(ROOT, 'core/test/golden/everyday-source.txt');
 const argv = process.argv.slice(2);
 const TOPK = Number(argv[argv.indexOf('--topk') + 1]) || 5;
 const VERBOSE = argv.includes('--verbose');
-
-/* ------------------------------------------------------------------ *
- * Odia -> roman, i.e. what a person would plausibly type.
- * Longest-first so multi-codepoint clusters win.
- * ------------------------------------------------------------------ */
-
-const NUKTA = '଼';
-const VIRAMA = '୍';
-
-const CONSONANT: Record<string, string> = {
-  ['କ']: 'k', ['ଖ']: 'kh', ['ଗ']: 'g', ['ଘ']: 'gh', ['ଙ']: 'ng',
-  ['ଚ']: 'ch', ['ଛ']: 'chh', ['ଜ']: 'j', ['ଝ']: 'jh', ['ଞ']: 'ny',
-  ['ଟ']: 't', ['ଠ']: 'th', ['ଡ']: 'd', ['ଢ']: 'dh', ['ଣ']: 'n',
-  ['ତ']: 't', ['ଥ']: 'th', ['ଦ']: 'd', ['ଧ']: 'dh', ['ନ']: 'n',
-  ['ପ']: 'p', ['ଫ']: 'ph', ['ବ']: 'b', ['ଭ']: 'bh', ['ମ']: 'm',
-  ['ଯ']: 'y', ['ର']: 'r', ['ଲ']: 'l', ['ଳ']: 'l', ['ୱ']: 'w',
-  ['ଵ']: 'w', ['ଶ']: 'sh', ['ଷ']: 'sh', ['ସ']: 's', ['ହ']: 'h',
-  ['ୟ']: 'y',
-};
-
-/** Nukta clusters must be tried before their base consonant. */
-const CLUSTER: Record<string, string> = {
-  [`ଡ${NUKTA}`]: 'd',
-  [`ଢ${NUKTA}`]: 'dh',
-};
-
-const INDEPENDENT: Record<string, string> = {
-  ['ଅ']: 'a', ['ଆ']: 'aa', ['ଇ']: 'i', ['ଈ']: 'ii',
-  ['ଉ']: 'u', ['ଊ']: 'uu', ['ଋ']: 'ru', ['ଏ']: 'e',
-  ['ଐ']: 'ai', ['ଓ']: 'o', ['ଔ']: 'au',
-};
-
-const MATRA: Record<string, string> = {
-  ['ା']: 'aa', ['ି']: 'i', ['ୀ']: 'ii', ['ୁ']: 'u',
-  ['ୂ']: 'uu', ['ୃ']: 'ru', ['େ']: 'e', ['ୈ']: 'ai',
-  ['ୋ']: 'o', ['ୌ']: 'au',
-};
-
-const SIGN: Record<string, string> = {
-  ['ଂ']: 'm', ['ଁ']: 'n', ['ଃ']: 'h',
-};
-
-function romanize(word: string): string {
-  let out = '';
-  let i = 0;
-  let pendingInherent = false;
-
-  const flushInherent = () => {
-    if (pendingInherent) { out += 'a'; pendingInherent = false; }
-  };
-
-  while (i < word.length) {
-    const two = word.slice(i, i + 2);
-
-    if (CLUSTER[two] !== undefined) {
-      flushInherent();
-      out += CLUSTER[two];
-      pendingInherent = true;
-      i += 2;
-      continue;
-    }
-
-    const ch = word[i] as string;
-
-    if (ch === VIRAMA) {
-      // Explicit halant: the inherent vowel is suppressed.
-      pendingInherent = false;
-      i += 1;
-      continue;
-    }
-    if (CONSONANT[ch] !== undefined) {
-      flushInherent();
-      out += CONSONANT[ch];
-      pendingInherent = true;
-      i += 1;
-      continue;
-    }
-    if (MATRA[ch] !== undefined) {
-      pendingInherent = false;      // the matra replaces the inherent vowel
-      out += MATRA[ch];
-      i += 1;
-      continue;
-    }
-    if (INDEPENDENT[ch] !== undefined) {
-      flushInherent();
-      out += INDEPENDENT[ch];
-      i += 1;
-      continue;
-    }
-    if (SIGN[ch] !== undefined) {
-      flushInherent();
-      out += SIGN[ch];
-      i += 1;
-      continue;
-    }
-    if (ch === NUKTA) { i += 1; continue; }   // stray nukta
-
-    i += 1;                                    // anything else: drop
-  }
-  flushInherent();
-  return out;
-}
-
-/** How most people actually type: long vowels collapse to short. */
-function casual(roman: string): string {
-  return roman
-    .replace(/aa/g, 'a')
-    .replace(/ii/g, 'i')
-    .replace(/uu/g, 'u');
-}
 
 /* ------------------------------------------------------------------ *
  * Run

@@ -323,12 +323,15 @@ function readSegmentWeights(raw: unknown): SegmentWeights {
 
 function readWeights(raw: unknown): RankWeights {
   const table = requireTable(raw, 'symbols.toml [weights]');
-  rejectUnknownKeys(table, ['rule', 'freq', 'user', 'pref'], 'symbols.toml [weights]');
+  rejectUnknownKeys(table, ['rule', 'freq', 'user', 'pref', 'bigram'], 'symbols.toml [weights]');
   return {
     rule: readWeight(table, 'rule', 'symbols.toml [weights]'),
     freq: readWeight(table, 'freq', 'symbols.toml [weights]'),
     user: readWeight(table, 'user', 'symbols.toml [weights]'),
     pref: readWeight(table, 'pref', 'symbols.toml [weights]'),
+    // Optional: a rule file written before context ranking existed loads and
+    // scores exactly as before. A present but invalid value still throws.
+    bigram: table['bigram'] === undefined ? 0 : readWeight(table, 'bigram', 'symbols.toml [weights]'),
   };
 }
 
