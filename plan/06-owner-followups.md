@@ -1,0 +1,53 @@
+# 06 — Owner follow-ups (deferred items)
+
+**Purpose:** a list of the items that Claude could not do in the cloud environment, and
+the items that only the owner can do. The owner asked (2026-10-04) to keep them for later
+and to get a reminder **when the software is developed**.
+
+**Reminder rule (also in `CLAUDE.md`):** when a stage in `plan/05-v3-direction.md` §13
+finishes, and in particular when the V1 web app is live on Vercel, Claude shows this list
+to the owner. Claude marks each item done here, with the date, when it is done.
+
+---
+
+## A. Needs the owner's Mac
+
+| # | Item | How | Since |
+|---|---|---|---|
+| A-1 | Rebuild the cheat-sheet PDFs. Both `.tex` files changed for D-12 (`j` → ଯ). The PDFs in `docs/` are older than the `.tex` files. | `cd docs && lualatex romanization-reference.tex` (twice), then the same for `romanization-reference-v2.tex`. Needs the macOS font Oriya Sangam MN. | 2026-10-04 |
+| A-2 | Rebuild the single-file apps in `docs/` so they carry D-12. The app the parents use (`Odia_Sanskrit_Appv2/odia-app-sanskrit-v2.html`, default mode) already has the `j` → ଯ option. `docs/odia-app.html` does not. | `npm run build:app`, then the Appv2 and dictionary builds (see `Appv2/README.md`, `Odia_Sanskrit_Appv2/README.md`). The V1 Vercel build may replace this step. | 2026-10-04 |
+
+## B. Five-minute checks (any device)
+
+| # | Check | Report |
+|---|---|---|
+| B-1 | On a Mac, an iPhone and in Microsoft Edge: open the browser console and run `speechSynthesis.getVoices().filter(v => v.lang.startsWith('or'))` | Which devices have an Odia voice |
+| B-2 | On Android: Gboard voice typing in Odia | Works / does not exist |
+| B-3 | On Android: Circle to Search on a screenshot of Odia text | Reads Odia / does not |
+| B-4 | On a Mac: System Settings → Keyboard → Input Sources | Any Odia phonetic option? |
+
+## C. Only a native speaker can do these
+
+| # | Item | Blocks |
+|---|---|---|
+| C-1 | Label the Praharaj review queue (offensive markers, colloquial and regional tags): `offensive`, `coarse`, or not | Family-safe filter (§6 of the brief) |
+| C-2 | Approve the generated suffixed forms of each offensive stem | Family-safe filter |
+| C-3 | Check each row of `core/test/golden/colloquial.tsv` when it exists | Colloquial test set |
+| C-4 | Judge the 100-sentence translation test (Google against Claude Haiku) | D-3, `/api/translate` |
+| C-5 | Review 50 loanword examples with a nukta on ଜ / ଫ | D-6 |
+| C-6 | Review the romanization scheme (`AGENTS.md` §7.4) | Public release |
+
+## D. Decisions still open
+
+| # | Decision | Trigger |
+|---|---|---|
+| D-6 | Nukta policy for ଜ / ଫ in Urdu and English loans | After C-5 |
+| D-10 | Public or private product. If public: a new repository without `tools/build-data/webcorpus/` (it stays in git history otherwise), and a decision on the word counts taken from that corpus (brief §12) | Before the first deploy |
+| — | Install the Claude Code skills for Android and iOS work | After the Vercel version is done (owner's instruction, 2026-10-04) |
+
+## E. Other sessions
+
+| # | Item | Status 2026-10-04 |
+|---|---|---|
+| E-1 | Session `session_0186HVx998d8ubjjxiDMfM9p` ("Let typed j reach ଯ") waits for "push / tune first / drop it". Its lexicon `j`-keys make `je` → ଯେ rank 1. Recommendation: reply "push", then combine its work with D-12 after E-2 lands. | Waiting for owner |
+| E-2 | Session `session_01GvEiBCo7MZVHuKSH5B9PK9` ("Make common-lexicon rebuilds deterministic") | Running |

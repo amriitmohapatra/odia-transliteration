@@ -11,6 +11,10 @@ are built and measured: `docs/odia-app.html`, `docs/odia-app-sanskrit.html` (fro
 and `Odia_Sanskrit_Appv2/odia-app-sanskrit-v2.html` (adds the dictionary). The v3 direction
 and the owner's decisions are in `plan/05-v3-direction.md`. See also `plan/02-stages.md`.
 
+**Owner follow-ups:** `plan/06-owner-followups.md` lists the items that only the owner can
+do, or that need the owner's Mac. When a stage in `plan/05-v3-direction.md` §13 finishes,
+and when the V1 web app is live on Vercel, show the owner the open items in that file.
+
 ---
 
 ## The one invariant you must not break
