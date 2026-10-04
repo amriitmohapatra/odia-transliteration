@@ -1,7 +1,7 @@
 # 05 — Direction for v3: decision brief
 
-**Status:** proposal, 2026-10-04. Nobody has built anything in this file yet. Nothing in this file is
-approved until the owner ticks it in §11.
+**Status:** decisions recorded 2026-10-04 (§11). D-6 and D-10 are still open. Each stage
+in §13 starts only when the owner approves it.
 
 **Purpose:** the owner asked for "more informed ideas to decide". This file collects the
 research, shows where each new idea conflicts with the current plan, and gives one
@@ -21,8 +21,8 @@ page. The research notes tag each such fact. This brief marks them **(unverified
 
 1. The app already does one thing that no competitor does: it shows an **English meaning
    under each Odia suggestion while you type**. This is the core of the value proposition.
-2. Most new ideas (lens, voice, Vercel site, Odia→English) are on the "never" list in
-   `plan/04-scope.md`. The owner must amend that file first (§3).
+2. Most new ideas (lens, voice, Vercel site, Odia→English) were on the "never" list in
+   `plan/04-scope.md`. The owner reopened them on 2026-10-04 (§3, D-1).
 3. Recommended shape: **keep the offline engine exactly as it is, and add an optional
    online "assist" layer** for voice, read-aloud and sentence translation (§4).
 4. Vercel can host the app as a static site with no change to the offline rule. Only the
@@ -81,7 +81,7 @@ Source: `research/2026-10-04/05-competitors-uvp.md`. Most competitor facts are
 ## 3. Scope decisions required
 
 `plan/04-scope.md` lists these as "Not building — ever". Each new idea needs one of them
-reversed. The owner ticks each row.
+reversed. The owner accepted S-1 to S-5 on 2026-10-04 (D-1).
 
 | # | Excluded today | New idea that needs it | Recommendation |
 |---|---|---|---|
@@ -405,26 +405,27 @@ News channels write English, Hindi and Urdu words directly in Odia script.
 
 ---
 
-## 11. Decisions for the owner
+## 11. Decisions
 
-Tick one box per row. Reply with the numbers, for example "D-1 yes, D-3 Sarvam+Haiku,
-budget 20".
+The owner accepted every recommendation on 2026-10-04 ("D-1 to D-12 all as you
+recommend"). Two recommendations postpone the choice. Those two rows stay **open** until
+their trigger occurs.
 
-| # | Decision | Options | Recommendation |
+| # | Decision | Status | Result |
 |---|---|---|---|
-| D-0 | Family-safe default | — | **Decided 2026-10-04: ON.** |
-| D-1 | Amend `04-scope.md` as in §3 (S-1 to S-5) | yes / per row | Yes |
-| D-2 | Architecture: offline core + opt-in assist layer (§4) | yes / no | Yes |
-| D-3 | Which cloud providers may receive user text or voice | Sarvam / Google / Azure / Claude | Sarvam (voice), Google or Claude Haiku (translation) after the test |
-| D-4 | Monthly budget cap for cloud services | amount | Start with a hard cap, e.g. US$10–20 |
-| D-5 | Replace the "MODERN" dictionary layer (§5) | yes / no | Yes |
-| D-6 | Nukta policy for ଜ / ଫ in Urdu and English loans | always / never / per word | Decide after you see 50 examples |
-| D-7 | Lens v1 form (§9) | browser extension / web camera | Browser extension |
-| D-8 | Vercel plan | Hobby (personal only) / Pro | Hobby until public, then Pro |
-| D-9 | Laya | experiment only / not now | Experiment only, after the simple tagger |
-| D-10 | Public or private product (§12) | private / public | Decide before the first deploy |
-| D-11 | Update `CLAUDE.md` stale lines (§12) | yes / no | Yes |
-| D-12 | Let `j` also give ଯ (§6). This changes `core/rules/symbols.toml` and the cheat sheet. | yes / no | Yes, measured with `npm run eval` before and after |
+| D-0 | Family-safe default | Decided 2026-10-04 | **ON** |
+| D-1 | Amend `04-scope.md` as in §3 (S-1 to S-5) | Decided 2026-10-04 | Yes. S-6 (spell-check) stays excluded. |
+| D-2 | Architecture (§4) | Decided 2026-10-04 | Offline core plus an opt-in assist layer |
+| D-3 | Cloud providers that may receive user text or voice | Partly decided 2026-10-04 | Voice: **Sarvam**. Translation: Google or Claude Haiku. The 100-sentence test (§9) picks one. |
+| D-4 | Monthly budget for cloud services | Decided 2026-10-04 | Hard cap **US$20 per month** |
+| D-5 | Replace the "MODERN" dictionary layer (§5) | Decided 2026-10-04 | Yes |
+| D-6 | Nukta policy for ଜ / ଫ in Urdu and English loans | **Open** | Trigger: the owner reviews 50 loanword examples |
+| D-7 | Lens v1 form (§9) | Decided 2026-10-04 | Browser extension |
+| D-8 | Vercel plan | Decided 2026-10-04 | Hobby until public, then Pro |
+| D-9 | Laya | Decided 2026-10-04 | Experiment E-1 only, after the simple tagger |
+| D-10 | Public or private product (§12) | **Open** | Trigger: before the first deploy |
+| D-11 | Update `CLAUDE.md` stale lines (§12) | Decided 2026-10-04 | Yes |
+| D-12 | Let `j` also give ଯ (§6) | Decided 2026-10-04 | Yes, measured before and after |
 
 ---
 
