@@ -161,7 +161,8 @@ experience is top-5-with-learning on frequent words.
 
 ## Licensing
 
-Project is MIT. Everything shipped derives from MIT / CC0 / CC-BY sources:
+Project is MIT. Everything shipped must derive from MIT / CC0 / CC-BY sources (fonts: OFL).
+Rows marked unknown or unverified below are open items, not exceptions:
 
 | Source | Licence | Use |
 |---|---|---|
@@ -169,6 +170,13 @@ Project is MIT. Everything shipped derives from MIT / CC0 / CC-BY sources:
 | AI4Bharat Aksharantar (`ori`) | CC-BY / CC0 | Lexicon |
 | AI4Bharat IndicCorp v2 (`ory_Orya`) | CC0 | Word frequencies |
 | Noto Sans Oriya | OFL 1.1 | Bundled font, weights 400 and 700, in `web/src/fonts/` (used by `web/` and `Appv2/`) |
+| Praharaj, *Purnnachandra Odia Bhashakosha* (1931–40), via indic-dict | Public domain (text). indic-dict packaging has no licence file. | Classical dictionary layer |
+| OdiaNLP `dictionary` `cleaned_pairs.json` | Repo MIT. **Origin of the text unknown.** To be replaced (D-5). | MODERN dictionary layer, `[mt]` rows |
+| Unicode CLDR `or.xml` | Unicode License v3 | MODERN dictionary layer, `[cldr]` rows |
+| wordfreq, CMUdict | Unverified (see provenance file) | Build time: loanword detection |
+| pako inflate | MIT | Unpacks the dictionary payloads |
+
+The dictionary sources and their checksums are in `Odia_Sanskrit_Appv2/PROVENANCE.md`.
 
 **Varnam/govarnam and Aksharamukha are AGPL.** Study their architecture; copy no code.
 Record every data source, its licence and a checksum in `core/data/PROVENANCE.md`.
