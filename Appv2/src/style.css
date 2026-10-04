@@ -188,10 +188,40 @@ body {
   letter-spacing: -0.01em;
 }
 
+/* Quiet header button (Settings): icon plus a word, 44px target. */
+.icon-btn svg { flex: none; }
+
+.icon-btn {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-left: auto;
+  padding: 0 0.75rem;
+  font-size: var(--fs-sm);
+}
+
+.btn-quiet {
+  background: transparent;
+  color: var(--text);
+}
+
+/* Phones: the icon alone (the button keeps its name through aria-label). */
+@media (max-width: 479px) {
+  .icon-btn .icon-btn-label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+}
+
 .tagline {
   margin: 0.1rem 0 0;
   color: var(--muted);
-  font-size: 0.875rem;
+  font-size: var(--fs-sm);
 }
 
 /* ------------------------------------------------------------------ *
@@ -224,16 +254,14 @@ body {
   display: block;
   margin: 0 0 0.4rem;
   color: var(--muted);
-  font-size: 0.72rem;
+  font-size: var(--fs-sm);
   font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.07em;
 }
 
 .pane-hint {
   margin-bottom: 0.4rem;
   color: var(--muted);
-  font-size: 0.78rem;
+  font-size: var(--fs-sm);
 }
 
 textarea {
@@ -341,6 +369,14 @@ textarea:focus {
   cursor: default;
 }
 
+/* No dictionary entry (set by dictionary/overlay.ts, with the screen-reader
+ * text "not a known word"): a quieter dotted line than "not checked yet". */
+.rb-word.rb-unknown {
+  text-decoration: underline dotted var(--muted);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 5px;
+}
+
 /* A word kept in English: shown as typed, nothing to pick. */
 .rb-latin {
   color: var(--muted);
@@ -388,42 +424,16 @@ textarea:focus {
 }
 
 .btn-small {
-  min-height: 38px;
+  min-height: var(--tap);
   padding: 0 0.9rem;
   font-size: 16px;
-}
-
-.toggles {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.25rem 1.25rem;
-  margin-bottom: 0.75rem;
-}
-
-.switch {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.55rem;
-  min-height: var(--tap);
-  color: var(--muted);
-  font-size: 16px;
-  cursor: pointer;
-  -webkit-tap-highlight-color: transparent;
-}
-
-.switch input {
-  width: 22px;
-  height: 22px;
-  margin: 0;
-  accent-color: var(--accent);
-  flex: 0 0 auto;
 }
 
 .status {
   margin: 0 0 1.25rem;
   min-height: 1.2em;
   color: var(--muted);
-  font-size: 0.82rem;
+  font-size: var(--fs-sm);
 }
 
 .status.warn {
@@ -500,7 +510,7 @@ textarea:focus {
 
 .picker-head h2 {
   margin: 0;
-  font-size: 0.95rem;
+  font-size: 1.15rem;
   font-weight: 600;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -508,7 +518,7 @@ textarea:focus {
 }
 
 .picker-head h2 .roman {
-  font-family: var(--mono-font);
+  font-family: var(--ui-font);
   color: var(--accent);
 }
 
@@ -553,8 +563,9 @@ textarea:focus {
 
 .candidate {
   /* The dictionary gloss (flex-basis 100%) goes to its own line instead of
-   * squeezing the word. */
+   * squeezing the word, with no extra gap between the two lines. */
   flex-wrap: wrap;
+  row-gap: 0;
 }
 
 .candidate .text {
@@ -568,12 +579,17 @@ textarea:focus {
   overflow-wrap: normal;
 }
 
+/* A Latin alternative (keep as typed): UI font, Latin size. */
+.candidate .text-latin {
+  font-family: var(--ui-font);
+  font-size: var(--fs-input);
+}
+
 .candidate .source {
+  /* Only with ?debug=1 (main.ts): engine words never reach users (H5). */
   flex: 0 0 auto;
   color: var(--muted);
-  font-size: 0.72rem;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
+  font-size: var(--fs-sm);
 }
 
 /* ------------------------------------------------------------------ *
@@ -598,11 +614,9 @@ textarea:focus {
 
 .guide h3 {
   margin: 1.4rem 0 0.4rem;
-  font-size: 0.75rem;
+  font-size: var(--fs-sm);
   font-weight: 700;
   color: var(--muted);
-  text-transform: uppercase;
-  letter-spacing: 0.07em;
 }
 
 /* Wide tables scroll inside their own box; the page never scrolls sideways. */
@@ -614,7 +628,7 @@ textarea:focus {
 table {
   border-collapse: collapse;
   width: 100%;
-  font-size: 0.92rem;
+  font-size: var(--fs-sm);
 }
 
 th,
@@ -627,15 +641,13 @@ td {
 
 thead th {
   color: var(--muted);
-  font-size: 0.7rem;
+  font-size: var(--fs-sm);
   font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
 }
 
 tbody th {
   color: var(--muted);
-  font-size: 0.78rem;
+  font-size: var(--fs-sm);
   font-weight: 600;
 }
 
@@ -650,7 +662,7 @@ code {
 .note {
   margin: 0.85rem 0;
   color: var(--muted);
-  font-size: 0.88rem;
+  font-size: var(--fs-sm);
 }
 
 /* ------------------------------------------------------------------ *
@@ -662,7 +674,7 @@ code {
   padding-top: 1rem;
   border-top: 1px solid var(--line);
   color: var(--muted);
-  font-size: 0.8rem;
+  font-size: var(--fs-sm);
 }
 
 .colophon p {
@@ -681,7 +693,7 @@ code {
   /* Same flip as .inline-candidate.is-active: in dark mode --ok is a light
    * mint (#59d5a0) and white text on it is unreadable. */
   color: var(--accent-text);
-  font-size: 0.9rem;
+  font-size: var(--fs-sm);
   font-weight: 600;
   opacity: 0;
   pointer-events: none;
@@ -769,18 +781,21 @@ code {
 .inline-candidate { color: var(--text); }
 
 .inline-num {
-  min-width: 1.35em;
+  min-width: 1.5em;
   padding: 0 3px;
   border: 1px solid currentColor;
   border-radius: 4px;
-  opacity: 0.65;
+  /* --muted, not opacity: opacity-quiet text fails contrast (audit M2). */
+  color: var(--muted);
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-  font-size: 0.72rem;
-  line-height: 1.5;
+  font-size: var(--fs-sm);
+  line-height: 1.4;
   text-align: center;
 }
 
 .inline-text { font-size: 1.15em; }
+
+.inline-candidate.is-active .inline-num { color: inherit; }
 
 /* The typed English word, last in the bar. UI font, not the Odia one. */
 .inline-latin {
@@ -950,7 +965,7 @@ code {
 
 .mode-label {
   margin-right: 0.4rem;
-  opacity: 0.75;
+  color: var(--muted);
 }
 
 .mode-select {
@@ -974,8 +989,8 @@ code {
 
 .mode-hint {
   margin: 0.45rem 0 0;
-  font-size: 0.82rem;
-  opacity: 0.7;
+  color: var(--muted);
+  font-size: var(--fs-sm);
 }
 
 /* The palette is a horizontally scrolling strip. It must never widen the page:
@@ -996,15 +1011,6 @@ code {
   align-items: center;
   gap: 0.3rem;
   flex: 0 0 auto;
-}
-
-.palette-name {
-  font-size: 0.7rem;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  opacity: 0.55;
-  margin-right: 0.15rem;
-  white-space: nowrap;
 }
 
 .palette-key {
@@ -1044,4 +1050,57 @@ code {
 .shortcuts .gives {
   font-family: var(--odia-font);
   font-size: 1.05rem;
+}
+
+/* ---------------------------------------------------------------- settings
+   Settings sheet (shares the .picker bottom-sheet styles). Each row is one
+   label: switch, name and helper text share a single hit area. */
+
+.settings-body {
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 0.25rem 1rem 0.5rem;
+}
+
+.settings-section {
+  margin: 1.25rem 0 0.25rem;
+  color: var(--muted);
+  font-size: var(--fs-sm);
+  font-weight: 700;
+}
+
+.setting {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  min-height: var(--tap);
+  padding: 0.6rem 0;
+  border-bottom: 1px solid var(--line);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.setting input {
+  flex: 0 0 auto;
+  width: 22px;
+  height: 22px;
+  margin: 0.15rem 0 0;
+  accent-color: var(--accent);
+}
+
+.setting-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.setting-label {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.setting-help {
+  color: var(--muted);
+  font-size: var(--fs-sm);
+  line-height: 1.4;
 }

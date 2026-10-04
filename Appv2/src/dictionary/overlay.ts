@@ -289,35 +289,39 @@ const MODERN_LABEL: Record<string, string> = {
   cldr: 'standard modern name (CLDR)',
 };
 
-/* The chip line for a word: modern gloss first (today's usage), the
- * Praharaj gloss after it, separated by a middle dot. Either may be
- * missing; approximate matches carry a leading ≈. */
+/* One short meaning per suggestion (plan/design/v1-ux-proposal.md 3.6):
+ * the modern layer's first sense if there is one, else the first Praharaj
+ * sense, never both joined. Cut at the first ";", no trailing full stop. A
+ * stem or prefix match is approximate and says so in words ("maybe:"), not
+ * with a symbol.
+ *
+ * A modern line tagged `loan` is NOT used as the meaning. The loan detector
+ * has false positives that a parent sees first (KEMITI, "how", came out as
+ * "English: committee", audit B5), and there is no confidence score to keep
+ * only the sure ones, so such words fall through to the dictionary. */
 function chipFor(word: string): string | null {
+  const m = modernChip(lookupModern(word));
+  if (m) return m;
   const entry = lookup(word);
-  const mo = lookupModern(word);
-  const parts: string[] = [];
-  const m = modernChip(mo);
-  if (m) parts.push(m);
-  const g = entry ? prefixed(entry, shortGloss(entry)) : null;
-  if (g) parts.push(g);
-  if (!parts.length) return null;
-  let chip = parts.join('  ·  ');
-  if (chip.length > 72) chip = chip.slice(0, 72).replace(/\s+\S*$/, '') + '\u2026';
-  return chip;
-}
-
-function prefixed(entry: Entry, gloss: string | null): string | null {
-  if (!gloss) return null;
-  return (entry.how !== 'exact' ? '≈ ' : '') + gloss;
+  const g = entry ? shortGloss(entry) : null;
+  return entry && g ? tidyGloss(g, entry.how !== 'exact') : null;
 }
 
 function modernChip(mo: ModernEntry | null): string | null {
-  if (!mo || !mo.lines.length) return null;
-  const line = mo.lines[0] as ModernLine;
-  let g = line.tag === 'loan' ? 'English: ' + line.gloss : (line.gloss.split(';')[0] as string);
-  if (g.length > 44) g = g.slice(0, 44).replace(/\s+\S*$/, '') + '\u2026';
-  return (mo.how !== 'exact' ? '≈ ' : '') + g;
+  if (!mo) return null;
+  const line = mo.lines.find((l) => l.tag !== 'loan');
+  return line ? tidyGloss(line.gloss, mo.how !== 'exact') : null;
 }
+
+function tidyGloss(gloss: string, approximate: boolean): string | null {
+  let g = (gloss.split(';')[0] as string).replace(/\s+/g, ' ').trim().replace(/[\s.,:]+$/, '');
+  if (g.length < 2) return null;
+  if (g.length > 56) g = g.slice(0, 56).replace(/\s+\S*$/, '') + '\u2026';
+  return (approximate ? 'maybe: ' : '') + g;
+}
+
+/** Shown where a suggestion has no dictionary entry (was a faint dot). */
+const NO_ENTRY = 'not a known word';
 
 /* Short English gloss for the inline chip.
  *
@@ -469,12 +473,12 @@ function entryBlock(word: string, num: number | null, entry: Entry | null, moder
   const tag = document.createElement('span');
   tag.className = 'dict-tag';
   if (!entry && !modern) {
-    tag.textContent = 'no entry';
+    tag.textContent = NO_ENTRY;
     tag.classList.add('dict-tag-none');
   } else if (entry && entry.how === 'stem') {
-    tag.textContent = '≈ stem';
+    tag.textContent = 'maybe: a form of this word';
   } else if (entry && entry.how === 'prefix') {
-    tag.textContent = '≈ begins with';
+    tag.textContent = 'maybe: starts with this word';
   }
   if (tag.textContent) h.appendChild(tag);
   block.appendChild(h);
@@ -487,11 +491,11 @@ function entryBlock(word: string, num: number | null, entry: Entry | null, moder
       row.className = 'dict-modern-row';
       const lab = document.createElement('span');
       lab.className = 'dict-modern-tag dict-modern-tag-' + line.tag;
-      lab.textContent = line.tag === 'loan' ? 'loan' : line.tag === 'cldr' ? 'name' : 'modern';
+      lab.textContent = line.tag === 'loan' ? 'English word?' : line.tag === 'cldr' ? 'name' : 'today';
       lab.title = MODERN_LABEL[line.tag] || line.tag;
       const val = document.createElement('span');
       val.className = 'dict-modern-gloss';
-      val.textContent = (modern.how !== 'exact' ? '≈ ' : '') + line.gloss;
+      val.textContent = (modern.how !== 'exact' ? 'maybe: ' : '') + line.gloss;
       row.appendChild(lab);
       row.appendChild(val);
       mbox.appendChild(row);
@@ -588,10 +592,13 @@ function augmentInlineBar(): void {
       const word = textEl.textContent || '';
       next.push({ text: word, num: i + 1 });
       if (btn.querySelector('.dict-gloss')) continue;
-      const g = state === 'ready' ? chipFor(word) : null;
+      // Nothing until the data is ready (refreshAll redoes the bar then), and
+      // nothing if it failed: an empty slot, not a wrong "not a known word".
+      if (state !== 'ready') continue;
+      const g = chipFor(word);
       const span = document.createElement('span');
       span.className = 'dict-gloss' + (g ? '' : ' dict-gloss-none');
-      span.textContent = g ? g : '·';
+      span.textContent = g ? g : NO_ENTRY;
       btn.appendChild(span);
     }
     lastCandidates = next;
@@ -614,11 +621,11 @@ function augmentPicker(): void {
       if (row.querySelector('.dict-gloss')) continue;
       const textEl = row.querySelector('.text');
       if (!textEl) continue;
-      const g = state === 'ready' ? chipFor(textEl.textContent || '') : null;
-      if (!g) continue;
+      if (state !== 'ready' || textEl.classList.contains('text-latin')) continue;
+      const g = chipFor(textEl.textContent || '');
       const span = document.createElement('span');
-      span.className = 'dict-gloss dict-gloss-picker';
-      span.textContent = g;
+      span.className = 'dict-gloss dict-gloss-picker' + (g ? '' : ' dict-gloss-none');
+      span.textContent = g ? g : NO_ENTRY;
       row.appendChild(span);
     }
   } finally {
@@ -642,7 +649,15 @@ function augmentReadback(): void {
       if (el.getAttribute('data-glossed') === '1') continue;
       el.setAttribute('data-glossed', '1');
       const g = chipFor(el.getAttribute('data-odia') || '');
-      if (g) el.title = g;
+      if (g) {
+        el.title = g;
+      } else {
+        // Proposal 3.7: a word with no entry gets a dotted underline and
+        // the screen-reader text "not a known word".
+        el.title = NO_ENTRY;
+        el.classList.add('rb-unknown');
+        el.setAttribute('aria-label', `${el.getAttribute('aria-label') || el.textContent || ''}, ${NO_ENTRY}`);
+      }
     }
   }, 120);
 }

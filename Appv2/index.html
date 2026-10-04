@@ -37,12 +37,24 @@
           <h1>Odia Phonetic</h1>
           <p class="tagline">Odia and Sanskrit, in Odia script. Works with the network off.</p>
         </div>
+        <button
+          type="button"
+          id="open-settings"
+          class="btn btn-quiet icon-btn"
+          aria-haspopup="dialog"
+          aria-controls="settings"
+          aria-label="Settings"
+        >
+          <!-- A "sliders" glyph drawn for this app (no third-party icon set). -->
+          <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h10M18 6h2M4 12h4M12 12h8M4 18h12"/><circle cx="16" cy="6" r="2"/><circle cx="10" cy="12" r="2"/><circle cx="18" cy="18" r="2"/></svg>
+          <span class="icon-btn-label">Settings</span>
+        </button>
       </header>
 
       <main>
         <section class="pane">
           <div class="pane-head">
-            <label class="pane-label" for="roman">English (phonetic)</label>
+            <label class="pane-label" for="roman">Type in English letters</label>
             <span class="pane-hint">
               <label class="mode-label" for="profile">Mode</label>
               <select id="profile" class="mode-select"></select>
@@ -96,17 +108,6 @@
         <div class="actions">
           <button type="button" id="copy" class="btn btn-primary">Copy Odia</button>
           <button type="button" id="clear" class="btn">Clear</button>
-        </div>
-
-        <div class="toggles">
-          <label class="switch">
-            <input type="checkbox" id="toggle-digits" />
-            <span>Odia numerals <span class="odia">୦-୯</span></span>
-          </label>
-          <label class="switch">
-            <input type="checkbox" id="toggle-strict" />
-            <span>Strict ITRANS</span>
-          </label>
         </div>
 
         <p id="status" class="status" role="status"></p>
@@ -266,8 +267,9 @@
           </p>
 
           <p class="note">
-            <strong>Strict ITRANS</strong> turns off guessing entirely: one roman spelling, one Odia
-            output, no candidates. Useful when you know exactly what you want.
+            <strong>Exact spelling</strong> (Settings, Advanced) turns off guessing entirely: one
+            roman spelling, one Odia output, no suggestions. It follows the ITRANS scheme. Useful
+            when you know exactly what you want.
           </p>
         </details>
 
@@ -379,10 +381,7 @@
       </main>
 
       <footer class="colophon">
-        <p>
-          Everything runs on this device. No network call, ever — see
-          <code>plan/04-scope.md</code>.
-        </p>
+        <p>Everything runs on this device. Nothing you type is sent anywhere.</p>
       </footer>
     </div>
 
@@ -395,6 +394,42 @@
           <button type="button" class="btn btn-small" data-picker-close>Done</button>
         </div>
         <ul id="picker-list" class="picker-list"></ul>
+      </div>
+    </div>
+
+    <!--
+      Settings sheet. Same bottom-sheet pattern as the picker (classes shared,
+      ids separate: #picker-list is a dictionary-overlay contract and must stay
+      unique to the Alternatives sheet).
+    -->
+    <div id="settings" class="picker sheet" hidden>
+      <div class="picker-scrim" data-settings-close></div>
+      <div class="picker-panel" role="dialog" aria-modal="true" aria-labelledby="settings-title">
+        <div class="picker-head">
+          <h2 id="settings-title">Settings</h2>
+          <button type="button" class="btn btn-small" data-settings-close>Done</button>
+        </div>
+        <div class="settings-body">
+          <label class="setting">
+            <input type="checkbox" id="toggle-digits" role="switch" />
+            <span class="setting-text">
+              <span class="setting-label">Odia digits <span class="odia" lang="or">୧୨୩</span></span>
+              <span class="setting-help">Write numbers as <span class="odia" lang="or">୧୨୩</span> instead of 123.</span>
+            </span>
+          </label>
+
+          <h3 class="settings-section">Advanced</h3>
+          <label class="setting">
+            <input type="checkbox" id="toggle-strict" role="switch" />
+            <span class="setting-text">
+              <span class="setting-label">Exact spelling (no guessing)</span>
+              <span class="setting-help">
+                One English spelling gives one Odia spelling. No suggestions. For people who know
+                the ITRANS scheme.
+              </span>
+            </span>
+          </label>
+        </div>
       </div>
     </div>
 

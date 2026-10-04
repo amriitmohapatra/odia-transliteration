@@ -57,6 +57,8 @@ const pickerEl = must<HTMLDivElement>('picker');
 const pickerTitleEl = must<HTMLHeadingElement>('picker-title');
 const pickerListEl = must<HTMLUListElement>('picker-list');
 const toastEl = must<HTMLDivElement>('toast');
+const settingsEl = must<HTMLDivElement>('settings');
+const openSettingsEl = must<HTMLButtonElement>('open-settings');
 
 function must<T extends HTMLElement>(id: string): T {
   const element = document.getElementById(id);
@@ -73,6 +75,12 @@ const PREF_STRICT = 'odia.pref.strict';
 
 /** How many candidates the picker offers. */
 const TOPK = 8;
+
+/**
+ * `?debug=1` shows engine detail (the LEXICON / RULE source of each
+ * alternative) that is never shown to users (audit H5).
+ */
+const DEBUG = new URLSearchParams(window.location.search).get('debug') === '1';
 
 const learnStore = new LocalStorageLearnStore();
 
@@ -381,14 +389,13 @@ async function buildPalette(): Promise<void> {
 
   paletteEl.replaceChildren(
     ...groups.map((group) => {
+      // The group name ("Vocalics", "Signs") is engine vocabulary: it names
+      // the group for screen readers but is not shown (audit H5).
       const section = document.createElement('div');
       section.className = 'palette-group';
-
-      const heading = document.createElement('span');
-      heading.className = 'palette-name';
-      heading.textContent = group.name;
-      heading.title = group.hint;
-      section.append(heading);
+      section.setAttribute('role', 'group');
+      section.setAttribute('aria-label', group.name);
+      section.title = group.hint;
 
       for (const entry of group.entries) {
         section.append(paletteButton(entry));
@@ -514,11 +521,13 @@ function candidateRow(candidate: PickerRow, current: boolean): HTMLLIElement {
   if (/[\u0B00-\u0B7F]/.test(candidate.text)) text.lang = 'or';
   text.textContent = candidate.text;
 
-  const source = document.createElement('span');
-  source.className = 'source';
-  source.textContent = candidate.source;
-
-  button.append(text, source);
+  button.append(text);
+  if (DEBUG) {
+    const source = document.createElement('span');
+    source.className = 'source';
+    source.textContent = candidate.source;
+    button.append(source);
+  }
   button.addEventListener('click', () => choose(candidate.text));
   item.append(button);
   return item;
@@ -566,6 +575,22 @@ function closePicker(restoreFocus = true): void {
 function focusReadbackWord(index: string | undefined): void {
   if (index === undefined) return;
   readbackEl.querySelector<HTMLElement>(`.rb-word[data-slot="${index}"]`)?.focus();
+}
+
+/* ------------------------------------------------------------------ *
+ * Settings sheet
+ * ------------------------------------------------------------------ */
+
+function openSettings(): void {
+  settingsEl.hidden = false;
+  document.documentElement.style.overflow = 'hidden';
+  settingsEl.querySelector<HTMLInputElement>('input')?.focus();
+}
+
+function closeSettings(): void {
+  settingsEl.hidden = true;
+  document.documentElement.style.overflow = '';
+  openSettingsEl.focus();
 }
 
 /* ------------------------------------------------------------------ *
@@ -757,8 +782,15 @@ function bindEvents(): void {
     closer.addEventListener('click', () => closePicker());
   }
 
+  openSettingsEl.addEventListener('click', openSettings);
+  for (const closer of document.querySelectorAll('[data-settings-close]')) {
+    closer.addEventListener('click', closeSettings);
+  }
+
   document.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape' && !pickerEl.hidden) closePicker();
+    if (event.key !== 'Escape') return;
+    if (!pickerEl.hidden) closePicker();
+    else if (!settingsEl.hidden) closeSettings();
   });
 }
 
