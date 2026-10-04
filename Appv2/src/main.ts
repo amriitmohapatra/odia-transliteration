@@ -200,8 +200,10 @@ async function boot(): Promise<void> {
   bindEvents();
 
   inline = new InlineCandidates(romanEl, {
+    // The Odia word just before the caret word gives context (word pairs, V2.2),
+    // so a word the user picked from the bar informs the next suggestion.
     candidates: (roman) =>
-      guard(() => handle?.engine.transliterateWord(roman, 9) ?? [], []),
+      guard(() => handle?.engine.transliterateWord(roman, 9, { prev: previousOdiaWord(roman) }) ?? [], []),
     onCommit: (roman, text) => {
       guard(() => handle?.engine.learn(roman, text), undefined);
       commitKeys.set(text, roman);
@@ -281,6 +283,18 @@ function digitMode(): DigitMode {
  * engine.ts, so switching between "Odia + Sanskrit" and "Śloka" reuses both
  * tables and costs only a rule parse.
  */
+/**
+ * The Odia word right before the roman word at the caret, if only spaces or tabs
+ * separate them (word pairs are counted across spaces only; punctuation or a
+ * line break ends the context). Undefined otherwise.
+ */
+function previousOdiaWord(roman: string): string | undefined {
+  const caret = romanEl.selectionStart ?? romanEl.value.length;
+  const before = romanEl.value.slice(0, Math.max(0, caret - roman.length));
+  const match = /([\u0B00-\u0B7F]+)[ \t]+$/.exec(before);
+  return match?.[1];
+}
+
 /** Kids edition: a word labelled offensive or coarse is never shown or explained. */
 function isKidsHidden(word: string): boolean {
   const labels = handle?.engine.labelsOf?.(word);

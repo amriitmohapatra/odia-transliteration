@@ -24,7 +24,8 @@ import type { Candidate, Result, WordResult } from '@odia/core/types';
  */
 export interface EngineLike {
   transliterate(input: string, opts?: { topk?: number }): Result;
-  transliterateWord(roman: string, topk?: number): Candidate[];
+  /** `context.prev`: the Odia word before this one, for word-pair ranking (V2.2). */
+  transliterateWord(roman: string, topk?: number, context?: { prev?: string }): Candidate[];
   learn(roman: string, chosen: string): void;
   strict(input: string, scheme?: 'itrans'): string;
   /** Family-safe filter (Settings, "Hide rude words"). Absent on the degraded engine. */

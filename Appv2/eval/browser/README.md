@@ -12,6 +12,7 @@ node Appv2/eval/browser/gloss-check.mjs 4810   # owner meanings first (raja -> R
 node Appv2/eval/browser/origin-check.mjs 4810  # word origin: sarakaara -> "from Persian" (V2.4)
 node Appv2/eval/browser/report-check.mjs 4810  # "Wrong word? Report it"
 node Appv2/eval/browser/freeze.mjs 4810        # A-7 timing (report, not pass/fail)
+node Appv2/eval/browser/context-check.mjs 4810 # word-pair context in the caret bar (V2.2)
 ```
 
 Playwright: in the Claude Code cloud environment it loads from
