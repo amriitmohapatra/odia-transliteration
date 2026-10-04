@@ -11,7 +11,7 @@
  */
 
 import './style.css';
-import { InlineCandidates } from './inline.js';
+import { badgeElement, InlineCandidates } from './inline.js';
 // After style.css: the overlay's stylesheet overrides parts of the caret bar.
 import { startDictionary } from './dictionary/index.js';
 
@@ -26,6 +26,7 @@ import {
 } from './engine.js';
 import { describeEntry, displayText, loadPalette, type PaletteEntry } from './palette.js';
 import { preprocess, PREPROCESS_HINTS } from './preprocess.js';
+import { badgeFor } from './badges.js';
 import { buildSlots, hasWords, readbackText, type Slot } from './readback.js';
 import { casual } from './romanize.js';
 import {
@@ -51,6 +52,7 @@ const strictEl = must<HTMLInputElement>('toggle-strict');
 const modeEverydayEl = must<HTMLInputElement>('mode-everyday');
 const modeSlokaEl = must<HTMLInputElement>('mode-sloka');
 const classicEl = must<HTMLInputElement>('toggle-classic');
+const familySafeEl = must<HTMLInputElement>('toggle-family-safe');
 const profileHintEl = must<HTMLElement>('profile-hint');
 const paletteEl = must<HTMLDivElement>('palette');
 const shortcutsEl = must<HTMLElement>('shortcuts');
@@ -73,6 +75,8 @@ function must<T extends HTMLElement>(id: string): T {
 
 const PREF_DIGITS = 'odia.pref.digits';
 const PREF_STRICT = 'odia.pref.strict';
+/** "Hide rude words". ON by default: a missing key reads as on. */
+const PREF_FAMILY_SAFE = 'odia.pref.familySafe';
 
 /**
  * Declared before boot() runs (it is called at module load), like every
@@ -117,6 +121,7 @@ void boot();
 async function boot(): Promise<void> {
   digitsEl.checked = readPref(PREF_DIGITS);
   strictEl.checked = readPref(PREF_STRICT);
+  familySafeEl.checked = readPref(PREF_FAMILY_SAFE, true);
   profileId = readProfilePref();
 
   buildProfileSelect();
@@ -132,6 +137,7 @@ async function boot(): Promise<void> {
       uncheckedWords.delete(text);
       render();
     },
+    badge: (text) => badgeFor(handle?.engine, text),
   });
   inline.setEnabled(!strictEl.checked);
 
@@ -173,7 +179,8 @@ function digitMode(): DigitMode {
  * tables and costs only a rule parse.
  */
 function rebuildEngine(): void {
-  handle = buildEngine(profileId, digitMode(), learnStore);
+  // familySafe on EVERY rebuild (digits, mode), or it would silently reset.
+  handle = buildEngine(profileId, digitMode(), learnStore, familySafeEl.checked);
   setStatus(handle.note, !handle.ready || handle.note.length > 0);
   profileHintEl.textContent = MODE_HINT[profileId];
 }
@@ -542,6 +549,8 @@ function candidateRow(candidate: PickerRow, current: boolean): HTMLLIElement {
   text.textContent = candidate.text;
 
   button.append(text);
+  const badge = badgeFor(handle?.engine, candidate.text);
+  if (badge) button.append(badgeElement(badge));
   if (DEBUG) {
     const source = document.createElement('span');
     source.className = 'source';
@@ -719,11 +728,13 @@ function message(error: unknown): string {
   return error instanceof Error ? error.message : String(error);
 }
 
-function readPref(key: string): boolean {
+/** A stored '1' / '0' switch. `fallback` when nothing is stored or storage is unavailable. */
+function readPref(key: string, fallback = false): boolean {
   try {
-    return localStorage.getItem(key) === '1';
+    const stored = localStorage.getItem(key);
+    return stored === null ? fallback : stored === '1';
   } catch {
-    return false;
+    return fallback;
   }
 }
 
@@ -786,6 +797,14 @@ function bindEvents(): void {
   digitsEl.addEventListener('change', () => {
     writePref(PREF_DIGITS, digitsEl.checked);
     rebuildEngine();
+    render();
+  });
+
+  familySafeEl.addEventListener('change', () => {
+    writePref(PREF_FAMILY_SAFE, familySafeEl.checked);
+    // No rebuild needed: the engine reads the switch on every lookup.
+    guard(() => handle?.engine.setFamilySafe?.(familySafeEl.checked), undefined);
+    inline?.setEnabled(!strictEl.checked); // re-rank the open suggestions
     render();
   });
 

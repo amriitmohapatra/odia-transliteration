@@ -71,6 +71,10 @@
   --accent-soft: #ece3fb;
   --ok: #0a7050;
   --warn: #8a4a00;
+  /* Flag badges (V1 family-safe; proposal 4.1). Text on its soft fill. */
+  --warn-soft: #fbefdc;
+  --danger: #a0172c;
+  --danger-soft: #fbe4e7;
 
   /* Floating surfaces that sit ABOVE the page: the caret candidate bar, the
    * palette keys. Previously these were written `var(--panel, #fff)` against a
@@ -115,6 +119,9 @@
     --accent-soft: #2a2138;
     --ok: #59d5a0;
     --warn: #e0aa62;
+    --warn-soft: #3a2a14;
+    --danger: #ff9aa5;
+    --danger-soft: #3d1a20;
     /* Lighter than --surface, not darker: a popover floating above the page
      * reads as elevated when it catches more light, which is the opposite of
      * the light-mode instinct to make it whiter than white. */
@@ -815,6 +822,29 @@ code {
 .inline-candidate.is-active .inline-keep { color: inherit; }
 .inline-latin::before { content: '\201C'; }
 .inline-latin::after { content: '\201D'; }
+
+/* Flag badges ("offensive", "can be rude"): words, not colour alone. Only
+ * ever from engine.labelsOf() (badges.ts). Keep their own fill on the
+ * highlighted item so they stay readable on the accent. */
+.badge {
+  display: inline-block;
+  flex: none;
+  padding: 0 6px;
+  border-radius: var(--radius-sm);
+  font-family: var(--ui-font);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  line-height: 1.5;
+  white-space: nowrap;
+}
+.badge-warn {
+  background: var(--warn-soft);
+  color: var(--warn);
+}
+.badge-danger {
+  background: var(--danger-soft);
+  color: var(--danger);
+}
 
 /* ---------------------------------------------------------------- strip
    Phone suggestion strip (inline.ts "docked" layout, audit B1). It rides on

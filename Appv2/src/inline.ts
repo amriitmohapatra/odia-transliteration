@@ -38,11 +38,15 @@
 
 import type { Candidate } from '@odia/core/types';
 
+import type { Badge } from './badges.js';
+
 export interface InlineHost {
   /** Candidates for the roman word currently under the caret. */
   candidates(roman: string): Candidate[];
   /** Called after a commit, so the page can re-render and record the choice. */
   onCommit(roman: string, text: string): void;
+  /** A text badge ("offensive", "can be rude") for an Odia candidate, if flagged. */
+  badge?(text: string): Badge | undefined;
 }
 
 /** Roman word immediately before the caret, and where it starts. */
@@ -376,6 +380,8 @@ export class InlineCandidates {
       }
 
       item.append(text);
+      const badge = latin ? undefined : this.host.badge?.(candidate.text);
+      if (badge) item.append(badgeElement(badge));
       this.box.appendChild(item);
     });
 
@@ -550,6 +556,14 @@ export class InlineCandidates {
     if (left < this.box.scrollLeft) this.box.scrollLeft = left;
     else if (right > this.box.scrollLeft + this.box.clientWidth) this.box.scrollLeft = right - this.box.clientWidth;
   }
+}
+
+/** A flag as text ("offensive"), never colour alone. Shared with main.ts. */
+export function badgeElement(badge: Badge): HTMLSpanElement {
+  const span = document.createElement('span');
+  span.className = `badge badge-${badge.kind}`;
+  span.textContent = badge.text;
+  return span;
 }
 
 function scrollButton(label: string, name: string): HTMLButtonElement {
