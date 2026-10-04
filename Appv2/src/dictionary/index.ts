@@ -1,7 +1,7 @@
 /**
  * Dictionary overlay entry point: the overlay plus its default data loader.
  *
- * The two payloads are gzip files shipped as separate build assets (named
+ * The payloads are gzip files shipped as separate build assets (named
  * .bin, not .gz, so no server or CDN transparently decompresses them or adds
  * Content-Encoding). In the normal build they are fetched from ./assets/ and
  * precached by the service worker; in the SINGLE_FILE build vite.config.ts
@@ -14,6 +14,7 @@
 import { initDictionary, type DictionaryBytes, type DictionaryState } from './overlay.js';
 export { meaningsOpen, setMeaningsOpen } from './overlay.js';
 import modernUrl from './modern.bin?url';
+import originUrl from './origin.bin?url';
 import praharajUrl from './praharaj.bin?url';
 
 export { initDictionary };
@@ -26,12 +27,16 @@ async function fetchBytes(url: string): Promise<Uint8Array> {
 }
 
 /**
- * Fetch both payloads in parallel. The modern layer is optional: if it fails,
- * it resolves to null and the Praharaj glosses still work, as before.
+ * Fetch the payloads in parallel. The modern layer and the word-origin map
+ * (V2.4, ~13 KB) are optional: if one fails it resolves to null and the
+ * Praharaj glosses still work, as before.
  */
 export function loadDictionaryBytes(): Promise<DictionaryBytes> {
   const modern = fetchBytes(modernUrl).catch(() => null);
-  return fetchBytes(praharajUrl).then((praharaj) => modern.then((m) => ({ praharaj, modern: m })));
+  const origin = fetchBytes(originUrl).catch(() => null);
+  return fetchBytes(praharajUrl).then((praharaj) =>
+    Promise.all([modern, origin]).then(([m, o]) => ({ praharaj, modern: m, origin: o })),
+  );
 }
 
 /**

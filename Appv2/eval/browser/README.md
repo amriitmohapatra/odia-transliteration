@@ -9,6 +9,7 @@ npx vite build --config Appv2/vite.config.ts
 (cd Appv2/dist && python3 -m http.server 4810 --bind 127.0.0.1 &)
 node Appv2/eval/browser/regress.mjs 4810       # 9 checks: typing, meanings, Keep English, offline, no external requests
 node Appv2/eval/browser/gloss-check.mjs 4810   # owner meanings first (raja -> Raja festival)
+node Appv2/eval/browser/origin-check.mjs 4810  # word origin: sarakaara -> "from Persian" (V2.4)
 node Appv2/eval/browser/report-check.mjs 4810  # "Wrong word? Report it"
 node Appv2/eval/browser/freeze.mjs 4810        # A-7 timing (report, not pass/fail)
 ```

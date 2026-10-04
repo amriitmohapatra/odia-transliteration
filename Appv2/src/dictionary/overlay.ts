@@ -6,6 +6,8 @@
  * 1931-40) and an optional modern layer (loanwords, community MT glosses, CLDR
  * names). Sources, licences and checksums: Odia_Sanskrit_Appv2/PROVENANCE.md
  * (praharaj.bin / modern.bin are the base64-decoded payloads recorded there).
+ * Word origins ("from Persian", V2.4) come from Praharaj's own origin marks,
+ * extracted by Odia_Sanskrit_Appv2/build/build_origin_map.py into origin.bin.
  *
  * It is layered on top of the app by watching the DOM the app renders (the
  * caret candidate bar, the alternatives picker, the read-back words), so the
@@ -49,12 +51,17 @@ import { parseGlosses, type Glosses } from '@odia/core';
 import glossesTsv from '../../../core/data/glosses.tsv?raw';
 
 import { inflate } from './pako-inflate.js';
+import { originChipLabel, originLabel, parseOrigin } from './origin.js';
 import './overlay.css';
 
-/** Raw gzip payloads. `modern` is optional: null when it could not be loaded. */
+/**
+ * Raw gzip payloads. `modern` and `origin` are optional: null (or absent) when
+ * they could not be loaded; the glosses work without them.
+ */
 export interface DictionaryBytes {
   praharaj: Uint8Array;
   modern: Uint8Array | null;
+  origin?: Uint8Array | null;
 }
 
 export type DictionaryLoader = () => Promise<DictionaryBytes>;
@@ -137,6 +144,7 @@ type LoadState = 'idle' | 'loading' | 'ready' | 'failed';
 
 let P: Dict | null = null; // Praharaj dictionary
 let M: Dict | null = null; // modern layer, same container format
+let O: string[] | null = null; // origin code per P key (V2.4), same order as P.keys
 let state: LoadState = 'idle';
 let loader: DictionaryLoader | null = null;
 
@@ -174,6 +182,17 @@ function parsePayload(gz: Uint8Array): Dict {
   return { keys, offsets, lens, defs: text.slice(c + 1) };
 }
 
+/* ------------------------------------------------------------ *
+ * Word origin (V2.4): codes and labels live in ./origin.ts.
+ * ------------------------------------------------------------ */
+
+/** Origin code of a lookup result. A prefix match is a different word: none. */
+function originCode(entry: Entry | null): string | null {
+  if (!O || !entry || entry.how === 'prefix') return null;
+  const code = O[entry.index];
+  return code ? code : null;
+}
+
 function loadData(): void {
   if (state !== 'idle' || loader === null) return;
   setState('loading');
@@ -191,6 +210,11 @@ function loadData(): void {
         M = bytes.modern ? parsePayload(bytes.modern) : null;
       } catch {
         M = null; /* modern layer is optional */
+      }
+      try {
+        O = bytes.origin ? parseOrigin(new TextDecoder('utf-8').decode(inflate(bytes.origin)), P.keys) : null;
+      } catch {
+        O = null; /* origins are optional */
       }
       setState('ready');
       lookupCache = Object.create(null) as Record<string, Entry | null>;
@@ -353,6 +377,26 @@ function chipFor(word: string): string | null {
   const entry = lookup(word);
   const g = entry ? shortGloss(entry) : null;
   return entry && g ? tidyGloss(g, entry.how !== 'exact') : null;
+}
+
+/** Origin suffix for a suggestion ("from Persian"), or null. Same gate as chipFor. */
+function chipOrigin(word: string): string | null {
+  if (hidden(word)) return null;
+  const entry = lookup(word);
+  return originChipLabel(originCode(entry));
+}
+
+/* Put the meaning (and a quiet origin suffix) into a gloss span. The accessible
+ * name gets ", from Persian" rather than the middle dot. */
+function fillGloss(span: HTMLElement, word: string, g: string | null): string {
+  span.textContent = g ? g : NO_ENTRY;
+  const o = g ? chipOrigin(word) : null;
+  if (!o) return span.textContent;
+  const suffix = document.createElement('span');
+  suffix.className = 'dict-origin';
+  suffix.textContent = ' \u00b7 ' + o;
+  span.appendChild(suffix);
+  return g + ', ' + o;
 }
 
 function modernChip(mo: ModernEntry | null): string | null {
@@ -550,6 +594,14 @@ function entryBlock(word: string, num: number | null, entry: Entry | null, moder
     tag.textContent = 'maybe: starts with this word';
   }
   if (tag.textContent) h.appendChild(tag);
+  const origin = originLabel(originCode(entry));
+  if (origin) {
+    const o = document.createElement('span');
+    o.className = 'dict-tag dict-tag-origin';
+    o.textContent = origin;
+    o.title = 'Word origin as marked in Praharaj\u2019s dictionary (1931\u201340)';
+    h.appendChild(o);
+  }
   block.appendChild(h);
 
   if (own) {
@@ -690,9 +742,9 @@ function augmentInlineBar(): void {
       const g = chipFor(word);
       const span = document.createElement('span');
       span.className = 'dict-gloss' + (g ? '' : ' dict-gloss-none');
-      span.textContent = g ? g : NO_ENTRY;
+      const spoken = fillGloss(span, word, g);
       btn.appendChild(span);
-      nameWithGloss(btn, span.textContent);
+      nameWithGloss(btn, spoken);
     }
     lastCandidates = next;
   } finally {
@@ -724,9 +776,9 @@ function augmentPicker(): void {
       const g = chipFor(textEl.textContent || '');
       const span = document.createElement('span');
       span.className = 'dict-gloss dict-gloss-picker' + (g ? '' : ' dict-gloss-none');
-      span.textContent = g ? g : NO_ENTRY;
+      const spoken = fillGloss(span, textEl.textContent || '', g);
       row.appendChild(span);
-      nameWithGloss(row, span.textContent);
+      nameWithGloss(row, spoken);
     }
   } finally {
     pickerAugmenting = false;
@@ -748,9 +800,11 @@ function augmentReadback(): void {
       const el = words[i] as HTMLElement;
       if (el.getAttribute('data-glossed') === '1') continue;
       el.setAttribute('data-glossed', '1');
-      const g = chipFor(el.getAttribute('data-odia') || '');
+      const odia = el.getAttribute('data-odia') || '';
+      const g = chipFor(odia);
       if (g) {
-        el.title = g;
+        const o = chipOrigin(odia);
+        el.title = o ? g + ' \u00b7 ' + o : g;
       } else {
         // Proposal 3.7: a word with no entry gets a dotted underline and
         // the screen-reader text "not a known word".

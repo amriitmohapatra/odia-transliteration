@@ -51,6 +51,52 @@ payloads are the committed `.b64` files above, base64-decoded without any other 
 | `Appv2/src/dictionary/modern.bin` | `fb2447b201335151d7c4425b0c4e8a6018ba1bcab7b2ad6cd97c2fdbc251b031` | = `modern_payload.b64` decoded. gzip; 40,589 entries |
 | `Appv2/src/dictionary/pako-inflate.js` | (vendored) | The trimmed pako build above, with its `window.__dictInflate` wrapper replaced by an ES `export`. MIT. |
 
+## V2.4: word origin (2026-10-04)
+
+`build/build_origin_map.py` reads the origin marks that Praharaj puts at the head of each
+entry (class: ସଂ. Sanskrit, ଦେ. native, ବୈଦେ. foreign, ପ୍ରାଦେ. regional, ଗ୍ରା. colloquial;
+then the source word in parentheses, e.g. `ବୈଦେ. ବି (ଫା. ସରକାର)` = Persian). Same source
+file and licence as the classical layer above (public domain). Python 3 stdlib only. The
+method, the tag table and the marks deliberately left unmapped are in the script's
+docstring; `python3 -m doctest build/build_origin_map.py` tests the tag rules.
+
+| File | sha256 | Note |
+|---|---|---|
+| `praharaj.babylon` (input) | `b60c01043c26598c26cb8085c130ef89ab92bb404367302a4257c6c35e0003eb` | Same copy as above |
+| `Appv2/src/dictionary/origin.bin` | `aac06339d526242f05153cac8444e97b6fd736033a983ed5a84c28c6b6cda7b1` | gzip (mtime 0, reproducible), 13,382 bytes; 74,760 bytes inflated |
+
+Format: line 1 `odia-origin 1 <TAB> 38776 <TAB> <FNV-1a 32 of the praharaj.bin keys>`, then
+one line per `praharaj.bin` key, in key order: the origin code, or empty. The app drops the
+file if the count or the checksum does not match `praharaj.bin` (a rebuilt payload without a
+rebuilt origin file shows no origins rather than wrong ones).
+
+Counts for the 38,776 keys of `praharaj.bin` (a key can carry more than one code):
+
+| Code | Label | Keys |
+|---|---|---|
+| S | Sanskrit (tatsama) | 19,667 |
+| D | native Odia (deshaja) | 6,547 |
+| T | native Odia, from Sanskrit (tadbhava) | 6,378 |
+| E | English | 1,148 |
+| P | Persian | 839 |
+| A | Arabic | 662 |
+| F | foreign, language not given | 361 |
+| H | Hindi | 61 |
+| B | Bengali | 26 |
+| K | Turkish | 19 |
+| G | Portuguese | 1 |
+| — | no origin found | 3,380 |
+
+244 keys have entries that disagree (homographs, e.g. one Sanskrit and one native entry);
+the file keeps both, in entry order (`S/D`).
+
+**Hindi is much rarer than the research note suggested.** The rough count in
+`plan/research/2026-10-04/02-dictionary-sources.md` (Hindi 4,749 by "first parenthesised
+tag") mostly counted `(ହି. ଶବ୍ଦସାଗର)`, a citation of the Hindi dictionary *Shabdasagar*
+inside Sanskrit entries. Read as origins, Praharaj marks 225 entries as Hindi; 61 keys of
+the shipped subset. Praharaj (1931–40) also predates most of today's Hindi borrowings in
+Odia news, so a word with no origin here may still be a recent loan.
+
 ## Open items
 
 1. Replace the `[mt]` rows (D-5). Candidate sources, all MIT-compatible: Samanantar/BPCC
@@ -64,3 +110,6 @@ payloads are the committed `.b64` files above, base64-decoded without any other 
 5. Praharaj's first sense is not always today's main sense. Example: ରଜ shows "Dust."
    though the owner chose ରଜ for the Raja festival. An owner gloss file is planned
    (`PLAN.md`, V2).
+6. Word origins (V2.4) cover what Praharaj marked in the 1930s. Recent loans (mostly
+   English and Hindi) are missing, and the label is the dictionary's, not a modern
+   etymology. Owner review of a sample is a follow-up.

@@ -151,6 +151,7 @@ body.dict-open #dict-panel { display: flex; }
 }
 .dict-entry-head {
   display: flex;
+  flex-wrap: wrap; /* the origin pill (V2.4) wraps under a long word */
   align-items: center;
   gap: 8px;
   margin-bottom: 6px;
@@ -181,6 +182,16 @@ body.dict-open #dict-panel { display: flex; }
   white-space: nowrap;
 }
 .dict-tag-none { font-style: italic; }
+/* Word origin from Praharaj's marks ("from Persian"), V2.4. Same pill, no
+ * border tint: it is information about the word, not a warning. */
+.dict-tag-origin {
+  white-space: normal;
+}
+/* The same origin as a quiet suffix of a suggestion's meaning chip. It
+ * inherits the chip's colour (muted, or the active item's colour). */
+.dict-gloss .dict-origin {
+  font-style: normal;
+}
 
 .dict-def {
   font-size: var(--fs-sm);
