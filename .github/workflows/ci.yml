@@ -37,6 +37,9 @@ jobs:
       - name: Everyday accuracy
         run: npx tsx tools/eval/everyday.ts
 
+      - name: Colloquial Odia (report only, unvalidated seed)
+        run: npx tsx tools/eval/colloquial.ts
+
       - name: Appv2 suite (no-regression, Sanskrit coverage, sloka)
         run: npx tsx Appv2/eval/run.ts
 

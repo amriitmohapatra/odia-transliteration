@@ -111,6 +111,7 @@ filtered.
 | Owner preferences | `core/data/preferences.tsv` | Owner | Yes |
 | Word labels | `core/data/labels.tsv` | Owner (empty until curated) | Yes |
 | Eval overrides | `core/test/golden/everyday-overrides.tsv` | Owner decisions | Yes |
+| Colloquial test set | `core/test/golden/colloquial.tsv` | Seed by agent, checked by owner (C-3) | Yes |
 | Dictionary | `Appv2/src/dictionary/*.bin` (from `Odia_Sanskrit_Appv2/build/*.b64`) | `Odia_Sanskrit_Appv2/build/*.py` | No |
 
 "-web" files are the pruned versions the browser loads (phone memory budget).
@@ -179,6 +180,8 @@ every result passes `canonical()`; cache by canonical text.
 | Held-out accuracy | `npm run eval` | Aksharantar test split, in-lexicon vs OOV, vs `baseline.json` |
 | Everyday accuracy | `npx tsx tools/eval/everyday.ts` | Real Odia round-trip, careful and casual |
 | Coverage | `npx tsx tools/eval/coverage.ts` | Every letter, matra, conjunct reachable |
+| Colloquial | `npx tsx tools/eval/colloquial.ts` | Spoken, slang, dialect forms by register (unvalidated seed) |
+| CI | `.github/workflows/ci.yml` | All of the above on every push |
 | Appv2 suite | `npx tsx Appv2/eval/run.ts` | Rule drift, theme, no-regression, Sanskrit coverage, śloka |
 | Browser | `tools/eval/webkit-check.py`, Playwright scripts | The app in a real engine |
 

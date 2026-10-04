@@ -48,7 +48,7 @@ whenever a task changes status. Last updated: 2026-10-04 (V1 in progress).
 | 1.1 | Owner preferences (`core/data/preferences.tsv`, `[weights] pref`) — `raja` → festival, `raajaa` → king | **Done** |
 | 1.2 | Family-safe filter (`core/data/labels.tsv`, on by default, `setFamilySafe`) | **Done** (list empty until C-1) |
 | 1.3 | Eval overrides for owner decisions (`everyday-overrides.tsv`) | **Done** |
-| 1.4 | Colloquial test set `core/test/golden/colloquial.tsv` + `tools/eval/colloquial.ts` (seeded, marked unvalidated) | To do |
+| 1.4 | Colloquial test set `core/test/golden/colloquial.tsv` + `tools/eval/colloquial.ts` (seeded, marked unvalidated) | **Done** — 26 rows; spoken top-1 71.4%, top-3 95.2%; 7 misses are the V2 work list |
 | 1.5 | Guard test for the filter with real data (after C-1) | Later |
 
 ### 3.2 Frontend (`Appv2/` → the V1 app)
@@ -69,15 +69,15 @@ layer, `ARCHITECTURE.md` §7). Two things are set up now so V3 starts safely:
 
 | # | Task | Status |
 |---|---|---|
-| 3.1 | `.env*` in `.gitignore` | To do |
+| 3.1 | `.env*` in `.gitignore` | **Done** |
 | 3.2 | `vercel.json`: build, output, `sw.js` headers | To do |
 
 ### 3.4 Quality, CI and release
 
 | # | Task | Status |
 |---|---|---|
-| 4.1 | Root `npm test` runs core, Appv2 and the fallback-page tests | To do |
-| 4.2 | GitHub Actions: tests, `gen-rules --check`, evals with delta on every push | To do |
+| 4.1 | Root `npm test` runs core, Appv2 and the fallback-page tests | **Done** |
+| 4.2 | GitHub Actions: tests, `gen-rules --check`, evals with delta on every push | **Done** (`.github/workflows/ci.yml`) |
 | 4.3 | Release = git tag + 5-line note (changes, numbers vs baseline, not tested, limits) | From first deploy |
 | 4.4 | Rollback = promote the previous Vercel deployment | From first deploy |
 | 4.5 | A rule for when `tools/eval/baseline.json` may be refreshed: only in its own commit, with the reason | To do |
@@ -144,4 +144,5 @@ Agents do not commit; the lead reviews, measures and commits.
 
 | Date | Change |
 |---|---|
+| 2026-10-04 | 1.4, 3.1, 4.1, 4.2 done. |
 | 2026-10-04 | Created. V0 done. V1 started: engine items 1.1–1.3 done. Guidebook practices added (§3.4, §4, 2.6). |
