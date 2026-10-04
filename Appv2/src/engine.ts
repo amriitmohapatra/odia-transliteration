@@ -93,6 +93,12 @@ export interface EngineHandle {
   ready: boolean;
   /** One short sentence for the status line. Empty when everything is fine. */
   note: string;
+  /**
+   * False when a word list (lexicon) the profile needs did not load: the
+   * engine still spells by rules, but the UI says the word list failed and
+   * offers Reload (V1 states).
+   */
+  wordList: boolean;
   profile: Profile;
 }
 
@@ -176,10 +182,14 @@ export function buildEngine(
       familySafe,
     });
 
+    // Every word list the profile names must have loaded: a missing one is a
+    // failed fetch in practice (the chunk exists in every build), and the
+    // mode is not what the user chose without it.
+    const wordList = sources.every((s) => s.lexicon.size > 0);
     const note = sources.every((s) => s.lexicon.size === 0)
       ? 'Rules only — no dictionary bundled yet.'
       : '';
-    return { engine, ready: true, note, profile };
+    return { engine, ready: true, note, profile, wordList };
   } catch (error) {
     // A generated rule file that fails core's validation lands here. Say so
     // rather than showing a blank page: the message is what makes it fixable.
@@ -208,7 +218,7 @@ function unigramsFor(key: AssetKey): Unigrams {
 }
 
 function degraded(profile: Profile, note: string): EngineHandle {
-  return { engine: verbatimEngine(), ready: false, note, profile };
+  return { engine: verbatimEngine(), ready: false, note, profile, wordList: false };
 }
 
 /** The one file a single-file glob matched, or undefined if it matched nothing. */

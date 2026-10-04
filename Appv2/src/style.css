@@ -436,15 +436,113 @@ textarea:focus {
   font-size: 16px;
 }
 
+/* The state line under the text box (main.ts updateStates). Loading is
+ * quiet text with a spinner; a failure is a filled warning line, so the two
+ * never look alike. */
 .status {
-  margin: 0 0 1.25rem;
-  min-height: 1.2em;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin: var(--space-2) 0 0;
   color: var(--muted);
   font-size: var(--fs-sm);
 }
 
-.status.warn {
+.status[hidden] {
+  display: none;
+}
+
+.status-loading::before {
+  content: '';
+  flex: none;
+  width: 14px;
+  height: 14px;
+  border: 2px solid var(--line);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.9s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .status-loading::before {
+    animation: none;
+    border-color: var(--accent);
+  }
+}
+
+.status-warn {
+  padding: 0.45rem 0.7rem;
+  border-radius: var(--radius-sm);
+  background: var(--warn-soft);
   color: var(--warn);
+  font-weight: 600;
+}
+
+/* Word list failed: a banner with the one thing to do. */
+.banner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  margin: var(--space-2) 0 0;
+  padding: 0.6rem 0.75rem;
+  border: 1px solid var(--warn);
+  border-radius: var(--radius-sm);
+  background: var(--warn-soft);
+  color: var(--warn);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+}
+
+.banner[hidden] {
+  display: none;
+}
+
+/* Offline status chip in the header. */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  margin-top: 0.25rem;
+  padding: 0.1rem 0.6rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--muted);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+}
+
+.chip[hidden] {
+  display: none;
+}
+
+.chip svg {
+  display: none;
+  flex: none;
+}
+
+.chip-ok {
+  border-color: var(--ok);
+  color: var(--ok);
+}
+
+.chip-ok svg {
+  display: block;
+}
+
+/* Copy while the box is empty: looks unavailable, still tappable so it can
+ * say why ("Type something first"). */
+.btn[aria-disabled='true'] {
+  border-color: var(--line);
+  background: var(--surface-soft);
+  color: var(--muted);
 }
 
 /* ------------------------------------------------------------------ *

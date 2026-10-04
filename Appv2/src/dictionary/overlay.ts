@@ -127,6 +127,19 @@ let M: Dict | null = null; // modern layer, same container format
 let state: LoadState = 'idle';
 let loader: DictionaryLoader | null = null;
 
+/** Load state, reported to the app (main.ts shows loading / failed lines). */
+export type DictionaryState = LoadState;
+let onState: ((s: DictionaryState) => void) | null = null;
+
+function setState(next: LoadState): void {
+  state = next;
+  try {
+    onState?.(next);
+  } catch {
+    /* the app's listener must never break the overlay */
+  }
+}
+
 function parsePayload(gz: Uint8Array): Dict {
   const inflated = inflate(gz);
   const text = new TextDecoder('utf-8').decode(inflated);
@@ -150,7 +163,7 @@ function parsePayload(gz: Uint8Array): Dict {
 
 function loadData(): void {
   if (state !== 'idle' || loader === null) return;
-  state = 'loading';
+  setState('loading');
   panelStatus('Unpacking dictionaries\u2026');
   let pending: Promise<DictionaryBytes>;
   try {
@@ -166,14 +179,14 @@ function loadData(): void {
       } catch {
         M = null; /* modern layer is optional */
       }
-      state = 'ready';
+      setState('ready');
       lookupCache = Object.create(null) as Record<string, Entry | null>;
       modernCache = Object.create(null) as Record<string, ModernEntry | null>;
       panelStatus('');
       refreshAll();
     })
     .catch(() => {
-      state = 'failed';
+      setState('failed');
       panelStatus('Dictionary failed to unpack — the app itself is unaffected.');
     });
 }
@@ -719,11 +732,12 @@ let started = false;
  * opens or the candidate bar first appears. Call once, after the app has
  * rendered its shell; later calls are ignored.
  */
-export function initDictionary(load: DictionaryLoader): void {
+export function initDictionary(load: DictionaryLoader, onStateChange?: (s: DictionaryState) => void): void {
   if (started) return;
   started = true;
   try {
     loader = load;
+    onState = onStateChange ?? null;
     buildPanel();
     observe();
     setTimeout(loadData, 400);

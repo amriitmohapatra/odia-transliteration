@@ -13,7 +13,7 @@
 import './style.css';
 import { badgeElement, InlineCandidates } from './inline.js';
 // After style.css: the overlay's stylesheet overrides parts of the caret bar.
-import { startDictionary } from './dictionary/index.js';
+import { startDictionary, type DictionaryState } from './dictionary/index.js';
 
 import { LocalStorageLearnStore } from '@odia/core';
 import type { DigitMode, WordResult } from '@odia/core/types';
@@ -45,6 +45,10 @@ const romanEl = must<HTMLTextAreaElement>('roman');
 const readbackRowEl = must<HTMLDivElement>('readback-row');
 const readbackEl = must<HTMLDivElement>('readback');
 const statusEl = must<HTMLParagraphElement>('status');
+const bannerEl = must<HTMLDivElement>('banner');
+const bannerReloadEl = must<HTMLButtonElement>('banner-reload');
+const offlineChipEl = must<HTMLSpanElement>('offline-chip');
+const offlineChipTextEl = must<HTMLSpanElement>('offline-chip-text');
 const copyEl = must<HTMLButtonElement>('copy');
 const clearEl = must<HTMLButtonElement>('clear');
 const digitsEl = must<HTMLInputElement>('toggle-digits');
@@ -92,6 +96,22 @@ const MODE_HINT: Record<ProfileId, string> = {
 
 /** How many candidates the picker offers. */
 const TOPK = 8;
+
+/* V1 states (proposal 3.11). Copy deck strings. */
+const LOADING_WORDS = 'Loading words\u2026 your text will convert in a moment';
+const LOADING_MEANINGS = 'Loading meanings\u2026';
+const MEANINGS_FAILED = 'Meanings are unavailable right now. Typing still works.';
+const EMPTY_COPY = 'Type something first';
+
+type Phase = 'loading' | 'ready' | 'failed';
+/** The engine and its word list: loading until built, failed if degraded. */
+let enginePhase: Phase = 'loading';
+/** What is loading while a mode switch fetches its word list. */
+let loadingText = LOADING_WORDS;
+let dictPhase: DictionaryState = 'idle';
+/** A note from the engine or an error (setStatus). */
+let note = '';
+let noteWarn = false;
 
 /**
  * `?debug=1` shows engine detail (the LEXICON / RULE source of each
@@ -152,7 +172,7 @@ async function boot(): Promise<void> {
   dockCopy.addEventListener('click', onCopy);
   inline.toolbar.append(dockCopy);
 
-  setStatus('Loading dictionary\u2026', false);
+  updateStates();
   render(); // paint the empty shell immediately
 
   await loadProfileAssets(profileId);
@@ -162,7 +182,10 @@ async function boot(): Promise<void> {
   convertInPlace();
   inline.setEnabled(!strictEl.checked);
   render();
-  startDictionary(); // glosses + side panel; its data loads lazily
+  startDictionary((s) => {
+    dictPhase = s;
+    updateStates();
+  }); // glosses + side panel; its data loads lazily
 
   void buildPalette();
   registerServiceWorker();
@@ -181,7 +204,10 @@ function digitMode(): DigitMode {
 function rebuildEngine(): void {
   // familySafe on EVERY rebuild (digits, mode), or it would silently reset.
   handle = buildEngine(profileId, digitMode(), learnStore, familySafeEl.checked);
-  setStatus(handle.note, !handle.ready || handle.note.length > 0);
+  enginePhase = handle.ready && handle.wordList ? 'ready' : 'failed';
+  loadingText = LOADING_WORDS;
+  // The degraded engine's own note is for engineers; the banner says it plainly.
+  setStatus(handle.ready ? handle.note : '', false);
   profileHintEl.textContent = MODE_HINT[profileId];
 }
 
@@ -207,8 +233,6 @@ function scheduleRender(): void {
  * how the result reads.
  */
 function render(): void {
-  if (handle) setStatus(handle.note, !handle.ready || handle.note.length > 0);
-
   const engine = handle?.engine;
   const raw = romanEl.value;
   const caret = document.activeElement === romanEl ? romanEl.selectionEnd : null;
@@ -266,7 +290,8 @@ function renderReadback(): void {
 
   readbackEl.replaceChildren(fragment);
   readbackRowEl.hidden = !hasWords(slots);
-  inline?.setNote(hasWords(slots) ? `Reads as: ${tail(readbackText(slots), 60)}` : '');
+  updateStripNote();
+  updateCopyState();
 }
 
 /** The last `max` characters, with an ellipsis at the start when cut. */
@@ -389,7 +414,9 @@ async function onProfileChange(): Promise<void> {
   // The Sanskrit lexicon is its own lazily-globbed chunk, so the first switch
   // into a profile that uses it is a fetch. Say so rather than appearing to
   // hang: on a cold load over a slow link it is a megabyte.
-  setStatus('Switching mode\u2026', false);
+  enginePhase = 'loading';
+  loadingText = next === 'sloka' ? 'Switching to \u015Aloka (verse)\u2026' : 'Switching mode\u2026';
+  updateStates();
   buildProfileSelect();
   await loadProfileAssets(profileId);
 
@@ -633,11 +660,11 @@ function closeSettings(): void {
  * first async thing in this handler.
  */
 function onCopy(): void {
-  const text = copyText();
-  if (text.length === 0) {
-    toast('Nothing to copy', true);
+  if (romanEl.value.trim().length === 0) {
+    toast(EMPTY_COPY, true);
     return;
   }
+  const text = copyText();
 
   const clipboard = navigator.clipboard;
   if (clipboard && typeof clipboard.writeText === 'function') {
@@ -711,8 +738,81 @@ function toast(text: string, isError = false): void {
 }
 
 function setStatus(text: string, warn: boolean): void {
-  statusEl.textContent = text;
-  statusEl.classList.toggle('warn', warn && text.length > 0);
+  note = text;
+  noteWarn = warn && text.length > 0;
+  updateStates();
+}
+
+/* ------------------------------------------------------------------ *
+ * States: loading, failures, empty (proposal 3.11)
+ * ------------------------------------------------------------------ */
+
+type StatusKind = 'loading' | 'warn' | 'note';
+
+/** The one line under the text box, most important first. */
+function currentStatus(): { text: string; kind: StatusKind } | undefined {
+  if (enginePhase === 'loading') return { text: loadingText, kind: 'loading' };
+  if (note && noteWarn) return { text: note, kind: 'warn' };
+  if (dictPhase === 'failed') return { text: MEANINGS_FAILED, kind: 'warn' };
+  if (dictPhase === 'loading') return { text: LOADING_MEANINGS, kind: 'loading' };
+  if (note) return { text: note, kind: 'note' };
+  return undefined;
+}
+
+function updateStates(): void {
+  const status = currentStatus();
+  statusEl.hidden = status === undefined;
+  statusEl.textContent = status?.text ?? '';
+  statusEl.className = `status status-${status?.kind ?? 'note'}`;
+  bannerEl.hidden = enginePhase !== 'failed';
+  document.body.classList.toggle('dict-failed', dictPhase === 'failed');
+  updateStripNote();
+}
+
+/**
+ * The phone strip's one-line note: a loading or failure message wins over
+ * the read-back summary, so the state is visible with the keyboard open.
+ */
+function updateStripNote(): void {
+  const status = currentStatus();
+  if (enginePhase === 'failed') inline?.setNote("The word list didn't load.");
+  else if (status && status.kind !== 'note' && status.text !== LOADING_MEANINGS) inline?.setNote(status.text);
+  else inline?.setNote(hasWords(slots) ? `Reads as: ${tail(readbackText(slots), 60)}` : '');
+}
+
+/** Copy looks disabled while the box is empty, and says why on tap (H8). */
+function updateCopyState(): void {
+  const empty = romanEl.value.trim().length === 0;
+  for (const button of [copyEl, document.getElementById('copy-dock')]) {
+    if (!button) continue;
+    if (empty) button.setAttribute('aria-disabled', 'true');
+    else button.removeAttribute('aria-disabled');
+  }
+}
+
+/* ------------------------------------------------------------------ *
+ * Offline chip
+ * ------------------------------------------------------------------ */
+
+let registration: ServiceWorkerRegistration | undefined;
+
+/**
+ * "Works offline" once the service worker is active, "Saving for offline\u2026"
+ * while it installs, nothing when there is no worker (dev, single file).
+ */
+function updateOfflineChip(): void {
+  const reg = registration;
+  let text = '';
+  let ready = false;
+  if (reg?.active) {
+    ready = true;
+    text = navigator.onLine === false ? 'Offline \u00B7 still works' : 'Works offline';
+  } else if (reg?.installing || reg?.waiting) {
+    text = 'Saving for offline\u2026';
+  }
+  offlineChipEl.hidden = text.length === 0;
+  offlineChipEl.classList.toggle('chip-ok', ready);
+  offlineChipTextEl.textContent = text;
 }
 
 function guard<T>(fn: () => T, fallback: T): T {
@@ -786,6 +886,9 @@ function bindEvents(): void {
   });
 
   copyEl.addEventListener('click', onCopy);
+  bannerReloadEl.addEventListener('click', () => window.location.reload());
+  window.addEventListener('online', updateOfflineChip);
+  window.addEventListener('offline', updateOfflineChip);
 
   clearEl.addEventListener('click', () => {
     romanEl.value = '';
@@ -850,9 +953,24 @@ function registerServiceWorker(): void {
   if (!('serviceWorker' in navigator)) return;
 
   const register = (): void => {
-    navigator.serviceWorker.register('./sw.js', { scope: './' }).catch(() => {
-      /* insecure origin, private mode, or unsupported: nothing to do */
-    });
+    navigator.serviceWorker
+      .register('./sw.js', { scope: './' })
+      .then((reg) => {
+        registration = reg;
+        const watch = (worker: ServiceWorker | null): void => {
+          worker?.addEventListener('statechange', updateOfflineChip);
+        };
+        watch(reg.installing);
+        watch(reg.waiting);
+        reg.addEventListener('updatefound', () => {
+          watch(reg.installing);
+          updateOfflineChip();
+        });
+        updateOfflineChip();
+      })
+      .catch(() => {
+        /* insecure origin, private mode, or unsupported: no chip */
+      });
   };
   // This runs at the end of boot(), after awaited asset loads, so the 'load'
   // event has usually fired already. Waiting for it then meant the worker
