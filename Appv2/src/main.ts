@@ -58,6 +58,7 @@ const modeEverydayEl = must<HTMLInputElement>('mode-everyday');
 const modeSlokaEl = must<HTMLInputElement>('mode-sloka');
 const classicEl = must<HTMLInputElement>('toggle-classic');
 const familySafeEl = must<HTMLInputElement>('toggle-family-safe');
+const textSizeEls = Array.from(document.querySelectorAll<HTMLInputElement>('input[name="text-size"]'));
 const profileHintEl = must<HTMLElement>('profile-hint');
 const paletteEl = must<HTMLDivElement>('palette');
 const shortcutsEl = must<HTMLElement>('shortcuts');
@@ -84,6 +85,15 @@ const PREF_DIGITS = 'odia.pref.digits';
 const PREF_STRICT = 'odia.pref.strict';
 /** "Hide rude words". ON by default: a missing key reads as on. */
 const PREF_FAMILY_SAFE = 'odia.pref.familySafe';
+/**
+ * Settings > Text size: 'normal' | 'large' | 'xl', missing = normal. Applied as
+ * a class on <html> that multiplies the --fs-* scale (style.css). The inline
+ * script in index.html reads the same key before first paint.
+ */
+const PREF_TEXT_SIZE = 'odia.pref.textSize';
+const TEXT_SIZES = ['normal', 'large', 'xl'] as const;
+type TextSize = (typeof TEXT_SIZES)[number];
+const TEXT_SIZE_CLASS: Record<TextSize, string> = { normal: '', large: 'text-large', xl: 'text-xl' };
 
 /**
  * Declared before boot() runs (it is called at module load), like every
@@ -161,6 +171,7 @@ async function boot(): Promise<void> {
   digitsEl.checked = readPref(PREF_DIGITS);
   strictEl.checked = readPref(PREF_STRICT);
   familySafeEl.checked = readPref(PREF_FAMILY_SAFE, true);
+  applyTextSize(readTextSize());
   profileId = readProfilePref();
 
   buildProfileSelect();
@@ -1010,13 +1021,39 @@ function message(error: unknown): string {
   return error instanceof Error ? error.message : String(error);
 }
 
+/** The stored string, or null when nothing is stored or storage is unavailable. */
+function readStored(key: string): string | null {
+  try {
+    return localStorage.getItem(key);
+  } catch {
+    return null;
+  }
+}
+
 /** A stored '1' / '0' switch. `fallback` when nothing is stored or storage is unavailable. */
 function readPref(key: string, fallback = false): boolean {
+  const stored = readStored(key);
+  return stored === null ? fallback : stored === '1';
+}
+
+function readTextSize(): TextSize {
+  const stored = readStored(PREF_TEXT_SIZE);
+  return (TEXT_SIZES as readonly string[]).includes(stored ?? '') ? (stored as TextSize) : 'normal';
+}
+
+/** Set the <html> class that scales the type, and check the matching radio. */
+function applyTextSize(size: TextSize): void {
+  const root = document.documentElement;
+  for (const cls of Object.values(TEXT_SIZE_CLASS)) if (cls) root.classList.remove(cls);
+  if (TEXT_SIZE_CLASS[size]) root.classList.add(TEXT_SIZE_CLASS[size]);
+  for (const radio of textSizeEls) radio.checked = radio.value === size;
+}
+
+function writeTextSize(size: TextSize): void {
   try {
-    const stored = localStorage.getItem(key);
-    return stored === null ? fallback : stored === '1';
+    localStorage.setItem(PREF_TEXT_SIZE, size);
   } catch {
-    return fallback;
+    /* storage unavailable; the size still applies for this session */
   }
 }
 
@@ -1100,6 +1137,16 @@ function bindEvents(): void {
     inline?.setEnabled(!strictEl.checked); // re-rank the open suggestions
     render();
   });
+
+  for (const radio of textSizeEls) {
+    radio.addEventListener('change', () => {
+      if (!radio.checked || !(TEXT_SIZES as readonly string[]).includes(radio.value)) return;
+      const size = radio.value as TextSize;
+      applyTextSize(size);
+      writeTextSize(size);
+      render(); // the suggestion bar and strip re-measure with the new size
+    });
+  }
 
   strictEl.addEventListener('change', () => {
     writePref(PREF_STRICT, strictEl.checked);

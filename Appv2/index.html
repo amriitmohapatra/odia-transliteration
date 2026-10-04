@@ -27,6 +27,18 @@
     <link rel="icon" type="image/png" sizes="192x192" href="./icons/icon-192.png" />
     <link rel="icon" type="image/png" sizes="512x512" href="./icons/icon-512.png" />
     <link rel="apple-touch-icon" href="./icons/apple-touch-icon-180.png" />
+
+    <!-- Text size (Settings) before first paint, so the page does not jump.
+         main.ts owns the setting; this only applies the stored value. -->
+    <script>
+      try {
+        var size = localStorage.getItem('odia.pref.textSize');
+        if (size === 'large') document.documentElement.classList.add('text-large');
+        if (size === 'xl') document.documentElement.classList.add('text-xl');
+      } catch (e) {
+        /* storage unavailable: normal size */
+      }
+    </script>
   </head>
 
   <body>
@@ -464,6 +476,27 @@
               <span class="setting-help">Write numbers as <span class="odia" lang="or">୧୨୩</span> instead of 123.</span>
             </span>
           </label>
+
+          <div class="setting-block">
+            <span class="setting-label" id="text-size-label">Text size</span>
+            <div class="segmented" role="radiogroup" aria-labelledby="text-size-label">
+              <label class="segment">
+                <input type="radio" name="text-size" id="text-size-normal" value="normal" />
+                <span>Normal</span>
+              </label>
+              <label class="segment">
+                <input type="radio" name="text-size" id="text-size-large" value="large" />
+                <span>Large</span>
+              </label>
+              <label class="segment">
+                <input type="radio" name="text-size" id="text-size-xl" value="xl" />
+                <span>Extra large</span>
+              </label>
+            </div>
+            <p class="text-size-preview" aria-hidden="true">
+              <span class="odia" lang="or">କେମିତି ଅଛ</span> &mdash; how are you?
+            </p>
+          </div>
 
           <h3 class="settings-section">Advanced</h3>
           <label class="setting">
