@@ -1,0 +1,52 @@
+# Checks on every push and pull request. Owner's guidebook practice: a broken
+# branch is caught by a machine, not by luck. Each step prints its numbers, so
+# the run log is the evidence for a change.
+name: ci
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      - name: Tests (core, Appv2, fallback page)
+        run: npm test
+
+      - name: Appv2 rule files are up to date
+        run: npx tsx Appv2/scripts/gen-rules.ts --check
+
+      - name: Build the engine
+        run: npm run build -w @odia/core
+
+      - name: Held-out accuracy (delta vs tools/eval/baseline.json)
+        run: npm run eval
+
+      - name: Everyday accuracy
+        run: npx tsx tools/eval/everyday.ts
+
+      - name: Appv2 suite (no-regression, Sanskrit coverage, sloka)
+        run: npx tsx Appv2/eval/run.ts
+
+      # Known open problem (AGENTS.md section 7.1): some letters are not reachable
+      # in the top 9, so this exits non-zero today. Reported, not blocking.
+      - name: Orthographic coverage (report only)
+        run: npx tsx tools/eval/coverage.ts
+        continue-on-error: true
+
+      - name: Build the web apps
+        run: |
+          npm run build -w @odia/web
+          npx vite build --config Appv2/vite.config.ts

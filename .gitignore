@@ -9,3 +9,8 @@ tools/build-data/raw/
 __pycache__/
 # 224 MB, over GitHub's 100 MB per-file limit; stays on the Mac
 tools/build-data/webcorpus/raw-archive-books.jsonl
+# Secrets for the planned assist layer (V3). Keys live only in Vercel
+# environment variables; never commit them.
+.env
+.env.*
+!.env.example
