@@ -35,18 +35,49 @@
         <span class="mark odia" aria-hidden="true">ଓ</span>
         <div>
           <h1>Odia Phonetic</h1>
-          <p class="tagline">Odia and Sanskrit, in Odia script. Works with the network off.</p>
+          <p class="tagline">Odia and Sanskrit, in Odia script.</p>
+          <!-- Offline status (main.ts updateOfflineChip). Hidden without a
+               service worker (dev server, single-file build). -->
+          <span id="offline-chip" class="chip" hidden>
+            <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>
+            <span id="offline-chip-text"></span>
+          </span>
         </div>
+        <button
+          type="button"
+          id="open-settings"
+          class="btn btn-quiet icon-btn"
+          aria-haspopup="dialog"
+          aria-controls="settings"
+          aria-label="Settings"
+        >
+          <!-- A "sliders" glyph drawn for this app (no third-party icon set). -->
+          <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h10M18 6h2M4 12h4M12 12h8M4 18h12"/><circle cx="16" cy="6" r="2"/><circle cx="10" cy="12" r="2"/><circle cx="18" cy="18" r="2"/></svg>
+          <span class="icon-btn-label">Settings</span>
+        </button>
       </header>
 
       <main>
         <section class="pane">
+          <!--
+            Mode. Labels only: the profile ids stay 'everyday' | 'unified' |
+            'sloka' (Appv2/eval/no-regression.ts and the stored
+            odia.pref.profile depend on them). "Everyday" runs the 'unified'
+            profile; the original 'everyday' profile is Settings > Advanced >
+            Classic engine. Native radios, so arrow keys work.
+          -->
+          <div class="segmented" role="radiogroup" aria-label="Mode">
+            <label class="segment">
+              <input type="radio" name="mode" id="mode-everyday" value="everyday" />
+              <span>Everyday</span>
+            </label>
+            <label class="segment">
+              <input type="radio" name="mode" id="mode-sloka" value="sloka" />
+              <span>&#x15A;loka (verse)</span>
+            </label>
+          </div>
           <div class="pane-head">
-            <label class="pane-label" for="roman">English (phonetic)</label>
-            <span class="pane-hint">
-              <label class="mode-label" for="profile">Mode</label>
-              <select id="profile" class="mode-select"></select>
-            </span>
+            <label class="pane-label" for="roman">Type in English letters</label>
           </div>
           <textarea
             id="roman"
@@ -56,8 +87,39 @@
             autocomplete="off"
             spellcheck="false"
             enterkeyhint="enter"
-            placeholder="dhyaana balaatitam naanyam balam |"
+            placeholder="Type here, e.g. kemiti achha…"
           ></textarea>
+          <!--
+            States next to the text, not at the bottom of the page (proposal
+            3.11): loading words / meanings (quiet, with a spinner), meanings
+            failed (warning line), word list failed (banner with Reload).
+          -->
+          <p id="status" class="status" role="status" aria-live="polite" hidden></p>
+          <div id="banner" class="banner" role="alert" hidden>
+            <span id="banner-text">The word list didn't load. Check your connection once, then reload.</span>
+            <button type="button" id="banner-reload" class="btn btn-small">Reload</button>
+          </div>
+          <!--
+            "Reads as": one romanised word per Odia word in the box, worked out
+            from the Odia letters (src/readback.ts). Each word is a button that
+            opens the Alternatives sheet for it. Replaces the separate ODIA
+            output box (audit H1): the text box is the only composing surface.
+            DOM CONTRACT: src/dictionary/overlay.ts reads #readback .rb-word and
+            its data-odia attribute (the Odia word; the button text is Latin).
+          -->
+          <div class="readback" id="readback-row" hidden>
+            <div class="readback-head">
+              <span class="readback-label" id="readback-label">Reads as</span>
+              <span class="readback-hint">tap a word to change it</span>
+            </div>
+            <div
+              id="readback"
+              class="readback-words"
+              lang="en"
+              translate="no"
+              aria-labelledby="readback-label"
+            ></div>
+          </div>
           <p class="mode-hint" id="profile-hint"></p>
         </section>
 
@@ -72,36 +134,10 @@
         -->
         <div id="palette" class="palette" aria-label="Insert a rare mark" hidden></div>
 
-        <section class="pane">
-          <div class="pane-head">
-            <span class="pane-label" id="output-label">Odia</span>
-            <span class="pane-hint" id="output-hint">tap a word for alternatives</span>
-          </div>
-          <div
-            id="output"
-            class="output odia"
-            aria-labelledby="output-label"
-            data-placeholder="ଧ୍ୟାନ ବଳାତିତଂ ନାନ୍ୟଂ ବଳଂ ।"
-          ></div>
-        </section>
-
         <div class="actions">
           <button type="button" id="copy" class="btn btn-primary">Copy Odia</button>
           <button type="button" id="clear" class="btn">Clear</button>
         </div>
-
-        <div class="toggles">
-          <label class="switch">
-            <input type="checkbox" id="toggle-digits" />
-            <span>Odia numerals <span class="odia">୦-୯</span></span>
-          </label>
-          <label class="switch">
-            <input type="checkbox" id="toggle-strict" />
-            <span>Strict ITRANS</span>
-          </label>
-        </div>
-
-        <p id="status" class="status" role="status"></p>
 
         <details class="guide">
           <summary>What to type</summary>
@@ -258,8 +294,9 @@
           </p>
 
           <p class="note">
-            <strong>Strict ITRANS</strong> turns off guessing entirely: one roman spelling, one Odia
-            output, no candidates. Useful when you know exactly what you want.
+            <strong>Exact spelling</strong> (Settings, Advanced) turns off guessing entirely: one
+            roman spelling, one Odia output, no suggestions. It follows the ITRANS scheme. Useful
+            when you know exactly what you want.
           </p>
         </details>
 
@@ -267,19 +304,20 @@
           <summary>Typing Sanskrit</summary>
 
           <p class="note">
-            Three modes. <strong>Everyday</strong> is the original engine, unchanged.
-            <strong>Odia + Sanskrit</strong> is the default — ordinary Odia leads, Sanskrit
-            spellings sit a slot or two down. <strong>Śloka</strong> flips the ranking for
+            Two modes. <strong>Everyday</strong> is the default — ordinary Odia leads, Sanskrit
+            spellings sit a slot or two down. <strong>Śloka (verse)</strong> flips the ranking for
             verse: a word-final <span class="odia">ଂ</span> beats
             <span class="odia">ମ</span>, <span class="odia">ଳ</span> beats
             <span class="odia">ଲ</span>, and the Sanskrit vocalics become typeable.
+            The original engine, without Sanskrit forms, is <strong>Classic engine</strong> in
+            Settings, Advanced.
           </p>
 
           <h3>Marks you can type directly</h3>
           <ul class="shortcuts" id="shortcuts"></ul>
 
           <p class="note">
-            Anything rarer is on the palette above the output. Hover or long-press a key to
+            Anything rarer is on the palette under the text box. Hover or long-press a key to
             see what it is and how else to reach it.
           </p>
 
@@ -371,10 +409,7 @@
       </main>
 
       <footer class="colophon">
-        <p>
-          Everything runs on this device. No network call, ever — see
-          <code>plan/04-scope.md</code>.
-        </p>
+        <p>Everything runs on this device. Nothing you type is sent anywhere.</p>
       </footer>
     </div>
 
@@ -387,6 +422,59 @@
           <button type="button" class="btn btn-small" data-picker-close>Done</button>
         </div>
         <ul id="picker-list" class="picker-list"></ul>
+      </div>
+    </div>
+
+    <!--
+      Settings sheet. Same bottom-sheet pattern as the picker (classes shared,
+      ids separate: #picker-list is a dictionary-overlay contract and must stay
+      unique to the Alternatives sheet).
+    -->
+    <div id="settings" class="picker sheet" hidden>
+      <div class="picker-scrim" data-settings-close></div>
+      <div class="picker-panel" role="dialog" aria-modal="true" aria-labelledby="settings-title">
+        <div class="picker-head">
+          <h2 id="settings-title">Settings</h2>
+          <button type="button" class="btn btn-small" data-settings-close>Done</button>
+        </div>
+        <div class="settings-body">
+          <label class="setting">
+            <input type="checkbox" id="toggle-family-safe" role="switch" checked />
+            <span class="setting-text">
+              <span class="setting-label">Hide rude words</span>
+              <span class="setting-help">
+                Rude and swear words are not suggested. You can still type them on purpose.
+              </span>
+            </span>
+          </label>
+
+          <label class="setting">
+            <input type="checkbox" id="toggle-digits" role="switch" />
+            <span class="setting-text">
+              <span class="setting-label">Odia digits <span class="odia" lang="or">୧୨୩</span></span>
+              <span class="setting-help">Write numbers as <span class="odia" lang="or">୧୨୩</span> instead of 123.</span>
+            </span>
+          </label>
+
+          <h3 class="settings-section">Advanced</h3>
+          <label class="setting">
+            <input type="checkbox" id="toggle-classic" role="switch" />
+            <span class="setting-text">
+              <span class="setting-label">Classic engine</span>
+              <span class="setting-help">The original word list without Sanskrit forms.</span>
+            </span>
+          </label>
+          <label class="setting">
+            <input type="checkbox" id="toggle-strict" role="switch" />
+            <span class="setting-text">
+              <span class="setting-label">Exact spelling (no guessing)</span>
+              <span class="setting-help">
+                One English spelling gives one Odia spelling. No suggestions. For people who know
+                the ITRANS scheme.
+              </span>
+            </span>
+          </label>
+        </div>
       </div>
     </div>
 

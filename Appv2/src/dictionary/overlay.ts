@@ -8,9 +8,20 @@
  * (praharaj.bin / modern.bin are the base64-decoded payloads recorded there).
  *
  * It is layered on top of the app by watching the DOM the app renders (the
- * caret candidate bar, the alternatives picker, the output words), so the app
- * modules do not need to know it exists. Everything is defensive: if any of
- * this fails, the app underneath keeps working exactly as before.
+ * caret candidate bar, the alternatives picker, the read-back words), so the
+ * app modules do not need to know it exists. Everything is defensive: if any
+ * of this fails, the app underneath keeps working exactly as before.
+ *
+ * DOM CONTRACT (the other end is commented in the file named):
+ *   div.inline-candidates > button.inline-candidate > .inline-text
+ *       the suggestion bar / phone strip            (Appv2/src/inline.ts)
+ *       `.inline-latin` items (kept English) are skipped.
+ *   #picker-list > li > button.candidate > .text
+ *       the Alternatives sheet                       (Appv2/src/main.ts)
+ *   #readback .rb-word[data-odia]
+ *       the "Reads as" words; the Odia word is in data-odia because the
+ *       button text is Latin                         (Appv2/src/main.ts,
+ *       Appv2/index.html). Until V1 this was #output .word.
  *
  * The module reads no script tags and no window globals. Its data arrives
  * through the `load` callback passed to `initDictionary()`, which is called
@@ -116,6 +127,19 @@ let M: Dict | null = null; // modern layer, same container format
 let state: LoadState = 'idle';
 let loader: DictionaryLoader | null = null;
 
+/** Load state, reported to the app (main.ts shows loading / failed lines). */
+export type DictionaryState = LoadState;
+let onState: ((s: DictionaryState) => void) | null = null;
+
+function setState(next: LoadState): void {
+  state = next;
+  try {
+    onState?.(next);
+  } catch {
+    /* the app's listener must never break the overlay */
+  }
+}
+
 function parsePayload(gz: Uint8Array): Dict {
   const inflated = inflate(gz);
   const text = new TextDecoder('utf-8').decode(inflated);
@@ -139,8 +163,8 @@ function parsePayload(gz: Uint8Array): Dict {
 
 function loadData(): void {
   if (state !== 'idle' || loader === null) return;
-  state = 'loading';
-  panelStatus('Unpacking dictionaries…');
+  setState('loading');
+  panelStatus('Unpacking dictionaries\u2026');
   let pending: Promise<DictionaryBytes>;
   try {
     pending = loader();
@@ -155,14 +179,14 @@ function loadData(): void {
       } catch {
         M = null; /* modern layer is optional */
       }
-      state = 'ready';
+      setState('ready');
       lookupCache = Object.create(null) as Record<string, Entry | null>;
       modernCache = Object.create(null) as Record<string, ModernEntry | null>;
       panelStatus('');
       refreshAll();
     })
     .catch(() => {
-      state = 'failed';
+      setState('failed');
       panelStatus('Dictionary failed to unpack — the app itself is unaffected.');
     });
 }
@@ -278,39 +302,43 @@ const MODERN_LABEL: Record<string, string> = {
   cldr: 'standard modern name (CLDR)',
 };
 
-/* The chip line for a word: modern gloss first (today's usage), the
- * Praharaj gloss after it, separated by a middle dot. Either may be
- * missing; approximate matches carry a leading ≈. */
+/* One short meaning per suggestion (plan/design/v1-ux-proposal.md 3.6):
+ * the modern layer's first sense if there is one, else the first Praharaj
+ * sense, never both joined. Cut at the first ";", no trailing full stop. A
+ * stem or prefix match is approximate and says so in words ("maybe:"), not
+ * with a symbol.
+ *
+ * A modern line tagged `loan` is NOT used as the meaning. The loan detector
+ * has false positives that a parent sees first (KEMITI, "how", came out as
+ * "English: committee", audit B5), and there is no confidence score to keep
+ * only the sure ones, so such words fall through to the dictionary. */
 function chipFor(word: string): string | null {
+  const m = modernChip(lookupModern(word));
+  if (m) return m;
   const entry = lookup(word);
-  const mo = lookupModern(word);
-  const parts: string[] = [];
-  const m = modernChip(mo);
-  if (m) parts.push(m);
-  const g = entry ? prefixed(entry, shortGloss(entry)) : null;
-  if (g) parts.push(g);
-  if (!parts.length) return null;
-  let chip = parts.join('  ·  ');
-  if (chip.length > 72) chip = chip.slice(0, 72).replace(/\s+\S*$/, '') + '\u2026';
-  return chip;
-}
-
-function prefixed(entry: Entry, gloss: string | null): string | null {
-  if (!gloss) return null;
-  return (entry.how !== 'exact' ? '≈ ' : '') + gloss;
+  const g = entry ? shortGloss(entry) : null;
+  return entry && g ? tidyGloss(g, entry.how !== 'exact') : null;
 }
 
 function modernChip(mo: ModernEntry | null): string | null {
-  if (!mo || !mo.lines.length) return null;
-  const line = mo.lines[0] as ModernLine;
-  let g = line.tag === 'loan' ? 'English: ' + line.gloss : (line.gloss.split(';')[0] as string);
-  if (g.length > 44) g = g.slice(0, 44).replace(/\s+\S*$/, '') + '\u2026';
-  return (mo.how !== 'exact' ? '≈ ' : '') + g;
+  if (!mo) return null;
+  const line = mo.lines.find((l) => l.tag !== 'loan');
+  return line ? tidyGloss(line.gloss, mo.how !== 'exact') : null;
 }
+
+function tidyGloss(gloss: string, approximate: boolean): string | null {
+  let g = (gloss.split(';')[0] as string).replace(/\s+/g, ' ').trim().replace(/[\s.,:]+$/, '');
+  if (g.length < 2) return null;
+  if (g.length > 56) g = g.slice(0, 56).replace(/\s+\S*$/, '') + '\u2026';
+  return (approximate ? 'maybe: ' : '') + g;
+}
+
+/** Shown where a suggestion has no dictionary entry (was a faint dot). */
+const NO_ENTRY = 'not a known word';
 
 /* Short English gloss for the inline chip.
  *
- * Entries open "<headword> — Translit …", so the FIRST Latin run is the
+ * Entries open "<headword> — Translit \u2026", so the FIRST Latin run is the
  * romanisation, not the meaning. Skip that, then prefer the English text of
  * sense 1 ("1. Trouble; distress"), then any Latin run after a dash. */
 const glossCache = Object.create(null) as Record<string, string | null>;
@@ -377,7 +405,7 @@ function buildPanel(): void {
   const search = document.createElement('input');
   search.type = 'search';
   search.className = 'dict-search odia';
-  search.placeholder = '\u0b16\u0b4b\u0b1c\u0b28\u0b4d\u0b24\u0b41…  (search any Odia word)';
+  search.placeholder = '\u0b16\u0b4b\u0b1c\u0b28\u0b4d\u0b24\u0b41\u2026  (search any Odia word)';
   search.setAttribute('aria-label', 'Search the dictionary');
   search.addEventListener('input', debounce(onSearch, 160));
   searchInput = search;
@@ -458,12 +486,12 @@ function entryBlock(word: string, num: number | null, entry: Entry | null, moder
   const tag = document.createElement('span');
   tag.className = 'dict-tag';
   if (!entry && !modern) {
-    tag.textContent = 'no entry';
+    tag.textContent = NO_ENTRY;
     tag.classList.add('dict-tag-none');
   } else if (entry && entry.how === 'stem') {
-    tag.textContent = '≈ stem';
+    tag.textContent = 'maybe: a form of this word';
   } else if (entry && entry.how === 'prefix') {
-    tag.textContent = '≈ begins with';
+    tag.textContent = 'maybe: starts with this word';
   }
   if (tag.textContent) h.appendChild(tag);
   block.appendChild(h);
@@ -476,11 +504,11 @@ function entryBlock(word: string, num: number | null, entry: Entry | null, moder
       row.className = 'dict-modern-row';
       const lab = document.createElement('span');
       lab.className = 'dict-modern-tag dict-modern-tag-' + line.tag;
-      lab.textContent = line.tag === 'loan' ? 'loan' : line.tag === 'cldr' ? 'name' : 'modern';
+      lab.textContent = line.tag === 'loan' ? 'English word?' : line.tag === 'cldr' ? 'name' : 'today';
       lab.title = MODERN_LABEL[line.tag] || line.tag;
       const val = document.createElement('span');
       val.className = 'dict-modern-gloss';
-      val.textContent = (modern.how !== 'exact' ? '≈ ' : '') + line.gloss;
+      val.textContent = (modern.how !== 'exact' ? 'maybe: ' : '') + line.gloss;
       row.appendChild(lab);
       row.appendChild(val);
       mbox.appendChild(row);
@@ -543,6 +571,7 @@ function refreshAll(): void {
   else renderCandidates();
   reglossInline();
   augmentPicker();
+  augmentReadback();
 }
 
 /* ------------------------------------------------------------ *
@@ -576,10 +605,13 @@ function augmentInlineBar(): void {
       const word = textEl.textContent || '';
       next.push({ text: word, num: i + 1 });
       if (btn.querySelector('.dict-gloss')) continue;
-      const g = state === 'ready' ? chipFor(word) : null;
+      // Nothing until the data is ready (refreshAll redoes the bar then), and
+      // nothing if it failed: an empty slot, not a wrong "not a known word".
+      if (state !== 'ready') continue;
+      const g = chipFor(word);
       const span = document.createElement('span');
       span.className = 'dict-gloss' + (g ? '' : ' dict-gloss-none');
-      span.textContent = g ? g : '·';
+      span.textContent = g ? g : NO_ENTRY;
       btn.appendChild(span);
     }
     lastCandidates = next;
@@ -602,11 +634,11 @@ function augmentPicker(): void {
       if (row.querySelector('.dict-gloss')) continue;
       const textEl = row.querySelector('.text');
       if (!textEl) continue;
-      const g = state === 'ready' ? chipFor(textEl.textContent || '') : null;
-      if (!g) continue;
+      if (state !== 'ready' || textEl.classList.contains('text-latin')) continue;
+      const g = chipFor(textEl.textContent || '');
       const span = document.createElement('span');
-      span.className = 'dict-gloss dict-gloss-picker';
-      span.textContent = g;
+      span.className = 'dict-gloss dict-gloss-picker' + (g ? '' : ' dict-gloss-none');
+      span.textContent = g ? g : NO_ENTRY;
       row.appendChild(span);
     }
   } finally {
@@ -614,21 +646,31 @@ function augmentPicker(): void {
   }
 }
 
-let outputTimer: ReturnType<typeof setTimeout> | null = null;
-function augmentOutput(): void {
+/* Read-back words: the gloss as a tooltip. The button text is the Latin
+ * reading, so the Odia word comes from data-odia (contract above). */
+let readbackTimer: ReturnType<typeof setTimeout> | null = null;
+function augmentReadback(): void {
   if (state !== 'ready') return;
-  if (outputTimer) return;
-  outputTimer = setTimeout(() => {
-    outputTimer = null;
-    const out = document.getElementById('output');
-    if (!out) return;
-    const words = out.querySelectorAll<HTMLElement>('.word');
+  if (readbackTimer) return;
+  readbackTimer = setTimeout(() => {
+    readbackTimer = null;
+    const line = document.getElementById('readback');
+    if (!line) return;
+    const words = line.querySelectorAll<HTMLElement>('.rb-word');
     for (let i = 0; i < words.length; i++) {
       const el = words[i] as HTMLElement;
       if (el.getAttribute('data-glossed') === '1') continue;
       el.setAttribute('data-glossed', '1');
-      const g = chipFor(el.textContent || '');
-      if (g) el.title = g;
+      const g = chipFor(el.getAttribute('data-odia') || '');
+      if (g) {
+        el.title = g;
+      } else {
+        // Proposal 3.7: a word with no entry gets a dotted underline and
+        // the screen-reader text "not a known word".
+        el.title = NO_ENTRY;
+        el.classList.add('rb-unknown');
+        el.setAttribute('aria-label', `${el.getAttribute('aria-label') || el.textContent || ''}, ${NO_ENTRY}`);
+      }
     }
   }, 120);
 }
@@ -675,9 +717,9 @@ function observe(): void {
     new MutationObserver(() => augmentPicker()).observe(picker, { childList: true });
   }
 
-  const out = document.getElementById('output');
-  if (out) {
-    new MutationObserver(() => augmentOutput()).observe(out, { childList: true, subtree: true });
+  const line = document.getElementById('readback');
+  if (line) {
+    new MutationObserver(() => augmentReadback()).observe(line, { childList: true, subtree: true });
   }
 }
 
@@ -690,11 +732,12 @@ let started = false;
  * opens or the candidate bar first appears. Call once, after the app has
  * rendered its shell; later calls are ignored.
  */
-export function initDictionary(load: DictionaryLoader): void {
+export function initDictionary(load: DictionaryLoader, onStateChange?: (s: DictionaryState) => void): void {
   if (started) return;
   started = true;
   try {
     loader = load;
+    onState = onStateChange ?? null;
     buildPanel();
     observe();
     setTimeout(loadData, 400);

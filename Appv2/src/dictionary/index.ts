@@ -11,12 +11,12 @@
  * DecompressionStream: the browser floor is Safari 13.
  */
 
-import { initDictionary, type DictionaryBytes } from './overlay.js';
+import { initDictionary, type DictionaryBytes, type DictionaryState } from './overlay.js';
 import modernUrl from './modern.bin?url';
 import praharajUrl from './praharaj.bin?url';
 
 export { initDictionary };
-export type { DictionaryBytes, DictionaryLoader } from './overlay.js';
+export type { DictionaryBytes, DictionaryLoader, DictionaryState } from './overlay.js';
 
 async function fetchBytes(url: string): Promise<Uint8Array> {
   const response = await fetch(url);
@@ -33,7 +33,10 @@ export function loadDictionaryBytes(): Promise<DictionaryBytes> {
   return fetchBytes(praharajUrl).then((praharaj) => modern.then((m) => ({ praharaj, modern: m })));
 }
 
-/** Start the overlay with the bundled data. Data loads lazily, after start-up. */
-export function startDictionary(): void {
-  initDictionary(loadDictionaryBytes);
+/**
+ * Start the overlay with the bundled data. Data loads lazily, after start-up.
+ * `onState` hears 'loading' / 'ready' / 'failed' (V1 loading and failure lines).
+ */
+export function startDictionary(onState?: (s: DictionaryState) => void): void {
+  initDictionary(loadDictionaryBytes, onState);
 }

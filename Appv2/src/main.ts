@@ -1,21 +1,22 @@
 /**
  * Wiring for Appv2.
  *
- * Forked from web/src/main.ts. The structure, the clipboard handling and the
- * picker are unchanged; what is new is the profile selector, the preprocess
- * step, and the insert palette.
+ * Forked from web/src/main.ts; the clipboard handling is unchanged. Appv2
+ * added the profile selector, the preprocess step and the insert palette. V1
+ * made the text box the only composing surface: the separate ODIA output box
+ * is gone, replaced by the "Reads as" line (readback.ts) and copyText().
  *
  * No framework, for the same reason as before: every kilobyte here is a
  * kilobyte JavaScriptCore has to interpret on an iPhone.
  */
 
 import './style.css';
-import { InlineCandidates } from './inline.js';
+import { badgeElement, InlineCandidates } from './inline.js';
 // After style.css: the overlay's stylesheet overrides parts of the caret bar.
-import { startDictionary } from './dictionary/index.js';
+import { startDictionary, type DictionaryState } from './dictionary/index.js';
 
 import { LocalStorageLearnStore } from '@odia/core';
-import type { Candidate, DigitMode, WordResult } from '@odia/core/types';
+import type { DigitMode, WordResult } from '@odia/core/types';
 
 import {
   buildEngine,
@@ -25,10 +26,12 @@ import {
 } from './engine.js';
 import { describeEntry, displayText, loadPalette, type PaletteEntry } from './palette.js';
 import { preprocess, PREPROCESS_HINTS } from './preprocess.js';
+import { badgeFor } from './badges.js';
+import { buildSlots, hasWords, readbackText, type Slot } from './readback.js';
+import { casual } from './romanize.js';
 import {
   DEFAULT_PROFILE,
   isProfileId,
-  PROFILE_ORDER,
   PROFILE_PREF_KEY,
   PROFILES,
   type ProfileId,
@@ -39,14 +42,21 @@ import {
  * ------------------------------------------------------------------ */
 
 const romanEl = must<HTMLTextAreaElement>('roman');
-const outputEl = must<HTMLDivElement>('output');
-const outputHintEl = must<HTMLElement>('output-hint');
+const readbackRowEl = must<HTMLDivElement>('readback-row');
+const readbackEl = must<HTMLDivElement>('readback');
 const statusEl = must<HTMLParagraphElement>('status');
+const bannerEl = must<HTMLDivElement>('banner');
+const bannerReloadEl = must<HTMLButtonElement>('banner-reload');
+const offlineChipEl = must<HTMLSpanElement>('offline-chip');
+const offlineChipTextEl = must<HTMLSpanElement>('offline-chip-text');
 const copyEl = must<HTMLButtonElement>('copy');
 const clearEl = must<HTMLButtonElement>('clear');
 const digitsEl = must<HTMLInputElement>('toggle-digits');
 const strictEl = must<HTMLInputElement>('toggle-strict');
-const profileEl = must<HTMLSelectElement>('profile');
+const modeEverydayEl = must<HTMLInputElement>('mode-everyday');
+const modeSlokaEl = must<HTMLInputElement>('mode-sloka');
+const classicEl = must<HTMLInputElement>('toggle-classic');
+const familySafeEl = must<HTMLInputElement>('toggle-family-safe');
 const profileHintEl = must<HTMLElement>('profile-hint');
 const paletteEl = must<HTMLDivElement>('palette');
 const shortcutsEl = must<HTMLElement>('shortcuts');
@@ -54,6 +64,8 @@ const pickerEl = must<HTMLDivElement>('picker');
 const pickerTitleEl = must<HTMLHeadingElement>('picker-title');
 const pickerListEl = must<HTMLUListElement>('picker-list');
 const toastEl = must<HTMLDivElement>('toast');
+const settingsEl = must<HTMLDivElement>('settings');
+const openSettingsEl = must<HTMLButtonElement>('open-settings');
 
 function must<T extends HTMLElement>(id: string): T {
   const element = document.getElementById(id);
@@ -67,9 +79,45 @@ function must<T extends HTMLElement>(id: string): T {
 
 const PREF_DIGITS = 'odia.pref.digits';
 const PREF_STRICT = 'odia.pref.strict';
+/** "Hide rude words". ON by default: a missing key reads as on. */
+const PREF_FAMILY_SAFE = 'odia.pref.familySafe';
+
+/**
+ * Declared before boot() runs (it is called at module load), like every
+ * constant boot() reaches. What users see for each profile (proposal "Mode note"). Labels only: the ids
+ * and the stored odia.pref.profile value are unchanged, and profiles.ts keeps
+ * its own labels for the eval harnesses.
+ */
+const MODE_HINT: Record<ProfileId, string> = {
+  unified: '',
+  sloka: 'For verse: Sanskrit spellings come first.',
+  everyday: 'Classic engine: the original word list, without Sanskrit forms.',
+};
 
 /** How many candidates the picker offers. */
 const TOPK = 8;
+
+/* V1 states (proposal 3.11). Copy deck strings. */
+const LOADING_WORDS = 'Loading words\u2026 your text will convert in a moment';
+const LOADING_MEANINGS = 'Loading meanings\u2026';
+const MEANINGS_FAILED = 'Meanings are unavailable right now. Typing still works.';
+const EMPTY_COPY = 'Type something first';
+
+type Phase = 'loading' | 'ready' | 'failed';
+/** The engine and its word list: loading until built, failed if degraded. */
+let enginePhase: Phase = 'loading';
+/** What is loading while a mode switch fetches its word list. */
+let loadingText = LOADING_WORDS;
+let dictPhase: DictionaryState = 'idle';
+/** A note from the engine or an error (setStatus). */
+let note = '';
+let noteWarn = false;
+
+/**
+ * `?debug=1` shows engine detail (the LEXICON / RULE source of each
+ * alternative) that is never shown to users (audit H5).
+ */
+const DEBUG = new URLSearchParams(window.location.search).get('debug') === '1';
 
 const learnStore = new LocalStorageLearnStore();
 
@@ -77,9 +125,12 @@ let profileId: ProfileId = DEFAULT_PROFILE;
 let handle: EngineHandle | undefined;
 let inline: InlineCandidates | undefined;
 
-let lastWords: readonly WordResult[] = [];
-const overrides = new Map<string, string>();
-let openWordButton: HTMLElement | undefined;
+/** The text box cut into read-back slots (readback.ts), as last rendered. */
+let slots: Slot[] = [];
+/** Odia word -> the English key it was committed under, this session. */
+const commitKeys = new Map<string, string>();
+/** Odia words converted in bulk (paste, late word list) and not yet picked. */
+const uncheckedWords = new Set<string>();
 
 /* ------------------------------------------------------------------ *
  * Boot
@@ -90,6 +141,7 @@ void boot();
 async function boot(): Promise<void> {
   digitsEl.checked = readPref(PREF_DIGITS);
   strictEl.checked = readPref(PREF_STRICT);
+  familySafeEl.checked = readPref(PREF_FAMILY_SAFE, true);
   profileId = readProfilePref();
 
   buildProfileSelect();
@@ -101,18 +153,39 @@ async function boot(): Promise<void> {
       guard(() => handle?.engine.transliterateWord(roman, 9) ?? [], []),
     onCommit: (roman, text) => {
       guard(() => handle?.engine.learn(roman, text), undefined);
+      commitKeys.set(text, roman);
+      uncheckedWords.delete(text);
       render();
     },
+    badge: (text) => badgeFor(handle?.engine, text),
   });
   inline.setEnabled(!strictEl.checked);
 
-  setStatus('Loading dictionary…', false);
+  // Copy rides on the phone strip too, so it stays reachable with the
+  // keyboard open (finish gate 2). Acts on click: the iOS clipboard needs the
+  // click as its user gesture; the strip's mousedown handler only keeps focus.
+  const dockCopy = document.createElement('button');
+  dockCopy.type = 'button';
+  dockCopy.id = 'copy-dock';
+  dockCopy.className = 'btn btn-primary';
+  dockCopy.textContent = 'Copy';
+  dockCopy.addEventListener('click', onCopy);
+  inline.toolbar.append(dockCopy);
+
+  updateStates();
   render(); // paint the empty shell immediately
 
   await loadProfileAssets(profileId);
   rebuildEngine();
+  // Words typed while the word list loaded convert now, in place, and the
+  // word at the caret gets its suggestions.
+  convertInPlace();
+  inline.setEnabled(!strictEl.checked);
   render();
-  startDictionary(); // glosses + side panel; its data loads lazily
+  startDictionary((s) => {
+    dictPhase = s;
+    updateStates();
+  }); // glosses + side panel; its data loads lazily
 
   void buildPalette();
   registerServiceWorker();
@@ -129,13 +202,17 @@ function digitMode(): DigitMode {
  * tables and costs only a rule parse.
  */
 function rebuildEngine(): void {
-  handle = buildEngine(profileId, digitMode(), learnStore);
-  setStatus(handle.note, !handle.ready || handle.note.length > 0);
-  profileHintEl.textContent = PROFILES[profileId].hint;
+  // familySafe on EVERY rebuild (digits, mode), or it would silently reset.
+  handle = buildEngine(profileId, digitMode(), learnStore, familySafeEl.checked);
+  enginePhase = handle.ready && handle.wordList ? 'ready' : 'failed';
+  loadingText = LOADING_WORDS;
+  // The degraded engine's own note is for engineers; the banner says it plainly.
+  setStatus(handle.ready ? handle.note : '', false);
+  profileHintEl.textContent = MODE_HINT[profileId];
 }
 
 /* ------------------------------------------------------------------ *
- * Rendering
+ * Rendering: the read-back line
  * ------------------------------------------------------------------ */
 
 let renderQueued = false;
@@ -149,132 +226,187 @@ function scheduleRender(): void {
   });
 }
 
+/**
+ * The text box is the only composing surface (audit H1). What used to be the
+ * ODIA output box is now two things: copyText(), which converts whatever is
+ * still roman exactly as that box did, and the "Reads as" line, which shows
+ * how the result reads.
+ */
 function render(): void {
   const engine = handle?.engine;
+  const raw = romanEl.value;
+  const caret = document.activeElement === romanEl ? romanEl.selectionEnd : null;
 
-  if (handle) setStatus(handle.note, !handle.ready || handle.note.length > 0);
-
-  if (!engine) {
-    outputEl.textContent = '';
-    lastWords = [];
-    return;
+  let words: readonly WordResult[] = [];
+  if (engine) {
+    // ONE preprocessed string for the engine. Roman words are ASCII letter
+    // runs that preprocess never touches, so buildSlots finds each of them in
+    // the raw box value in order, and the slot offsets are offsets in the box.
+    const input = preprocess(raw, PROFILES[profileId].preprocess);
+    words = guard(() => engine.transliterate(input, { topk: TOPK }).words, []);
   }
 
-  // ONE preprocessed string, computed once, used for BOTH the engine call and
-  // the offset recovery in buildOutput(). They must be the same string: `||`
-  // collapses to a single `॥`, so passing the raw value to one and the
-  // preprocessed value to the other desynchronises locate()'s offsets and the
-  // output silently duplicates or drops text.
-  const input = preprocess(romanEl.value, PROFILES[profileId].preprocess);
-
-  if (strictEl.checked) {
-    outputHintEl.textContent = 'strict ITRANS — one spelling, one answer';
-    lastWords = [];
-    outputEl.textContent = guard(() => engine.strict(input, 'itrans'), input);
-    return;
-  }
-
-  outputHintEl.textContent = 'tap a word for alternatives';
-
-  const result = guard(() => engine.transliterate(input, { topk: TOPK }), undefined);
-  if (!result) {
-    outputEl.textContent = input;
-    lastWords = [];
-    return;
-  }
-
-  lastWords = result.words;
-  outputEl.replaceChildren(buildOutput(input, result.words));
+  const display = strictEl.checked && engine
+    ? (word: WordResult) => guard(() => engine.strict(word.roman, 'itrans'), word.roman)
+    : undefined;
+  slots = buildSlots(raw, words, caret, display);
+  renderReadback();
 }
 
-function buildOutput(input: string, words: readonly WordResult[]): DocumentFragment {
+function renderReadback(): void {
   const fragment = document.createDocumentFragment();
-  const offsets = locate(input, words);
 
-  if (!offsets) {
-    words.forEach((word, index) => {
-      if (index > 0) fragment.append(' ');
-      fragment.append(renderWord(word, index));
-    });
-    return fragment;
-  }
+  slots.forEach((slot, index) => {
+    if (slot.kind === 'text') {
+      fragment.append(slot.text);
+      return;
+    }
+    if (slot.kind === 'latin') {
+      const span = document.createElement('span');
+      span.className = 'rb-latin';
+      span.textContent = slot.text;
+      fragment.append(span);
+      return;
+    }
 
-  let cursor = 0;
-  words.forEach((word, index) => {
-    const at = offsets[index];
-    if (at > cursor) fragment.append(input.slice(cursor, at));
-    fragment.append(renderWord(word, index));
-    cursor = at + word.roman.length;
+    // DOM CONTRACT with dictionary/overlay.ts: `.rb-word` inside #readback,
+    // with the Odia word in data-odia (the visible text is Latin).
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'rb-word';
+    button.dataset.slot = String(index);
+    button.dataset.odia = slot.odia;
+    button.textContent = slot.reads;
+    const unchecked = slot.kind === 'roman' || uncheckedWords.has(slot.odia);
+    if (unchecked) button.classList.add('rb-unchecked');
+    if (slot.kind === 'roman' && slot.pending) button.classList.add('rb-pending');
+    if (strictEl.checked && slot.kind === 'roman') button.disabled = true;
+    button.setAttribute(
+      'aria-label',
+      `${slot.reads}${unchecked ? ', not checked yet' : ''}. Change this word`,
+    );
+    fragment.append(button);
   });
 
-  if (cursor < input.length) fragment.append(input.slice(cursor));
-  return fragment;
+  readbackEl.replaceChildren(fragment);
+  readbackRowEl.hidden = !hasWords(slots);
+  updateStripNote();
+  updateCopyState();
 }
 
-/** Byte offset of each roman token in the input, or undefined if any is missing. */
-function locate(input: string, words: readonly WordResult[]): number[] | undefined {
-  const offsets: number[] = [];
-  let cursor = 0;
+/** The last `max` characters, with an ellipsis at the start when cut. */
+function tail(text: string, max: number): string {
+  return text.length <= max ? text : `\u2026${text.slice(text.length - max + 1)}`;
+}
 
-  for (const word of words) {
-    const at = input.indexOf(word.roman, cursor);
-    if (at < 0) return undefined;
-    offsets.push(at);
-    cursor = at + word.roman.length;
+/**
+ * What Copy puts on the clipboard: the box with every roman word that is
+ * still there converted to its top candidate (or strict ITRANS), and the
+ * preprocess marks (| -> danda and so on) applied. Byte-for-byte what the old
+ * output box showed, so copying never regresses.
+ */
+function copyText(): string {
+  const engine = handle?.engine;
+  const input = preprocess(romanEl.value, PROFILES[profileId].preprocess);
+  if (!engine) return input;
+  if (strictEl.checked) return guard(() => engine.strict(input, 'itrans'), input);
+  return guard(() => engine.transliterate(input, { topk: 1 }).text, input);
+}
+
+/** Convert one stretch of the box the way copyText() would. */
+function convertStretch(text: string, engine: EngineHandle['engine']): string {
+  if (!/[A-Za-z]/.test(text)) return text;
+  const input = preprocess(text, PROFILES[profileId].preprocess);
+  if (strictEl.checked) return guard(() => engine.strict(input, 'itrans'), text);
+  const result = guard(() => engine.transliterate(input, { topk: 1 }), undefined);
+  if (!result) return text;
+  for (const word of result.words) {
+    const top = word.candidates[0]?.text;
+    if (top !== undefined && /[\u0B00-\u0B7F]/.test(top)) uncheckedWords.add(top);
   }
-
-  return offsets;
+  return result.text;
 }
 
-function renderWord(word: WordResult, index: number): Node {
-  const text = chosenText(word);
-  const alternatives = word.candidates.length > 1;
+/**
+ * Convert roman words in the box to Odia IN PLACE, except the word still being
+ * typed at the caret (the suggestion bar owns that one). Runs when the word
+ * list becomes ready (text typed while it loaded) and after a paste. Converted
+ * words are marked "not checked yet" in the read-back until the user picks.
+ */
+function convertInPlace(): void {
+  const engine = handle?.engine;
+  if (!engine || !handle?.ready) return;
+  const raw = romanEl.value;
+  if (!/[A-Za-z]/.test(raw)) return;
 
-  if (!alternatives) {
-    const span = document.createElement('span');
-    span.className = 'word word-static';
-    span.textContent = text;
-    return span;
-  }
+  const focused = document.activeElement === romanEl;
+  const caret = focused ? (romanEl.selectionEnd ?? raw.length) : raw.length;
+  const before = raw.slice(0, caret);
+  const after = raw.slice(caret);
+  const pending = focused ? (/[A-Za-z_~]+$/.exec(before)?.[0] ?? '') : '';
+  const head = before.slice(0, before.length - pending.length);
 
-  const button = document.createElement('button');
-  button.type = 'button';
-  button.className = 'word ambiguous';
-  if (overrides.has(word.roman)) button.classList.add('chosen');
-  button.textContent = text;
-  button.dataset.index = String(index);
-  button.setAttribute('aria-label', `${text} — alternatives for ${word.roman}`);
-  return button;
+  const newHead = convertStretch(head, engine);
+  const newAfter = convertStretch(after, engine);
+  if (newHead === head && newAfter === after) return;
+
+  romanEl.value = newHead + pending + newAfter;
+  const at = newHead.length + pending.length;
+  if (focused) romanEl.setSelectionRange(at, at);
+  render();
 }
 
-function chosenText(word: WordResult): string {
-  return overrides.get(word.roman) ?? word.candidates[0]?.text ?? word.roman;
-}
+/**
+ * Strict mode has no suggestion bar, so on Space or Enter the run before the
+ * caret is replaced by its strict ITRANS result in place, before the key's
+ * own character goes in. ITRANS uses `.` `^` `~` and capitals, so the run is
+ * everything back to the previous whitespace.
+ */
+function strictCommit(event: KeyboardEvent): void {
+  if (!strictEl.checked || (event.key !== ' ' && event.key !== 'Enter')) return;
+  if (event.metaKey || event.ctrlKey || event.altKey) return;
+  const engine = handle?.engine;
+  const { value, selectionStart, selectionEnd } = romanEl;
+  if (!engine || selectionStart === null || selectionStart !== selectionEnd) return;
 
-function outputText(): string {
-  return outputEl.textContent ?? '';
+  let start = selectionStart;
+  while (start > 0 && !/\s/.test(value[start - 1] as string)) start -= 1;
+  const run = value.slice(start, selectionStart);
+  if (!/[A-Za-z]/.test(run)) return;
+
+  const input = preprocess(run, PROFILES[profileId].preprocess);
+  const odia = guard(() => engine.strict(input, 'itrans'), run);
+  romanEl.value = value.slice(0, start) + odia + value.slice(selectionStart);
+  const caret = start + odia.length;
+  romanEl.setSelectionRange(caret, caret);
 }
 
 /* ------------------------------------------------------------------ *
  * Profile selector
  * ------------------------------------------------------------------ */
 
+
+/** Put the mode controls in step with `profileId`. */
 function buildProfileSelect(): void {
-  profileEl.replaceChildren(
-    ...PROFILE_ORDER.map((id) => {
-      const option = document.createElement('option');
-      option.value = id;
-      option.textContent = PROFILES[id].label;
-      return option;
-    }),
-  );
-  profileEl.value = profileId;
-  profileHintEl.textContent = PROFILES[profileId].hint;
+  modeSlokaEl.checked = profileId === 'sloka';
+  modeEverydayEl.checked = profileId !== 'sloka';
+  classicEl.checked = profileId === 'everyday';
+  profileHintEl.textContent = MODE_HINT[profileId];
+  profileHintEl.hidden = MODE_HINT[profileId].length === 0;
+}
+
+/**
+ * The profile the controls ask for. "Classic engine" applies to Everyday
+ * only: choosing Śloka turns it off, and turning it on selects Everyday.
+ */
+function profileFromControls(): ProfileId {
+  if (modeSlokaEl.checked) return 'sloka';
+  return classicEl.checked ? 'everyday' : 'unified';
 }
 
 async function onProfileChange(): Promise<void> {
-  const next = profileEl.value;
-  if (!isProfileId(next)) return;
+  const next = profileFromControls();
+  if (!isProfileId(next) || next === profileId) return;
 
   profileId = next;
   writeProfilePref(next);
@@ -282,7 +414,10 @@ async function onProfileChange(): Promise<void> {
   // The Sanskrit lexicon is its own lazily-globbed chunk, so the first switch
   // into a profile that uses it is a fetch. Say so rather than appearing to
   // hang: on a cold load over a slow link it is a megabyte.
-  setStatus('Switching mode…', false);
+  enginePhase = 'loading';
+  loadingText = next === 'sloka' ? 'Switching to \u015Aloka (verse)\u2026' : 'Switching mode\u2026';
+  updateStates();
+  buildProfileSelect();
   await loadProfileAssets(profileId);
 
   rebuildEngine();
@@ -308,14 +443,13 @@ async function buildPalette(): Promise<void> {
 
   paletteEl.replaceChildren(
     ...groups.map((group) => {
+      // The group name ("Vocalics", "Signs") is engine vocabulary: it names
+      // the group for screen readers but is not shown (audit H5).
       const section = document.createElement('div');
       section.className = 'palette-group';
-
-      const heading = document.createElement('span');
-      heading.className = 'palette-name';
-      heading.textContent = group.name;
-      heading.title = group.hint;
-      section.append(heading);
+      section.setAttribute('role', 'group');
+      section.setAttribute('aria-label', group.name);
+      section.title = group.hint;
 
       for (const entry of group.entries) {
         section.append(paletteButton(entry));
@@ -378,22 +512,44 @@ function buildShortcutHints(): void {
 }
 
 /* ------------------------------------------------------------------ *
- * Candidate picker
+ * Candidate picker (the Alternatives sheet), opened from a read-back word
  * ------------------------------------------------------------------ */
 
-function openPicker(index: number, trigger: HTMLElement): void {
-  const word = lastWords[index];
-  if (!word || word.candidates.length < 2) return;
+interface PickerRow {
+  text: string;
+  source: string;
+}
 
-  pickerTitleEl.replaceChildren('Alternatives for ', romanLabel(word.roman));
-  pickerListEl.replaceChildren(
-    ...word.candidates.map((candidate) => candidateRow(word, candidate)),
-  );
+/** The slot whose alternatives are showing, with the box text it stood for. */
+let openSlot: { start: number; end: number; was: string; key: string } | undefined;
+let openTrigger: HTMLElement | undefined;
+
+function openPicker(index: number, trigger: HTMLElement): void {
+  const slot = slots[index];
+  const engine = handle?.engine;
+  if (!slot || !engine || (slot.kind !== 'odia' && slot.kind !== 'roman')) return;
+
+  // The English key: the word as typed for a roman slot; for a committed word,
+  // the key it was committed under in this session, else its romanisation in
+  // the way people type it (long vowels short).
+  const key = slot.kind === 'roman' ? slot.word.roman : commitKeys.get(slot.odia) ?? casual(slot.reads);
+  const candidates: PickerRow[] =
+    slot.kind === 'roman'
+      ? slot.word.candidates.map((c) => ({ text: c.text, source: c.source }))
+      : guard(() => engine.transliterateWord(key, TOPK + 1), []).map((c) => ({ text: c.text, source: c.source }));
+  // The current word is always on the list, so the sheet can say "this one".
+  if (!candidates.some((c) => c.text === slot.odia)) candidates.unshift({ text: slot.odia, source: 'current' });
+
+  openSlot = { start: slot.start, end: slot.end, was: romanEl.value.slice(slot.start, slot.end), key };
+  pickerTitleEl.replaceChildren('Alternatives for ', romanLabel(key));
+  // DOM CONTRACT with dictionary/overlay.ts: #picker-list > li > button.candidate
+  // with the Odia word in a `.text` child; the overlay appends .dict-gloss.
+  pickerListEl.replaceChildren(...candidates.map((c) => candidateRow(c, c.text === slot.odia)));
 
   pickerEl.hidden = false;
   document.documentElement.style.overflow = 'hidden';
   trigger.classList.add('open');
-  openWordButton = trigger;
+  openTrigger = trigger;
 
   const first = pickerListEl.querySelector<HTMLButtonElement>('button.candidate');
   first?.focus();
@@ -406,40 +562,91 @@ function romanLabel(roman: string): HTMLElement {
   return span;
 }
 
-function candidateRow(word: WordResult, candidate: Candidate): HTMLLIElement {
+function candidateRow(candidate: PickerRow, current: boolean): HTMLLIElement {
   const item = document.createElement('li');
   const button = document.createElement('button');
 
   button.type = 'button';
   button.className = 'candidate';
-  if (chosenText(word) === candidate.text) button.setAttribute('aria-current', 'true');
+  if (current) button.setAttribute('aria-current', 'true');
 
   const text = document.createElement('span');
-  text.className = 'text';
+  text.className = /[\u0B00-\u0B7F]/.test(candidate.text) ? 'text' : 'text text-latin';
+  if (/[\u0B00-\u0B7F]/.test(candidate.text)) text.lang = 'or';
   text.textContent = candidate.text;
 
-  const source = document.createElement('span');
-  source.className = 'source';
-  source.textContent = candidate.source;
-
-  button.append(text, source);
-  button.addEventListener('click', () => choose(word.roman, candidate.text));
+  button.append(text);
+  const badge = badgeFor(handle?.engine, candidate.text);
+  if (badge) button.append(badgeElement(badge));
+  if (DEBUG) {
+    const source = document.createElement('span');
+    source.className = 'source';
+    source.textContent = candidate.source;
+    button.append(source);
+  }
+  button.addEventListener('click', () => choose(candidate.text));
   item.append(button);
   return item;
 }
 
-function choose(roman: string, text: string): void {
-  overrides.set(roman, text);
-  guard(() => handle?.engine.learn(roman, text), undefined);
-  closePicker();
+/** Replace the open slot's text in the box with the chosen word. */
+function choose(text: string): void {
+  const slot = openSlot;
+  const index = openTrigger?.dataset.slot;
+  closePicker(false);
+  if (!slot) return;
+
+  const value = romanEl.value;
+  // The box may have changed under the sheet; never replace the wrong text.
+  if (value.slice(slot.start, slot.end) !== slot.was) {
+    render();
+    return;
+  }
+
+  romanEl.value = value.slice(0, slot.start) + text + value.slice(slot.end);
+  guard(() => handle?.engine.learn(slot.key, text), undefined);
+  commitKeys.set(text, slot.key);
+  uncheckedWords.delete(text);
+  uncheckedWords.delete(slot.was);
+
+  // Keep the caret where it was, shifted by the change in length.
+  const caret = romanEl.selectionEnd ?? value.length;
+  const shifted = caret >= slot.end ? caret + text.length - (slot.end - slot.start) : caret;
+  romanEl.setSelectionRange(shifted, shifted);
   render();
+  focusReadbackWord(index);
 }
 
-function closePicker(): void {
+function closePicker(restoreFocus = true): void {
   pickerEl.hidden = true;
   document.documentElement.style.overflow = '';
-  openWordButton?.classList.remove('open');
-  openWordButton = undefined;
+  openTrigger?.classList.remove('open');
+  const index = openTrigger?.dataset.slot;
+  openTrigger = undefined;
+  openSlot = undefined;
+  if (restoreFocus) focusReadbackWord(index);
+}
+
+/** Focus goes back to the read-back word that opened the sheet. */
+function focusReadbackWord(index: string | undefined): void {
+  if (index === undefined) return;
+  readbackEl.querySelector<HTMLElement>(`.rb-word[data-slot="${index}"]`)?.focus();
+}
+
+/* ------------------------------------------------------------------ *
+ * Settings sheet
+ * ------------------------------------------------------------------ */
+
+function openSettings(): void {
+  settingsEl.hidden = false;
+  document.documentElement.style.overflow = 'hidden';
+  settingsEl.querySelector<HTMLInputElement>('input')?.focus();
+}
+
+function closeSettings(): void {
+  settingsEl.hidden = true;
+  document.documentElement.style.overflow = '';
+  openSettingsEl.focus();
 }
 
 /* ------------------------------------------------------------------ *
@@ -449,15 +656,15 @@ function closePicker(): void {
 /**
  * On iOS the Clipboard API only works when `writeText` is reached inside the
  * user gesture that triggered it. Anything awaited first — even a microtask —
- * loses the gesture. So `outputText()` is synchronous and `writeText` is the
+ * loses the gesture. So `copyText()` is synchronous and `writeText` is the
  * first async thing in this handler.
  */
 function onCopy(): void {
-  const text = outputText();
-  if (text.length === 0) {
-    toast('Nothing to copy', true);
+  if (romanEl.value.trim().length === 0) {
+    toast(EMPTY_COPY, true);
     return;
   }
+  const text = copyText();
 
   const clipboard = navigator.clipboard;
   if (clipboard && typeof clipboard.writeText === 'function') {
@@ -531,8 +738,80 @@ function toast(text: string, isError = false): void {
 }
 
 function setStatus(text: string, warn: boolean): void {
-  statusEl.textContent = text;
-  statusEl.classList.toggle('warn', warn && text.length > 0);
+  note = text;
+  noteWarn = warn && text.length > 0;
+  updateStates();
+}
+
+/* ------------------------------------------------------------------ *
+ * States: loading, failures, empty (proposal 3.11)
+ * ------------------------------------------------------------------ */
+
+type StatusKind = 'loading' | 'warn' | 'note';
+
+/** The one line under the text box, most important first. */
+function currentStatus(): { text: string; kind: StatusKind } | undefined {
+  if (enginePhase === 'loading') return { text: loadingText, kind: 'loading' };
+  if (note && noteWarn) return { text: note, kind: 'warn' };
+  if (dictPhase === 'failed') return { text: MEANINGS_FAILED, kind: 'warn' };
+  if (dictPhase === 'loading') return { text: LOADING_MEANINGS, kind: 'loading' };
+  if (note) return { text: note, kind: 'note' };
+  return undefined;
+}
+
+function updateStates(): void {
+  const status = currentStatus();
+  statusEl.hidden = status === undefined;
+  statusEl.textContent = status?.text ?? '';
+  statusEl.className = `status status-${status?.kind ?? 'note'}`;
+  bannerEl.hidden = enginePhase !== 'failed';
+  updateStripNote();
+}
+
+/**
+ * The phone strip's one-line note: a loading or failure message wins over
+ * the read-back summary, so the state is visible with the keyboard open.
+ */
+function updateStripNote(): void {
+  const status = currentStatus();
+  if (enginePhase === 'failed') inline?.setNote("The word list didn't load.");
+  else if (status && status.kind !== 'note' && status.text !== LOADING_MEANINGS) inline?.setNote(status.text);
+  else inline?.setNote(hasWords(slots) ? `Reads as: ${tail(readbackText(slots), 60)}` : '');
+}
+
+/** Copy looks disabled while the box is empty, and says why on tap (H8). */
+function updateCopyState(): void {
+  const empty = romanEl.value.trim().length === 0;
+  for (const button of [copyEl, document.getElementById('copy-dock')]) {
+    if (!button) continue;
+    if (empty) button.setAttribute('aria-disabled', 'true');
+    else button.removeAttribute('aria-disabled');
+  }
+}
+
+/* ------------------------------------------------------------------ *
+ * Offline chip
+ * ------------------------------------------------------------------ */
+
+let registration: ServiceWorkerRegistration | undefined;
+
+/**
+ * "Works offline" once the service worker is active, "Saving for offline\u2026"
+ * while it installs, nothing when there is no worker (dev, single file).
+ */
+function updateOfflineChip(): void {
+  const reg = registration;
+  let text = '';
+  let ready = false;
+  if (reg?.active) {
+    ready = true;
+    text = navigator.onLine === false ? 'Offline \u00B7 still works' : 'Works offline';
+  } else if (reg?.installing || reg?.waiting) {
+    text = 'Saving for offline\u2026';
+  }
+  offlineChipEl.hidden = text.length === 0;
+  offlineChipEl.classList.toggle('chip-ok', ready);
+  offlineChipTextEl.textContent = text;
 }
 
 function guard<T>(fn: () => T, fallback: T): T {
@@ -548,11 +827,13 @@ function message(error: unknown): string {
   return error instanceof Error ? error.message : String(error);
 }
 
-function readPref(key: string): boolean {
+/** A stored '1' / '0' switch. `fallback` when nothing is stored or storage is unavailable. */
+function readPref(key: string, fallback = false): boolean {
   try {
-    return localStorage.getItem(key) === '1';
+    const stored = localStorage.getItem(key);
+    return stored === null ? fallback : stored === '1';
   } catch {
-    return false;
+    return fallback;
   }
 }
 
@@ -586,19 +867,31 @@ function writeProfilePref(id: ProfileId): void {
  * ------------------------------------------------------------------ */
 
 function bindEvents(): void {
-  romanEl.addEventListener('input', scheduleRender);
+  romanEl.addEventListener('input', (event) => {
+    const kind = (event as InputEvent).inputType;
+    if (kind === 'insertFromPaste' || kind === 'insertFromDrop') convertInPlace();
+    scheduleRender();
+  });
+  // The caret moving changes which word is "being typed".
+  romanEl.addEventListener('keyup', scheduleRender);
+  romanEl.addEventListener('click', scheduleRender);
+  romanEl.addEventListener('blur', scheduleRender);
+  romanEl.addEventListener('keydown', strictCommit);
 
-  outputEl.addEventListener('click', (event) => {
-    const target = (event.target as HTMLElement | null)?.closest<HTMLElement>('button.word');
-    const index = target?.dataset.index;
+  readbackEl.addEventListener('click', (event) => {
+    const target = (event.target as HTMLElement | null)?.closest<HTMLElement>('button.rb-word');
+    const index = target?.dataset.slot;
     if (target && index !== undefined) openPicker(Number(index), target);
   });
 
   copyEl.addEventListener('click', onCopy);
+  bannerReloadEl.addEventListener('click', () => window.location.reload());
+  window.addEventListener('online', updateOfflineChip);
+  window.addEventListener('offline', updateOfflineChip);
 
   clearEl.addEventListener('click', () => {
     romanEl.value = '';
-    overrides.clear();
+    uncheckedWords.clear();
     render();
     romanEl.focus();
   });
@@ -609,6 +902,14 @@ function bindEvents(): void {
     render();
   });
 
+  familySafeEl.addEventListener('change', () => {
+    writePref(PREF_FAMILY_SAFE, familySafeEl.checked);
+    // No rebuild needed: the engine reads the switch on every lookup.
+    guard(() => handle?.engine.setFamilySafe?.(familySafeEl.checked), undefined);
+    inline?.setEnabled(!strictEl.checked); // re-rank the open suggestions
+    render();
+  });
+
   strictEl.addEventListener('change', () => {
     writePref(PREF_STRICT, strictEl.checked);
     // Strict ITRANS has exactly one answer per word, so there is nothing to pick.
@@ -616,14 +917,29 @@ function bindEvents(): void {
     render();
   });
 
-  profileEl.addEventListener('change', () => void onProfileChange());
+  modeEverydayEl.addEventListener('change', () => void onProfileChange());
+  modeSlokaEl.addEventListener('change', () => {
+    classicEl.checked = false;
+    void onProfileChange();
+  });
+  classicEl.addEventListener('change', () => {
+    if (classicEl.checked) modeEverydayEl.checked = true;
+    void onProfileChange();
+  });
 
   for (const closer of document.querySelectorAll('[data-picker-close]')) {
-    closer.addEventListener('click', closePicker);
+    closer.addEventListener('click', () => closePicker());
+  }
+
+  openSettingsEl.addEventListener('click', openSettings);
+  for (const closer of document.querySelectorAll('[data-settings-close]')) {
+    closer.addEventListener('click', closeSettings);
   }
 
   document.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape' && !pickerEl.hidden) closePicker();
+    if (event.key !== 'Escape') return;
+    if (!pickerEl.hidden) closePicker();
+    else if (!settingsEl.hidden) closeSettings();
   });
 }
 
@@ -636,9 +952,24 @@ function registerServiceWorker(): void {
   if (!('serviceWorker' in navigator)) return;
 
   const register = (): void => {
-    navigator.serviceWorker.register('./sw.js', { scope: './' }).catch(() => {
-      /* insecure origin, private mode, or unsupported: nothing to do */
-    });
+    navigator.serviceWorker
+      .register('./sw.js', { scope: './' })
+      .then((reg) => {
+        registration = reg;
+        const watch = (worker: ServiceWorker | null): void => {
+          worker?.addEventListener('statechange', updateOfflineChip);
+        };
+        watch(reg.installing);
+        watch(reg.waiting);
+        reg.addEventListener('updatefound', () => {
+          watch(reg.installing);
+          updateOfflineChip();
+        });
+        updateOfflineChip();
+      })
+      .catch(() => {
+        /* insecure origin, private mode, or unsupported: no chip */
+      });
   };
   // This runs at the end of boot(), after awaited asset loads, so the 'load'
   // event has usually fired already. Waiting for it then meant the worker

@@ -27,6 +27,10 @@ export interface EngineLike {
   transliterateWord(roman: string, topk?: number): Candidate[];
   learn(roman: string, chosen: string): void;
   strict(input: string, scheme?: 'itrans'): string;
+  /** Family-safe filter (Settings, "Hide rude words"). Absent on the degraded engine. */
+  setFamilySafe?(on: boolean): void;
+  /** Owner-curated labels of a word, for badges (badges.ts). Absent on the degraded engine. */
+  labelsOf?(word: string): ReadonlySet<string> | undefined;
 }
 
 /** Runs of Latin letters, which is all a verbatim engine can recognise as a word. */
