@@ -17,7 +17,7 @@ const BASE = {
 };
 const LABELS_TSV = read('../../core/data/labels.tsv');
 const labels = parseLabels(LABELS_TSV, 'core/data/labels.tsv');
-const INNOCENT = ['band', 'banda', 'bandi', 'bandha', 'bia', 'pela', 'pel', 'randi', 'randhi', 'gandi', 'gandhi', 'handi', 'beda'];
+const INNOCENT = ['band', 'banda', 'bandi', 'bandha', 'bia', 'pela', 'pel', 'randi', 'randhi', 'gandi', 'gandhi', 'handi', 'beda', 'chhori', 'chhadi', 'chhaadi', 'dahi', 'dadhi', 'bala', 'baala'];
 
 // The labelled words and their listed keys, read back from the file.
 const listed: { word: string; keys: string[] }[] = [];
@@ -43,8 +43,9 @@ describe('content filter on the real labels and lexicon', { timeout: 60_000 }, (
     for (const k of INNOCENT) {
       const got = texts(family, k);
       expect(got.filter((w) => labels.isOffensive(w)), k).toEqual([]);
-      // Nothing innocent is lost: every unlabelled word of the unfiltered list is still offered.
-      for (const w of texts(off, k).filter((x) => labels.get(x) === undefined)) expect(got, k).toContain(w);
+      // Nothing innocent is lost: every non-offensive word of the unfiltered list is still offered
+      // (slang-labelled ordinary words such as the word for hair included).
+      for (const w of texts(off, k).filter((x) => !labels.isOffensive(x))) expect(got, k).toContain(w);
     }
   });
 
@@ -58,10 +59,10 @@ describe('content filter on the real labels and lexicon', { timeout: 60_000 }, (
     }
   });
 
-  it('kids: no labelled word for any everyday or listed key', () => {
+  it('kids: no offensive or coarse word for any everyday or listed key', () => {
     const all = [...INNOCENT, ...listed.flatMap((l) => l.keys)];
     for (const k of all) {
-      expect(texts(kids, k).filter((w) => labels.get(w) !== undefined), k).toEqual([]);
+      expect(texts(kids, k).filter((w) => labels.isOffensive(w) || labels.isCoarse(w)), k).toEqual([]);
     }
   });
 

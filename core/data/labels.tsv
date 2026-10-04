@@ -35,3 +35,12 @@
 ଗାଣ୍ଡି	offensive	gaandi
 ମାଦରଚୋଦ୍	offensive	maadarachod,madarchod
 ମାଦରଚୋଦ	offensive	maadarachoda,madarachoda
+# Owner's second list, 2026-10-04.
+# Not in the lexicon; the rules spell it for chhodi (#2), chhori (#4) and chodi (#5).
+ଛୋଡ଼ି	offensive	chhodi
+# REVIEW: ordinary word first (curd), 360 corpus uses. Labelled slang (marked, not
+#   filtered, also for kids) so the ordinary word is never hidden. Change to coarse to
+#   hide it from kids too.
+ଦଧି	slang
+# REVIEW: ordinary word first (hair), 1,473 corpus uses. Same reasoning as above.
+ବାଳ	slang
