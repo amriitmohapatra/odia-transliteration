@@ -10,7 +10,7 @@ recommendation per idea. The owner decides. Then we build.
 **Writing style:** STE-flavored (ASD-STE100): short sentences, active voice, tables for
 comparisons. Terms that are not common English are in the glossary (§13).
 
-**Evidence:** the full research notes, with source URLs, are in
+**Evidence:** the seven research notes, with source URLs, are in
 `plan/research/2026-10-04/`. The network proxy in the research environment blocked many
 web pages. Some facts therefore come from search-result summaries, not from the primary
 page. The research notes tag each such fact. This brief marks them **(unverified)**.
@@ -38,7 +38,8 @@ page. The research notes tag each such fact. This brief marks them **(unverified
 8. Speak-to-write is feasible only through a cloud service. Odia speech recognition
    gets about **one word in three or four wrong**, so read-back is necessary (§7).
 9. Slang, colloquial words and abuses get a data layer, a test set and a
-   **family-safe filter that is on by default** (owner decision, 2026-10-04) (§6).
+   **family-safe filter that is on by default** (owner decision, 2026-10-04). No usable
+   Odia abuse list exists, so the owner labels the words (§6).
 10. Before any public release: decide about the scraped web corpus in git history (§10).
 
 ---
@@ -194,32 +195,73 @@ upstream licences). Use share-alike sets for offline evaluation only.
 
 **Owner decision (2026-10-04): the family-safe filter is ON by default.**
 
-Testers will try slang and abuses first. The design:
+Testers will try slang and abuses first. Full notes: `research/2026-10-04/07-slang-colloquial.md`.
 
-1. **The user can always type any word.** The engine never refuses or changes what the
-   user typed on purpose. The verbatim token stays available.
-2. **With family-safe ON, the app never suggests an offensive word that the user did not
-   type exactly.** Most important: an abuse must never appear as a near match for an
-   innocent word.
-3. **Tag whole words, never substrings.** Substring matching blocks innocent words that
-   contain an offensive part.
-4. **An explicit pick wins.** If the user picks or types the word in full, `learn()`
-   records it for that user.
-5. **Spoken forms are real forms.** Odia speech uses forms such as ଯାଉଚି for written
-   ଯାଉଛି. These get lexicon rows and glosses labelled "spoken".
-6. **Regional forms** (Sambalpuri, Ganjami, Baleswari) get a "dialect" label, not a
-   correction.
+### What we found
 
-Tests to add:
+- **No Odia abuse list exists that we can ship.** The common lists (LDNOOBW, MACD) have no
+  Odia. The labelled Odia datasets are unreleased, non-commercial, or have no licence.
+  **The owner must label the offensive words.**
+- **Imported lists block everyday words.** A small npm list (`cleanword`) has five Odia
+  entries that are also in our lexicon. Praharaj glosses all five as ordinary words
+  ("mad", "goat", "hut", "mortar"...). Do not import a list without review.
+- **Praharaj already tags candidates.** In the shipped subset: 1,796 colloquial words
+  (ଗ୍ରା.), 1,408 regional words (ପ୍ରାଦେ., about 631 of them Sambalpuri), and 348 entries
+  with an offensive marker. These are a review queue for the owner, not a final list.
+- **Spoken forms are in the corpus, but rare.** Examples: କଣ 10,822, ମତେ 4,956, ନାଇଁ 3,265,
+  ହଉ 1,178, ଯାଉଚି 346 (written ଯାଉଛି 1,902). They come from fiction dialogue, not from the
+  "social" lane, which is mostly politicians' posts.
+- **Most spoken forms already come first.** `kana`, `kouthi`, `mate`, `naain` and
+  `karuchi` give the right word at rank 1.
+- **Gap: `j` never gives ଯ.** The rules map `j` only to ଜ. So `je`, `jadi`, `jiba` and
+  `jauchi` never offer ଯେ, ଯଦି, ଯିବା, ଯାଉଚି. (Checked in the engine, 2026-10-04.) ଯେ is the
+  5th most frequent word. Odia ଯ sounds like "ja" (`AGENTS.md` §4), so many users
+  will type "je". See decision D-12.
+- **Apostrophe forms (କ'ଣ) are lost.** The corpus merge filter drops them.
 
-- `core/test/golden/colloquial.tsv` — spoken and slang forms with their expected Odia.
-- A guard test: for a list of innocent inputs, no offensive word appears in the top 5
-  when family-safe is ON.
+### Design
 
-**Only a native speaker can label offensive words.** That task belongs to the owner.
+Labels live in a data file, never in code. Every entry goes through `canonical()`, or a
+nukta mismatch defeats the filter.
 
-Data sources and corpus coverage: see `research/2026-10-04/07-slang-colloquial.md`
-(research in progress at the time of writing).
+| Label | Effect with family-safe ON |
+|---|---|
+| `offensive` | Never shown as a near match. Shown only when the roman input equals one of the word's own lexicon keys. Gloss carries an "offensive" badge. |
+| `coarse` | Shown normally, with a "can be rude" badge |
+| `spoken`, `slang`, `dialect` | Label only. No filtering. |
+
+Rules:
+
+1. **The user can always type any word.** Strict mode and the rule path are not filtered.
+   The filter touches only lexicon and learned suggestions.
+2. **Whole words, never substrings.** Odia syllables are short, so substring matching
+   blocks innocent words. Tag the stem. Generate the suffixed forms (ରେ, କୁ, ମାନେ...) for
+   the owner to approve. Match exact words at runtime.
+3. **An explicit pick is learned only under its exact roman key.** It then never appears
+   as a near match for other input.
+4. **The badge matters for non-readers.** A user who cannot read Odia must not send an
+   abuse by accident.
+5. Precedent: the open-source Android keyboard behind Gboard blocks offensive words by
+   default, shows a flagged word only on an exact match, and does not learn it while
+   blocking is on **(default-on is unverified)**.
+
+### Tests
+
+- `core/test/golden/colloquial.tsv` — columns `roman odia register source`, several roman
+  spellings per word, typed by people. Report it by register. Never average it with the
+  other test sets.
+- Guard test, family-safe ON: for common inputs and for near-miss variants of each
+  offensive word (aspiration, dental/retroflex, vowel length, ଣ/ନ, ଳ/ଲ, ଶ/ଷ/ସ):
+  no `offensive` word in the top 5. The exact key still returns the word. Strict mode is
+  unchanged. `coarse` words stay visible.
+- Guard test, family-safe OFF: ranking is identical to the engine without the filter.
+
+### Owner tasks (no agent can do these)
+
+1. Label the Praharaj review queue: `offensive`, `coarse`, or not.
+2. Approve the generated suffixed forms.
+3. Check each row of `colloquial.tsv`.
+4. Decide D-12 (`j` → ଯ).
 
 ---
 
@@ -379,6 +421,7 @@ budget 20".
 | D-9 | Laya | experiment only / not now | Experiment only, after the simple tagger |
 | D-10 | Public or private product (§12) | private / public | Decide before the first deploy |
 | D-11 | Update `CLAUDE.md` stale lines (§12) | yes / no | Yes |
+| D-12 | Let `j` also give ଯ (§6). This changes `core/rules/symbols.toml` and the cheat sheet. | yes / no | Yes, measured with `npm run eval` before and after |
 
 ---
 
@@ -410,7 +453,7 @@ Each stage is useful alone. The owner approves each stage before it starts.
 
 | Stage | Content | Network | Needs decisions |
 |---|---|---|---|
-| **V0 Clean-up** | Fix the four blockers in §4. Record dictionary provenance. Update `CLAUDE.md`. | none | D-10, D-11 |
+| **V0 Clean-up** | Fix the four blockers in §4. Record dictionary provenance. Update `CLAUDE.md`. `j` → ଯ. | none | D-10, D-11, D-12 |
 | **V1 Web app on Vercel** | One merged app (Odia, Sanskrit, dictionary). Family-safe filter. Romanized read-back line. Colloquial and guard tests. | static only | D-1, D-8 |
 | **V2 Better words** | IndicXlit lexicon fill. Bigram ranking. Phrase table. New modern glosses. Hindi/Urdu layer. | none | D-5, D-6 |
 | **V3 Assist layer** | `/api/speak`, `/api/listen`, `/api/translate`, behind switches. | opt-in | D-2, D-3, D-4 |
