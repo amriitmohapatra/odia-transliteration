@@ -33,7 +33,7 @@ whenever a task changes status. Last updated: 2026-10-04 (V1 in progress).
 |---|---|---|
 | V0 Clean-up | Cache scoping, English word in the bar, `rank()` learning bug, bundled font, dictionary provenance, `j` → ଯ | **Done** 2026-10-04 (D-10 open) |
 | **V1 Web app on Vercel** | One merged app; dictionary as a module; owner preferences; family-safe filter; romanised read-back; colloquial tests; UI/UX pass; PWA + `vercel.json`; CI | **Code done** 2026-10-04. Acceptance: A-1–A-10, A-12 pass in Chromium; A-11 (Safari) and phones are owner tests. Then owner: D-10, deploy |
-| V2 Better words | IndicXlit lexicon fill, bigram ranking, owner phrase table, new modern glosses, **owner gloss file** (e.g. ରଜ shows "Dust." today, not the festival), Hindi/Urdu layer, `j`-keys in lexicon | Not started |
+| V2 Better words | See §3b. Owner gloss file pulled forward into V1 (done) | **Started** 2026-10-04 |
 | V3 Assist layer | `/api/speak`, `/api/listen`, `/api/translate` behind switches | Not started |
 | V4 Lens | Browser extension, then camera/screenshot input | Not started |
 | V5 Native | macOS input method with the real engine; Android, iOS (skills first) | Not started |
@@ -87,6 +87,24 @@ layer, `ARCHITECTURE.md` §7). Two things are set up now so V3 starts safely:
 | 4.5 | A rule for when `tools/eval/baseline.json` may be refreshed: only in its own commit, with the reason | To do |
 | 4.6 | Browser checks in the repo: `Appv2/eval/browser/` (regress, gloss-check, report-check, freeze) | **Done** |
 | 4.7 | Run the browser checks in CI (needs a Playwright + Chromium install step) | To do |
+
+## 3b. V2 — better words (started 2026-10-04)
+
+Measured limits of this environment (2026-10-04): HuggingFace and Wikidata do not answer
+through the network proxy, and GitHub returns 403 for the IndicXlit repository. Items that
+need them wait for a run on the owner's Mac or a later environment.
+
+| # | Task | Data source | Status |
+|---|---|---|---|
+| V2.1 | `j`-keys in the common lexicon (the useful part of PR #2), on main's reproducible builder | in repo | To do (data agent) |
+| V2.2 | Context ranking: word-pair (bigram) counts; the previous word helps rank the next | in-repo corpus (same status as the shipped word counts, D-10 note) | To do (data agent) |
+| V2.3 | Colloquial work list (`jauchi`, `aasuchu`, `janichi`, `kain`, `chala`, `dada`, `sanga`) | in repo | To do (data agent) |
+| V2.4 | Word origin in the dictionary: "from Hindi / Persian / Arabic / English" | Praharaj origin tags (public domain, in hand) | To do (dictionary agent) |
+| V2.5 | Owner phrase table: greetings, festival wishes, the three levels of "you" | the owner writes it | Mechanism first; content is an owner task |
+| V2.6 | IndicXlit lexicon fill for unknown words (OOV top-1 7.3%) | HuggingFace | **Blocked here** |
+| V2.7 | Replace the MODERN meanings layer (D-5) | Samanantar / BPCC (HuggingFace), Wikidata | **Blocked here** |
+| V2.8 | Phrases with offensive meaning made of innocent words | needs V2.2 | Later |
+| V2.9 | Inflected forms of offensive words | owner review (C-2) | Waiting for the owner |
 
 ## 4. V1 acceptance checks
 
