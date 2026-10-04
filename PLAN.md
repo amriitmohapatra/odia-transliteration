@@ -58,7 +58,7 @@ whenever a task changes status. Last updated: 2026-10-04 (V1 in progress).
 | 2.1 | Dictionary as a module of the app; data as cached binary files; retire `build_app.py` | **Done** — 157/157 glosses identical to the old file; lazy load after the page; works over HTTP and from one file (Chromium) |
 | 2.2 | Family-safe switch in settings, stored as `odia.pref.familySafe`, plain label | To do |
 | 2.3 | Romanised read-back line under the output (copy of the eval romaniser) | To do |
-| 2.4 | PWA: manifest, icons, Apple tags in `Appv2/` | To do |
+| 2.4 | PWA: manifest, icons, Apple tags in `Appv2/` | **Done** |
 | 2.5 | UI/UX pass from the design proposal (§5) | To do (design in progress) |
 | 2.6 | "Report this word" button: copies word, output, code points, version; opens an email link. No network call. | To do |
 
@@ -89,7 +89,7 @@ V1 is done when every row passes. Each row says how it is checked.
 | # | Claim | How it is checked |
 |---|---|---|
 | A-1 | `kemiti achha` → କେମିତି ଅଛ | Unit test + browser test |
-| A-2 | Works offline after the first load | Playwright: load, go offline, reload, type |
+| A-2 | Works offline after the first load | Playwright: load, go offline, reload, type — **passes** (after fixing a registration bug, 2026-10-04) |
 | A-3 | Family-safe filter is on by default and can be turned off | Unit tests (done) + browser test of the switch |
 | A-4 | The meaning shows under candidates (e.g. `dina` → "Day", "Poor") | Playwright |
 | A-5 | "Dictionary loading" and "dictionary failed" look different | Playwright with the data file blocked |
@@ -99,7 +99,7 @@ V1 is done when every row passes. Each row says how it is checked.
 | A-9 | Phone layout: inputs ≥16 px, tap targets ≥44 px, safe areas | Playwright at 390×844 + design checklist |
 | A-10 | No metric regression | `npm run eval`, `everyday.ts`, `Appv2/eval/run.ts` |
 | A-11 | Safari engine | `webkit-check.py` on the owner's Mac (follow-up A-3) |
-| A-12 | No analytics, no network call in V1 | Network log in Playwright is empty after load |
+| A-12 | No analytics, no network call in V1 | Network log in Playwright is empty after load — **passes** (0 requests off the origin) |
 
 ## 5. UI/UX design approach
 
@@ -144,6 +144,7 @@ Agents do not commit; the lead reviews, measures and commits.
 
 | Date | Change |
 |---|---|
+| 2026-10-04 | 2.4 done. Service-worker registration bug fixed: offline now works (A-2, A-12 pass). |
 | 2026-10-04 | 2.1 done (dictionary module). Owner gloss file added to V2. |
 | 2026-10-04 | 1.4, 3.1, 4.1, 4.2 done. |
 | 2026-10-04 | Created. V0 done. V1 started: engine items 1.1–1.3 done. Guidebook practices added (§3.4, §4, 2.6). |
