@@ -36,8 +36,8 @@ ask for them before that.
 
 | # | Item | Blocks |
 |---|---|---|
-| C-1 | Label the Praharaj review queue (offensive markers, colloquial and regional tags): `offensive`, `coarse`, or not | Family-safe filter (§6 of the brief) |
-| C-2 | Approve the generated suffixed forms of each offensive stem | Family-safe filter |
+| C-1 | **First part done 2026-10-04:** the owner's two lists are in `core/data/labels.tsv` (17 rows). Please check the 4 rows marked REVIEW (one word labelled `coarse` because of its ordinary meaning "depth; hole"; one with a second meaning "bottom of a thing"; the words for curd and hair labelled `slang`, so they are never hidden). Still open: the Praharaj review queue (about 348 entries with offensive markers). | Family-safe filter |
+| C-2 | Check `plan/review/c2-inflections.tsv`: 118 inflected forms of the offensive words (case endings; verb endings for the two verbs), each with a proposed typed spelling. Delete the rows that are not real; then Claude moves the rest into `labels.tsv`. **Until then, inflected forms are not filtered.** | Family-safe filter for inflected forms |
 | C-3 | Check each of the 26 rows of `core/test/golden/colloquial.tsv` (spoken, slang and dialect words seeded by Claude): right Odia? right register? Add the casual words your family really types. | Colloquial test set |
 | C-4 | Judge the 100-sentence translation test (Google against Claude Haiku) | D-3, `/api/translate` |
 | C-5 | Review 50 loanword examples with a nukta on ଜ / ଫ | D-6 |
