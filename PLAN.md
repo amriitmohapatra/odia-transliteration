@@ -107,6 +107,10 @@ need them wait for a run on the owner's Mac or a later environment.
 | V2.8 | Phrases with offensive meaning made of innocent words | needs V2.2 | Later |
 | V2.9 | Inflected forms of offensive words | owner review (C-2) | Waiting for the owner |
 
+**Release step (owner approval, 2026-10-04):** when V2 is merged into this branch and all
+checks pass, Claude opens a pull request from `claude/festive-hawking-ie6xyt` to `main`.
+The owner merges it. The owner's phone and Safari checks follow the merge to `main`.
+
 ## 4. V1 acceptance checks
 
 V1 is done when every row passes. Each row says how it is checked.
