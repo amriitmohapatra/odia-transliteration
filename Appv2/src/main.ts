@@ -635,9 +635,14 @@ function registerServiceWorker(): void {
   if (!import.meta.env.PROD) return;
   if (!('serviceWorker' in navigator)) return;
 
-  window.addEventListener('load', () => {
+  const register = (): void => {
     navigator.serviceWorker.register('./sw.js', { scope: './' }).catch(() => {
       /* insecure origin, private mode, or unsupported: nothing to do */
     });
-  });
+  };
+  // This runs at the end of boot(), after awaited asset loads, so the 'load'
+  // event has usually fired already. Waiting for it then meant the worker
+  // never registered and the served app never worked offline.
+  if (document.readyState === 'complete') register();
+  else window.addEventListener('load', register, { once: true });
 }
