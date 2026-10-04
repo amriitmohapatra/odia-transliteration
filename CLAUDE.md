@@ -6,7 +6,20 @@ English → Odia (ଓଡ଼ିଆ) phonetic transliteration for macOS and Window
 **Read `plan/00-overview.md` before making architectural decisions.** The plan folder is
 the source of truth for scope, staging and rationale.
 
-**Current stage**: pre-Stage-A. Nothing built yet. See `plan/02-stages.md`.
+**Current stage** (2026-10-04, later): **V1 code is done** (the Appv2 web app: dictionary,
+family-safe filter, read-back, new UI, offline). It waits for the owner's decision D-10
+(public or private) and the Vercel deploy. Status per item: `PLAN.md`. Earlier: Stages A and B were in progress. Three single-file web apps
+are built and measured: `docs/odia-app.html`, `docs/odia-app-sanskrit.html` (from `Appv2/`)
+and `Odia_Sanskrit_Appv2/odia-app-sanskrit-v2.html` (adds the dictionary). The v3 direction
+and the owner's decisions are in `plan/05-v3-direction.md`. See also `plan/02-stages.md`.
+
+**Living plan files:** `PLAN.md` (stages, work per area, acceptance checks, status) and
+`ARCHITECTURE.md` (components, data flow, storage, hosting). Update them in the same commit
+as the change they describe.
+
+**Owner follow-ups:** `plan/06-owner-followups.md` lists the items that only the owner can
+do, or that need the owner's Mac. When a stage in `plan/05-v3-direction.md` §13 finishes,
+and when the V1 web app is live on Vercel, show the owner the open items in that file.
 
 ---
 
@@ -47,7 +60,7 @@ core/  ────────────────────────�
                                      │
   ├─ cli/         node               │  direct import
   ├─ web/         browser            │  direct import
-  ├─ app/         Tauri desktop      │  direct import
+  ├─ Appv2/       Sanskrit web app   │  direct import
   └─ ime-macos/   Swift input method │  JavaScriptCore
                                      ┘
 ```
@@ -56,8 +69,8 @@ core/  ────────────────────────�
 public macOS system framework. No FFI, no WebAssembly, no Rust in the engine path. This
 is why the core is TypeScript.
 
-Rust appears in exactly one place: `app/src-tauri/src/` — roughly 150 lines of clipboard
-and hotkey glue. Do not grow it.
+The Tauri desktop composer (`app/`) in `plan/00-overview.md` does not exist. If it is ever
+built, Rust stays limited to roughly 150 lines of clipboard and hotkey glue.
 
 ---
 
@@ -71,6 +84,10 @@ and hotkey glue. Do not grow it.
 | Candidate ranking feels wrong | `[weights]` in `core/rules/symbols.toml` |
 | Strict ITRANS/ISO-15919 mapping | `core/rules/itrans.toml` |
 | Segmentation or orthography assembly logic | `core/src/segment.ts` (rare) |
+| "For this roman key, this word comes first" (owner decision) | `core/data/preferences.tsv` |
+| A word is offensive / coarse / spoken / slang / dialect (owner-curated, whole words) | `core/data/labels.tsv` |
+| The meaning shown for a word is wrong or misleading (owner meaning, shown first) | `core/data/glosses.tsv` |
+| The derived everyday test expects the wrong word for an ambiguous key (owner decision) | `core/test/golden/everyday-overrides.tsv` |
 
 `core/src/rules.ts` validates rule files on load and **fails loudly** on a typo or a
 non-canonical Odia string. Do not soften that into a warning.
@@ -83,7 +100,7 @@ After any rule change, run `npm run eval` and compare against
 ## Commands
 
 ```bash
-npm install                            # workspaces: core, cli, web, app
+npm install                            # workspaces: core, cli, web
 
 npm test                               # all tests
 npm test -w core                       # engine only (includes nukta vectors)
@@ -94,7 +111,7 @@ npm run -w cli start -- "odisha" --codepoints    # verify nukta encoding
 
 npm run eval                           # metrics + delta vs baseline
 npm run -w web dev                     # web page
-npm run -w app tauri dev               # desktop composer
+npx vite --config Appv2/vite.config.ts # Sanskrit web app (not a workspace)
 
 cd tools/build-data && uv run python build_lexicon.py   # rebuild data artifacts
 ```
@@ -154,24 +171,35 @@ experience is top-5-with-learning on frequent words.
 
 ## Licensing
 
-Project is MIT. Everything shipped derives from MIT / CC0 / CC-BY sources:
+Project is MIT. Everything shipped must derive from MIT / CC0 / CC-BY sources (fonts: OFL).
+Rows marked unknown or unverified below are open items, not exceptions:
 
 | Source | Licence | Use |
 |---|---|---|
 | `indic-transliteration/common_maps` `oriya.toml` | MIT | Seeds strict-mode table |
 | AI4Bharat Aksharantar (`ori`) | CC-BY / CC0 | Lexicon |
 | AI4Bharat IndicCorp v2 (`ory_Orya`) | CC0 | Word frequencies |
-| Noto Sans Oriya | OFL | Bundled font |
+| Noto Sans Oriya | OFL 1.1 | Bundled font, weights 400 and 700, in `web/src/fonts/` (used by `web/` and `Appv2/`) |
+| Praharaj, *Purnnachandra Odia Bhashakosha* (1931–40), via indic-dict | Public domain (text). indic-dict packaging has no licence file. | Classical dictionary layer |
+| OdiaNLP `dictionary` `cleaned_pairs.json` | Repo MIT. **Origin of the text unknown.** To be replaced (D-5). | MODERN dictionary layer, `[mt]` rows |
+| Unicode CLDR `or.xml` | Unicode License v3 | MODERN dictionary layer, `[cldr]` rows |
+| wordfreq, CMUdict | Unverified (see provenance file) | Build time: loanword detection |
+| pako inflate | MIT | Unpacks the dictionary payloads |
+
+The dictionary sources and their checksums are in `Odia_Sanskrit_Appv2/PROVENANCE.md`.
 
 **Varnam/govarnam and Aksharamukha are AGPL.** Study their architecture; copy no code.
-Record every data source, its licence and a checksum in `core/data/PROVENANCE.md`.
+Record every data source, its licence and a checksum in the `PROVENANCE.md` of the folder
+that owns the data: `core/data/`, `Appv2/data/` or `Odia_Sanskrit_Appv2/`.
 
 ---
 
 ## Conventions
 
-- Offline only. **No network call from shipped code, ever.** This was a decision, not an
-  oversight — see `plan/04-scope.md`.
+- The engine is offline only. **`core/` never makes a network call.** This was a
+  decision, not an oversight — see `plan/04-scope.md`. Since 2026-10-04 (D-2) the web app
+  may call an opt-in assist layer on Vercel. Each online feature is off until the user
+  turns it on. See `plan/05-v3-direction.md` §4.
 - The engine API is synchronous. There is no network, so there is no reason for promises.
 - Before adding a feature, check `plan/04-scope.md`. Most tempting ideas are already
   listed there as deliberately excluded.
@@ -186,6 +214,10 @@ third-party text (archive.org books, literature, news, government pages, X posts
 that the MIT `LICENSE` does not cover.
 
 If the user says they want to make the repo public, remind them of this first.
+
+**Saved for later (owner, 2026-10-04):** the website is public, the repository stays private
+for now. When the owner says the project is finished, remind them to plan the public
+repository: the steps are in `plan/06-owner-followups.md` (section D) and `PLAN.md` (stage P).
 Deleting the files in a new commit is **not enough** — they remain in git history.
 Either publish from a fresh repository that never contained them, or rewrite
 history and confirm with the user before doing so.

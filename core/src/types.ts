@@ -23,7 +23,9 @@
  * untouched Latin token with source `'verbatim'`, so mixed English input
  * ("PCR", "Bayesian") never needs a language-detection heuristic.
  */
-export type CandidateSource = 'user' | 'lexicon' | 'rule' | 'verbatim';
+import type { FilterLevel, Labels, Preferences } from './curation.js';
+
+export type CandidateSource = 'user' | 'preference' | 'lexicon' | 'rule' | 'verbatim';
 
 export interface Candidate {
   /** Canonical Odia text (or the verbatim Latin token). */
@@ -116,6 +118,13 @@ export interface RankWeights {
   rule: number;
   freq: number;
   user: number;
+  /** Owner preferences (data/preferences.tsv). Kept below one user pick. */
+  pref: number;
+  /**
+   * Context from the previous word (data/bigrams.tsv), see rank.ts. Optional in
+   * symbols.toml; absent or 0 means no context term at all.
+   */
+  bigram?: number;
 }
 
 /**
@@ -248,6 +257,26 @@ export interface Unigrams {
   logfreq(odiaWord: string): number;
 }
 
+/**
+ * Word-pair counts, used by `rank.ts` to prefer a likely next word when the
+ * previous word is known. See bigrams.ts for the file format.
+ */
+export interface Bigrams {
+  /** Number of (prev, next) pairs loaded. */
+  readonly size: number;
+  /**
+   * ln(1 + count(prev, next)) / ln(1 + total(prev)), in (0, 1] for a known
+   * pair and 0 for an unknown one. Both words canonical.
+   */
+  score(prev: string, next: string): number;
+}
+
+/** What the engine may know about a word's surroundings. */
+export interface WordContext {
+  /** The previous word of the sentence, in Odia (canonicalised by the engine). */
+  prev?: string;
+}
+
 /* ------------------------------------------------------------------ *
  * User learning
  * ------------------------------------------------------------------ */
@@ -272,4 +301,14 @@ export interface EngineConfig {
   unigrams: Unigrams;
   learnStore?: LearnStore;
   digits?: DigitMode;
+  /** Owner-curated "put this word first" rows. See curation.ts. */
+  preferences?: Preferences;
+  /** Whole-word labels; `offensive` drives the family-safe filter. */
+  labels?: Labels;
+  /** Family-safe filter. Default true. Has no effect while `labels` is empty. */
+  familySafe?: boolean;
+  /** Content filter level; overrides `familySafe`. 'kids' cannot be lowered at run time. */
+  filter?: FilterLevel;
+  /** Word-pair counts for context ranking. Absent means no context term. */
+  bigrams?: Bigrams;
 }

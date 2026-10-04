@@ -17,8 +17,19 @@
  * referenced here.
  */
 
-import { Engine, loadRules, emptyLexicon, emptyUnigrams, parseLexicon, parseUnigrams } from '@odia/core';
-import type { DigitMode, LearnStore, Lexicon, Unigrams } from '@odia/core/types';
+import {
+  Engine,
+  loadRules,
+  emptyBigrams,
+  emptyLexicon,
+  emptyUnigrams,
+  parseBigrams,
+  parseLexicon,
+  parseUnigrams,
+  parseLabels,
+  parsePreferences,
+} from '@odia/core';
+import type { Bigrams, DigitMode, LearnStore, Lexicon, Unigrams } from '@odia/core/types';
 
 import { mergeLexicons, mergeUnigrams, type LexiconSource } from './compose.js';
 import { PROFILES, type AssetKey, type Profile, type ProfileId } from './profiles.js';
@@ -62,6 +73,18 @@ const GLOBS: Record<AssetKey, RawGlob> = {
     query: '?raw',
     import: 'default',
   }),
+  coreBigrams: import.meta.glob('../../core/data/bigrams-web.tsv', {
+    query: '?raw',
+    import: 'default',
+  }),
+  preferences: import.meta.glob('../../core/data/preferences.tsv', {
+    query: '?raw',
+    import: 'default',
+  }),
+  labels: import.meta.glob('../../core/data/labels.tsv', {
+    query: '?raw',
+    import: 'default',
+  }),
 };
 
 /** The palette is not an engine asset, but it loads the same way. */
@@ -76,12 +99,19 @@ export interface EngineHandle {
   ready: boolean;
   /** One short sentence for the status line. Empty when everything is fine. */
   note: string;
+  /**
+   * False when a word list (lexicon) the profile needs did not load: the
+   * engine still spells by rules, but the UI says the word list failed and
+   * offers Reload (V1 states).
+   */
+  wordList: boolean;
   profile: Profile;
 }
 
 const rawCache = new Map<AssetKey, string | undefined>();
 const lexiconCache = new Map<AssetKey, Lexicon>();
 const unigramCache = new Map<AssetKey, Unigrams>();
+const bigramCache = new Map<AssetKey, Bigrams>();
 
 /**
  * Fetch the assets a profile needs.
@@ -96,6 +126,9 @@ export async function loadProfileAssets(id: ProfileId): Promise<void> {
     'itrans',
     ...profile.lexicons.map((l) => l.asset),
     ...profile.unigrams,
+    'coreBigrams',
+    'preferences',
+    'labels',
   ];
   await Promise.all(wanted.map(readAsset));
 }
@@ -124,6 +157,8 @@ export function buildEngine(
   id: ProfileId,
   digits: DigitMode,
   learnStore: LearnStore,
+  familySafe = true,
+  kids = false,
 ): EngineHandle {
   const profile = PROFILES[id];
 
@@ -149,14 +184,25 @@ export function buildEngine(
       rules: loadRules(rulesToml, rawCache.get('itrans')),
       lexicon: mergeLexicons(sources),
       unigrams: mergeUnigrams(profile.unigrams.map(unigramsFor)),
+      // Context ranking for engine.transliterate(sentence). A missing chunk
+      // means no context term; a malformed file throws, like a bad rule file.
+      bigrams: bigramsFor('coreBigrams'),
       learnStore,
       digits,
+      preferences: parsePreferences(rawCache.get('preferences') ?? '', 'core/data/preferences.tsv'),
+      labels: parseLabels(rawCache.get('labels') ?? '', 'core/data/labels.tsv'),
+      // Kids edition: offensive and coarse words never appear, whatever the switch.
+      filter: kids ? 'kids' : familySafe ? 'family' : 'off',
     });
 
+    // Every word list the profile names must have loaded: a missing one is a
+    // failed fetch in practice (the chunk exists in every build), and the
+    // mode is not what the user chose without it.
+    const wordList = sources.every((s) => s.lexicon.size > 0);
     const note = sources.every((s) => s.lexicon.size === 0)
       ? 'Rules only — no dictionary bundled yet.'
       : '';
-    return { engine, ready: true, note, profile };
+    return { engine, ready: true, note, profile, wordList };
   } catch (error) {
     // A generated rule file that fails core's validation lands here. Say so
     // rather than showing a blank page: the message is what makes it fixable.
@@ -184,8 +230,18 @@ function unigramsFor(key: AssetKey): Unigrams {
   return parsed;
 }
 
+function bigramsFor(key: AssetKey): Bigrams {
+  let parsed = bigramCache.get(key);
+  if (parsed === undefined) {
+    const raw = rawCache.get(key);
+    parsed = raw === undefined ? emptyBigrams() : parseBigrams(raw, 'core/data/bigrams-web.tsv');
+    bigramCache.set(key, parsed);
+  }
+  return parsed;
+}
+
 function degraded(profile: Profile, note: string): EngineHandle {
-  return { engine: verbatimEngine(), ready: false, note, profile };
+  return { engine: verbatimEngine(), ready: false, note, profile, wordList: false };
 }
 
 /** The one file a single-file glob matched, or undefined if it matched nothing. */

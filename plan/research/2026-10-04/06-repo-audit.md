@@ -1,0 +1,15 @@
+# Repo audit (Explore agent) — key facts
+- Tests run 2026-10-04: core 128/128 pass, Appv2 15/15 pass, docs/odia-simple.test.mjs 58 pass.
+- Chain: web/ -> docs/odia-app.html (6.5 MB); Appv2/ -> docs/odia-app-sanskrit.html (7.9 MB); Odia_Sanskrit_Appv2/build_app.py injects pako + 2 base64 payloads (8.19 MB Praharaj 38,776 entries; 0.41 MB modern ~40.6k) + overlay JS before </body> -> 16.5 MB.
+- Workspaces: core, cli, web only. Appv2 and Odia_Sanskrit_Appv2 not workspaces. CLAUDE.md lists nonexistent app/ (Tauri).
+- Vercel base: web/ normal (non-single) Vite build -> dist/ with lazy lexicon chunk + sw.js; base './'. Appv2 as second Vite root.
+- Blockers: (a) SW activate deletes all other caches on origin (web/vite.config.ts:142-152, same in Appv2) -> two apps on one origin wipe each other. (b) overlay only works on single file, base64 in HTML, window.__dictInflate global, hand-trimmed pako. (c) Appv2 no manifest/icons but registers SW. (d) No bundled webfont (style.css:41 names only) -> boxes on systems without Odia font. CLAUDE.md:164 claims Noto bundled — false.
+- Overlay attaches via MutationObserver on class/id names (Appv2/src/inline.ts:61,216,226; main.ts:40,53,411-415) — silent breakage on rename. Overlay has hand-copied canonical(); line 27 has a literal precomposed U+0B5C (harmless after NFC).
+- Mixed language: rank() appends verbatim token last (core/src/rank.ts:13-15,145). BUG: inline bar drops verbatim (web/src/inline.ts:125, same Appv2), Space commits top Odia (:170-174); inline bar default on -> English needs Escape; learn() never records English.
+- LOAN tag display-only, build-time, CMUdict phonetic match. No Hindi/Urdu handling anywhere.
+- No context (bigram/phrase) ranking: transliterate() scores each token independently (core/src/index.ts:78-112).
+- learn(): localStorage 'odia.userdict' shared by web and Appv2 (learn.ts:157).
+- Sizes: working tree 467 MB (~220 without webcorpus); .git 149 MB, ONE commit 5fccb29; webcorpus 247 MB. dist-single/dist-legacy committed (.gitignore only covers dist/).
+- CLAUDE.md:9 "pre-Stage-A. Nothing built yet." is stale vs AGENTS.md:20-27 and plan/02-stages.md (Stages A,B in progress).
+- Open: AGENTS §7.1 coverage vs correctness; §7.4 scheme unreviewed by native speaker; §7.5 mu -> ମୁ not ମୁଁ.
+- Because there is ONE commit, a clean public repo is cheap: new repo without webcorpus.

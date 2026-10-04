@@ -66,6 +66,22 @@ function goldenWords(): string[] {
   return [...seen];
 }
 
+/**
+ * Owner decisions that accept another word for an ambiguous derived roman key.
+ * Same file and same rule as tools/eval/everyday.ts, so both report alike.
+ */
+const OVERRIDES = new Map<string, string[]>();
+{
+  const file = resolve(ROOT, 'core/test/golden/everyday-overrides.tsv');
+  for (const line of (existsSync(file) ? readFileSync(file, 'utf8') : '').split('\n')) {
+    if (!line.trim() || line.startsWith('#')) continue;
+    const [roman, register, odia] = line.split('\t');
+    if (!roman || !register || !odia) throw new Error(`bad row in ${file}: ${line}`);
+    const key = `${register}\t${roman}`;
+    OVERRIDES.set(key, [...(OVERRIDES.get(key) ?? []), canonical(odia)]);
+  }
+}
+
 function score(engine: Engine, words: readonly string[]): Arm {
   const arm: Arm = { careful1: 0, careful3: 0, casual1: 0, casual3: 0, total: 0 };
 
@@ -74,12 +90,14 @@ function score(engine: Engine, words: readonly string[]): Arm {
     if (careful.length === 0) continue;
     arm.total += 1;
 
-    for (const [roman, at1, at3] of [
-      [careful, 'careful1', 'careful3'],
-      [casual(careful), 'casual1', 'casual3'],
+    for (const [roman, at1, at3, register] of [
+      [careful, 'careful1', 'careful3', 'careful'],
+      [casual(careful), 'casual1', 'casual3', 'casual'],
     ] as const) {
       const candidates = engine.transliterateWord(roman, TOPK);
-      const at = candidates.findIndex((c) => c.text === word);
+      const accepted = [word, ...(OVERRIDES.get(`${register}\t${roman}`) ?? [])];
+      const ranks = accepted.map((w) => candidates.findIndex((c) => c.text === w)).filter((r) => r >= 0);
+      const at = ranks.length ? Math.min(...ranks) : -1;
       if (at === 0) arm[at1] += 1;
       if (at >= 0 && at < 3) arm[at3] += 1;
     }

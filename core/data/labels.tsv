@@ -1,0 +1,46 @@
+# labels.tsv — owner-curated whole-word labels.
+#
+# Format: odia <TAB> label <TAB> keys      labels: offensive, coarse, spoken, slang, dialect
+# Whole words only, never substrings. The Odia cell must be canonical.
+# keys (optional, comma-separated): the exact roman spellings under which the word may
+# still appear in family mode. Choose keys NO innocent word shares: the lexicon also
+# files words under loose casual keys, so the casual spelling is usually unsafe.
+#
+# Filter levels: off = nothing filtered; family (default) = offensive words only under
+# their own keys, or when the user taught them; kids = offensive and coarse words never.
+# See core/src/curation.ts. Phrases are not labelled: their offensive head word is.
+# Inflected forms (with case or verb endings) are NOT covered until they are listed here
+# (plan/06-owner-followups.md C-2).
+#
+# Source: the owner's list, 2026-10-04. Keys were proposed by Claude from the measured
+# collisions (see the commit message); rows marked REVIEW wait for the owner's check.
+# Licence: MIT (this project).
+# Not "banda"/"band": those spell BANDA (closed). Not "gandi" below: GANDI (knot).
+ବାଣ୍ଡ	offensive	baanda,baand
+ବିଆ	offensive	biaa
+# Key "pella", not "pela": "pela" is the everyday spelling of PELA (push).
+ପେଳ	offensive	pella
+ଗେହିବା	offensive	gehiba
+ଗେଇଁବା	offensive	geinba
+ଗିହା	offensive	giha,gihaa
+ଗିହାଁ	offensive	gihaan
+ରାଣ୍ଡି	offensive	raandi
+ବେଧେଇ	offensive	bedhei
+# REVIEW: also an ordinary word in Praharaj ("thickness; depth; hole"), 103 corpus uses.
+#   Proposed coarse, not offensive: shown with a "can be rude" badge in family mode,
+#   hidden for kids.
+ବେଧ	coarse
+ବୋକାଚୋଦା	offensive	bokaachodaa,bokachoda
+# REVIEW: Praharaj also gives "the bottom of a thing". Kept offensive as listed.
+ଗାଣ୍ଡି	offensive	gaandi
+ମାଦରଚୋଦ୍	offensive	maadarachod,madarchod
+ମାଦରଚୋଦ	offensive	maadarachoda,madarachoda
+# Owner's second list, 2026-10-04.
+# Not in the lexicon; the rules spell it for chhodi (#2), chhori (#4) and chodi (#5).
+ଛୋଡ଼ି	offensive	chhodi
+# REVIEW: ordinary word first (curd), 360 corpus uses. Labelled slang (marked, not
+#   filtered, also for kids) so the ordinary word is never hidden. Change to coarse to
+#   hide it from kids too.
+ଦଧି	slang
+# REVIEW: ordinary word first (hair), 1,473 corpus uses. Same reasoning as above.
+ବାଳ	slang

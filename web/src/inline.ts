@@ -34,6 +34,9 @@ interface Pending {
 
 const MAX_SHOWN = 9;
 
+/** True when a candidate has no Odia in it: the typed English word, or one taught earlier. */
+const isLatin = (text: string): boolean => !/[\u0B00-\u0B7F]/.test(text);
+
 /** Mirror styles that must match the textarea for the measurement to be right. */
 const MIRRORED = [
   'boxSizing', 'width', 'paddingTop', 'paddingRight', 'paddingBottom', 'paddingLeft',
@@ -120,12 +123,19 @@ export class InlineCandidates {
     const pending = this.pendingAt();
     if (pending === undefined) return this.hide();
 
-    const candidates = this.host
-      .candidates(pending.roman)
-      .filter((c) => c.source !== 'verbatim')
-      .slice(0, MAX_SHOWN);
+    // The typed word itself stays in the bar, as the last item, so an English
+    // word can be kept with one number key. Hiding it (the earlier rule) meant
+    // Escape was the only way out, and learn() never saw the choice. Once
+    // picked, learn() moves it up for that key, so Space then commits it.
+    // With no Odia candidate at all there is nothing to choose between, so the
+    // bar stays hidden.
+    const all = this.host.candidates(pending.roman);
+    const ranked = all.filter((c) => c.source !== 'verbatim');
+    if (ranked.length === 0) return this.hide();
 
-    if (candidates.length === 0) return this.hide();
+    const verbatim = all.find((c) => c.source === 'verbatim');
+    const candidates =
+      verbatim === undefined ? ranked.slice(0, MAX_SHOWN) : [...ranked.slice(0, MAX_SHOWN - 1), verbatim];
 
     this.pending = pending;
     this.shown = candidates;
@@ -213,7 +223,9 @@ export class InlineCandidates {
     this.shown.forEach((candidate, i) => {
       const item = document.createElement('button');
       item.type = 'button';
-      item.className = 'inline-candidate' + (i === this.active ? ' is-active' : '');
+      const latin = isLatin(candidate.text);
+      item.className =
+        'inline-candidate' + (latin ? ' inline-verbatim' : '') + (i === this.active ? ' is-active' : '');
       item.dataset.index = String(i);
       item.setAttribute('role', 'option');
       item.setAttribute('aria-selected', String(i === this.active));
@@ -222,9 +234,12 @@ export class InlineCandidates {
       num.className = 'inline-num';
       num.textContent = String(i + 1);
 
+      // Latin gets its own class, not '.odia' or '.inline-text': it must not be
+      // drawn in the Odia font, and the dictionary overlay skips it.
       const text = document.createElement('span');
-      text.className = 'inline-text odia';
+      text.className = latin ? 'inline-latin' : 'inline-text odia';
       text.textContent = candidate.text;
+      if (latin) item.title = 'Keep as typed';
 
       item.append(num, text);
       this.box.appendChild(item);

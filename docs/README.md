@@ -2,7 +2,8 @@
 
 | File | What it is |
 |---|---|
-| **`odia-app.html`** | **The app.** Full engine, 112k-entry lexicon, ~4 MB, one self-contained file. This is the one to use. |
+| **`odia-app-sanskrit.html`** | **The app (V1, from 2026-10-04 when rebuilt).** Built from `Appv2/` with `SINGLE_FILE=1 npx vite build --config Appv2/vite.config.ts && node Appv2/scripts/make-single-file.mjs`. Everyday Odia, Sanskrit, the dictionary and the V1 interface in one ~16 MB file. Rebuilt and committed 2026-10-04 (V1 + V2, adult edition, about 18 MB). The kids edition builds to `odia-app-kids.html` (see `ARCHITECTURE.md` §6). The hosted version is the same app on Vercel. |
+| `odia-app.html` | The original app (`web/`, now frozen). Full engine, 112k-entry lexicon, ~6 MB, one self-contained file. |
 | `odia-simple.html` | A 40 KB rules-only version. No vocabulary, so it gets ଜନ୍ମଦିନ wrong — kept as a lightweight fallback and as the thing the 58-check test suite guards. |
 | `romanization-reference.pdf` | Printable reference: vowels, matras, consonants, conjuncts, signs, numerals. |
 | `romanization-reference.tex` | Source. Compile with **LuaLaTeX**, not pdfLaTeX (Odia needs HarfBuzz shaping). |

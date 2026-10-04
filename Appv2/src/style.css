@@ -12,20 +12,78 @@
  * the notch and the Home indicator in standalone mode.
  */
 
+/*
+ * Noto Sans Oriya, bundled so a computer without an Odia font does not show
+ * boxes. SIL Open Font License 1.1 (fonts/OFL.txt). Oriya subset from npm
+ * @fontsource/noto-sans-oriya 5.3.0, weights 400 and 700 (600-650 text uses 700).
+ */
+@font-face {
+  font-family: 'Noto Sans Oriya';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../../web/src/fonts/noto-sans-oriya-oriya-400-normal.woff2') format('woff2');
+  unicode-range: U+0951-0952, U+0964-0965, U+0B01-0B77, U+1CDA, U+1CF2, U+200C-200D, U+20B9, U+25CC;
+}
+@font-face {
+  font-family: 'Noto Sans Oriya';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('../../web/src/fonts/noto-sans-oriya-oriya-700-normal.woff2') format('woff2');
+  unicode-range: U+0951-0952, U+0964-0965, U+0B01-0B77, U+1CDA, U+1CF2, U+200C-200D, U+20B9, U+25CC;
+}
+
+/* The same files as a second family for the text box, enlarged to the Odia
+ * optical size with size-adjust (Chrome 92+, Safari 17+; older browsers show
+ * Noto at the Latin size, which is still the right font). A textarea has one
+ * font-size, so this is the only way to give its Odia --odia-scale. */
+@font-face {
+  font-family: 'Odia Box';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  size-adjust: 132%;
+  src: url('../../web/src/fonts/noto-sans-oriya-oriya-400-normal.woff2') format('woff2');
+  unicode-range: U+0951-0952, U+0964-0965, U+0B01-0B77, U+1CDA, U+1CF2, U+200C-200D, U+20B9, U+25CC;
+}
+@font-face {
+  font-family: 'Odia Box';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  size-adjust: 132%;
+  src: url('../../web/src/fonts/noto-sans-oriya-oriya-700-normal.woff2') format('woff2');
+  unicode-range: U+0951-0952, U+0964-0965, U+0B01-0B77, U+1CDA, U+1CF2, U+200C-200D, U+20B9, U+25CC;
+}
+
 :root {
   color-scheme: light dark;
 
+  /* Colour tokens (plan/design/v1-ux-proposal.md 4.1). Every token here has a
+   * dark value below (Appv2/eval/check-theme.mjs fails the build otherwise).
+   * Contrast, recomputed for these values (WCAG 2.x), in the B2 commit:
+   * every text pair >= 4.5:1, every control edge and focus ring >= 3:1. */
   --bg: #f7f6fa;
   --surface: #ffffff;
   --surface-soft: #f1eff7;
-  --text: #1b1b21;
-  --muted: #63636f;
+  --text: #17171c;
+  --muted: #55555f;
+  /* Decorative dividers only (sheet heads, table rows, footer). */
   --line: #dedbe8;
+  /* Edges of controls: text box, buttons, segmented control, palette keys,
+   * strip cards, search field. 3:1 or more against every surface. */
+  --line-strong: #8a879a;
   --accent: #5b2a9a;
   --accent-text: #ffffff;
   --accent-soft: #ece3fb;
-  --ok: #0a7050;
-  --warn: #8a4a00;
+  --ok: #0a6b4c;
+  --warn: #7a4100;
+  /* Flag badges (V1 family-safe; proposal 4.1). Text on its soft fill. */
+  --warn-soft: #fbefdc;
+  --danger: #a0172c;
+  --danger-soft: #fbe4e7;
+  --danger-text: #ffffff;
 
   /* Floating surfaces that sit ABOVE the page: the caret candidate bar, the
    * palette keys. Previously these were written `var(--panel, #fff)` against a
@@ -38,12 +96,45 @@
   --panel: #ffffff;
   --card: #f1eff7;
 
-  --radius: 14px;
-  --tap: 44px;
+  /* Type scale (proposal 4.3). Non-colour, so no dark value. --fs-sm is the
+   * floor for any text a user reads; inputs stay >= 16px (iOS zoom).
+   * Settings > Text size multiplies the whole scale, Odia and Latin, through
+   * --fs-scale: 1 / 1.15 / 1.3 (classes below, set by main.ts and by the
+   * inline script in index.html before first paint). */
+  --fs-scale: 1;
+  --fs-sm: calc(15px * var(--fs-scale));
+  --fs-body: calc(17px * var(--fs-scale));
+  --fs-input: calc(18px * var(--fs-scale));
+  --fs-lg: calc(20px * var(--fs-scale));
   --odia-scale: 1.32;
+  --fs-odia-cand: calc(var(--fs-input) * var(--odia-scale));
+
+  /* Spacing, radii, targets (proposal 4.4). */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --radius: 14px;
+  --radius-sm: 8px;
+  --radius-pill: 999px;
+  --tap: 44px;
+  --tap-lg: 52px;
+
   --odia-font: 'Noto Sans Oriya', 'Oriya Sangam MN', 'Kalinga', 'Oriya MN', sans-serif;
   --ui-font: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
   --mono-font: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+/* Text size (Settings). Not :root-only blocks, so check-theme.mjs does not
+ * read them as colour blocks; they only change the multiplier. */
+:root.text-large {
+  --fs-scale: 1.15;
+}
+
+:root.text-xl {
+  --fs-scale: 1.3;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -52,13 +143,18 @@
     --surface: #1c1c23;
     --surface-soft: #23232c;
     --text: #ecebf2;
-    --muted: #9b9aa9;
+    --muted: #a9a8b6;
     --line: #32323e;
+    --line-strong: #7d7c90;
     --accent: #c3a4f4;
     --accent-text: #1a1024;
     --accent-soft: #2a2138;
     --ok: #59d5a0;
-    --warn: #e0aa62;
+    --warn: #f0bd78;
+    --warn-soft: #3a2a14;
+    --danger: #ff9aa5;
+    --danger-soft: #3d1a20;
+    --danger-text: #1a1024;
     /* Lighter than --surface, not darker: a popover floating above the page
      * reads as elevated when it catches more light, which is the opposite of
      * the light-mode instinct to make it whiter than white. */
@@ -73,6 +169,29 @@
   box-sizing: border-box;
 }
 
+/* One visible focus ring for everything focusable by keyboard (proposal
+ * 4.5): 2px --accent, 2px off the element. --accent is 6.98:1 or more
+ * against every surface in both themes (B2 table). Components that draw
+ * their own ring (segmented control, toast button) override it. */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* Read by screen readers, not shown: the suggestion announcements and the
+ * text box's how-to hint. */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 html {
   /* Stop iOS Safari inflating text in landscape. */
   -webkit-text-size-adjust: 100%;
@@ -83,7 +202,7 @@ body {
   margin: 0;
   background: var(--bg);
   color: var(--text);
-  font: 17px/1.55 var(--ui-font);
+  font: var(--fs-body)/1.55 var(--ui-font);
   /* No horizontal scrolling in portrait, ever. */
   overflow-x: hidden;
   overscroll-behavior-y: contain;
@@ -127,15 +246,62 @@ body {
 
 .masthead h1 {
   margin: 0;
-  font-size: 1.15rem;
+  font-size: var(--fs-lg);
   font-weight: 650;
   letter-spacing: -0.01em;
+}
+
+/* Quiet header button (Settings): icon plus a word, 44px target. */
+.icon-btn svg { flex: none; }
+
+.icon-btn {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-left: auto;
+  padding: 0 0.75rem;
+  font-size: var(--fs-sm);
+}
+
+.btn-quiet {
+  background: transparent;
+  color: var(--text);
+}
+
+/* Quiet buttons are named by their word or icon; their edge is the strong one
+ * too, so they still read as buttons. */
+
+/* Settings then Help: only the first is pushed to the right. */
+.icon-btn + .icon-btn {
+  margin-left: 0;
+}
+
+/* Phones: the icon alone (the button keeps its name through aria-label). */
+@media (max-width: 479px) {
+  .masthead {
+    gap: var(--space-2);
+  }
+
+  .icon-btn {
+    justify-content: center;
+    padding: 0;
+  }
+
+  .icon-btn .icon-btn-label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
 }
 
 .tagline {
   margin: 0.1rem 0 0;
   color: var(--muted);
-  font-size: 0.875rem;
+  font-size: var(--fs-sm);
 }
 
 /* ------------------------------------------------------------------ *
@@ -146,6 +312,51 @@ body {
   font-family: var(--odia-font);
   font-size: calc(1em * var(--odia-scale));
   line-height: 1.75;
+}
+
+/* ------------------------------------------------------------------ *
+ * First-run card (proposal 3.9): two lines, an example, "Got it".
+ * ------------------------------------------------------------------ */
+
+.intro {
+  margin: 0 0 var(--space-4);
+  padding: var(--space-3) var(--space-4) var(--space-4);
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--accent);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+/* Kids edition hides the "Hide rude words" row: the filter is fixed there. */
+.setting[hidden] {
+  display: none;
+}
+
+.intro[hidden] {
+  display: none;
+}
+
+.intro-title {
+  margin: 0;
+  font-size: var(--fs-body);
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.intro-body {
+  margin: var(--space-1) 0 var(--space-3);
+  color: var(--text);
+  line-height: 1.45;
+}
+
+.intro-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.intro-actions .btn-primary {
+  flex: 1 1 14rem;
 }
 
 /* ------------------------------------------------------------------ *
@@ -168,16 +379,14 @@ body {
   display: block;
   margin: 0 0 0.4rem;
   color: var(--muted);
-  font-size: 0.72rem;
+  font-size: var(--fs-sm);
   font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.07em;
 }
 
 .pane-hint {
   margin-bottom: 0.4rem;
   color: var(--muted);
-  font-size: 0.78rem;
+  font-size: var(--fs-sm);
 }
 
 textarea {
@@ -185,15 +394,28 @@ textarea {
   width: 100%;
   min-height: 6.5rem;
   padding: 0.75rem 0.85rem;
-  border: 1px solid var(--line);
+  border: 1px solid var(--line-strong);
   border-radius: var(--radius);
   background: var(--surface);
   color: var(--text);
-  /* Must stay at or above 16px: below it, iOS Safari zooms on focus. */
-  font: 17px/1.6 var(--mono-font);
+  /* Must stay at or above 16px: below it, iOS Safari zooms on focus.
+   * Odia first, in Noto Sans Oriya scaled by --odia-scale through the 'Odia
+   * Box' face below (its unicode-range limits it to Odia), Latin in the UI
+   * font. Was the monospace stack, so committed Odia looked smaller and
+   * different from the same word elsewhere (audit H2). */
+  font-family: 'Odia Box', var(--ui-font);
+  font-size: var(--fs-input);
+  line-height: 1.75;
   resize: vertical;
   -webkit-appearance: none;
   appearance: none;
+}
+
+/* The browser default placeholder grey was 3.68:1 in dark mode; Firefox also
+ * fades it with opacity. --muted is 7.37 / 7.23:1 on the text box. */
+textarea::placeholder {
+  color: var(--muted);
+  opacity: 1;
 }
 
 textarea:focus-visible,
@@ -202,62 +424,94 @@ textarea:focus {
   outline-offset: 1px;
 }
 
-.output {
-  min-height: 6.5rem;
-  padding: 0.6rem 0.7rem;
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  background: var(--surface-soft);
-  /* pre-wrap preserves the writer's own spacing and line breaks; anywhere stops
-     a long unbroken token from forcing the page sideways. */
-  white-space: pre-wrap;
-  overflow-wrap: anywhere;
+/* ------------------------------------------------------------------ *
+ * "Reads as" line (readback.ts): one Latin word per Odia word in the box.
+ * Replaces the ODIA output box (audit H1). Each word is a button with a 44px
+ * hit area that opens the Alternatives sheet.
+ * ------------------------------------------------------------------ */
+
+.readback {
+  margin-top: var(--space-2);
 }
 
-.output:empty::before {
-  content: attr(data-placeholder);
+.readback-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0 var(--space-2);
+}
+
+.readback-label {
   color: var(--muted);
+  font-size: var(--fs-sm);
+  font-weight: 600;
 }
 
-/* A word in the output. Words with alternatives are buttons; words with only
-   one reading are inert spans, so nothing looks tappable that is not. At the
-   Odia size and line-height above, each line box clears 44px on a phone. */
-.word {
-  display: inline-block;
-  margin: 0;
-  padding: 0.1em 0.12em;
+.readback-hint {
+  color: var(--muted);
+  font-size: var(--fs-sm);
+}
+
+.readback-words {
+  font-size: var(--fs-input);
+  line-height: 1.5;
+  overflow-wrap: break-word;
+}
+
+.rb-word {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--tap);
+  margin: 0 2px;
+  padding: 0 2px;
   border: 0;
-  border-radius: 5px;
+  border-radius: var(--radius-sm);
   background: none;
-  color: inherit;
+  color: var(--text);
   font: inherit;
-  text-align: inherit;
-}
-
-button.word {
   cursor: pointer;
   touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
 }
 
-/* Dotted underline marks a word the engine is not certain about. */
-.word.ambiguous {
-  border-bottom: 2px dotted var(--accent);
+/* Not checked yet: converted without the user picking it (the word being
+ * typed, or text converted after a paste or a late word list). */
+.rb-word.rb-unchecked {
+  text-decoration: underline dotted var(--accent);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 5px;
 }
 
-.word.chosen {
+.rb-word.rb-pending {
+  color: var(--muted);
+}
+
+.rb-word:hover,
+.rb-word.open {
   background: var(--accent-soft);
 }
 
-button.word:active,
-button.word.open {
-  background: var(--accent);
-  color: var(--accent-text);
+.rb-word:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
 }
 
-button.word:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 1px;
+.rb-word:disabled {
+  cursor: default;
+}
+
+/* No dictionary entry (set by dictionary/overlay.ts, with the screen-reader
+ * text "not a known word"): a quieter dotted line than "not checked yet". */
+.rb-word.rb-unknown {
+  text-decoration: underline dotted var(--muted);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 5px;
+}
+
+/* A word kept in English: shown as typed, nothing to pick. */
+.rb-latin {
+  color: var(--muted);
 }
 
 /* ------------------------------------------------------------------ *
@@ -267,19 +521,19 @@ button.word:focus-visible {
 .actions {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.6rem;
-  margin: 0.25rem 0 1rem;
+  gap: var(--space-2);
+  margin: var(--space-1) 0 var(--space-4);
 }
 
 .btn {
   min-height: var(--tap);
   min-width: var(--tap);
   padding: 0 1.15rem;
-  border: 1px solid var(--line);
+  border: 1px solid var(--line-strong);
   border-radius: var(--radius);
   background: var(--surface);
   color: var(--text);
-  font: 600 17px/1 var(--ui-font);
+  font: 600 var(--fs-body)/1 var(--ui-font);
   cursor: pointer;
   touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
@@ -301,47 +555,148 @@ button.word:focus-visible {
   flex: 1 1 12rem;
 }
 
-.btn-small {
-  min-height: 38px;
-  padding: 0 0.9rem;
-  font-size: 16px;
+/* Share / Copy: the primary action, 52px (proposal 4.4). */
+.btn-lg {
+  min-height: var(--tap-lg);
 }
 
-.toggles {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.25rem 1.25rem;
-  margin-bottom: 0.75rem;
+/* The actions row: Clear is quiet and keeps to its own width. */
+.actions .btn-quiet {
+  flex: none;
+  border-color: transparent;
 }
 
-.switch {
+.btn[hidden] {
+  display: none;
+}
+
+/* Meanings (below 1100px): icon and word, at the end of the actions row. */
+.actions .meanings-btn {
   display: inline-flex;
   align-items: center;
-  gap: 0.55rem;
+  gap: 6px;
+  margin-left: auto;
+}
+
+/* The same action on the phone strip: an icon button beside Copy. */
+.meanings-dock {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-small {
   min-height: var(--tap);
-  color: var(--muted);
-  font-size: 16px;
-  cursor: pointer;
-  -webkit-tap-highlight-color: transparent;
+  padding: 0 0.9rem;
 }
 
-.switch input {
-  width: 22px;
-  height: 22px;
-  margin: 0;
-  accent-color: var(--accent);
-  flex: 0 0 auto;
-}
-
+/* The state line under the text box (main.ts updateStates). Loading is
+ * quiet text with a spinner; a failure is a filled warning line, so the two
+ * never look alike. */
 .status {
-  margin: 0 0 1.25rem;
-  min-height: 1.2em;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin: var(--space-2) 0 0;
   color: var(--muted);
-  font-size: 0.82rem;
+  font-size: var(--fs-sm);
 }
 
-.status.warn {
+.status[hidden] {
+  display: none;
+}
+
+.status-loading::before {
+  content: '';
+  flex: none;
+  width: 14px;
+  height: 14px;
+  border: 2px solid var(--line);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.9s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .status-loading::before {
+    animation: none;
+    border-color: var(--accent);
+  }
+}
+
+.status-warn {
+  padding: 0.45rem 0.7rem;
+  border-radius: var(--radius-sm);
+  background: var(--warn-soft);
   color: var(--warn);
+  font-weight: 600;
+}
+
+/* Word list failed: a banner with the one thing to do. */
+.banner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  margin: var(--space-2) 0 0;
+  padding: 0.6rem 0.75rem;
+  border: 1px solid var(--warn);
+  border-radius: var(--radius-sm);
+  background: var(--warn-soft);
+  color: var(--warn);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+}
+
+.banner[hidden] {
+  display: none;
+}
+
+/* Offline status chip in the header. */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  margin-top: 0.25rem;
+  padding: 0.1rem 0.6rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-pill);
+  color: var(--muted);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+}
+
+.chip[hidden] {
+  display: none;
+}
+
+.chip svg {
+  display: none;
+  flex: none;
+}
+
+.chip-ok {
+  border-color: var(--ok);
+  color: var(--ok);
+}
+
+.chip-ok svg {
+  display: block;
+}
+
+/* Copy while the box is empty: looks unavailable, still tappable so it can
+ * say why ("Type something first"). */
+.btn[aria-disabled='true'] {
+  border-color: var(--line);
+  background: var(--surface-soft);
+  color: var(--muted);
 }
 
 /* ------------------------------------------------------------------ *
@@ -351,7 +706,13 @@ button.word:focus-visible {
 .picker {
   position: fixed;
   inset: 0;
-  z-index: 20;
+  /* One z-index scale for the whole app (plan/design/v1-ux-proposal.md 5):
+   *   page 0 · sticky header 10 · strip/popover 20 · meanings toggle 30 ·
+   *   meanings panel 35 · modal sheets 40 · toast 50.
+   * Literal numbers, not --z-* tokens: Appv2/eval/check-theme.mjs treats an
+   * unknown token as a colour. Before V1 the meanings button sat at 59 and
+   * covered this sheet's bottom rows (audit B4). */
+  z-index: 40;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -408,7 +769,7 @@ button.word:focus-visible {
 
 .picker-head h2 {
   margin: 0;
-  font-size: 0.95rem;
+  font-size: var(--fs-lg);
   font-weight: 600;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -416,8 +777,13 @@ button.word:focus-visible {
 }
 
 .picker-head h2 .roman {
-  font-family: var(--mono-font);
+  font-family: var(--ui-font);
   color: var(--accent);
+}
+
+.picker-foot {
+  padding: var(--space-2) var(--space-3) var(--space-3);
+  text-align: right;
 }
 
 .picker-list {
@@ -459,19 +825,35 @@ button.word:focus-visible {
   background: var(--accent-soft);
 }
 
+.candidate {
+  /* The dictionary gloss (flex-basis 100%) goes to its own line instead of
+   * squeezing the word, with no extra gap between the two lines. */
+  flex-wrap: wrap;
+  row-gap: 0;
+}
+
 .candidate .text {
   font-family: var(--odia-font);
-  font-size: calc(1rem * var(--odia-scale));
+  font-size: calc(var(--fs-body) * var(--odia-scale));
   line-height: 1.6;
-  overflow-wrap: anywhere;
+  /* Never break an Odia word between letters (audit B3: the word for "day" rendered as DI / NA
+   * once the gloss took the room). The gloss wraps instead. */
+  flex: none;
+  white-space: nowrap;
+  overflow-wrap: normal;
+}
+
+/* A Latin alternative (keep as typed): UI font, Latin size. */
+.candidate .text-latin {
+  font-family: var(--ui-font);
+  font-size: var(--fs-input);
 }
 
 .candidate .source {
+  /* Only with ?debug=1 (main.ts): engine words never reach users (H5). */
   flex: 0 0 auto;
   color: var(--muted);
-  font-size: 0.72rem;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
+  font-size: var(--fs-sm);
 }
 
 /* ------------------------------------------------------------------ *
@@ -496,11 +878,9 @@ button.word:focus-visible {
 
 .guide h3 {
   margin: 1.4rem 0 0.4rem;
-  font-size: 0.75rem;
+  font-size: var(--fs-sm);
   font-weight: 700;
   color: var(--muted);
-  text-transform: uppercase;
-  letter-spacing: 0.07em;
 }
 
 /* Wide tables scroll inside their own box; the page never scrolls sideways. */
@@ -512,7 +892,7 @@ button.word:focus-visible {
 table {
   border-collapse: collapse;
   width: 100%;
-  font-size: 0.92rem;
+  font-size: var(--fs-sm);
 }
 
 th,
@@ -525,15 +905,13 @@ td {
 
 thead th {
   color: var(--muted);
-  font-size: 0.7rem;
+  font-size: var(--fs-sm);
   font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
 }
 
 tbody th {
   color: var(--muted);
-  font-size: 0.78rem;
+  font-size: var(--fs-sm);
   font-weight: 600;
 }
 
@@ -542,13 +920,13 @@ code {
   border-radius: 4px;
   background: var(--surface-soft);
   font-family: var(--mono-font);
-  font-size: 0.88em;
+  font-size: 1em; /* was 0.88em: 13px inside 15px notes, under the floor */
 }
 
 .note {
   margin: 0.85rem 0;
   color: var(--muted);
-  font-size: 0.88rem;
+  font-size: var(--fs-sm);
 }
 
 /* ------------------------------------------------------------------ *
@@ -560,7 +938,7 @@ code {
   padding-top: 1rem;
   border-top: 1px solid var(--line);
   color: var(--muted);
-  font-size: 0.8rem;
+  font-size: var(--fs-sm);
 }
 
 .colophon p {
@@ -568,18 +946,25 @@ code {
 }
 
 .toast {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  /* max-content: centred with left 50%, the box would otherwise wrap at half
+   * the screen width. */
+  width: max-content;
+  max-width: calc(100vw - 2rem);
   position: fixed;
   left: 50%;
   bottom: calc(1.5rem + env(safe-area-inset-bottom));
-  z-index: 30;
+  z-index: 50; /* above sheets: see the z-index scale at .picker */
   transform: translateX(-50%) translateY(0.4rem);
   padding: 0.7rem 1.25rem;
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
   background: var(--ok);
   /* Same flip as .inline-candidate.is-active: in dark mode --ok is a light
    * mint (#59d5a0) and white text on it is unreadable. */
   color: var(--accent-text);
-  font-size: 0.9rem;
+  font-size: var(--fs-sm);
   font-weight: 600;
   opacity: 0;
   pointer-events: none;
@@ -591,8 +976,42 @@ code {
   transform: translateX(-50%) translateY(0);
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .toast {
+    transition: none;
+  }
+}
+
 .toast.error {
   background: var(--warn);
+}
+
+/* "Cleared" carries an Undo button, so that toast takes taps. */
+.toast.show.has-action {
+  pointer-events: auto;
+  padding: 0.25rem 0.35rem 0.25rem 1.25rem;
+}
+
+.toast-action {
+  min-height: var(--tap);
+  min-width: var(--tap);
+  padding: 0 1rem;
+  border: 2px solid currentColor;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.toast-action[hidden] {
+  display: none;
+}
+
+.toast-action:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
 }
 
 /* Visually hidden but reachable: the clipboard fallback textarea has to be
@@ -621,7 +1040,7 @@ code {
 
 .inline-candidates {
   position: absolute;
-  z-index: 60;
+  z-index: 20; /* strip/popover level: see the scale at .picker */
   display: flex;
   flex-wrap: wrap;
   gap: 4px;
@@ -647,7 +1066,11 @@ code {
   cursor: pointer;
 }
 
-.inline-candidate:hover { background: rgb(0 0 0 / 6%); }
+/* :not(.is-active), so hover never repaints the highlighted item. With equal
+ * specificity the later :hover rule used to win and, in dark mode, left the
+ * dark --accent-text on a dark hover fill (1.71:1, audit B2). On touch screens
+ * hover sticks after a tap, so this was the common case, not an edge. */
+.inline-candidate:not(.is-active):hover { background: var(--accent-soft); }
 
 .inline-candidate.is-active {
   background: var(--accent);
@@ -663,18 +1086,254 @@ code {
 .inline-candidate { color: var(--text); }
 
 .inline-num {
-  min-width: 1.35em;
+  min-width: 1.5em;
   padding: 0 3px;
   border: 1px solid currentColor;
   border-radius: 4px;
-  opacity: 0.65;
+  /* --muted, not opacity: opacity-quiet text fails contrast (audit M2). */
+  color: var(--muted);
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-  font-size: 0.72rem;
-  line-height: 1.5;
+  font-size: var(--fs-sm);
+  line-height: 1.4;
   text-align: center;
 }
 
 .inline-text { font-size: 1.15em; }
+
+.inline-candidate.is-active .inline-num { color: inherit; }
+
+/* The typed English word, last in the bar. UI font, not the Odia one. */
+.inline-latin {
+  font-family: var(--ui-font);
+  color: var(--muted);
+}
+
+/* On the highlighted item, use the same text colour as the Odia candidates. */
+.inline-candidate.is-active .inline-latin { color: inherit; }
+
+/* The typed English word: "Keep" plus the word in quotes, so it reads as an
+ * action rather than as a misspelt candidate. */
+.inline-keep {
+  color: var(--muted);
+  font-size: var(--fs-sm);
+}
+.inline-candidate.is-active .inline-keep { color: inherit; }
+.inline-latin::before { content: '\201C'; }
+.inline-latin::after { content: '\201D'; }
+
+/* Flag badges ("offensive", "can be rude"): words, not colour alone. Only
+ * ever from engine.labelsOf() (badges.ts). Keep their own fill on the
+ * highlighted item so they stay readable on the accent. */
+.badge {
+  display: inline-block;
+  flex: none;
+  padding: 0 6px;
+  border-radius: var(--radius-sm);
+  font-family: var(--ui-font);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  line-height: 1.5;
+  white-space: nowrap;
+}
+.badge-warn {
+  background: var(--warn-soft);
+  color: var(--warn);
+}
+.badge-danger {
+  background: var(--danger-soft);
+  color: var(--danger);
+}
+
+/* -------------------------------------------------------------- popover
+   Desktop caret popover (inline.ts "popover" layout; proposal 3.5): a
+   vertical list, one candidate per row - number, Odia word, flag badge,
+   one-line meaning - in fixed columns (CSS subgrid), so the numbers line up
+   with keys 1-9 and nothing moves when the meanings arrive. Fixed width for
+   the same reason; inline.ts caps it at the text box's column and sets
+   max-height when it has to scroll. */
+
+.kb-bar[data-mode='popover'] .inline-candidates {
+  display: grid;
+  grid-template-columns: auto auto auto minmax(0, 1fr);
+  align-content: start;
+  gap: 2px 0;
+  width: 30rem;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: var(--space-1);
+  border-color: var(--line-strong);
+}
+.kb-bar[data-mode='popover'] .inline-candidates[hidden] { display: none; }
+
+.kb-bar[data-mode='popover'] .inline-candidate {
+  display: grid;
+  grid-template-columns: subgrid;
+  grid-column: 1 / -1;
+  align-items: center;
+  column-gap: var(--space-3);
+  min-height: 36px;
+  padding: 2px var(--space-3) 2px var(--space-2);
+  text-align: left;
+}
+.kb-bar[data-mode='popover'] .inline-num { grid-column: 1; }
+.kb-bar[data-mode='popover'] .inline-text {
+  grid-column: 2;
+  font-size: var(--fs-odia-cand);
+  line-height: 1.25;
+  white-space: nowrap;
+}
+.kb-bar[data-mode='popover'] .badge { grid-column: 3; }
+/* "Keep "dina"": number, the word "Keep", the typed word, in one row. */
+.kb-bar[data-mode='popover'] .inline-verbatim {
+  display: flex;
+  gap: var(--space-2);
+}
+
+/* Without subgrid (Safari < 16, Chrome < 117): rows are flex and the word
+ * column gets a minimum width, so meanings still mostly line up. */
+@supports not (grid-template-columns: subgrid) {
+  .kb-bar[data-mode='popover'] .inline-candidate { display: flex; }
+  .kb-bar[data-mode='popover'] .inline-text { min-width: 5.5em; }
+}
+
+/* Desktop text box: tall enough for the list to open under the first lines
+ * without reaching the "Reads as" line (in em, so it grows with Text size). */
+@media (min-width: 700px) and (pointer: fine), (min-width: 1024px) {
+  textarea {
+    min-height: 23em;
+  }
+}
+
+/* ---------------------------------------------------------------- strip
+   Phone suggestion strip (inline.ts "docked" layout, audit B1). It rides on
+   the on-screen keyboard: inline.ts pins it to the bottom of
+   window.visualViewport and reserves room for it with body padding.
+   In the desktop "popover" layout the wrapper is display: contents, so the
+   list above is positioned against the page exactly as before. */
+
+.kb-bar[data-mode='popover'] { display: contents; }
+.kb-bar[data-mode='popover'] .kb-bar-top { display: none; }
+
+.kb-bar[data-mode='docked'] {
+  display: none;
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 20; /* strip level: see the scale at .picker */
+  padding: 4px var(--space-2) calc(var(--space-2) + env(safe-area-inset-bottom));
+  border-top: 1px solid var(--line);
+  background: var(--panel);
+  box-shadow: 0 -6px 20px rgb(0 0 0 / 14%);
+}
+.kb-bar[data-mode='docked'].is-open { display: block; }
+
+.kb-bar-top {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: var(--tap);
+}
+
+.kb-bar-note {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  color: var(--muted);
+  font-size: var(--fs-sm);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.kb-bar-page {
+  flex: none;
+  min-width: var(--tap);
+  min-height: var(--tap);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  color: var(--text);
+  font: 700 22px/1 var(--ui-font);
+  cursor: pointer;
+  touch-action: manipulation;
+}
+.kb-bar-page[hidden] { display: none; }
+.kb-bar-page:disabled { color: var(--muted); cursor: default; }
+
+.kb-bar-tools {
+  display: flex;
+  flex: none;
+  gap: var(--space-2);
+}
+.kb-bar-tools .btn {
+  flex: none;
+  min-height: var(--tap);
+}
+
+/* Three cards across a 390px phone (each at least about 119px), the rest by
+ * swipe or the arrow buttons above. A card grows to fit its word, so a long
+ * word (the word for "university", say) is never cut; three across is a floor for
+ * ordinary words. No number badges: phone keyboards have no number row by
+ * default. */
+.kb-bar[data-mode='docked'] .inline-candidates {
+  position: static;
+  display: flex;
+  flex-wrap: nowrap;
+  gap: var(--space-2);
+  max-width: none;
+  margin-top: 4px;
+  padding: 0;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+.kb-bar[data-mode='docked'] .inline-candidates[hidden] { display: none; }
+.kb-bar[data-mode='docked'] .inline-candidates::-webkit-scrollbar { display: none; }
+
+.kb-bar[data-mode='docked'] .inline-candidate {
+  flex: 0 0 auto;
+  min-width: calc((100% - 2 * var(--space-2)) / 3);
+  max-width: 100%;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 2px;
+  min-height: 64px;
+  padding: 6px 10px;
+  overflow: hidden;
+  border: 1px solid var(--line-strong);
+  border-radius: 10px;
+  background: var(--surface);
+  text-align: left;
+  scroll-snap-align: start;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+.kb-bar[data-mode='docked'] .inline-candidate.is-active {
+  border-color: var(--accent);
+  background: var(--accent);
+}
+.kb-bar[data-mode='docked'] .inline-num { display: none; }
+.kb-bar[data-mode='docked'] .inline-text {
+  max-width: 100%;
+  font-size: var(--fs-odia-cand);
+  line-height: 1.3;
+  white-space: nowrap;
+}
+.kb-bar[data-mode='docked'] .inline-latin {
+  max-width: 100%;
+  overflow: hidden;
+  font-size: var(--fs-input);
+  white-space: nowrap;
+  text-overflow: ellipsis; /* only past the full strip width */
+}
 
 /* Hidden twin of the textarea, used only to measure where the caret is. */
 .caret-mirror {
@@ -687,9 +1346,6 @@ code {
   pointer-events: none;
 }
 
-@media (prefers-color-scheme: dark) {
-  .inline-candidate:hover { background: rgb(255 255 255 / 10%); }
-}
 
 /* ==========================================================================
  * Appv2 additions: the mode selector, the insert palette, shortcut hints.
@@ -698,34 +1354,61 @@ code {
  * exactly what Appv2 adds and nothing else.
  * ========================================================================== */
 
-.mode-label {
-  margin-right: 0.4rem;
-  opacity: 0.75;
+/* Mode: a two-part segmented control (radios underneath). 48px tall. */
+.segmented {
+  display: flex;
+  gap: var(--space-1);
+  margin: 0 0 var(--space-3);
+  padding: var(--space-1);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius);
+  background: var(--surface-soft);
 }
 
-.mode-select {
-  font: inherit;
-  /* 16px, unconditionally.
-   *
-   * iOS Safari zooms the whole page when a form control smaller than 16px
-   * takes focus. This was first written as 0.9rem with a
-   * `@media (pointer: coarse)` bump to 1rem, on the theory that only the touch
-   * path matters — and tools/eval/webkit-check.py failed it at 14.4px. The
-   * check is right and the media query was too clever: the rule the project
-   * enforces is flat, so this is flat. */
-  font-size: 1rem;
-  padding: 0.15rem 0.4rem;
-  border-radius: 0.4rem;
-  border: 1px solid var(--line);
-  background: transparent;
-  color: inherit;
-  min-height: 2rem;
+.segment {
+  position: relative;
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+/* The radio stays in the accessibility tree and takes the clicks; only its
+ * box is invisible (no text on it, so this is not opacity-quiet text). */
+.segment input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.segment span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 0 0.5rem;
+  border-radius: calc(var(--radius) - 4px);
+  color: var(--text);
+  font-weight: 600;
+  text-align: center;
+}
+
+.segment input:checked + span {
+  background: var(--accent);
+  color: var(--accent-text);
+}
+
+.segment input:focus-visible + span {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
 }
 
 .mode-hint {
   margin: 0.45rem 0 0;
-  font-size: 0.82rem;
-  opacity: 0.7;
+  color: var(--muted);
+  font-size: var(--fs-sm);
 }
 
 /* The palette is a horizontally scrolling strip. It must never widen the page:
@@ -748,25 +1431,16 @@ code {
   flex: 0 0 auto;
 }
 
-.palette-name {
-  font-size: 0.7rem;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  opacity: 0.55;
-  margin-right: 0.15rem;
-  white-space: nowrap;
-}
-
 .palette-key {
   font-family: var(--odia-font);
-  font-size: 1.15rem;
+  font-size: var(--fs-input);
   line-height: 1;
   /* 44px: the minimum comfortable touch target. */
   min-width: 44px;
   min-height: 44px;
   padding: 0 0.35rem;
-  border-radius: 0.5rem;
-  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--line-strong);
   background: var(--card);
   color: inherit;
   cursor: pointer;
@@ -788,10 +1462,93 @@ code {
   display: flex;
   align-items: baseline;
   gap: 0.3rem;
-  font-size: 0.9rem;
+  font-size: var(--fs-sm); /* was 0.9rem (14.4px), under the 15px floor */
 }
 
 .shortcuts .gives {
   font-family: var(--odia-font);
-  font-size: 1.05rem;
+  font-size: calc(var(--fs-sm) * var(--odia-scale));
+}
+
+/* ---------------------------------------------------------------- settings
+   Settings sheet (shares the .picker bottom-sheet styles). Each row is one
+   label: switch, name and helper text share a single hit area. */
+
+.settings-body {
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 0.25rem 1rem 0.5rem;
+}
+
+.help-text {
+  margin: var(--space-1) 0 var(--space-3);
+  line-height: 1.5;
+}
+
+/* The cheat sheets inside Help keep their look, a little tighter on top. */
+.help-body .guide:first-of-type {
+  margin-top: var(--space-5);
+}
+
+.settings-section {
+  margin: 1.25rem 0 0.25rem;
+  color: var(--muted);
+  font-size: var(--fs-sm);
+  font-weight: 700;
+}
+
+.setting {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  min-height: var(--tap);
+  padding: 0.6rem 0;
+  border-bottom: 1px solid var(--line);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.setting input {
+  flex: 0 0 auto;
+  width: 22px;
+  height: 22px;
+  margin: 0.15rem 0 0;
+  accent-color: var(--accent);
+}
+
+.setting-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.setting-label {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.setting-help {
+  color: var(--muted);
+  font-size: var(--fs-sm);
+  line-height: 1.4;
+}
+
+/* Text size: a three-part segmented control (same look as the mode
+ * control) and a live preview line. */
+.setting-block {
+  padding: 0.6rem 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.setting-block .segmented {
+  margin: var(--space-2) 0 var(--space-1);
+}
+
+.setting-block .segment span {
+  min-height: var(--tap);
+}
+
+.text-size-preview {
+  margin: var(--space-1) 0 0;
+  color: var(--text);
 }

@@ -5,9 +5,9 @@
 #
 # profile      = sloka
 # base         = core/rules/symbols.toml
-# base-sha256  = b0f91251c673787e0180779154d72a66c6d2f72d8ec4863e379a5ee2d6964b6f
+# base-sha256  = 6293b8fec8c69935da12f6a90243b7db28fd1f8e5faa0d12819bd4d5ce3179bd
 # delta        = rules/sanskrit.delta.toml
-# delta-sha256 = 2884aecc31dc47d3a287fac8c1e22ee9bcf4898a66b78ddadb6a21fdf6157cdc
+# delta-sha256 = 8fddb4244ddad9eead68bd06ddcec7d9fbf3c62ae4c49bcf005be705808d320a
 #
 # There is deliberately no timestamp here: generation is deterministic, so
 # `gen-rules.ts --check` can be a plain byte comparison.
@@ -76,6 +76,24 @@ version = "0.1"
 rule = 1.0
 freq = 2.2  # [sloka set]
 user = 2.0
+# Owner preferences (core/data/preferences.tsv), added as pref * row weight.
+# 1.0 settles a near tie between two real words (raja: the Raja festival over
+# "king", a 0.06 gap), but stays below one user pick (user * ln 2 = 1.39), so
+# the user's own choice still wins. Measured by core/test/curation.test.ts.
+pref = 1.0
+# Context from the previous word (core/data/bigrams.tsv), added as
+# bigram * ln(1 + count(prev, word)) / ln(1 + total(prev)), a 0..1 term (see
+# core/src/rank.ts). Only when the previous word is known (transliterate() on a
+# sentence, or transliterateWord(roman, k, { prev })); single words are not
+# affected.
+# 1.2, not higher, by the house rule: ONE user pick (user * ln 2 = 1.39) must
+# beat any context, as it beats an owner preference (pref = 1.0). Measured
+# 2026-10-04 after the long-a change, on a held-out split of the corpus
+# (build_bigrams.py --holdout; tools/eval/context.ts, chain context):
+#   weight 1.2 -> careful top-1 92.7%, casual 84.6%
+#   weight 2.0 -> careful top-1 92.7%, casual 84.9%   (casual -0.3 pp at 1.2)
+# On the everyday sentences, weights 1.0-2.0 give identical results.
+bigram = 1.2
 
 # Structural preferences the segmenter applies on top of the per-letter weights.
 #
@@ -117,12 +135,16 @@ matra = ""
 w = 1.0
 
 # "rama" is far more often ରାମ than ରମ, so plain "a" can also reach the long
-# vowel, at a cost.
+# vowel, at a cost. 0.35 until 2026-10-04 (V2.3). Swept on the corpus dev split
+# (tools/eval/context.ts, 23,481 tokens, no context), careful / casual top-1:
+#   0.35 92.4 / 83.2   0.45 92.3 / 83.6   0.55 92.2 / 84.0   0.65 91.9 / 84.4
+# 0.55 made the conjunct ଡ୍ଯ unreachable for "dya" (tools/eval/coverage.ts) and
+# 0.65 cost careful top-3; 0.45 keeps reachability and raja -> ରଜ (preference).
 [[vowel]]
 roman = "a"
 independent = "ଆ"
 matra = "ା"
-w = 0.35
+w = 0.45
 
 [[vowel]]
 roman = "aa"
@@ -307,9 +329,18 @@ odia = [
   { text = "କ", w = 0.45 },
 ]
 
+# "j" also reaches ଯ word-initially (owner decision D-12, 2026-10-04).
+#
+# Odia ଯ is pronounced like "ja" (see the "y" block below), so people type ଯେ
+# as "je", ଯଦି as "jadi", ଯିବା as "jiba". With "j" mapped only to ଜ, and the
+# lexicon spelling ଯ as "y", none of those were reachable from "j" at all —
+# and ଯେ is the 5th most frequent word in the web corpus (81,614 tokens).
+# Word-initial only, matching the ଯ/ୟ convention. 0.6 is the weight Appv2's
+# delta S8 already shipped and measured for this exact option. It keeps ଜ the
+# rule default, so frequency decides between the two.
 [[consonant]]
 roman = "j"
-odia = [  # [sloka S8]
+odia = [
   { text = "ଜ", w = 1.0 },
   { text = "ଯ", w = 0.6, context = "word_initial" },
 ]

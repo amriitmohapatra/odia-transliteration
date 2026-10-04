@@ -24,9 +24,14 @@ import type { Candidate, Result, WordResult } from '@odia/core/types';
  */
 export interface EngineLike {
   transliterate(input: string, opts?: { topk?: number }): Result;
-  transliterateWord(roman: string, topk?: number): Candidate[];
+  /** `context.prev`: the Odia word before this one, for word-pair ranking (V2.2). */
+  transliterateWord(roman: string, topk?: number, context?: { prev?: string }): Candidate[];
   learn(roman: string, chosen: string): void;
   strict(input: string, scheme?: 'itrans'): string;
+  /** Family-safe filter (Settings, "Hide rude words"). Absent on the degraded engine. */
+  setFamilySafe?(on: boolean): void;
+  /** Owner-curated labels of a word, for badges (badges.ts). Absent on the degraded engine. */
+  labelsOf?(word: string): ReadonlySet<string> | undefined;
 }
 
 /** Runs of Latin letters, which is all a verbatim engine can recognise as a word. */

@@ -4,6 +4,25 @@
  *   score = weights.rule * (ruleScore + lexScore)
  *         + weights.freq * logfreq(word)
  *         + weights.user * log(1 + userCount)
+ *         + weights.pref * prefWeight          (owner preference, data/preferences.tsv)
+ *         + weights.bigram * bigram(prev, word) (context, data/bigrams.tsv)
+ *
+ * The context term, when the previous word `prev` of the sentence is known:
+ *
+ *   bigram(prev, word) = ln(1 + count(prev, word)) / ln(1 + total(prev))
+ *
+ * `count(prev, word)` is how often `word` directly followed `prev` in the
+ * corpus; `total(prev)` is how many pair tokens start with `prev` at all, i.e.
+ * how often anything followed it. The ratio is a log-scaled conditional: 1
+ * when every occurrence of `prev` was followed by `word`, near 0 when `word`
+ * followed it once among thousands, and 0 for a pair never seen. It never
+ * adds a candidate, only re-scores the ones rules and lexicon produced, so the
+ * content filter and the reachability floor work as before.
+ *
+ * With no previous word, no bigram data, or `[weights] bigram` absent or 0,
+ * the term is skipped entirely (not added as 0), so the scores are bit for bit
+ * the scores of the engine without context. core/test/bigrams.test.ts checks
+ * that.
  *
  * `ruleScore` and `lexScore` are each 0-1 and are ADDED rather than maxed.
  * That is the whole point: a spelling the segmenter produced *and* the lexicon
@@ -28,7 +47,21 @@ export interface RankInput {
   lexiconEntries: readonly LexiconEntry[];
   /** Canonical Odia word -> times the user chose it for this key. */
   userCounts?: Record<string, number>;
+  /** Canonical Odia word -> owner preference weight for this key. */
+  prefWeights?: Readonly<Record<string, number>>;
+  /**
+   * The content filter, present only when it is on (see Engine and
+   * curation.ts). Returns true to drop a candidate. It is told whether the user
+   * taught the word or the owner prefers it for this key, because those
+   * exemptions depend on the filter level.
+   */
+  isBlocked?: (word: string, vouched: { user: boolean; pref: boolean }) => boolean;
   unigrams: Unigrams;
+  /**
+   * The context term for a canonical candidate, 0..1 (see the header), present
+   * only when the previous word is known and bigram data is loaded.
+   */
+  bigram?: (word: string) => number;
   weights: RankWeights;
   /** Maximum ranked candidates before the verbatim token is appended. */
   topk: number;
@@ -38,6 +71,7 @@ interface Evidence {
   rule: number;
   lex: number;
   user: number;
+  pref: number;
 }
 
 /**
@@ -56,7 +90,7 @@ export function rank(input: RankInput): Candidate[] {
     const key = canonical(text);
     const existing = evidence.get(key);
     if (existing === undefined) {
-      const fresh: Evidence = { rule: 0, lex: 0, user: 0 };
+      const fresh: Evidence = { rule: 0, lex: 0, user: 0, pref: 0 };
       fresh[field] = value;
       evidence.set(key, fresh);
     } else if (value > existing[field]) {
@@ -83,14 +117,33 @@ export function rank(input: RankInput): Candidate[] {
     for (const [word, count] of Object.entries(input.userCounts)) bump(word, 'user', count);
   }
 
+  if (input.prefWeights !== undefined) {
+    for (const [word, weight] of Object.entries(input.prefWeights)) bump(word, 'pref', weight);
+  }
+
+  const bigramWeight = input.weights.bigram ?? 0;
+  const bigram = bigramWeight > 0 ? input.bigram : undefined;
+
   const scored: (Candidate & { fromRules: boolean })[] = [];
   for (const [text, sources] of evidence) {
+    // Before the slice, so a dropped word frees its slot for the next one.
+    if (input.isBlocked !== undefined && input.isBlocked(text, { user: sources.user > 0, pref: sources.pref > 0 })) {
+      continue;
+    }
+    let score =
+      input.weights.rule * (sources.rule + sources.lex) +
+      input.weights.freq * input.unigrams.logfreq(text) +
+      input.weights.user * Math.log(1 + sources.user) +
+      // Guarded so callers built before `pref` existed still score as before.
+      (sources.pref > 0 ? input.weights.pref * sources.pref : 0);
+    // Added only when non-zero, so a list without context is bit-identical.
+    if (bigram !== undefined) {
+      const context = bigram(text);
+      if (context > 0) score += bigramWeight * context;
+    }
     scored.push({
       text,
-      score:
-        input.weights.rule * (sources.rule + sources.lex) +
-        input.weights.freq * input.unigrams.logfreq(text) +
-        input.weights.user * Math.log(1 + sources.user),
+      score,
       source: sourceOf(sources),
       fromRules: sources.rule > 0,
     });
@@ -142,16 +195,26 @@ export function rank(input: RankInput): Candidate[] {
   // The verbatim token goes last and exactly once. A ranked candidate that is
   // character-for-character the input (an all-digit token in arabic mode, say)
   // would otherwise appear twice.
+  //
+  // One exception: the user already taught this exact token — picked "bus" for
+  // "bus" before. Then it keeps the rank it earned, with source 'user', and no
+  // verbatim copy is appended. Dropping it here (the earlier rule) put a taught
+  // English word back at the end every time, so learning it did nothing, and
+  // the dropped entry also cost the list one slot. Exact comparison, no case
+  // folding: a taught "PCR" and a typed "pcr" are different strings.
+  const taught = out.find((c) => c.text === input.roman && c.source === 'user');
+  if (taught !== undefined) return out;
   return [...out.filter((c) => c.text !== input.roman), { text: input.roman, score: 0, source: 'verbatim' }];
 }
 
 /**
  * Which source to report when several agree. User choice is the strongest
- * claim, then the lexicon, then the rules — the order in which a UI should
+ * claim, then the owner's preference, then the lexicon, then the rules — the order in which a UI should
  * explain where a suggestion came from.
  */
 function sourceOf(sources: Evidence): CandidateSource {
   if (sources.user > 0) return 'user';
+  if (sources.pref > 0) return 'preference';
   if (sources.lex > 0) return 'lexicon';
   return 'rule';
 }

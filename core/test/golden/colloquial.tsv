@@ -1,0 +1,35 @@
+# colloquial.tsv — spoken, slang and dialect Odia, typed the casual way.
+#
+# STATUS: UNVALIDATED SEED (2026-10-04). Seeded by an agent from the research probe list
+# (plan/research/2026-10-04/07-slang-colloquial.md). Every row needs the owner's check
+# (plan/06-owner-followups.md, C-3) before its numbers mean anything. No offensive words:
+# those are curated by the owner only.
+#
+# Report by register. Never average with heldout.tsv or the everyday set.
+# roman <TAB> odia <TAB> register (spoken|slang|dialect) <TAB> note
+kana	କଣ	spoken	written କଅଣ; corpus 10,822
+kouthi	କୋଉଠି	spoken	written କେଉଁଠି
+mate	ମତେ	spoken	written ମୋତେ; corpus 4,956
+tate	ତତେ	spoken	written ତୋତେ
+naain	ନାଇଁ	spoken	written ନାହିଁ; corpus 3,265
+hau	ହଉ	spoken	written ହେଉ; corpus 1,178
+karuchi	କରୁଚି	spoken	written କରୁଛି
+kahuchi	କହୁଚି	spoken	written କହୁଛି
+jauchi	ଯାଉଚି	spoken	written ଯାଉଛି; corpus 346
+aasuchu	ଆସୁଚୁ	spoken	written ଆସୁଛୁ
+janichi	ଜାଣିଚି	spoken	written ଜାଣିଛି
+heigala	ହେଇଗଲା	spoken	written ହୋଇଗଲା
+eithi	ଏଇଠି	spoken	written ଏଠାରେ
+tike	ଟିକେ	spoken	written ଟିକିଏ
+tame	ତମେ	spoken	written ତୁମେ
+muin	ମୁଇଁ	dialect	first person, regional
+kain	କାଇଁ	dialect	why, regional
+chala	ଚାଲ	spoken	let us go
+bapa	ବାପା	spoken	father
+bhai	ଭାଇ	spoken	brother
+bhaina	ଭାଇନା	spoken	elder brother, address
+dada	ଦାଦା	spoken	elder brother / uncle, address
+sanga	ସାଙ୍ଗ	spoken	friend
+dost	ଦୋସ୍ତ	slang	friend, from Persian
+toka	ଟୋକା	slang	boy, lad
+masta	ମସ୍ତ	slang	great, from Hindi

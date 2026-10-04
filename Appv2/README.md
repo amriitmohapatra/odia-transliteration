@@ -43,6 +43,11 @@ problem, not a rule problem: long compounds like `ଯତ୍ରାଚ୍ୟୂତ
 
 ## Nothing outside this folder changed
 
+> **No longer true from V1 (2026-10-04).** Appv2 is now the V1 web app. V1 changed files
+> outside this folder on purpose (core preferences and the family-safe filter, the
+> dictionary module's data, CI, `vercel.json`). See `PLAN.md` and `ARCHITECTURE.md`. The
+> text below describes the original Appv2 work.
+
 Not one existing file was edited. Three properties of the engine make that
 possible, and they are worth knowing before touching anything here:
 

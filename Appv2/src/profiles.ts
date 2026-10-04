@@ -35,7 +35,13 @@ export type AssetKey =
   | 'coreLexicon'
   | 'sanskritLexicon'
   | 'coreUnigrams'
-  | 'sanskritUnigrams';
+  | 'sanskritUnigrams'
+  // Word pairs for context ranking (core/data/bigrams-web.tsv), shared by every
+  // profile. Used by engine.transliterate(sentence); single words are unaffected.
+  | 'coreBigrams'
+  // Owner-curated, shared by every profile: core/data/preferences.tsv, labels.tsv.
+  | 'preferences'
+  | 'labels';
 
 export interface LexiconRef {
   asset: AssetKey;

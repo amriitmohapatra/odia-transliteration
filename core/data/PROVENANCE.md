@@ -172,6 +172,17 @@ final `a`, `v` for `w`, `ri` for `ru` on vocalic words, and nasal-cluster collap
 The weight is `ln(1+count) / ln(1+peak) * 2.303`. The **exact** romanization gets
 the full weight and every looser variant gets 0.9x.
 
+**`j`-keys for ଯ (2026-10-04, V2.1).** ଯ is romanized `y`, but Odia pronounces it
+*ja*. A word that starts with ଯ therefore also gets every one of its spellings with
+the initial `y` replaced by `j` (ଯିବା: `jibaa`, `jiba`, `jib`), weighted 0.9x like
+the other loose spellings; the exact key stays `y…`. Only a word-initial ଯ: inside a
+word the letter is ୟ, which really is `y`. This adds 4,971 rows to
+`lexicon-common.tsv` and 1,381 to `lexicon-common-web.tsv`; after the merge, 4,495
+new and 110 raised rows in `lexicon.tsv`, 1,351 new and 8 raised in
+`lexicon-web.tsv`. No other row changed. Trade-off: where a `j` spelling is shared,
+the more frequent word leads (`je` → ଯେ 81,614 over ଜେ 1,716); see the commit
+message for every ଜ-word that lost first place.
+
 "Exact" is the careful spelling with ଂ → `m` and ଁ → `n`. That matches the careful
 register of `tools/eval/everyday.ts`. `docs/romanization-reference` accepts both `n`
 and `m` for ଂ. When a word has an anusvara or candrabindu, `ଂ`→`n` and the dropped
@@ -206,12 +217,77 @@ and this file directly. After rerunning it, rename its two lexicon outputs to
 
 | File | Rows | Size | sha256 |
 |---|---|---|---|
-| `core/data/lexicon-common.tsv` | 369,672 | 14,329,498 B | `3d02fafe0912337da4fe98a4839e9028bfc76398dd6c7d4921e51264122bcdb1` |
-| `core/data/lexicon-common-web.tsv` | 88,193 | 3,193,190 B | `37f8fbba5d879e6caf21852af652d982d5c9c06aa54b8ef6a3f8d16549c625b5` |
-| `core/data/lexicon.tsv` (merged) | 774,496 | 33,061,457 B | `b39bed5ed7a249c31f387ac2177a14852aa409406d92aa0b4fd5faca01c09be7` |
-| `core/data/lexicon-web.tsv` (merged) | 121,774 | 4,678,925 B | `849878370300ac92bc6807e49b3b4cfda99997594e33d6fb0fb8ae6193df0af2` |
+| `core/data/lexicon-common.tsv` | 374,643 | 14,517,489 B | `eb654b403d1019bc81959b867a05c7d075647cb61bf25a9187ddc33caea3ebce` |
+| `core/data/lexicon-common-web.tsv` | 89,574 | 3,242,540 B | `bd399a6aa7e4806ac0fd602add89f1d0904841441ca4c9b19f2092ceda1f9234` |
+| `core/data/lexicon.tsv` (merged) | 778,991 | 33,230,798 B | `5e6d0323c158556b2b3e909a869820058372973887d143766d3bb88f5a4b6ed2` |
+| `core/data/lexicon-web.tsv` (merged) | 123,125 | 4,727,172 B | `991df800e273b25a7a6f5c52d028ce38ec251d2d8d5479c7763ce85db48b8b54` |
+
+Rebuilt 2026-10-04 with the `j`-keys. Two runs (default and `PYTHONHASHSEED=12345`)
+gave byte-identical files.
 
 Precomposed U+0B5C / U+0B5D in all four files: 0.
+
+## Word pairs (bigrams) for context ranking
+
+Added 2026-10-04 (V2.2) by `tools/build-data/build_bigrams.py` (Python 3 stdlib).
+The ranker uses them when the previous word of a sentence is known (formula in
+`core/src/rank.ts`, weight `[weights] bigram` in `core/rules/symbols.toml`).
+
+**Source.** The raw text of the web corpus in `tools/build-data/webcorpus/`, the
+same text the unigram counts in `webfreq.tsv` were counted from
+(`PROVENANCE-webcorpus.md`), minus one lane:
+
+| Lane | Raw text (sha256) | Pair tokens |
+|---|---|---:|
+| wikipedia | `wikipedia-raw.jsonl.gz` (`3cb988fb5211c184aff6af47a9a4e16123ec24b9bc567cbd6a16d5dfff4a2d9a`) | 3,984,147 |
+| literature | `raw-lit.jsonl` (`cd63c50b8d0dfebe18d1c6dd09f7fc74d3a171fcb15f940578a8edd16c4dcfa9`) | 2,091,085 |
+| news | `news-raw.jsonl` (`227b544082d7a6f554145621375d173d8b5b57c3a1e1c3561ec2d2beed9a891c`) | 338,686 |
+| social | `social-politicians-raw.txt` (`5e2d813a68cb742b5ec6e3e59be3ab78ad8fe8f842b7278ecd8807cda7e756b8`) | 191,462 |
+| gov | `gov-and-orgs-corpus.txt` (`f2f88829a9f0b673655d93c0fc377a9ac5e69aa841bd634ca0371e8927c4e257`) | 47,930 |
+| archive_ocr | not in the repository (`raw-archive-books.jsonl`, 224 MB, owner's Mac only) | 0 |
+
+So the pairs cover the born-digital lanes only (6,653,310 pair tokens), not the
+OCR books that are about half of `webfreq.tsv`'s tokens.
+
+**Method.** Each lane is tokenised with that lane's own tokeniser, imported from its
+script (`count_freq.py`, `harvest_lit.py`, `harvest_news.py`, `fetch_lib.py`,
+`analyze_gov.py`), and every token then passes `merge_all.py`'s key filter (NFC,
+Odia block only, at least two code points, a base letter, no Odia digit) and
+`canonical()`. So every word of a pair is a word of `webfreq.tsv`. Two tokens form a
+pair only when the text between them is spaces or tabs; a dropped token, punctuation,
+a line break or a digit ends the chain (the engine applies the same rule in
+`transliterate()`). Two approximations: `news-raw.jsonl` stores each page as
+space-joined Odia words without punctuation, so news pairs can cross a sentence end;
+and it keeps the site chrome that `news-freq.tsv` stripped, so a pair on more than 30%
+of one host's pages (hosts with at least 5 pages) is not counted for that host.
+
+**Counts.** 2,996,224 distinct pairs, 368,936 distinct first words. A `prev * total`
+row in each file holds every pair token that starts with `prev`, counted before any
+pruning, so a pruned file scores a pair exactly as the full file does.
+
+| File | Kept | Pairs | `*` rows | Size | sha256 |
+|---|---|---:|---:|---:|---|
+| `core/data/bigrams.tsv` | count ≥ 3 | 354,943 | 43,022 | 13,859,643 B | `8dc767a68731f5f6ef08f7c8ed40328083ad8453a03b3efe2d2e157792a85f20` |
+| `core/data/bigrams-web.tsv` | both words in `lexicon-web.tsv` or `unigrams-web.tsv`; highest counts first within 1,500,000 B (lowest count kept: 14) | 37,690 | 7,142 | 1,499,845 B | `2313996f6a347a059725d08c6dd383370beef530d448a6a8f91299bd05776fcd` |
+
+Count ≥ 2 would keep 945,299 pairs in 37.9 MB; pairs seen once or twice are mostly
+names and one-off phrases. The web file depends on `lexicon-web.tsv`
+(`991df800…`) and `unigrams-web.tsv` (`cf69682c…`): rebuild it after either changes.
+Two runs (default and `PYTHONHASHSEED=777`) gave byte-identical files. Precomposed
+U+0B5C / U+0B5D in both files: 0 (asserted on write, and `parseBigrams` canonicalises
+on read).
+
+**Dev split.** `build_bigrams.py --holdout DIR` leaves every 20th literature, news and
+social document out of the counts and writes them to `DIR/dev-source.txt`. The weight
+was tuned on that split with `tools/eval/context.ts`, never on the held-out
+Aksharantar set. Nothing from it is committed.
+
+**Licence.** Same status as the shipped word counts in `webfreq.tsv` / `unigrams.tsv`
+(see `PROVENANCE-webcorpus.md` and decision D-10): integer counts over word pairs, no
+source text, from Wikipedia/Wikisource (CC BY-SA, share-alike: a licence decision is
+open), news, blogs, x.com and government pages (no explicit licence). Pair counts
+reveal more of the source text than single-word counts (a two-word window), which is
+worth weighing in that same decision.
 
 ## Licence note
 

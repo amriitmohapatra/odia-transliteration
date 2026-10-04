@@ -1,5 +1,11 @@
 # Odia_Sanskrit_Appv2 — the app, with a dictionary beside it
 
+> **Since V1 (2026-10-04) the dictionary is part of the Appv2 app itself**
+> (`Appv2/src/dictionary/`, data in `praharaj.bin` and `modern.bin`). Every Appv2 build
+> contains it, including the single-file build. `build/build_app.py` is retired. This
+> folder keeps the payload builders, the source payloads and `PROVENANCE.md`. The
+> description below is the pre-V1 design and stays for history.
+
 **The file to open: `odia-app-sanskrit-v2.html`** — one self-contained page
 (~16 MB), AirDroppable, works from `file://` with no network, exactly like
 `docs/odia-app-sanskrit.html` before it.
@@ -119,9 +125,10 @@ python3 build/build_dictionary_payload.py path/to/praharaj.babylon
 #    and `pip install wordfreq cmudict`)
 python3 build/build_modern_layer.py cleaned_pairs.json or.xml praharaj.babylon
 
-# 3. assemble the page from the untouched v1 app
-python3 build/build_app.py docs/odia-app-sanskrit.html \
-        Odia_Sanskrit_Appv2/odia-app-sanskrit-v2.html
+# 3. (V1) base64-decode the payloads into the app's assets
+base64 -d build/dict_payload_v2.b64 > ../Appv2/src/dictionary/praharaj.bin
+base64 -d build/modern_payload.b64  > ../Appv2/src/dictionary/modern.bin
+#    then build Appv2 (see Appv2/README.md). build_app.py is retired.
 ```
 
 `build/` contains everything: the payload builder, the assembler,
@@ -136,7 +143,7 @@ and unpacks in ~½ s on load).
 | the app itself | MIT (this repo) |
 | Praharaj dictionary text | public domain (author d. 1946) |
 | indic-dict digitisation | freely redistributable |
-| MTEnglish2Odia / OdiaNLP pairs | MIT |
+| OdiaNLP `dictionary` pairs | repository MIT; origin of the text unknown — see `PROVENANCE.md` |
 | Unicode CLDR data | Unicode licence |
 | CMUdict (loan detection, build-time only) | BSD |
 | pako (inflate) | MIT |

@@ -19,9 +19,28 @@
     <meta name="format-detection" content="telephone=no" />
 
     <meta name="theme-color" content="#f7f6fa" media="(prefers-color-scheme: light)" />
-    <meta name="theme-color" content="#16161a" media="(prefers-color-scheme: dark)" />
-    <script type="module" crossorigin src="./assets/index-DnU40LD_.js"></script>
-    <link rel="stylesheet" crossorigin href="./assets/index-CFh1qhgJ.css">
+    <meta name="theme-color" content="#131318" media="(prefers-color-scheme: dark)" />
+
+    <!-- Install as an app (Android, desktop) and Home Screen icon (iOS). The
+         single-file build inlines the icons and drops the manifest. -->
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <link rel="icon" type="image/png" sizes="192x192" href="./icons/icon-192.png" />
+    <link rel="icon" type="image/png" sizes="512x512" href="./icons/icon-512.png" />
+    <link rel="apple-touch-icon" href="./icons/apple-touch-icon-180.png" />
+
+    <!-- Text size (Settings) before first paint, so the page does not jump.
+         main.ts owns the setting; this only applies the stored value. -->
+    <script>
+      try {
+        var size = localStorage.getItem('odia.pref.textSize');
+        if (size === 'large') document.documentElement.classList.add('text-large');
+        if (size === 'xl') document.documentElement.classList.add('text-xl');
+      } catch (e) {
+        /* storage unavailable: normal size */
+      }
+    </script>
+    <script type="module" crossorigin src="./assets/index-Y_6zGTGy.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-DzfJjKpP.css">
   </head>
 
   <body>
@@ -30,29 +49,122 @@
         <span class="mark odia" aria-hidden="true">ଓ</span>
         <div>
           <h1>Odia Phonetic</h1>
-          <p class="tagline">Odia and Sanskrit, in Odia script. Works with the network off.</p>
+          <p class="tagline">Odia and Sanskrit, in Odia script.</p>
+          <!-- Offline status (main.ts updateOfflineChip). Hidden without a
+               service worker (dev server, single-file build). -->
+          <span id="offline-chip" class="chip" hidden>
+            <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>
+            <span id="offline-chip-text"></span>
+          </span>
         </div>
+        <button
+          type="button"
+          id="open-settings"
+          class="btn btn-quiet icon-btn"
+          aria-haspopup="dialog"
+          aria-controls="settings"
+          aria-label="Settings"
+        >
+          <!-- A "sliders" glyph drawn for this app (no third-party icon set). -->
+          <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h10M18 6h2M4 12h4M12 12h8M4 18h12"/><circle cx="16" cy="6" r="2"/><circle cx="10" cy="12" r="2"/><circle cx="18" cy="18" r="2"/></svg>
+          <span class="icon-btn-label">Settings</span>
+        </button>
+        <button
+          type="button"
+          id="open-help"
+          class="btn btn-quiet icon-btn"
+          aria-haspopup="dialog"
+          aria-controls="help"
+          aria-label="Help"
+        >
+          <!-- A question mark in a circle, drawn for this app. -->
+          <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.3-1 .9-1 1.6v.6"/><path d="M12 17.2v.1"/></svg>
+          <span class="icon-btn-label">Help</span>
+        </button>
       </header>
 
       <main>
+        <!--
+          First-run card (proposal 3.9, copy deck 6). Shown until dismissed
+          (localStorage odia.pref.seenIntro = '1'), re-openable from Help.
+          Hidden in the markup so a returning user never sees it flash.
+        -->
+        <section id="intro" class="intro" aria-labelledby="intro-title" hidden>
+          <h2 class="intro-title" id="intro-title">Type Odia the way it sounds, in English letters.</h2>
+          <p class="intro-body">Unlike a keyboard, it shows what each word means before you pick it.</p>
+          <div class="intro-actions">
+            <button type="button" id="intro-try" class="btn btn-primary">Try an example: kemiti achha</button>
+            <button type="button" id="intro-dismiss" class="btn">Got it</button>
+          </div>
+        </section>
+
         <section class="pane">
+          <!--
+            Mode. Labels only: the profile ids stay 'everyday' | 'unified' |
+            'sloka' (Appv2/eval/no-regression.ts and the stored
+            odia.pref.profile depend on them). "Everyday" runs the 'unified'
+            profile; the original 'everyday' profile is Settings > Advanced >
+            Classic engine. Native radios, so arrow keys work.
+          -->
+          <div class="segmented" role="radiogroup" aria-label="Mode">
+            <label class="segment">
+              <input type="radio" name="mode" id="mode-everyday" value="everyday" />
+              <span>Everyday</span>
+            </label>
+            <label class="segment">
+              <input type="radio" name="mode" id="mode-sloka" value="sloka" />
+              <span>&#x15A;loka (verse)</span>
+            </label>
+          </div>
           <div class="pane-head">
-            <label class="pane-label" for="roman">English (phonetic)</label>
-            <span class="pane-hint">
-              <label class="mode-label" for="profile">Mode</label>
-              <select id="profile" class="mode-select"></select>
-            </span>
+            <label class="pane-label" for="roman">Type in English letters</label>
           </div>
           <textarea
             id="roman"
+            aria-describedby="roman-help"
             rows="4"
             autocapitalize="off"
             autocorrect="off"
             autocomplete="off"
             spellcheck="false"
             enterkeyhint="enter"
-            placeholder="dhyaana balaatitam naanyam balam |"
+            placeholder="Type here, e.g. kemiti achha…"
           ></textarea>
+          <p id="roman-help" class="sr-only">
+            Suggestions appear as you type. Up and down arrows choose one, Enter or its number
+            takes it, Space takes the highlighted one. Control Enter copies the Odia.
+          </p>
+          <!--
+            States next to the text, not at the bottom of the page (proposal
+            3.11): loading words / meanings (quiet, with a spinner), meanings
+            failed (warning line), word list failed (banner with Reload).
+          -->
+          <p id="status" class="status" role="status" aria-live="polite" hidden></p>
+          <div id="banner" class="banner" role="alert" hidden>
+            <span id="banner-text">The word list didn't load. Check your connection once, then reload.</span>
+            <button type="button" id="banner-reload" class="btn btn-small">Reload</button>
+          </div>
+          <!--
+            "Reads as": one romanised word per Odia word in the box, worked out
+            from the Odia letters (src/readback.ts). Each word is a button that
+            opens the Alternatives sheet for it. Replaces the separate ODIA
+            output box (audit H1): the text box is the only composing surface.
+            DOM CONTRACT: src/dictionary/overlay.ts reads #readback .rb-word and
+            its data-odia attribute (the Odia word; the button text is Latin).
+          -->
+          <div class="readback" id="readback-row" hidden>
+            <div class="readback-head">
+              <span class="readback-label" id="readback-label">Reads as</span>
+              <span class="readback-hint">tap a word to change it</span>
+            </div>
+            <div
+              id="readback"
+              class="readback-words"
+              lang="en"
+              translate="no"
+              aria-labelledby="readback-label"
+            ></div>
+          </div>
           <p class="mode-hint" id="profile-hint"></p>
         </section>
 
@@ -65,311 +177,44 @@
           asks for: rare marks and correct answers were competing for the same
           nine candidate slots, and the fix is to stop making them compete.
         -->
-        <div id="palette" class="palette" aria-label="Insert a rare mark" hidden></div>
+        <div id="palette" class="palette" role="toolbar" aria-label="Insert a rare mark" hidden></div>
 
-        <section class="pane">
-          <div class="pane-head">
-            <span class="pane-label" id="output-label">Odia</span>
-            <span class="pane-hint" id="output-hint">tap a word for alternatives</span>
-          </div>
-          <div
-            id="output"
-            class="output odia"
-            aria-labelledby="output-label"
-            data-placeholder="ଧ୍ୟାନ ବଳାତିତଂ ନାନ୍ୟଂ ବଳଂ ।"
-          ></div>
-        </section>
-
+        <!--
+          Share / Copy / Clear (proposal 3.10). On a phone with a share sheet
+          (navigator.share) "Share…" is the primary action and Copy the
+          secondary one; elsewhere "Copy Odia" is primary and Share is hidden.
+          main.ts layoutActions() decides. Sharing hands the text to the
+          phone's own share sheet: the user's action, not a network call.
+          #copy keeps its id (Playwright checks click it).
+        -->
         <div class="actions">
-          <button type="button" id="copy" class="btn btn-primary">Copy Odia</button>
-          <button type="button" id="clear" class="btn">Clear</button>
+          <button type="button" id="share" class="btn btn-primary btn-lg" hidden>Share&hellip;</button>
+          <button
+            type="button"
+            id="copy"
+            class="btn btn-primary btn-lg"
+            aria-keyshortcuts="Control+Enter Meta+Enter"
+            title="Copy Odia (Ctrl+Enter)"
+          >Copy Odia</button>
+          <button type="button" id="clear" class="btn btn-quiet">Clear</button>
+          <!-- Meanings (below 1100px; wider screens show the column). DOM
+               contract: aria-controls="dict-panel", see dictionary/overlay.ts. -->
+          <button
+            type="button"
+            id="dict-toggle"
+            class="btn btn-quiet meanings-btn"
+            aria-controls="dict-panel"
+            aria-expanded="false"
+          >
+            <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6.5C10 5 7 4.5 3.5 5v13c3.5-.5 6.5 0 8.5 1.5 2-1.5 5-2 8.5-1.5V5C17 4.5 14 5 12 6.5z"/><path d="M12 6.5v13"/></svg>
+            Meanings
+          </button>
         </div>
 
-        <div class="toggles">
-          <label class="switch">
-            <input type="checkbox" id="toggle-digits" />
-            <span>Odia numerals <span class="odia">୦-୯</span></span>
-          </label>
-          <label class="switch">
-            <input type="checkbox" id="toggle-strict" />
-            <span>Strict ITRANS</span>
-          </label>
-        </div>
-
-        <p id="status" class="status" role="status"></p>
-
-        <details class="guide">
-          <summary>What to type</summary>
-
-          <p class="note">
-            Case is ignored for ordinary letters, so <code>ta</code> and <code>Ta</code> behave the
-            same. Where a spelling is ambiguous the word is underlined with dots — tap it and pick
-            the one you meant. Your choice is remembered on this device.
-          </p>
-
-          <h3>Vowels</h3>
-          <div class="scroll">
-            <table>
-              <thead>
-                <tr>
-                  <th>Letter</th><th>Type</th><th>On କ</th>
-                  <th>Letter</th><th>Type</th><th>On କ</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td class="odia">ଅ</td><td><code>a</code></td><td class="odia">କ</td>
-                  <td class="odia">ଏ</td><td><code>e</code></td><td class="odia">କେ</td>
-                </tr>
-                <tr>
-                  <td class="odia">ଆ</td><td><code>aa</code></td><td class="odia">କା</td>
-                  <td class="odia">ଐ</td><td><code>ai</code></td><td class="odia">କୈ</td>
-                </tr>
-                <tr>
-                  <td class="odia">ଇ</td><td><code>i</code></td><td class="odia">କି</td>
-                  <td class="odia">ଓ</td><td><code>o</code></td><td class="odia">କୋ</td>
-                </tr>
-                <tr>
-                  <td class="odia">ଈ</td><td><code>ii</code> <code>ee</code></td><td class="odia">କୀ</td>
-                  <td class="odia">ଔ</td><td><code>au</code></td><td class="odia">କୌ</td>
-                </tr>
-                <tr>
-                  <td class="odia">ଉ</td><td><code>u</code></td><td class="odia">କୁ</td>
-                  <td class="odia">ଋ</td><td><code>ru</code> <code>ri</code></td><td class="odia">କୃ</td>
-                </tr>
-                <tr>
-                  <td class="odia">ଊ</td><td><code>uu</code> <code>oo</code></td><td class="odia">କୂ</td>
-                  <td></td><td></td><td></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <h3>Consonants</h3>
-          <div class="scroll">
-            <table>
-              <tbody>
-                <tr>
-                  <th>Velar</th>
-                  <td class="odia">କ <code>k</code></td><td class="odia">ଖ <code>kh</code></td>
-                  <td class="odia">ଗ <code>g</code></td><td class="odia">ଘ <code>gh</code></td>
-                  <td class="odia">ଙ <code>ng</code></td>
-                </tr>
-                <tr>
-                  <th>Palatal</th>
-                  <td class="odia">ଚ <code>ch</code></td><td class="odia">ଛ <code>chh</code></td>
-                  <td class="odia">ଜ <code>j</code></td><td class="odia">ଝ <code>jh</code></td>
-                  <td class="odia">ଞ <code>~n</code></td>
-                </tr>
-                <tr>
-                  <th>Retroflex</th>
-                  <td class="odia">ଟ <code>T</code></td><td class="odia">ଠ <code>Th</code></td>
-                  <td class="odia">ଡ <code>D</code></td><td class="odia">ଢ <code>Dh</code></td>
-                  <td class="odia">ଣ <code>N</code></td>
-                </tr>
-                <tr>
-                  <th>Dental</th>
-                  <td class="odia">ତ <code>t</code></td><td class="odia">ଥ <code>th</code></td>
-                  <td class="odia">ଦ <code>d</code></td><td class="odia">ଧ <code>dh</code></td>
-                  <td class="odia">ନ <code>n</code></td>
-                </tr>
-                <tr>
-                  <th>Labial</th>
-                  <td class="odia">ପ <code>p</code></td><td class="odia">ଫ <code>ph</code></td>
-                  <td class="odia">ବ <code>b</code></td><td class="odia">ଭ <code>bh</code></td>
-                  <td class="odia">ମ <code>m</code></td>
-                </tr>
-                <tr>
-                  <th>Sibilant</th>
-                  <td class="odia">ଶ <code>sh</code></td><td class="odia">ଷ <code>Sh</code></td>
-                  <td class="odia">ସ <code>s</code></td><td class="odia">ହ <code>h</code></td>
-                  <td></td>
-                </tr>
-                <tr>
-                  <th>Other</th>
-                  <td class="odia">ଯ <code>y</code></td><td class="odia">ର <code>r</code></td>
-                  <td class="odia">ଲ <code>l</code></td><td class="odia">ଳ <code>L</code></td>
-                  <td class="odia">ୱ <code>w</code></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <h3>The nukta letters and signs</h3>
-          <div class="scroll">
-            <table>
-              <thead>
-                <tr><th>Letter</th><th>Type</th><th>Example</th></tr>
-              </thead>
-              <tbody>
-                <!--
-                  The nukta letters are written as numeric character references so
-                  the encoding is visible and cannot drift: base consonant plus
-                  U+0B3C, never the precomposed U+0B5C / U+0B5D.
-                -->
-                <tr>
-                  <td class="odia">&#x0B21;&#x0B3C;</td>
-                  <td><code>R</code>, or <code>d</code> then tap</td>
-                  <td class="odia">ଓ&#x0B21;&#x0B3C;ିଶା <code>odisha</code></td>
-                </tr>
-                <tr>
-                  <td class="odia">&#x0B22;&#x0B3C;</td>
-                  <td><code>Rh</code></td>
-                  <td class="odia">ପ&#x0B22;&#x0B3C;ା <code>paRhaa</code></td>
-                </tr>
-                <tr>
-                  <td class="odia">ଂ</td><td><code>M</code> or <code>n</code></td>
-                  <td class="odia">ଅଂଶ <code>ansha</code></td>
-                </tr>
-                <tr>
-                  <td class="odia">ଁ</td><td><code>~</code></td>
-                  <td class="odia">ମୁଁ <code>mu~</code></td>
-                </tr>
-                <tr>
-                  <td class="odia">ଃ</td><td><code>H</code>, or <code>:</code></td>
-                  <td class="odia">ଦୁଃଖ <code>du:kha</code></td>
-                </tr>
-                <tr>
-                  <td>halant</td><td><code>_</code></td>
-                  <td class="odia">କମଲ୍ <code>kamal_</code></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <p class="note">
-            <strong>About &#x0B21;&#x0B3C;.</strong> This letter is everywhere in Odia
-            (<span class="odia">ଓ&#x0B21;&#x0B3C;ିଶା</span>,
-            <span class="odia">ଓ&#x0B21;&#x0B3C;ିଆ</span>,
-            <span class="odia">ବ&#x0B21;&#x0B3C;</span>) so you should not have to work for it.
-            Common words are recognised from the dictionary, and elsewhere a <code>d</code> inside a
-            word offers it as an alternative. Type <code>R</code> if you want it outright.
-          </p>
-
-          <p class="note">
-            Conjuncts form on their own — type consonants back to back and the halant is inserted
-            for you. <code>namaskaara</code> → <span class="odia">ନମସ୍କାର</span>,
-            <code>ksha</code> → <span class="odia">କ୍ଷ</span>.
-          </p>
-
-          <p class="note">
-            <strong>Strict ITRANS</strong> turns off guessing entirely: one roman spelling, one Odia
-            output, no candidates. Useful when you know exactly what you want.
-          </p>
-        </details>
-
-        <details class="guide">
-          <summary>Typing Sanskrit</summary>
-
-          <p class="note">
-            Three modes. <strong>Everyday</strong> is the original engine, unchanged.
-            <strong>Odia + Sanskrit</strong> is the default — ordinary Odia leads, Sanskrit
-            spellings sit a slot or two down. <strong>Śloka</strong> flips the ranking for
-            verse: a word-final <span class="odia">ଂ</span> beats
-            <span class="odia">ମ</span>, <span class="odia">ଳ</span> beats
-            <span class="odia">ଲ</span>, and the Sanskrit vocalics become typeable.
-          </p>
-
-          <h3>Marks you can type directly</h3>
-          <ul class="shortcuts" id="shortcuts"></ul>
-
-          <p class="note">
-            Anything rarer is on the palette above the output. Hover or long-press a key to
-            see what it is and how else to reach it.
-          </p>
-
-          <h3>Sanskrit vowels</h3>
-          <div class="scroll">
-            <table>
-              <thead>
-                <tr><th>Letter</th><th>Type</th><th>On କ</th><th>Note</th></tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td class="odia">ଋ</td><td><code>ri</code> <code>ru</code></td>
-                  <td class="odia">କୃ</td><td>common in modern Odia</td>
-                </tr>
-                <tr>
-                  <td class="odia">ୠ</td><td><code>rri</code></td>
-                  <td class="odia">କୄ</td><td>Śloka mode only</td>
-                </tr>
-                <tr>
-                  <td class="odia">ଌ</td><td><code>lri</code></td>
-                  <td class="odia">କୢ</td><td>Śloka mode only</td>
-                </tr>
-                <tr>
-                  <td class="odia">ୡ</td><td><code>llri</code></td>
-                  <td class="odia">କୣ</td><td>Śloka mode only</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <h3>Conjuncts Sanskrit needs</h3>
-          <p class="note">
-            Two families that the base scheme could not reach. A nasal before a stop
-            assimilates in the script — <span class="odia">ଙ</span> before velars,
-            <span class="odia">ଞ</span> before palatals — but nobody types it that way, so a
-            plain <code>n</code> works.
-          </p>
-          <div class="scroll">
-            <table>
-              <tbody>
-                <tr>
-                  <th>Nasal + stop</th>
-                  <td class="odia">ଙ୍କ <code>nk</code></td><td class="odia">ଙ୍ଖ <code>nkh</code></td>
-                  <td class="odia">ଙ୍ଗ <code>ng</code></td><td class="odia">ଙ୍ଘ <code>ngh</code></td>
-                </tr>
-                <tr>
-                  <th></th>
-                  <td class="odia">ଞ୍ଚ <code>nch</code></td><td class="odia">ଞ୍ଛ <code>nchh</code></td>
-                  <td class="odia">ଞ୍ଜ <code>nj</code></td><td class="odia">ଞ୍ଝ <code>njh</code></td>
-                </tr>
-                <tr>
-                  <th>Subjoined <span class="odia">ୱ</span></th>
-                  <td class="odia">ସ୍ୱ <code>sv</code> <code>sw</code></td>
-                  <td class="odia">ଦ୍ୱ <code>dv</code> <code>dw</code></td>
-                  <td class="odia">ତ୍ୱ <code>tv</code> <code>tw</code></td>
-                  <td class="odia">ଶ୍ୱ <code>shv</code></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <p class="note">
-            <strong>Why <span class="odia">ୱ</span> only in conjuncts.</strong> Sanskrit
-            <em>व</em> is written <span class="odia">ବ</span> standing alone
-            (<span class="odia">ଦେବ</span>, <span class="odia">ବିଷ୍ଣୁ</span>) but
-            <span class="odia">ୱ</span> when subjoined — <span class="odia">ସ୍ୱାମୀ</span>
-            outnumbers <span class="odia">ସ୍ବାମୀ</span> more than three to one in real Odia
-            text. There is no rule context for "after a halant", so these are spelled out as
-            their own keys.
-          </p>
-
-          <p class="note">
-            <strong>Why <span class="odia">ଳ</span> so often.</strong> Sanskrit
-            <em>ल</em> in an Odia tatsama word is usually <span class="odia">ଳ</span>, not
-            <span class="odia">ଲ</span>: <span class="odia">ଜଳ</span>,
-            <span class="odia">ଫଳ</span>, <span class="odia">ବଳ</span>,
-            <span class="odia">କାଳ</span>. Measured across the whole corpus,
-            <span class="odia">ଳ</span> wins 2.4 to 1 at the end of a word. Śloka mode ranks
-            it first; the other modes offer it one slot down.
-          </p>
-
-          <p class="note">
-            The base scheme is in <code>docs/romanization-reference.pdf</code> and these
-            additions are in <code>docs/romanization-reference-v2.pdf</code>. Both are
-            <strong>drafts unreviewed by a native speaker</strong> — every mapping is a
-            proposal, and a wrong one is a line in a TOML file, not a code change.
-          </p>
-        </details>
       </main>
 
       <footer class="colophon">
-        <p>
-          Everything runs on this device. No network call, ever — see
-          <code>plan/04-scope.md</code>.
-        </p>
+        <p>Everything runs on this device. Nothing you type is sent anywhere.</p>
       </footer>
     </div>
 
@@ -382,10 +227,381 @@
           <button type="button" class="btn btn-small" data-picker-close>Done</button>
         </div>
         <ul id="picker-list" class="picker-list"></ul>
+        <!-- PLAN.md 2.6: no network call. Copies a report and opens an email
+             draft; the user decides whether to send it, and to whom. -->
+        <div class="picker-foot">
+          <button type="button" class="btn btn-small" id="picker-report">Wrong word? Report it</button>
+        </div>
       </div>
     </div>
 
-    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    <!--
+      Settings sheet. Same bottom-sheet pattern as the picker (classes shared,
+      ids separate: #picker-list is a dictionary-overlay contract and must stay
+      unique to the Alternatives sheet).
+    -->
+    <div id="settings" class="picker sheet" hidden>
+      <div class="picker-scrim" data-settings-close></div>
+      <div class="picker-panel" role="dialog" aria-modal="true" aria-labelledby="settings-title">
+        <div class="picker-head">
+          <h2 id="settings-title">Settings</h2>
+          <button type="button" class="btn btn-small" data-settings-close>Done</button>
+        </div>
+        <div class="settings-body">
+          <label class="setting">
+            <input type="checkbox" id="toggle-family-safe" role="switch" checked />
+            <span class="setting-text">
+              <span class="setting-label">Hide rude words</span>
+              <span class="setting-help">
+                Rude and swear words are not suggested. You can still type them on purpose.
+              </span>
+            </span>
+          </label>
+
+          <label class="setting">
+            <input type="checkbox" id="toggle-digits" role="switch" />
+            <span class="setting-text">
+              <span class="setting-label">Odia digits <span class="odia" lang="or">୧୨୩</span></span>
+              <span class="setting-help">Write numbers as <span class="odia" lang="or">୧୨୩</span> instead of 123.</span>
+            </span>
+          </label>
+
+          <div class="setting-block">
+            <span class="setting-label" id="text-size-label">Text size</span>
+            <div class="segmented" role="radiogroup" aria-labelledby="text-size-label">
+              <label class="segment">
+                <input type="radio" name="text-size" id="text-size-normal" value="normal" />
+                <span>Normal</span>
+              </label>
+              <label class="segment">
+                <input type="radio" name="text-size" id="text-size-large" value="large" />
+                <span>Large</span>
+              </label>
+              <label class="segment">
+                <input type="radio" name="text-size" id="text-size-xl" value="xl" />
+                <span>Extra large</span>
+              </label>
+            </div>
+            <p class="text-size-preview" aria-hidden="true">
+              <span class="odia" lang="or">କେମିତି ଅଛ</span> &mdash; how are you?
+            </p>
+          </div>
+
+          <h3 class="settings-section">Advanced</h3>
+          <label class="setting">
+            <input type="checkbox" id="toggle-classic" role="switch" />
+            <span class="setting-text">
+              <span class="setting-label">Classic engine</span>
+              <span class="setting-help">The original word list without Sanskrit forms.</span>
+            </span>
+          </label>
+          <label class="setting">
+            <input type="checkbox" id="toggle-strict" role="switch" />
+            <span class="setting-text">
+              <span class="setting-label">Exact spelling (no guessing)</span>
+              <span class="setting-help">
+                One English spelling gives one Odia spelling. No suggestions. For people who know
+                the ITRANS scheme.
+              </span>
+            </span>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <!-- One toast: a message, and for "Cleared" an Undo button (main.ts toast()). -->
+    <!--
+      Help sheet (proposal 3.1): what this is, the welcome card again, and the
+      cheat sheets that used to sit on the main screen (audit 1.4). Same
+      bottom-sheet classes as Settings; its own ids.
+    -->
+    <div id="help" class="picker sheet" hidden>
+      <div class="picker-scrim" data-help-close></div>
+      <div class="picker-panel" role="dialog" aria-modal="true" aria-labelledby="help-title">
+        <div class="picker-head">
+          <h2 id="help-title">Help</h2>
+          <button type="button" class="btn btn-small" data-help-close>Done</button>
+        </div>
+        <div class="settings-body help-body">
+          <h3 class="settings-section">What this is</h3>
+          <p class="help-text">
+            Type Odia the way it sounds, in English letters. Unlike a keyboard, it shows what each
+            word means before you pick it. Nothing you type leaves this device.
+          </p>
+          <button type="button" id="help-intro" class="btn">Show the welcome card again</button>
+
+            <details class="guide">
+              <summary>What to type</summary>
+
+              <p class="note">
+                Case is ignored for ordinary letters, so <code>ta</code> and <code>Ta</code> behave the
+                same. Where a spelling is ambiguous the word is underlined with dots — tap it and pick
+                the one you meant. Your choice is remembered on this device.
+              </p>
+
+              <h3>Vowels</h3>
+              <div class="scroll">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Letter</th><th>Type</th><th>On କ</th>
+                      <th>Letter</th><th>Type</th><th>On କ</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="odia">ଅ</td><td><code>a</code></td><td class="odia">କ</td>
+                      <td class="odia">ଏ</td><td><code>e</code></td><td class="odia">କେ</td>
+                    </tr>
+                    <tr>
+                      <td class="odia">ଆ</td><td><code>aa</code></td><td class="odia">କା</td>
+                      <td class="odia">ଐ</td><td><code>ai</code></td><td class="odia">କୈ</td>
+                    </tr>
+                    <tr>
+                      <td class="odia">ଇ</td><td><code>i</code></td><td class="odia">କି</td>
+                      <td class="odia">ଓ</td><td><code>o</code></td><td class="odia">କୋ</td>
+                    </tr>
+                    <tr>
+                      <td class="odia">ଈ</td><td><code>ii</code> <code>ee</code></td><td class="odia">କୀ</td>
+                      <td class="odia">ଔ</td><td><code>au</code></td><td class="odia">କୌ</td>
+                    </tr>
+                    <tr>
+                      <td class="odia">ଉ</td><td><code>u</code></td><td class="odia">କୁ</td>
+                      <td class="odia">ଋ</td><td><code>ru</code> <code>ri</code></td><td class="odia">କୃ</td>
+                    </tr>
+                    <tr>
+                      <td class="odia">ଊ</td><td><code>uu</code> <code>oo</code></td><td class="odia">କୂ</td>
+                      <td></td><td></td><td></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <h3>Consonants</h3>
+              <div class="scroll">
+                <table>
+                  <tbody>
+                    <tr>
+                      <th>Velar</th>
+                      <td class="odia">କ <code>k</code></td><td class="odia">ଖ <code>kh</code></td>
+                      <td class="odia">ଗ <code>g</code></td><td class="odia">ଘ <code>gh</code></td>
+                      <td class="odia">ଙ <code>ng</code></td>
+                    </tr>
+                    <tr>
+                      <th>Palatal</th>
+                      <td class="odia">ଚ <code>ch</code></td><td class="odia">ଛ <code>chh</code></td>
+                      <td class="odia">ଜ <code>j</code></td><td class="odia">ଝ <code>jh</code></td>
+                      <td class="odia">ଞ <code>~n</code></td>
+                    </tr>
+                    <tr>
+                      <th>Retroflex</th>
+                      <td class="odia">ଟ <code>T</code></td><td class="odia">ଠ <code>Th</code></td>
+                      <td class="odia">ଡ <code>D</code></td><td class="odia">ଢ <code>Dh</code></td>
+                      <td class="odia">ଣ <code>N</code></td>
+                    </tr>
+                    <tr>
+                      <th>Dental</th>
+                      <td class="odia">ତ <code>t</code></td><td class="odia">ଥ <code>th</code></td>
+                      <td class="odia">ଦ <code>d</code></td><td class="odia">ଧ <code>dh</code></td>
+                      <td class="odia">ନ <code>n</code></td>
+                    </tr>
+                    <tr>
+                      <th>Labial</th>
+                      <td class="odia">ପ <code>p</code></td><td class="odia">ଫ <code>ph</code></td>
+                      <td class="odia">ବ <code>b</code></td><td class="odia">ଭ <code>bh</code></td>
+                      <td class="odia">ମ <code>m</code></td>
+                    </tr>
+                    <tr>
+                      <th>Sibilant</th>
+                      <td class="odia">ଶ <code>sh</code></td><td class="odia">ଷ <code>Sh</code></td>
+                      <td class="odia">ସ <code>s</code></td><td class="odia">ହ <code>h</code></td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <th>Other</th>
+                      <td class="odia">ଯ <code>y</code></td><td class="odia">ର <code>r</code></td>
+                      <td class="odia">ଲ <code>l</code></td><td class="odia">ଳ <code>L</code></td>
+                      <td class="odia">ୱ <code>w</code></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <h3>The nukta letters and signs</h3>
+              <div class="scroll">
+                <table>
+                  <thead>
+                    <tr><th>Letter</th><th>Type</th><th>Example</th></tr>
+                  </thead>
+                  <tbody>
+                    <!--
+                      The nukta letters are written as numeric character references so
+                      the encoding is visible and cannot drift: base consonant plus
+                      U+0B3C, never the precomposed U+0B5C / U+0B5D.
+                    -->
+                    <tr>
+                      <td class="odia">&#x0B21;&#x0B3C;</td>
+                      <td><code>R</code>, or <code>d</code> then tap</td>
+                      <td class="odia">ଓ&#x0B21;&#x0B3C;ିଶା <code>odisha</code></td>
+                    </tr>
+                    <tr>
+                      <td class="odia">&#x0B22;&#x0B3C;</td>
+                      <td><code>Rh</code></td>
+                      <td class="odia">ପ&#x0B22;&#x0B3C;ା <code>paRhaa</code></td>
+                    </tr>
+                    <tr>
+                      <td class="odia">ଂ</td><td><code>M</code> or <code>n</code></td>
+                      <td class="odia">ଅଂଶ <code>ansha</code></td>
+                    </tr>
+                    <tr>
+                      <td class="odia">ଁ</td><td><code>~</code></td>
+                      <td class="odia">ମୁଁ <code>mu~</code></td>
+                    </tr>
+                    <tr>
+                      <td class="odia">ଃ</td><td><code>H</code>, or <code>:</code></td>
+                      <td class="odia">ଦୁଃଖ <code>du:kha</code></td>
+                    </tr>
+                    <tr>
+                      <td>halant</td><td><code>_</code></td>
+                      <td class="odia">କମଲ୍ <code>kamal_</code></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <p class="note">
+                <strong>About &#x0B21;&#x0B3C;.</strong> This letter is everywhere in Odia
+                (<span class="odia">ଓ&#x0B21;&#x0B3C;ିଶା</span>,
+                <span class="odia">ଓ&#x0B21;&#x0B3C;ିଆ</span>,
+                <span class="odia">ବ&#x0B21;&#x0B3C;</span>) so you should not have to work for it.
+                Common words are recognised from the dictionary, and elsewhere a <code>d</code> inside a
+                word offers it as an alternative. Type <code>R</code> if you want it outright.
+              </p>
+
+              <p class="note">
+                Conjuncts form on their own — type consonants back to back and the halant is inserted
+                for you. <code>namaskaara</code> → <span class="odia">ନମସ୍କାର</span>,
+                <code>ksha</code> → <span class="odia">କ୍ଷ</span>.
+              </p>
+
+              <p class="note">
+                <strong>Exact spelling</strong> (Settings, Advanced) turns off guessing entirely: one
+                roman spelling, one Odia output, no suggestions. It follows the ITRANS scheme. Useful
+                when you know exactly what you want.
+              </p>
+            </details>
+
+            <details class="guide">
+              <summary>Typing Sanskrit</summary>
+
+              <p class="note">
+                Two modes. <strong>Everyday</strong> is the default — ordinary Odia leads, Sanskrit
+                spellings sit a slot or two down. <strong>Śloka (verse)</strong> flips the ranking for
+                verse: a word-final <span class="odia">ଂ</span> beats
+                <span class="odia">ମ</span>, <span class="odia">ଳ</span> beats
+                <span class="odia">ଲ</span>, and the Sanskrit vocalics become typeable.
+                The original engine, without Sanskrit forms, is <strong>Classic engine</strong> in
+                Settings, Advanced.
+              </p>
+
+              <h3>Marks you can type directly</h3>
+              <ul class="shortcuts" id="shortcuts"></ul>
+
+              <p class="note">
+                Anything rarer is on the palette under the text box. Hover or long-press a key to
+                see what it is and how else to reach it.
+              </p>
+
+              <h3>Sanskrit vowels</h3>
+              <div class="scroll">
+                <table>
+                  <thead>
+                    <tr><th>Letter</th><th>Type</th><th>On କ</th><th>Note</th></tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="odia">ଋ</td><td><code>ri</code> <code>ru</code></td>
+                      <td class="odia">କୃ</td><td>common in modern Odia</td>
+                    </tr>
+                    <tr>
+                      <td class="odia">ୠ</td><td><code>rri</code></td>
+                      <td class="odia">କୄ</td><td>Śloka mode only</td>
+                    </tr>
+                    <tr>
+                      <td class="odia">ଌ</td><td><code>lri</code></td>
+                      <td class="odia">କୢ</td><td>Śloka mode only</td>
+                    </tr>
+                    <tr>
+                      <td class="odia">ୡ</td><td><code>llri</code></td>
+                      <td class="odia">କୣ</td><td>Śloka mode only</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <h3>Conjuncts Sanskrit needs</h3>
+              <p class="note">
+                Two families that the base scheme could not reach. A nasal before a stop
+                assimilates in the script — <span class="odia">ଙ</span> before velars,
+                <span class="odia">ଞ</span> before palatals — but nobody types it that way, so a
+                plain <code>n</code> works.
+              </p>
+              <div class="scroll">
+                <table>
+                  <tbody>
+                    <tr>
+                      <th>Nasal + stop</th>
+                      <td class="odia">ଙ୍କ <code>nk</code></td><td class="odia">ଙ୍ଖ <code>nkh</code></td>
+                      <td class="odia">ଙ୍ଗ <code>ng</code></td><td class="odia">ଙ୍ଘ <code>ngh</code></td>
+                    </tr>
+                    <tr>
+                      <th></th>
+                      <td class="odia">ଞ୍ଚ <code>nch</code></td><td class="odia">ଞ୍ଛ <code>nchh</code></td>
+                      <td class="odia">ଞ୍ଜ <code>nj</code></td><td class="odia">ଞ୍ଝ <code>njh</code></td>
+                    </tr>
+                    <tr>
+                      <th>Subjoined <span class="odia">ୱ</span></th>
+                      <td class="odia">ସ୍ୱ <code>sv</code> <code>sw</code></td>
+                      <td class="odia">ଦ୍ୱ <code>dv</code> <code>dw</code></td>
+                      <td class="odia">ତ୍ୱ <code>tv</code> <code>tw</code></td>
+                      <td class="odia">ଶ୍ୱ <code>shv</code></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <p class="note">
+                <strong>Why <span class="odia">ୱ</span> only in conjuncts.</strong> Sanskrit
+                <em>व</em> is written <span class="odia">ବ</span> standing alone
+                (<span class="odia">ଦେବ</span>, <span class="odia">ବିଷ୍ଣୁ</span>) but
+                <span class="odia">ୱ</span> when subjoined — <span class="odia">ସ୍ୱାମୀ</span>
+                outnumbers <span class="odia">ସ୍ବାମୀ</span> more than three to one in real Odia
+                text. There is no rule context for "after a halant", so these are spelled out as
+                their own keys.
+              </p>
+
+              <p class="note">
+                <strong>Why <span class="odia">ଳ</span> so often.</strong> Sanskrit
+                <em>ल</em> in an Odia tatsama word is usually <span class="odia">ଳ</span>, not
+                <span class="odia">ଲ</span>: <span class="odia">ଜଳ</span>,
+                <span class="odia">ଫଳ</span>, <span class="odia">ବଳ</span>,
+                <span class="odia">କାଳ</span>. Measured across the whole corpus,
+                <span class="odia">ଳ</span> wins 2.4 to 1 at the end of a word. Śloka mode ranks
+                it first; the other modes offer it one slot down.
+              </p>
+
+              <p class="note">
+                The base scheme is in <code>docs/romanization-reference.pdf</code> and these
+                additions are in <code>docs/romanization-reference-v2.pdf</code>. Both are
+                <strong>drafts unreviewed by a native speaker</strong> — every mapping is a
+                proposal, and a wrong one is a line in a TOML file, not a code change.
+              </p>
+            </details>
+        </div>
+      </div>
+    </div>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"><span id="toast-text"></span><button type="button" id="toast-action" class="toast-action" hidden></button></div>
 
   </body>
 </html>

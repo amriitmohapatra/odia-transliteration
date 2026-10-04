@@ -1,0 +1,13 @@
+# preferences.tsv — owner-curated "put this word first" rows.
+#
+# Edited by hand by the project owner (a native Odia speaker). Not corpus data.
+# Format: roman <TAB> odia <TAB> weight <TAB> note      (weight optional, default 1)
+# The Odia cell must be canonical: nukta letters decomposed (U+0B21 U+0B3C,
+# U+0B22 U+0B3C), never U+0B5C / U+0B5D. The loader rejects anything else.
+# Score added: [weights] pref in core/rules/symbols.toml x weight. One user pick
+# still outranks a weight-1 row.
+#
+# Provenance: owner decisions, recorded in plan/05-v3-direction.md and
+# plan/06-owner-followups.md. Licence: MIT (this project).
+raja	ରଜ	1	Raja festival first (owner, 2026-10-04). "raajaa" is king.
+raajaa	ରାଜା	1	king (owner, 2026-10-04)

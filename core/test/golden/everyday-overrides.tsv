@@ -1,0 +1,11 @@
+# everyday-overrides.tsv — owner decisions that change what tools/eval/everyday.ts accepts.
+#
+# everyday.ts derives the roman a person would type from real Odia text, then checks the
+# original word comes back. Sometimes the derived roman is ambiguous and the owner has
+# decided another word should come first for it. A row here makes the harness accept that
+# word as correct for that roman key and register, as well as the original. The harness
+# prints how many rows it applied. Add a row only for an owner decision, never to make a
+# number go up.
+#
+# roman <TAB> register (careful|casual) <TAB> accepted odia <TAB> reason <TAB> date
+raja	casual	ରଜ	Owner: "raja" gives the Raja festival first, "raajaa" gives king. Context decides.	2026-10-04

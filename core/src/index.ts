@@ -11,6 +11,9 @@
  * which reads the shipped `rules/` and `data/` files.
  */
 
+import { emptyBigrams, parseBigrams } from './bigrams.js';
+import { emptyLabels, emptyPreferences, parseLabels, parsePreferences } from './curation.js';
+import type { FilterLevel, Labels, Preferences } from './curation.js';
 import { canonical } from './normalize.js';
 import { emptyLexicon, parseLexicon } from './lexicon.js';
 import { rank } from './rank.js';
@@ -20,6 +23,7 @@ import { strictTransliterate } from './strict.js';
 import { tokenize } from './tokenize.js';
 import { emptyUnigrams, parseUnigrams } from './unigrams.js';
 import type {
+  Bigrams,
   Candidate,
   DigitMode,
   EngineConfig,
@@ -30,6 +34,7 @@ import type {
   StrictSchemeName,
   TransliterateOptions,
   Unigrams,
+  WordContext,
   WordResult,
 } from './types.js';
 
@@ -52,7 +57,11 @@ export class Engine {
   private readonly rules: Rules;
   private readonly lexicon: Lexicon;
   private readonly unigrams: Unigrams;
+  private readonly bigrams: Bigrams;
   private readonly learnStore: LearnStore | undefined;
+  private readonly preferences: Preferences;
+  private readonly labels: Labels;
+  private filterLevel: FilterLevel;
   private readonly digitMode: DigitMode;
   private readonly beam: number;
   private readonly topk: number;
@@ -61,7 +70,11 @@ export class Engine {
     this.rules = cfg.rules;
     this.lexicon = cfg.lexicon;
     this.unigrams = cfg.unigrams;
+    this.bigrams = cfg.bigrams ?? emptyBigrams();
     this.learnStore = cfg.learnStore;
+    this.preferences = cfg.preferences ?? emptyPreferences();
+    this.labels = cfg.labels ?? emptyLabels();
+    this.filterLevel = cfg.filter ?? (cfg.familySafe === false ? 'off' : 'family');
     this.digitMode = cfg.digits ?? 'arabic';
     this.beam = cfg.beam ?? DEFAULT_BEAM;
     this.topk = cfg.topk ?? DEFAULT_TOPK;
@@ -79,22 +92,35 @@ export class Engine {
     const topk = opts?.topk ?? this.topk;
     const words: WordResult[] = [];
     let text = '';
+    // The previous word's top-1 Odia spelling, passed as context to the next
+    // word. It carries across spaces and tabs only, the same adjacency the
+    // bigram counts use (tools/build-data/build_bigrams.py): punctuation,
+    // digits, a line break or a Latin top-1 (English kept verbatim) end it.
+    let prev: string | undefined;
 
     for (const token of tokenize(input)) {
       switch (token.kind) {
         case 'word': {
-          const candidates = this.transliterateWord(token.text, topk);
+          const candidates = this.transliterateWord(token.text, topk, prev === undefined ? undefined : { prev });
           words.push({ roman: token.text, candidates });
-          text += candidates[0]?.text ?? token.text;
+          const top = candidates[0];
+          text += top?.text ?? token.text;
+          prev = top !== undefined && top.source !== 'verbatim' && top.text !== token.text ? top.text : undefined;
           break;
         }
         case 'digits': {
           const candidates = this.digitCandidates(token.text);
           words.push({ roman: token.text, candidates });
           text += candidates[0]?.text ?? token.text;
+          prev = undefined;
           break;
         }
+        case 'space':
+          if (/[\n\r\f\v]/.test(token.text)) prev = undefined;
+          text += token.text;
+          break;
         default:
+          prev = undefined;
           text += token.text;
       }
     }
@@ -108,8 +134,13 @@ export class Engine {
    * Case is folded before matching — natural mode has no case distinction —
    * but the verbatim candidate keeps the original spelling, so "PCR" comes
    * back as "PCR" and not "pcr".
+   *
+   * `context.prev` is the previous word of the sentence in Odia, when the
+   * caller knows it. With bigram data loaded it adds the context term of
+   * rank.ts; without it, or without bigram data, the result is exactly the
+   * context-free one.
    */
-  transliterateWord(roman: string, topk?: number): Candidate[] {
+  transliterateWord(roman: string, topk?: number, context?: WordContext): Candidate[] {
     const key = roman.toLowerCase();
     const wanted = topk ?? this.topk;
 
@@ -123,10 +154,23 @@ export class Engine {
       }),
       lexiconEntries: this.lexicon.lookup(key),
       userCounts: this.learnStore?.get(key),
+      prefWeights: this.preferences.get(key),
+      isBlocked: this.blockerFor(key),
       unigrams: this.unigrams,
+      bigram: this.contextFor(context),
       weights: this.rules.weights,
       topk: wanted,
     });
+  }
+
+  /** The bigram term for one previous word, or undefined when it cannot apply. */
+  private contextFor(context: WordContext | undefined): ((word: string) => number) | undefined {
+    if (this.bigrams.size === 0 || context?.prev === undefined) return undefined;
+    // A boundary: the previous word may come straight from a host text field.
+    const prev = canonical(context.prev);
+    if (prev.length === 0) return undefined;
+    const bigrams = this.bigrams;
+    return (word) => bigrams.score(prev, word);
   }
 
   /**
@@ -137,7 +181,44 @@ export class Engine {
    * field handed back — enters long-lived storage.
    */
   learn(roman: string, chosen: string): void {
-    this.learnStore?.record(roman, canonical(chosen));
+    const word = canonical(chosen);
+    // The kids edition never remembers a labelled word, so it can never come back.
+    if (this.filterLevel === 'kids' && (this.labels.isOffensive(word) || this.labels.isCoarse(word))) return;
+    this.learnStore?.record(roman, word);
+  }
+
+  /** Family-safe filter: on by default (owner decision D-0). See rank.ts. */
+  get familySafe(): boolean {
+    return this.filterLevel !== 'off';
+  }
+
+  /** The "Hide rude words" switch. Ignored in the kids edition, which stays on. */
+  setFamilySafe(on: boolean): void {
+    if (this.filterLevel === 'kids') return;
+    this.filterLevel = on ? 'family' : 'off';
+  }
+
+  get filter(): FilterLevel {
+    return this.filterLevel;
+  }
+
+  /**
+   * The content filter for one roman key, or undefined when nothing is
+   * filtered. Family: an offensive word stays only under one of its own
+   * listed keys, or when the user taught it or the owner prefers it. Kids:
+   * offensive and coarse words never appear.
+   */
+  private blockerFor(key: string): ((word: string, vouched: { user: boolean; pref: boolean }) => boolean) | undefined {
+    if (this.filterLevel === 'off' || this.labels.size === 0) return undefined;
+    const labels = this.labels;
+    if (this.filterLevel === 'kids') return (word) => labels.isOffensive(word) || labels.isCoarse(word);
+    return (word, vouched) =>
+      labels.isOffensive(word) && !vouched.user && !vouched.pref && !(labels.keysFor(word)?.has(key) ?? false);
+  }
+
+  /** Labels for a canonical Odia word, for display (e.g. an "offensive" badge). */
+  labelsOf(word: string): ReadonlySet<string> | undefined {
+    return this.labels.get(canonical(word));
   }
 
   /** Deterministic ITRANS. Case-sensitive, one answer, no candidates. */
@@ -199,6 +280,16 @@ export interface CreateEngineOptions {
   lexiconTsv?: string;
   /** Contents of `data/unigrams.tsv`. Absent means the frequency term is 0 everywhere. */
   unigramsTsv?: string;
+  /** Contents of `data/bigrams.tsv` (or `-web`). Absent means no context term. */
+  bigramsTsv?: string;
+  /** Contents of `data/preferences.tsv` (owner-curated). Absent means none. */
+  preferencesTsv?: string;
+  /** Contents of `data/labels.tsv` (owner-curated). Absent means none. */
+  labelsTsv?: string;
+  /** Family-safe filter. Default true. */
+  familySafe?: boolean;
+  /** Content filter level: 'off' | 'family' | 'kids'. Overrides `familySafe`. */
+  filter?: FilterLevel;
   learnStore?: LearnStore;
   digits?: DigitMode;
   beam?: number;
@@ -217,6 +308,11 @@ export function createEngine(opts: CreateEngineOptions): Engine {
     rules: loadRules(opts.rulesToml, opts.itransToml),
     lexicon: opts.lexiconTsv === undefined ? emptyLexicon() : parseLexicon(opts.lexiconTsv),
     unigrams: opts.unigramsTsv === undefined ? emptyUnigrams() : parseUnigrams(opts.unigramsTsv),
+    bigrams: opts.bigramsTsv === undefined ? undefined : parseBigrams(opts.bigramsTsv),
+    preferences: opts.preferencesTsv === undefined ? undefined : parsePreferences(opts.preferencesTsv),
+    labels: opts.labelsTsv === undefined ? undefined : parseLabels(opts.labelsTsv),
+    familySafe: opts.familySafe,
+    filter: opts.filter,
     learnStore: opts.learnStore,
     digits: opts.digits,
     beam: opts.beam,
@@ -241,6 +337,8 @@ export {
   DDHA_NUKTA,
 } from './normalize.js';
 export { loadRules, loadStrictScheme, optionContext } from './rules.js';
+export { parsePreferences, parseLabels, parseGlosses, LABELS, GLOSS_STATUS, FILTER_LEVELS } from './curation.js';
+export type { Preferences, Labels, Label, Glosses, GlossStatus, FilterLevel } from './curation.js';
 export type { PositionContext, PositionedOption } from './rules.js';
 export { tokenize } from './tokenize.js';
 export type { Token, TokenKind } from './tokenize.js';
@@ -248,6 +346,7 @@ export { segment, DEFAULT_BEAM } from './segment.js';
 export type { RuleCandidate, SegmentOptions } from './segment.js';
 export { emptyLexicon, parseLexicon } from './lexicon.js';
 export { emptyUnigrams, parseUnigrams } from './unigrams.js';
+export { emptyBigrams, parseBigrams } from './bigrams.js';
 export { rank } from './rank.js';
 export type { RankInput } from './rank.js';
 export { strictTransliterate } from './strict.js';
