@@ -121,8 +121,29 @@ Principles for this app:
 6. **No surprises with data.** Nothing leaves the device in V1. Each later online feature
    has its own switch that names the company.
 
-The detailed audit, wireframes, design tokens and the usability script for the owner's
-parents come from the designer's proposal. They go here when it arrives.
+Full proposal: `plan/design/v1-ux-proposal.md` (audit, wireframes, tokens with computed
+contrast, accessibility checklist, copy deck, usability test for the owner's parents).
+
+**Audit, worst first** (checked in Chromium, phone 390×844 and desktop 1280×800):
+
+| # | Problem | Fix in V1 |
+|---|---|---|
+| B1 | On a phone the keyboard hides the suggestions after #4, the result and Copy | A suggestion strip that sits on the keyboard; Copy stays in the top bar |
+| B2 | Dark mode: hovered active suggestion is 1.7:1 contrast | One CSS rule (`:not(.is-active):hover`) |
+| B3 | The Alternatives sheet splits Odia words between letters | No `overflow-wrap: anywhere` on Odia |
+| B4 | The round meanings button covers the Alternatives sheet | Layering fix |
+| B5 | Wrong meanings: କେମିତି → "committee", ଆଛା → "See)", ରଜ → "Dust." | Owner gloss file + loan-detector exclusions (data) |
+| — | Odia shown twice, tiny labels, engine words on screen, silent loading, no offline sign | One text box + "Reads as" line, ≥15 px text, plain words, honest states |
+
+**V1 UI work, in order:** (1) B2–B4; (2) phone suggestion strip; (3) one text box + "Reads
+as" line; (4) readable meanings, no engine words; (5) family-safe switch ("Hide rude
+words", on); (6) Share/Copy and Undo; (7) new colour and size tokens (all text ≥4.5:1,
+outlines ≥3:1); (8) loading, error and offline states; (9) first-run card, everyday
+example; (10) desktop list popover + fixed meanings column; (11) screen-reader fixes.
+
+**Mode names:** "Everyday" (runs today's default, Odia + Sanskrit) and "Śloka (verse)"; the
+original engine moves to Advanced. Adopted as the recommended default; the owner can
+change it.
 
 ## 6. Team
 
@@ -144,6 +165,7 @@ Agents do not commit; the lead reviews, measures and commits.
 
 | Date | Change |
 |---|---|
+| 2026-10-04 | Design proposal in (`plan/design/`). V1 UI work list added (§5). Romanizer for the read-back line done. |
 | 2026-10-04 | 2.4 done. Service-worker registration bug fixed: offline now works (A-2, A-12 pass). |
 | 2026-10-04 | 2.1 done (dictionary module). Owner gloss file added to V2. |
 | 2026-10-04 | 1.4, 3.1, 4.1, 4.2 done. |
