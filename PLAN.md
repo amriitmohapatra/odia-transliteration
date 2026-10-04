@@ -32,7 +32,7 @@ whenever a task changes status. Last updated: 2026-10-04 (V1 in progress).
 | Stage | Content | Status |
 |---|---|---|
 | V0 Clean-up | Cache scoping, English word in the bar, `rank()` learning bug, bundled font, dictionary provenance, `j` → ଯ | **Done** 2026-10-04 (D-10 open) |
-| **V1 Web app on Vercel** | One merged app; dictionary as a module; owner preferences; family-safe filter; romanised read-back; colloquial tests; UI/UX pass; PWA + `vercel.json`; CI | **Code nearly done** — left: 2.6 report button, A-7 timing. Then owner: D-10, deploy, phone test |
+| **V1 Web app on Vercel** | One merged app; dictionary as a module; owner preferences; family-safe filter; romanised read-back; colloquial tests; UI/UX pass; PWA + `vercel.json`; CI | **Code done** 2026-10-04. Acceptance: A-1–A-10, A-12 pass in Chromium; A-11 (Safari) and phones are owner tests. Then owner: D-10, deploy |
 | V2 Better words | IndicXlit lexicon fill, bigram ranking, owner phrase table, new modern glosses, **owner gloss file** (e.g. ରଜ shows "Dust." today, not the festival), Hindi/Urdu layer, `j`-keys in lexicon | Not started |
 | V3 Assist layer | `/api/speak`, `/api/listen`, `/api/translate` behind switches | Not started |
 | V4 Lens | Browser extension, then camera/screenshot input | Not started |
@@ -95,7 +95,7 @@ V1 is done when every row passes. Each row says how it is checked.
 | A-4 | The meaning shows under candidates (e.g. `dina` → "Day", "Poor") | Playwright — **passes** |
 | A-5 | "Dictionary loading" and "dictionary failed" look different | Playwright with the data file blocked — **passes** (Run A check-a6) |
 | A-6 | Learned words survive the move from the old app to V1 | Same storage key `odia.userdict` (unchanged); learning checked in the browser — **passes** on the same origin. Moving from the old *file* to the hosted site is a new origin: learned words do not carry over (no export yet) |
-| A-7 | Typing never freezes while the dictionary loads | Playwright timing on a throttled CPU |
+| A-7 | Typing never freezes while the dictionary loads | Playwright long-task timing, CPU normal and 4× slower — **passes**: no long task while the meanings load; key median 6 ms (normal) / 26 ms (4×). Known limit: one start-up task while the word list is built, 0.2 s normal / 0.9 s at 4×; a key pressed in that moment waits up to ~0.5 s |
 | A-8 | Usable with the keyboard alone | Playwright key sequence — **passes** (Run B check-b6: text box → Copy in 5 Tab stops, focus ring ≥7.37:1) |
 | A-9 | Phone layout: inputs ≥16 px, tap targets ≥44 px, safe areas | Playwright at 390×844 and 390×480 — **passes** in Chromium; real phones: owner test |
 | A-10 | No metric regression | `npm run eval`, `everyday.ts`, `Appv2/eval/run.ts` — **passes** (unchanged after both UI runs) |
@@ -166,6 +166,7 @@ Agents do not commit; the lead reviews, measures and commits.
 
 | Date | Change |
 |---|---|
+| 2026-10-04 | A-7 measured (passes, start-up limit noted). **V1 code done.** |
 | 2026-10-04 | 2.6 report button done. |
 | 2026-10-04 | UI Run B merged (6 commits): Share/Undo, tokens (70/70 contrast pairs pass), text size, first-run card + Help, desktop list + meanings column, screen-reader path. A-1, A-6, A-8, A-9, A-10 pass. |
 | 2026-10-04 | Owner meanings file (1.6) done: wrong meanings from the audit fixed as seed rows. |
