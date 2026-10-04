@@ -213,10 +213,13 @@ Testers will try slang and abuses first. Full notes: `research/2026-10-04/07-sla
   "social" lane, which is mostly politicians' posts.
 - **Most spoken forms already come first.** `kana`, `kouthi`, `mate`, `naain` and
   `karuchi` give the right word at rank 1.
-- **Gap: `j` never gives ଯ.** The rules map `j` only to ଜ. So `je`, `jadi`, `jiba` and
-  `jauchi` never offer ଯେ, ଯଦି, ଯିବା, ଯାଉଚି. (Checked in the engine, 2026-10-04.) ଯେ is the
-  5th most frequent word. Odia ଯ sounds like "ja" (`AGENTS.md` §4), so many users
-  will type "je". See decision D-12.
+- **Gap: `j` never gave ଯ. Fixed 2026-10-04 (D-12).** The core rules mapped `j` only to ଜ,
+  so `je`, `jadi` and `jiba` never offered ଯେ, ଯଦି, ଯିବା. ଯେ is the 5th most frequent word
+  (81,614 tokens). The Sanskrit app's default mode already had this option (its delta S8,
+  weight 0.6). That option now lives in the core rules for every mode. Now: `je` → ଯେ at
+  rank 2, `jadi` → ଯଦି at rank 2, `jiba` → ଯିବା at rank 3.
+- **Still open:** `jauchi` does not offer ଯାଉଚି (the `au` reading, not the `j`). `j` inside
+  a compound (`upajoga` → ଉପଯୋଗ) does not reach ଯ, because the option is word-initial only.
 - **Apostrophe forms (କ'ଣ) are lost.** The corpus merge filter drops them.
 - **The full lexicon has 5 rows with a nukta on ଯ** (U+0B2F U+0B3C), which is not an Odia
   form. One appears at rank 3 for `ye`. Audit nukta on every consonant other than ଡ and ଢ
@@ -264,7 +267,6 @@ Rules:
 1. Label the Praharaj review queue: `offensive`, `coarse`, or not.
 2. Approve the generated suffixed forms.
 3. Check each row of `colloquial.tsv`.
-4. Decide D-12 (`j` → ଯ).
 
 ---
 
@@ -425,7 +427,7 @@ their trigger occurs.
 | D-9 | Laya | Decided 2026-10-04 | Experiment E-1 only, after the simple tagger |
 | D-10 | Public or private product (§12) | **Open** | Trigger: before the first deploy |
 | D-11 | Update `CLAUDE.md` stale lines (§12) | Decided 2026-10-04 | Yes |
-| D-12 | Let `j` also give ଯ (§6) | Decided 2026-10-04 | Yes, measured before and after |
+| D-12 | Let `j` also give ଯ (§6) | Decided 2026-10-04 | Yes. **Done** 2026-10-04, measured before and after. |
 
 ---
 
@@ -457,7 +459,7 @@ Each stage is useful alone. The owner approves each stage before it starts.
 
 | Stage | Content | Network | Needs decisions |
 |---|---|---|---|
-| **V0 Clean-up** | Fix the four blockers in §4. Record dictionary provenance. Update `CLAUDE.md`. `j` → ଯ. | none | D-10, D-11, D-12 |
+| **V0 Clean-up** | Fix the four blockers in §4. Record dictionary provenance. Update `CLAUDE.md` (done). `j` → ଯ (done). | none | D-10 |
 | **V1 Web app on Vercel** | One merged app (Odia, Sanskrit, dictionary). Family-safe filter. Romanized read-back line. Colloquial and guard tests. | static only | D-1, D-8 |
 | **V2 Better words** | IndicXlit lexicon fill. Bigram ranking. Phrase table. New modern glosses. Hindi/Urdu layer. | none | D-5, D-6 |
 | **V3 Assist layer** | `/api/speak`, `/api/listen`, `/api/translate`, behind switches. | opt-in | D-2, D-3, D-4 |

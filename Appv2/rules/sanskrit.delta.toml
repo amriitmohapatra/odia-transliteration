@@ -392,10 +392,11 @@ odia = [{ text = "ଶ୍ୱ", w = 1.0 }]
 # the Hindi intuition. "je" could not reach ଯେ, the #5 word in Odia.
 # Sanskrit needs it constantly: ଯଥା, ଯତ୍ର, ଯଜ୍ଞ, ଯୋଗ, ଯମ, ଯଦା.
 # Recovers D5.
-[[consonant.merge]]
-id = "S8"
-roman = "j"
-odia = [{ text = "ଯ", w = 0.6, context = "word_initial" }]
+#
+# MOVED TO CORE 2026-10-04 (owner decision D-12, plan/05-v3-direction.md):
+# core/rules/symbols.toml now carries this exact option, at this exact weight,
+# for every profile including Everyday. A merge here would duplicate it, so
+# the delta is gone. The id S8 stays reserved.
 
 
 # ==========================================================================

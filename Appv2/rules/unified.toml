@@ -5,9 +5,9 @@
 #
 # profile      = unified
 # base         = core/rules/symbols.toml
-# base-sha256  = b0f91251c673787e0180779154d72a66c6d2f72d8ec4863e379a5ee2d6964b6f
+# base-sha256  = a73475ef29cf10bbde77a5bca4088b954605a691f31a06ff3232e0b740b6a0ee
 # delta        = rules/unified.delta.toml
-# delta-sha256 = f05e463186c85403f5098944d9c44e928c45b24a1cacb8839804b925d5db7365
+# delta-sha256 = 57646b55f8b73a962fc6378046364b81e4bdf0a61c3a02ce377560ab1d741f8b
 #
 # There is deliberately no timestamp here: generation is deterministic, so
 # `gen-rules.ts --check` can be a plain byte comparison.
@@ -307,9 +307,18 @@ odia = [
   { text = "କ", w = 0.45 },
 ]
 
+# "j" also reaches ଯ word-initially (owner decision D-12, 2026-10-04).
+#
+# Odia ଯ is pronounced like "ja" (see the "y" block below), so people type ଯେ
+# as "je", ଯଦି as "jadi", ଯିବା as "jiba". With "j" mapped only to ଜ, and the
+# lexicon spelling ଯ as "y", none of those were reachable from "j" at all —
+# and ଯେ is the 5th most frequent word in the web corpus (81,614 tokens).
+# Word-initial only, matching the ଯ/ୟ convention. 0.6 is the weight Appv2's
+# delta S8 already shipped and measured for this exact option. It keeps ଜ the
+# rule default, so frequency decides between the two.
 [[consonant]]
 roman = "j"
-odia = [  # [unified S8]
+odia = [
   { text = "ଜ", w = 1.0 },
   { text = "ଯ", w = 0.6, context = "word_initial" },
 ]

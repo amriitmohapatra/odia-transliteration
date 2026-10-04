@@ -285,9 +285,21 @@ odia = [
   { text = "କ", w = 0.45 },
 ]
 
+# "j" also reaches ଯ word-initially (owner decision D-12, 2026-10-04).
+#
+# Odia ଯ is pronounced like "ja" (see the "y" block below), so people type ଯେ
+# as "je", ଯଦି as "jadi", ଯିବା as "jiba". With "j" mapped only to ଜ, and the
+# lexicon spelling ଯ as "y", none of those were reachable from "j" at all —
+# and ଯେ is the 5th most frequent word in the web corpus (81,614 tokens).
+# Word-initial only, matching the ଯ/ୟ convention. 0.6 is the weight Appv2's
+# delta S8 already shipped and measured for this exact option. It keeps ଜ the
+# rule default, so frequency decides between the two.
 [[consonant]]
 roman = "j"
-odia = [{ text = "ଜ", w = 1.0 }]
+odia = [
+  { text = "ଜ", w = 1.0 },
+  { text = "ଯ", w = 0.6, context = "word_initial" },
+]
 
 [[consonant]]
 roman = "jh"

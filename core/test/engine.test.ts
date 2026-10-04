@@ -96,6 +96,22 @@ describe('Engine: orthography through the public API', () => {
     // appear in `text` but never as words.
     expect(result.words.map((w) => w.roman)).toEqual(['kemiti', 'achha']);
   });
+
+  // Decision D-12: Odia YA sounds like "ja", so "j" must reach it word-initially.
+  // YE (U+0B2F U+0B47) is the 5th most frequent word and was unreachable from "j".
+  it('lets "j" reach YA at the start of a word: "je" offers YE, "jiba" offers YIBAA', () => {
+    const engine = ruleOnlyEngine();
+    expect(textsOf(engine.transliterateWord('je', 9))).toContain('ଯେ');
+    expect(textsOf(engine.transliterateWord('jiba', 9))).toContain('ଯିବା');
+  });
+
+  it('keeps JA as the rule default for "j", and never reads a non-initial "j" as YA', () => {
+    const engine = ruleOnlyEngine();
+    expect(engine.transliterateWord('je', 9)[0]?.text).toBe('ଜେ');
+    // "raja": the j is not word-initial, so no candidate may contain YA at all.
+    const raja = textsOf(engine.transliterateWord('raja', 40));
+    expect(raja.some((t) => t.includes('ଯ'))).toBe(false);
+  });
 });
 
 describe('Engine: mixed English', () => {

@@ -99,7 +99,7 @@ roman = "h"
 odia = [{ text = "ଃ", w = 0.25, context = "before_consonant" }]
 
 
-# Everything else — S1b, S1c, S4a-S4d, S5a-S5e, S7-S7h, S8 — is inherited
+# Everything else — S1b, S1c, S4a-S4d, S5a-S5e, S7-S7h — is inherited (S8 moved to core on 2026-10-04)
 # verbatim from sanskrit.delta.toml. Those blocks are either measured on the
 # Odia web corpus already (the D1-D5, D7 patch) or weighted so low they cannot
 # change rank 1 (S5e at 0.06).
