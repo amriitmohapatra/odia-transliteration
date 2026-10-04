@@ -100,7 +100,7 @@ need them wait for a run on the owner's Mac or a later environment.
 | V2.1 | `j`-keys in the common lexicon (the useful part of PR #2), on main's reproducible builder | in repo | To do (data agent) |
 | V2.2 | Context ranking: word-pair (bigram) counts; the previous word helps rank the next | in-repo corpus (same status as the shipped word counts, D-10 note) | To do (data agent) |
 | V2.3 | Colloquial work list (`jauchi`, `aasuchu`, `janichi`, `kain`, `chala`, `dada`, `sanga`) | in repo | To do (data agent) |
-| V2.4 | Word origin in the dictionary: "from Hindi / Persian / Arabic / English" | Praharaj origin tags (public domain, in hand) | To do (dictionary agent) |
+| V2.4 | Word origin in the dictionary: "from Hindi / Persian / Arabic / English" | Praharaj origin tags (public domain, in hand) | **Done** — 35,396 of 38,776 dictionary words get an origin (`origin.bin`, 13 KB); panel pill on all sizes, chip suffix on desktop. Owner: review a sample (follow-up C-8) |
 | V2.5 | Owner phrase table: greetings, festival wishes, the three levels of "you" | the owner writes it | Mechanism first; content is an owner task |
 | V2.6 | IndicXlit lexicon fill for unknown words (OOV top-1 7.3%) | HuggingFace | **Blocked here** |
 | V2.7 | Replace the MODERN meanings layer (D-5) | Samanantar / BPCC (HuggingFace), Wikidata | **Blocked here** |

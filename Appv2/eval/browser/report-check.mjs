@@ -18,7 +18,7 @@ await p.locator('#picker-report').click(); await p.waitForTimeout(800);
 const clip = await p.evaluate(() => navigator.clipboard.readText());
 const mail = await p.evaluate(() => window.__mail ?? '');
 const toastText = await p.evaluate(() => document.querySelector('#toast-text')?.textContent);
-const ok = visible && /Typed: raja/.test(clip) && /U\+0B30 U\+0B1C/.test(clip) && /Offered: /.test(clip) && /App: V1 /.test(clip) && mail.startsWith('mailto:?subject=') && ext.length === 0 && errs.length === 0;
+const ok = visible && /Typed: raja/.test(clip) && /U\+0B30 U\+0B1C/.test(clip) && /Offered: /.test(clip) && /App: V1 /.test(clip) && /^mailto:[^?]+@[^?]+\?subject=/.test(mail) && ext.length === 0 && errs.length === 0;
 console.log(clip); console.log('mail:', mail.slice(0, 70) + '…'); console.log('toast:', toastText);
 console.log(ok ? 'PASS report' : 'FAIL report', JSON.stringify({ visible, ext, errs }));
 await b.close();

@@ -1,3 +1,7 @@
+> **Correction 2026-10-04 (V2.4):** the Hindi count below (about 4,749) counted mostly
+> `(ହି. ଶବ୍ଦସାଗର)` citations of a Hindi dictionary. Praharaj marks only about 225 entries
+> as Hindi in origin. See `Odia_Sanskrit_Appv2/build/build_origin_map.py`.
+
 # Research 02: modern Odia lexical resources (status 2026-10-04)
 
 Scope: find MODERN Odia lexical resources to update the app's dictionary overlay, extend it to

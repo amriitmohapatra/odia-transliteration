@@ -116,6 +116,7 @@ mode is not filtered.
 | Eval overrides | `core/test/golden/everyday-overrides.tsv` | Owner decisions | Yes |
 | Colloquial test set | `core/test/golden/colloquial.tsv` | Seed by agent, checked by owner (C-3) | Yes |
 | Dictionary | `Appv2/src/dictionary/*.bin` (from `Odia_Sanskrit_Appv2/build/*.b64`) | `Odia_Sanskrit_Appv2/build/*.py` | No |
+| Word origin | `Appv2/src/dictionary/origin.bin` (13 KB gzip; one line per `praharaj.bin` key; checksum-guarded, dropped if the keys differ) | `Odia_Sanskrit_Appv2/build/build_origin_map.py` from the Praharaj marks | No |
 
 The dictionary module (`Appv2/src/dictionary/`): `index.ts` fetches the two `.bin` files
 (gzip, inflated by a vendored pako, Safari 13 floor), `overlay.ts` adds gloss chips to the
