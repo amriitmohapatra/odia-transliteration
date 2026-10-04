@@ -56,7 +56,7 @@ page. The research notes tag each such fact. This brief marks them **(unverified
 | A keyboard (Gboard, Windows Odia Phonetic) | This app |
 |---|---|
 | Turns `dina` into an Odia word. It assumes that you can read the result. | Shows ଦିନ "day" and ଦୀନ "poor" side by side. You pick by meaning. (Checked against the shipped dictionary data, 2026-10-04.) |
-| Everyday words only. | A Sanskrit mode for slokas (Gita, Puranas) in Odia script, with correct visarga and conjuncts. |
+| Everyday words only. | A Sanskrit mode for slokas (Gita, Puranas) in Odia script, with the right visarga and conjuncts. |
 | Needs an install or a phone. | One page on any computer. No account. Nothing typed leaves the device. |
 
 ### What is NOT a difference
@@ -87,7 +87,7 @@ reversed. The owner ticks each row.
 |---|---|---|---|
 | S-1 | "a website" | Vercel-hosted app | **Reverse.** A static site keeps the engine offline. |
 | S-2 | "Any network call" (from shipped code) | Voice, read-aloud, sentence translation | **Keep for the engine. Allow for an opt-in assist layer only.** The engine (`core/`) never calls the network. The web page calls the network only after the user turns a feature on. |
-| S-3 | "Odia → English reverse transliteration" | Lens: romanized pronunciation of Odia text | **Reverse, for display only.** A romanized line under Odia text helps a non-reader say the word. |
+| S-3 | "Odia → English reverse transliteration" | Lens: romanized pronunciation of Odia text | **Reverse, to show pronunciation only.** A romanized line under Odia text helps a non-reader say the word. |
 | S-4 | "Voice input or OCR" | Speak-to-write, lens | **Reverse, through the assist layer.** |
 | S-5 | "Mobile keyboards (iOS / Android)" | Android and iOS versions | **Reverse later**, after the desktop/web version (the owner's own order). iOS Stage D already exists in `02-stages.md`. Android is new. |
 | S-6 | "Spell-check or grammar checking" | (not asked) | Keep excluded. |
@@ -102,7 +102,7 @@ reversed. The owner ticks each row.
   (Mac, PC, phone)    │  first load; service worker caches it)   │
                       │                                          │
                       │   core/ engine  ── unchanged, offline    │
-                      │   dictionary    ── fetched once, cached  │
+                      │   dictionary    ── loaded once, cached   │
                       │   family-safe filter, phrase table       │
                       └───────────────┬──────────────────────────┘
                                       │ only if the user turns on
@@ -136,7 +136,7 @@ Four problems block a direct deploy of the current files:
 | Problem | Where | Fix |
 |---|---|---|
 | Two service workers on one site delete each other's cache. | `web/vite.config.ts:142-152`, same code in `Appv2/` | One app, one service worker. |
-| The dictionary is 8.6 MB of base64 inside the HTML. It only works in the single-file build. It finds the page by CSS class names, so a rename breaks it with no error. | `Odia_Sanskrit_Appv2/build/` | Make the dictionary a normal module of the app with a fetched data file. |
+| The dictionary is 8.6 MB of base64 inside the HTML. It only works in the single-file build. It finds the page by CSS class names, so a rename breaks it with no error. | `Odia_Sanskrit_Appv2/build/` | Make the dictionary a normal module of the app with a separate data file. |
 | No Odia font is bundled. A computer without an Odia font shows boxes. | `web/src/style.css:41` | Bundle Noto Sans Oriya (OFL). |
 | In the suggestion bar, Space always picks the Odia word. An English word needs Escape first, and `learn()` never records it. | `web/src/inline.ts:125,170-174` | Keep the typed English word in the bar. |
 
@@ -218,6 +218,9 @@ Testers will try slang and abuses first. Full notes: `research/2026-10-04/07-sla
   5th most frequent word. Odia ଯ sounds like "ja" (`AGENTS.md` §4), so many users
   will type "je". See decision D-12.
 - **Apostrophe forms (କ'ଣ) are lost.** The corpus merge filter drops them.
+- **The full lexicon has 5 rows with a nukta on ଯ** (U+0B2F U+0B3C), which is not an Odia
+  form. One appears at rank 3 for `ye`. Audit nukta on every consonant other than ଡ and ଢ
+  as part of decision D-6.
 
 ### Design
 
@@ -310,7 +313,7 @@ There are two different users:
 
 | | Laya | Jev |
 |---|---|---|
-| Who | ConvAI Innovations, released ~18 Sept 2026 | TypeSafe AI, launched ~15 Sept 2026 |
+| Who | ConvAI Innovations, released ~18 Sept 2026 | TypeSafe AI, released ~15 Sept 2026 |
 | Licence | Apache-2.0 (free, open weights) | Hosted only, ~US$0.042 per 1M input tokens **(unverified)** |
 | What it does | Picks an answer from a fixed list, a score, or yes/no. **It does not write text.** | Same type |
 | Size | 322M (multilingual) | — |
@@ -396,7 +399,7 @@ News channels write English, Hindi and Urdu words directly in Odia script.
 | Case | Today | Proposed |
 |---|---|---|
 | User types an English word in English letters | The engine keeps it as the last candidate. The suggestion bar hides it (bug, §4). | Fix the bar. |
-| English word written in Odia script (ମୋବାଇଲ) | Dictionary shows "English: mobile" (the `LOAN` tag). Display only. | Keep. Use the tag in the lens too. |
+| English word written in Odia script (ମୋବାଇଲ) | Dictionary shows "English: mobile" (the `LOAN` tag). It does not change the ranking. | Keep. Use the tag in the lens too. |
 | Hindi or Urdu word in Odia script | **Nothing specific.** | Use Praharaj origin tags plus Aksharantar `hin`/`urd`. Show "Hindi:" or "Urdu:" with the gloss. |
 | Nukta on ଜ / ଫ for Urdu sounds (z, f) | `PROVENANCE.md` calls these forms "malformed". | **Decide a policy first** (§11, D-6). Otherwise lexicon keys and `canonical()` conflict. |
 
