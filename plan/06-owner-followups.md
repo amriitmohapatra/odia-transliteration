@@ -37,7 +37,7 @@ to the owner. Claude marks each item done here, with the date, when it is done.
 | C-4 | Judge the 100-sentence translation test (Google against Claude Haiku) | D-3, `/api/translate` |
 | C-5 | Review 50 loanword examples with a nukta on ଜ / ଫ | D-6 |
 | C-6 | Review the romanization scheme (`AGENTS.md` §7.4) | Public release |
-| C-7 | Write today's meaning for words where Praharaj's first sense misleads. First case: ରଜ shows "Dust.", but `raja` now means the Raja festival. Goes in an owner gloss file (V2). | Correct meanings under suggestions |
+| C-7 | Check the meanings file `core/data/glosses.tsv`. It has 4 rows suggested by Claude (status `seed`): ରଜ "Raja festival (June); also: dust", କେମିତି "how", ଆଛା "okay; fine", ଦିନ "day". Change `seed` to `owner` when right, fix or delete otherwise, and add words you find wrong while using the app. | Correct meanings under suggestions |
 
 ## D. Decisions still open
 

@@ -12,6 +12,13 @@
  *       Scored through `[weights] pref` in symbols.toml, below a single user
  *       pick, so the user's own choice still wins.
  *
+ *   glosses.tsv       odia <TAB> meaning <TAB> status <TAB> note
+ *       The meaning to show first for a word, where the dictionary's first
+ *       sense misleads today (e.g. the Raja festival, not "dust"). status is
+ *       `owner` (written by the owner) or `seed` (suggested by an agent, shown,
+ *       but waiting for the owner's check). Read by the app's dictionary
+ *       module, not by the engine.
+ *
  *   labels.tsv        odia <TAB> label
  *       Whole words only, never substrings. Labels: offensive, coarse, spoken,
  *       slang, dialect. Only `offensive` changes ranking (the family-safe
@@ -92,6 +99,31 @@ export function parseLabels(tsv: string, file = 'labels.tsv'): Labels {
     get: (word) => map.get(word),
     isOffensive: (word) => map.get(word)?.has('offensive') ?? false,
   };
+}
+
+export const GLOSS_STATUS = ['owner', 'seed'] as const;
+export type GlossStatus = (typeof GLOSS_STATUS)[number];
+
+/** Owner meanings, by canonical Odia word. */
+export interface Glosses {
+  readonly size: number;
+  get(word: string): { meaning: string; status: GlossStatus } | undefined;
+}
+
+export function parseGlosses(tsv: string, file = 'glosses.tsv'): Glosses {
+  const map = new Map<string, { meaning: string; status: GlossStatus }>();
+  for (const { cells, line } of rows(tsv, file)) {
+    const where = `${file}:${line}`;
+    const [odia, meaning, status] = cells;
+    if (!odia || !meaning || !status) throw new Error(`${where}: expected "odia<TAB>meaning<TAB>status[<TAB>note]"`);
+    assertCanonical(odia, where);
+    if (!(GLOSS_STATUS as readonly string[]).includes(status)) {
+      throw new Error(`${where}: unknown status "${status}" (allowed: ${GLOSS_STATUS.join(', ')})`);
+    }
+    if (map.has(odia)) throw new Error(`${where}: duplicate meaning for this word`);
+    map.set(odia, { meaning, status: status as GlossStatus });
+  }
+  return { size: map.size, get: (word) => map.get(word) };
 }
 
 export const emptyPreferences = (): Preferences => parsePreferences('');

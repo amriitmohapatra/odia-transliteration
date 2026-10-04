@@ -1,0 +1,14 @@
+# glosses.tsv — owner meanings: the meaning to show first for a word.
+#
+# Use it where the dictionary's first sense misleads today. The app's dictionary module
+# shows this meaning first, under the suggestion and at the top of the side panel.
+# Format: odia <TAB> meaning <TAB> status <TAB> note
+#   status  owner = written by the owner;  seed = suggested by an agent, waiting for the
+#           owner's check (plan/06-owner-followups.md C-7). Change seed to owner when
+#           checked, or delete the row.
+# The Odia cell must be canonical (nukta decomposed). The loader rejects anything else.
+# Licence: MIT (this project).
+ରଜ	Raja festival (June); also: dust	seed	raja -> festival is the owner's decision (2026-10-04); Praharaj's first sense is "dust"
+କେମିତି	how	seed	audit B5: was shown as "English: committee" (loan detector)
+ଆଛା	okay; fine	seed	audit B5: was shown as "See)"
+ଦିନ	day	seed	audit B5: the modern layer led with "day after day"

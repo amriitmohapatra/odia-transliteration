@@ -275,8 +275,8 @@ export {
   DDHA_NUKTA,
 } from './normalize.js';
 export { loadRules, loadStrictScheme, optionContext } from './rules.js';
-export { parsePreferences, parseLabels, LABELS } from './curation.js';
-export type { Preferences, Labels, Label } from './curation.js';
+export { parsePreferences, parseLabels, parseGlosses, LABELS, GLOSS_STATUS } from './curation.js';
+export type { Preferences, Labels, Label, Glosses, GlossStatus } from './curation.js';
 export type { PositionContext, PositionedOption } from './rules.js';
 export { tokenize } from './tokenize.js';
 export type { Token, TokenKind } from './tokenize.js';

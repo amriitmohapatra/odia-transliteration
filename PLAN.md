@@ -50,6 +50,7 @@ whenever a task changes status. Last updated: 2026-10-04 (V1 in progress).
 | 1.3 | Eval overrides for owner decisions (`everyday-overrides.tsv`) | **Done** |
 | 1.4 | Colloquial test set `core/test/golden/colloquial.tsv` + `tools/eval/colloquial.ts` (seeded, marked unvalidated) | **Done** — 26 rows; spoken top-1 71.4%, top-3 95.2%; 7 misses are the V2 work list |
 | 1.5 | Guard test for the filter with real data (after C-1) | Later |
+| 1.6 | Owner meanings `core/data/glosses.tsv` (audit B5): shown first under suggestions and in the panel; 4 `seed` rows (ରଜ festival, କେମିତି how, ଆଛା okay, ଦିନ day) | **Done** — rows wait for the owner's check (C-7) |
 
 ### 3.2 Frontend (`Appv2/` → the V1 app)
 
@@ -165,6 +166,7 @@ Agents do not commit; the lead reviews, measures and commits.
 
 | Date | Change |
 |---|---|
+| 2026-10-04 | Owner meanings file (1.6) done: wrong meanings from the audit fixed as seed rows. |
 | 2026-10-04 | UI Run A merged (8 commits, `--no-ff`): B1–B4 fixed, phone strip, one text box + "Reads as", readable meanings, "Hide rude words", states, mode names. A-3, A-4, A-5 pass. |
 | 2026-10-04 | Design proposal in (`plan/design/`). V1 UI work list added (§5). Romanizer for the read-back line done. |
 | 2026-10-04 | 2.4 done. Service-worker registration bug fixed: offline now works (A-2, A-12 pass). |

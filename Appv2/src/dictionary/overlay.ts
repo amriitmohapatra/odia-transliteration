@@ -34,6 +34,10 @@
  */
 
 import { canonical } from '@odia/core/normalize';
+import { parseGlosses, type Glosses } from '@odia/core';
+// Owner meanings (core/data/glosses.tsv): shown first, where the dictionary's
+// first sense misleads today. Small, so bundled with the app, not lazy.
+import glossesTsv from '../../../core/data/glosses.tsv?raw';
 
 import { inflate } from './pako-inflate.js';
 import './overlay.css';
@@ -312,7 +316,24 @@ const MODERN_LABEL: Record<string, string> = {
  * has false positives that a parent sees first (KEMITI, "how", came out as
  * "English: committee", audit B5), and there is no confidence score to keep
  * only the sure ones, so such words fall through to the dictionary. */
+/* Parsed once. A bad row throws in the unit test (Appv2/test/glosses.test.ts),
+ * which is where it must fail; at runtime it must never take the app down. */
+const OWNER: Glosses = (() => {
+  try {
+    return parseGlosses(glossesTsv, 'core/data/glosses.tsv');
+  } catch (error) {
+    console.error(error);
+    return parseGlosses('');
+  }
+})();
+
+function ownerGloss(word: string): { meaning: string; status: string } | undefined {
+  return OWNER.get(canonical(word));
+}
+
 function chipFor(word: string): string | null {
+  const own = ownerGloss(word);
+  if (own) return tidyGloss(own.meaning, false);
   const m = modernChip(lookupModern(word));
   if (m) return m;
   const entry = lookup(word);
@@ -485,7 +506,8 @@ function entryBlock(word: string, num: number | null, entry: Entry | null, moder
 
   const tag = document.createElement('span');
   tag.className = 'dict-tag';
-  if (!entry && !modern) {
+  const own = ownerGloss(word);
+  if (!entry && !modern && !own) {
     tag.textContent = NO_ENTRY;
     tag.classList.add('dict-tag-none');
   } else if (entry && entry.how === 'stem') {
@@ -495,6 +517,27 @@ function entryBlock(word: string, num: number | null, entry: Entry | null, moder
   }
   if (tag.textContent) h.appendChild(tag);
   block.appendChild(h);
+
+  if (own) {
+    const obox = document.createElement('div');
+    obox.className = 'dict-modern dict-owner';
+    const row = document.createElement('div');
+    row.className = 'dict-modern-row';
+    const lab = document.createElement('span');
+    lab.className = 'dict-modern-tag dict-modern-tag-owner';
+    lab.textContent = 'meaning';
+    lab.title =
+      own.status === 'owner'
+        ? 'Meaning set by the project owner (core/data/glosses.tsv)'
+        : 'Suggested meaning, not yet checked by the project owner';
+    const val = document.createElement('span');
+    val.className = 'dict-modern-gloss';
+    val.textContent = own.meaning + (own.status === 'seed' ? ' (suggested, not yet checked)' : '');
+    row.appendChild(lab);
+    row.appendChild(val);
+    obox.appendChild(row);
+    block.appendChild(obox);
+  }
 
   if (modern && modern.lines.length) {
     const mbox = document.createElement('div');
