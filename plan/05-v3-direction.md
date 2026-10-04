@@ -133,12 +133,12 @@ The repository audit (`research/2026-10-04/06-repo-audit.md`) recommends **one V
 that merges `web/` and `Appv2/`, with the dictionary loaded as a separate cached file**.
 Four problems block a direct deploy of the current files:
 
-| Problem | Where | Fix |
-|---|---|---|
-| Two service workers on one site delete each other's cache. | `web/vite.config.ts:142-152`, same code in `Appv2/` | One app, one service worker. |
-| The dictionary is 8.6 MB of base64 inside the HTML. It only works in the single-file build. It finds the page by CSS class names, so a rename breaks it with no error. | `Odia_Sanskrit_Appv2/build/` | Make the dictionary a normal module of the app with a separate data file. |
-| No Odia font is bundled. A computer without an Odia font shows boxes. | `web/src/style.css:41` | Bundle Noto Sans Oriya (OFL). |
-| In the suggestion bar, Space always picks the Odia word. An English word needs Escape first, and `learn()` never records it. | `web/src/inline.ts:125,170-174` | Keep the typed English word in the bar. |
+| Problem | Where | Fix | Status |
+|---|---|---|---|
+| Two service workers on one site delete each other's cache. | `web/vite.config.ts:142-152`, same code in `Appv2/` | One app, one service worker. | **V0 done 2026-10-04:** each worker owns only its own caches. V1 still merges to one worker. |
+| The dictionary is 8.6 MB of base64 inside the HTML. It only works in the single-file build. It finds the page by CSS class names, so a rename breaks it with no error. | `Odia_Sanskrit_Appv2/build/` | Make the dictionary a normal module of the app with a separate data file. | **Moved to V1** (2026-10-04). V1 merges the apps, so doing it now means doing it twice. |
+| No Odia font is bundled. A computer without an Odia font shows boxes. | `web/src/style.css:41` | Bundle Noto Sans Oriya (OFL). | **V0 done 2026-10-04.** |
+| In the suggestion bar, Space always picks the Odia word. An English word needs Escape first, and `learn()` never records it. | `web/src/inline.ts:125,170-174` | Keep the typed English word in the bar. | **V0 done 2026-10-04.** Root cause was in `core/src/rank.ts`: a taught English word was dropped and re-added last. Fixed too. |
 
 Hosting cost: Vercel's free "Hobby" plan is for personal, non-commercial use. A public
 product needs the Pro plan (about US$20 per month) **(unverified price)**.
@@ -459,8 +459,8 @@ Each stage is useful alone. The owner approves each stage before it starts.
 
 | Stage | Content | Network | Needs decisions |
 |---|---|---|---|
-| **V0 Clean-up** | Fix the four blockers in §4. Record dictionary provenance. Update `CLAUDE.md` (done). `j` → ଯ (done). | none | D-10 |
-| **V1 Web app on Vercel** | One merged app (Odia, Sanskrit, dictionary). Family-safe filter. Romanized read-back line. Colloquial and guard tests. | static only | D-1, D-8 |
+| **V0 Clean-up** — **done 2026-10-04** except D-10 | Service-worker caches, English word in the bar (and the `rank()` bug behind it), bundled font, dictionary provenance (`Odia_Sanskrit_Appv2/PROVENANCE.md`), `CLAUDE.md`, `j` → ଯ. The dictionary module moved to V1. | none | D-10 |
+| **V1 Web app on Vercel** | One merged app (Odia, Sanskrit, dictionary). The dictionary becomes a module of the app, with its data as a separate cached file. Family-safe filter. Romanized read-back line. Colloquial and guard tests. | static only | D-1, D-8 |
 | **V2 Better words** | IndicXlit lexicon fill. Bigram ranking. Phrase table. New modern glosses. Hindi/Urdu layer. | none | D-5, D-6 |
 | **V3 Assist layer** | `/api/speak`, `/api/listen`, `/api/translate`, behind switches. | opt-in | D-2, D-3, D-4 |
 | **V4 Lens** | Browser extension, then web-app camera and screenshot input. | opt-in for translation | D-7 |

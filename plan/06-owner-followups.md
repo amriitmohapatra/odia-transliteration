@@ -16,6 +16,7 @@ to the owner. Claude marks each item done here, with the date, when it is done.
 |---|---|---|---|
 | A-1 | Rebuild the cheat-sheet PDFs. Both `.tex` files changed for D-12 (`j` → ଯ). The PDFs in `docs/` are older than the `.tex` files. | `cd docs && lualatex romanization-reference.tex` (twice), then the same for `romanization-reference-v2.tex`. Needs the macOS font Oriya Sangam MN. | 2026-10-04 |
 | A-2 | Rebuild the single-file apps in `docs/` so they carry D-12. The app the parents use (`Odia_Sanskrit_Appv2/odia-app-sanskrit-v2.html`, default mode) already has the `j` → ଯ option. `docs/odia-app.html` does not. | `npm run build:app`, then the Appv2 and dictionary builds (see `Appv2/README.md`, `Odia_Sanskrit_Appv2/README.md`). The V1 Vercel build may replace this step. | 2026-10-04 |
+| A-3 | Run the WebKit (Safari engine) checks. This environment has only Chromium. The V0 changes (caret bar, font, service worker) passed in Chromium. | `python3 tools/eval/webkit-check.py` and `python3 Appv2/eval/webkit-sanskrit.py` (need `pip install playwright` and `playwright install webkit`) | 2026-10-04 |
 
 ## B. Five-minute checks (any device)
 
@@ -45,9 +46,11 @@ to the owner. Claude marks each item done here, with the date, when it is done.
 | D-10 | Public or private product. If public: a new repository without `tools/build-data/webcorpus/` (it stays in git history otherwise), and a decision on the word counts taken from that corpus (brief §12) | Before the first deploy |
 | — | Install the Claude Code skills for Android and iOS work | After the Vercel version is done (owner's instruction, 2026-10-04) |
 
-## E. Other sessions
+## E. Other sessions and their branches
 
-| # | Item | Status 2026-10-04 |
+Checked 2026-10-04 against `claude/festive-hawking-ie6xyt` (this plan's branch).
+
+| # | Item | Status |
 |---|---|---|
-| E-1 | Session `session_0186HVx998d8ubjjxiDMfM9p` ("Let typed j reach ଯ") waits for "push / tune first / drop it". Its lexicon `j`-keys make `je` → ଯେ rank 1. Recommendation: reply "push", then combine its work with D-12 after E-2 lands. | Waiting for owner |
-| E-2 | Session `session_01GvEiBCo7MZVHuKSH5B9PK9` ("Make common-lexicon rebuilds deterministic") | Running |
+| E-1 | Session `session_0186HVx998d8ubjjxiDMfM9p`, branch `claude/zealous-brown-hpenqp` ("Offer ଯ for word-initial j"). It adds `j`-keys to the lexicon, so `je` → ଯେ is rank 1. | **Pushed.** Three problems: (1) it **breaks the Appv2 rule build**: `gen-rules --check` fails with "duplicate option after merge" on delta S8, because it adds the core option without retiring S8. (2) It conflicts with this branch in `core/rules/symbols.toml` (weight 0.4 against 0.6) and both cheat sheets. (3) It conflicts with E-2 in all four lexicon files and the builder. Recommendation: do not merge it as is. After E-2 lands, re-apply only its builder change (the `j`-keys) on top of E-2 and this branch, then rebuild and measure. |
+| E-2 | Session `session_01GvEiBCo7MZVHuKSH5B9PK9`, branch `claude/jolly-dijkstra-4p8v4w` ("Make the common lexicon build reproducible") | **Pushed.** Merges cleanly with this branch. Appv2 rule check passes. Measured alone: everyday **casual top-1 drops 80.4% → 78.3%** (one word of 46): `raja` now gives ରଜ first (score 3.83) and ରାଜା second (3.81). Other rows unchanged. Combined with this branch: same gains as D-12 alone, 132/132 tests, all Appv2 checks pass. Decide whether ରଜ before ରାଜା is acceptable before merging (ରଜ is also the Raja festival). |
