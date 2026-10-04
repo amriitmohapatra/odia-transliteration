@@ -120,6 +120,11 @@ export interface RankWeights {
   user: number;
   /** Owner preferences (data/preferences.tsv). Kept below one user pick. */
   pref: number;
+  /**
+   * Context from the previous word (data/bigrams.tsv), see rank.ts. Optional in
+   * symbols.toml; absent or 0 means no context term at all.
+   */
+  bigram?: number;
 }
 
 /**
@@ -252,6 +257,26 @@ export interface Unigrams {
   logfreq(odiaWord: string): number;
 }
 
+/**
+ * Word-pair counts, used by `rank.ts` to prefer a likely next word when the
+ * previous word is known. See bigrams.ts for the file format.
+ */
+export interface Bigrams {
+  /** Number of (prev, next) pairs loaded. */
+  readonly size: number;
+  /**
+   * ln(1 + count(prev, next)) / ln(1 + total(prev)), in (0, 1] for a known
+   * pair and 0 for an unknown one. Both words canonical.
+   */
+  score(prev: string, next: string): number;
+}
+
+/** What the engine may know about a word's surroundings. */
+export interface WordContext {
+  /** The previous word of the sentence, in Odia (canonicalised by the engine). */
+  prev?: string;
+}
+
 /* ------------------------------------------------------------------ *
  * User learning
  * ------------------------------------------------------------------ */
@@ -284,4 +309,6 @@ export interface EngineConfig {
   familySafe?: boolean;
   /** Content filter level; overrides `familySafe`. 'kids' cannot be lowered at run time. */
   filter?: FilterLevel;
+  /** Word-pair counts for context ranking. Absent means no context term. */
+  bigrams?: Bigrams;
 }

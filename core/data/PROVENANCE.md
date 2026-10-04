@@ -227,6 +227,68 @@ gave byte-identical files.
 
 Precomposed U+0B5C / U+0B5D in all four files: 0.
 
+## Word pairs (bigrams) for context ranking
+
+Added 2026-10-04 (V2.2) by `tools/build-data/build_bigrams.py` (Python 3 stdlib).
+The ranker uses them when the previous word of a sentence is known (formula in
+`core/src/rank.ts`, weight `[weights] bigram` in `core/rules/symbols.toml`).
+
+**Source.** The raw text of the web corpus in `tools/build-data/webcorpus/`, the
+same text the unigram counts in `webfreq.tsv` were counted from
+(`PROVENANCE-webcorpus.md`), minus one lane:
+
+| Lane | Raw text (sha256) | Pair tokens |
+|---|---|---:|
+| wikipedia | `wikipedia-raw.jsonl.gz` (`3cb988fb5211c184aff6af47a9a4e16123ec24b9bc567cbd6a16d5dfff4a2d9a`) | 3,984,147 |
+| literature | `raw-lit.jsonl` (`cd63c50b8d0dfebe18d1c6dd09f7fc74d3a171fcb15f940578a8edd16c4dcfa9`) | 2,091,085 |
+| news | `news-raw.jsonl` (`227b544082d7a6f554145621375d173d8b5b57c3a1e1c3561ec2d2beed9a891c`) | 338,686 |
+| social | `social-politicians-raw.txt` (`5e2d813a68cb742b5ec6e3e59be3ab78ad8fe8f842b7278ecd8807cda7e756b8`) | 191,462 |
+| gov | `gov-and-orgs-corpus.txt` (`f2f88829a9f0b673655d93c0fc377a9ac5e69aa841bd634ca0371e8927c4e257`) | 47,930 |
+| archive_ocr | not in the repository (`raw-archive-books.jsonl`, 224 MB, owner's Mac only) | 0 |
+
+So the pairs cover the born-digital lanes only (6,653,310 pair tokens), not the
+OCR books that are about half of `webfreq.tsv`'s tokens.
+
+**Method.** Each lane is tokenised with that lane's own tokeniser, imported from its
+script (`count_freq.py`, `harvest_lit.py`, `harvest_news.py`, `fetch_lib.py`,
+`analyze_gov.py`), and every token then passes `merge_all.py`'s key filter (NFC,
+Odia block only, at least two code points, a base letter, no Odia digit) and
+`canonical()`. So every word of a pair is a word of `webfreq.tsv`. Two tokens form a
+pair only when the text between them is spaces or tabs; a dropped token, punctuation,
+a line break or a digit ends the chain (the engine applies the same rule in
+`transliterate()`). Two approximations: `news-raw.jsonl` stores each page as
+space-joined Odia words without punctuation, so news pairs can cross a sentence end;
+and it keeps the site chrome that `news-freq.tsv` stripped, so a pair on more than 30%
+of one host's pages (hosts with at least 5 pages) is not counted for that host.
+
+**Counts.** 2,996,224 distinct pairs, 368,936 distinct first words. A `prev * total`
+row in each file holds every pair token that starts with `prev`, counted before any
+pruning, so a pruned file scores a pair exactly as the full file does.
+
+| File | Kept | Pairs | `*` rows | Size | sha256 |
+|---|---|---:|---:|---:|---|
+| `core/data/bigrams.tsv` | count ≥ 3 | 354,943 | 43,022 | 13,859,643 B | `8dc767a68731f5f6ef08f7c8ed40328083ad8453a03b3efe2d2e157792a85f20` |
+| `core/data/bigrams-web.tsv` | both words in `lexicon-web.tsv` or `unigrams-web.tsv`; highest counts first within 1,500,000 B (lowest count kept: 14) | 37,690 | 7,142 | 1,499,845 B | `2313996f6a347a059725d08c6dd383370beef530d448a6a8f91299bd05776fcd` |
+
+Count ≥ 2 would keep 945,299 pairs in 37.9 MB; pairs seen once or twice are mostly
+names and one-off phrases. The web file depends on `lexicon-web.tsv`
+(`991df800…`) and `unigrams-web.tsv` (`cf69682c…`): rebuild it after either changes.
+Two runs (default and `PYTHONHASHSEED=777`) gave byte-identical files. Precomposed
+U+0B5C / U+0B5D in both files: 0 (asserted on write, and `parseBigrams` canonicalises
+on read).
+
+**Dev split.** `build_bigrams.py --holdout DIR` leaves every 20th literature, news and
+social document out of the counts and writes them to `DIR/dev-source.txt`. The weight
+was tuned on that split with `tools/eval/context.ts`, never on the held-out
+Aksharantar set. Nothing from it is committed.
+
+**Licence.** Same status as the shipped word counts in `webfreq.tsv` / `unigrams.tsv`
+(see `PROVENANCE-webcorpus.md` and decision D-10): integer counts over word pairs, no
+source text, from Wikipedia/Wikisource (CC BY-SA, share-alike: a licence decision is
+open), news, blogs, x.com and government pages (no explicit licence). Pair counts
+reveal more of the source text than single-word counts (a two-word window), which is
+worth weighing in that same decision.
+
 ## Licence note
 
 Aksharantar is released by AI4Bharat under CC-BY 4.0 / CC0 and is redistributable

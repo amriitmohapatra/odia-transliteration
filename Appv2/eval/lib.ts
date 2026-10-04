@@ -21,14 +21,16 @@ import { fileURLToPath } from 'node:url';
 import {
   Engine,
   loadRules,
+  emptyBigrams,
   emptyLexicon,
   emptyUnigrams,
+  parseBigrams,
   parseLexicon,
   parseUnigrams,
   parseLabels,
   parsePreferences,
 } from '../../core/src/index.js';
-import type { Lexicon, Unigrams } from '../../core/src/types.js';
+import type { Bigrams, Lexicon, Unigrams } from '../../core/src/types.js';
 
 import { mergeLexicons, mergeUnigrams } from '../src/compose.js';
 import { PROFILES, type AssetKey, type ProfileId } from '../src/profiles.js';
@@ -53,6 +55,7 @@ const PATHS: Record<AssetKey, string> = {
   sanskritLexicon: resolve(APPV2, 'data/sanskrit-lexicon.tsv'),
   coreUnigrams: resolve(ROOT, 'core/data/unigrams.tsv'),
   sanskritUnigrams: resolve(APPV2, 'data/sanskrit-unigrams.tsv'),
+  coreBigrams: resolve(ROOT, 'core/data/bigrams.tsv'),
   preferences: resolve(ROOT, 'core/data/preferences.tsv'),
   labels: resolve(ROOT, 'core/data/labels.tsv'),
 };
@@ -92,6 +95,16 @@ function unigrams(key: AssetKey): Unigrams {
   return parsed;
 }
 
+let bigramCache: Bigrams | undefined;
+
+function bigrams(): Bigrams {
+  if (bigramCache === undefined) {
+    const text = raw('coreBigrams');
+    bigramCache = text === undefined ? emptyBigrams() : parseBigrams(text, PATHS.coreBigrams);
+  }
+  return bigramCache;
+}
+
 export interface EvalEngineOptions {
   /** Omit the lexicons, to measure what the RULES alone can do. */
   rulesOnly?: boolean;
@@ -119,6 +132,8 @@ export function engineFor(id: ProfileId, opts: EvalEngineOptions = {}): Engine {
           })),
         ),
     unigrams: opts.rulesOnly ? emptyUnigrams() : mergeUnigrams(profile.unigrams.map(unigrams)),
+    // The app loads word pairs for every profile (context in transliterate()).
+    bigrams: opts.rulesOnly ? undefined : bigrams(),
     // Same owner data the app loads, so evals measure what users get.
     preferences: opts.rulesOnly ? undefined : parsePreferences(raw('preferences') ?? ''),
     labels: parseLabels(raw('labels') ?? ''),

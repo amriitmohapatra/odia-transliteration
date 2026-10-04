@@ -5,6 +5,24 @@
  *         + weights.freq * logfreq(word)
  *         + weights.user * log(1 + userCount)
  *         + weights.pref * prefWeight          (owner preference, data/preferences.tsv)
+ *         + weights.bigram * bigram(prev, word) (context, data/bigrams.tsv)
+ *
+ * The context term, when the previous word `prev` of the sentence is known:
+ *
+ *   bigram(prev, word) = ln(1 + count(prev, word)) / ln(1 + total(prev))
+ *
+ * `count(prev, word)` is how often `word` directly followed `prev` in the
+ * corpus; `total(prev)` is how many pair tokens start with `prev` at all, i.e.
+ * how often anything followed it. The ratio is a log-scaled conditional: 1
+ * when every occurrence of `prev` was followed by `word`, near 0 when `word`
+ * followed it once among thousands, and 0 for a pair never seen. It never
+ * adds a candidate, only re-scores the ones rules and lexicon produced, so the
+ * content filter and the reachability floor work as before.
+ *
+ * With no previous word, no bigram data, or `[weights] bigram` absent or 0,
+ * the term is skipped entirely (not added as 0), so the scores are bit for bit
+ * the scores of the engine without context. core/test/bigrams.test.ts checks
+ * that.
  *
  * `ruleScore` and `lexScore` are each 0-1 and are ADDED rather than maxed.
  * That is the whole point: a spelling the segmenter produced *and* the lexicon
@@ -39,6 +57,11 @@ export interface RankInput {
    */
   isBlocked?: (word: string, vouched: { user: boolean; pref: boolean }) => boolean;
   unigrams: Unigrams;
+  /**
+   * The context term for a canonical candidate, 0..1 (see the header), present
+   * only when the previous word is known and bigram data is loaded.
+   */
+  bigram?: (word: string) => number;
   weights: RankWeights;
   /** Maximum ranked candidates before the verbatim token is appended. */
   topk: number;
@@ -98,20 +121,29 @@ export function rank(input: RankInput): Candidate[] {
     for (const [word, weight] of Object.entries(input.prefWeights)) bump(word, 'pref', weight);
   }
 
+  const bigramWeight = input.weights.bigram ?? 0;
+  const bigram = bigramWeight > 0 ? input.bigram : undefined;
+
   const scored: (Candidate & { fromRules: boolean })[] = [];
   for (const [text, sources] of evidence) {
     // Before the slice, so a dropped word frees its slot for the next one.
     if (input.isBlocked !== undefined && input.isBlocked(text, { user: sources.user > 0, pref: sources.pref > 0 })) {
       continue;
     }
+    let score =
+      input.weights.rule * (sources.rule + sources.lex) +
+      input.weights.freq * input.unigrams.logfreq(text) +
+      input.weights.user * Math.log(1 + sources.user) +
+      // Guarded so callers built before `pref` existed still score as before.
+      (sources.pref > 0 ? input.weights.pref * sources.pref : 0);
+    // Added only when non-zero, so a list without context is bit-identical.
+    if (bigram !== undefined) {
+      const context = bigram(text);
+      if (context > 0) score += bigramWeight * context;
+    }
     scored.push({
       text,
-      score:
-        input.weights.rule * (sources.rule + sources.lex) +
-        input.weights.freq * input.unigrams.logfreq(text) +
-        input.weights.user * Math.log(1 + sources.user) +
-        // Guarded so callers built before `pref` existed still score as before.
-        (sources.pref > 0 ? input.weights.pref * sources.pref : 0),
+      score,
       source: sourceOf(sources),
       fromRules: sources.rule > 0,
     });
