@@ -32,7 +32,7 @@ whenever a task changes status. Last updated: 2026-10-04 (V1 in progress).
 | Stage | Content | Status |
 |---|---|---|
 | V0 Clean-up | Cache scoping, English word in the bar, `rank()` learning bug, bundled font, dictionary provenance, `j` → ଯ | **Done** 2026-10-04 (D-10 open) |
-| **V1 Web app on Vercel** | One merged app; dictionary as a module; owner preferences; family-safe filter; romanised read-back; colloquial tests; UI/UX pass; PWA + `vercel.json`; CI | **Code done** 2026-10-04. Acceptance: A-1–A-10, A-12 pass in Chromium; A-11 (Safari) and phones are owner tests. Then owner: D-10, deploy |
+| **V1 Web app on Vercel** | One merged app; dictionary as a module; owner preferences; family-safe filter; romanised read-back; colloquial tests; UI/UX pass; PWA + `vercel.json`; CI | **Live** 2026-10-04: adult `https://odia-transliteration-web.vercel.app/`, kids `https://odia-phonetic-kids.vercel.app/` (two Vercel projects, root directory = repository root). Acceptance: A-1–A-10, A-12 pass in Chromium; A-11 (Safari) and phones are owner tests (`plan/06`) |
 | V2 Better words | See §3b. Owner gloss file pulled forward into V1 (done) | **Started** 2026-10-04 |
 | V3 Assist layer | `/api/speak`, `/api/listen`, `/api/translate` behind switches | Not started |
 | V4 Lens | Browser extension, then camera/screenshot input | Not started |
@@ -75,7 +75,7 @@ layer, `ARCHITECTURE.md` §7). Two things are set up now so V3 starts safely:
 | # | Task | Status |
 |---|---|---|
 | 3.1 | `.env*` in `.gitignore` | **Done** |
-| 3.2 | `vercel.json`: build, output, `sw.js` headers | **Done** (deploy itself is the owner's action, after D-10) |
+| 3.2 | `vercel.json`: build, output, `sw.js` headers | **Done**. Deployed by the owner 2026-10-04 (two projects: adult, kids) |
 
 ### 3.4 Quality, CI and release
 
@@ -83,8 +83,8 @@ layer, `ARCHITECTURE.md` §7). Two things are set up now so V3 starts safely:
 |---|---|---|
 | 4.1 | Root `npm test` runs core, Appv2 and the fallback-page tests | **Done** |
 | 4.2 | GitHub Actions: tests, `gen-rules --check`, evals with delta on every push | **Done** (`.github/workflows/ci.yml`) |
-| 4.3 | Release = git tag + 5-line note (changes, numbers vs baseline, not tested, limits) | From first deploy |
-| 4.4 | Rollback = promote the previous Vercel deployment | From first deploy |
+| 4.3 | Release = git tag + 5-line note (changes, numbers vs baseline, not tested, limits) | To do (first deploy 2026-10-04 has no tag yet) |
+| 4.4 | Rollback = promote the previous Vercel deployment | Available since the first deploy (2026-10-04) |
 | 4.5 | A rule for when `tools/eval/baseline.json` may be refreshed: only in its own commit, with the reason | To do |
 | 4.6 | Browser checks in the repo: `Appv2/eval/browser/` (regress, gloss-check, report-check, freeze) | **Done** |
 | 4.7 | Run the browser checks in CI (needs a Playwright + Chromium install step) | To do |
@@ -194,6 +194,7 @@ Agents do not commit; the lead reviews, measures and commits.
 
 | Date | Change |
 |---|---|
+| 2026-10-04 | PR #3 merged to `main`. **V1 live on Vercel** (adult and kids). First build failed: Vercel had picked `web` as the root directory; fixed by setting it to the repository root. |
 | 2026-10-04 | Browser checks moved into the repo (4.6). Docs pointers updated (CLAUDE.md, AGENTS.md, docs/README.md). |
 | 2026-10-04 | V2.1–V2.4 merged: j-keys, word-pair context (weight 1.2, wired into the caret bar), long-a weight, word origins. |
 | 2026-10-04 | `main` (PR #1) merged in. Owner decisions applied: meanings (C-7), report email, D-10 public site. Owner's offensive lists labelled with keyed exemptions; kids edition. |

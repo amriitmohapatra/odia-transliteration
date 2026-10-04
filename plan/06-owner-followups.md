@@ -16,6 +16,11 @@ to the owner. Claude marks each item done here, with the date, when it is done.
 checks (A-4, B, phone tests) only after the app is complete and merged to `main`. Do not
 ask for them before that.
 
+**Now due (2026-10-04):** V1 is merged to `main` (PR #3) and live on Vercel: adult
+`https://odia-transliteration-web.vercel.app/`, kids `https://odia-phonetic-kids.vercel.app/`.
+Use these addresses for A-3, A-4 and B. The cloud environment cannot open `*.vercel.app`
+(its network policy blocks the host), so Claude cannot test the live sites.
+
 | # | Item | How | Since |
 |---|---|---|---|
 | A-1 | Rebuild the cheat-sheet PDFs. Both `.tex` files changed for D-12 (`j` → ଯ). The PDFs in `docs/` are older than the `.tex` files. | `cd docs && lualatex romanization-reference.tex` (twice), then the same for `romanization-reference-v2.tex`. Needs the macOS font Oriya Sangam MN. | 2026-10-04 |
@@ -55,7 +60,7 @@ ask for them before that.
 | D-10 | **Decided 2026-10-04: public product.** Recorded as: the website is public; the GitHub repository stays private until the owner says otherwise. A public site needs no public repository. If the code is to be public too: publish from a fresh repository without `tools/build-data/webcorpus/` (it stays in git history otherwise), and decide about the word counts taken from that corpus (brief §12). Since V2.2 the app also ships word-PAIR counts from the same corpus (two-word windows, slightly more of the source text than single-word counts): the same decision covers them. | Ask before any repository becomes public |
 | ~~—~~ | ~~Where "Wrong word? Report it" sends reports~~ | **Decided 2026-10-04:** to the owner's email (set in `Appv2/src/main.ts`, joined at run time) |
 | — | **Public repository** (owner, 2026-10-04): when the owner says the project is finished, plan and create a public code repository. Steps: (1) a fresh repository that never contained `tools/build-data/webcorpus/` (deleting it here is not enough: it stays in git history); (2) decide about the word and word-pair counts derived from that corpus (keep, rebuild from CC0/CC-BY sources such as IndicCorp v2, or drop); (3) check every row of the licence table in `CLAUDE.md` (open items: OdiaNLP pairs, wordfreq, CMUdict, indic-dict packaging); (4) decide whether the report email stays in the public code. | When the owner says "project finished" |
-| — | Install the Claude Code skills for Android and iOS work | After the Vercel version is done (owner's instruction, 2026-10-04) |
+| — | Install the Claude Code skills for Android and iOS work | **Asked 2026-10-04** (Vercel version is live). Waiting for the owner's answer. |
 
 ## E. Other sessions and their branches
 
@@ -63,5 +68,5 @@ Checked 2026-10-04 against `claude/festive-hawking-ie6xyt` (this plan's branch).
 
 | # | Item | Status |
 |---|---|---|
-| E-1 | Session `session_0186HVx998d8ubjjxiDMfM9p`, branch `claude/zealous-brown-hpenqp` ("Offer ଯ for word-initial j"). It adds `j`-keys to the lexicon, so `je` → ଯେ is rank 1. **It opened PR amriitmohapatra/odia-transliteration#2.** | **Do not merge PR #2 as it is.** (1) It breaks the Appv2 rule build (`gen-rules --check`: "duplicate option after merge" on delta S8); CI on that branch would show it. (2) It conflicts with this branch in `core/rules/symbols.toml` (weight 0.4 vs 0.6) and both cheat sheets. (3) It conflicts with E-2 in all four lexicon files and the builder. Plan: merge E-2 first, then re-apply only its builder change (the `j`-keys) on top, rebuild, measure, and close PR #2. |
+| E-1 | Session `session_0186HVx998d8ubjjxiDMfM9p`, branch `claude/zealous-brown-hpenqp` ("Offer ଯ for word-initial j"). It adds `j`-keys to the lexicon, so `je` → ଯେ is rank 1. **It opened PR amriitmohapatra/odia-transliteration#2.** | **Close PR #2 without merging (owner action; still open 2026-10-04).** Its `j`-keys are on `main` since PR #3. (1) It breaks the Appv2 rule build (`gen-rules --check`: "duplicate option after merge" on delta S8); CI on that branch would show it. (2) It conflicts with this branch in `core/rules/symbols.toml` (weight 0.4 vs 0.6) and both cheat sheets. (3) It conflicts with E-2 in all four lexicon files and the builder. Plan: merge E-2 first, then re-apply only its builder change (the `j`-keys) on top, rebuild, measure, and close PR #2. |
 | E-2 | Session `session_01GvEiBCo7MZVHuKSH5B9PK9`, branch `claude/jolly-dijkstra-4p8v4w` ("Make the common lexicon build reproducible") | **Merged to `main` by the owner (PR #1), and `main` merged into this branch 2026-10-04: all metrics unchanged.** Earlier: Merges cleanly with this branch. Its one changed result, `raja` giving the Raja festival first, now matches the owner's decision (2026-10-04) and the eval override accepts it, so it is no longer a regression. Ready to merge when the owner wants; then re-apply E-1's `j`-keys on top. |

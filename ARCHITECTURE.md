@@ -206,6 +206,11 @@ and `dictionary/overlay.css` together.
 ## 6. Hosting and deployment (V1)
 
 - Vercel serves `Appv2/dist/` as static files. No server code runs in V1.
+- **Live since 2026-10-04:** adult `https://odia-transliteration-web.vercel.app/`, kids
+  `https://odia-phonetic-kids.vercel.app/`. Both projects deploy from `main`.
+- **Root Directory must be the repository root** (empty or `./`). Vercel may suggest `web`
+  because `web/` is a Vite project; with `web` the build fails ("Could not resolve
+  .../web/Appv2/vite.config.ts"). Leave the command overrides off so `vercel.json` applies.
 - `vercel.json` (repo root) sets the install and build commands, the output folder and
   headers (`sw.js` must not be cached long, so updates reach users).
 - Every push to a branch gets a Vercel preview address. The owner checks the preview.
