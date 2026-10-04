@@ -15,7 +15,7 @@ import { badgeElement, DOCK_QUERY, InlineCandidates } from './inline.js';
 // After style.css: the overlay's stylesheet overrides parts of the caret bar.
 import { meaningsOpen, setMeaningsOpen, startDictionary, type DictionaryState } from './dictionary/index.js';
 
-import { LocalStorageLearnStore } from '@odia/core';
+import { codepoints, LocalStorageLearnStore } from '@odia/core';
 import type { DigitMode, WordResult } from '@odia/core/types';
 
 import {
@@ -717,6 +717,65 @@ function choose(text: string): void {
   focusReadbackWord(index);
 }
 
+/* ------------------------------------------------------------------ *
+ * "Wrong word? Report it" (PLAN.md 2.6)
+ *
+ * No network call. The report is copied to the clipboard and an email draft
+ * opens with no recipient, so the user decides whether to send it and to whom.
+ * REPORT_EMAIL is empty on purpose: putting the owner's address in a public
+ * page is the owner's decision (plan/06-owner-followups.md).
+ * ------------------------------------------------------------------ */
+
+declare const __APP_VERSION__: string;
+const REPORT_EMAIL = '';
+const REPORT_COPIED = 'Report copied. Paste it in an email or a WhatsApp message to the app owner.';
+
+function reportText(): string | undefined {
+  const slot = openSlot;
+  if (!slot) return undefined;
+  const offered = [...pickerListEl.querySelectorAll('button.candidate .text')]
+    .map((el) => el.textContent ?? '')
+    .filter((t) => t.length > 0);
+  return [
+    'Odia Phonetic: wrong word report',
+    `Typed: ${slot.key}`,
+    `Shown: ${slot.was}   (${codepoints(slot.was)})`,
+    `Offered: ${offered.join(', ')}`,
+    `Mode: ${profileId}; Hide rude words: ${familySafeEl.checked ? 'on' : 'off'}`,
+    `App: ${__APP_VERSION__}`,
+    '',
+    'The word I wanted (English letters or Odia):',
+    '',
+  ].join('\n');
+}
+
+/** Same iOS rule as onCopy(): writeText is the first async step of the tap. */
+function onReport(): void {
+  const text = reportText();
+  if (text === undefined) return;
+  const done = (copied: boolean): void => {
+    if (copied) toast(REPORT_COPIED);
+    openReportMail(text);
+  };
+  const clipboard = navigator.clipboard;
+  if (clipboard && typeof clipboard.writeText === 'function') {
+    clipboard.writeText(text).then(
+      () => done(true),
+      () => done(legacyCopy(text)),
+    );
+    return;
+  }
+  done(legacyCopy(text));
+}
+
+function openReportMail(body: string): void {
+  const link = document.createElement('a');
+  link.href =
+    `mailto:${REPORT_EMAIL}?subject=${encodeURIComponent('Odia Phonetic: wrong word')}` +
+    `&body=${encodeURIComponent(body)}`;
+  link.click();
+}
+
 function closePicker(restoreFocus = true): void {
   pickerEl.hidden = true;
   document.documentElement.style.overflow = '';
@@ -1307,6 +1366,7 @@ function bindEvents(): void {
     void onProfileChange();
   });
 
+  must<HTMLButtonElement>('picker-report').addEventListener('click', onReport);
   for (const closer of document.querySelectorAll('[data-picker-close]')) {
     closer.addEventListener('click', () => closePicker());
   }

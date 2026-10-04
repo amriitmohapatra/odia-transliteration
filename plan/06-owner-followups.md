@@ -46,6 +46,7 @@ to the owner. Claude marks each item done here, with the date, when it is done.
 |---|---|---|
 | D-6 | Nukta policy for ଜ / ଫ in Urdu and English loans | After C-5 |
 | D-10 | Public or private product. If public: a new repository without `tools/build-data/webcorpus/` (it stays in git history otherwise), and a decision on the word counts taken from that corpus (brief §12) | Before the first deploy |
+| — | Where "Wrong word? Report it" sends reports: today the email draft has no recipient. Set `REPORT_EMAIL` in `Appv2/src/main.ts` to an address you are happy to publish, or keep it empty (people choose whom to send to). | Before the first public deploy |
 | — | Install the Claude Code skills for Android and iOS work | After the Vercel version is done (owner's instruction, 2026-10-04) |
 
 ## E. Other sessions and their branches

@@ -15,12 +15,28 @@
  *     npx vite build --config Appv2/vite.config.ts
  */
 
+import { execSync } from 'node:child_process';
 import { existsSync, mkdirSync, readFileSync, readdirSync, statSync, writeFileSync } from 'node:fs';
 import { join, relative, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { defineConfig, type Plugin } from 'vite';
 
 const appDir = fileURLToPath(new URL('.', import.meta.url));
+
+/** "V1 <commit>" for the "Report this word" text: Vercel's commit, else git, else "dev". */
+function appVersion(): string {
+  let sha = process.env.VERCEL_GIT_COMMIT_SHA?.slice(0, 7);
+  if (!sha) {
+    try {
+      sha = execSync('git rev-parse --short HEAD', { cwd: appDir, stdio: ['ignore', 'pipe', 'ignore'] })
+        .toString()
+        .trim();
+    } catch {
+      sha = 'dev';
+    }
+  }
+  return `V1 ${sha}`;
+}
 const repoRoot = resolve(appDir, '..');
 const coreDir = resolve(repoRoot, 'core');
 
@@ -251,6 +267,7 @@ export default defineConfig({
   },
   define: {
     __CORE_MODE__: JSON.stringify(coreMode),
+    __APP_VERSION__: JSON.stringify(appVersion()),
   },
   build: {
     outDir: legacy ? 'dist-legacy' : singleFile ? 'dist-single' : 'dist',

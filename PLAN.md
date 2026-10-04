@@ -61,7 +61,7 @@ whenever a task changes status. Last updated: 2026-10-04 (V1 in progress).
 | 2.3 | Romanised read-back line under the output (copy of the eval romaniser) | **Done** (Run A: "Reads as" line, tap a word for alternatives) |
 | 2.4 | PWA: manifest, icons, Apple tags in `Appv2/` | **Done** |
 | 2.5 | UI/UX pass from the design proposal (§5) | **Done** — Run A (items 1–5, 8, mode names) and Run B (6 Share/Copy/Undo, 7 tokens + text size, 9 first-run card + Help, 10 desktop list + meanings column, 11 screen reader + keyboard). Open: M9 "Show full entry"; phone Meanings panel above the iOS keyboard |
-| 2.6 | "Report this word" button: copies word, output, code points, version; opens an email link. No network call. | To do (last V1 code item) |
+| 2.6 | "Report this word" button: copies word, output, code points, version; opens an email link. No network call. | **Done** — "Wrong word? Report it" in the Alternatives sheet; recipient empty until the owner decides (follow-up D) |
 
 ### 3.3 Backend
 
@@ -166,6 +166,7 @@ Agents do not commit; the lead reviews, measures and commits.
 
 | Date | Change |
 |---|---|
+| 2026-10-04 | 2.6 report button done. |
 | 2026-10-04 | UI Run B merged (6 commits): Share/Undo, tokens (70/70 contrast pairs pass), text size, first-run card + Help, desktop list + meanings column, screen-reader path. A-1, A-6, A-8, A-9, A-10 pass. |
 | 2026-10-04 | Owner meanings file (1.6) done: wrong meanings from the audit fixed as seed rows. |
 | 2026-10-04 | UI Run A merged (8 commits, `--no-ff`): B1–B4 fixed, phone strip, one text box + "Reads as", readable meanings, "Hide rude words", states, mode names. A-3, A-4, A-5 pass. |
