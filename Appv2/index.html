@@ -134,9 +134,18 @@
         -->
         <div id="palette" class="palette" aria-label="Insert a rare mark" hidden></div>
 
+        <!--
+          Share / Copy / Clear (proposal 3.10). On a phone with a share sheet
+          (navigator.share) "Share…" is the primary action and Copy the
+          secondary one; elsewhere "Copy Odia" is primary and Share is hidden.
+          main.ts layoutActions() decides. Sharing hands the text to the
+          phone's own share sheet: the user's action, not a network call.
+          #copy keeps its id (Playwright checks click it).
+        -->
         <div class="actions">
-          <button type="button" id="copy" class="btn btn-primary">Copy Odia</button>
-          <button type="button" id="clear" class="btn">Clear</button>
+          <button type="button" id="share" class="btn btn-primary btn-lg" hidden>Share&hellip;</button>
+          <button type="button" id="copy" class="btn btn-primary btn-lg">Copy Odia</button>
+          <button type="button" id="clear" class="btn btn-quiet">Clear</button>
         </div>
 
         <details class="guide">
@@ -478,7 +487,8 @@
       </div>
     </div>
 
-    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    <!-- One toast: a message, and for "Cleared" an Undo button (main.ts toast()). -->
+    <div id="toast" class="toast" role="status" aria-live="polite"><span id="toast-text"></span><button type="button" id="toast-action" class="toast-action" hidden></button></div>
 
     <script type="module" src="./src/main.ts"></script>
   </body>

@@ -430,6 +430,21 @@ textarea:focus {
   flex: 1 1 12rem;
 }
 
+/* Share / Copy: the primary action, 52px (proposal 4.4). */
+.btn-lg {
+  min-height: var(--tap-lg);
+}
+
+/* The actions row: Clear is quiet and keeps to its own width. */
+.actions .btn-quiet {
+  flex: none;
+  border-color: transparent;
+}
+
+.btn[hidden] {
+  display: none;
+}
+
 .btn-small {
   min-height: var(--tap);
   padding: 0 0.9rem;
@@ -787,6 +802,13 @@ code {
 }
 
 .toast {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  /* max-content: centred with left 50%, the box would otherwise wrap at half
+   * the screen width. */
+  width: max-content;
+  max-width: calc(100vw - 2rem);
   position: fixed;
   left: 50%;
   bottom: calc(1.5rem + env(safe-area-inset-bottom));
@@ -812,6 +834,34 @@ code {
 
 .toast.error {
   background: var(--warn);
+}
+
+/* "Cleared" carries an Undo button, so that toast takes taps. */
+.toast.show.has-action {
+  pointer-events: auto;
+  padding: 0.25rem 0.35rem 0.25rem 1.25rem;
+}
+
+.toast-action {
+  min-height: var(--tap);
+  min-width: var(--tap);
+  padding: 0 1rem;
+  border: 2px solid currentColor;
+  border-radius: 999px;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.toast-action[hidden] {
+  display: none;
+}
+
+.toast-action:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
 }
 
 /* Visually hidden but reachable: the clipboard fallback textarea has to be

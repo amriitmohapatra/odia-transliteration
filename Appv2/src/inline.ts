@@ -62,7 +62,7 @@ const MAX_SHOWN = 9;
  * Where the strip replaces the popover: phone widths, and touch-first screens
  * up to a small tablet. Matches the layout breakpoints in style.css.
  */
-const DOCK_QUERY = '(max-width: 699px), (pointer: coarse) and (max-width: 1023px)';
+export const DOCK_QUERY = '(max-width: 699px), (pointer: coarse) and (max-width: 1023px)';
 
 /** True when a candidate has no Odia in it: the typed English word, or one taught earlier. */
 const isLatin = (text: string): boolean => !/[\u0B00-\u0B7F]/.test(text);

@@ -11,7 +11,7 @@
  */
 
 import './style.css';
-import { badgeElement, InlineCandidates } from './inline.js';
+import { badgeElement, DOCK_QUERY, InlineCandidates } from './inline.js';
 // After style.css: the overlay's stylesheet overrides parts of the caret bar.
 import { startDictionary, type DictionaryState } from './dictionary/index.js';
 
@@ -50,6 +50,7 @@ const bannerReloadEl = must<HTMLButtonElement>('banner-reload');
 const offlineChipEl = must<HTMLSpanElement>('offline-chip');
 const offlineChipTextEl = must<HTMLSpanElement>('offline-chip-text');
 const copyEl = must<HTMLButtonElement>('copy');
+const shareEl = must<HTMLButtonElement>('share');
 const clearEl = must<HTMLButtonElement>('clear');
 const digitsEl = must<HTMLInputElement>('toggle-digits');
 const strictEl = must<HTMLInputElement>('toggle-strict');
@@ -64,6 +65,8 @@ const pickerEl = must<HTMLDivElement>('picker');
 const pickerTitleEl = must<HTMLHeadingElement>('picker-title');
 const pickerListEl = must<HTMLUListElement>('picker-list');
 const toastEl = must<HTMLDivElement>('toast');
+const toastTextEl = must<HTMLSpanElement>('toast-text');
+const toastActionEl = must<HTMLButtonElement>('toast-action');
 const settingsEl = must<HTMLDivElement>('settings');
 const openSettingsEl = must<HTMLButtonElement>('open-settings');
 
@@ -102,6 +105,22 @@ const LOADING_WORDS = 'Loading words\u2026 your text will convert in a moment';
 const LOADING_MEANINGS = 'Loading meanings\u2026';
 const MEANINGS_FAILED = 'Meanings are unavailable right now. Typing still works.';
 const EMPTY_COPY = 'Type something first';
+/* Share / Copy / Clear (proposal 3.10, copy deck 6). */
+const COPIED = 'Copied \u2014 now paste it in WhatsApp';
+const COPY_FAILED = "Couldn't copy. The text is selected \u2014 press and hold, then Copy.";
+const SHARE_FAILED = "Couldn't open sharing. Use Copy instead.";
+const CLEARED = 'Cleared';
+/** Toasts stay long enough for older readers (proposal 5: at least 4 s). */
+const TOAST_MS = 4000;
+const UNDO_MS = 6000;
+
+/**
+ * The phone's share sheet (WhatsApp, Messages...). Feature-detected: absent on
+ * most desktop browsers and in the test Chromium. Sharing is the user's own
+ * hand-off to the OS, not a network call from the app.
+ */
+const CAN_SHARE = typeof navigator.share === 'function';
+const phoneQuery = typeof window.matchMedia === 'function' ? window.matchMedia(DOCK_QUERY) : undefined;
 
 type Phase = 'loading' | 'ready' | 'failed';
 /** The engine and its word list: loading until built, failed if degraded. */
@@ -164,13 +183,23 @@ async function boot(): Promise<void> {
   // Copy rides on the phone strip too, so it stays reachable with the
   // keyboard open (finish gate 2). Acts on click: the iOS clipboard needs the
   // click as its user gesture; the strip's mousedown handler only keeps focus.
+  // One primary action on the strip (finish gate 2): Share\u2026 where the
+  // phone has a share sheet, else Copy. Both act on click, inside the gesture.
+  const dockShare = document.createElement('button');
+  dockShare.type = 'button';
+  dockShare.id = 'share-dock';
+  dockShare.className = 'btn btn-primary';
+  dockShare.textContent = 'Share\u2026';
+  dockShare.hidden = true;
+  dockShare.addEventListener('click', onShare);
   const dockCopy = document.createElement('button');
   dockCopy.type = 'button';
   dockCopy.id = 'copy-dock';
   dockCopy.className = 'btn btn-primary';
   dockCopy.textContent = 'Copy';
   dockCopy.addEventListener('click', onCopy);
-  inline.toolbar.append(dockCopy);
+  inline.toolbar.append(dockShare, dockCopy);
+  layoutActions();
 
   updateStates();
   render(); // paint the empty shell immediately
@@ -654,33 +683,140 @@ function closeSettings(): void {
  * ------------------------------------------------------------------ */
 
 /**
+ * Share and Copy look disabled while the box is empty and say why on tap.
+ * Returns true when there is nothing to send.
+ */
+function refuseEmpty(): boolean {
+  if (romanEl.value.trim().length > 0) return false;
+  toast(EMPTY_COPY, { error: true });
+  return true;
+}
+
+/**
  * On iOS the Clipboard API only works when `writeText` is reached inside the
- * user gesture that triggered it. Anything awaited first — even a microtask —
+ * user gesture that triggered it. Anything awaited first, even a microtask,
  * loses the gesture. So `copyText()` is synchronous and `writeText` is the
  * first async thing in this handler.
  */
 function onCopy(): void {
-  if (romanEl.value.trim().length === 0) {
-    toast(EMPTY_COPY, true);
-    return;
-  }
+  if (refuseEmpty()) return;
   const text = copyText();
 
   const clipboard = navigator.clipboard;
   if (clipboard && typeof clipboard.writeText === 'function') {
     clipboard.writeText(text).then(
-      () => toast('Copied'),
-      () => finish(legacyCopy(text)),
+      () => toast(COPIED),
+      () => finish(legacyCopy(text), text),
     );
     return;
   }
 
-  finish(legacyCopy(text));
+  finish(legacyCopy(text), text);
 }
 
-function finish(ok: boolean): void {
-  if (ok) toast('Copied');
-  else toast('Could not copy — select the text and copy manually', true);
+function finish(ok: boolean, text: string): void {
+  if (ok) toast(COPIED);
+  else copyFailed(text);
+}
+
+/**
+ * Copy failed: put exactly what would have been copied in the box (the word
+ * at the caret converted, as Copy would) and select it, so the user can copy
+ * it by hand. The message says how.
+ */
+function copyFailed(text: string): void {
+  if (romanEl.value !== text) {
+    romanEl.value = text;
+    render();
+  }
+  romanEl.focus();
+  romanEl.setSelectionRange(0, romanEl.value.length);
+  refreshSuggestions();
+  toast(COPY_FAILED, { error: true });
+}
+
+/**
+ * Share\u2026 (phones): the phone's own share sheet, text only. Called
+ * synchronously from the click so the browser sees the user gesture.
+ * Closing the sheet without choosing an app is not an error.
+ */
+function onShare(): void {
+  if (refuseEmpty()) return;
+  if (typeof navigator.share !== 'function') {
+    onCopy();
+    return;
+  }
+  const text = copyText();
+  let sharing: Promise<void>;
+  try {
+    sharing = navigator.share({ text });
+  } catch {
+    toast(SHARE_FAILED, { error: true });
+    return;
+  }
+  sharing.catch((error: unknown) => {
+    if (error instanceof Error && error.name === 'AbortError') return;
+    toast(SHARE_FAILED, { error: true });
+  });
+}
+
+/**
+ * Phone with a share sheet: Share\u2026 is primary, Copy secondary (on the strip,
+ * where only one fits, Share alone). Elsewhere Copy Odia is primary and there
+ * is no Share (desktop share sheets are poor; proposal 3.10).
+ */
+function layoutActions(): void {
+  const share = CAN_SHARE && (phoneQuery?.matches ?? false);
+  shareEl.hidden = !share;
+  copyEl.classList.toggle('btn-primary', !share);
+  copyEl.textContent = share ? 'Copy' : 'Copy Odia';
+  const dockShare = document.getElementById('share-dock');
+  const dockCopy = document.getElementById('copy-dock');
+  if (dockShare) dockShare.hidden = !share;
+  if (dockCopy) dockCopy.hidden = share;
+}
+
+/* ------------------------------------------------------------------ *
+ * Clear, with Undo
+ * ------------------------------------------------------------------ */
+
+/** What Clear removed, while its Undo toast is showing. */
+let cleared: { value: string; caret: number } | undefined;
+
+function onClear(): void {
+  const value = romanEl.value;
+  if (value.length === 0) {
+    romanEl.focus();
+    return;
+  }
+  const keep = { value, caret: romanEl.selectionEnd ?? value.length };
+  romanEl.value = '';
+  uncheckedWords.clear();
+  render();
+  romanEl.focus();
+  refreshSuggestions();
+  toast(CLEARED, { action: { label: 'Undo', run: undoClear }, ms: UNDO_MS });
+  cleared = keep; // after toast(): showing it ends any earlier undo window
+}
+
+/** Put the cleared text back, caret where it was. Only while the box is still empty. */
+function undoClear(): void {
+  const state = cleared;
+  hideToast();
+  if (!state || romanEl.value.length > 0) return;
+  romanEl.value = state.value;
+  romanEl.focus();
+  romanEl.setSelectionRange(state.caret, state.caret);
+  render();
+  refreshSuggestions();
+}
+
+/**
+ * After the box value is set by script (no input event), the suggestion bar
+ * must re-read the word at the caret, or a tap would commit into stale offsets.
+ */
+function refreshSuggestions(): void {
+  inline?.setEnabled(!strictEl.checked);
 }
 
 /**
@@ -728,13 +864,59 @@ function legacyCopy(text: string): boolean {
  * ------------------------------------------------------------------ */
 
 let toastTimer: number | undefined;
+let toastAction: (() => void) | undefined;
 
-function toast(text: string, isError = false): void {
-  toastEl.textContent = text;
-  toastEl.classList.toggle('error', isError);
-  toastEl.classList.add('show');
+interface ToastOptions {
+  error?: boolean;
+  /** A button in the toast ("Undo"). */
+  action?: { label: string; run: () => void };
+  ms?: number;
+}
+
+/**
+ * A short message (role=status) for at least 4 s. Showing any toast ends the
+ * Undo window of an earlier "Cleared".
+ */
+function toast(text: string, options: ToastOptions = {}): void {
   if (toastTimer !== undefined) clearTimeout(toastTimer);
-  toastTimer = window.setTimeout(() => toastEl.classList.remove('show'), 1600);
+  cleared = undefined;
+  toastTextEl.textContent = text;
+  toastAction = options.action?.run;
+  toastActionEl.hidden = options.action === undefined;
+  toastActionEl.textContent = options.action?.label ?? '';
+  toastEl.classList.toggle('error', options.error === true);
+  toastEl.classList.toggle('has-action', options.action !== undefined);
+  placeToast();
+  toastEl.classList.add('show');
+  toastTimer = window.setTimeout(hideToast, options.ms ?? TOAST_MS);
+}
+
+function hideToast(): void {
+  if (toastTimer !== undefined) clearTimeout(toastTimer);
+  toastTimer = undefined;
+  toastEl.classList.remove('show', 'has-action');
+  toastActionEl.hidden = true;
+  toastAction = undefined;
+  cleared = undefined;
+}
+
+/**
+ * Keep the toast in sight with the keyboard open: above the phone strip when
+ * it is showing, else above the bottom of the visual viewport (on iOS the
+ * keyboard covers the bottom of the layout viewport, where position: fixed
+ * puts it).
+ */
+function placeToast(): void {
+  const bar = document.getElementById('kb-bar');
+  const vv = window.visualViewport;
+  let bottom: number | undefined;
+  if (bar && document.body.classList.contains('kb-docked')) {
+    bottom = window.innerHeight - bar.getBoundingClientRect().top + 12;
+  } else if (vv) {
+    const covered = window.innerHeight - (vv.offsetTop + vv.height);
+    if (covered > 1) bottom = covered + 24;
+  }
+  toastEl.style.bottom = bottom === undefined ? '' : `${Math.round(bottom)}px`;
 }
 
 function setStatus(text: string, warn: boolean): void {
@@ -782,7 +964,8 @@ function updateStripNote(): void {
 /** Copy looks disabled while the box is empty, and says why on tap (H8). */
 function updateCopyState(): void {
   const empty = romanEl.value.trim().length === 0;
-  for (const button of [copyEl, document.getElementById('copy-dock')]) {
+  const buttons = [copyEl, shareEl, document.getElementById('copy-dock'), document.getElementById('share-dock')];
+  for (const button of buttons) {
     if (!button) continue;
     if (empty) button.setAttribute('aria-disabled', 'true');
     else button.removeAttribute('aria-disabled');
@@ -885,15 +1068,23 @@ function bindEvents(): void {
   });
 
   copyEl.addEventListener('click', onCopy);
+  shareEl.addEventListener('click', onShare);
+  // addListener, not addEventListener('change'): the floor is Safari 13.
+  phoneQuery?.addListener(layoutActions);
+  toastActionEl.addEventListener('click', () => toastAction?.());
   bannerReloadEl.addEventListener('click', () => window.location.reload());
   window.addEventListener('online', updateOfflineChip);
   window.addEventListener('offline', updateOfflineChip);
 
-  clearEl.addEventListener('click', () => {
-    romanEl.value = '';
-    uncheckedWords.clear();
-    render();
-    romanEl.focus();
+  clearEl.addEventListener('click', onClear);
+  // Ctrl/Cmd+Z in the emptied box is Undo too while "Cleared" shows: the box
+  // was emptied by script, so the browser's own undo has nothing to restore.
+  romanEl.addEventListener('keydown', (event) => {
+    const undoKey = (event.ctrlKey || event.metaKey) && !event.shiftKey && event.key.toLowerCase() === 'z';
+    if (undoKey && cleared && romanEl.value.length === 0) {
+      event.preventDefault();
+      undoClear();
+    }
   });
 
   digitsEl.addEventListener('change', () => {
