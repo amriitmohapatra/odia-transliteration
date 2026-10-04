@@ -38,8 +38,17 @@
  *     and children are observed), in both layouts;
  *   - items are `button.inline-candidate`; an Odia item has a `.inline-text`
  *     child holding the word; the typed-English item has `.inline-latin`
- *     instead and is skipped by the overlay (no gloss).
+ *     instead and is skipped by the overlay (no gloss);
+ *   - each item's `data-label` is its accessible name without the meaning
+ *     (the word, plus a flag badge); the overlay sets aria-label to
+ *     data-label + ", " + the meaning when it adds the gloss (V1 B6).
  * Rename any of these only together with overlay.ts.
+ *
+ * Screen readers (proposal 5, audit M5): the list is a listbox the text box
+ * points at (aria-controls, aria-activedescendant on the highlighted
+ * option); options are not tab stops (focus stays in the text box). A
+ * polite live region says how many suggestions there are after a pause in
+ * typing, and which word (with its meaning) was chosen.
  */
 
 import type { Candidate } from '@odia/core/types';
@@ -68,6 +77,9 @@ interface Pending {
 }
 
 const MAX_SHOWN = 9;
+
+/** Quiet time before the suggestion count is announced (not on every key). */
+const ANNOUNCE_MS = 900;
 
 /**
  * Where the strip replaces the popover: phone widths, and touch-first screens
@@ -98,7 +110,9 @@ export class InlineCandidates {
   private readonly next: HTMLButtonElement;
   private readonly box: HTMLDivElement;
   private readonly mirror: HTMLDivElement;
+  private readonly live: HTMLDivElement;
   private readonly dockQuery: MediaQueryList | undefined;
+  private announceTimer: number | undefined;
 
   private shown: Candidate[] = [];
   private pending: Pending | undefined;
@@ -125,7 +139,8 @@ export class InlineCandidates {
     top.className = 'kb-bar-top';
     this.note = document.createElement('span');
     this.note.className = 'kb-bar-note';
-    this.note.setAttribute('aria-live', 'polite');
+    // Not a live region: it changes on every key. The state line under the
+    // text box (#status) and this module's own live region speak instead.
     this.prev = scrollButton('\u2039', 'Earlier suggestions');
     this.next = scrollButton('\u203A', 'More suggestions');
     this.toolbar = document.createElement('div');
@@ -146,6 +161,16 @@ export class InlineCandidates {
     this.mirror.className = 'caret-mirror';
     this.mirror.setAttribute('aria-hidden', 'true');
     document.body.appendChild(this.mirror);
+
+    this.live = document.createElement('div');
+    this.live.id = 'inline-live';
+    this.live.className = 'sr-only';
+    this.live.setAttribute('role', 'status');
+    this.live.setAttribute('aria-live', 'polite');
+    document.body.appendChild(this.live);
+
+    area.setAttribute('aria-controls', this.box.id);
+    area.setAttribute('aria-autocomplete', 'list');
 
     area.addEventListener('input', () => this.refresh());
     area.addEventListener('click', () => this.refresh());
@@ -345,8 +370,34 @@ export class InlineCandidates {
     const caret = pending.start + replaced.length;
     this.area.setSelectionRange(caret, caret);
 
+    // The chosen word and its meaning, from the option's accessible name
+    // (the overlay adds the meaning to it), read before the list is cleared.
+    const item = this.box.children[index] as HTMLElement | undefined;
+    const said = item?.getAttribute('aria-label') ?? chosen.text;
+
     this.hide();
+    this.say(`Chosen: ${said}`);
     this.host.onCommit(pending.roman, chosen.text);
+  }
+
+  /** Polite announcement; the same text twice is still spoken. */
+  private say(text: string): void {
+    if (this.announceTimer !== undefined) window.clearTimeout(this.announceTimer);
+    this.announceTimer = undefined;
+    this.live.textContent = '';
+    window.setTimeout(() => (this.live.textContent = text), 50);
+  }
+
+  /** After a pause in typing: how many suggestions, and the first one. */
+  private announceLater(): void {
+    if (this.announceTimer !== undefined) window.clearTimeout(this.announceTimer);
+    this.announceTimer = window.setTimeout(() => {
+      this.announceTimer = undefined;
+      if (this.box.hidden) return;
+      const first = this.box.children[0] as HTMLElement | undefined;
+      const n = this.shown.length;
+      this.live.textContent = `${n} suggestion${n === 1 ? '' : 's'}. 1: ${first?.getAttribute('aria-label') ?? ''}`;
+    }, ANNOUNCE_MS);
   }
 
   /* ---------------------------------------------------------------- view */
@@ -355,6 +406,9 @@ export class InlineCandidates {
     this.box.hidden = true;
     this.shown = [];
     this.pending = undefined;
+    this.area.removeAttribute('aria-activedescendant');
+    if (this.announceTimer !== undefined) window.clearTimeout(this.announceTimer);
+    this.announceTimer = undefined;
     if (this.dockOpen) {
       this.updatePaging();
       this.queuePosition();
@@ -376,10 +430,13 @@ export class InlineCandidates {
       item.id = `inline-candidate-${i}`;
       item.setAttribute('role', 'option');
       item.setAttribute('aria-selected', String(i === this.active));
+      // Not a tab stop: focus stays in the text box, which points here.
+      item.tabIndex = -1;
 
       const num = document.createElement('span');
       num.className = 'inline-num';
       num.textContent = String(i + 1);
+      num.setAttribute('aria-hidden', 'true');
       item.append(num);
 
       // Latin gets its own class, not '.odia' or '.inline-text': it must not be
@@ -400,10 +457,16 @@ export class InlineCandidates {
       item.append(text);
       const badge = latin ? undefined : this.host.badge?.(candidate.text);
       if (badge) item.append(badgeElement(badge));
+      // Accessible name: "<word>, <badge>"; the overlay appends the meaning.
+      const label = latin ? `Keep "${candidate.text}", as typed` : candidate.text + (badge ? `, ${badge.text}` : '');
+      item.dataset.label = label;
+      item.setAttribute('aria-label', label);
       this.box.appendChild(item);
     });
 
     this.box.hidden = false;
+    this.area.setAttribute('aria-activedescendant', `inline-candidate-${this.active}`);
+    if (!sameWord) this.announceLater();
     if (this.docked) {
       // Arrow keys (a Bluetooth keyboard on a phone) keep the highlight visible;
       // a new word starts at the left.
@@ -587,7 +650,8 @@ export class InlineCandidates {
   private page(direction: 1 | -1): void {
     const step = Math.max(1, this.box.clientWidth - 8);
     const left = this.box.scrollLeft + direction * step;
-    if (typeof this.box.scrollTo === 'function') this.box.scrollTo({ left, behavior: 'smooth' });
+    const still = typeof window.matchMedia === 'function' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (typeof this.box.scrollTo === 'function') this.box.scrollTo({ left, behavior: still ? 'auto' : 'smooth' });
     else this.box.scrollLeft = left;
   }
 

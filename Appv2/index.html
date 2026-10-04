@@ -119,6 +119,7 @@
           </div>
           <textarea
             id="roman"
+            aria-describedby="roman-help"
             rows="4"
             autocapitalize="off"
             autocorrect="off"
@@ -127,6 +128,10 @@
             enterkeyhint="enter"
             placeholder="Type here, e.g. kemiti achha…"
           ></textarea>
+          <p id="roman-help" class="sr-only">
+            Suggestions appear as you type. Up and down arrows choose one, Enter or its number
+            takes it, Space takes the highlighted one. Control Enter copies the Odia.
+          </p>
           <!--
             States next to the text, not at the bottom of the page (proposal
             3.11): loading words / meanings (quiet, with a spinner), meanings
@@ -170,7 +175,7 @@
           asks for: rare marks and correct answers were competing for the same
           nine candidate slots, and the fix is to stop making them compete.
         -->
-        <div id="palette" class="palette" aria-label="Insert a rare mark" hidden></div>
+        <div id="palette" class="palette" role="toolbar" aria-label="Insert a rare mark" hidden></div>
 
         <!--
           Share / Copy / Clear (proposal 3.10). On a phone with a share sheet
@@ -182,7 +187,13 @@
         -->
         <div class="actions">
           <button type="button" id="share" class="btn btn-primary btn-lg" hidden>Share&hellip;</button>
-          <button type="button" id="copy" class="btn btn-primary btn-lg">Copy Odia</button>
+          <button
+            type="button"
+            id="copy"
+            class="btn btn-primary btn-lg"
+            aria-keyshortcuts="Control+Enter Meta+Enter"
+            title="Copy Odia (Ctrl+Enter)"
+          >Copy Odia</button>
           <button type="button" id="clear" class="btn btn-quiet">Clear</button>
           <!-- Meanings (below 1100px; wider screens show the column). DOM
                contract: aria-controls="dict-panel", see dictionary/overlay.ts. -->

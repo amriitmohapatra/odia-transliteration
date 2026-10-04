@@ -18,6 +18,10 @@
  *       `.inline-latin` items (kept English) are skipped.
  *   #picker-list > li > button.candidate > .text
  *       the Alternatives sheet                       (Appv2/src/main.ts)
+ *   [data-label] on those two kinds of button
+ *       their accessible name without the meaning; when a gloss is added,
+ *       aria-label becomes data-label + ", " + the gloss, so a screen reader
+ *       hears "<word>, day" (V1 B6).
  *   #readback .rb-word[data-odia]
  *       the "Reads as" words; the Odia word is in data-odia because the
  *       button text is Latin                         (Appv2/src/main.ts,
@@ -525,6 +529,7 @@ function entryBlock(word: string, num: number | null, entry: Entry | null, moder
   }
   const w = document.createElement('span');
   w.className = 'dict-word odia';
+  w.lang = 'or';
   w.textContent = word;
   h.appendChild(w);
 
@@ -680,6 +685,7 @@ function augmentInlineBar(): void {
       span.className = 'dict-gloss' + (g ? '' : ' dict-gloss-none');
       span.textContent = g ? g : NO_ENTRY;
       btn.appendChild(span);
+      nameWithGloss(btn, span.textContent);
     }
     lastCandidates = next;
   } finally {
@@ -687,6 +693,12 @@ function augmentInlineBar(): void {
   }
   if (!searchInput || searchInput.value.trim().length === 0) renderCandidates();
   if (state === 'idle') loadData();
+}
+
+/** aria-label = the app's data-label + ", " + the gloss (contract above). */
+function nameWithGloss(btn: Element, gloss: string): void {
+  const base = btn.getAttribute('data-label');
+  if (base) btn.setAttribute('aria-label', base + ', ' + gloss);
 }
 
 let pickerAugmenting = false;
@@ -707,6 +719,7 @@ function augmentPicker(): void {
       span.className = 'dict-gloss dict-gloss-picker' + (g ? '' : ' dict-gloss-none');
       span.textContent = g ? g : NO_ENTRY;
       row.appendChild(span);
+      nameWithGloss(row, span.textContent);
     }
   } finally {
     pickerAugmenting = false;

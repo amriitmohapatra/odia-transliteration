@@ -508,6 +508,7 @@ async function buildPalette(): Promise<void> {
     return;
   }
 
+  let first = true;
   paletteEl.replaceChildren(
     ...groups.map((group) => {
       // The group name ("Vocalics", "Signs") is engine vocabulary: it names
@@ -519,12 +520,33 @@ async function buildPalette(): Promise<void> {
       section.title = group.hint;
 
       for (const entry of group.entries) {
-        section.append(paletteButton(entry));
+        const key = paletteButton(entry);
+        // One tab stop for the whole palette; arrow keys move inside it.
+        key.tabIndex = first ? 0 : -1;
+        first = false;
+        section.append(key);
       }
       return section;
     }),
   );
   paletteEl.hidden = false;
+}
+
+/** Roving focus in the palette toolbar: arrows, Home, End. */
+function onPaletteKey(event: KeyboardEvent): void {
+  const keys = Array.from(paletteEl.querySelectorAll<HTMLButtonElement>('.palette-key'));
+  const at = keys.indexOf(document.activeElement as HTMLButtonElement);
+  if (at < 0) return;
+  let next = at;
+  if (event.key === 'ArrowRight' || event.key === 'ArrowDown') next = Math.min(keys.length - 1, at + 1);
+  else if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') next = Math.max(0, at - 1);
+  else if (event.key === 'Home') next = 0;
+  else if (event.key === 'End') next = keys.length - 1;
+  else return;
+  event.preventDefault();
+  keys[at]?.setAttribute('tabindex', '-1');
+  keys[next]?.setAttribute('tabindex', '0');
+  keys[next]?.focus();
 }
 
 function paletteButton(entry: PaletteEntry): HTMLButtonElement {
@@ -539,6 +561,12 @@ function paletteButton(entry: PaletteEntry): HTMLButtonElement {
   button.addEventListener('mousedown', (event) => {
     event.preventDefault();
     insertAtCaret(entry.text);
+  });
+  // Enter / Space on a focused key (a keyboard click has detail 0; a mouse
+  // or touch click was already handled on mousedown). The text box keeps its
+  // last caret position, so the mark lands where the user was typing.
+  button.addEventListener('click', (event) => {
+    if (event.detail === 0) insertAtCaret(entry.text);
   });
   return button;
 }
@@ -645,6 +673,11 @@ function candidateRow(candidate: PickerRow, current: boolean): HTMLLIElement {
   button.append(text);
   const badge = badgeFor(handle?.engine, candidate.text);
   if (badge) button.append(badgeElement(badge));
+  // Accessible name without the meaning; dictionary/overlay.ts appends the
+  // gloss to it (DOM contract: data-label).
+  const label = candidate.text + (badge ? `, ${badge.text}` : '') + (current ? ', current word' : '');
+  button.dataset.label = label;
+  button.setAttribute('aria-label', label);
   if (DEBUG) {
     const source = document.createElement('span');
     source.className = 'source';
@@ -726,6 +759,34 @@ function closeHelp(restoreFocus = true): void {
   helpEl.hidden = true;
   document.documentElement.style.overflow = '';
   if (restoreFocus) openHelpEl.focus();
+}
+
+/**
+ * The sheets are modal (aria-modal): Tab and Shift+Tab cycle inside the open
+ * one instead of walking into the page behind the scrim.
+ */
+function trapSheetFocus(event: KeyboardEvent): void {
+  if (event.key !== 'Tab') return;
+  const sheet = [pickerEl, settingsEl, helpEl].find((el) => !el.hidden);
+  const panel = sheet?.querySelector<HTMLElement>('.picker-panel');
+  if (!panel) return;
+  const focusable = Array.from(
+    panel.querySelectorAll<HTMLElement>('button, input, select, textarea, summary, [tabindex]:not([tabindex="-1"])'),
+  ).filter((el) => !el.closest('[hidden]') && el.getClientRects().length > 0 && !(el as HTMLButtonElement).disabled);
+  const first = focusable[0];
+  const last = focusable[focusable.length - 1];
+  if (!first || !last) return;
+  const active = document.activeElement as HTMLElement | null;
+  if (!active || !panel.contains(active)) {
+    event.preventDefault();
+    first.focus();
+  } else if (event.shiftKey && active === first) {
+    event.preventDefault();
+    last.focus();
+  } else if (!event.shiftKey && active === last) {
+    event.preventDefault();
+    first.focus();
+  }
 }
 
 /* ------------------------------------------------------------------ *
@@ -1167,6 +1228,16 @@ function bindEvents(): void {
   romanEl.addEventListener('click', scheduleRender);
   romanEl.addEventListener('blur', scheduleRender);
   romanEl.addEventListener('keydown', strictCommit);
+  // Ctrl/Cmd+Enter copies (the keyboard path: type, arrows, Enter or a
+  // number, then this). Ctrl/Cmd+Shift+C (proposal 3.10) is the browser's
+  // inspect-element key in Chrome, so it is not used.
+  romanEl.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter' && (event.ctrlKey || event.metaKey) && !event.shiftKey && !event.altKey) {
+      event.preventDefault();
+      onCopy();
+    }
+  });
+  paletteEl.addEventListener('keydown', onPaletteKey);
 
   readbackEl.addEventListener('click', (event) => {
     const target = (event.target as HTMLElement | null)?.closest<HTMLElement>('button.rb-word');
@@ -1255,6 +1326,7 @@ function bindEvents(): void {
     closer.addEventListener('click', closeSettings);
   }
 
+  document.addEventListener('keydown', trapSheetFocus);
   document.addEventListener('keydown', (event) => {
     if (event.key !== 'Escape') return;
     if (!pickerEl.hidden) closePicker();

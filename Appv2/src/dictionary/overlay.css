@@ -100,6 +100,7 @@ body.dict-open #dict-panel { display: flex; }
   border-radius: 8px;
 }
 .dict-close:hover { background: var(--card); color: var(--text); }
+.dict-close { min-width: var(--tap); min-height: var(--tap); }
 
 .dict-sub {
   margin: 0;
@@ -115,8 +116,8 @@ body.dict-open #dict-panel { display: flex; }
   border-radius: 10px;
   background: var(--card);
   color: var(--text);
-  outline: none;
 }
+/* A real focus ring (style.css :focus-visible), not just a border colour. */
 .dict-search:focus { border-color: var(--accent); }
 
 .dict-state {
