@@ -34,7 +34,7 @@ to the owner. Claude marks each item done here, with the date, when it is done.
 |---|---|---|
 | C-1 | Label the Praharaj review queue (offensive markers, colloquial and regional tags): `offensive`, `coarse`, or not | Family-safe filter (§6 of the brief) |
 | C-2 | Approve the generated suffixed forms of each offensive stem | Family-safe filter |
-| C-3 | Check each row of `core/test/golden/colloquial.tsv` when it exists | Colloquial test set |
+| C-3 | Check each of the 26 rows of `core/test/golden/colloquial.tsv` (spoken, slang and dialect words seeded by Claude): right Odia? right register? Add the casual words your family really types. | Colloquial test set |
 | C-4 | Judge the 100-sentence translation test (Google against Claude Haiku) | D-3, `/api/translate` |
 | C-5 | Review 50 loanword examples with a nukta on ଜ / ଫ | D-6 |
 | C-6 | Review the romanization scheme (`AGENTS.md` §7.4) | Public release |
