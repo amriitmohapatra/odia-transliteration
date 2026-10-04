@@ -6,7 +6,10 @@ English → Odia (ଓଡ଼ିଆ) phonetic transliteration for macOS and Window
 **Read `plan/00-overview.md` before making architectural decisions.** The plan folder is
 the source of truth for scope, staging and rationale.
 
-**Current stage**: pre-Stage-A. Nothing built yet. See `plan/02-stages.md`.
+**Current stage** (2026-10-04): Stages A and B are in progress. Three single-file web apps
+are built and measured: `docs/odia-app.html`, `docs/odia-app-sanskrit.html` (from `Appv2/`)
+and `Odia_Sanskrit_Appv2/odia-app-sanskrit-v2.html` (adds the dictionary). The v3 direction
+and the owner's decisions are in `plan/05-v3-direction.md`. See also `plan/02-stages.md`.
 
 ---
 
@@ -47,7 +50,7 @@ core/  ────────────────────────�
                                      │
   ├─ cli/         node               │  direct import
   ├─ web/         browser            │  direct import
-  ├─ app/         Tauri desktop      │  direct import
+  ├─ Appv2/       Sanskrit web app   │  direct import
   └─ ime-macos/   Swift input method │  JavaScriptCore
                                      ┘
 ```
@@ -56,8 +59,8 @@ core/  ────────────────────────�
 public macOS system framework. No FFI, no WebAssembly, no Rust in the engine path. This
 is why the core is TypeScript.
 
-Rust appears in exactly one place: `app/src-tauri/src/` — roughly 150 lines of clipboard
-and hotkey glue. Do not grow it.
+The Tauri desktop composer (`app/`) in `plan/00-overview.md` does not exist. If it is ever
+built, Rust stays limited to roughly 150 lines of clipboard and hotkey glue.
 
 ---
 
@@ -83,7 +86,7 @@ After any rule change, run `npm run eval` and compare against
 ## Commands
 
 ```bash
-npm install                            # workspaces: core, cli, web, app
+npm install                            # workspaces: core, cli, web
 
 npm test                               # all tests
 npm test -w core                       # engine only (includes nukta vectors)
@@ -94,7 +97,7 @@ npm run -w cli start -- "odisha" --codepoints    # verify nukta encoding
 
 npm run eval                           # metrics + delta vs baseline
 npm run -w web dev                     # web page
-npm run -w app tauri dev               # desktop composer
+npx vite --config Appv2/vite.config.ts # Sanskrit web app (not a workspace)
 
 cd tools/build-data && uv run python build_lexicon.py   # rebuild data artifacts
 ```
@@ -161,7 +164,7 @@ Project is MIT. Everything shipped derives from MIT / CC0 / CC-BY sources:
 | `indic-transliteration/common_maps` `oriya.toml` | MIT | Seeds strict-mode table |
 | AI4Bharat Aksharantar (`ori`) | CC-BY / CC0 | Lexicon |
 | AI4Bharat IndicCorp v2 (`ory_Orya`) | CC0 | Word frequencies |
-| Noto Sans Oriya | OFL | Bundled font |
+| Noto Sans Oriya | OFL | Planned bundled font. Not bundled yet (`plan/05-v3-direction.md` §4). |
 
 **Varnam/govarnam and Aksharamukha are AGPL.** Study their architecture; copy no code.
 Record every data source, its licence and a checksum in `core/data/PROVENANCE.md`.
@@ -170,8 +173,10 @@ Record every data source, its licence and a checksum in `core/data/PROVENANCE.md
 
 ## Conventions
 
-- Offline only. **No network call from shipped code, ever.** This was a decision, not an
-  oversight — see `plan/04-scope.md`.
+- The engine is offline only. **`core/` never makes a network call.** This was a
+  decision, not an oversight — see `plan/04-scope.md`. Since 2026-10-04 (D-2) the web app
+  may call an opt-in assist layer on Vercel. Each online feature is off until the user
+  turns it on. See `plan/05-v3-direction.md` §4.
 - The engine API is synchronous. There is no network, so there is no reason for promises.
 - Before adding a feature, check `plan/04-scope.md`. Most tempting ideas are already
   listed there as deliberately excluded.
