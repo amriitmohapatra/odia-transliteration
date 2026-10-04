@@ -249,8 +249,22 @@ body {
 /* Quiet buttons are named by their word or icon; their edge is the strong one
  * too, so they still read as buttons. */
 
+/* Settings then Help: only the first is pushed to the right. */
+.icon-btn + .icon-btn {
+  margin-left: 0;
+}
+
 /* Phones: the icon alone (the button keeps its name through aria-label). */
 @media (max-width: 479px) {
+  .masthead {
+    gap: var(--space-2);
+  }
+
+  .icon-btn {
+    justify-content: center;
+    padding: 0;
+  }
+
   .icon-btn .icon-btn-label {
     position: absolute;
     width: 1px;
@@ -275,6 +289,46 @@ body {
   font-family: var(--odia-font);
   font-size: calc(1em * var(--odia-scale));
   line-height: 1.75;
+}
+
+/* ------------------------------------------------------------------ *
+ * First-run card (proposal 3.9): two lines, an example, "Got it".
+ * ------------------------------------------------------------------ */
+
+.intro {
+  margin: 0 0 var(--space-4);
+  padding: var(--space-3) var(--space-4) var(--space-4);
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--accent);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+.intro[hidden] {
+  display: none;
+}
+
+.intro-title {
+  margin: 0;
+  font-size: var(--fs-body);
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.intro-body {
+  margin: var(--space-1) 0 var(--space-3);
+  color: var(--text);
+  line-height: 1.45;
+}
+
+.intro-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.intro-actions .btn-primary {
+  flex: 1 1 14rem;
 }
 
 /* ------------------------------------------------------------------ *
@@ -1310,6 +1364,16 @@ code {
   overflow-y: auto;
   overscroll-behavior: contain;
   padding: 0.25rem 1rem 0.5rem;
+}
+
+.help-text {
+  margin: var(--space-1) 0 var(--space-3);
+  line-height: 1.5;
+}
+
+/* The cheat sheets inside Help keep their look, a little tighter on top. */
+.help-body .guide:first-of-type {
+  margin-top: var(--space-5);
 }
 
 .settings-section {

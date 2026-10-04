@@ -70,6 +70,12 @@ const toastTextEl = must<HTMLSpanElement>('toast-text');
 const toastActionEl = must<HTMLButtonElement>('toast-action');
 const settingsEl = must<HTMLDivElement>('settings');
 const openSettingsEl = must<HTMLButtonElement>('open-settings');
+const helpEl = must<HTMLDivElement>('help');
+const openHelpEl = must<HTMLButtonElement>('open-help');
+const helpIntroEl = must<HTMLButtonElement>('help-intro');
+const introEl = must<HTMLElement>('intro');
+const introTryEl = must<HTMLButtonElement>('intro-try');
+const introDismissEl = must<HTMLButtonElement>('intro-dismiss');
 
 function must<T extends HTMLElement>(id: string): T {
   const element = document.getElementById(id);
@@ -91,6 +97,10 @@ const PREF_FAMILY_SAFE = 'odia.pref.familySafe';
  * script in index.html reads the same key before first paint.
  */
 const PREF_TEXT_SIZE = 'odia.pref.textSize';
+/** The first-run card was dismissed: '1'. Missing = show it. */
+const PREF_SEEN_INTRO = 'odia.pref.seenIntro';
+/** The everyday example the card offers (proposal 3.9). */
+const INTRO_EXAMPLE = 'kemiti achha';
 const TEXT_SIZES = ['normal', 'large', 'xl'] as const;
 type TextSize = (typeof TEXT_SIZES)[number];
 const TEXT_SIZE_CLASS: Record<TextSize, string> = { normal: '', large: 'text-large', xl: 'text-xl' };
@@ -172,6 +182,7 @@ async function boot(): Promise<void> {
   strictEl.checked = readPref(PREF_STRICT);
   familySafeEl.checked = readPref(PREF_FAMILY_SAFE, true);
   applyTextSize(readTextSize());
+  introEl.hidden = readPref(PREF_SEEN_INTRO);
   profileId = readProfilePref();
 
   buildProfileSelect();
@@ -674,7 +685,7 @@ function focusReadbackWord(index: string | undefined): void {
 }
 
 /* ------------------------------------------------------------------ *
- * Settings sheet
+ * Settings and Help sheets
  * ------------------------------------------------------------------ */
 
 function openSettings(): void {
@@ -687,6 +698,49 @@ function closeSettings(): void {
   settingsEl.hidden = true;
   document.documentElement.style.overflow = '';
   openSettingsEl.focus();
+}
+
+function openHelp(): void {
+  helpEl.hidden = false;
+  document.documentElement.style.overflow = 'hidden';
+  helpIntroEl.focus();
+}
+
+function closeHelp(restoreFocus = true): void {
+  helpEl.hidden = true;
+  document.documentElement.style.overflow = '';
+  if (restoreFocus) openHelpEl.focus();
+}
+
+/* ------------------------------------------------------------------ *
+ * First-run card (proposal 3.9)
+ * ------------------------------------------------------------------ */
+
+function dismissIntro(): void {
+  introEl.hidden = true;
+  writePref(PREF_SEEN_INTRO, true);
+}
+
+/**
+ * "Try an example": the first word converted, the second still being typed,
+ * so the first thing a user sees is a suggestion list with meanings.
+ */
+function tryExample(): void {
+  dismissIntro();
+  romanEl.value = INTRO_EXAMPLE;
+  romanEl.focus();
+  romanEl.setSelectionRange(INTRO_EXAMPLE.length, INTRO_EXAMPLE.length);
+  convertInPlace(); // no-op until the word list is ready; boot() converts then
+  render();
+  refreshSuggestions();
+}
+
+/** From Help: the card again, at the top of the page. */
+function showIntroAgain(): void {
+  closeHelp(false);
+  introEl.hidden = false;
+  introEl.scrollIntoView({ block: 'start' });
+  introTryEl.focus();
 }
 
 /* ------------------------------------------------------------------ *
@@ -1170,6 +1224,16 @@ function bindEvents(): void {
   }
 
   openSettingsEl.addEventListener('click', openSettings);
+  openHelpEl.addEventListener('click', openHelp);
+  for (const closer of document.querySelectorAll('[data-help-close]')) {
+    closer.addEventListener('click', () => closeHelp());
+  }
+  helpIntroEl.addEventListener('click', showIntroAgain);
+  introTryEl.addEventListener('click', tryExample);
+  introDismissEl.addEventListener('click', () => {
+    dismissIntro();
+    romanEl.focus();
+  });
   for (const closer of document.querySelectorAll('[data-settings-close]')) {
     closer.addEventListener('click', closeSettings);
   }
@@ -1178,6 +1242,7 @@ function bindEvents(): void {
     if (event.key !== 'Escape') return;
     if (!pickerEl.hidden) closePicker();
     else if (!settingsEl.hidden) closeSettings();
+    else if (!helpEl.hidden) closeHelp();
   });
 }
 
