@@ -23,7 +23,7 @@
  * untouched Latin token with source `'verbatim'`, so mixed English input
  * ("PCR", "Bayesian") never needs a language-detection heuristic.
  */
-import type { Labels, Preferences } from './curation.js';
+import type { FilterLevel, Labels, Preferences } from './curation.js';
 
 export type CandidateSource = 'user' | 'preference' | 'lexicon' | 'rule' | 'verbatim';
 
@@ -282,4 +282,6 @@ export interface EngineConfig {
   labels?: Labels;
   /** Family-safe filter. Default true. Has no effect while `labels` is empty. */
   familySafe?: boolean;
+  /** Content filter level; overrides `familySafe`. 'kids' cannot be lowered at run time. */
+  filter?: FilterLevel;
 }

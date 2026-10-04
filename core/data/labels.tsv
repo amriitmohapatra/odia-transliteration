@@ -1,11 +1,37 @@
 # labels.tsv — owner-curated whole-word labels.
 #
-# Format: odia <TAB> label      labels: offensive, coarse, spoken, slang, dialect
+# Format: odia <TAB> label <TAB> keys      labels: offensive, coarse, spoken, slang, dialect
 # Whole words only, never substrings. The Odia cell must be canonical.
-# Only `offensive` changes ranking: with the family-safe filter on (the default),
-# an offensive word is never offered as a near miss; it still appears when the
-# lexicon, the user or a preference lists it under the exact roman key typed.
+# keys (optional, comma-separated): the exact roman spellings under which the word may
+# still appear in family mode. Choose keys NO innocent word shares: the lexicon also
+# files words under loose casual keys, so the casual spelling is usually unsafe.
 #
-# Empty on purpose. The owner curates this list after the basic V1 app is built
-# (plan/06-owner-followups.md, C-1 and C-2). No abusive word is ever added by an
-# agent. Licence: MIT (this project).
+# Filter levels: off = nothing filtered; family (default) = offensive words only under
+# their own keys, or when the user taught them; kids = offensive and coarse words never.
+# See core/src/curation.ts. Phrases are not labelled: their offensive head word is.
+# Inflected forms (with case or verb endings) are NOT covered until they are listed here
+# (plan/06-owner-followups.md C-2).
+#
+# Source: the owner's list, 2026-10-04. Keys were proposed by Claude from the measured
+# collisions (see the commit message); rows marked REVIEW wait for the owner's check.
+# Licence: MIT (this project).
+# Not "banda"/"band": those spell BANDA (closed). Not "gandi" below: GANDI (knot).
+ବାଣ୍ଡ	offensive	baanda,baand
+ବିଆ	offensive	biaa
+# Key "pella", not "pela": "pela" is the everyday spelling of PELA (push).
+ପେଳ	offensive	pella
+ଗେହିବା	offensive	gehiba
+ଗେଇଁବା	offensive	geinba
+ଗିହା	offensive	giha,gihaa
+ଗିହାଁ	offensive	gihaan
+ରାଣ୍ଡି	offensive	raandi
+ବେଧେଇ	offensive	bedhei
+# REVIEW: also an ordinary word in Praharaj ("thickness; depth; hole"), 103 corpus uses.
+#   Proposed coarse, not offensive: shown with a "can be rude" badge in family mode,
+#   hidden for kids.
+ବେଧ	coarse
+ବୋକାଚୋଦା	offensive	bokaachodaa,bokachoda
+# REVIEW: Praharaj also gives "the bottom of a thing". Kept offensive as listed.
+ଗାଣ୍ଡି	offensive	gaandi
+ମାଦରଚୋଦ୍	offensive	maadarachod,madarchod
+ମାଦରଚୋଦ	offensive	maadarachoda,madarachoda

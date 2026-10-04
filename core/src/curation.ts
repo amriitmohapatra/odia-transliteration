@@ -19,10 +19,20 @@
  *       but waiting for the owner's check). Read by the app's dictionary
  *       module, not by the engine.
  *
- *   labels.tsv        odia <TAB> label
+ *   labels.tsv        odia <TAB> label <TAB> keys
  *       Whole words only, never substrings. Labels: offensive, coarse, spoken,
- *       slang, dialect. Only `offensive` changes ranking (the family-safe
- *       filter, see rank.ts); the others are for display.
+ *       slang, dialect. `keys` (optional, comma-separated roman) are the exact
+ *       spellings under which the word may still appear in family mode. They
+ *       must be keys no innocent word shares: the lexicon also files words
+ *       under loose casual keys (one listed word sits under the key of the
+ *       word for "closed"), so "the lexicon lists it under this key" is NOT a
+ *       safe exemption. Filter levels (see index.ts):
+ *         off      nothing filtered
+ *         family   offensive words dropped unless the key typed is one of
+ *                  their `keys`, or the user taught them, or a preference
+ *                  lists them (default)
+ *         kids     offensive AND coarse words dropped, no exemptions, and
+ *                  learn() refuses them
  *
  * Lines starting with # and blank lines are ignored. No Odia literal appears in
  * this file; the data lives in the TSVs.
@@ -45,7 +55,14 @@ export interface Labels {
   get(word: string): ReadonlySet<Label> | undefined;
   /** True when the whole word carries the `offensive` label. */
   isOffensive(word: string): boolean;
+  /** True when the whole word carries the `coarse` label. */
+  isCoarse(word: string): boolean;
+  /** The roman keys under which the word may appear in family mode. */
+  keysFor(word: string): ReadonlySet<string> | undefined;
 }
+
+export const FILTER_LEVELS = ['off', 'family', 'kids'] as const;
+export type FilterLevel = (typeof FILTER_LEVELS)[number];
 
 function rows(tsv: string, file: string): { cells: string[]; line: number }[] {
   const out: { cells: string[]; line: number }[] = [];
@@ -82,10 +99,11 @@ export function parsePreferences(tsv: string, file = 'preferences.tsv'): Prefere
 
 export function parseLabels(tsv: string, file = 'labels.tsv'): Labels {
   const map = new Map<string, Set<Label>>();
+  const keys = new Map<string, Set<string>>();
   for (const { cells, line } of rows(tsv, file)) {
     const where = `${file}:${line}`;
-    const [odia, label] = cells;
-    if (!odia || !label) throw new Error(`${where}: expected "odia<TAB>label"`);
+    const [odia, label, keyCell] = cells;
+    if (!odia || !label) throw new Error(`${where}: expected "odia<TAB>label[<TAB>keys]"`);
     assertCanonical(odia, where);
     if (!(LABELS as readonly string[]).includes(label)) {
       throw new Error(`${where}: unknown label "${label}" (allowed: ${LABELS.join(', ')})`);
@@ -93,11 +111,19 @@ export function parseLabels(tsv: string, file = 'labels.tsv'): Labels {
     const set = map.get(odia) ?? new Set<Label>();
     set.add(label as Label);
     map.set(odia, set);
+    for (const raw of (keyCell ?? '').split(',').map((k) => k.trim()).filter((k) => k.length > 0)) {
+      if (!/^[a-z_]+$/i.test(raw)) throw new Error(`${where}: key "${raw}" must be Latin letters only`);
+      const ks = keys.get(odia) ?? new Set<string>();
+      ks.add(raw.toLowerCase());
+      keys.set(odia, ks);
+    }
   }
   return {
     size: map.size,
     get: (word) => map.get(word),
     isOffensive: (word) => map.get(word)?.has('offensive') ?? false,
+    isCoarse: (word) => map.get(word)?.has('coarse') ?? false,
+    keysFor: (word) => keys.get(word),
   };
 }
 

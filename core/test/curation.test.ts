@@ -111,10 +111,10 @@ describe('labels.tsv and the family-safe filter', () => {
     expect(texts(engine.transliterateWord('bus', 5))).not.toContain(FAKE);
   });
 
-  it('still offers the word under its own lexicon key, or once the user taught it', () => {
+  it('still offers the word under one of its listed keys, or once the user taught it', () => {
     const byKey = createEngine({
       rulesToml: SYMBOLS_TOML,
-      labelsTsv: OFFENSIVE,
+      labelsTsv: `${FAKE}\toffensive\tbush\n`,
       lexiconTsv: `bush\t${FAKE}\t1\n`,
     });
     expect(texts(byKey.transliterateWord('bush', 5))).toContain(FAKE);
@@ -122,6 +122,62 @@ describe('labels.tsv and the family-safe filter', () => {
     const taught = createEngine({ rulesToml: SYMBOLS_TOML, labelsTsv: OFFENSIVE, learnStore: new MemoryLearnStore() });
     taught.learn('bus', FAKE);
     expect(taught.transliterateWord('bus', 5)[0]?.text).toBe(FAKE);
+  });
+
+  // The real case behind this rule: the lexicon also files words under loose
+  // casual keys, and one listed word sat under the key of the word for
+  // "closed". "The lexicon lists it under this key" is not a safe exemption.
+  it('drops it when the lexicon files it under a key that is not one of its listed keys', () => {
+    const engine = createEngine({
+      rulesToml: SYMBOLS_TOML,
+      labelsTsv: `${FAKE}\toffensive\tbushh\n`,
+      lexiconTsv: `bus\t${FAKE}\t1\n`,
+    });
+    expect(texts(engine.transliterateWord('bus', 5))).not.toContain(FAKE);
+  });
+
+  it('shows a coarse word normally in family mode', () => {
+    const engine = createEngine({ rulesToml: SYMBOLS_TOML, labelsTsv: `${FAKE}\tcoarse\n` });
+    expect(texts(engine.transliterateWord('bus', 5))).toContain(FAKE);
+  });
+
+  describe('kids level', () => {
+    const KIDS = { rulesToml: SYMBOLS_TOML, filter: 'kids' as const };
+
+    it('drops offensive and coarse words with no exemption: not under a listed key, not when taught', () => {
+      const off = createEngine({
+        ...KIDS,
+        labelsTsv: `${FAKE}\toffensive\tbus\n`,
+        lexiconTsv: `bus\t${FAKE}\t1\n`,
+        learnStore: new MemoryLearnStore(),
+      });
+      off.learn('bus', FAKE);
+      expect(texts(off.transliterateWord('bus', 5))).not.toContain(FAKE);
+
+      const coarse = createEngine({ ...KIDS, labelsTsv: `${FAKE}\tcoarse\n` });
+      expect(texts(coarse.transliterateWord('bus', 5))).not.toContain(FAKE);
+    });
+
+    it('never remembers a labelled word, and cannot be switched off', () => {
+      const store = new MemoryLearnStore();
+      const engine = createEngine({ ...KIDS, labelsTsv: OFFENSIVE, learnStore: store });
+      engine.learn('bus', FAKE);
+      expect(store.get('bus')).toBeUndefined();
+      engine.setFamilySafe(false);
+      expect(engine.filter).toBe('kids');
+      expect(engine.familySafe).toBe(true);
+      expect(texts(engine.transliterateWord('bus', 5))).not.toContain(FAKE);
+    });
+
+    it('changes nothing while the label list is empty', () => {
+      const none = createEngine({ rulesToml: SYMBOLS_TOML });
+      const kids = createEngine({ ...KIDS, labelsTsv: '# empty\n' });
+      expect(kids.transliterateWord('bus', 9)).toEqual(none.transliterateWord('bus', 9));
+    });
+  });
+
+  it('rejects a key that is not Latin letters', () => {
+    expect(() => parseLabels(`${FAKE}\toffensive\tb us\n`)).toThrow(/Latin letters/);
   });
 
   it('never touches strict mode', () => {

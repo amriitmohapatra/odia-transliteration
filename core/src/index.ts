@@ -12,7 +12,7 @@
  */
 
 import { emptyLabels, emptyPreferences, parseLabels, parsePreferences } from './curation.js';
-import type { Labels, Preferences } from './curation.js';
+import type { FilterLevel, Labels, Preferences } from './curation.js';
 import { canonical } from './normalize.js';
 import { emptyLexicon, parseLexicon } from './lexicon.js';
 import { rank } from './rank.js';
@@ -57,7 +57,7 @@ export class Engine {
   private readonly learnStore: LearnStore | undefined;
   private readonly preferences: Preferences;
   private readonly labels: Labels;
-  private familySafeOn: boolean;
+  private filterLevel: FilterLevel;
   private readonly digitMode: DigitMode;
   private readonly beam: number;
   private readonly topk: number;
@@ -69,7 +69,7 @@ export class Engine {
     this.learnStore = cfg.learnStore;
     this.preferences = cfg.preferences ?? emptyPreferences();
     this.labels = cfg.labels ?? emptyLabels();
-    this.familySafeOn = cfg.familySafe ?? true;
+    this.filterLevel = cfg.filter ?? (cfg.familySafe === false ? 'off' : 'family');
     this.digitMode = cfg.digits ?? 'arabic';
     this.beam = cfg.beam ?? DEFAULT_BEAM;
     this.topk = cfg.topk ?? DEFAULT_TOPK;
@@ -132,8 +132,7 @@ export class Engine {
       lexiconEntries: this.lexicon.lookup(key),
       userCounts: this.learnStore?.get(key),
       prefWeights: this.preferences.get(key),
-      isOffensive:
-        this.familySafeOn && this.labels.size > 0 ? (word) => this.labels.isOffensive(word) : undefined,
+      isBlocked: this.blockerFor(key),
       unigrams: this.unigrams,
       weights: this.rules.weights,
       topk: wanted,
@@ -148,16 +147,39 @@ export class Engine {
    * field handed back — enters long-lived storage.
    */
   learn(roman: string, chosen: string): void {
-    this.learnStore?.record(roman, canonical(chosen));
+    const word = canonical(chosen);
+    // The kids edition never remembers a labelled word, so it can never come back.
+    if (this.filterLevel === 'kids' && (this.labels.isOffensive(word) || this.labels.isCoarse(word))) return;
+    this.learnStore?.record(roman, word);
   }
 
   /** Family-safe filter: on by default (owner decision D-0). See rank.ts. */
   get familySafe(): boolean {
-    return this.familySafeOn;
+    return this.filterLevel !== 'off';
   }
 
+  /** The "Hide rude words" switch. Ignored in the kids edition, which stays on. */
   setFamilySafe(on: boolean): void {
-    this.familySafeOn = on;
+    if (this.filterLevel === 'kids') return;
+    this.filterLevel = on ? 'family' : 'off';
+  }
+
+  get filter(): FilterLevel {
+    return this.filterLevel;
+  }
+
+  /**
+   * The content filter for one roman key, or undefined when nothing is
+   * filtered. Family: an offensive word stays only under one of its own
+   * listed keys, or when the user taught it or the owner prefers it. Kids:
+   * offensive and coarse words never appear.
+   */
+  private blockerFor(key: string): ((word: string, vouched: { user: boolean; pref: boolean }) => boolean) | undefined {
+    if (this.filterLevel === 'off' || this.labels.size === 0) return undefined;
+    const labels = this.labels;
+    if (this.filterLevel === 'kids') return (word) => labels.isOffensive(word) || labels.isCoarse(word);
+    return (word, vouched) =>
+      labels.isOffensive(word) && !vouched.user && !vouched.pref && !(labels.keysFor(word)?.has(key) ?? false);
   }
 
   /** Labels for a canonical Odia word, for display (e.g. an "offensive" badge). */
@@ -230,6 +252,8 @@ export interface CreateEngineOptions {
   labelsTsv?: string;
   /** Family-safe filter. Default true. */
   familySafe?: boolean;
+  /** Content filter level: 'off' | 'family' | 'kids'. Overrides `familySafe`. */
+  filter?: FilterLevel;
   learnStore?: LearnStore;
   digits?: DigitMode;
   beam?: number;
@@ -251,6 +275,7 @@ export function createEngine(opts: CreateEngineOptions): Engine {
     preferences: opts.preferencesTsv === undefined ? undefined : parsePreferences(opts.preferencesTsv),
     labels: opts.labelsTsv === undefined ? undefined : parseLabels(opts.labelsTsv),
     familySafe: opts.familySafe,
+    filter: opts.filter,
     learnStore: opts.learnStore,
     digits: opts.digits,
     beam: opts.beam,
@@ -275,8 +300,8 @@ export {
   DDHA_NUKTA,
 } from './normalize.js';
 export { loadRules, loadStrictScheme, optionContext } from './rules.js';
-export { parsePreferences, parseLabels, parseGlosses, LABELS, GLOSS_STATUS } from './curation.js';
-export type { Preferences, Labels, Label, Glosses, GlossStatus } from './curation.js';
+export { parsePreferences, parseLabels, parseGlosses, LABELS, GLOSS_STATUS, FILTER_LEVELS } from './curation.js';
+export type { Preferences, Labels, Label, Glosses, GlossStatus, FilterLevel } from './curation.js';
 export type { PositionContext, PositionedOption } from './rules.js';
 export { tokenize } from './tokenize.js';
 export type { Token, TokenKind } from './tokenize.js';

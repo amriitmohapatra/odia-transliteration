@@ -32,12 +32,12 @@ export interface RankInput {
   /** Canonical Odia word -> owner preference weight for this key. */
   prefWeights?: Readonly<Record<string, number>>;
   /**
-   * Family-safe filter, present only when it is on. A candidate for which this
-   * returns true is dropped UNLESS the lexicon, the user or the owner vouches
-   * for it under this exact key. So a word typed by its own spelling still
-   * appears, but never as a rule-generated near miss for an innocent input.
+   * The content filter, present only when it is on (see Engine and
+   * curation.ts). Returns true to drop a candidate. It is told whether the user
+   * taught the word or the owner prefers it for this key, because those
+   * exemptions depend on the filter level.
    */
-  isOffensive?: (word: string) => boolean;
+  isBlocked?: (word: string, vouched: { user: boolean; pref: boolean }) => boolean;
   unigrams: Unigrams;
   weights: RankWeights;
   /** Maximum ranked candidates before the verbatim token is appended. */
@@ -101,13 +101,7 @@ export function rank(input: RankInput): Candidate[] {
   const scored: (Candidate & { fromRules: boolean })[] = [];
   for (const [text, sources] of evidence) {
     // Before the slice, so a dropped word frees its slot for the next one.
-    if (
-      input.isOffensive !== undefined &&
-      sources.lex === 0 &&
-      sources.user === 0 &&
-      sources.pref === 0 &&
-      input.isOffensive(text)
-    ) {
+    if (input.isBlocked !== undefined && input.isBlocked(text, { user: sources.user > 0, pref: sources.pref > 0 })) {
       continue;
     }
     scored.push({
