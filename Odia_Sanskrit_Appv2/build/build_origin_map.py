@@ -31,7 +31,7 @@ Method
    is a language mark (LANG below). Within it, each `+`-joined piece that
    starts with a language mark contributes that language (hybrids such as
    "ଆ. ନଜର୍+ଫା. ବନ୍ଦୀ", Arabic + Persian, keep both). Text after "ତୁଳ"
-   (compare) or "କିମ୍ବା" (or) is ignored: "(ସଂ. କାତର; ତୁଳ. ହି. ...)" is not Hindi.
+   (compare; also spelt ତୂଳ, ଢୁଳ) or "କିମ୍ବା" (or) is ignored: "(ସଂ. କାତର; ତୁଳ. ହି. ...)" is not Hindi.
    "(ହି. ଶବ୍ଦସାଗର)" / "(ହି.ଶ)" is a CITATION of the Hindi dictionary
    Shabdasagar, not an origin, and is skipped.
 3. CODE per entry, from class + etymon:
@@ -64,19 +64,19 @@ came from this mark; Sanskrit marks inside a ସଂ.-class entry are not counted
 because the class alone decides those.
 
     mark                              code  meaning      decided
-    ସଂ / ସଂ.                            S    Sanskrit       16,070  (tadbhava etymons and hybrids)
+    ସଂ / ସଂ.                            S    Sanskrit       16,069  (tadbhava etymons and hybrids)
     ଇଂ / ଇଂ.                            E    English         4,186
     ଫା / ଫା.                            P    Persian         3,926
     ଆ / ଆ.                              A    Arabic          2,567
-    ହି / ହି.  (not ହି. ଶବ୍ଦସାଗର)          H    Hindi             183
+    ହି / ହି.  (not ହି. ଶବ୍ଦସାଗର)          H    Hindi             182
     ହିନ୍ଦିରୁ / ହିନ୍ଦୀରୁ ("from Hindi")       H    Hindi              43
     ବଙ୍ଗଳାରୁ ("from Bengali") / ବଂ.       B    Bengali           131
     ତୁର୍କୀ                               K    Turkish            61
     ପର୍ଟୁଗୀଜ                             G    Portuguese          5
     ଓ.  (Odia part of a hybrid)        D    native Odia        45
 
-Class marks (whole file, entries): ସଂ. -> S 63,215 · ଦେ. -> D 40,147 / T 15,473 ·
-ବୈଦେ. without a language -> F 1,746 · no class found or register only -> none 17,096
+Class marks (whole file, entries): ସଂ. -> S 63,215 · ଦେ. -> D 40,148 / T 15,472 ·
+ବୈଦେ. without a language -> F 1,746 · no class found or register only -> none 17,097
 (phrases, cross-references, regional and colloquial words without a foreign etymon).
 
 Deliberately NOT mapped (ambiguous; the entry keeps its class code, or nothing):
@@ -90,7 +90,7 @@ Deliberately NOT mapped (ambiguous; the entry keeps its class code, or nothing):
 The earlier rough count in plan/research/2026-10-04/02-dictionary-sources.md
 ("first parenthesised tag": Hindi 4,749) mostly counted "(ହି. ଶବ୍ଦସାଗର)", a
 citation of the Hindi dictionary Shabdasagar inside Sanskrit entries (~740 in
-the head alone), plus later senses. Genuine Hindi etymons: 226 entries.
+the head alone), plus later senses. Genuine Hindi etymons: 225 entries.
 
 Run from the repo root (Python 3 stdlib only):
     python3 Odia_Sanskrit_Appv2/build/build_origin_map.py <path-to-praharaj.babylon>
@@ -153,7 +153,7 @@ LANG = {
     'ଓ': 'D',
 }
 FOREIGN_CODES = set('PAEHBKG')
-STOP = re.compile(r'ତୁଳ|ଢୁଳ|କିମ୍ବା')
+STOP = re.compile(r'ତୁଳ|ତୂଳ|ଢୁଳ|କିମ୍ବା')
 CITATION = re.compile(r'^\s*ହି\s*\.?\s*ଶ')  # (ହି. ଶବ୍ଦସାଗର), (ହି.ଶ)
 
 TOKEN = re.compile(r'\([^()]*\)|\[[^\[\]]*\]|[^\s()\[\]]+')
@@ -189,6 +189,8 @@ def etymon_codes(group: str, marks: list = None) -> str:
     >>> etymon_codes('(କଚିରିଆ)')
     ''
     >>> etymon_codes('(ତୁଳ ବଂ. ମତନ୍; ହି. ମୋତାବିକ୍)')
+    ''
+    >>> etymon_codes('(ତୂଳ; ହି. ଅଭର୍)')
     ''
     >>> etymon_codes('[ଇଂ. ରବ୍ଳ]')
     'E'

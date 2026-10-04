@@ -63,7 +63,7 @@ docstring; `python3 -m doctest build/build_origin_map.py` tests the tag rules.
 | File | sha256 | Note |
 |---|---|---|
 | `praharaj.babylon` (input) | `b60c01043c26598c26cb8085c130ef89ab92bb404367302a4257c6c35e0003eb` | Same copy as above |
-| `Appv2/src/dictionary/origin.bin` | `993558c12bb26ba5dff926ce22f413de698d0f7a5a690fc8c586dc6f2b3f1c69` | gzip (mtime 0, reproducible), 13,382 bytes; 74,761 bytes inflated |
+| `Appv2/src/dictionary/origin.bin` | `aac06339d526242f05153cac8444e97b6fd736033a983ed5a84c28c6b6cda7b1` | gzip (mtime 0, reproducible), 13,382 bytes; 74,760 bytes inflated |
 
 Format: line 1 `odia-origin 1 <TAB> 38776 <TAB> <FNV-1a 32 of the praharaj.bin keys>`, then
 one line per `praharaj.bin` key, in key order: the origin code, or empty. The app drops the
@@ -81,11 +81,11 @@ Counts for the 38,776 keys of `praharaj.bin` (a key can carry more than one code
 | P | Persian | 839 |
 | A | Arabic | 662 |
 | F | foreign, language not given | 361 |
-| H | Hindi | 62 |
+| H | Hindi | 61 |
 | B | Bengali | 26 |
 | K | Turkish | 19 |
 | G | Portuguese | 1 |
-| — | no origin found | 3,379 |
+| — | no origin found | 3,380 |
 
 244 keys have entries that disagree (homographs, e.g. one Sanskrit and one native entry);
 the file keeps both, in entry order (`S/D`).
@@ -93,7 +93,7 @@ the file keeps both, in entry order (`S/D`).
 **Hindi is much rarer than the research note suggested.** The rough count in
 `plan/research/2026-10-04/02-dictionary-sources.md` (Hindi 4,749 by "first parenthesised
 tag") mostly counted `(ହି. ଶବ୍ଦସାଗର)`, a citation of the Hindi dictionary *Shabdasagar*
-inside Sanskrit entries. Read as origins, Praharaj marks 226 entries as Hindi; 62 keys of
+inside Sanskrit entries. Read as origins, Praharaj marks 225 entries as Hindi; 61 keys of
 the shipped subset. Praharaj (1931–40) also predates most of today's Hindi borrowings in
 Odia news, so a word with no origin here may still be a recent loan.
 

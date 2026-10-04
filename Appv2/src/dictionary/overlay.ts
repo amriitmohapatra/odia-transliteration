@@ -51,6 +51,7 @@ import { parseGlosses, type Glosses } from '@odia/core';
 import glossesTsv from '../../../core/data/glosses.tsv?raw';
 
 import { inflate } from './pako-inflate.js';
+import { originChipLabel, originLabel, parseOrigin } from './origin.js';
 import './overlay.css';
 
 /**
@@ -182,93 +183,14 @@ function parsePayload(gz: Uint8Array): Dict {
 }
 
 /* ------------------------------------------------------------ *
- * Word origin (V2.4). origin.bin = gzip(text):
- *   line 1: "odia-origin 1" TAB <key count> TAB <FNV-1a 32 of P.keys.join("\n")>
- *   then one line per Praharaj key, in key order: a code or "".
- * Codes: S Sanskrit (tatsama), T native Odia from Sanskrit (tadbhava),
- * D native Odia (deshaja), P Persian, A Arabic, E English, H Hindi,
- * B Bengali, K Turkish, G Portuguese, F foreign (language not given).
- * Several letters = a hybrid ("AP"); "/" separates homograph entries
- * that disagree ("S/D"). Table and method: build_origin_map.py.
+ * Word origin (V2.4): codes and labels live in ./origin.ts.
  * ------------------------------------------------------------ */
-
-const ORIGIN_FORMAT = 'odia-origin 1';
-
-/** FNV-1a 32 over UTF-16 code units; mirrors fnv1a() in build_origin_map.py. */
-function fnv1a(s: string): string {
-  let h = 0x811c9dc5;
-  for (let i = 0; i < s.length; i += 1) {
-    h ^= s.charCodeAt(i);
-    h = Math.imul(h, 0x01000193) >>> 0;
-  }
-  return ('0000000' + h.toString(16)).slice(-8);
-}
-
-/** Origin codes aligned with dict.keys, or null if the file does not belong to it. */
-function parseOrigin(gz: Uint8Array, dict: Dict): string[] | null {
-  const lines = new TextDecoder('utf-8').decode(inflate(gz)).split('\n');
-  const head = (lines[0] as string).split('\t');
-  const count = dict.keys.length;
-  if (head[0] !== ORIGIN_FORMAT || +(head[1] as string) !== count) return null;
-  if (head[2] !== fnv1a(dict.keys.join('\n'))) return null; // stale: built for another praharaj.bin
-  if (lines.length < count + 1) return null;
-  return lines.slice(1, count + 1);
-}
-
-const LANG_NAME: Record<string, string> = {
-  S: 'Sanskrit',
-  D: 'Odia',
-  P: 'Persian',
-  A: 'Arabic',
-  E: 'English',
-  H: 'Hindi',
-  B: 'Bengali',
-  K: 'Turkish',
-  G: 'Portuguese',
-};
-
-/** Panel label for one entry's code ("S", "T", "P", "AP", ...). */
-function originPhrase(code: string): string | null {
-  if (code === 'S') return 'from Sanskrit (tatsama)';
-  if (code === 'T') return 'native Odia (tadbhava, from Sanskrit)';
-  if (code === 'D') return 'native Odia (deshaja)';
-  if (code === 'F') return 'from another language';
-  const names: string[] = [];
-  for (let i = 0; i < code.length; i += 1) {
-    const n = LANG_NAME[code.charAt(i)];
-    if (!n) return null; // unknown letter: say nothing rather than guess
-    names.push(n);
-  }
-  return names.length ? 'from ' + names.join(' + ') : null;
-}
 
 /** Origin code of a lookup result. A prefix match is a different word: none. */
 function originCode(entry: Entry | null): string | null {
   if (!O || !entry || entry.how === 'prefix') return null;
   const code = O[entry.index];
   return code ? code : null;
-}
-
-/** "from Persian" / "from Sanskrit (tatsama) or native Odia (deshaja)", for the panel. */
-function originLabel(entry: Entry | null): string | null {
-  const code = originCode(entry);
-  if (!code) return null;
-  const parts: string[] = [];
-  for (const c of code.split('/')) {
-    const phrase = originPhrase(c);
-    if (!phrase) return null;
-    parts.push(phrase);
-  }
-  return parts.join(' or ');
-}
-
-/** Short suffix for a suggestion's meaning: only for a borrowed word, and only
- * when Praharaj's entries agree. Native and Sanskrit words get none, so the
- * suffix stays rare enough to notice. */
-function originChip(entry: Entry | null): string | null {
-  const code = originCode(entry);
-  if (!code || code.indexOf('/') >= 0 || !/[PAEHBKGF]/.test(code)) return null;
-  return originPhrase(code);
 }
 
 function loadData(): void {
@@ -290,7 +212,7 @@ function loadData(): void {
         M = null; /* modern layer is optional */
       }
       try {
-        O = bytes.origin ? parseOrigin(bytes.origin, P) : null;
+        O = bytes.origin ? parseOrigin(new TextDecoder('utf-8').decode(inflate(bytes.origin)), P.keys) : null;
       } catch {
         O = null; /* origins are optional */
       }
@@ -460,7 +382,8 @@ function chipFor(word: string): string | null {
 /** Origin suffix for a suggestion ("from Persian"), or null. Same gate as chipFor. */
 function chipOrigin(word: string): string | null {
   if (hidden(word)) return null;
-  return originChip(lookup(word));
+  const entry = lookup(word);
+  return originChipLabel(originCode(entry));
 }
 
 /* Put the meaning (and a quiet origin suffix) into a gloss span. The accessible
@@ -671,7 +594,7 @@ function entryBlock(word: string, num: number | null, entry: Entry | null, moder
     tag.textContent = 'maybe: starts with this word';
   }
   if (tag.textContent) h.appendChild(tag);
-  const origin = originLabel(entry);
+  const origin = originLabel(originCode(entry));
   if (origin) {
     const o = document.createElement('span');
     o.className = 'dict-tag dict-tag-origin';
