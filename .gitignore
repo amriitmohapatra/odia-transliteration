@@ -14,3 +14,5 @@ tools/build-data/webcorpus/raw-archive-books.jsonl
 .env
 .env.*
 !.env.example
+# Temporary git worktrees made for agents by Claude Code; never project content.
+.claude/worktrees/
