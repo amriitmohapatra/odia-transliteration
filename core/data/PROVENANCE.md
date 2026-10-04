@@ -172,6 +172,17 @@ final `a`, `v` for `w`, `ri` for `ru` on vocalic words, and nasal-cluster collap
 The weight is `ln(1+count) / ln(1+peak) * 2.303`. The **exact** romanization gets
 the full weight and every looser variant gets 0.9x.
 
+**`j`-keys for ଯ (2026-10-04, V2.1).** ଯ is romanized `y`, but Odia pronounces it
+*ja*. A word that starts with ଯ therefore also gets every one of its spellings with
+the initial `y` replaced by `j` (ଯିବା: `jibaa`, `jiba`, `jib`), weighted 0.9x like
+the other loose spellings; the exact key stays `y…`. Only a word-initial ଯ: inside a
+word the letter is ୟ, which really is `y`. This adds 4,971 rows to
+`lexicon-common.tsv` and 1,381 to `lexicon-common-web.tsv`; after the merge, 4,495
+new and 110 raised rows in `lexicon.tsv`, 1,351 new and 8 raised in
+`lexicon-web.tsv`. No other row changed. Trade-off: where a `j` spelling is shared,
+the more frequent word leads (`je` → ଯେ 81,614 over ଜେ 1,716); see the commit
+message for every ଜ-word that lost first place.
+
 "Exact" is the careful spelling with ଂ → `m` and ଁ → `n`. That matches the careful
 register of `tools/eval/everyday.ts`. `docs/romanization-reference` accepts both `n`
 and `m` for ଂ. When a word has an anusvara or candrabindu, `ଂ`→`n` and the dropped
@@ -206,10 +217,13 @@ and this file directly. After rerunning it, rename its two lexicon outputs to
 
 | File | Rows | Size | sha256 |
 |---|---|---|---|
-| `core/data/lexicon-common.tsv` | 369,672 | 14,329,498 B | `3d02fafe0912337da4fe98a4839e9028bfc76398dd6c7d4921e51264122bcdb1` |
-| `core/data/lexicon-common-web.tsv` | 88,193 | 3,193,190 B | `37f8fbba5d879e6caf21852af652d982d5c9c06aa54b8ef6a3f8d16549c625b5` |
-| `core/data/lexicon.tsv` (merged) | 774,496 | 33,061,457 B | `b39bed5ed7a249c31f387ac2177a14852aa409406d92aa0b4fd5faca01c09be7` |
-| `core/data/lexicon-web.tsv` (merged) | 121,774 | 4,678,925 B | `849878370300ac92bc6807e49b3b4cfda99997594e33d6fb0fb8ae6193df0af2` |
+| `core/data/lexicon-common.tsv` | 374,643 | 14,517,489 B | `eb654b403d1019bc81959b867a05c7d075647cb61bf25a9187ddc33caea3ebce` |
+| `core/data/lexicon-common-web.tsv` | 89,574 | 3,242,540 B | `bd399a6aa7e4806ac0fd602add89f1d0904841441ca4c9b19f2092ceda1f9234` |
+| `core/data/lexicon.tsv` (merged) | 778,991 | 33,230,798 B | `5e6d0323c158556b2b3e909a869820058372973887d143766d3bb88f5a4b6ed2` |
+| `core/data/lexicon-web.tsv` (merged) | 123,125 | 4,727,172 B | `991df800e273b25a7a6f5c52d028ce38ec251d2d8d5479c7763ce85db48b8b54` |
+
+Rebuilt 2026-10-04 with the `j`-keys. Two runs (default and `PYTHONHASHSEED=12345`)
+gave byte-identical files.
 
 Precomposed U+0B5C / U+0B5D in all four files: 0.
 
