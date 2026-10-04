@@ -722,12 +722,13 @@ function choose(text: string): void {
  *
  * No network call. The report is copied to the clipboard and an email draft
  * opens with no recipient, so the user decides whether to send it and to whom.
- * REPORT_EMAIL is empty on purpose: putting the owner's address in a public
- * page is the owner's decision (plan/06-owner-followups.md).
+ * The owner chose to receive reports (2026-10-04). The address is joined at
+ * run time from two parts so it never appears whole in the page source, which
+ * keeps the simplest address scrapers from collecting it from the public site.
  * ------------------------------------------------------------------ */
 
 declare const __APP_VERSION__: string;
-const REPORT_EMAIL = '';
+const REPORT_EMAIL = ['amrit.mohapatra97', 'gmail.com'].join('@');
 const REPORT_COPIED = 'Report copied. Paste it in an email or a WhatsApp message to the app owner.';
 
 function reportText(): string | undefined {

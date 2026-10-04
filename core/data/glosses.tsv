@@ -8,7 +8,9 @@
 #           checked, or delete the row.
 # The Odia cell must be canonical (nukta decomposed). The loader rejects anything else.
 # Licence: MIT (this project).
-ରଜ	Raja festival (June); also: dust	seed	raja -> festival is the owner's decision (2026-10-04); Praharaj's first sense is "dust"
-କେମିତି	how	seed	audit B5: was shown as "English: committee" (loan detector)
-ଆଛା	okay; fine	seed	audit B5: was shown as "See)"
-ଦିନ	day	seed	audit B5: the modern layer led with "day after day"
+ରଜ	Raja festival (June)	owner	owner 2026-10-04: today RAJA means the festival; dust is DHULI
+କେମିତି	how	owner	owner 2026-10-04; the loan detector had glossed it as "committee"
+ଆଛା	okay; fine	owner	owner 2026-10-04
+ଦିନ	day	owner	owner 2026-10-04
+କମିଟି	committee	owner	owner 2026-10-04: this is the Odia spelling of committee
+ଧୂଳି	dust	owner	owner 2026-10-04: the everyday word for dust

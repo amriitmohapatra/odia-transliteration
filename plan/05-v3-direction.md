@@ -1,6 +1,6 @@
 # 05 — Direction for v3: decision brief
 
-**Status:** decisions recorded 2026-10-04 (§11). D-6 and D-10 are still open. Each stage
+**Status:** decisions recorded 2026-10-04 (§11). D-6 is still open (D-10 decided: public website). Each stage
 in §13 starts only when the owner approves it.
 
 **Purpose:** the owner asked for "more informed ideas to decide". This file collects the
@@ -425,7 +425,7 @@ their trigger occurs.
 | D-7 | Lens v1 form (§9) | Decided 2026-10-04 | Browser extension |
 | D-8 | Vercel plan | Decided 2026-10-04 | Hobby until public, then Pro |
 | D-9 | Laya | Decided 2026-10-04 | Experiment E-1 only, after the simple tagger |
-| D-10 | Public or private product (§12) | **Open** | Trigger: before the first deploy |
+| D-10 | Public or private product (§12) | Decided 2026-10-04 | **Public website.** The repository stays private until the owner says otherwise (a public repo needs a fresh repository without the scraped corpus). |
 | D-11 | Update `CLAUDE.md` stale lines (§12) | Decided 2026-10-04 | Yes |
 | D-12 | Let `j` also give ଯ (§6) | Decided 2026-10-04 | Yes. **Done** 2026-10-04, measured before and after. |
 
