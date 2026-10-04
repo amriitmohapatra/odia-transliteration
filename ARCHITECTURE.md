@@ -233,7 +233,8 @@ every result passes `canonical()`; cache by canonical text.
 | Colloquial | `npx tsx tools/eval/colloquial.ts` | Spoken, slang, dialect forms by register (unvalidated seed) |
 | CI | `.github/workflows/ci.yml` | All of the above on every push |
 | Appv2 suite | `npx tsx Appv2/eval/run.ts` | Rule drift, theme, no-regression, Sanskrit coverage, śloka |
-| Browser | `tools/eval/webkit-check.py`, Playwright scripts | The app in a real engine |
+| Browser (Chromium) | `Appv2/eval/browser/*.mjs` (see its README) | Typing, meanings, Keep English, offline, report button, A-7 timing — against the built app |
+| Browser (Safari engine) | `tools/eval/webkit-check.py` | On a Mac only |
 
 Rule: every rule or data change reports the metric delta in its commit.
 

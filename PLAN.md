@@ -82,6 +82,8 @@ layer, `ARCHITECTURE.md` §7). Two things are set up now so V3 starts safely:
 | 4.3 | Release = git tag + 5-line note (changes, numbers vs baseline, not tested, limits) | From first deploy |
 | 4.4 | Rollback = promote the previous Vercel deployment | From first deploy |
 | 4.5 | A rule for when `tools/eval/baseline.json` may be refreshed: only in its own commit, with the reason | To do |
+| 4.6 | Browser checks in the repo: `Appv2/eval/browser/` (regress, gloss-check, report-check, freeze) | **Done** |
+| 4.7 | Run the browser checks in CI (needs a Playwright + Chromium install step) | To do |
 
 ## 4. V1 acceptance checks
 
@@ -166,6 +168,7 @@ Agents do not commit; the lead reviews, measures and commits.
 
 | Date | Change |
 |---|---|
+| 2026-10-04 | Browser checks moved into the repo (4.6). Docs pointers updated (CLAUDE.md, AGENTS.md, docs/README.md). |
 | 2026-10-04 | A-7 measured (passes, start-up limit noted). **V1 code done.** |
 | 2026-10-04 | 2.6 report button done. |
 | 2026-10-04 | UI Run B merged (6 commits): Share/Undo, tokens (70/70 contrast pairs pass), text size, first-run card + Help, desktop list + meanings column, screen-reader path. A-1, A-6, A-8, A-9, A-10 pass. |

@@ -17,6 +17,12 @@ and the spike results. **This file is the shortest path to being useful.**
 
 English → Odia (ଓଡ଼ିଆ) phonetic transliteration. Type `kemiti achha`, get `କେମିତି ଅଛ`.
 
+> **Update 2026-10-04.** The owner widened the scope: a V1 web app on Vercel (built from
+> `Appv2/`, code done), then an opt-in online assist layer, a lens, and native apps. Read
+> `PLAN.md` (stages, status, acceptance) and `ARCHITECTURE.md` (components, data flow,
+> storage, DOM contracts) first; `plan/05-v3-direction.md` holds the decisions. The text
+> below is the July 2026 state and is kept for its hard-won facts.
+
 Current scope is **macOS only** (the owner narrowed it; iOS is deferred, not cancelled).
 Two shipped artefacts:
 

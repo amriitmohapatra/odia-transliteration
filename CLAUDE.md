@@ -6,7 +6,9 @@ English → Odia (ଓଡ଼ିଆ) phonetic transliteration for macOS and Window
 **Read `plan/00-overview.md` before making architectural decisions.** The plan folder is
 the source of truth for scope, staging and rationale.
 
-**Current stage** (2026-10-04): Stages A and B are in progress. Three single-file web apps
+**Current stage** (2026-10-04, later): **V1 code is done** (the Appv2 web app: dictionary,
+family-safe filter, read-back, new UI, offline). It waits for the owner's decision D-10
+(public or private) and the Vercel deploy. Status per item: `PLAN.md`. Earlier: Stages A and B were in progress. Three single-file web apps
 are built and measured: `docs/odia-app.html`, `docs/odia-app-sanskrit.html` (from `Appv2/`)
 and `Odia_Sanskrit_Appv2/odia-app-sanskrit-v2.html` (adds the dictionary). The v3 direction
 and the owner's decisions are in `plan/05-v3-direction.md`. See also `plan/02-stages.md`.
