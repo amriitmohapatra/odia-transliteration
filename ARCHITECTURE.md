@@ -1,0 +1,208 @@
+# ARCHITECTURE.md — how the system is built
+
+**Living document.** Claude updates this file in the same commit as any change that moves
+a box, a file or a data flow below. Last updated: 2026-10-04 (V1 in progress).
+
+Companion files: `PLAN.md` (what we build, in what order, and how we check it),
+`plan/05-v3-direction.md` (research and decisions), `CLAUDE.md` (working rules),
+`AGENTS.md` (hand-off for any AI tool).
+
+**Style:** STE-flavored (short sentences, active voice). Terms are in the glossary at the
+end.
+
+---
+
+## 1. The system in one picture
+
+```
+                         OWNER (native speaker)
+                 edits rules, preferences, labels, phrases
+                                   │
+   ┌───────────────────────────────▼────────────────────────────────┐
+   │  SOURCE OF TRUTH (git)                                         │
+   │  core/rules/*.toml      letters → Odia, weights                │
+   │  core/data/*.tsv        lexicon, unigrams (built), preferences │
+   │                         and labels (hand-edited)               │
+   │  Appv2/rules, data      Sanskrit profiles (generated + mined)  │
+   │  Appv2/src/dictionary   Praharaj + modern glosses (binary)     │
+   └───────────────┬────────────────────────────────┬───────────────┘
+                   │ imported as text               │ build-time only
+   ┌───────────────▼──────────────┐   ┌─────────────▼──────────────┐
+   │  core/  THE ENGINE           │   │ tools/build-data (Python)  │
+   │  TypeScript, synchronous,    │   │ corpus → lexicon/unigrams  │
+   │  no I/O, no network          │   │ tools/eval  (measurement)  │
+   └───┬──────────┬──────────┬────┘   └────────────────────────────┘
+       │          │          │
+   cli/       web/        Appv2/  ──► V1 web app (Vercel, static, offline)
+   (dev)    (legacy        (three modes + dictionary + family-safe filter)
+             single file)        │
+                                 │ only if the user turns a feature on (V3)
+                     ┌───────────▼─────────────┐
+                     │ ASSIST LAYER (planned)  │  Vercel functions:
+                     │ /api/speak /api/listen  │  keys stay on the server
+                     │ /api/translate          │  → Sarvam, Google/Claude
+                     └─────────────────────────┘
+
+   ime-macos/ (Swift, JavaScriptCore) · lens extension (V4) · Android/iOS (V5): later
+```
+
+## 2. Invariants (never break these)
+
+| # | Invariant | Where it is enforced |
+|---|---|---|
+| I-1 | ଡ଼ and ଢ଼ are stored decomposed (U+0B21/U+0B22 + U+0B3C), never U+0B5C/U+0B5D | `canonical()` in `core/src/normalize.ts` at every boundary; nukta tests in `core/test/` |
+| I-2 | `core/` makes no network call and has no I/O | `core/tsconfig.json` has `"types": []`; code review |
+| I-3 | The engine API is synchronous | Type signatures; the macOS input method depends on it |
+| I-4 | Linguistic behaviour lives in data (TOML/TSV), not in TypeScript | `CLAUDE.md` "Where behaviour lives"; `rules.ts` and `curation.ts` fail loudly on bad data |
+| I-5 | Every shipped data source is MIT / CC0 / CC-BY (fonts OFL), with a provenance record | `PROVENANCE.md` per data folder |
+| I-6 | Online features are opt-in, one switch each, and name the company that receives the data | V3 design rule (`plan/05` §4) |
+| I-7 | No Odia literals in TypeScript source: use `\u` escapes | Review. Warning: the agent tooling can turn `\u` escapes into literal characters; check by code point after writing |
+
+## 3. The engine (`core/`)
+
+One call per keystroke: `transliterateWord(roman, topk)` → ranked candidates.
+
+```
+roman ──► tokenize ──► segment (rules lattice, beam) ──┐
+              │                                        ├─► rank ──► candidates
+              │        lexicon.lookup(key) ────────────┤    (dedupe on canonical,
+              │        unigrams.logfreq(word) ─────────┤     family-safe filter,
+              │        learnStore.get(key)  ───────────┤     reachability floor,
+              │        preferences.get(key) ───────────┘     verbatim token last)
+              └── digits: arabic | odia
+```
+
+| Module | Job |
+|---|---|
+| `normalize.ts` | `canonical()`, code-point helpers. The nukta invariant. |
+| `tokenize.ts` | Splits input into words, digit runs, punctuation. Non-ASCII passes through. |
+| `rules.ts` | Loads and validates `symbols.toml` / `itrans.toml`. Throws on any error. |
+| `segment.ts` | Builds spellings from the rules (weighted lattice, beam search, position context). |
+| `lexicon.ts`, `unigrams.ts` | Sorted lexicon (roman key → words) and word frequencies. |
+| `curation.ts` | Owner data: `preferences.tsv`, `labels.tsv`. Strict parsers. |
+| `rank.ts` | Merges evidence and scores (see formula). |
+| `learn.ts` | User dictionary (`{roman: {odia: count}}`), memory or localStorage. |
+| `strict.ts` | Deterministic ITRANS mode. |
+| `index.ts` | `Engine`, `createEngine()`. `node.ts`: `createEngineFromDisk()`. |
+
+**Score** (weights in `[weights]` of `symbols.toml`):
+
+```
+score = rule × (ruleScore + lexScore) + freq × logfreq + user × ln(1 + picks) + pref × prefWeight
+        1.0                              1.5              2.0                    1.0
+```
+
+Order of trust when sources agree: user > owner preference > lexicon > rules.
+
+**Family-safe filter** (on by default): with labels loaded, a word labelled `offensive` is
+dropped unless the lexicon, the user or a preference lists it under the exact key typed.
+It runs before the list is cut to `topk`, so the list stays full. Strict mode is not
+filtered.
+
+## 4. Data
+
+| Data | File | Made by | Edited by hand? |
+|---|---|---|---|
+| Rules (natural mode) | `core/rules/symbols.toml` | Owner + Claude | Yes, with eval delta |
+| Rules (strict ITRANS) | `core/rules/itrans.toml` | From MIT `oriya.toml` | Rarely |
+| Sanskrit profiles | `Appv2/rules/*.delta.toml` → `sanskrit.toml`, `unified.toml` | `Appv2/scripts/gen-rules.ts` | Only the `.delta` files |
+| Lexicon, unigrams | `core/data/lexicon*.tsv`, `unigrams*.tsv` | `tools/build-data/` | No |
+| Sanskrit lexicon | `Appv2/data/*.tsv` | `Appv2/scripts/mine_webfreq_sanskrit.py` | No |
+| Owner preferences | `core/data/preferences.tsv` | Owner | Yes |
+| Word labels | `core/data/labels.tsv` | Owner (empty until curated) | Yes |
+| Eval overrides | `core/test/golden/everyday-overrides.tsv` | Owner decisions | Yes |
+| Dictionary | `Appv2/src/dictionary/*.bin` (from `Odia_Sanskrit_Appv2/build/*.b64`) | `Odia_Sanskrit_Appv2/build/*.py` | No |
+
+"-web" files are the pruned versions the browser loads (phone memory budget).
+
+## 5. The V1 web app (`Appv2/`)
+
+```
+index.html ─ main.ts ─┬─ engine.ts      loads assets per mode (lazy chunks), builds Engine
+                      ├─ profiles.ts    Everyday | Odia+Sanskrit (default) | Śloka
+                      ├─ preprocess.ts  | → ।  || → ॥  ' → ଽ  (before the engine)
+                      ├─ inline.ts      caret suggestion bar (1–8 Odia + typed word as 9)
+                      ├─ palette.ts     insert strip for rare marks
+                      ├─ dictionary/    gloss chips, side panel, search (lazy, ~6 MB)
+                      └─ sw.js          generated service worker (offline)
+```
+
+**Loading order** (keeps the first screen fast): page shell → engine assets for the
+selected mode → engine → dictionary data on first need.
+
+**Browser storage** (per device, never sent anywhere):
+
+| Key | Holds |
+|---|---|
+| `odia.userdict` | Learned picks `{roman: {odia: count}}` |
+| `odia.pref.profile`, `odia.pref.digits`, `odia.pref.strict` | Settings |
+| `odia.pref.familySafe` | Family-safe switch (V1, default on) |
+| Cache Storage `odia-appv2-<rev>` | Offline copy of the app; each app touches only its own prefix |
+
+**Builds:**
+
+| Command | Output | Use |
+|---|---|---|
+| `npx vite build --config Appv2/vite.config.ts` | `Appv2/dist/` (chunks, service worker) | Vercel |
+| `SINGLE_FILE=1 … && node Appv2/scripts/make-single-file.mjs` | one `.html` (fonts and dictionary inlined) | AirDrop / offline file |
+
+`web/` stays as the builder of the legacy `docs/odia-app.html`. V1 does not use it.
+
+## 6. Hosting and deployment (V1)
+
+- Vercel serves `Appv2/dist/` as static files. No server code runs in V1.
+- `vercel.json` (repo root) sets the install and build commands, the output folder and
+  headers (`sw.js` must not be cached long, so updates reach users).
+- Every push to a branch gets a Vercel preview address. The owner checks the preview.
+  Promote to production = release. Rollback = promote the previous deployment.
+- No analytics script. "Nothing sent online" is part of the value proposition.
+
+## 7. The assist layer (V3, planned)
+
+| Route | Does | Provider (D-3) |
+|---|---|---|
+| `/api/speak` | Odia text → audio | Sarvam Bulbul (browser voice first where present) |
+| `/api/listen` | audio → Odia text | Sarvam Saarika |
+| `/api/translate` | sentence → English | Google or Claude Haiku (100-sentence test decides) |
+
+Rules: keys only in Vercel environment variables; `.env*` never committed; rate limit per
+visitor; provider spending limit; hard cap US$20/month (D-4); logs never hold user text;
+every result passes `canonical()`; cache by canonical text.
+
+## 8. Testing and measurement
+
+| Check | Command | Measures |
+|---|---|---|
+| Engine unit tests | `npx vitest run --root core` | Correctness, nukta invariant, curation, filter |
+| Appv2 unit tests | `npx vitest run --root Appv2` | Preprocessing |
+| Fallback page | `node docs/odia-simple.test.mjs` | The 40 KB rules-only page |
+| Held-out accuracy | `npm run eval` | Aksharantar test split, in-lexicon vs OOV, vs `baseline.json` |
+| Everyday accuracy | `npx tsx tools/eval/everyday.ts` | Real Odia round-trip, careful and casual |
+| Coverage | `npx tsx tools/eval/coverage.ts` | Every letter, matra, conjunct reachable |
+| Appv2 suite | `npx tsx Appv2/eval/run.ts` | Rule drift, theme, no-regression, Sanskrit coverage, śloka |
+| Browser | `tools/eval/webkit-check.py`, Playwright scripts | The app in a real engine |
+
+Rule: every rule or data change reports the metric delta in its commit.
+
+## 9. Decision log (short)
+
+| Date | Decision | Why |
+|---|---|---|
+| 2026-07 | TypeScript engine, rules in TOML | JavaScriptCore runs the same engine on macOS/iOS |
+| 2026-07 | Offline engine, no network ever | Reliability; no undocumented endpoints |
+| 2026-10-04 | Offline core + opt-in online assist layer (D-2) | New features need servers; the engine stays offline |
+| 2026-10-04 | Appv2 becomes the V1 web app; dictionary becomes a module | One app, one service worker, one build |
+| 2026-10-04 | Owner preferences as data with their own weight, below one user pick | Owner decides ambiguous keys (raja → festival) without code |
+| 2026-10-04 | Family-safe filter in `rank()`, on by default (D-0) | Never suggest an abuse as a near miss; always allow typing it |
+
+## 10. Glossary
+
+| Term | Meaning |
+|---|---|
+| Candidate | One suggested Odia spelling for the typed word |
+| Canonical | The one stored form of an Odia string (see I-1) |
+| Lexicon | Roman key → Odia word list, from data |
+| OOV | Out of vocabulary: not in the lexicon |
+| Service worker | Browser code that keeps a copy of the app for offline use |
+| Static site | Files only; no server code runs |
+| Verbatim token | The typed Latin word, offered as-is (for English words) |
