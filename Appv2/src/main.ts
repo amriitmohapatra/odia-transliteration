@@ -31,7 +31,6 @@ import { casual } from './romanize.js';
 import {
   DEFAULT_PROFILE,
   isProfileId,
-  PROFILE_ORDER,
   PROFILE_PREF_KEY,
   PROFILES,
   type ProfileId,
@@ -49,7 +48,9 @@ const copyEl = must<HTMLButtonElement>('copy');
 const clearEl = must<HTMLButtonElement>('clear');
 const digitsEl = must<HTMLInputElement>('toggle-digits');
 const strictEl = must<HTMLInputElement>('toggle-strict');
-const profileEl = must<HTMLSelectElement>('profile');
+const modeEverydayEl = must<HTMLInputElement>('mode-everyday');
+const modeSlokaEl = must<HTMLInputElement>('mode-sloka');
+const classicEl = must<HTMLInputElement>('toggle-classic');
 const profileHintEl = must<HTMLElement>('profile-hint');
 const paletteEl = must<HTMLDivElement>('palette');
 const shortcutsEl = must<HTMLElement>('shortcuts');
@@ -72,6 +73,18 @@ function must<T extends HTMLElement>(id: string): T {
 
 const PREF_DIGITS = 'odia.pref.digits';
 const PREF_STRICT = 'odia.pref.strict';
+
+/**
+ * Declared before boot() runs (it is called at module load), like every
+ * constant boot() reaches. What users see for each profile (proposal "Mode note"). Labels only: the ids
+ * and the stored odia.pref.profile value are unchanged, and profiles.ts keeps
+ * its own labels for the eval harnesses.
+ */
+const MODE_HINT: Record<ProfileId, string> = {
+  unified: '',
+  sloka: 'For verse: Sanskrit spellings come first.',
+  everyday: 'Classic engine: the original word list, without Sanskrit forms.',
+};
 
 /** How many candidates the picker offers. */
 const TOPK = 8;
@@ -162,7 +175,7 @@ function digitMode(): DigitMode {
 function rebuildEngine(): void {
   handle = buildEngine(profileId, digitMode(), learnStore);
   setStatus(handle.note, !handle.ready || handle.note.length > 0);
-  profileHintEl.textContent = PROFILES[profileId].hint;
+  profileHintEl.textContent = MODE_HINT[profileId];
 }
 
 /* ------------------------------------------------------------------ *
@@ -340,22 +353,28 @@ function strictCommit(event: KeyboardEvent): void {
  * Profile selector
  * ------------------------------------------------------------------ */
 
+
+/** Put the mode controls in step with `profileId`. */
 function buildProfileSelect(): void {
-  profileEl.replaceChildren(
-    ...PROFILE_ORDER.map((id) => {
-      const option = document.createElement('option');
-      option.value = id;
-      option.textContent = PROFILES[id].label;
-      return option;
-    }),
-  );
-  profileEl.value = profileId;
-  profileHintEl.textContent = PROFILES[profileId].hint;
+  modeSlokaEl.checked = profileId === 'sloka';
+  modeEverydayEl.checked = profileId !== 'sloka';
+  classicEl.checked = profileId === 'everyday';
+  profileHintEl.textContent = MODE_HINT[profileId];
+  profileHintEl.hidden = MODE_HINT[profileId].length === 0;
+}
+
+/**
+ * The profile the controls ask for. "Classic engine" applies to Everyday
+ * only: choosing Śloka turns it off, and turning it on selects Everyday.
+ */
+function profileFromControls(): ProfileId {
+  if (modeSlokaEl.checked) return 'sloka';
+  return classicEl.checked ? 'everyday' : 'unified';
 }
 
 async function onProfileChange(): Promise<void> {
-  const next = profileEl.value;
-  if (!isProfileId(next)) return;
+  const next = profileFromControls();
+  if (!isProfileId(next) || next === profileId) return;
 
   profileId = next;
   writeProfilePref(next);
@@ -364,6 +383,7 @@ async function onProfileChange(): Promise<void> {
   // into a profile that uses it is a fetch. Say so rather than appearing to
   // hang: on a cold load over a slow link it is a megabyte.
   setStatus('Switching mode\u2026', false);
+  buildProfileSelect();
   await loadProfileAssets(profileId);
 
   rebuildEngine();
@@ -776,7 +796,15 @@ function bindEvents(): void {
     render();
   });
 
-  profileEl.addEventListener('change', () => void onProfileChange());
+  modeEverydayEl.addEventListener('change', () => void onProfileChange());
+  modeSlokaEl.addEventListener('change', () => {
+    classicEl.checked = false;
+    void onProfileChange();
+  });
+  classicEl.addEventListener('change', () => {
+    if (classicEl.checked) modeEverydayEl.checked = true;
+    void onProfileChange();
+  });
 
   for (const closer of document.querySelectorAll('[data-picker-close]')) {
     closer.addEventListener('click', () => closePicker());

@@ -963,28 +963,55 @@ code {
  * exactly what Appv2 adds and nothing else.
  * ========================================================================== */
 
-.mode-label {
-  margin-right: 0.4rem;
-  color: var(--muted);
+/* Mode: a two-part segmented control (radios underneath). 48px tall. */
+.segmented {
+  display: flex;
+  gap: 4px;
+  margin: 0 0 0.75rem;
+  padding: 4px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface-soft);
 }
 
-.mode-select {
-  font: inherit;
-  /* 16px, unconditionally.
-   *
-   * iOS Safari zooms the whole page when a form control smaller than 16px
-   * takes focus. This was first written as 0.9rem with a
-   * `@media (pointer: coarse)` bump to 1rem, on the theory that only the touch
-   * path matters — and tools/eval/webkit-check.py failed it at 14.4px. The
-   * check is right and the media query was too clever: the rule the project
-   * enforces is flat, so this is flat. */
-  font-size: 1rem;
-  padding: 0.15rem 0.4rem;
-  border-radius: 0.4rem;
-  border: 1px solid var(--line);
-  background: transparent;
-  color: inherit;
-  min-height: 2rem;
+.segment {
+  position: relative;
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+/* The radio stays in the accessibility tree and takes the clicks; only its
+ * box is invisible (no text on it, so this is not opacity-quiet text). */
+.segment input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.segment span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 0 0.5rem;
+  border-radius: calc(var(--radius) - 4px);
+  color: var(--text);
+  font-weight: 600;
+  text-align: center;
+}
+
+.segment input:checked + span {
+  background: var(--accent);
+  color: var(--accent-text);
+}
+
+.segment input:focus-visible + span {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
 }
 
 .mode-hint {

@@ -53,12 +53,25 @@
 
       <main>
         <section class="pane">
+          <!--
+            Mode. Labels only: the profile ids stay 'everyday' | 'unified' |
+            'sloka' (Appv2/eval/no-regression.ts and the stored
+            odia.pref.profile depend on them). "Everyday" runs the 'unified'
+            profile; the original 'everyday' profile is Settings > Advanced >
+            Classic engine. Native radios, so arrow keys work.
+          -->
+          <div class="segmented" role="radiogroup" aria-label="Mode">
+            <label class="segment">
+              <input type="radio" name="mode" id="mode-everyday" value="everyday" />
+              <span>Everyday</span>
+            </label>
+            <label class="segment">
+              <input type="radio" name="mode" id="mode-sloka" value="sloka" />
+              <span>&#x15A;loka (verse)</span>
+            </label>
+          </div>
           <div class="pane-head">
             <label class="pane-label" for="roman">Type in English letters</label>
-            <span class="pane-hint">
-              <label class="mode-label" for="profile">Mode</label>
-              <select id="profile" class="mode-select"></select>
-            </span>
           </div>
           <textarea
             id="roman"
@@ -277,12 +290,13 @@
           <summary>Typing Sanskrit</summary>
 
           <p class="note">
-            Three modes. <strong>Everyday</strong> is the original engine, unchanged.
-            <strong>Odia + Sanskrit</strong> is the default — ordinary Odia leads, Sanskrit
-            spellings sit a slot or two down. <strong>Śloka</strong> flips the ranking for
+            Two modes. <strong>Everyday</strong> is the default — ordinary Odia leads, Sanskrit
+            spellings sit a slot or two down. <strong>Śloka (verse)</strong> flips the ranking for
             verse: a word-final <span class="odia">ଂ</span> beats
             <span class="odia">ମ</span>, <span class="odia">ଳ</span> beats
             <span class="odia">ଲ</span>, and the Sanskrit vocalics become typeable.
+            The original engine, without Sanskrit forms, is <strong>Classic engine</strong> in
+            Settings, Advanced.
           </p>
 
           <h3>Marks you can type directly</h3>
@@ -419,6 +433,13 @@
           </label>
 
           <h3 class="settings-section">Advanced</h3>
+          <label class="setting">
+            <input type="checkbox" id="toggle-classic" role="switch" />
+            <span class="setting-text">
+              <span class="setting-label">Classic engine</span>
+              <span class="setting-help">The original word list without Sanskrit forms.</span>
+            </span>
+          </label>
           <label class="setting">
             <input type="checkbox" id="toggle-strict" role="switch" />
             <span class="setting-text">
