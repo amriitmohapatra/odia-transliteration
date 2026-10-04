@@ -40,6 +40,9 @@ jobs:
       - name: Colloquial Odia (report only, unvalidated seed)
         run: npx tsx tools/eval/colloquial.ts
 
+      - name: Words in context (report only)
+        run: npx tsx tools/eval/context.ts
+
       - name: Appv2 suite (no-regression, Sanskrit coverage, sloka)
         run: npx tsx Appv2/eval/run.ts
 

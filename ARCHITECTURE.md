@@ -79,7 +79,8 @@ roman ──► tokenize ──► segment (rules lattice, beam) ──┐
 | `rules.ts` | Loads and validates `symbols.toml` / `itrans.toml`. Throws on any error. |
 | `segment.ts` | Builds spellings from the rules (weighted lattice, beam search, position context). |
 | `lexicon.ts`, `unigrams.ts` | Sorted lexicon (roman key → words) and word frequencies. |
-| `curation.ts` | Owner data: `preferences.tsv`, `labels.tsv`. Strict parsers. |
+| `curation.ts` | Owner data: `preferences.tsv`, `labels.tsv`, `glosses.tsv`. Strict parsers. |
+| `bigrams.ts` | Word-pair counts (`bigrams.tsv`), strict loader; the context term. |
 | `rank.ts` | Merges evidence and scores (see formula). |
 | `learn.ts` | User dictionary (`{roman: {odia: count}}`), memory or localStorage. |
 | `strict.ts` | Deterministic ITRANS mode. |
@@ -90,9 +91,14 @@ roman ──► tokenize ──► segment (rules lattice, beam) ──┐
 ```
 score = rule × (ruleScore + lexScore) + freq × logfreq + user × ln(1 + picks) + pref × prefWeight
         1.0                              1.5              2.0                    1.0
+      + bigram × ln(1 + count(prev, word)) / ln(1 + total(prev))      (only with a previous word)
+        1.2
 ```
 
-Order of trust when sources agree: user > owner preference > lexicon > rules.
+Order of trust when sources agree: user > owner preference > lexicon > rules. One user pick
+(2.0 × ln 2 = 1.39) beats a preference (1.0) and the strongest context (1.2); guarded by
+`core/test/weights.test.ts`. The previous word comes from `transliterate()` (its own top-1)
+or from the caret bar (`transliterateWord(roman, k, { prev })`, the Odia word before the caret).
 
 **Content filter** (`filter: off | family | kids`, default family): `family` drops a word
 labelled `offensive` unless the key typed is one of its own keys in `labels.tsv`, the user
@@ -108,7 +114,8 @@ mode is not filtered.
 | Rules (natural mode) | `core/rules/symbols.toml` | Owner + Claude | Yes, with eval delta |
 | Rules (strict ITRANS) | `core/rules/itrans.toml` | From MIT `oriya.toml` | Rarely |
 | Sanskrit profiles | `Appv2/rules/*.delta.toml` → `sanskrit.toml`, `unified.toml` | `Appv2/scripts/gen-rules.ts` | Only the `.delta` files |
-| Lexicon, unigrams | `core/data/lexicon*.tsv`, `unigrams*.tsv` | `tools/build-data/` | No |
+| Lexicon, unigrams | `core/data/lexicon*.tsv`, `unigrams*.tsv` | `tools/build-data/` (reproducible since PR #1; `j`-keys for ଯ-words since V2.1) | No |
+| Word pairs | `core/data/bigrams.tsv` (full, evals), `bigrams-web.tsv` (≤1.5 MB, browser) | `tools/build-data/build_bigrams.py` | No |
 | Sanskrit lexicon | `Appv2/data/*.tsv` | `Appv2/scripts/mine_webfreq_sanskrit.py` | No |
 | Owner preferences | `core/data/preferences.tsv` | Owner | Yes |
 | Word labels | `core/data/labels.tsv` | Owner (empty until curated) | Yes |
@@ -244,6 +251,7 @@ every result passes `canonical()`; cache by canonical text.
 | Everyday accuracy | `npx tsx tools/eval/everyday.ts` | Real Odia round-trip, careful and casual |
 | Coverage | `npx tsx tools/eval/coverage.ts` | Every letter, matra, conjunct reachable |
 | Colloquial | `npx tsx tools/eval/colloquial.ts` | Spoken, slang, dialect forms by register (unvalidated seed) |
+| Context | `npx tsx tools/eval/context.ts` | Words in their sentence, with and without the previous word; `--weights` sweeps the bigram weight |
 | CI | `.github/workflows/ci.yml` | All of the above on every push |
 | Appv2 suite | `npx tsx Appv2/eval/run.ts` | Rule drift, theme, no-regression, Sanskrit coverage, śloka |
 | Browser (Chromium) | `Appv2/eval/browser/*.mjs` (see its README) | Typing, meanings, Keep English, offline, report button, A-7 timing — against the built app |

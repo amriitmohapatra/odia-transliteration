@@ -97,9 +97,9 @@ need them wait for a run on the owner's Mac or a later environment.
 
 | # | Task | Data source | Status |
 |---|---|---|---|
-| V2.1 | `j`-keys in the common lexicon (the useful part of PR #2), on main's reproducible builder | in repo | To do (data agent) |
-| V2.2 | Context ranking: word-pair (bigram) counts; the previous word helps rank the next | in-repo corpus (same status as the shipped word counts, D-10 note) | To do (data agent) |
-| V2.3 | Colloquial work list (`jauchi`, `aasuchu`, `janichi`, `kain`, `chala`, `dada`, `sanga`) | in repo | To do (data agent) |
+| V2.1 | `j`-keys in the common lexicon (the useful part of PR #2), on main's reproducible builder | in repo | **Done** — ଯ-words typed with j: top-1 361 → 659 of 779; 12 of the 300 commonest ଜ-words lose first place (owner questions Q-1, Q-2) |
+| V2.2 | Context ranking: word-pair (bigram) counts; the previous word helps rank the next | in-repo corpus (same status as the shipped word counts, D-10 note) | **Done** — weight 1.2 (one user pick still wins); held-out corpus split casual top-1 83.2 → 84.6, careful 92.4 → 92.7; caret bar uses the word before the caret |
+| V2.3 | Colloquial work list (`jauchi`, `aasuchu`, `janichi`, `kain`, `chala`, `dada`, `sanga`) | in repo | **Partly** — `jauchi` fixed (V2.1); long-a weight 0.35 → 0.45 (held-out overall top-1 25.0 → 25.3); the other six need owner validation (spoken ଚ vs written ଛ) or an engine change (`dada`: the beam) |
 | V2.4 | Word origin in the dictionary: "from Hindi / Persian / Arabic / English" | Praharaj origin tags (public domain, in hand) | **Done** — 35,396 of 38,776 dictionary words get an origin (`origin.bin`, 13 KB); panel pill on all sizes, chip suffix on desktop. Owner: review a sample (follow-up C-8) |
 | V2.5 | Owner phrase table: greetings, festival wishes, the three levels of "you" | the owner writes it | Mechanism first; content is an owner task |
 | V2.6 | IndicXlit lexicon fill for unknown words (OOV top-1 7.3%) | HuggingFace | **Blocked here** |
@@ -123,7 +123,7 @@ V1 is done when every row passes. Each row says how it is checked.
 | A-4 | The meaning shows under candidates (e.g. `dina` → "Day", "Poor") | Playwright — **passes** |
 | A-5 | "Dictionary loading" and "dictionary failed" look different | Playwright with the data file blocked — **passes** (Run A check-a6) |
 | A-6 | Learned words survive the move from the old app to V1 | Same storage key `odia.userdict` (unchanged); learning checked in the browser — **passes** on the same origin. Moving from the old *file* to the hosted site is a new origin: learned words do not carry over (no export yet) |
-| A-7 | Typing never freezes while the dictionary loads | Playwright long-task timing, CPU normal and 4× slower — **passes**: no long task while the meanings load; key median 6 ms (normal) / 26 ms (4×). Known limit: one start-up task while the word list is built, 0.2 s normal / 0.9 s at 4×; a key pressed in that moment waits up to ~0.5 s |
+| A-7 | Typing never freezes while the dictionary loads | Playwright long-task timing, CPU normal and 4× slower — **passes**: no long task while the meanings load; key median 3 ms (normal) / 21 ms (4×). Known limit: one start-up task while the word list and word pairs are built, 0.31 s normal / 1.07 s at 4× (V2; was 0.2 / 0.9 s in V1) |
 | A-8 | Usable with the keyboard alone | Playwright key sequence — **passes** (Run B check-b6: text box → Copy in 5 Tab stops, focus ring ≥7.37:1) |
 | A-9 | Phone layout: inputs ≥16 px, tap targets ≥44 px, safe areas | Playwright at 390×844 and 390×480 — **passes** in Chromium; real phones: owner test |
 | A-10 | No metric regression | `npm run eval`, `everyday.ts`, `Appv2/eval/run.ts` — **passes** (unchanged after both UI runs) |
@@ -195,6 +195,7 @@ Agents do not commit; the lead reviews, measures and commits.
 | Date | Change |
 |---|---|
 | 2026-10-04 | Browser checks moved into the repo (4.6). Docs pointers updated (CLAUDE.md, AGENTS.md, docs/README.md). |
+| 2026-10-04 | V2.1–V2.4 merged: j-keys, word-pair context (weight 1.2, wired into the caret bar), long-a weight, word origins. |
 | 2026-10-04 | `main` (PR #1) merged in. Owner decisions applied: meanings (C-7), report email, D-10 public site. Owner's offensive lists labelled with keyed exemptions; kids edition. |
 | 2026-10-04 | A-7 measured (passes, start-up limit noted). **V1 code done.** |
 | 2026-10-04 | 2.6 report button done. |
