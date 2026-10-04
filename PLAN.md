@@ -38,6 +38,7 @@ whenever a task changes status. Last updated: 2026-10-04 (V1 in progress).
 | V4 Lens | Browser extension, then camera/screenshot input | Not started |
 | V5 Native | macOS input method with the real engine; Android, iOS (skills first) | Not started |
 | E-1 Experiment | Laya against a simple word-origin tagger | Not started |
+| P Public repository | When the owner says "project finished": a fresh public repository without the scraped corpus, the derived-counts decision, the licence-table check (`plan/06-owner-followups.md`, section D) | Waiting for "project finished" |
 
 ## 3. V1 — work by area
 

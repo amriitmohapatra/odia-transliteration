@@ -51,6 +51,7 @@ ask for them before that.
 | D-6 | Nukta policy for ଜ / ଫ in Urdu and English loans | After C-5 |
 | D-10 | **Decided 2026-10-04: public product.** Recorded as: the website is public; the GitHub repository stays private until the owner says otherwise. A public site needs no public repository. If the code is to be public too: publish from a fresh repository without `tools/build-data/webcorpus/` (it stays in git history otherwise), and decide about the word counts taken from that corpus (brief §12). | Ask before any repository becomes public |
 | ~~—~~ | ~~Where "Wrong word? Report it" sends reports~~ | **Decided 2026-10-04:** to the owner's email (set in `Appv2/src/main.ts`, joined at run time) |
+| — | **Public repository** (owner, 2026-10-04): when the owner says the project is finished, plan and create a public code repository. Steps: (1) a fresh repository that never contained `tools/build-data/webcorpus/` (deleting it here is not enough: it stays in git history); (2) decide about the word and word-pair counts derived from that corpus (keep, rebuild from CC0/CC-BY sources such as IndicCorp v2, or drop); (3) check every row of the licence table in `CLAUDE.md` (open items: OdiaNLP pairs, wordfreq, CMUdict, indic-dict packaging); (4) decide whether the report email stays in the public code. | When the owner says "project finished" |
 | — | Install the Claude Code skills for Android and iOS work | After the Vercel version is done (owner's instruction, 2026-10-04) |
 
 ## E. Other sessions and their branches
