@@ -168,7 +168,7 @@ Project is MIT. Everything shipped derives from MIT / CC0 / CC-BY sources:
 | `indic-transliteration/common_maps` `oriya.toml` | MIT | Seeds strict-mode table |
 | AI4Bharat Aksharantar (`ori`) | CC-BY / CC0 | Lexicon |
 | AI4Bharat IndicCorp v2 (`ory_Orya`) | CC0 | Word frequencies |
-| Noto Sans Oriya | OFL | Planned bundled font. Not bundled yet (`plan/05-v3-direction.md` §4). |
+| Noto Sans Oriya | OFL 1.1 | Bundled font, weights 400 and 700, in `web/src/fonts/` (used by `web/` and `Appv2/`) |
 
 **Varnam/govarnam and Aksharamukha are AGPL.** Study their architecture; copy no code.
 Record every data source, its licence and a checksum in `core/data/PROVENANCE.md`.

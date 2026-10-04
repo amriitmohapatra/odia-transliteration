@@ -271,7 +271,9 @@ export default defineConfig({
     // missing METHODS are covered by POLYFILLS above.
     target: ['es2019', 'safari13'],
     cssTarget: 'safari13',
-    assetsInlineLimit: 0,
+    // Assets stay separate files, except the bundled Odia font in the single-file
+    // build: a file:// page cannot fetch a sibling font file, so it is inlined.
+    assetsInlineLimit: (file: string) => singleFile && file.endsWith('.woff2'),
     reportCompressedSize: true,
     // The pruned lexicon is a multi-MB data chunk by design. Warning about it on
     // every build would just train us to ignore the warning.

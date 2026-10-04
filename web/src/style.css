@@ -12,6 +12,28 @@
  * the notch and the Home indicator in standalone mode.
  */
 
+/*
+ * Noto Sans Oriya, bundled so a computer without an Odia font does not show
+ * boxes. SIL Open Font License 1.1 (fonts/OFL.txt). Oriya subset from npm
+ * @fontsource/noto-sans-oriya 5.3.0, weights 400 and 700 (600-650 text uses 700).
+ */
+@font-face {
+  font-family: 'Noto Sans Oriya';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('./fonts/noto-sans-oriya-oriya-400-normal.woff2') format('woff2');
+  unicode-range: U+0951-0952, U+0964-0965, U+0B01-0B77, U+1CDA, U+1CF2, U+200C-200D, U+20B9, U+25CC;
+}
+@font-face {
+  font-family: 'Noto Sans Oriya';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('./fonts/noto-sans-oriya-oriya-700-normal.woff2') format('woff2');
+  unicode-range: U+0951-0952, U+0964-0965, U+0B01-0B77, U+1CDA, U+1CF2, U+200C-200D, U+20B9, U+25CC;
+}
+
 :root {
   color-scheme: light dark;
 
