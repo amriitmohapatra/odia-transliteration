@@ -5,7 +5,7 @@
 #
 # profile      = unified
 # base         = core/rules/symbols.toml
-# base-sha256  = d70eff3ffc531367ad9207eef25bc90a3905585c9a0b2ecaf3d1eb2b3359aac2
+# base-sha256  = 69950514ce3dbaf5b2e350ded3ac061d31df6ddb0dc0ec2287e6814a7dcc5831
 # delta        = rules/unified.delta.toml
 # delta-sha256 = 57646b55f8b73a962fc6378046364b81e4bdf0a61c3a02ce377560ab1d741f8b
 #
@@ -133,12 +133,16 @@ matra = ""
 w = 1.0
 
 # "rama" is far more often ରାମ than ରମ, so plain "a" can also reach the long
-# vowel, at a cost.
+# vowel, at a cost. 0.35 until 2026-10-04 (V2.3). Swept on the corpus dev split
+# (tools/eval/context.ts, 23,481 tokens, no context), careful / casual top-1:
+#   0.35 92.4 / 83.2   0.45 92.3 / 83.6   0.55 92.2 / 84.0   0.65 91.9 / 84.4
+# 0.55 made the conjunct ଡ୍ଯ unreachable for "dya" (tools/eval/coverage.ts) and
+# 0.65 cost careful top-3; 0.45 keeps reachability and raja -> ରଜ (preference).
 [[vowel]]
 roman = "a"
 independent = "ଆ"
 matra = "ା"
-w = 0.35
+w = 0.45
 
 [[vowel]]
 roman = "aa"
