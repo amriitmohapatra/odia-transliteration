@@ -542,6 +542,21 @@ textarea:focus {
   display: none;
 }
 
+/* Meanings (below 1100px): icon and word, at the end of the actions row. */
+.actions .meanings-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: auto;
+}
+
+/* The same action on the phone strip: an icon button beside Copy. */
+.meanings-dock {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .btn-small {
   min-height: var(--tap);
   padding: 0 0.9rem;
@@ -1088,6 +1103,66 @@ code {
 .badge-danger {
   background: var(--danger-soft);
   color: var(--danger);
+}
+
+/* -------------------------------------------------------------- popover
+   Desktop caret popover (inline.ts "popover" layout; proposal 3.5): a
+   vertical list, one candidate per row - number, Odia word, flag badge,
+   one-line meaning - in fixed columns (CSS subgrid), so the numbers line up
+   with keys 1-9 and nothing moves when the meanings arrive. Fixed width for
+   the same reason; inline.ts caps it at the text box's column and sets
+   max-height when it has to scroll. */
+
+.kb-bar[data-mode='popover'] .inline-candidates {
+  display: grid;
+  grid-template-columns: auto auto auto minmax(0, 1fr);
+  align-content: start;
+  gap: 2px 0;
+  width: 30rem;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: var(--space-1);
+  border-color: var(--line-strong);
+}
+.kb-bar[data-mode='popover'] .inline-candidates[hidden] { display: none; }
+
+.kb-bar[data-mode='popover'] .inline-candidate {
+  display: grid;
+  grid-template-columns: subgrid;
+  grid-column: 1 / -1;
+  align-items: center;
+  column-gap: var(--space-3);
+  min-height: 36px;
+  padding: 2px var(--space-3) 2px var(--space-2);
+  text-align: left;
+}
+.kb-bar[data-mode='popover'] .inline-num { grid-column: 1; }
+.kb-bar[data-mode='popover'] .inline-text {
+  grid-column: 2;
+  font-size: var(--fs-odia-cand);
+  line-height: 1.25;
+  white-space: nowrap;
+}
+.kb-bar[data-mode='popover'] .badge { grid-column: 3; }
+/* "Keep "dina"": number, the word "Keep", the typed word, in one row. */
+.kb-bar[data-mode='popover'] .inline-verbatim {
+  display: flex;
+  gap: var(--space-2);
+}
+
+/* Without subgrid (Safari < 16, Chrome < 117): rows are flex and the word
+ * column gets a minimum width, so meanings still mostly line up. */
+@supports not (grid-template-columns: subgrid) {
+  .kb-bar[data-mode='popover'] .inline-candidate { display: flex; }
+  .kb-bar[data-mode='popover'] .inline-text { min-width: 5.5em; }
+}
+
+/* Desktop text box: tall enough for the list to open under the first lines
+ * without reaching the "Reads as" line (in em, so it grows with Text size). */
+@media (min-width: 700px) and (pointer: fine), (min-width: 1024px) {
+  textarea {
+    min-height: 23em;
+  }
 }
 
 /* ---------------------------------------------------------------- strip

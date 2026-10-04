@@ -13,7 +13,7 @@
 import './style.css';
 import { badgeElement, DOCK_QUERY, InlineCandidates } from './inline.js';
 // After style.css: the overlay's stylesheet overrides parts of the caret bar.
-import { startDictionary, type DictionaryState } from './dictionary/index.js';
+import { meaningsOpen, setMeaningsOpen, startDictionary, type DictionaryState } from './dictionary/index.js';
 
 import { LocalStorageLearnStore } from '@odia/core';
 import type { DigitMode, WordResult } from '@odia/core/types';
@@ -50,6 +50,7 @@ const bannerReloadEl = must<HTMLButtonElement>('banner-reload');
 const offlineChipEl = must<HTMLSpanElement>('offline-chip');
 const offlineChipTextEl = must<HTMLSpanElement>('offline-chip-text');
 const copyEl = must<HTMLButtonElement>('copy');
+const meaningsEl = must<HTMLButtonElement>('dict-toggle');
 const shareEl = must<HTMLButtonElement>('share');
 const clearEl = must<HTMLButtonElement>('clear');
 const digitsEl = must<HTMLInputElement>('toggle-digits');
@@ -199,6 +200,8 @@ async function boot(): Promise<void> {
       render();
     },
     badge: (text) => badgeFor(handle?.engine, text),
+    // The desktop popover never covers these (proposal 3.5).
+    keepClear: () => [statusEl, bannerEl, readbackRowEl],
   });
   inline.setEnabled(!strictEl.checked);
 
@@ -220,7 +223,20 @@ async function boot(): Promise<void> {
   dockCopy.className = 'btn btn-primary';
   dockCopy.textContent = 'Copy';
   dockCopy.addEventListener('click', onCopy);
-  inline.toolbar.append(dockShare, dockCopy);
+  // Meanings with the keyboard open (the actions-row button is under the
+  // strip). The dock's mousedown keeps focus in the text box, so the
+  // keyboard stays up while the panel shows the current suggestions.
+  const dockMeanings = document.createElement('button');
+  dockMeanings.type = 'button';
+  dockMeanings.id = 'meanings-dock';
+  dockMeanings.className = 'kb-bar-page meanings-dock';
+  dockMeanings.setAttribute('aria-label', 'Meanings');
+  dockMeanings.setAttribute('aria-controls', 'dict-panel');
+  dockMeanings.setAttribute('aria-expanded', 'false');
+  dockMeanings.title = 'Meanings';
+  dockMeanings.innerHTML = meaningsEl.querySelector('svg')?.outerHTML ?? '';
+  dockMeanings.addEventListener('click', () => setMeaningsOpen(!meaningsOpen()));
+  inline.toolbar.append(dockMeanings, dockShare, dockCopy);
   layoutActions();
 
   updateStates();
@@ -1160,6 +1176,7 @@ function bindEvents(): void {
 
   copyEl.addEventListener('click', onCopy);
   shareEl.addEventListener('click', onShare);
+  meaningsEl.addEventListener('click', () => setMeaningsOpen(!meaningsOpen(), meaningsEl));
   // addListener, not addEventListener('change'): the floor is Safari 13.
   phoneQuery?.addListener(layoutActions);
   toastActionEl.addEventListener('click', () => toastAction?.());
@@ -1243,6 +1260,11 @@ function bindEvents(): void {
     if (!pickerEl.hidden) closePicker();
     else if (!settingsEl.hidden) closeSettings();
     else if (!helpEl.hidden) closeHelp();
+    // Not when the suggestion bar just used this Esc to close itself.
+    else if (meaningsOpen() && window.innerWidth < 1100 && !event.defaultPrevented) {
+      setMeaningsOpen(false);
+      if (document.activeElement?.closest('#dict-panel')) meaningsEl.focus();
+    }
   });
 }
 

@@ -22,6 +22,11 @@
  *       the "Reads as" words; the Odia word is in data-odia because the
  *       button text is Latin                         (Appv2/src/main.ts,
  *       Appv2/index.html). Until V1 this was #output .word.
+ *   [aria-controls="dict-panel"]
+ *       the "Meanings" buttons main.ts makes (#dict-toggle in the actions
+ *       row, #meanings-dock on the phone strip); they call
+ *       setMeaningsOpen() and this module keeps their aria-expanded in
+ *       step. Until V1 B5 this module drew its own floating #dict-toggle.
  *
  * The module reads no script tags and no window globals. Its data arrives
  * through the `load` callback passed to `initDictionary()`, which is called
@@ -414,8 +419,17 @@ function buildPanel(): void {
   close.type = 'button';
   close.className = 'dict-close';
   close.textContent = '×';
-  close.setAttribute('aria-label', 'Close dictionary panel');
-  close.addEventListener('click', () => setPanelOpen(false));
+  close.setAttribute('aria-label', 'Close meanings');
+  // mousedown: opened from the phone strip, the text box keeps focus (and
+  // the keyboard stays up) through the close.
+  close.addEventListener('mousedown', (event) => {
+    if (document.activeElement && document.activeElement.tagName === 'TEXTAREA') event.preventDefault();
+  });
+  close.addEventListener('click', () => {
+    setPanelOpen(false);
+    if (opener && document.activeElement !== opener && opener.isConnected) opener.focus();
+    opener = null;
+  });
   head.appendChild(title);
   head.appendChild(close);
 
@@ -447,27 +461,37 @@ function buildPanel(): void {
   panel.appendChild(body);
   document.body.appendChild(panel);
 
-  const toggleBtn = document.createElement('button');
-  toggleBtn.type = 'button';
-  toggleBtn.id = 'dict-toggle';
-  const bOdia = document.createElement('span');
-  bOdia.className = 'odia';
-  bOdia.textContent = '\u0b05'; /* the letter a */
-  toggleBtn.appendChild(bOdia);
-  toggleBtn.appendChild(document.createTextNode('→A'));
-  toggleBtn.setAttribute('aria-label', 'Toggle dictionary panel');
-  toggleBtn.addEventListener('click', () => {
-    setPanelOpen(!document.body.classList.contains('dict-open'));
-  });
-  document.body.appendChild(toggleBtn);
-
   setPanelOpen(window.innerWidth >= 1100);
   renderEmpty();
 }
 
+/** The button that opened the panel on a narrow screen; focus returns there on close. */
+let opener: HTMLElement | null = null;
+
 function setPanelOpen(open: boolean): void {
   document.body.classList.toggle('dict-open', open);
+  const controls = document.querySelectorAll('[aria-controls="dict-panel"]');
+  for (let i = 0; i < controls.length; i++) controls[i]?.setAttribute('aria-expanded', String(open));
   if (open && state === 'idle') loadData();
+}
+
+/**
+ * Open or close the Meanings panel (the "Meanings" buttons in main.ts).
+ * At 1100px and wider the panel is a fixed column and always shown.
+ * Opened from a button (not from the strip, where the text box keeps focus),
+ * focus moves to the panel's close button and comes back on close.
+ */
+export function setMeaningsOpen(open: boolean, from?: HTMLElement): void {
+  if (!started) return;
+  setPanelOpen(open);
+  if (open && from && document.activeElement === from) {
+    opener = from;
+    document.querySelector<HTMLElement>('#dict-panel .dict-close')?.focus();
+  }
+}
+
+export function meaningsOpen(): boolean {
+  return document.body.classList.contains('dict-open');
 }
 
 function panelStatus(text: string): void {
