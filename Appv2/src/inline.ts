@@ -275,13 +275,20 @@ export class InlineCandidates {
       parseFloat(style.lineHeight || '20');
     const left = rect.left + window.scrollX + marker.offsetLeft;
 
+    // Keep the bar inside the text box's column: never wider than it, and
+    // nudged left rather than running past its right edge. Clamping to the
+    // window instead let item 5 slide under the docked dictionary column on
+    // desktop (audit H6), because that column is beside the text box, not
+    // outside the window.
+    const columnLeft = rect.left + window.scrollX;
+    const columnRight = Math.min(rect.right, window.innerWidth - 8) + window.scrollX;
+    this.box.style.maxWidth = `${Math.round(columnRight - columnLeft)}px`;
     this.box.style.top = `${Math.round(top)}px`;
     this.box.style.left = `${Math.round(left)}px`;
 
-    // Nudge back inside the viewport if the bar would run off the right edge.
-    const box = this.box.getBoundingClientRect();
-    const overflow = box.right - (window.innerWidth - 8);
-    if (overflow > 0) this.box.style.left = `${Math.round(left - overflow)}px`;
+    const width = this.box.getBoundingClientRect().width;
+    const overflow = left + width - columnRight;
+    if (overflow > 0) this.box.style.left = `${Math.round(Math.max(columnLeft, left - overflow))}px`;
   }
 }
 

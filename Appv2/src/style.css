@@ -373,7 +373,13 @@ button.word:focus-visible {
 .picker {
   position: fixed;
   inset: 0;
-  z-index: 20;
+  /* One z-index scale for the whole app (plan/design/v1-ux-proposal.md 5):
+   *   page 0 · sticky header 10 · strip/popover 20 · meanings toggle 30 ·
+   *   meanings panel 35 · modal sheets 40 · toast 50.
+   * Literal numbers, not --z-* tokens: Appv2/eval/check-theme.mjs treats an
+   * unknown token as a colour. Before V1 the meanings button sat at 59 and
+   * covered this sheet's bottom rows (audit B4). */
+  z-index: 40;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -481,11 +487,21 @@ button.word:focus-visible {
   background: var(--accent-soft);
 }
 
+.candidate {
+  /* The dictionary gloss (flex-basis 100%) goes to its own line instead of
+   * squeezing the word. */
+  flex-wrap: wrap;
+}
+
 .candidate .text {
   font-family: var(--odia-font);
   font-size: calc(1rem * var(--odia-scale));
   line-height: 1.6;
-  overflow-wrap: anywhere;
+  /* Never break an Odia word between letters (audit B3: the word for "day" rendered as DI / NA
+   * once the gloss took the room). The gloss wraps instead. */
+  flex: none;
+  white-space: nowrap;
+  overflow-wrap: normal;
 }
 
 .candidate .source {
@@ -593,7 +609,7 @@ code {
   position: fixed;
   left: 50%;
   bottom: calc(1.5rem + env(safe-area-inset-bottom));
-  z-index: 30;
+  z-index: 50; /* above sheets: see the z-index scale at .picker */
   transform: translateX(-50%) translateY(0.4rem);
   padding: 0.7rem 1.25rem;
   border-radius: 999px;
@@ -643,7 +659,7 @@ code {
 
 .inline-candidates {
   position: absolute;
-  z-index: 60;
+  z-index: 20; /* strip/popover level: see the scale at .picker */
   display: flex;
   flex-wrap: wrap;
   gap: 4px;
@@ -669,7 +685,11 @@ code {
   cursor: pointer;
 }
 
-.inline-candidate:hover { background: rgb(0 0 0 / 6%); }
+/* :not(.is-active), so hover never repaints the highlighted item. With equal
+ * specificity the later :hover rule used to win and, in dark mode, left the
+ * dark --accent-text on a dark hover fill (1.71:1, audit B2). On touch screens
+ * hover sticks after a tap, so this was the common case, not an edge. */
+.inline-candidate:not(.is-active):hover { background: var(--accent-soft); }
 
 .inline-candidate.is-active {
   background: var(--accent);
@@ -718,9 +738,6 @@ code {
   pointer-events: none;
 }
 
-@media (prefers-color-scheme: dark) {
-  .inline-candidate:hover { background: rgb(255 255 255 / 10%); }
-}
 
 /* ==========================================================================
  * Appv2 additions: the mode selector, the insert palette, shortcut hints.
