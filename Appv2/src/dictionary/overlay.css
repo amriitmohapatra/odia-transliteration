@@ -1,0 +1,239 @@
+/* Dictionary overlay styles. Reuses the app's design tokens (--panel, --card,
+ * --text, --muted, --line, --accent, --odia-font …) so light/dark theming
+ * follows the app automatically.
+ *
+ * Imported after Appv2/src/style.css (main.ts imports the dictionary module
+ * after it), so the .inline-candidates / .inline-candidate overrides below win
+ * the cascade, exactly as when this sheet was injected before </body>. */
+
+/* --- short gloss chip inside the caret candidate bar --- */
+.inline-candidate .dict-gloss {
+  display: block;
+  font-family: var(--ui-font);
+  font-size: 0.72rem;
+  line-height: 1.25;
+  color: var(--muted);
+  max-width: 15rem;
+  white-space: normal;
+  margin-top: 2px;
+}
+.inline-candidate .dict-gloss-none {
+  opacity: 0.35;
+}
+.inline-candidate.is-active .dict-gloss {
+  color: inherit;
+  opacity: 0.85;
+}
+
+/* The bar was a one-line row; with glosses it reads better as a column grid. */
+.inline-candidates {
+  max-width: min(92vw, 720px);
+}
+.inline-candidate {
+  align-items: baseline;
+  flex-wrap: wrap;
+}
+
+/* --- gloss line in the alternatives picker --- */
+.candidate .dict-gloss-picker {
+  display: block;
+  flex-basis: 100%;
+  font-family: var(--ui-font);
+  font-size: 0.8rem;
+  color: var(--muted);
+  margin-top: 2px;
+}
+
+/* --- side panel --- */
+#dict-panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: min(420px, 92vw);
+  background: var(--panel);
+  color: var(--text);
+  border-left: 1px solid var(--line);
+  box-shadow: -12px 0 32px rgb(0 0 0 / 12%);
+  padding: max(12px, env(safe-area-inset-top)) 16px max(12px, env(safe-area-inset-bottom));
+  display: none;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 60;
+  font-family: var(--ui-font);
+}
+body.dict-open #dict-panel { display: flex; }
+
+.dict-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.dict-head h2 {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 650;
+}
+.dict-head h2 .odia { margin-right: 0.35em; }
+.dict-close {
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 8px;
+}
+.dict-close:hover { background: var(--card); color: var(--text); }
+
+.dict-sub {
+  margin: 0;
+  font-size: 0.74rem;
+  color: var(--muted);
+}
+
+.dict-search {
+  width: 100%;
+  font-size: 1rem;
+  padding: 8px 10px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--card);
+  color: var(--text);
+  outline: none;
+}
+.dict-search:focus { border-color: var(--accent); }
+
+.dict-state {
+  margin: 0;
+  font-size: 0.8rem;
+  color: var(--warn, #8a4a00);
+}
+
+.dict-body {
+  overflow-y: auto;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-bottom: 12px;
+  overscroll-behavior: contain;
+}
+
+.dict-hint {
+  margin: 4px 0 0;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.dict-entry {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 10px 12px;
+}
+.dict-entry-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+.dict-num {
+  flex: none;
+  width: 1.35rem;
+  height: 1.35rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--accent);
+  color: var(--accent-text);
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+.dict-word {
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+.dict-tag {
+  font-size: 0.68rem;
+  color: var(--muted);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 1px 8px;
+  white-space: nowrap;
+}
+.dict-tag-none { opacity: 0.7; font-style: italic; }
+
+.dict-def {
+  font-size: 0.86rem;
+  line-height: 1.55;
+  white-space: pre-wrap;
+  max-height: 16rem;
+  overflow-y: auto;
+  color: var(--text);
+}
+
+/* --- toggle button (always available; primary affordance on phones) --- */
+#dict-toggle {
+  position: fixed;
+  right: max(14px, env(safe-area-inset-right));
+  bottom: max(14px, env(safe-area-inset-bottom));
+  z-index: 59;
+  border: 1px solid var(--line);
+  background: var(--panel);
+  color: var(--text);
+  border-radius: 999px;
+  padding: 10px 14px;
+  font-size: 0.95rem;
+  font-family: var(--ui-font);
+  box-shadow: 0 6px 20px rgb(0 0 0 / 18%);
+  cursor: pointer;
+}
+#dict-toggle .odia { color: var(--accent); font-weight: 700; }
+body.dict-open #dict-toggle { display: none; }
+
+/* --- wide screens: panel sits beside the app column, not over it --- */
+@media (min-width: 1100px) {
+  body.dict-open .app {
+    margin-right: calc(min(420px, 34vw) + 28px);
+    margin-left: auto;
+  }
+  body.dict-open #dict-panel { width: min(420px, 34vw); }
+}
+
+/* --- modern layer card inside a panel entry --- */
+.dict-modern {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 6px;
+  padding: 6px 8px;
+  border-left: 3px solid var(--accent);
+  border-radius: 6px;
+  background: color-mix(in srgb, var(--accent) 7%, transparent);
+}
+@supports not (background: color-mix(in srgb, red 7%, transparent)) {
+  .dict-modern { background: var(--accent-soft); }
+}
+.dict-modern-row {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  font-size: 0.84rem;
+}
+.dict-modern-tag {
+  flex: none;
+  font-size: 0.64rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--accent);
+  border: 1px solid var(--accent);
+  border-radius: 999px;
+  padding: 0 7px;
+  cursor: help;
+}
+.dict-modern-gloss { color: var(--text); }

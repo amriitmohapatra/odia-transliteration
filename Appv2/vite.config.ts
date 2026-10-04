@@ -257,9 +257,11 @@ export default defineConfig({
     // Handles SYNTAX only; missing METHODS are covered by POLYFILLS above.
     target: ['es2019', 'safari13'],
     cssTarget: 'safari13',
-    // Assets stay separate files, except the bundled Odia font in the single-file
-    // build: a file:// page cannot fetch a sibling font file, so it is inlined.
-    assetsInlineLimit: (file: string) => singleFile && file.endsWith('.woff2'),
+    // Assets stay separate files, except in the single-file build: a file://
+    // page cannot fetch a sibling file, so the bundled Odia font and the
+    // dictionary payloads (src/dictionary/*.bin) are inlined as data: URIs there.
+    assetsInlineLimit: (file: string) =>
+      singleFile && (file.endsWith('.woff2') || file.endsWith('.bin')),
     reportCompressedSize: true,
     chunkSizeWarningLimit: singleFile ? 100_000 : 2000,
     rollupOptions: {

@@ -39,6 +39,18 @@ file used here is the OdiaNLP one. See `plan/research/2026-10-04/02-dictionary-s
 | `build/modern_payload.b64` | `fde76f2a4030a61e18cf013aef3b126d92d37fdf279fe306f7aa1db5c14858da` | Committed payload, MODERN layer |
 | `build/pako-inflate.min.js` | `bca5529190cd4c572482197baa533963e1588bc510c90379c4c634e66a262bfc` | |
 
+## V1: the same data as app assets (2026-10-04)
+
+The dictionary is now a module of the Appv2 app (`Appv2/src/dictionary/`). The two
+payloads are the committed `.b64` files above, base64-decoded without any other change
+(lossless: re-encoding gives the same base64). `build/build_app.py` is retired.
+
+| File | sha256 | Note |
+|---|---|---|
+| `Appv2/src/dictionary/praharaj.bin` | `ca8401ebc6a3f26546628833f9ef90afd126737de2dbb7afe24c9b8c681423ed` | = `dict_payload_v2.b64` decoded. gzip; 38,776 entries |
+| `Appv2/src/dictionary/modern.bin` | `fb2447b201335151d7c4425b0c4e8a6018ba1bcab7b2ad6cd97c2fdbc251b031` | = `modern_payload.b64` decoded. gzip; 40,589 entries |
+| `Appv2/src/dictionary/pako-inflate.js` | (vendored) | The trimmed pako build above, with its `window.__dictInflate` wrapper replaced by an ES `export`. MIT. |
+
 ## Open items
 
 1. Replace the `[mt]` rows (D-5). Candidate sources, all MIT-compatible: Samanantar/BPCC
@@ -46,7 +58,9 @@ file used here is the OdiaNLP one. See `plan/research/2026-10-04/02-dictionary-s
 2. Confirm the wordfreq data licence. If CC-BY-SA applies to single English words used
    as glosses, replace them with a CC0 or CC-BY word list.
 3. Record the pako version, or replace the trimmed copy with a pinned npm package.
-4. The overlay's own `canonical()` (`build/dict-overlay.js`) is a hand copy of
-   `core/src/normalize.ts`. It contains literal precomposed nukta characters, against the
-   repository convention. It still works, because `normalize('NFC')` runs first. V1 moves
-   the dictionary into the app as a module, which removes this copy.
+4. ~~The overlay's hand-copied `canonical()`~~ — **closed in V1**: the module imports
+   `canonical` from `core/src/normalize.ts`. The old `build/dict-overlay.js` keeps its copy
+   only as the retired legacy file.
+5. Praharaj's first sense is not always today's main sense. Example: ରଜ shows "Dust."
+   though the owner chose ରଜ for the Raja festival. An owner gloss file is planned
+   (`PLAN.md`, V2).

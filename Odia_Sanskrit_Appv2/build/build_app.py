@@ -51,4 +51,20 @@ def main(app_html: str, out_path: str) -> None:
     print(f'wrote {out_path}  ({len(out.encode("utf-8"))/1e6:.2f} MB)')
 
 if __name__ == '__main__':
-    main(sys.argv[1], sys.argv[2])
+    # RETIRED 2026-10-04 (V1). The dictionary is now a module of the Appv2 app
+    # (Appv2/src/dictionary/), so every Appv2 build already contains it.
+    # Injecting this overlay into such a page would load two dictionaries.
+    # Build the app instead:
+    #     npx vite build --config Appv2/vite.config.ts            (web, Vercel)
+    #     SINGLE_FILE=1 npx vite build --config Appv2/vite.config.ts \
+    #         && node Appv2/scripts/make-single-file.mjs           (one .html)
+    # Run with --legacy only to reproduce the pre-V1 file from an OLD
+    # docs/odia-app-sanskrit.html that has no dictionary in it.
+    if '--legacy' not in sys.argv:
+        sys.exit('build_app.py is retired: the dictionary is part of Appv2 now. '
+                 'See the comment at the end of this file.')
+    args = [a for a in sys.argv[1:] if a != '--legacy']
+    html_in = Path(args[0]).read_text(encoding='utf-8')
+    if 'dict-panel' in html_in or 'initDictionary' in html_in:
+        sys.exit('refusing: this page already contains the dictionary')
+    main(args[0], args[1])

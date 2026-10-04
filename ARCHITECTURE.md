@@ -114,6 +114,11 @@ filtered.
 | Colloquial test set | `core/test/golden/colloquial.tsv` | Seed by agent, checked by owner (C-3) | Yes |
 | Dictionary | `Appv2/src/dictionary/*.bin` (from `Odia_Sanskrit_Appv2/build/*.b64`) | `Odia_Sanskrit_Appv2/build/*.py` | No |
 
+The dictionary module (`Appv2/src/dictionary/`): `index.ts` fetches the two `.bin` files
+(gzip, inflated by a vendored pako, Safari 13 floor), `overlay.ts` adds gloss chips to the
+caret bar, the picker and the output, plus a side panel with search. It imports
+`canonical()` from core. It skips Latin items (`inline-latin`).
+
 "-web" files are the pruned versions the browser loads (phone memory budget).
 
 ## 5. The V1 web app (`Appv2/`)

@@ -11,6 +11,8 @@
 
 import './style.css';
 import { InlineCandidates } from './inline.js';
+// After style.css: the overlay's stylesheet overrides parts of the caret bar.
+import { startDictionary } from './dictionary/index.js';
 
 import { LocalStorageLearnStore } from '@odia/core';
 import type { Candidate, DigitMode, WordResult } from '@odia/core/types';
@@ -110,6 +112,7 @@ async function boot(): Promise<void> {
   await loadProfileAssets(profileId);
   rebuildEngine();
   render();
+  startDictionary(); // glosses + side panel; its data loads lazily
 
   void buildPalette();
   registerServiceWorker();

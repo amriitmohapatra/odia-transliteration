@@ -33,7 +33,7 @@ whenever a task changes status. Last updated: 2026-10-04 (V1 in progress).
 |---|---|---|
 | V0 Clean-up | Cache scoping, English word in the bar, `rank()` learning bug, bundled font, dictionary provenance, `j` → ଯ | **Done** 2026-10-04 (D-10 open) |
 | **V1 Web app on Vercel** | One merged app; dictionary as a module; owner preferences; family-safe filter; romanised read-back; colloquial tests; UI/UX pass; PWA + `vercel.json`; CI | **In progress** |
-| V2 Better words | IndicXlit lexicon fill, bigram ranking, owner phrase table, new modern glosses, Hindi/Urdu layer, `j`-keys in lexicon | Not started |
+| V2 Better words | IndicXlit lexicon fill, bigram ranking, owner phrase table, new modern glosses, **owner gloss file** (e.g. ରଜ shows "Dust." today, not the festival), Hindi/Urdu layer, `j`-keys in lexicon | Not started |
 | V3 Assist layer | `/api/speak`, `/api/listen`, `/api/translate` behind switches | Not started |
 | V4 Lens | Browser extension, then camera/screenshot input | Not started |
 | V5 Native | macOS input method with the real engine; Android, iOS (skills first) | Not started |
@@ -55,7 +55,7 @@ whenever a task changes status. Last updated: 2026-10-04 (V1 in progress).
 
 | # | Task | Status |
 |---|---|---|
-| 2.1 | Dictionary as a module of the app; data as cached binary files; retire `build_app.py` | In progress (frontend agent) |
+| 2.1 | Dictionary as a module of the app; data as cached binary files; retire `build_app.py` | **Done** — 157/157 glosses identical to the old file; lazy load after the page; works over HTTP and from one file (Chromium) |
 | 2.2 | Family-safe switch in settings, stored as `odia.pref.familySafe`, plain label | To do |
 | 2.3 | Romanised read-back line under the output (copy of the eval romaniser) | To do |
 | 2.4 | PWA: manifest, icons, Apple tags in `Appv2/` | To do |
@@ -144,5 +144,6 @@ Agents do not commit; the lead reviews, measures and commits.
 
 | Date | Change |
 |---|---|
+| 2026-10-04 | 2.1 done (dictionary module). Owner gloss file added to V2. |
 | 2026-10-04 | 1.4, 3.1, 4.1, 4.2 done. |
 | 2026-10-04 | Created. V0 done. V1 started: engine items 1.1–1.3 done. Guidebook practices added (§3.4, §4, 2.6). |

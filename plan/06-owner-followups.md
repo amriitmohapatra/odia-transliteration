@@ -16,7 +16,7 @@ to the owner. Claude marks each item done here, with the date, when it is done.
 |---|---|---|---|
 | A-1 | Rebuild the cheat-sheet PDFs. Both `.tex` files changed for D-12 (`j` → ଯ). The PDFs in `docs/` are older than the `.tex` files. | `cd docs && lualatex romanization-reference.tex` (twice), then the same for `romanization-reference-v2.tex`. Needs the macOS font Oriya Sangam MN. | 2026-10-04 |
 | A-2 | Rebuild the single-file apps in `docs/` so they carry D-12. The app the parents use (`Odia_Sanskrit_Appv2/odia-app-sanskrit-v2.html`, default mode) already has the `j` → ଯ option. `docs/odia-app.html` does not. | `npm run build:app`, then the Appv2 and dictionary builds (see `Appv2/README.md`, `Odia_Sanskrit_Appv2/README.md`). The V1 Vercel build may replace this step. | 2026-10-04 |
-| A-3 | Run the WebKit (Safari engine) checks. This environment has only Chromium. The V0 changes (caret bar, font, service worker) passed in Chromium. | `python3 tools/eval/webkit-check.py` and `python3 Appv2/eval/webkit-sanskrit.py` (need `pip install playwright` and `playwright install webkit`) | 2026-10-04 |
+| A-3 | Run the WebKit (Safari engine) checks. Include the V1 single-file app opened from Files/Finder: the dictionary now loads with `fetch()` from a `data:` URI, proven only in Chromium. This environment has only Chromium. The V0 changes (caret bar, font, service worker) passed in Chromium. | `python3 tools/eval/webkit-check.py` and `python3 Appv2/eval/webkit-sanskrit.py` (need `pip install playwright` and `playwright install webkit`) | 2026-10-04 |
 
 ## B. Five-minute checks (any device)
 
@@ -37,6 +37,7 @@ to the owner. Claude marks each item done here, with the date, when it is done.
 | C-4 | Judge the 100-sentence translation test (Google against Claude Haiku) | D-3, `/api/translate` |
 | C-5 | Review 50 loanword examples with a nukta on ଜ / ଫ | D-6 |
 | C-6 | Review the romanization scheme (`AGENTS.md` §7.4) | Public release |
+| C-7 | Write today's meaning for words where Praharaj's first sense misleads. First case: ରଜ shows "Dust.", but `raja` now means the Raja festival. Goes in an owner gloss file (V2). | Correct meanings under suggestions |
 
 ## D. Decisions still open
 
