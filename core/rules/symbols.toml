@@ -285,9 +285,15 @@ odia = [
   { text = "କ", w = 0.45 },
 ]
 
+# ଯ is pronounced like "ja", so people type ଯେ, ଯିବା, ଯଦି as "je", "jiba",
+# "jadi". Offer it word-initially at low weight; the lexicon decides between
+# ଜ and ଯ for real words. Non-initially ଯ is rare (ୟ is used), so no option.
 [[consonant]]
 roman = "j"
-odia = [{ text = "ଜ", w = 1.0 }]
+odia = [
+  { text = "ଜ", w = 1.0 },
+  { text = "ଯ", w = 0.4, context = "word_initial" },
+]
 
 [[consonant]]
 roman = "jh"

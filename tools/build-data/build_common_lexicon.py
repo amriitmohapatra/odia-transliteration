@@ -158,7 +158,7 @@ NASAL_COLLAPSE = (
 )
 
 
-def variants(roman: str, has_vocalic: bool) -> list[str]:
+def variants(roman: str, has_vocalic: bool, initial_ya: bool = False) -> list[str]:
     """The spellings a person might actually type for this word."""
     # Expand the sign placeholders both ways before anything else.
     seeds = {roman}
@@ -198,6 +198,12 @@ def variants(roman: str, has_vocalic: bool) -> list[str]:
     if "w" in roman:
         forms.add(roman.replace("w", "v"))
         forms.add(casual.replace("w", "v"))
+
+    # ଯ is romanized "y" above, but it is pronounced "ja", so ଯିବା is typed
+    # "jiba" at least as often as "yiba". Only a word-initial ଯ: elsewhere the
+    # letter is ୟ, which really is "y".
+    if initial_ya:
+        forms |= {"j" + f[1:] for f in forms if f.startswith("y")}
 
     return [f for f in forms if 1 < len(f) <= 40 and "\x01" not in f and "\x02" not in f]
 
@@ -240,7 +246,8 @@ def main() -> int:
             # Same 0..2.303 scale the unigrams use, so ranking stays comparable.
             weight = (math.log1p(count) / math.log1p(peak)) * 2.303
             has_vocalic = ("ୃ" in word) or ("ଋ" in word)
-            for n, key in enumerate(variants(roman, has_vocalic)):
+            initial_ya = word.startswith("ଯ")
+            for n, key in enumerate(variants(roman, has_vocalic, initial_ya)):
                 # the exact romanization outranks its looser variants
                 w = weight if n == 0 else weight * 0.9
                 slot = table.setdefault(key, {})
