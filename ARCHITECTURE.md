@@ -197,7 +197,9 @@ Copy visibly finishes the current eligible token before reading the value. Addre
 domains, acronyms and alphanumeric identifiers stay literal. Paste, drop, spell-check
 replacements, non-Roman composition and explicit Keep choices retain literal-span metadata
 through subsequent edits and undo/redo. Left/Right move the caret; Up/Down choose
-candidates; Alt/Option+1–9 selects a candidate without consuming ordinary digits. No
+candidates; number keys 1–9 take a candidate while the bar is open (Microsoft IME style,
+the owner's original design; setting "Number keys pick suggestions", on by default), and
+Alt/Option+1–9 always does. With the setting off, number keys type digits. No
 whole-document conversion runs as a side effect of copying.
 
 **Composition (fixed 2026-10-12, after PR #5):** `isLiteralInput()` in `editor-state.ts`
@@ -235,6 +237,7 @@ selected mode → engine → dictionary data on first need.
 | `odia.userdict` | Learned picks `{roman: {odia: count}}` |
 | `odia.pref.profile`, `odia.pref.digits`, `odia.pref.strict` | Settings |
 | `odia.pref.familySafe` | "Hide rude words" switch: `'1'`/`'0'`, missing = on |
+| `odia.pref.numberPick` | "Number keys pick suggestions" switch (1–9 take a suggestion, Microsoft IME style): `'1'`/`'0'`, missing = on |
 | `odia.pref.textSize` | `normal` / `large` / `xl` (scales every `--fs-*` by 1 / 1.15 / 1.3; applied by an inline head script before first paint) |
 | `odia.pref.seenIntro` | `'1'` once the first-run card is dismissed |
 | Cache Storage `odia-appv2-<rev>` | Offline copy of the app; each app touches only its own prefix |

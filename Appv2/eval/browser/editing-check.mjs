@@ -56,7 +56,14 @@ async function firstCandidate(page) {
 }
 try {
   for (const literal of ['test@example.com', 'https://example.com/a?q=1', 'covid19', 'PCR2']) {
-    await run(`typed ${literal} remains literal, including digits and punctuation`, async ({ page }) => {
+    await run(`typed ${literal} remains literal, including digits and punctuation`, async ({ page, area }) => {
+      if (literal === 'covid19') {
+        // A digit straight after letters needs "Number keys pick suggestions" off.
+        await page.locator('#open-settings').click();
+        await page.locator('#toggle-number-pick').uncheck();
+        await page.locator('#settings button[data-settings-close]').click();
+        await area.focus();
+      }
       await page.keyboard.type(literal + ' ');
       assert.equal(await editor(page), literal + ' ');
       await page.waitForFunction(() => document.querySelectorAll('#readback .rb-word[data-odia]').length === 0, null, { timeout: 2000 });
@@ -92,6 +99,40 @@ try {
     const proposed = await page.locator('#inline-candidates .inline-candidate').nth(1).locator('.inline-text, .inline-latin').innerText();
     await page.keyboard.press('Alt+2');
     assert.equal(await editor(page), proposed, 'Alt+2 selects the displayed second candidate');
+  });
+
+  await run('number keys pick a numbered suggestion, as on Microsoft keyboards (default on)', async ({ page }) => {
+    await page.keyboard.type('kemiti');
+    await firstCandidate(page);
+    const second = await page.locator('#inline-candidates .inline-candidate').nth(1).locator('.inline-text, .inline-latin').innerText();
+    await page.keyboard.press('2');
+    assert.equal(await editor(page), second, '2 takes the displayed second candidate');
+    await page.keyboard.type(' 10 ');
+    assert.equal(await editor(page), second + ' 10 ', 'with no suggestions open, number keys type digits');
+    await page.keyboard.type('bus');
+    await firstCandidate(page);
+    const shown = await page.locator('#inline-candidates .inline-candidate').count();
+    if (shown < 9) {
+      await page.keyboard.press(String(shown + 1));
+      assert.ok((await editor(page)).endsWith('bus' + (shown + 1)), 'a number beyond the list types the digit');
+    }
+    assert.equal(await page.evaluate(() => localStorage.getItem('odia.pref.numberPick')), null, 'default needs no stored setting');
+  });
+
+  await run('number keys type digits when the setting is off; Alt plus a number still picks', async ({ page, area }) => {
+    await page.locator('#open-settings').click();
+    await page.locator('#toggle-number-pick').uncheck();
+    await page.locator('#settings button[data-settings-close]').click();
+    await area.focus();
+    await page.keyboard.type('kemiti');
+    await firstCandidate(page);
+    await page.keyboard.press('2');
+    assert.equal(await editor(page), 'kemiti2');
+    assert.equal(await page.evaluate(() => localStorage.getItem('odia.pref.numberPick')), '0', 'the choice is saved');
+    await page.keyboard.press('Backspace');
+    const second = await page.locator('#inline-candidates .inline-candidate').nth(1).locator('.inline-text, .inline-latin').innerText();
+    await page.keyboard.press('Alt+2');
+    assert.equal(await editor(page), second);
   });
 
   await run('Copy honors the candidate highlighted with ArrowDown', async ({ page }) => {

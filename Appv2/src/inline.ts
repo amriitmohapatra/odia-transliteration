@@ -61,6 +61,8 @@ export interface InlineHost {
   replace(start: number, end: number, text: string, literal: boolean): void;
   keep(start: number, end: number): void;
   composing(): boolean;
+  /** True when plain number keys 1-9 take a suggestion (Microsoft IME style). */
+  numberKeysPick?(): boolean;
   deferBoundary(separator: string, action: () => boolean): void;
   /** Candidates for the roman word currently under the caret. */
   candidates(roman: string): Candidate[];
@@ -340,6 +342,13 @@ export class InlineCandidates {
         const index = Number(digit) - 1;
         if (index < this.shown.length) { event.preventDefault(); this.commit(index); }
       }
+      return;
+    }
+    // 1-9 take that suggestion, the way the Windows IME does (the owner's
+    // original design). A number beyond the list types the digit.
+    if (!event.shiftKey && /^[1-9]$/.test(event.key) && this.host.numberKeysPick?.()) {
+      const index = Number(event.key) - 1;
+      if (index < this.shown.length) { event.preventDefault(); this.commit(index); }
       return;
     }
     if (event.shiftKey) return;

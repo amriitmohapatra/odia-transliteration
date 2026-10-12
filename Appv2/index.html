@@ -129,8 +129,8 @@
             placeholder="Type here, e.g. kemiti achha…"
           ></textarea>
           <p id="roman-help" class="sr-only">
-            Suggestions appear as you type. Up and down arrows choose one; Enter or Alt plus
-            its number takes it. Space takes the highlighted one. Left and right move the caret.
+            Suggestions appear as you type. Up and down arrows choose one; Enter, its number,
+            or Alt plus its number takes it. Space takes the highlighted one. Left and right move the caret.
             Control or Command Enter copies the text. Control or Command Z undoes an edit.
           </p>
           <!--
@@ -265,6 +265,14 @@
             </span>
           </label>
 
+          <label class="setting">
+            <input type="checkbox" id="toggle-number-pick" role="switch" />
+            <span class="setting-text">
+              <span class="setting-label">Number keys pick suggestions</span>
+              <span class="setting-help">Press 1–9 to take a numbered suggestion, as on Microsoft keyboards. Turn off to type a number straight after letters (covid19). Alt plus a number always picks.</span>
+            </span>
+          </label>
+
           <div class="setting-block">
             <span class="setting-label" id="text-size-label">Text size</span>
             <div class="segmented" role="radiogroup" aria-labelledby="text-size-label">
@@ -335,8 +343,9 @@
               <p class="note">
                 Use Up and Down to choose a suggestion, then Space to take it and start
                 the next word, or Enter to take it and start a new line. Tab takes it without a separator.
-                Alt (Option on Mac) plus 1–9 selects a numbered suggestion; ordinary number
-                keys type digits. Left and Right move through your text. Undo with Ctrl+Z
+                Number keys 1–9 take a numbered suggestion, as on Microsoft keyboards (turn this
+                off in Settings to type digits straight after letters). Alt (Option on Mac) plus
+                1–9 always takes it. Left and Right move through your text. Undo with Ctrl+Z
                 or Command+Z; redo with Ctrl+Shift+Z or Command+Shift+Z.
               </p>
               <p class="note">

@@ -218,6 +218,7 @@ Agents do not commit; the lead reviews, measures and commits.
 
 | Date | Change |
 |---|---|
+| 2026-10-12 | Number keys 1–9 pick a suggestion again (owner request: Microsoft keyboard style, lost in PR #5). Setting "Number keys pick suggestions", on by default; Alt+number always picks. Two new editing checks (27/27). |
 | 2026-10-12 | V2.5 phrase table: data file, parser, Meanings panel "Phrases", unit and browser checks (`phrases-check.mjs`, in CI). Engine scores unchanged. |
 | 2026-10-12 | Security check (repo found public): no secrets in any commit (gitleaks + custom scan, all history). CI token set to read-only; `npm audit fix` (nanoid, smol-toml; vitest/tinypool remain, test runner only, needs a major upgrade). Owner items S-1 to S-4 in `plan/06`. Owner decision: the repo stays public, history unchanged (free Actions minutes). |
 | 2026-10-12 | Owner approved the fixes. **Fixed:** composed Roman words (Gboard) show suggestions and convert again; a tap during composition replaces the word once and undo returns the Roman word; Escape only closes the bar for the current word; "Try example" waits for the engine. Checks: 4 unit + 4 browser composition cases and a rewritten Escape case (they fail on the PR #5 build, pass now); editing 25/25, English 19/19, phone 193/193 on adult and kids builds. |
