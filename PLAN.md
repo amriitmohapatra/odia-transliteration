@@ -218,6 +218,7 @@ Agents do not commit; the lead reviews, measures and commits.
 
 | Date | Change |
 |---|---|
+| 2026-10-12 | Claude review of the Codex changes (PRs #4, #5): all unit, eval and browser checks pass on adult and kids builds; typing latency unchanged. **Found:** words typed through a composing keyboard (Android Gboard style) stay Roman and show no suggestions (confirmed in Chromium with CDP IME events; before #5 they converted); Escape now keeps a word as English; "Hide rude words" is not applied to English results (canary test added); "Try example" before load can stay Roman. `report-check.mjs` presses Done (phone read-back row is hidden while typing). Fixes wait for the owner. |
 | 2026-10-04 | PR #3 merged to `main`. **V1 live on Vercel** (adult and kids). First build failed: Vercel had picked `web` as the root directory; fixed by setting it to the repository root. |
 | 2026-10-04 | Browser checks moved into the repo (4.6). Docs pointers updated (CLAUDE.md, AGENTS.md, docs/README.md). |
 | 2026-10-04 | V2.1–V2.4 merged: j-keys, word-pair context (weight 1.2, wired into the caret bar), long-a weight, word origins. |
