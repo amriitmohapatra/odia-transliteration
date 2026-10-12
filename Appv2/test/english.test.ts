@@ -1,7 +1,7 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 import { canonical } from '../../core/src/normalize.js';
-import { parseGlosses } from '../../core/src/curation.js';
+import { parseGlosses, parseLabels } from '../../core/src/curation.js';
 import { normalizeEnglish, parseEnglishEntries, searchEnglish } from '../src/dictionary/english.js';
 
 const tsv = readFileSync(new URL('../src/dictionary/english.tsv', import.meta.url), 'utf8');
@@ -86,5 +86,17 @@ describe('English to Odia starter dictionary', () => {
     expect(() => parseEnglishEntries(row.replace('translation', 'automatic'))).toThrow(/kind/);
     expect(() => parseEnglishEntries(row.replace('\t\tseed', '\tINVALID\tseed'))).toThrow(/alias/);
     expect(() => parseEnglishEntries('incomplete')).toThrow(/seven fields/);
+  });
+});
+
+// The adult "Hide rude words" switch is not applied to English results (only the
+// kids edition passes `hide`). This canary keeps that safe: an offensive or coarse
+// word added to english.tsv fails here before it can be shown or inserted.
+describe('English starter dictionary and the content labels', () => {
+  it('contains no word labelled offensive or coarse', () => {
+    const labels = parseLabels(readFileSync(new URL('../../core/data/labels.tsv', import.meta.url), 'utf8'));
+    const flagged = entries.map((entry) => canonical(entry.odia))
+      .filter((word) => labels.isOffensive(word) || labels.isCoarse(word));
+    expect(flagged).toEqual([]);
   });
 });

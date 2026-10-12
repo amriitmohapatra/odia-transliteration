@@ -284,6 +284,7 @@ async function boot(): Promise<void> {
   // Loading never rewrites text the user already typed or pasted.
   inline.setEnabled(!strictEl.checked);
   render();
+  if (exampleWaiting) tryExample();
   startDictionary(
     (s) => {
       dictPhase = s;
@@ -891,8 +892,14 @@ function dismissIntro(): void {
  * "Try an example": the first word converted, the second still being typed,
  * so the first thing a user sees is a suggestion list with meanings.
  */
+/** Set when "Try an example" is pressed before the engine is ready. */
+let exampleWaiting = false;
+
 function tryExample(): void {
   dismissIntro();
+  // Before the engine loads, the example would stay Roman: run it after loading.
+  if (!handle) { exampleWaiting = true; return; }
+  exampleWaiting = false;
   const split = INTRO_EXAMPLE.lastIndexOf(' ') + 1;
   const prefix = INTRO_EXAMPLE.slice(0, split);
   const converted = guard(() => handle?.engine.transliterate(prefix).text ?? prefix, prefix);
@@ -1045,7 +1052,7 @@ function undoClear(): void {
  * must re-read the word at the caret, or a tap would commit into stale offsets.
  */
 function refreshSuggestions(): void {
-  inline?.setEnabled(!strictEl.checked && !editor.composing);
+  inline?.setEnabled(!strictEl.checked);
 }
 
 /**
@@ -1396,7 +1403,7 @@ function bindEvents(): void {
     writePref(PREF_FAMILY_SAFE, familySafeEl.checked);
     // No rebuild needed: the engine reads the switch on every lookup.
     guard(() => handle?.engine.setFamilySafe?.(familySafeEl.checked), undefined);
-    inline?.setEnabled(!strictEl.checked && !editor.composing); // re-rank the open suggestions
+    inline?.setEnabled(!strictEl.checked); // re-rank the open suggestions
     render();
   });
 
@@ -1413,7 +1420,7 @@ function bindEvents(): void {
   strictEl.addEventListener('change', () => {
     writePref(PREF_STRICT, strictEl.checked);
     // Strict ITRANS has exactly one answer per word, so there is nothing to pick.
-    inline?.setEnabled(!strictEl.checked && !editor.composing);
+    inline?.setEnabled(!strictEl.checked);
     render();
   });
 

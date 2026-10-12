@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { EditHistory, pendingRoman, replaceState, type EditState } from '../src/editor-state.js';
+import { EditHistory, isLiteralInput, pendingRoman, replaceState, type EditState } from '../src/editor-state.js';
 const state = (value: string, start = value.length, end = start): EditState => ({ value, start, end, direction: 'none', literals: [] });
 
 describe('literal boundaries', () => {
@@ -63,5 +63,26 @@ describe('editor transactions', () => {
     h.record(h.current, replaceState(h.current, 1, 1, 'c'));
     expect(h.redo()).toBeUndefined();
     expect(h.current.value).toBe('ac');
+  });
+});
+
+describe('which input stays literal', () => {
+  it('keeps pasted, dropped and spell-check text literal', () => {
+    for (const type of ['insertFromPaste', 'insertFromDrop', 'insertReplacementText']) {
+      expect(isLiteralInput(type, false, 'kemiti')).toBe(true);
+    }
+  });
+  it('transliterates a Roman word that a phone keyboard composes (Gboard)', () => {
+    expect(isLiteralInput('insertCompositionText', true, 'kemiti')).toBe(false);
+    expect(isLiteralInput('insertText', true, 'kemiti')).toBe(false);
+    const composed = replaceState(state(''), 0, 0, 'kemiti', isLiteralInput('insertCompositionText', true, 'kemiti'));
+    expect(pendingRoman(composed)).toEqual({ roman: 'kemiti', start: 0, end: 6, tailEnd: 6 });
+  });
+  it('keeps text from an Odia or other-script IME as committed', () => {
+    expect(isLiteralInput('insertCompositionText', true, '\u0B15\u0B47\u0B2E\u0B3F\u0B24\u0B3F')).toBe(true);
+    expect(isLiteralInput('insertCompositionText', true, '\u65E5\u672C')).toBe(true);
+  });
+  it('treats ordinary typing as eligible', () => {
+    expect(isLiteralInput('insertText', false, 'k')).toBe(false);
   });
 });

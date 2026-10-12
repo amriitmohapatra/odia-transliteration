@@ -30,6 +30,16 @@ export function pendingRoman(state: EditState): PendingRoman | undefined {
   return { roman, start, end: start + roman.length, tailEnd: caret };
 }
 
+/** Paste, drop and spell-check replacements stay literal. Composed text stays
+ * literal only when it is not plain Roman: an Odia or other-script IME commits
+ * what the user chose, but a Latin keyboard that composes whole words (Android
+ * Gboard) must still be transliterated.
+ */
+export function isLiteralInput(inputType: string, composed: boolean, text: string): boolean {
+  if (['insertFromPaste', 'insertFromDrop', 'insertReplacementText'].includes(inputType)) return true;
+  return (composed || inputType === 'insertCompositionText') && /[^\t\n\r\x20-\x7E]/.test(text);
+}
+
 /** Replace a range without moving or destroying unrelated literal spans. */
 export function replaceState(before: EditState, start: number, end: number, text: string, literal = false): EditState {
   const delta = text.length - (end - start);

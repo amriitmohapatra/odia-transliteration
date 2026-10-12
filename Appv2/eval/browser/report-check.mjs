@@ -12,6 +12,8 @@ const errs = []; p.on('pageerror', e => errs.push(String(e)));
 const ext = []; p.on('request', r => { if (!r.url().startsWith(URL) && !r.url().startsWith('data:')) ext.push(r.url()); });
 await p.goto(URL); await p.waitForTimeout(2500);
 const ta = p.locator('textarea').first(); await ta.click(); await ta.type('raja ', { delay: 20 }); await p.waitForTimeout(800);
+// Phone layout (2026-10-12): the read-back row returns after Done.
+if (await p.locator('#done-dock').isVisible()) { await p.locator('#done-dock').click(); await p.waitForTimeout(500); }
 await p.locator('#readback .rb-word').first().click(); await p.waitForTimeout(800);
 const visible = await p.locator('#picker-report').isVisible();
 await p.locator('#picker-report').click(); await p.waitForTimeout(800);

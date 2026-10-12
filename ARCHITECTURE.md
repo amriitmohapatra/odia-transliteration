@@ -192,11 +192,20 @@ iOS system keyboard; viewport simulations do not establish device parity.
 **Editor transactions (12 October 2026):** the editor value is the document being
 copied or shared. Space/newline commits an eligible Roman token with its punctuation;
 Copy visibly finishes the current eligible token before reading the value. Addresses,
-domains, acronyms and alphanumeric identifiers stay literal. Paste, browser composition
-and explicit Keep choices retain literal-span metadata through subsequent edits and
-undo/redo. Left/Right move the caret; Up/Down choose candidates; Alt/Option+1–9 selects
-a candidate without consuming ordinary digits. Native composition stays under the
-browser's control. No whole-document conversion runs as a side effect of copying.
+domains, acronyms and alphanumeric identifiers stay literal. Paste, drop, spell-check
+replacements, non-Roman composition and explicit Keep choices retain literal-span metadata
+through subsequent edits and undo/redo. Left/Right move the caret; Up/Down choose
+candidates; Alt/Option+1–9 selects a candidate without consuming ordinary digits. No
+whole-document conversion runs as a side effect of copying.
+
+**Composition (fixed 2026-10-12, after PR #5):** `isLiteralInput()` in `editor-state.ts`
+decides. Composed text that is plain Roman (Android Gboard composes whole words) is
+eligible: the bar shows during composition and Space converts it. Composed Odia or other
+scripts (an IME's own commit) stays literal. A tap on a suggestion during composition
+ends the composition in `Editor.replace()`; undo first returns the Roman word. Escape
+closes the bar for the current word only (Space then types a plain space); Keep is the
+only way to keep a word in English permanently. Checks: `editing-check.mjs` composition
+cases (CDP `Input.imeSetComposition`), desktop and phone.
 
 The English dictionary's optional insertion callback delegates to the editor. It
 replaces the last editor selection with the explicitly chosen canonical Odia form;
@@ -244,6 +253,11 @@ and `dictionary/overlay.css` together.
 ## 6. Hosting and deployment (V1)
 
 - Vercel serves `Appv2/dist/` as static files. No server code runs in V1.
+- **Live since 2026-10-04:** adult `https://odia-transliteration-web.vercel.app/`, kids
+  `https://odia-phonetic-kids.vercel.app/`. Both projects deploy from `main`.
+- **Root Directory must be the repository root** (empty or `./`). Vercel may suggest `web`
+  because `web/` is a Vite project; with `web` the build fails ("Could not resolve
+  .../web/Appv2/vite.config.ts"). Leave the command overrides off so `vercel.json` applies.
 - `vercel.json` (repo root) sets the install and build commands, the output folder and
   headers (`sw.js` must not be cached long, so updates reach users).
 - Every push to a branch gets a Vercel preview address. The configured production

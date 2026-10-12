@@ -115,6 +115,25 @@ that later phone changes passed.
   eight pre-existing conflicts in linguistic data/rules/reference/builder files.
   Use `git merge-tree --write-tree` to inspect without modifying the worktree.
 
+## Claude review, 12 October 2026 (after PR #5)
+
+- Re-ran on merged `main` (adult and kids builds): 178 core + 74 Appv2 unit tests, 58 fallback
+  checks, evals unchanged (held-out 25.3/36.8), editing 21/21, English 19/19, phone 193/193,
+  regress, gloss, origin, context, kids and report checks pass. Typing latency unchanged (freeze).
+- `report-check.mjs` now presses Done first: on phones the read-back row is hidden while typing.
+- **Open, HIGH:** `editor.ts` `acceptInput` marks all composition text literal, and the bar hides
+  while composing. A composing Latin keyboard (Gboard) therefore gets no suggestions and the
+  word stays Roman after Space. Confirmed in Chromium with CDP `Input.imeSetComposition`
+  (`4a3a85e` converts, `d4e941b` does not). Needs an Android check (`plan/06` A-5).
+- **Open, MEDIUM:** Escape now calls `keep()`, so the word stays English permanently; Help names
+  only Keep. **LOW:** family-safe switch not passed to English lookup (canary test added in
+  `Appv2/test/english.test.ts`); Try example before the engine loads leaves Roman text.
+
+**Fixed 2026-10-12 (owner approved):** composed Roman words convert again and show the bar;
+Escape only closes the bar for the current word; Try example waits for the engine. Rule in
+`editor-state.ts` `isLiteralInput()`. Editing checks now 25/25 (4 new composition cases fail
+on `d4e941b`, pass now). Real Android (Gboard) confirmation is `plan/06` A-5.
+
 ## Resuming in another chat
 
 1. Check `gh pr view 5 --json state,mergeCommit,headRefOid,url` and `git status`.

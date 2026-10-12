@@ -171,18 +171,20 @@ try {
     assert.equal(await clipboard(page), 'bus bus ');
   });
 
-  await run('Escape keeps a word literal through Copy and Undo restores conversion', async ({ page, area }) => {
-    await page.keyboard.type('kemiti');
-    const proposed = await firstCandidate(page);
+  await run('Escape closes suggestions for this word only; a changed word offers them again', async ({ page }) => {
+    await page.keyboard.type('kemi');
+    await firstCandidate(page);
     await page.keyboard.press('Escape');
-    await page.locator('#copy').click();
-    assert.equal(await editor(page), 'kemiti');
-    assert.equal(await clipboard(page), 'kemiti', 'Escape means keep, not merely hide the picker');
-    await area.focus();
-    await page.keyboard.press('Control+z');
-    assert.equal(await editor(page), 'kemiti', 'undoing Keep changes its literal protection, not its text');
+    assert.equal(await page.locator('#inline-candidates').isVisible(), false, 'Escape closes the bar');
+    await page.keyboard.type('ti');
+    const proposed = await firstCandidate(page);
     await page.keyboard.press('Space');
-    assert.equal(await editor(page), proposed + ' ', 'after Undo the Roman word may convert again');
+    assert.equal(await editor(page), proposed + ' ', 'Escape is not Keep: the longer word converts');
+    await page.keyboard.type('achha');
+    await firstCandidate(page);
+    await page.keyboard.press('Escape');
+    await page.keyboard.press('Space');
+    assert.equal(await editor(page), proposed + ' achha ', 'after Escape, Space types a plain space');
   });
 
   await run('Clear toast expires on an intervening edit and Undo targets that edit', async ({ page }) => {
@@ -250,19 +252,54 @@ try {
     assert.equal(await editor(page), proposed + '? ');
   });
 
-  await run('browser IME composition is not converted before native commit', async ({ page, context }) => {
+  await run('an Odia IME composition is kept exactly as the IME commits it', async ({ page, context }) => {
     // CDP drives Chromium's actual composition events, without claiming a physical IME test.
     const cdp = await context.newCDPSession(page);
     await cdp.send('Input.imeSetComposition', { text: 'kemiti', selectionStart: 6, selectionEnd: 6 });
     assert.equal(await editor(page), 'kemiti');
-    const visible = await page.locator('#inline-candidates').isVisible();
-    assert.equal(visible, false, 'our candidate picker stays closed during native composition');
     await cdp.send('Input.insertText', { text: '\u0b15\u0b47\u0b2e\u0b3f\u0b24\u0b3f' });
     assert.equal(await editor(page), '\u0b15\u0b47\u0b2e\u0b3f\u0b24\u0b3f');
+    assert.equal(await page.locator('#inline-candidates').isVisible(), false, 'no suggestions for committed Odia');
     await page.keyboard.press('Space');
     assert.equal(await editor(page), '\u0b15\u0b47\u0b2e\u0b3f\u0b24\u0b3f ');
     await cdp.detach();
   });
+
+  // A Latin keyboard that composes whole words (Android Gboard). Before this was
+  // fixed, the composed word was literal: no suggestions and no conversion.
+  async function composeRoman(cdp, word) {
+    for (let i = 1; i <= word.length; i++) {
+      await cdp.send('Input.imeSetComposition', { text: word.slice(0, i), selectionStart: i, selectionEnd: i });
+    }
+  }
+  for (const mobile of [false, true]) {
+    const where = mobile ? 'phone' : 'desktop';
+    await run(`${where}: a composed Roman word shows suggestions and converts on Space`, async ({ page, context }) => {
+      const cdp = await context.newCDPSession(page);
+      await composeRoman(cdp, 'kemiti');
+      const proposed = await firstCandidate(page);
+      await cdp.send('Input.insertText', { text: 'kemiti' });
+      await page.keyboard.press('Space');
+      assert.equal(await editor(page), proposed + ' ');
+      await cdp.detach();
+    }, mobile);
+
+    await run(`${where}: a tap on a suggestion during composition replaces the word once`, async ({ page, context }) => {
+      const cdp = await context.newCDPSession(page);
+      await composeRoman(cdp, 'kemiti');
+      const candidate = page.locator('#inline-candidates .inline-candidate').first();
+      const proposed = await firstCandidate(page);
+      await candidate.click();
+      assert.equal(await editor(page), proposed);
+      await composeRoman(cdp, ' achha');
+      await cdp.send('Input.insertText', { text: ' achha' });
+      assert.equal(await editor(page), proposed + ' achha', 'no duplicated or lost text after the tap');
+      await page.keyboard.press('Space');
+      const value = await editor(page);
+      assert.ok(!/[a-z]/.test(value), `both words are Odia: ${value}`);
+      await cdp.detach();
+    }, mobile);
+  }
 
   await run('phone viewport insertion without keydown commits punctuation on space', async ({ page }) => {
     // insertText models software-keyboard input without keydown. It does not emulate iOS itself.
