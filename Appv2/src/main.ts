@@ -16,7 +16,8 @@ import { badgeElement, DOCK_QUERY, InlineCandidates } from './inline.js';
 import { meaningsOpen, setMeaningsOpen, startDictionary, type DictionaryState } from './dictionary/index.js';
 
 import { codepoints, LocalStorageLearnStore } from '@odia/core';
-import type { DigitMode } from '@odia/core/types';
+import type { Candidate, DigitMode } from '@odia/core/types';
+import type { EngineLike } from './verbatim.js';
 
 import {
   buildEngine,
@@ -129,6 +130,9 @@ const MODE_HINT: Record<ProfileId, string> = {
 
 /** How many candidates the picker offers. */
 const TOPK = 8;
+/** Word completions in the bar, and the place of the first one (0-based). */
+const COMPLETIONS = 2;
+const COMPLETION_SLOT = 2;
 
 /* V1 states (proposal 3.11). Copy deck strings. */
 const LOADING_WORDS = 'Loading words\u2026 your text will convert in a moment';
@@ -222,7 +226,7 @@ async function boot(): Promise<void> {
     // The Odia word just before the caret word gives context (word pairs, V2.2),
     // so a word the user picked from the bar informs the next suggestion.
     candidates: (roman) =>
-      guard(() => handle?.engine.transliterateWord(roman, 9, { prev: previousOdiaWord(roman) }) ?? [], []),
+      guard(() => withCompletions(handle?.engine, roman, handle?.engine.transliterateWord(roman, 9, { prev: previousOdiaWord(roman) }) ?? []), []),
     onCommit: (roman, text) => {
       guard(() => handle?.engine.learn(roman, text), undefined);
       commitKeys.set(text, roman);
@@ -303,8 +307,13 @@ async function boot(): Promise<void> {
         insertAtCaret(canonical(word));
         return true;
       },
-      spell: (roman) => guard(() => (handle?.engine.transliterateWord(roman, 5) ?? [])
-        .filter((c) => c.source !== 'verbatim').map((c) => canonical(c.text)), []),
+      // The spellings of the word, then whole-word completions (V2.16).
+      spell: (roman) => guard(() => {
+        const ranked = (handle?.engine.transliterateWord(roman, 5) ?? []).filter((c) => c.source !== 'verbatim');
+        const more = handle?.engine.complete?.(roman, COMPLETIONS, ranked.map((c) => c.text)) ?? [];
+        return [...ranked, ...more].map((c) => canonical(c.text));
+      }, []),
+      frequency: (word) => guard(() => handle?.engine.wordFrequency?.(word) ?? 0, 0),
     },
   ); // glosses + side panel; its data loads lazily
 
@@ -327,6 +336,19 @@ function digitMode(): DigitMode {
  * separate them (word pairs are counted across spaces only; punctuation or a
  * line break ends the context). Undefined otherwise.
  */
+/**
+ * Word completion (V2.16): up to two whole words for a key still being typed
+ * ("bhub" -> the city), from the typed-spelling data. They go third and fourth,
+ * so Space still takes the best match for what was typed, and a number key
+ * reaches them. None in the kids edition (no typed data there).
+ */
+function withCompletions(engine: EngineLike | undefined, roman: string, ranked: Candidate[]): Candidate[] {
+  const extra = engine?.complete?.(roman, COMPLETIONS, ranked.map((c) => c.text)) ?? [];
+  if (extra.length === 0) return ranked;
+  const at = Math.min(COMPLETION_SLOT, ranked.filter((c) => c.source !== 'verbatim').length);
+  return [...ranked.slice(0, at), ...extra, ...ranked.slice(at)];
+}
+
 function previousOdiaWord(roman: string): string | undefined {
   const caret = romanEl.selectionStart ?? romanEl.value.length;
   const start = editor.pending()?.start ?? Math.max(0, caret - roman.length);

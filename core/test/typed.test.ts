@@ -54,6 +54,25 @@ describe('typed-spelling pairs', () => {
     expect(engine.transliterateWord('kali', 5)[0]?.text).toBe(KALI_DID);
   });
 
+  it('do not stop a word kept in English from leading after one Keep', () => {
+    const BUS = '\u0B2C\u0B38\u0B4D'; // the loan word, a real word with a frequency
+    const engine = createEngine({
+      rulesToml: SYMBOLS_TOML,
+      typedTsv: `bus\t${BUS}\t287\n`,
+      unigramsTsv: `${BUS}\t2.0\n`,
+      learnStore: new MemoryLearnStore(),
+    });
+    expect(engine.transliterateWord('bus', 5)[0]?.text).toBe(BUS);
+    engine.learn('bus', 'bus');
+    const out = engine.transliterateWord('bus', 5);
+    expect(out[0]).toMatchObject({ text: 'bus', source: 'user' });
+    expect(out.filter((c) => c.text === 'bus')).toHaveLength(1);
+    // Two picks of the Odia word later, the Odia word leads again.
+    engine.learn('bus', BUS);
+    engine.learn('bus', BUS);
+    expect(engine.transliterateWord('bus', 5)[0]?.text).toBe(BUS);
+  });
+
   it('lose to an owner preference', () => {
     const engine = createEngine({
       rulesToml: SYMBOLS_TOML,
@@ -76,5 +95,48 @@ describe('typed-spelling pairs', () => {
     const common = createEngine({ rulesToml: SYMBOLS_TOML, typedTsv: `kn\t${KANA}\t285010\n` });
     const score = (e: typeof rare) => e.transliterateWord('kn', 5).find((c) => c.text === KANA)?.score ?? 0;
     expect(score(common)).toBeGreaterThan(score(rare));
+  });
+});
+
+describe('word completion from typed pairs', () => {
+  const CITY = '\u0B2D\u0B41\u0B2C\u0B28\u0B47\u0B36\u0B4D\u0B71\u0B30'; // bhubaneswar
+  const BHUBANA = '\u0B2D\u0B41\u0B2C\u0B28'; // bhubana
+  const MISSPELT = '\u0B2D\u0B41\u0B2C\u0B47\u0B28\u0B47\u0B36\u0B4D\u0B71\u0B30';
+  const TYPED_CITY =
+    `bhuban\t${BHUBANA}\t250\nbhubaneswar\t${CITY}\t7000\nbhubeneswar\t${MISSPELT}\t114\nbhubneswar\t${CITY}\t747\n`;
+  const engine = createEngine({ rulesToml: SYMBOLS_TOML, typedTsv: TYPED_CITY });
+
+  it('offers the whole word for a key still being typed, most chosen first, counts summed over keys', () => {
+    const out = engine.complete('bhub', 3);
+    expect(texts(out)).toEqual([CITY, BHUBANA]);
+    expect(out[0]?.source).toBe('completion');
+    expect(out[0]?.score).toBe(7747);
+  });
+
+  it('drops a rare misspelling next to the common word (relative floor)', () => {
+    expect(texts(engine.complete('bhub', 5))).not.toContain(MISSPELT);
+  });
+
+  it('needs three letters, and skips words that are already candidates', () => {
+    expect(engine.complete('bh', 3)).toEqual([]);
+    expect(texts(engine.complete('bhub', 3, [CITY]))).toEqual([BHUBANA]);
+  });
+
+  it('never completes to the exact key itself', () => {
+    expect(texts(engine.complete('bhuban', 3))).toEqual([CITY]);
+  });
+
+  it('is empty without typed data', () => {
+    expect(createEngine({ rulesToml: SYMBOLS_TOML }).complete('bhub', 3)).toEqual([]);
+  });
+
+  it('goes through the content filter', () => {
+    const kids = createEngine({
+      rulesToml: SYMBOLS_TOML,
+      typedTsv: TYPED_CITY,
+      labelsTsv: `${CITY}\toffensive\tbhubaneswar\n`,
+      filter: 'kids',
+    });
+    expect(texts(kids.complete('bhub', 3))).not.toContain(CITY);
   });
 });

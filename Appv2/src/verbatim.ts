@@ -27,6 +27,10 @@ export interface EngineLike {
   /** `context.prev`: the Odia word before this one, for word-pair ranking (V2.2). */
   transliterateWord(roman: string, topk?: number, context?: { prev?: string }): Candidate[];
   learn(roman: string, chosen: string): void;
+  /** Whole words for a key still being typed (typed-spelling data). Absent on the degraded engine. */
+  complete?(roman: string, k?: number, exclude?: readonly string[]): Candidate[];
+  /** How common an Odia word is (log frequency, 0 when unknown). Absent on the degraded engine. */
+  wordFrequency?(word: string): number;
   strict(input: string, scheme?: 'itrans'): string;
   /** Family-safe filter (Settings, "Hide rude words"). Absent on the degraded engine. */
   setFamilySafe?(on: boolean): void;

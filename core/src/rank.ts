@@ -213,6 +213,19 @@ export function rank(input: RankInput): Candidate[] {
     }
   }
 
+  // A typed word the user kept as it is ("bus" kept in English) has no rule,
+  // lexicon or frequency evidence, so one pick (user * ln 2) could never beat
+  // an Odia word that has them, and the typed-spelling data gives many English
+  // keys such a word. When it is the user's most picked word for this key, it
+  // goes first: keeping it was an explicit choice, as Keep in the bar says.
+  // After the floor, whose re-sort by score would undo it.
+  const kept = input.userCounts?.[input.roman];
+  if (kept !== undefined && kept > 0 && limit > 0 && !/[\u0B00-\u0B7F]/.test(input.roman) &&
+      Object.values(input.userCounts ?? {}).every((count) => count <= kept)) {
+    const entry = scored.find((c) => c.text === input.roman);
+    if (entry !== undefined) out = [entry, ...out.filter((c) => c !== entry)].slice(0, limit);
+  }
+
   // The verbatim token goes last and exactly once. A ranked candidate that is
   // character-for-character the input (an all-digit token in arabic mode, say)
   // would otherwise appear twice.

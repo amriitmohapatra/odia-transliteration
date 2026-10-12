@@ -459,7 +459,10 @@ export class InlineCandidates {
       item.type = 'button';
       const latin = isLatin(candidate.text);
       item.className =
-        'inline-candidate' + (latin ? ' inline-verbatim' : '') + (i === this.active ? ' is-active' : '');
+        'inline-candidate' + (latin ? ' inline-verbatim' : '') +
+        // A whole word for a key still being typed: marked so it reads as a completion.
+        (candidate.source === 'completion' ? ' inline-completion' : '') +
+        (i === this.active ? ' is-active' : '');
       item.dataset.index = String(i);
       item.id = `inline-candidate-${i}`;
       item.setAttribute('role', 'option');

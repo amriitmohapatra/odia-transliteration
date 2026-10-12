@@ -82,6 +82,7 @@ roman ──► tokenize ──► segment (rules lattice, beam) ──┐
 | `curation.ts` | Owner data: `preferences.tsv`, `labels.tsv`, `glosses.tsv`, `phrases.tsv`. Strict parsers. |
 | `bigrams.ts` | Word-pair counts (`bigrams.tsv`), strict loader; the context term. |
 | `rank.ts` typed term | Typed-spelling pairs (`typed.tsv`, parsed as a lexicon): `typed * count / (total + prior)`, also a candidate source (`source: 'typed'`). |
+| `Engine.complete()` | Whole-word completions from the typed pairs (prefix scan, `source: 'completion'`); the app puts up to two in the bar and in the dictionary search. |
 | `rank.ts` | Merges evidence and scores (see formula). |
 | `learn.ts` | User dictionary (`{roman: {odia: count}}`), memory or localStorage. |
 | `strict.ts` | Deterministic ITRANS mode. |

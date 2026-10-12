@@ -41,6 +41,12 @@ import type {
 /** Candidates returned per word when the caller does not ask for a specific number. */
 export const DEFAULT_TOPK = 8;
 
+/** Word completion: the shortest key that is completed, rows scanned, and the least use. */
+const COMPLETE_MIN_KEY = 3;
+const COMPLETE_SCAN = 5000;
+const COMPLETE_MIN_COUNT = 100;
+const COMPLETE_MIN_SHARE = 0.02;
+
 /**
  * `EngineConfig` plus the two search knobs. Kept out of `types.ts` because
  * they are tuning, not contract: nothing outside this class should have to
@@ -164,6 +170,43 @@ export class Engine {
       weights: this.rules.weights,
       topk: wanted,
     });
+  }
+
+  /**
+   * Whole words for a roman key that is still being typed: typed-spelling
+   * pairs whose key starts with `roman` and is longer ("bhub" -> the city).
+   * Ranked by how often users chose the word under any such key. Needs at
+   * least COMPLETE_MIN_KEY letters (a shorter prefix matches too much to
+   * guess), goes through the content filter, and never returns a word that
+   * is already a candidate for the exact key. Empty without typed data.
+   */
+  complete(roman: string, k = 2, exclude: readonly string[] = []): Candidate[] {
+    const key = roman.toLowerCase();
+    if (this.typed === undefined || key.length < COMPLETE_MIN_KEY || k <= 0) return [];
+    const totals = new Map<string, number>();
+    for (const row of this.typed.prefix(key, COMPLETE_SCAN)) {
+      if (row.key.length <= key.length) continue;
+      totals.set(row.word, (totals.get(row.word) ?? 0) + row.weight);
+    }
+    const skip = new Set(exclude.map((w) => canonical(w)));
+    const blocked = this.blockerFor(key);
+    const out: Candidate[] = [];
+    const ranked = [...totals].sort((a, b) => b[1] - a[1] || (a[0] < b[0] ? -1 : 1));
+    // Relative floor as well: a misspelling typed a hundred times next to the
+    // right word typed thousands of times is noise, not a completion.
+    const floor = Math.max(COMPLETE_MIN_COUNT, COMPLETE_MIN_SHARE * (ranked[0]?.[1] ?? 0));
+    for (const [word, count] of ranked) {
+      if (out.length >= k) break;
+      if (count < floor || skip.has(word)) continue;
+      if (blocked?.(word, { user: false, pref: false }) === true) continue;
+      out.push({ text: word, score: count, source: 'completion' });
+    }
+    return out;
+  }
+
+  /** How common an Odia word is: its log frequency, 0 for a word the counts never saw. */
+  wordFrequency(word: string): number {
+    return this.unigrams.logfreq(canonical(word));
   }
 
   /** The bigram term for one previous word, or undefined when it cannot apply. */

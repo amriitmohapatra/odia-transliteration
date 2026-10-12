@@ -25,7 +25,7 @@
  */
 import type { FilterLevel, Labels, Preferences } from './curation.js';
 
-export type CandidateSource = 'user' | 'preference' | 'lexicon' | 'typed' | 'rule' | 'verbatim';
+export type CandidateSource = 'user' | 'preference' | 'lexicon' | 'typed' | 'completion' | 'rule' | 'verbatim';
 
 export interface Candidate {
   /** Canonical Odia text (or the verbatim Latin token). */
