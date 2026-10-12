@@ -54,6 +54,7 @@ import { inflate } from './pako-inflate.js';
 import { originChipLabel, originLabel, parseOrigin } from './origin.js';
 import { parseEnglishEntries, searchEnglish, type EnglishEntry } from './english.js';
 import englishTsv from './english.tsv?raw';
+import { cleanDefinition } from './clean.js';
 import { CATEGORY_LABEL, parsePhrases, searchPhrases, type Phrase } from './phrases.js';
 import phrasesTsv from '../../../core/data/phrases.tsv?raw';
 import { DOCK_QUERY } from '../inline.js';
@@ -262,7 +263,7 @@ function bsearch(dict: Dict | null, key: string): number {
 
 function defAt(dict: Dict, i: number): string {
   const start = dict.offsets[i] as number;
-  return dict.defs.slice(start, start + (dict.lens[i] as number));
+  return cleanDefinition(dict.defs.slice(start, start + (dict.lens[i] as number)));
 }
 
 let lookupCache = Object.create(null) as Record<string, Entry | null>;
