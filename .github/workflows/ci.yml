@@ -8,6 +8,34 @@ on:
   pull_request:
 
 jobs:
+  editor-browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Install browser test tools
+        run: |
+          npm install --prefix "$RUNNER_TEMP/odia-browser-tools" --no-save --package-lock=false playwright@1.58.2
+          "$RUNNER_TEMP/odia-browser-tools/node_modules/.bin/playwright" install --with-deps chromium
+      - name: Build production app
+        run: npx vite build --config Appv2/vite.config.ts
+      - name: Editor and English dictionary browser regressions
+        run: |
+          python3 -m http.server 4810 --bind 127.0.0.1 --directory Appv2/dist > "$RUNNER_TEMP/odia-browser-server.log" 2>&1 &
+          odia_server_pid=$!
+          trap 'kill "$odia_server_pid"' EXIT
+          for attempt in $(seq 1 30); do
+            if curl --fail --silent http://127.0.0.1:4810/ > /dev/null; then break; fi
+            sleep 1
+          done
+          export NODE_PATH="$RUNNER_TEMP/odia-browser-tools/node_modules"
+          node Appv2/eval/browser/editing-check.mjs 4810
+          node Appv2/eval/browser/english-check.mjs 4810
   check:
     runs-on: ubuntu-latest
     timeout-minutes: 20

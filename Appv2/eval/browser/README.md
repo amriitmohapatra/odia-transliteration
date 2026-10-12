@@ -14,6 +14,7 @@ node Appv2/eval/browser/report-check.mjs 4810  # "Wrong word? Report it"
 node Appv2/eval/browser/freeze.mjs 4810        # A-7 timing (report, not pass/fail)
 node Appv2/eval/browser/context-check.mjs 4810 # word-pair context in the caret bar (V2.2)
 node Appv2/eval/browser/english-check.mjs 4810 # English lookup, clipboard, offline and degraded loading
+node Appv2/eval/browser/editing-check.mjs 4810 # literal text, caret, commits, undo and mobile input events
 ```
 
 Playwright: in the Claude Code cloud environment it loads from
@@ -29,15 +30,36 @@ editing the script. To use the prepared Codex cloud tools and system Chromium:
 NODE_PATH=/workspace/onboarding-tools/node_modules CHROMIUM_EXECUTABLE_PATH=/usr/bin/chromium node Appv2/eval/browser/english-check.mjs 4810
 ```
 
-It exits nonzero on a failed assertion. Its 15 checks include explicit translation
+It exits nonzero on a failed assertion. Its 19 checks include explicit translation
 versus loan labels, canonical clipboard output, unavailable historical data,
-direction switching after that failure, clipboard denial, and offline reload.
+direction switching after that failure, clipboard denial, offline reload, and
+dictionary insertion with saved selection/caret and undo/redo.
+
+`editing-check.mjs` has 21 independent scenarios. It covers addresses/identifiers,
+literal paste and readback, punctuation, visible and selected-candidate Copy,
+Alt/Option+number selection, native selected-text Copy, caret movement, Clear,
+undo/redo, explicit Keep/Escape, browser composition, typed Odia digits and strict
+ITRANS, plus phone-style input events with and without cancelable `beforeinput`.
+The browser CI job runs both scripts against a production build. Ordinary digits
+are content; the existing `regress.mjs` now uses Alt+number for its Keep check.
+
+Both scripts accept `APP_URL` for deployment checks. `editing-check.mjs` also
+accepts `EDITING_CHECK_FILTER` (a regular expression over scenario names) for a
+targeted production smoke test. They use fresh browser contexts and write only
+test text/local browser state, without a server-side mutation.
 
 For WebKit (Python Playwright plus its browser/system libraries):
 
 ```bash
 python3 Appv2/eval/browser/english-webkit.py 4810
+python3 Appv2/eval/browser/editing-webkit.py 4810
 ```
+
+`editing-webkit.py` checks six editor scenarios with assertions and a failing exit
+status on regressions. It verifies actual clipboard bytes through native paste,
+undo/redo, dictionary selection restoration and mobile-style boundary events.
+It accepts `APP_URL` and `WEBKIT_EXECUTABLE_PATH`. All six passed in the 12 October
+Linux run; this does not establish physical iPhone behavior.
 
 `WEBKIT_EXECUTABLE_PATH` can select an installed launcher. This runs desktop and
 iPhone viewport scenarios, **not native device tests**. The 12 online checks

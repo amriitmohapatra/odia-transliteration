@@ -47,7 +47,10 @@ unavailable” rather than implying that a word is invalid.
 The seed is bundled with app code, so English lookup continues when historical
 payload loading fails and works offline after the app is cached. It makes no
 network requests. Clipboard copying is explicit and shows an error with a manual
-copy fallback when the browser disallows access.
+copy fallback when the browser disallows access. The separate **Insert Odia**
+action asks the editor to replace its saved selection with the exact chosen
+word, through an undoable editor transaction. It does not translate the sentence
+or add words to the transliteration ranker; no whitespace is inserted implicitly.
 
 Before expanding the seed, review every proposed spelling/sense with a native
 speaker, then use a suitable reviewed-source workflow. The parser reserves

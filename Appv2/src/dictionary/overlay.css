@@ -317,7 +317,8 @@ body.kb-docked #dict-toggle { display: none; }
   color: var(--text);
   font: inherit;
 }
-.dict-copy {
+.dict-copy,
+.dict-insert {
   min-height: var(--tap);
   margin-top: 8px;
   padding: 6px 12px;
@@ -329,3 +330,9 @@ body.kb-docked #dict-toggle { display: none; }
   cursor: pointer;
 }
 .dict-english-entry .dict-tag { white-space: normal; }
+
+.dict-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}

@@ -1,0 +1,85 @@
+{
+  "suite": "editing",
+  "passed": 2,
+  "total": 16,
+  "results": [
+    {
+      "name": "typed test@example.com remains literal, including digits and punctuation",
+      "pass": false,
+      "detail": "Expected values to be strictly equal:\n+ actual - expected\n\n+ 'test@example.ଚୋମ '\n- 'test@example.com '\n                ^\n"
+    },
+    {
+      "name": "typed https://example.com/a?q=1 remains literal, including digits and punctuation",
+      "pass": false,
+      "detail": "Reads as must not imply a hidden Odia conversion for a literal token\n\n5 !== 0\n"
+    },
+    {
+      "name": "typed covid19 remains literal, including digits and punctuation",
+      "pass": false,
+      "detail": "Expected values to be strictly equal:\n+ actual - expected\n\n+ 'ଚୋବିଦ9 '\n- 'covid19 '\n"
+    },
+    {
+      "name": "typed PCR2 remains literal, including digits and punctuation",
+      "pass": false,
+      "detail": "Expected values to be strictly equal:\n\n'ପ୍ଚ୍ର ' !== 'PCR2 '\n"
+    },
+    {
+      "name": "punctuation commits on whitespace and Copy equals displayed text",
+      "pass": false,
+      "detail": "uncommitted Roman text: namaskar, ତୁମେ କେମିତି achha? "
+    },
+    {
+      "name": "Copy visibly finalizes a pending word and copies that same result",
+      "pass": false,
+      "detail": "pending conversion is visible\n\n'kemiti' !== 'କେମିତି'\n"
+    },
+    {
+      "name": "Alt plus a digit explicitly selects that candidate",
+      "pass": false,
+      "detail": "Alt+2 selects the displayed second candidate\n\n'kemiti' !== 'କେମିଟି'\n"
+    },
+    {
+      "name": "Copy honors the candidate highlighted with ArrowDown",
+      "pass": false,
+      "detail": "Copy must commit the highlighted choice, not rerank to first\n\n'kemiti' !== 'କେମିଟି'\n"
+    },
+    {
+      "name": "native Copy of a selected raw substring stays exact",
+      "pass": true
+    },
+    {
+      "name": "paste preserves mixed text and Copy does not reinterpret it",
+      "pass": false,
+      "detail": "paste should be literal\n+ actual - expected\n\n+ 'ମୋତେ ତେସ୍ତ@ଏକ୍ଷମ୍ପ୍ଲେ.ଚୋମ ରେ ଏମୈଲ କର ହ୍ତ୍ତ୍ପ୍ସ://ଏକ୍ଷମ୍ପ୍ଲେ.ଚୋମ ଚୋବିଦ19 ପିସିସିଆର2'\n- 'mote test@example.com re email kara https://example.com covid19 PCR2'\n"
+    },
+    {
+      "name": "Left and Right move the actual caret; typing replaces a selection",
+      "pass": false,
+      "detail": "Left must not change candidate selection instead\n+ actual - expected\n\n  [\n+   6,\n+   6\n-   5,\n-   5\n  ]\n"
+    },
+    {
+      "name": "word commit is one reversible undo/redo step",
+      "pass": false,
+      "detail": "Undo restores precommit Roman token\n+ actual - expected\n\n+ 'କେମିତି '\n- 'kemiti'\n"
+    },
+    {
+      "name": "Clear participates in undo and redo",
+      "pass": false,
+      "detail": "Redo repeats Clear\n\n'କେମିତି ' !== ''\n"
+    },
+    {
+      "name": "Keep English is learned and survives Copy",
+      "pass": true
+    },
+    {
+      "name": "browser IME composition is not converted before native commit",
+      "pass": false,
+      "detail": "our candidate picker stays closed during native composition\n\ntrue !== false\n"
+    },
+    {
+      "name": "phone viewport insertion without keydown commits punctuation on space",
+      "pass": false,
+      "detail": "Expected values to be strictly equal:\n+ actual - expected\n\n+ 'kemiti? '\n- 'କେମିତି? '\n"
+    }
+  ]
+}

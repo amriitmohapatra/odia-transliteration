@@ -1,0 +1,91 @@
+{
+  "suite": "editing",
+  "passed": 21,
+  "total": 21,
+  "results": [
+    {
+      "name": "typed test@example.com remains literal, including digits and punctuation",
+      "pass": true
+    },
+    {
+      "name": "typed https://example.com/a?q=1 remains literal, including digits and punctuation",
+      "pass": true
+    },
+    {
+      "name": "typed covid19 remains literal, including digits and punctuation",
+      "pass": true
+    },
+    {
+      "name": "typed PCR2 remains literal, including digits and punctuation",
+      "pass": true
+    },
+    {
+      "name": "punctuation commits on whitespace and Copy equals displayed text",
+      "pass": true
+    },
+    {
+      "name": "Copy visibly finalizes a pending word and copies that same result",
+      "pass": true
+    },
+    {
+      "name": "Alt plus a digit explicitly selects that candidate",
+      "pass": true
+    },
+    {
+      "name": "Copy honors the candidate highlighted with ArrowDown",
+      "pass": true
+    },
+    {
+      "name": "native Copy of a selected raw substring stays exact",
+      "pass": true
+    },
+    {
+      "name": "paste preserves mixed text and Copy does not reinterpret it",
+      "pass": true
+    },
+    {
+      "name": "Left and Right move the actual caret; typing replaces a selection",
+      "pass": true
+    },
+    {
+      "name": "word commit is one reversible undo/redo step",
+      "pass": true
+    },
+    {
+      "name": "Clear participates in undo and redo",
+      "pass": true
+    },
+    {
+      "name": "Keep English is learned and survives Copy",
+      "pass": true
+    },
+    {
+      "name": "Escape keeps a word literal through Copy and Undo restores conversion",
+      "pass": true
+    },
+    {
+      "name": "Clear toast expires on an intervening edit and Undo targets that edit",
+      "pass": true
+    },
+    {
+      "name": "Odia digits convert standalone typed numbers but preserve identifiers and pasted numbers",
+      "pass": true
+    },
+    {
+      "name": "strict ITRANS preserves uppercase keys and Sloka punctuation shortcuts remain usable",
+      "pass": true
+    },
+    {
+      "name": "noncancelable beforeinput commits after input without duplicate space and stays undoable",
+      "pass": true
+    },
+    {
+      "name": "browser IME composition is not converted before native commit",
+      "pass": true
+    },
+    {
+      "name": "phone viewport insertion without keydown commits punctuation on space",
+      "pass": true
+    }
+  ]
+}

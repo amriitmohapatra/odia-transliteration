@@ -1,16 +1,17 @@
 // Build Appv2 and serve dist first. Usage: node english-check.mjs [port]
+// APP_URL overrides the local URL for deployment checks.
 // Playwright resolves locally or via NODE_PATH. Optional CHROMIUM_EXECUTABLE_PATH.
 import assert from 'node:assert/strict';
 import { createRequire } from 'node:module';
 const { chromium } = createRequire(import.meta.url)('playwright');
-const url = `http://127.0.0.1:${process.argv[2] || '4810'}/`;
+const url = new URL(process.env.APP_URL || `http://127.0.0.1:${process.argv[2] || '4810'}/`).href;
 const browser = await chromium.launch(process.env.CHROMIUM_EXECUTABLE_PATH
   ? { executablePath: process.env.CHROMIUM_EXECUTABLE_PATH } : {});
 let checks = 0;
 const check = (condition, message) => { assert.ok(condition, message); checks++; console.log('PASS', message); };
 try {
   const context = await browser.newContext({ viewport: { width: 1440, height: 1000 } });
-  await context.grantPermissions(['clipboard-read', 'clipboard-write'], { origin: url });
+  await context.grantPermissions(['clipboard-read', 'clipboard-write'], { origin: new URL(url).origin });
   const page = await context.newPage();
   const errors = []; const external = [];
   page.on('pageerror', error => errors.push(String(error)));
@@ -32,6 +33,28 @@ try {
   await page.locator('.dict-copy').click();
   await page.waitForFunction(() => document.querySelector('.dict-body')?.textContent.includes('Copied Odia.'));
   check(await page.evaluate(() => navigator.clipboard.readText()) === '\u0b2c\u0b21\u0b3c', 'clipboard preserves decomposed nukta');
+  // Choosing a dictionary result is an explicit edit at the editor selection
+  // saved before the user moved focus into dictionary search.
+  const editor = page.locator('#roman');
+  const beforeInsert = '\u0b18\u0b30 \u0b2d\u0b32 \u0b26\u0b3f\u0b28';
+  await editor.fill(beforeInsert);
+  await editor.evaluate((element) => {
+    element.focus();
+    element.setSelectionRange(3, 5);
+  });
+  await search.fill('big');
+  await page.waitForFunction(() => document.querySelector('.dict-english-entry')?.textContent.includes('big:'));
+  await page.locator('.dict-insert').click();
+  await page.waitForFunction(() => document.querySelector('.dict-body')?.textContent.includes('Inserted Odia.'));
+  check(await editor.inputValue() === '\u0b18\u0b30 \u0b2c\u0b21\u0b3c \u0b26\u0b3f\u0b28',
+    'Insert Odia replaces the saved editor selection and preserves surrounding words');
+  check(await editor.evaluate(element => element.selectionStart === 6 && element.selectionEnd === 6),
+    'insertion restores the editor caret after the canonical Odia word');
+  await editor.press('Control+z');
+  check(await editor.inputValue() === beforeInsert, 'dictionary insertion is one undoable editor transaction');
+  await editor.press('Control+Shift+z');
+  check(await editor.inputValue() === '\u0b18\u0b30 \u0b2c\u0b21\u0b3c \u0b26\u0b3f\u0b28',
+    'dictionary insertion can be redone without losing surrounding text');
   await search.fill('me');
   await page.waitForFunction(() => document.querySelector('.dict-body')?.textContent.includes('(Related headword)'));
   check(await page.locator('.dict-english-entry').count() >= 2, 'prefix results are explicitly labelled');

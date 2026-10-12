@@ -1,5 +1,22 @@
 # Codex review — 12 October 2026
 
+## Implemented after the review
+
+The owner subsequently authorized implementation and release to Vercel. The app
+now preserves addresses, identifiers and pasted text; plain digits no longer
+select candidates. Alt/Option+number selects a candidate, Left/Right moves the
+caret, and punctuation commits consistently at word boundaries. Copy visibly
+finishes the active eligible word and copies the editor contents. Shared
+transactions provide undo/redo for typing, commits, Clear and insertion, including
+mobile input events and browser composition. English dictionary results now offer
+**Insert Odia** at the saved editor selection, alongside Copy.
+
+The historical findings below explain why these changes were needed. See the
+[implementation and validation record](plan/research/2026-10-12/EDITOR-IMPLEMENTATION.md)
+for the 21 editor checks, 19 dictionary checks and WebKit evidence. Dictionary
+coverage, preferred spellings and ranking limitations remain separate work; this
+release does not claim to fix them or to complete native iOS parity.
+
 ## Follow-up after environment settings were published
 
 PR #4 was merged as `5ba8761`; this follow-up starts from that merged revision.

@@ -1,7 +1,7 @@
 /**
  * Live candidate bar — the Windows IME interaction, in two layouts.
  *
- * You type roman, a numbered list appears as you go, and a number key (or a
+ * You type roman, a numbered list appears as you go, and Alt+number (or a
  * tap) commits that word IN PLACE, replacing the roman with Odia. The textarea
  * therefore ends up holding a mix of committed Odia and the roman word you are
  * still typing, which is exactly what an input method does.
@@ -14,7 +14,7 @@
  *
  *   popover  desktop. A vertical list at the caret: number, Odia word,
  *            one-line meaning in a fixed column, "Keep ..." last (proposal
- *            3.5), so numbers line up with keys 1-9 and nothing jumps when
+ *            3.5), so numbers line up with Alt+1-9 and nothing jumps when
  *            the meanings arrive. It opens under the caret line, or above it
  *            when below would cover the elements the host keeps clear (the
  *            "Reads as" line); if neither side has room it takes the larger
@@ -54,8 +54,14 @@
 import type { Candidate } from '@odia/core/types';
 
 import type { Badge } from './badges.js';
+import type { PendingRoman } from './editor-state.js';
 
 export interface InlineHost {
+  pending(): PendingRoman | undefined;
+  replace(start: number, end: number, text: string, literal: boolean): void;
+  keep(start: number, end: number): void;
+  composing(): boolean;
+  deferBoundary(separator: string, action: () => boolean): void;
   /** Candidates for the roman word currently under the caret. */
   candidates(roman: string): Candidate[];
   /** Called after a commit, so the page can re-render and record the choice. */
@@ -67,13 +73,6 @@ export interface InlineHost {
    * the state lines under the text box). Hidden ones are ignored.
    */
   keepClear?(): readonly (HTMLElement | null)[];
-}
-
-/** Roman word immediately before the caret, and where it starts. */
-interface Pending {
-  roman: string;
-  start: number;
-  end: number;
 }
 
 const MAX_SHOWN = 9;
@@ -115,7 +114,7 @@ export class InlineCandidates {
   private announceTimer: number | undefined;
 
   private shown: Candidate[] = [];
-  private pending: Pending | undefined;
+  private pending: PendingRoman | undefined;
   private active = 0;
   private enabled = true;
   private docked = false;
@@ -173,6 +172,16 @@ export class InlineCandidates {
     area.setAttribute('aria-autocomplete', 'list');
 
     area.addEventListener('input', () => this.refresh());
+    area.addEventListener('compositionstart', () => this.hide());
+    area.addEventListener('beforeinput', (event) => {
+      const input = event as InputEvent;
+      if (input.defaultPrevented || input.isComposing || this.host.composing()) return;
+      const separator = input.inputType === 'insertLineBreak' || input.inputType === 'insertParagraph'
+        ? '\n' : input.inputType === 'insertText' ? input.data : null;
+      if (!separator || !/^[ \t\r\n]+$/.test(separator)) return;
+      if (!input.cancelable) this.host.deferBoundary(separator, () => this.commitPending(separator));
+      else if (this.commitPending(separator)) input.preventDefault();
+    });
     area.addEventListener('click', () => this.refresh());
     area.addEventListener('keyup', (e) => {
       if (e.key.startsWith('Arrow') || e.key === 'Home' || e.key === 'End') this.refresh();
@@ -261,27 +270,27 @@ export class InlineCandidates {
   /* --------------------------------------------------------------- state */
 
   /** The roman run ending at the caret, if the caret is inside one. */
-  private pendingAt(): Pending | undefined {
-    const { value, selectionStart, selectionEnd } = this.area;
-    if (selectionStart === null || selectionStart !== selectionEnd) return undefined;
+  private pendingAt(): PendingRoman | undefined {
+    return this.host.pending();
+  }
 
-    let start = selectionStart;
-    while (start > 0 && isRoman(value[start - 1] as string)) start -= 1;
-    if (start === selectionStart) return undefined; // caret not after a roman run
-
-    const roman = value.slice(start, selectionStart);
-    if (roman.length === 0) return undefined;
-    return { roman, start, end: selectionStart };
+  /** Copy/Share and touch-keyboard beforeinput share the same commit policy. */
+  commitPending(trailing = ''): boolean {
+    if (!this.enabled || this.host.composing()) return false;
+    this.refresh();
+    if (!this.isOpen() || !this.pending || !this.shown.length) return false;
+    this.commit(this.active, trailing);
+    return true;
   }
 
   private refresh(): void {
-    if (!this.enabled) return this.hide();
+    if (!this.enabled || this.host.composing()) return this.hide();
 
     const pending = this.pendingAt();
     if (pending === undefined) return this.hide();
 
     // The typed word itself stays in the bar, as the last item, so an English
-    // word can be kept with one number key. Hiding it (the earlier rule) meant
+    // word can be kept with Alt+number. Hiding it (the earlier rule) meant
     // Escape was the only way out, and learn() never saw the choice. Once
     // picked, learn() moves it up for that key, so Space then commits it.
     // With no Odia candidate at all there is nothing to choose between, so the
@@ -310,47 +319,51 @@ export class InlineCandidates {
   /* ---------------------------------------------------------------- keys */
 
   private onKeyDown(event: KeyboardEvent): void {
+    if (event.defaultPrevented || event.isComposing || this.host.composing() ||
+        event.metaKey || event.ctrlKey || event.getModifierState('AltGraph')) return;
+    // Re-read the actual selection: touch handles and programmatic selection
+    // changes do not necessarily emit click/keyup before the next key.
+    this.refresh();
     if (!this.isOpen() || this.shown.length === 0) return;
-    if (event.metaKey || event.ctrlKey || event.altKey) return;
-
-    // 1-9 commit directly, the way the Windows IME does.
-    if (/^[1-9]$/.test(event.key)) {
-      const index = Number(event.key) - 1;
-      if (index < this.shown.length) {
-        event.preventDefault();
-        this.commit(index);
+    if (event.altKey) {
+      const digit = /^Digit([1-9])$/.exec(event.code)?.[1] ?? (/^[1-9]$/.test(event.key) ? event.key : undefined);
+      if (digit && !event.shiftKey) {
+        const index = Number(digit) - 1;
+        if (index < this.shown.length) { event.preventDefault(); this.commit(index); }
       }
       return;
     }
-
+    if (event.shiftKey) return;
     switch (event.key) {
       case 'ArrowDown':
-      case 'ArrowRight':
         event.preventDefault();
         this.active = (this.active + 1) % this.shown.length;
         this.draw();
         break;
       case 'ArrowUp':
-      case 'ArrowLeft':
         event.preventDefault();
         this.active = (this.active - 1 + this.shown.length) % this.shown.length;
         this.draw();
         break;
-      case 'Enter':
       case 'Tab':
         event.preventDefault();
         this.commit(this.active);
         break;
+      case 'Enter':
+        event.preventDefault();
+        this.commit(this.active, '\n');
+        break;
       case ' ':
-        // Space commits the highlighted word and keeps the space, which is how
-        // you type a sentence without ever leaving the keyboard.
         event.preventDefault();
         this.commit(this.active, ' ');
         break;
-      case 'Escape':
+      case 'Escape': {
         event.preventDefault();
+        const pending = this.pending;
+        if (pending) this.host.keep(pending.start, pending.end);
         this.hide();
         break;
+      }
       default:
         break;
     }
@@ -363,12 +376,14 @@ export class InlineCandidates {
     const pending = this.pending;
     if (chosen === undefined || pending === undefined) return;
 
-    const { value } = this.area;
-    const replaced = chosen.text + trailing;
-    this.area.value = value.slice(0, pending.start) + replaced + value.slice(pending.end);
-
-    const caret = pending.start + replaced.length;
-    this.area.setSelectionRange(caret, caret);
+    const current = this.pendingAt();
+    if (!current || current.start !== pending.start || current.roman !== pending.roman || current.tailEnd !== pending.tailEnd) {
+      this.refresh();
+      return;
+    }
+    const punctuation = this.area.value.slice(pending.end, pending.tailEnd);
+    const replaced = chosen.text + punctuation + trailing;
+    this.host.replace(pending.start, pending.tailEnd, replaced, isLatin(chosen.text));
 
     // The chosen word and its meaning, from the option's accessible name
     // (the overlay adds the meaning to it), read before the list is cleared.
@@ -702,8 +717,4 @@ function scrollButton(label: string, name: string): HTMLButtonElement {
   button.setAttribute('aria-label', name);
   button.hidden = true;
   return button;
-}
-
-function isRoman(ch: string): boolean {
-  return /[A-Za-z_~]/.test(ch);
 }

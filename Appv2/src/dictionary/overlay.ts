@@ -371,6 +371,8 @@ function ownerGloss(word: string): { meaning: string; status: string } | undefin
 /* Kids edition: words the app must never explain (labelled offensive or coarse).
  * Set by initDictionary; the default hides nothing. */
 let hidden: (word: string) => boolean = () => false;
+// The editor owns selection and undo; the dictionary never mutates its DOM.
+let insertWord: ((word: string) => boolean) | undefined;
 
 function chipFor(word: string): string | null {
   if (hidden(word)) return null;
@@ -721,7 +723,7 @@ function renderEnglishSearch(): void {
   hint.className = 'dict-hint';
   hint.setAttribute('role', 'status');
   hint.textContent = !query
-    ? 'Look up an English word or short phrase, then copy the Odia result. Try water, phone, or meeting. This does not translate sentences or change typing suggestions.'
+    ? 'Look up an English word or short phrase, then insert or copy the Odia result. Try water, phone, or meeting. This does not translate sentences or change typing suggestions.'
     : results.length
       ? 'English lookup results. “Related headword” means a prefix match, not a translation of your exact input.'
       : 'No entry in this starter dictionary. Try another word. This is limited coverage, not a judgment about the word.';
@@ -772,7 +774,27 @@ function englishBlock(entry: EnglishEntry, exact: boolean): HTMLElement {
       copy.disabled = false;
     }
   });
-  block.append(head, sense, source, copy, feedback);
+  const actions = document.createElement('div');
+  actions.className = 'dict-actions';
+  if (insertWord) {
+    const insert = document.createElement('button');
+    insert.type = 'button';
+    insert.className = 'dict-insert';
+    insert.textContent = 'Insert Odia';
+    insert.setAttribute('aria-label', `Insert ${entry.english}, ${entry.sense}, in Odia`);
+    insert.addEventListener('click', () => {
+      try {
+        const word = canonical(entry.odia);
+        const inserted = !hidden(word) && insertWord?.(word);
+        feedback.textContent = inserted ? 'Inserted Odia.' : 'Could not insert. Copy the Odia word instead.';
+      } catch {
+        feedback.textContent = 'Could not insert. Copy the Odia word instead.';
+      }
+    });
+    actions.appendChild(insert);
+  }
+  actions.appendChild(copy);
+  block.append(head, sense, source, actions, feedback);
   return block;
 }
 
@@ -983,12 +1005,14 @@ export function initDictionary(
   load: DictionaryLoader,
   onStateChange?: (s: DictionaryState) => void,
   hideWord?: (word: string) => boolean,
+  insert?: (word: string) => boolean,
 ): void {
   if (started) return;
   started = true;
   try {
     loader = load;
     if (hideWord) hidden = hideWord;
+    insertWord = insert;
     onState = onStateChange ?? null;
     buildPanel();
     observe();
