@@ -21,6 +21,7 @@ import type { EngineLike } from './verbatim.js';
 
 import {
   buildEngine,
+  loadConverter,
   loadPaletteToml,
   loadProfileAssets,
   type EngineHandle,
@@ -290,6 +291,13 @@ async function boot(): Promise<void> {
 
   await loadProfileAssets(profileId);
   rebuildEngine();
+  // The spelling converter for unknown words (V2.14) loads after the first
+  // engine, so typing starts at once; the engine is rebuilt when it arrives.
+  void loadConverter().then((loaded) => {
+    if (!loaded) return;
+    rebuildEngine();
+    render();
+  });
   // Loading never rewrites text the user already typed or pasted.
   inline.setEnabled(!strictEl.checked);
   render();

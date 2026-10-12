@@ -25,7 +25,7 @@
  */
 import type { FilterLevel, Labels, Preferences } from './curation.js';
 
-export type CandidateSource = 'user' | 'preference' | 'lexicon' | 'typed' | 'completion' | 'rule' | 'verbatim';
+export type CandidateSource = 'user' | 'preference' | 'lexicon' | 'typed' | 'converter' | 'completion' | 'rule' | 'verbatim';
 
 export interface Candidate {
   /** Canonical Odia text (or the verbatim Latin token). */
@@ -133,6 +133,16 @@ export interface RankWeights {
   typed?: number;
   /** Prior count added to total(key) above, so a rarely typed key counts less. */
   typedPrior?: number;
+  /**
+   * The spelling converter (core/data/converter.bin), added as
+   * weight * share(word), where share is the softmax of the converter's n-best
+   * costs at `convertTemperature`. `convert` applies when neither the lexicon
+   * nor the typed pairs know the key, `convertKnown` when one of them does.
+   * Absent or 0 means no converter term in that case.
+   */
+  convert?: number;
+  convertKnown?: number;
+  convertTemperature?: number;
 }
 
 /**
@@ -279,6 +289,14 @@ export interface Bigrams {
   score(prev: string, next: string): number;
 }
 
+/**
+ * A roman -> Odia spelling converter: n spellings with a cost each (lower is
+ * better). `core/src/converter.ts` implements it over a weighted transducer.
+ */
+export interface SpellingConverter {
+  decode(roman: string, n: number): readonly { text: string; cost: number }[];
+}
+
 /** What the engine may know about a word's surroundings. */
 export interface WordContext {
   /** The previous word of the sentence, in Odia (canonicalised by the engine). */
@@ -319,6 +337,8 @@ export interface EngineConfig {
   filter?: FilterLevel;
   /** Word-pair counts for context ranking. Absent means no context term. */
   bigrams?: Bigrams;
+  /** The learned spelling converter (converter.ts). Absent means no converter term. */
+  converter?: SpellingConverter;
   /**
    * Typed-spelling pairs (data/typed.tsv): roman key -> chosen Odia word, with
    * the pair count as the weight. Absent means no typed term.

@@ -28,8 +28,12 @@ import {
   parseUnigrams,
   parseLabels,
   parsePreferences,
+  parseConverter,
 } from '@odia/core';
-import type { Bigrams, DigitMode, LearnStore, Lexicon, Unigrams } from '@odia/core/types';
+import type { Bigrams, DigitMode, LearnStore, Lexicon, SpellingConverter, Unigrams } from '@odia/core/types';
+
+import converterUrl from '../../core/data/converter.bin?url';
+import { inflate } from './dictionary/pako-inflate.js';
 
 import { mergeLexicons, mergeUnigrams, type LexiconSource } from './compose.js';
 import { PROFILES, type AssetKey, type Profile, type ProfileId } from './profiles.js';
@@ -124,6 +128,30 @@ const rawCache = new Map<AssetKey, string | undefined>();
 const lexiconCache = new Map<AssetKey, Lexicon>();
 const unigramCache = new Map<AssetKey, Unigrams>();
 const bigramCache = new Map<AssetKey, Bigrams>();
+let converter: SpellingConverter | undefined;
+let converterLoad: Promise<boolean> | undefined;
+
+/**
+ * Fetch and parse the spelling converter (core/data/converter.bin, gzip, ~0.8
+ * MB). Not part of loadProfileAssets: typing works without it, so the app
+ * loads it after start-up and rebuilds the engine once it is here. Resolves
+ * false when it cannot load; the engine then simply has no converter term.
+ * Like the dictionary payloads it is named .bin, so no server decompresses it,
+ * and it is inflated with the vendored pako (the browser floor is Safari 13).
+ */
+export function loadConverter(): Promise<boolean> {
+  converterLoad ??= fetch(converterUrl)
+    .then((response) => {
+      if (!response.ok) throw new Error(`converter fetch failed: ${response.status}`);
+      return response.arrayBuffer();
+    })
+    .then((buffer) => {
+      converter = parseConverter(inflate(new Uint8Array(buffer)));
+      return true;
+    })
+    .catch(() => false);
+  return converterLoad;
+}
 
 /**
  * Fetch the assets a profile needs.
@@ -203,6 +231,9 @@ export function buildEngine(
       // What keyboard users typed and chose. Parsed once like a lexicon; a
       // missing chunk means no typed term, the engine still works.
       typed: lexiconFor('typed'),
+      // Spellings for words the word lists do not know (V2.14). Absent until
+      // loadConverter() has finished.
+      converter,
       learnStore,
       digits,
       preferences: parsePreferences(rawCache.get('preferences') ?? '', 'core/data/preferences.tsv'),

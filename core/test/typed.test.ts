@@ -1,8 +1,8 @@
 import { describe, it, expect } from 'vitest';
 
-import { createEngine } from '../src/index.js';
+import { createEngine, Engine, emptyLexicon, emptyUnigrams, parseLexicon } from '../src/index.js';
 import { MemoryLearnStore } from '../src/learn.js';
-import { SYMBOLS_TOML } from './helpers.js';
+import { SYMBOLS_TOML, testRules } from './helpers.js';
 
 /*
  * Typed-spelling pairs (core/data/typed.tsv): what keyboard users typed for a
@@ -138,5 +138,42 @@ describe('word completion from typed pairs', () => {
       filter: 'kids',
     });
     expect(texts(kids.complete('bhub', 3))).not.toContain(CITY);
+  });
+});
+
+describe('the spelling converter term', () => {
+  const STRANGE = '\u0B15\u0B4D\u0B37'; // what a converter might say for "kx": not a rule spelling
+  const fake = (out: Record<string, { text: string; cost: number }[]>) => ({ decode: (roman: string) => out[roman] ?? [] });
+  const conv = fake({ kx: [{ text: STRANGE, cost: 5 }], kali: [{ text: KALI_YESTERDAY, cost: 5 }, { text: KALI_DID, cost: 9 }] });
+
+  it('changes nothing without a converter: bit for bit the plain engine', () => {
+    const plain = createEngine({ rulesToml: SYMBOLS_TOML, lexiconTsv: LEXICON });
+    const withNone = createEngine({ rulesToml: SYMBOLS_TOML, lexiconTsv: LEXICON });
+    expect(withNone.transliterateWord('kali', 8)).toEqual(plain.transliterateWord('kali', 8));
+  });
+
+  it('puts the converter word first for a key the word lists do not know', () => {
+    const engine = new Engine({ rules: testRules(), lexicon: emptyLexicon(), unigrams: emptyUnigrams(), converter: conv });
+    const top = engine.transliterateWord('kx', 5)[0];
+    expect(top).toMatchObject({ text: STRANGE, source: 'converter' });
+  });
+
+  it('weighs less for a key the lexicon knows (convert_known)', () => {
+    const w = testRules().weights;
+    expect(w.convertKnown ?? 0).toBeLessThan(w.convert ?? 0);
+    const engine = new Engine({ rules: testRules(), lexicon: parseLexicon(LEXICON), unigrams: emptyUnigrams(), converter: conv });
+    const plain = new Engine({ rules: testRules(), lexicon: parseLexicon(LEXICON), unigrams: emptyUnigrams() });
+    const score = (e: Engine) => e.transliterateWord('kali', 5).find((c) => c.text === KALI_YESTERDAY)?.score ?? 0;
+    expect(score(engine) - score(plain)).toBeLessThanOrEqual((w.convertKnown ?? 0) + 1e-9);
+    expect(score(engine)).toBeGreaterThan(score(plain));
+  });
+
+  it('loses to one pick by the user, although its weight is larger than a pick', () => {
+    const store = new MemoryLearnStore();
+    const engine = new Engine({ rules: testRules(), lexicon: emptyLexicon(), unigrams: emptyUnigrams(), converter: conv, learnStore: store });
+    const other = engine.transliterateWord('kx', 5).find((c) => c.text !== STRANGE && c.source !== 'verbatim');
+    expect(other).toBeDefined();
+    engine.learn('kx', other!.text);
+    expect(engine.transliterateWord('kx', 5)[0]?.text).toBe(other!.text);
   });
 });

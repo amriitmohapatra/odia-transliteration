@@ -5,7 +5,7 @@
 #
 # profile      = unified
 # base         = core/rules/symbols.toml
-# base-sha256  = 8b6b354aa0ecb1aba498c06721eeabc610ea435dd5e2d58ff5426f6178b4681b
+# base-sha256  = 3ce76bbf02640509a1faf46206199fba8bcaef6680b38035c410f2289ea3f6fc
 # delta        = rules/unified.delta.toml
 # delta-sha256 = 57646b55f8b73a962fc6378046364b81e4bdf0a61c3a02ce377560ab1d741f8b
 #
@@ -103,6 +103,20 @@ bigram = 1.2
 # churn on held-out keys for +0.4 pp).
 typed = 1.3
 typed_prior = 20
+# The spelling converter (core/data/converter.bin, learned from Desh keyboard
+# data): weight * share, share = softmax of its 5-best costs at
+# convert_temperature. `convert` when neither the lexicon nor the typed pairs
+# know the key, `convert_known` when one does. Above one user pick is safe: the
+# user's most picked word for a key always goes first (rank.ts).
+# Measured 2026-10-12 (held-out, typed pairs without golden pairs):
+#   off               -> OOV top-1/top-5 6.7/14.9, in-lexicon 58.9/80.1
+#   4 / 0   / T 3     -> OOV 25.5/39.9 (Desh converter alone 23.6/39.9)
+#   4 / 0.5 / T 3     -> OOV 25.5/40.3, in-lexicon 60.1/83.4, everyday top-1 +2.2
+#   1.3 / 0.5 / T 1   -> OOV 21.9/35.6 (the cap the additive house rule needed)
+# convert_known 0.7 gains 0.4 in-lexicon for 15% more time per key.
+convert = 4.0
+convert_known = 0.5
+convert_temperature = 3
 
 # Structural preferences the segmenter applies on top of the per-letter weights.
 #

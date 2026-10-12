@@ -29,8 +29,10 @@ import {
   parseUnigrams,
   parseLabels,
   parsePreferences,
+  parseConverter,
 } from '../../core/src/index.js';
-import type { Bigrams, Lexicon, Unigrams } from '../../core/src/types.js';
+import type { Bigrams, Lexicon, SpellingConverter, Unigrams } from '../../core/src/types.js';
+import { gunzipped, readCoreBytes } from '../../core/src/node.js';
 
 import { mergeLexicons, mergeUnigrams } from '../src/compose.js';
 import { PROFILES, type AssetKey, type ProfileId } from '../src/profiles.js';
@@ -96,6 +98,16 @@ function unigrams(key: AssetKey): Unigrams {
   return parsed;
 }
 
+let converterCache: SpellingConverter | undefined;
+
+function converter(): SpellingConverter | undefined {
+  if (converterCache === undefined) {
+    const bytes = gunzipped(readCoreBytes('data/converter.bin'));
+    converterCache = bytes === undefined ? undefined : parseConverter(bytes);
+  }
+  return converterCache;
+}
+
 let bigramCache: Bigrams | undefined;
 
 function bigrams(): Bigrams {
@@ -137,6 +149,8 @@ export function engineFor(id: ProfileId, opts: EvalEngineOptions = {}): Engine {
     bigrams: opts.rulesOnly ? undefined : bigrams(),
     // Typed-spelling pairs, as the adult app loads them.
     typed: opts.rulesOnly ? undefined : lexicon('typed'),
+    // The spelling converter, as the app attaches it once loaded.
+    converter: opts.rulesOnly ? undefined : converter(),
     // Same owner data the app loads, so evals measure what users get.
     preferences: opts.rulesOnly ? undefined : parsePreferences(raw('preferences') ?? ''),
     labels: parseLabels(raw('labels') ?? ''),

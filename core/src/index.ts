@@ -15,6 +15,7 @@ import { emptyBigrams, parseBigrams } from './bigrams.js';
 import { emptyLabels, emptyPreferences, parseLabels, parsePreferences } from './curation.js';
 import type { FilterLevel, Labels, Preferences } from './curation.js';
 import { canonical } from './normalize.js';
+import { parseConverter } from './converter.js';
 import { emptyLexicon, parseLexicon } from './lexicon.js';
 import { rank } from './rank.js';
 import { loadRules } from './rules.js';
@@ -31,6 +32,7 @@ import type {
   Lexicon,
   Result,
   Rules,
+  SpellingConverter,
   StrictSchemeName,
   TransliterateOptions,
   Unigrams,
@@ -46,6 +48,8 @@ const COMPLETE_MIN_KEY = 3;
 const COMPLETE_SCAN = 5000;
 const COMPLETE_MIN_COUNT = 100;
 const COMPLETE_MIN_SHARE = 0.02;
+/** Spellings asked of the converter per key. */
+const CONVERT_NBEST = 5;
 
 /**
  * `EngineConfig` plus the two search knobs. Kept out of `types.ts` because
@@ -65,6 +69,7 @@ export class Engine {
   private readonly unigrams: Unigrams;
   private readonly bigrams: Bigrams;
   private readonly typed: Lexicon | undefined;
+  private readonly converter: SpellingConverter | undefined;
   private readonly learnStore: LearnStore | undefined;
   private readonly preferences: Preferences;
   private readonly labels: Labels;
@@ -79,6 +84,7 @@ export class Engine {
     this.unigrams = cfg.unigrams;
     this.bigrams = cfg.bigrams ?? emptyBigrams();
     this.typed = cfg.typed;
+    this.converter = cfg.converter;
     this.learnStore = cfg.learnStore;
     this.preferences = cfg.preferences ?? emptyPreferences();
     this.labels = cfg.labels ?? emptyLabels();
@@ -151,6 +157,14 @@ export class Engine {
   transliterateWord(roman: string, topk?: number, context?: WordContext): Candidate[] {
     const key = roman.toLowerCase();
     const wanted = topk ?? this.topk;
+    const lexiconEntries = this.lexicon.lookup(key);
+    const typedEntries = this.typed?.lookup(key);
+    // The converter for a key the word lists do not know, and (at its own
+    // weight) for one they do. Decoded only when its weight is not 0.
+    const known = lexiconEntries.length > 0 || (typedEntries?.length ?? 0) > 0;
+    const convertWeight = known ? (this.rules.weights.convertKnown ?? 0) : (this.rules.weights.convert ?? 0);
+    const converterEntries =
+      this.converter !== undefined && convertWeight > 0 ? this.converter.decode(key, CONVERT_NBEST) : undefined;
 
     return rank({
       roman,
@@ -160,8 +174,10 @@ export class Engine {
         beam: this.beam,
         limit: Math.max(wanted, this.beam),
       }),
-      lexiconEntries: this.lexicon.lookup(key),
-      typedEntries: this.typed?.lookup(key),
+      lexiconEntries,
+      typedEntries,
+      converterEntries,
+      convertWeight,
       userCounts: this.learnStore?.get(key),
       prefWeights: this.preferences.get(key),
       isBlocked: this.blockerFor(key),
@@ -330,6 +346,8 @@ export interface CreateEngineOptions {
   bigramsTsv?: string;
   /** Contents of `data/typed.tsv` (typed-spelling pairs). Absent means no typed term. */
   typedTsv?: string;
+  /** Bytes of `data/converter.bin` (the spelling converter). Absent means no converter term. */
+  converterBin?: Uint8Array;
   /** Contents of `data/preferences.tsv` (owner-curated). Absent means none. */
   preferencesTsv?: string;
   /** Contents of `data/labels.tsv` (owner-curated). Absent means none. */
@@ -358,6 +376,7 @@ export function createEngine(opts: CreateEngineOptions): Engine {
     unigrams: opts.unigramsTsv === undefined ? emptyUnigrams() : parseUnigrams(opts.unigramsTsv),
     bigrams: opts.bigramsTsv === undefined ? undefined : parseBigrams(opts.bigramsTsv),
     typed: opts.typedTsv === undefined ? undefined : parseLexicon(opts.typedTsv),
+    converter: opts.converterBin === undefined ? undefined : parseConverter(opts.converterBin),
     preferences: opts.preferencesTsv === undefined ? undefined : parsePreferences(opts.preferencesTsv),
     labels: opts.labelsTsv === undefined ? undefined : parseLabels(opts.labelsTsv),
     familySafe: opts.familySafe,
@@ -396,6 +415,8 @@ export type { RuleCandidate, SegmentOptions } from './segment.js';
 export { emptyLexicon, parseLexicon } from './lexicon.js';
 export { emptyUnigrams, parseUnigrams } from './unigrams.js';
 export { emptyBigrams, parseBigrams } from './bigrams.js';
+export { parseConverter } from './converter.js';
+export type { Converter, ConverterCandidate, ConverterOptions } from './converter.js';
 export { rank } from './rank.js';
 export type { RankInput } from './rank.js';
 export { strictTransliterate } from './strict.js';

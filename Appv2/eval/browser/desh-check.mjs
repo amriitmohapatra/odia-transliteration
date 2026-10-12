@@ -17,6 +17,7 @@ const browser = await chromium.launch(process.env.CHROMIUM_EXECUTABLE_PATH
 const CITY = '\u0B2D\u0B41\u0B2C\u0B28\u0B47\u0B36\u0B4D\u0B71\u0B30'; // bhubaneswar
 const NAMASKAR = '\u0B28\u0B2E\u0B38\u0B4D\u0B15\u0B3E\u0B30';
 const NAMA = '\u0B28\u0B2E';
+const ATANKI = '\u0B06\u0B24\u0B19\u0B4D\u0B15\u0B40'; // aatankee: in no word list; the converter spells it
 
 const results = [];
 async function run(name, test, mobile = false) {
@@ -77,6 +78,21 @@ try {
     const first = (await barWords(page))[0];
     await page.keyboard.press('Space');
     assert.equal(await editor(page), `${first} `);
+  });
+
+  await run('converter: a word the word lists do not know is spelled right once it has loaded', async ({ page }) => {
+    // The converter loads after start-up; retype until the engine has it.
+    let first = '';
+    for (let attempt = 0; attempt < 20 && first !== ATANKI; attempt++) {
+      await page.locator('#roman').fill('');
+      await page.keyboard.type('aatankee');
+      await page.locator('#inline-candidates .inline-candidate').first().waitFor({ state: 'visible' });
+      first = (await barWords(page))[0];
+      if (first !== ATANKI) await page.waitForTimeout(250);
+    }
+    assert.equal(first, ATANKI, 'first suggestion');
+    await page.keyboard.press('Space');
+    assert.equal(await editor(page), `${ATANKI} `);
   });
 
   await run('dictionary: an English-letter search lists the completion too', async ({ page }) => {

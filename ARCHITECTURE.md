@@ -82,6 +82,7 @@ roman ──► tokenize ──► segment (rules lattice, beam) ──┐
 | `curation.ts` | Owner data: `preferences.tsv`, `labels.tsv`, `glosses.tsv`, `phrases.tsv`. Strict parsers. |
 | `bigrams.ts` | Word-pair counts (`bigrams.tsv`), strict loader; the context term. |
 | `rank.ts` typed term | Typed-spelling pairs (`typed.tsv`, parsed as a lexicon): `typed * count / (total + prior)`, also a candidate source (`source: 'typed'`). |
+| `converter.ts` | Desh spelling converter: n-best decoder over `converter.bin` (pure, synchronous). `rank.ts` adds `convert * share` (softmax of costs); weight `convert` for keys no word list knows, `convert_known` otherwise. The app fetches the file after start-up and rebuilds the engine. The user's most picked word for a key is always first. |
 | `Engine.complete()` | Whole-word completions from the typed pairs (prefix scan, `source: 'completion'`); the app puts up to two in the bar and in the dictionary search. |
 | `rank.ts` | Merges evidence and scores (see formula). |
 | `learn.ts` | User dictionary (`{roman: {odia: count}}`), memory or localStorage. |
@@ -119,6 +120,7 @@ mode is not filtered.
 | Lexicon, unigrams | `core/data/lexicon*.tsv`, `unigrams*.tsv` | `tools/build-data/` (reproducible since PR #1; `j`-keys for ଯ-words since V2.1) | No |
 | Word pairs | `core/data/bigrams.tsv` (full, evals), `bigrams-web.tsv` (≤1.5 MB, browser) | `tools/build-data/build_bigrams.py` | No |
 | Typed spellings (Desh) | `core/data/typed.tsv` (1.56 MB, 412 KB gzipped; adult web app, not kids) | `tools/build-data/build_typed.py` (raw file outside the repo) | No |
+| Spelling converter (Desh) | `core/data/converter.bin` (gzip, 843 KB; adult and kids, not sloka) | `tools/build-data/build_converter.py` (raw file outside the repo) | No |
 | Sanskrit lexicon | `Appv2/data/*.tsv` | `Appv2/scripts/mine_webfreq_sanskrit.py` | No |
 | Owner preferences | `core/data/preferences.tsv` | Owner | Yes |
 | Word labels | `core/data/labels.tsv` | Owner (empty until curated) | Yes |

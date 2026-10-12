@@ -326,3 +326,20 @@ What Desh users typed (roman key) and the Odia word they chose, with the pair co
 | Dropped | 563 pairs below 0.5% of their key's choices |
 | Held-out | 717 (key, word) pairs of `core/test/golden/heldout.tsv` are in the file (real choices, e.g. `jiba` → the verb). `tools/eval/run_eval.ts` removes them before it scores the held-out set, and decides the in-lexicon split with an engine without typed pairs, so the split matches `tools/eval/baseline.json`. |
 | Not in | the kids edition (adults' chat; the constant edition flag drops the chunk) |
+
+### Spelling converter (`converter.bin`)
+
+Desh's learned Latin → Odia spelling model (a joint n-gram weighted transducer), in this
+project's own compact format. Decoder: `core/src/converter.ts` (this project's code; Desh's
+own decoder scripts are not used and not in the repository).
+
+| | |
+|---|---|
+| Raw input | `arcs_fstprint.tsv.gz` (OpenFst `fstprint` export of Desh `transliteration.db`), 332,660 arcs, 59,668 final states, sha256 `f9067a9dc09b414fa505343cf410620740dc5d90399e64fe6dd798c95848a2bd` |
+| Build | `python3 -I tools/build-data/build_converter.py /path/to/arcs_fstprint.tsv.gz` |
+| Output | gzip-compressed binary, 843,182 bytes (1,661,412 inflated); sha256 `68ee486b64cf0e9fbf8bf1e20553d3569681d0ef34da5939f696afea91a8e2ed` (file), `e46f43861f6c8cbc074f3bc45a59700782e9a3bb696eff5f04001936f1b36d6a` (inflated). Deterministic. |
+| Weights | quantised to 1/256: held-out accuracy unchanged, top-1 the same as the float model on 99.95% of keys |
+| Check | the decoder's 5-best equals the reference decoder's on all 4,201 held-out keys (same quantised weights) |
+| Canonical form | every output goes through `canonical()` |
+| Held-out | the model was trained by Desh, not by this project; whether the Aksharantar test words were in its training data is unknown, so its held-out gain may be flattered |
+| In | adult and kids web apps (a spelling model, not a word list; outputs still pass the content filter); off in the sloka profile |

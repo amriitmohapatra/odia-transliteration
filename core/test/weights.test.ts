@@ -21,6 +21,9 @@ describe('[weights] in symbols.toml keep the user in charge', () => {
     expect(onePick).toBeGreaterThan(w.bigram ?? 0);
   });
 
+  // The converter weight may exceed one pick: rank.ts puts the user's most
+  // picked word first whatever the other terms add (core/test/typed.test.ts).
+
   it('one user pick beats the strongest possible typed-spelling term', () => {
     // The typed factor is count / (total + prior), below 1 (see rank.ts).
     expect(onePick).toBeGreaterThan(w.typed ?? 0);

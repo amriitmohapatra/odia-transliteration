@@ -151,11 +151,11 @@ function main(argv: string[]): number {
   let engine;
   // The in-lexicon split is decided by an engine without the typed pairs, so it
   // is the same split as tools/eval/baseline.json and a typed word does not move
-  // a key from OOV to in-lexicon.
+  // a key from OOV to in-lexicon. Without the converter as well, for the same reason.
   let splitEngine;
   try {
     engine = createEngineFromDisk({ typedTsv: typedTsv.tsv });
-    splitEngine = createEngineFromDisk({ noTyped: true });
+    splitEngine = createEngineFromDisk({ noTyped: true, noConverter: true });
   } catch (err) {
     console.error(`run_eval: could not load the engine: ${message(err)}`);
     return 1;
