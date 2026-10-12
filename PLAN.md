@@ -106,6 +106,12 @@ need them wait for a run on the owner's Mac or a later environment.
 | V2.7 | Replace the MODERN meanings layer (D-5) | Samanantar / BPCC (HuggingFace), Wikidata | **Blocked here** |
 | V2.8 | Phrases with offensive meaning made of innocent words | needs V2.2 | Later |
 | V2.9 | Inflected forms of offensive words | owner review (C-2) | Waiting for the owner |
+| V2.10 | Explicit offline English → Odia lookup, separate translations/loan spellings | original seed + existing owner glosses | **First version** 2026-10-12: 70 entries / 62 terms, Copy Odia, offline/degraded-load checks. 64 proposed entries await native review; typing aliases are separate follow-up work. |
+
+The measured 12 October interface/data audit and recommended next work are in
+[`codex_review_12Oct2026.md`](codex_review_12Oct2026.md). It prioritizes literal-text
+preservation, consistent commit/copy/undo, and shipped-asset evaluation before
+larger corpus imports or native-keyboard packaging.
 
 **Release step (owner approval, 2026-10-04):** when V2 is merged into this branch and all
 checks pass, Claude opens a pull request from `claude/festive-hawking-ie6xyt` to `main`.

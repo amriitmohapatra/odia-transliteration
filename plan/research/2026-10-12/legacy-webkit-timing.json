@@ -1,0 +1,12 @@
+[
+  {
+    "input": "janmadina",
+    "after400ms": "ଜନ୍ମଦିନ",
+    "after2000ms": "ଜନ୍ମଦିନ"
+  },
+  {
+    "input": "ghara",
+    "after400ms": "ଘର",
+    "after2000ms": "ଘର"
+  }
+]

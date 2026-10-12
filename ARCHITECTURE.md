@@ -130,6 +130,13 @@ The dictionary module (`Appv2/src/dictionary/`): `index.ts` fetches the two `.bi
 caret bar, the picker and the output, plus a side panel with search. It imports
 `canonical()` from core. It skips Latin items (`inline-latin`).
 
+The panel also has an explicit English → Odia direction (12 October 2026).
+`english.ts` searches the small bundled `english.tsv` by headword/alias, preserving
+separate senses, translations and loan spellings. Each result shows review status
+and supports Copy Odia. It applies the same hidden-word callback as Odia lookup,
+works independently of the historical binary payloads, and does not feed engine
+ranking. See `Appv2/src/dictionary/PROVENANCE.md` for coverage and review limits.
+
 "-web" files are the pruned versions the browser loads (phone memory budget).
 
 ## 5. The V1 web app (`Appv2/`)

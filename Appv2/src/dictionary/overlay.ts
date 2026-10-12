@@ -52,7 +52,11 @@ import glossesTsv from '../../../core/data/glosses.tsv?raw';
 
 import { inflate } from './pako-inflate.js';
 import { originChipLabel, originLabel, parseOrigin } from './origin.js';
+import { parseEnglishEntries, searchEnglish, type EnglishEntry } from './english.js';
+import englishTsv from './english.tsv?raw';
 import './overlay.css';
+
+const ENGLISH = parseEnglishEntries(englishTsv);
 
 /**
  * Raw gzip payloads. `modern` and `origin` are optional: null (or absent) when
@@ -224,7 +228,7 @@ function loadData(): void {
     })
     .catch(() => {
       setState('failed');
-      panelStatus('Dictionary failed to unpack — the app itself is unaffected.');
+      panelStatus('Historical dictionary unavailable. English lookup and typing still work.');
     });
 }
 
@@ -413,7 +417,7 @@ function tidyGloss(gloss: string, approximate: boolean): string | null {
 }
 
 /** Shown where a suggestion has no dictionary entry (was a faint dot). */
-const NO_ENTRY = 'not a known word';
+const NO_ENTRY = 'meaning unavailable';
 
 /* Short English gloss for the inline chip.
  *
@@ -453,6 +457,8 @@ function shortGloss(entry: Entry): string | null {
 let panelBody: HTMLDivElement | null = null;
 let panelState: HTMLParagraphElement | null = null;
 let searchInput: HTMLInputElement | null = null;
+let searchDirection: HTMLSelectElement | null = null;
+let panelSubtitle: HTMLParagraphElement | null = null;
 let lastCandidates: { text: string; num: number }[] = [];
 
 function buildPanel(): void {
@@ -488,7 +494,32 @@ function buildPanel(): void {
 
   const sub = document.createElement('p');
   sub.className = 'dict-sub';
+  panelSubtitle = sub;
   sub.textContent = 'Pur\u1e47\u1e47achandra O\u1e0di\u0101 Bh\u0101shakosha — G. C. Praharaj (1931–40)';
+
+  const direction = document.createElement('select');
+  direction.className = 'dict-direction';
+  direction.setAttribute('aria-label', 'Dictionary direction');
+  for (const [value, text] of [['odia', 'Odia → English'], ['english', 'English → Odia']]) {
+    const option = document.createElement('option');
+    option.value = value as string;
+    option.textContent = text as string;
+    direction.appendChild(option);
+  }
+  searchDirection = direction;
+  direction.addEventListener('change', () => {
+    if (!searchInput || !panelSubtitle) return;
+    const english = direction.value === 'english';
+    searchInput.value = '';
+    // The selected direction owns the body even while Odia payloads are
+    // loading or unavailable; never leave English results under Odia mode.
+    if (panelBody) panelBody.textContent = '';
+    searchInput.placeholder = english ? 'Search English, e.g. water, meeting' : 'Search an Odia word';
+    panelSubtitle.textContent = english
+      ? `${ENGLISH.length} entries for ${new Set(ENGLISH.map((entry) => entry.english)).size} English terms. Starter dictionary; most entries await native-speaker review. Translations and loan spellings are separate.`
+      : 'Pur\u1e47\u1e47achandra O\u1e0di\u0101 Bh\u0101shakosha — G. C. Praharaj (1931–40)';
+    onSearch();
+  });
 
   const search = document.createElement('input');
   search.type = 'search';
@@ -509,6 +540,7 @@ function buildPanel(): void {
 
   panel.appendChild(head);
   panel.appendChild(sub);
+  panel.appendChild(direction);
   panel.appendChild(search);
   panel.appendChild(stateEl);
   panel.appendChild(body);
@@ -560,7 +592,7 @@ function renderEmpty(): void {
   const p = document.createElement('p');
   p.className = 'dict-hint';
   p.textContent =
-    'Type in the roman box — meanings for each suggestion appear here as you go. Suggestions the dictionary does not know are marked, so you can still judge them by ear.';
+    'Type in the roman box — meanings for each suggestion appear here as you go. A missing meaning does not mean a spelling is wrong. Choose English → Odia to look up a word by its English meaning.';
   panelBody.appendChild(p);
 }
 
@@ -656,6 +688,10 @@ function entryBlock(word: string, num: number | null, entry: Entry | null, moder
 
 function renderCandidates(): void {
   if (!panelBody) return;
+  if (searchDirection?.value === 'english') {
+    renderEnglishSearch();
+    return;
+  }
   if (state !== 'ready') {
     if (state === 'idle') loadData();
     return;
@@ -675,9 +711,78 @@ function renderCandidates(): void {
   }
 }
 
+/** English results are small bundled data and do not depend on historical payloads. */
+function renderEnglishSearch(): void {
+  if (!panelBody || !searchInput) return;
+  panelBody.textContent = '';
+  const query = searchInput.value.trim();
+  const results = searchEnglish(ENGLISH, query, hidden);
+  const hint = document.createElement('p');
+  hint.className = 'dict-hint';
+  hint.setAttribute('role', 'status');
+  hint.textContent = !query
+    ? 'Look up an English word or short phrase, then copy the Odia result. Try water, phone, or meeting. This does not translate sentences or change typing suggestions.'
+    : results.length
+      ? 'English lookup results. “Related headword” means a prefix match, not a translation of your exact input.'
+      : 'No entry in this starter dictionary. Try another word. This is limited coverage, not a judgment about the word.';
+  panelBody.appendChild(hint);
+  for (const { entry, exact } of results) panelBody.appendChild(englishBlock(entry, exact));
+}
+
+function englishBlock(entry: EnglishEntry, exact: boolean): HTMLElement {
+  const block = document.createElement('section');
+  block.className = 'dict-entry dict-english-entry';
+  const head = document.createElement('div');
+  head.className = 'dict-entry-head';
+  const word = document.createElement('span');
+  word.className = 'dict-word odia';
+  word.lang = 'or';
+  word.textContent = entry.odia;
+  const tag = document.createElement('span');
+  tag.className = 'dict-tag';
+  tag.textContent = entry.kind === 'translation' ? 'Translation' : 'English loan spelling';
+  head.append(word, tag);
+  const sense = document.createElement('p');
+  sense.className = 'dict-hint';
+  sense.textContent = `${entry.english}: ${entry.sense}${exact ? '' : ' (Related headword)'}`;
+  const source = document.createElement('p');
+  source.className = 'dict-hint';
+  source.textContent = entry.status === 'owner'
+    ? 'Based on an existing owner-reviewed meaning.'
+    : 'Suggested entry — awaiting native-speaker review.';
+  const copy = document.createElement('button');
+  copy.type = 'button';
+  copy.className = 'dict-copy';
+  copy.textContent = 'Copy Odia';
+  copy.setAttribute('aria-label', `Copy ${entry.english}, ${entry.sense}, in Odia`);
+  const feedback = document.createElement('p');
+  feedback.className = 'dict-hint';
+  feedback.setAttribute('role', 'status');
+  copy.addEventListener('click', async () => {
+    copy.disabled = true;
+    feedback.textContent = '';
+    try {
+      if (!navigator.clipboard?.writeText) throw new Error('Clipboard unavailable');
+      await navigator.clipboard.writeText(canonical(entry.odia));
+      feedback.textContent = 'Copied Odia.';
+    } catch {
+      // Keep the word selectable when clipboard permission or file:// blocks copying.
+      feedback.textContent = 'Could not copy. Select the Odia word above and copy it manually.';
+    } finally {
+      copy.disabled = false;
+    }
+  });
+  block.append(head, sense, source, copy, feedback);
+  return block;
+}
+
 function onSearch(): void {
   if (!searchInput || !panelBody) return;
   const q = searchInput.value.trim();
+  if (searchDirection?.value === 'english') {
+    renderEnglishSearch();
+    return;
+  }
   if (state !== 'ready') {
     loadData();
     return;
@@ -690,11 +795,12 @@ function onSearch(): void {
   const blocked = hidden(canonical(q));
   const entry = blocked ? null : lookup(q);
   const modern = blocked ? null : lookupModern(q);
+  const own = blocked ? undefined : ownerGloss(q);
   const label = document.createElement('p');
   label.className = 'dict-hint';
-  label.textContent = entry || modern ? 'Search result:' : 'Nothing found for that spelling.';
+  label.textContent = entry || modern || own ? 'Search result:' : 'Nothing found for that spelling.';
   panelBody.appendChild(label);
-  if (entry || modern) panelBody.appendChild(entryBlock(q, null, entry, modern));
+  if (entry || modern || own) panelBody.appendChild(entryBlock(q, null, entry, modern));
 }
 
 function refreshAll(): void {
@@ -737,7 +843,7 @@ function augmentInlineBar(): void {
       next.push({ text: word, num: i + 1 });
       if (btn.querySelector('.dict-gloss')) continue;
       // Nothing until the data is ready (refreshAll redoes the bar then), and
-      // nothing if it failed: an empty slot, not a wrong "not a known word".
+      // nothing if it failed: an empty slot, not a wrong "meaning unavailable".
       if (state !== 'ready') continue;
       const g = chipFor(word);
       const span = document.createElement('span');
@@ -807,7 +913,7 @@ function augmentReadback(): void {
         el.title = o ? g + ' \u00b7 ' + o : g;
       } else {
         // Proposal 3.7: a word with no entry gets a dotted underline and
-        // the screen-reader text "not a known word".
+        // the screen-reader text "meaning unavailable".
         el.title = NO_ENTRY;
         el.classList.add('rb-unknown');
         el.setAttribute('aria-label', `${el.getAttribute('aria-label') || el.textContent || ''}, ${NO_ENTRY}`);

@@ -1,0 +1,28 @@
+[
+  {
+    "id": "punctuation",
+    "typed": "namaskar, tume kemiti achha? ",
+    "editor": "namaskar, ତୁମେ କେମିତି achha? ",
+    "copied": "ନମସ୍କାର, ତୁମେ କେମିତି ଅଛ? "
+  },
+  {
+    "id": "email",
+    "typed": "test@example.com ",
+    "editor": "test@example.ଚୋମ ",
+    "copied": "ତେସ୍ତ@ଏକ୍ଷମ୍ପ୍ଲେ.ଚୋମ "
+  },
+  {
+    "id": "url",
+    "typed": "https://example.com ",
+    "editor": "https://example.ଚୋମ ",
+    "copied": "ହ୍ତ୍ତ୍ପ୍ସ://ଏକ୍ଷମ୍ପ୍ଲେ.ଚୋମ "
+  },
+  {
+    "id": "reselect",
+    "typed": "mu bhala achhi ",
+    "editor": "ମୁ ଭଲ ଅଛି ",
+    "copied": "ମୁ ଭଲ ଅଛି ",
+    "picker": "ମୁ\nAt\nମୁଁ\nthe i\nମୂ\nBinding\nମୁଂ\nmaybe: At\nମୂଂ\nmaybe: Binding\nmu",
+    "changed": "ମୁଁ ଭଲ ଅଛି "
+  }
+]

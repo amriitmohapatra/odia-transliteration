@@ -1,0 +1,74 @@
+# English -> Odia starter dictionary. See PROVENANCE.md in this directory.
+# english<TAB>odia<TAB>kind<TAB>sense<TAB>aliases (| separated)<TAB>status<TAB>source
+# seed = original agent suggestions awaiting native-speaker review; not validated translations.
+# owner = exact existing owner gloss; ownership does not validate other entries.
+water	ପାଣି	translation	water for everyday use		seed	original-seed
+food	ଖାଦ୍ୟ	translation	food; general noun		seed	original-seed
+rice	ଭାତ	translation	cooked rice	cooked rice	seed	original-seed
+rice	ଚାଉଳ	translation	uncooked rice grains	uncooked rice	seed	original-seed
+home	ଘର	translation	house or home	house	seed	original-seed
+friend	ସାଙ୍ଗ	translation	friend; everyday use		seed	original-seed
+mother	ମା	translation	mother; familiar address	mum|mom	seed	original-seed
+father	ବାପା	translation	father; familiar address	dad	seed	original-seed
+child	ପିଲା	translation	child	kid	seed	original-seed
+book	ବହି	translation	a book; noun		seed	original-seed
+school	ବିଦ୍ୟାଳୟ	translation	school; formal noun		seed	original-seed
+school	ସ୍କୁଲ	loan	English school written in Odia		seed	original-seed
+teacher	ଶିକ୍ଷକ	translation	teacher; masculine form		seed	original-seed
+teacher	ଶିକ୍ଷୟିତ୍ରୀ	translation	teacher; feminine form		seed	original-seed
+work	କାମ	translation	work; noun		seed	original-seed
+money	ଟଙ୍କା	translation	money; also rupee		seed	original-seed
+time	ସମୟ	translation	time; general noun		seed	original-seed
+today	ଆଜି	translation	on this day		seed	original-seed
+tomorrow	କାଲି	translation	tomorrow; context needed, also yesterday		seed	original-seed
+yesterday	କାଲି	translation	yesterday; context needed, also tomorrow		seed	original-seed
+morning	ସକାଳ	translation	morning		seed	original-seed
+night	ରାତି	translation	night		seed	original-seed
+good	ଭଲ	translation	good; also well depending on context	well	seed	original-seed
+thank you	ଧନ୍ୟବାଦ	translation	thanks; expression of gratitude	thanks	seed	original-seed
+hello	ନମସ୍କାର	translation	greeting; polite register	greeting	seed	original-seed
+yes	ହଁ	translation	affirmative response		seed	original-seed
+no	ନା	translation	negative response		seed	original-seed
+where	କେଉଁଠି	translation	question about place		seed	original-seed
+what	କଣ	translation	question word; everyday use		seed	original-seed
+why	କାହିଁକି	translation	question about reason		seed	original-seed
+when	କେତେବେଳେ	translation	question about time		seed	original-seed
+name	ନାମ	translation	a name; noun		seed	original-seed
+village	ଗାଁ	translation	village		seed	original-seed
+city	ସହର	translation	city or town	town	seed	original-seed
+road	ରାସ୍ତା	translation	road or way	street	seed	original-seed
+rain	ବର୍ଷା	translation	rain; noun		seed	original-seed
+sun	ସୂର୍ଯ୍ୟ	translation	the sun		seed	original-seed
+moon	ଚନ୍ଦ୍ର	translation	the moon		seed	original-seed
+flower	ଫୁଲ	translation	flower		seed	original-seed
+big	ବଡ଼	translation	big or large	large	seed	original-seed
+small	ଛୋଟ	translation	small or little	little	seed	original-seed
+odia	ଓଡ଼ିଆ	translation	Odia language or identity	oriya	seed	original-seed
+odisha	ଓଡ଼ିଶା	translation	state name	orissa	seed	original-seed
+message	ବାର୍ତ୍ତା	translation	a message; noun		seed	original-seed
+message	ମେସେଜ୍	loan	English message written in Odia		seed	original-seed
+meeting	ବୈଠକ	translation	an arranged discussion; noun		seed	original-seed
+meeting	ମିଟିଂ	loan	English meeting written in Odia		seed	original-seed
+office	କାର୍ଯ୍ୟାଳୟ	translation	office; formal noun		seed	original-seed
+office	ଅଫିସ୍	loan	English office written in Odia		seed	original-seed
+phone	ଫୋନ୍	loan	phone or telephone device; English loan	telephone	seed	original-seed
+mobile	ମୋବାଇଲ୍	loan	mobile phone; English loan	mobile phone	seed	original-seed
+computer	କମ୍ପ୍ୟୁଟର	loan	English computer written in Odia		seed	original-seed
+internet	ଇଣ୍ଟରନେଟ୍	loan	English internet written in Odia		seed	original-seed
+email	ଇମେଲ୍	loan	English email written in Odia	e-mail	seed	original-seed
+video	ଭିଡିଓ	loan	English video written in Odia		seed	original-seed
+photo	ଫଟୋ	loan	English photo written in Odia	photograph	seed	original-seed
+file	ଫାଇଲ୍	loan	English file written in Odia; document sense		seed	original-seed
+app	ଆପ୍	loan	English app written in Odia; software sense	application	seed	original-seed
+bus	ବସ୍	loan	English bus written in Odia		seed	original-seed
+train	ଟ୍ରେନ୍	loan	English train written in Odia; transport noun		seed	original-seed
+bank	ବ୍ୟାଙ୍କ	loan	English bank written in Odia; financial institution		seed	original-seed
+bank	କୂଳ	translation	river bank; edge of a river	river bank	seed	original-seed
+day	ଦିନ	translation	day		owner	owner-gloss
+how	କେମିତି	translation	how		owner	owner-gloss
+okay	ଆଛା	translation	okay; fine	fine	owner	owner-gloss
+dust	ଧୂଳି	translation	dust		owner	owner-gloss
+committee	କମିଟି	loan	committee		owner	owner-gloss
+raja festival	ରଜ	translation	Raja festival (June)		owner	owner-gloss
+call	କଲ୍	loan	telephone call; English loan	phone call	seed	original-seed
+call	ଡାକ	translation	a call or summons; not a telephone device	summons	seed	original-seed

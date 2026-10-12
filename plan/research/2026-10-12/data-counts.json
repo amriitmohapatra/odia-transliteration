@@ -1,0 +1,12 @@
+{
+  "web_lexicon_rows": 123125,
+  "web_roman_keys": 105824,
+  "web_odia_spellings": 54397,
+  "modern_words": 40589,
+  "modern_entries_with_tag": {
+    "loan": 33401,
+    "cldr": 995,
+    "mt": 7359
+  },
+  "modern_loan_only_entries_excluded_from_chip": 32315
+}

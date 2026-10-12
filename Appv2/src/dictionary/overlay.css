@@ -22,7 +22,7 @@
   text-overflow: ellipsis;
   margin-top: 2px;
 }
-/* "not a known word": words, in --muted italic. Was a dot at 0.35 opacity
+/* "meaning unavailable": words, in --muted italic. Was a dot at 0.35 opacity
  * (1.67:1, and a dot means nothing to a parent; audit M2). */
 .dict-gloss-none {
   font-style: italic;
@@ -305,3 +305,27 @@ body.kb-docked #dict-toggle { display: none; }
   cursor: help;
 }
 .dict-modern-gloss { color: var(--text); }
+
+/* English lookup is a separate, explicit direction; engine choices stay phonetic. */
+.dict-direction {
+  width: 100%;
+  min-height: var(--tap);
+  padding: 8px 10px;
+  border: 1px solid var(--line-strong);
+  border-radius: 10px;
+  background: var(--card);
+  color: var(--text);
+  font: inherit;
+}
+.dict-copy {
+  min-height: var(--tap);
+  margin-top: 8px;
+  padding: 6px 12px;
+  border: 1px solid var(--line-strong);
+  border-radius: 8px;
+  background: var(--panel);
+  color: var(--text);
+  font: inherit;
+  cursor: pointer;
+}
+.dict-english-entry .dict-tag { white-space: normal; }

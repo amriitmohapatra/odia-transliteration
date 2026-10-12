@@ -1,0 +1,445 @@
+[
+  {
+    "id": "punctuation",
+    "snapshots": [
+      {
+        "step": "type namaskar,",
+        "value": "namaskar,",
+        "selection": [
+          9,
+          9
+        ],
+        "readback": "namaskaara,",
+        "candidates": [
+          "1ନମସ୍କାରhello",
+          "2ନମସ୍କରnot a known word",
+          "3ଣମସ୍କରnot a known word",
+          "4ନମସ୍କର୍not a known word",
+          "5ନମଶ୍କରnot a known word",
+          "6ନମାସ୍କରnot a known word",
+          "7ଣମଶ୍କରnot a known word",
+          "8ଣମସ୍କାରnot a known word",
+          "9Keepnamaskar"
+        ],
+        "panel": "ଅଭିଧାନ Dictionary\n\nPurṇṇachandra Oḍiā Bhāshakosha — G. C. Praharaj (1931–40)\n\nSuggestions under the caret:\n\n1\nନମସ୍କାର\nfrom Sanskrit (tatsama)\ntoday\nhello; greet; salute; greeting cards\nନମସ୍କାର — Namaskāra ସଂ. ବି. (ନମସ୍+କୃ ଧାତୁ +ଭାବ. ଅ) — ଭକ୍ତିପୂର୍ବକ ଅଭିବାଦନ ବା ବନ୍ଦନା;ପ୍ରଣାମ; ଭକ୍ତି ସହକାରେ ଦଣ୍ଡବତ —Obeisance (as a token of respect; respectful salutation; paying homage. [ଦ୍ର—ପ୍ରଣାମ ବା ନମସ୍କାର ଅନେକ ପ୍ରକାରରେ କରାୟାଏ ୟଥା— 1 ହାତ ୟୋଡ଼ି ମୁଣ୍ଡକୁ ନୁଆଁଇବା (ଅଧ୍ଯମ ନମସ୍କାର)— 2 ଆଣ୍ଠୁମାଡ଼ି ବସି ଭୂମିରେ ମୁଣ୍ଡଲଗାଇବା (ମଧ୍ଯମ)— 3 ଦଣ୍ଡବତ୍ ଲମ୍ବ ହୋଇ ଭୁମିରେ ମୁହଁ ମାଡ଼ି ପଡ଼ି ସାଷ୍ଟାଙ୍ଗ ନମସ୍କାର କରିବା (ଉତ୍ତମ)—ଆହୁରି ମଧ୍ଯ କାଯିକ,ବାଚିକ ଓ ମାନସିକ ଭେଦରେ ନମସ୍କାର 3 ପ୍ରକାର] ଦେ. ଅ — ନମ (ଦେଖ) Name (See)\n2\nନମସ୍କର\nnot a known word\n3\nଣମସ୍କର\nnot a known word\n4\nନମସ୍କର୍\nnot a known word\n5\nନମଶ୍କର\nnot a known word\n6\nନମାସ୍କର\nnot a known word\n7\nଣମଶ୍କର\nnot a known word\n8\nଣମସ୍କାର\nnot a known word"
+      },
+      {
+        "step": "space after comma",
+        "value": "namaskar, ",
+        "selection": [
+          10,
+          10
+        ],
+        "readback": "namaskaara,",
+        "candidates": [
+          "1ନମସ୍କାରhello",
+          "2ନମସ୍କରnot a known word",
+          "3ଣମସ୍କରnot a known word",
+          "4ନମସ୍କର୍not a known word",
+          "5ନମଶ୍କରnot a known word",
+          "6ନମାସ୍କରnot a known word",
+          "7ଣମଶ୍କରnot a known word",
+          "8ଣମସ୍କାରnot a known word",
+          "9Keepnamaskar"
+        ],
+        "panel": "ଅଭିଧାନ Dictionary\n\nPurṇṇachandra Oḍiā Bhāshakosha — G. C. Praharaj (1931–40)\n\nSuggestions under the caret:\n\n1\nନମସ୍କାର\nfrom Sanskrit (tatsama)\ntoday\nhello; greet; salute; greeting cards\nନମସ୍କାର — Namaskāra ସଂ. ବି. (ନମସ୍+କୃ ଧାତୁ +ଭାବ. ଅ) — ଭକ୍ତିପୂର୍ବକ ଅଭିବାଦନ ବା ବନ୍ଦନା;ପ୍ରଣାମ; ଭକ୍ତି ସହକାରେ ଦଣ୍ଡବତ —Obeisance (as a token of respect; respectful salutation; paying homage. [ଦ୍ର—ପ୍ରଣାମ ବା ନମସ୍କାର ଅନେକ ପ୍ରକାରରେ କରାୟାଏ ୟଥା— 1 ହାତ ୟୋଡ଼ି ମୁଣ୍ଡକୁ ନୁଆଁଇବା (ଅଧ୍ଯମ ନମସ୍କାର)— 2 ଆଣ୍ଠୁମାଡ଼ି ବସି ଭୂମିରେ ମୁଣ୍ଡଲଗାଇବା (ମଧ୍ଯମ)— 3 ଦଣ୍ଡବତ୍ ଲମ୍ବ ହୋଇ ଭୁମିରେ ମୁହଁ ମାଡ଼ି ପଡ଼ି ସାଷ୍ଟାଙ୍ଗ ନମସ୍କାର କରିବା (ଉତ୍ତମ)—ଆହୁରି ମଧ୍ଯ କାଯିକ,ବାଚିକ ଓ ମାନସିକ ଭେଦରେ ନମସ୍କାର 3 ପ୍ରକାର] ଦେ. ଅ — ନମ (ଦେଖ) Name (See)\n2\nନମସ୍କର\nnot a known word\n3\nଣମସ୍କର\nnot a known word\n4\nନମସ୍କର୍\nnot a known word\n5\nନମଶ୍କର\nnot a known word\n6\nନମାସ୍କର\nnot a known word\n7\nଣମଶ୍କର\nnot a known word\n8\nଣମସ୍କାର\nnot a known word"
+      },
+      {
+        "step": "continue sentence ending ?",
+        "value": "namaskar, ତୁମେ କେମିତି achha?",
+        "selection": [
+          28,
+          28
+        ],
+        "readback": "namaskaara, tume kemiti achha?",
+        "candidates": [
+          "1ଅଛThe form taken by the verb 'To be' in present tense 2nd…",
+          "2ଆଛାokay",
+          "3ଅଛାnot a known word",
+          "4ଆଛnot a known word",
+          "5ଅଚ୍ହnot a known word",
+          "6ଅଛ୍ହnot a known word",
+          "7ଅକ୍ହ୍ହnot a known word",
+          "8ଅଛ୍ହାnot a known word",
+          "9Keepachha"
+        ],
+        "panel": "ଅଭିଧାନ Dictionary\n\nPurṇṇachandra Oḍiā Bhāshakosha — G. C. Praharaj (1931–40)\n\nSuggestions under the caret:\n\n1\nଅଛ\nnative Odia (deshaja)\nଅଛ — Achha ଦେ. କ୍ରିଯା. (ସଂ. ଅସ ଧାତୁ; ବର୍ତ୍ତମାନ କାଳ 2 ଯ ପୁରୁଷ, ଆଦରାର୍ଥ ଏକବଚନ (ତୁମ୍ଭେ) ଓ ବହୁବଚନରେ (ତୁମ୍ଭେମାନେ ସହିତ ବ୍ଯବହୃତ ରୂପ); ହୁଅ; ଅଟ —The form taken by the verb 'To be' in present tense 2nd person singular & plural (you) are. [ଦ—ସଂ. ଅସ ଧାତୁର ବର୍ତ୍ତମାନ କାଳର ଭିନ୍ନ ଭିନ୍ନ ରୂପ] ବଚନ ପ୍ରଥମପୁରୁଷ  ଦ୍ବିତୀଯପୁରୁଷ  ତୃତୀଯପୁରୁଷ ଅନାଦରାର୍ଥକ ଏକବଚନ  ମୁଁଅଛି (ପଦ୍ଯରେ ଅଛଇଁ)  ତୁ ଅଛୁ ସେ ଅଛି (ପଦ୍ଯରେ ଅଛଇ) ଆଦରାର୍ଥକ ଏକବଚନ ଆମ୍ଭେ ଅଛୁଁ ତୁମ୍ଭେ ଅଛ ଆପଣ ଅଛନ୍ତି ସେ ଅଛନ୍ତି ବହୁବଚନ ଆମ୍ଭେ,ଆମ୍ଭେମାନେ ଅଛୁଁ  ତୁମ୍ଭେମାନେ ଅଛ ଆପଣମାନେ ଅଛନ୍ତ$nbsp;ସେମାନେ ଅଛନ୍ତ\n2\nଆଛା\nmeaning\nokay; fine\nଆଛା — Āchhā ଗ୍ରା. ଅ — ଆଚ୍ଛା (ଦେଖ) Āchchhā (See)\n3\nଅଛା\nnot a known word\n4\nଆଛ\nnot a known word\n5\nଅଚ୍ହ\nmaybe: starts with this word\nଅଚ୍ — ସଂ. ବି. (ସଂ. ବ୍ଯାକରଣ) — ସ୍ବରବର୍ଣ୍ଣମାନ — A technical term in sanskrit grammer for the vowels.\n6\nଅଛ୍ହ\nnot a known word\n7\nଅକ୍ହ୍ହ\nnot a known word\n8\nଅଛ୍ହା\nnot a known word"
+      },
+      {
+        "step": "space after ?",
+        "value": "namaskar, ତୁମେ କେମିତି achha? ",
+        "selection": [
+          29,
+          29
+        ],
+        "readback": "namaskaara, tume kemiti achha?",
+        "candidates": [
+          "1ଅଛThe form taken by the verb 'To be' in present tense 2nd…",
+          "2ଆଛାokay",
+          "3ଅଛାnot a known word",
+          "4ଆଛnot a known word",
+          "5ଅଚ୍ହnot a known word",
+          "6ଅଛ୍ହnot a known word",
+          "7ଅକ୍ହ୍ହnot a known word",
+          "8ଅଛ୍ହାnot a known word",
+          "9Keepachha"
+        ],
+        "panel": "ଅଭିଧାନ Dictionary\n\nPurṇṇachandra Oḍiā Bhāshakosha — G. C. Praharaj (1931–40)\n\nSuggestions under the caret:\n\n1\nଅଛ\nnative Odia (deshaja)\nଅଛ — Achha ଦେ. କ୍ରିଯା. (ସଂ. ଅସ ଧାତୁ; ବର୍ତ୍ତମାନ କାଳ 2 ଯ ପୁରୁଷ, ଆଦରାର୍ଥ ଏକବଚନ (ତୁମ୍ଭେ) ଓ ବହୁବଚନରେ (ତୁମ୍ଭେମାନେ ସହିତ ବ୍ଯବହୃତ ରୂପ); ହୁଅ; ଅଟ —The form taken by the verb 'To be' in present tense 2nd person singular & plural (you) are. [ଦ—ସଂ. ଅସ ଧାତୁର ବର୍ତ୍ତମାନ କାଳର ଭିନ୍ନ ଭିନ୍ନ ରୂପ] ବଚନ ପ୍ରଥମପୁରୁଷ  ଦ୍ବିତୀଯପୁରୁଷ  ତୃତୀଯପୁରୁଷ ଅନାଦରାର୍ଥକ ଏକବଚନ  ମୁଁଅଛି (ପଦ୍ଯରେ ଅଛଇଁ)  ତୁ ଅଛୁ ସେ ଅଛି (ପଦ୍ଯରେ ଅଛଇ) ଆଦରାର୍ଥକ ଏକବଚନ ଆମ୍ଭେ ଅଛୁଁ ତୁମ୍ଭେ ଅଛ ଆପଣ ଅଛନ୍ତି ସେ ଅଛନ୍ତି ବହୁବଚନ ଆମ୍ଭେ,ଆମ୍ଭେମାନେ ଅଛୁଁ  ତୁମ୍ଭେମାନେ ଅଛ ଆପଣମାନେ ଅଛନ୍ତ$nbsp;ସେମାନେ ଅଛନ୍ତ\n2\nଆଛା\nmeaning\nokay; fine\nଆଛା — Āchhā ଗ୍ରା. ଅ — ଆଚ୍ଛା (ଦେଖ) Āchchhā (See)\n3\nଅଛା\nnot a known word\n4\nଆଛ\nnot a known word\n5\nଅଚ୍ହ\nmaybe: starts with this word\nଅଚ୍ — ସଂ. ବି. (ସଂ. ବ୍ଯାକରଣ) — ସ୍ବରବର୍ଣ୍ଣମାନ — A technical term in sanskrit grammer for the vowels.\n6\nଅଛ୍ହ\nnot a known word\n7\nଅକ୍ହ୍ହ\nnot a known word\n8\nଅଛ୍ହା\nnot a known word"
+      }
+    ]
+  },
+  {
+    "id": "undo",
+    "snapshots": [
+      {
+        "step": "commit namaskar with space",
+        "value": "ନମସ୍କାର ",
+        "selection": [
+          8,
+          8
+        ],
+        "readback": "namaskaara",
+        "candidates": [
+          "1ନମସ୍କାରhello",
+          "2ନମସ୍କରnot a known word",
+          "3ଣମସ୍କରnot a known word",
+          "4ନମସ୍କର୍not a known word",
+          "5ନମଶ୍କରnot a known word",
+          "6ନମାସ୍କରnot a known word",
+          "7ଣମଶ୍କରnot a known word",
+          "8ଣମସ୍କାରnot a known word",
+          "9Keepnamaskar"
+        ],
+        "panel": "ଅଭିଧାନ Dictionary\n\nPurṇṇachandra Oḍiā Bhāshakosha — G. C. Praharaj (1931–40)\n\nSuggestions under the caret:\n\n1\nନମସ୍କାର\nfrom Sanskrit (tatsama)\ntoday\nhello; greet; salute; greeting cards\nନମସ୍କାର — Namaskāra ସଂ. ବି. (ନମସ୍+କୃ ଧାତୁ +ଭାବ. ଅ) — ଭକ୍ତିପୂର୍ବକ ଅଭିବାଦନ ବା ବନ୍ଦନା;ପ୍ରଣାମ; ଭକ୍ତି ସହକାରେ ଦଣ୍ଡବତ —Obeisance (as a token of respect; respectful salutation; paying homage. [ଦ୍ର—ପ୍ରଣାମ ବା ନମସ୍କାର ଅନେକ ପ୍ରକାରରେ କରାୟାଏ ୟଥା— 1 ହାତ ୟୋଡ଼ି ମୁଣ୍ଡକୁ ନୁଆଁଇବା (ଅଧ୍ଯମ ନମସ୍କାର)— 2 ଆଣ୍ଠୁମାଡ଼ି ବସି ଭୂମିରେ ମୁଣ୍ଡଲଗାଇବା (ମଧ୍ଯମ)— 3 ଦଣ୍ଡବତ୍ ଲମ୍ବ ହୋଇ ଭୁମିରେ ମୁହଁ ମାଡ଼ି ପଡ଼ି ସାଷ୍ଟାଙ୍ଗ ନମସ୍କାର କରିବା (ଉତ୍ତମ)—ଆହୁରି ମଧ୍ଯ କାଯିକ,ବାଚିକ ଓ ମାନସିକ ଭେଦରେ ନମସ୍କାର 3 ପ୍ରକାର] ଦେ. ଅ — ନମ (ଦେଖ) Name (See)\n2\nନମସ୍କର\nnot a known word\n3\nଣମସ୍କର\nnot a known word\n4\nନମସ୍କର୍\nnot a known word\n5\nନମଶ୍କର\nnot a known word\n6\nନମାସ୍କର\nnot a known word\n7\nଣମଶ୍କର\nnot a known word\n8\nଣମସ୍କାର\nnot a known word"
+      },
+      {
+        "step": "undo commit",
+        "value": "ନମସ୍କାର ",
+        "selection": [
+          8,
+          8
+        ],
+        "readback": "namaskaara",
+        "candidates": [
+          "1ନମସ୍କାରhello",
+          "2ନମସ୍କରnot a known word",
+          "3ଣମସ୍କରnot a known word",
+          "4ନମସ୍କର୍not a known word",
+          "5ନମଶ୍କରnot a known word",
+          "6ନମାସ୍କରnot a known word",
+          "7ଣମଶ୍କରnot a known word",
+          "8ଣମସ୍କାରnot a known word",
+          "9Keepnamaskar"
+        ],
+        "panel": "ଅଭିଧାନ Dictionary\n\nPurṇṇachandra Oḍiā Bhāshakosha — G. C. Praharaj (1931–40)\n\nSuggestions under the caret:\n\n1\nନମସ୍କାର\nfrom Sanskrit (tatsama)\ntoday\nhello; greet; salute; greeting cards\nନମସ୍କାର — Namaskāra ସଂ. ବି. (ନମସ୍+କୃ ଧାତୁ +ଭାବ. ଅ) — ଭକ୍ତିପୂର୍ବକ ଅଭିବାଦନ ବା ବନ୍ଦନା;ପ୍ରଣାମ; ଭକ୍ତି ସହକାରେ ଦଣ୍ଡବତ —Obeisance (as a token of respect; respectful salutation; paying homage. [ଦ୍ର—ପ୍ରଣାମ ବା ନମସ୍କାର ଅନେକ ପ୍ରକାରରେ କରାୟାଏ ୟଥା— 1 ହାତ ୟୋଡ଼ି ମୁଣ୍ଡକୁ ନୁଆଁଇବା (ଅଧ୍ଯମ ନମସ୍କାର)— 2 ଆଣ୍ଠୁମାଡ଼ି ବସି ଭୂମିରେ ମୁଣ୍ଡଲଗାଇବା (ମଧ୍ଯମ)— 3 ଦଣ୍ଡବତ୍ ଲମ୍ବ ହୋଇ ଭୁମିରେ ମୁହଁ ମାଡ଼ି ପଡ଼ି ସାଷ୍ଟାଙ୍ଗ ନମସ୍କାର କରିବା (ଉତ୍ତମ)—ଆହୁରି ମଧ୍ଯ କାଯିକ,ବାଚିକ ଓ ମାନସିକ ଭେଦରେ ନମସ୍କାର 3 ପ୍ରକାର] ଦେ. ଅ — ନମ (ଦେଖ) Name (See)\n2\nନମସ୍କର\nnot a known word\n3\nଣମସ୍କର\nnot a known word\n4\nନମସ୍କର୍\nnot a known word\n5\nନମଶ୍କର\nnot a known word\n6\nନମାସ୍କର\nnot a known word\n7\nଣମଶ୍କର\nnot a known word\n8\nଣମସ୍କାର\nnot a known word"
+      }
+    ]
+  },
+  {
+    "id": "backspace",
+    "snapshots": [
+      {
+        "step": "backspace removes trailing space",
+        "value": "କେମିତି",
+        "selection": [
+          6,
+          6
+        ],
+        "readback": "kemiti",
+        "candidates": [
+          "1କେମିତିhow",
+          "2କେମିଟିnot a known word",
+          "3କେମିତୀnot a known word",
+          "4କେମୀତିnot a known word",
+          "5କେମିଟୀnot a known word",
+          "6କେମୀଟିnot a known word",
+          "7କେମୀତୀnot a known word",
+          "8କେମୀଟୀnot a known word",
+          "9Keepkemiti"
+        ],
+        "panel": "ଅଭିଧାନ Dictionary\n\nPurṇṇachandra Oḍiā Bhāshakosha — G. C. Praharaj (1931–40)\n\nSuggestions under the caret:\n\n1\nକେମିତି\nmeaning\nhow\nEnglish word?\ncommittee\ntoday\nhow-to\n2\nକେମିଟି\nnot a known word\n3\nକେମିତୀ\nnot a known word\n4\nକେମୀତି\nnot a known word\n5\nକେମିଟୀ\nnot a known word\n6\nକେମୀଟି\nnot a known word\n7\nକେମୀତୀ\nnot a known word\n8\nକେମୀଟୀ\nnot a known word"
+      },
+      {
+        "step": "second backspace",
+        "value": "କେମିତ",
+        "selection": [
+          5,
+          5
+        ],
+        "readback": "kemita",
+        "candidates": [
+          "1କେମିତିhow",
+          "2କେମିଟିnot a known word",
+          "3କେମିତୀnot a known word",
+          "4କେମୀତିnot a known word",
+          "5କେମିଟୀnot a known word",
+          "6କେମୀଟିnot a known word",
+          "7କେମୀତୀnot a known word",
+          "8କେମୀଟୀnot a known word",
+          "9Keepkemiti"
+        ],
+        "panel": "ଅଭିଧାନ Dictionary\n\nPurṇṇachandra Oḍiā Bhāshakosha — G. C. Praharaj (1931–40)\n\nSuggestions under the caret:\n\n1\nକେମିତି\nmeaning\nhow\nEnglish word?\ncommittee\ntoday\nhow-to\n2\nକେମିଟି\nnot a known word\n3\nକେମିତୀ\nnot a known word\n4\nକେମୀତି\nnot a known word\n5\nକେମିଟୀ\nnot a known word\n6\nକେମୀଟି\nnot a known word\n7\nକେମୀତୀ\nnot a known word\n8\nକେମୀଟୀ\nnot a known word"
+      }
+    ]
+  },
+  {
+    "id": "arrows",
+    "snapshots": [
+      {
+        "step": "typed kemiti",
+        "value": "kemiti",
+        "selection": [
+          6,
+          6
+        ],
+        "readback": "kemiti",
+        "candidates": [
+          "1\nକେମିତି\nhow",
+          "2\nକେମିଟି\nnot a known word",
+          "3\nକେମିତୀ\nnot a known word",
+          "4\nକେମୀତି\nnot a known word",
+          "5\nକେମିଟୀ\nnot a known word",
+          "6\nକେମୀଟି\nnot a known word",
+          "7\nକେମୀତୀ\nnot a known word",
+          "8\nକେମୀଟୀ\nnot a known word",
+          "9\nKeep\nkemiti"
+        ],
+        "panel": "ଅଭିଧାନ Dictionary\n\nPurṇṇachandra Oḍiā Bhāshakosha — G. C. Praharaj (1931–40)\n\nSuggestions under the caret:\n\n1\nକେମିତି\nmeaning\nhow\nEnglish word?\ncommittee\ntoday\nhow-to\n2\nକେମିଟି\nnot a known word\n3\nକେମିତୀ\nnot a known word\n4\nକେମୀତି\nnot a known word\n5\nକେମିଟୀ\nnot a known word\n6\nକେମୀଟି\nnot a known word\n7\nକେମୀତୀ\nnot a known word\n8\nକେମୀଟୀ\nnot a known word"
+      },
+      {
+        "step": "left arrow",
+        "value": "kemiti",
+        "selection": [
+          6,
+          6
+        ],
+        "readback": "kemiti",
+        "candidates": [
+          "1\nକେମିତି\nhow",
+          "2\nକେମିଟି\nnot a known word",
+          "3\nକେମିତୀ\nnot a known word",
+          "4\nକେମୀତି\nnot a known word",
+          "5\nକେମିଟୀ\nnot a known word",
+          "6\nକେମୀଟି\nnot a known word",
+          "7\nକେମୀତୀ\nnot a known word",
+          "8\nକେମୀଟୀ\nnot a known word",
+          "9\nKeep\nkemiti"
+        ],
+        "panel": "ଅଭିଧାନ Dictionary\n\nPurṇṇachandra Oḍiā Bhāshakosha — G. C. Praharaj (1931–40)\n\nSuggestions under the caret:\n\n1\nକେମିତି\nmeaning\nhow\nEnglish word?\ncommittee\ntoday\nhow-to\n2\nକେମିଟି\nnot a known word\n3\nକେମିତୀ\nnot a known word\n4\nକେମୀତି\nnot a known word\n5\nକେମିଟୀ\nnot a known word\n6\nକେମୀଟି\nnot a known word\n7\nକେମୀତୀ\nnot a known word\n8\nକେମୀଟୀ\nnot a known word"
+      },
+      {
+        "step": "type a after left arrow",
+        "value": "kemitia",
+        "selection": [
+          7,
+          7
+        ],
+        "readback": "kemitia",
+        "candidates": [
+          "1\nକେମିତିଅ\nnot a known word",
+          "2\nକେମିଟିଅ\nnot a known word",
+          "3\nକେମିତିଆ\nnot a known word",
+          "4\nକେମିତୀଅ\nnot a known word",
+          "5\nକେମୀତିଅ\nnot a known word",
+          "6\nକେମିଟିଆ\nnot a known word",
+          "7\nକେମୀତିଆ\nnot a known word",
+          "8\nକେମୀତୀଅ\nnot a known word",
+          "9\nKeep\nkemitia"
+        ],
+        "panel": "ଅଭିଧାନ Dictionary\n\nPurṇṇachandra Oḍiā Bhāshakosha — G. C. Praharaj (1931–40)\n\nSuggestions under the caret:\n\n1\nକେମିତିଅ\nnot a known word\n2\nକେମିଟିଅ\nnot a known word\n3\nକେମିତିଆ\nEnglish word?\ncommittee\n4\nକେମିତୀଅ\nnot a known word\n5\nକେମୀତିଅ\nnot a known word\n6\nକେମିଟିଆ\nnot a known word\n7\nକେମୀତିଆ\nnot a known word\n8\nକେମୀତୀଅ\nnot a known word"
+      }
+    ]
+  },
+  {
+    "id": "numbers",
+    "snapshots": [
+      {
+        "step": "type covid19",
+        "value": "ଚୋବିଦ9",
+        "selection": [
+          6,
+          6
+        ],
+        "readback": "chobida9",
+        "candidates": [
+          "1ଚୋବିଦnot a known word",
+          "2ଚୋବିଡnot a known word",
+          "3କୋବିଦPhilosopher",
+          "4ଚୋବିଡ଼not a known word",
+          "5ଚୋବିଦ୍not a known word",
+          "6କୋବିଡmaybe: Cabbage",
+          "7ଚୋବୀଡnot a known word",
+          "8ଚୋୱିଡnot a known word",
+          "9Keepcovid"
+        ],
+        "panel": "ଅଭିଧାନ Dictionary\n\nPurṇṇachandra Oḍiā Bhāshakosha — G. C. Praharaj (1931–40)\n\nSuggestions under the caret:\n\n1\nଚୋବିଦ\nnot a known word\n2\nଚୋବିଡ\nnot a known word\n3\nକୋବିଦ\nfrom Sanskrit (tatsama)\nକୋବିଦ — Kobida ସଂ. ବି. ପୁଂ. (କୁ ଧାତୁ=ଶବ୍ଦ କରିବା+କର୍ତ୍ତୃ. କ୍ବିପ;— କୋ=ବେଦ; କୋ+ବିଦ୍ ଧାତୁ=ଜାଣିବା+କର୍ତ୍ତୃ. ଅ; ୟେ ବେଦ ଜାଣନ୍ତି) — 1 ପଣ୍ଡିତ — 1. Philosopher; learned man. 2 ଜ୍ଞାନୀ ବ୍ଯକ୍ତି —2. Wise man. ସଂ. ବି — 1 ନିପୁଣ —1. Expert; skilled. 2 ଦକ୍ଷ —2. Dexterous; clever. 3 ବିଜ୍ଞ; ଅନୁଭବୀ —3. Experienced. 4 ବିଦ୍ବାନ —4. Learned.\n4\nଚୋବିଡ଼\nnot a known word\n5\nଚୋବିଦ୍\nnot a known word\n6\nକୋବିଡ\nmaybe: starts with this word\nକୋବି — Kobi ବୈଦେ. ବି. (ପର୍ତ୍ତୃଗୀଜ୍—କୋବେ; ତୁଳ, ଇଂ. କାବ୍ବେଜ୍) — ଶୀତକାଳରେ ଜନ୍ମିବା ସର୍ଷପାଦି ବର୍ଗର ବିଦେଶୀଯ ଶାକଗୁଳ୍ମ — Cabbage; Brassica Olearacea. [ଦ୍ର—ଏ ଦେଶରେ ଏହାର ବିସ୍ତୁର ଚାଷ ହେଉଅଛି; ଏହା ପ୍ରଧାନତଃ ତିନି ଶ୍ରେଣୀର; ୟଥା—( 1 ) ଫୁଲକୋବୀ (Cauliflower); ଏହାର ଫୁଲ ଫୁଲତୋଡ଼ା ପରି ହୁଏ, ( 2 ) ବନ୍ଧାକୋବି (cabbage), ଏହାର ପତ୍ର ପରସ୍ପର ଗୁଡ଼ାଇ ହୋଇ ତାଳ ପରି ଟାଣୁଆ ହୁଏ, ( 3 ) ଉଲ ବା ଓଲ୍କୋବି (knol-kohl); ଏହାର ମୂଳ ଓଲୁଅ ଭଳି ଭୂମି ଉପରେ ବାହାରେ ବର୍ଣ୍ଣ, ଆକାର ଓ ପରିପୃଷ୍ଟ ହେବାର ସମଯ ଭେଦରେ ଏ ପ୍ରତ୍ଯେକ ଶ୍ରେଣୀର ଅନେକ ନାମ ଅଛି]\n7\nଚୋବୀଡ\nnot a known word\n8\nଚୋୱିଡ\nnot a known word"
+      },
+      {
+        "step": "type PCR2",
+        "value": "ଚୋବିଦ9 ପ୍ଚ୍ର",
+        "selection": [
+          12,
+          12
+        ],
+        "readback": "chobida9 pchra",
+        "candidates": [
+          "1ପିସିସିଆରnot a known word",
+          "2ପ୍ଚ୍ରnot a known word",
+          "3ପ୍କ୍ରnot a known word",
+          "4ପ୍ଚ୍ର୍not a known word",
+          "5ପ୍କ୍ର୍not a known word",
+          "6KeepPCR"
+        ],
+        "panel": "ଅଭିଧାନ Dictionary\n\nPurṇṇachandra Oḍiā Bhāshakosha — G. C. Praharaj (1931–40)\n\nSuggestions under the caret:\n\n1\nପିସିସିଆର\nnot a known word\n2\nପ୍ଚ୍ର\nnot a known word\n3\nପ୍କ୍ର\nnot a known word\n4\nପ୍ଚ୍ର୍\nnot a known word\n5\nପ୍କ୍ର୍\nnot a known word"
+      }
+    ]
+  },
+  {
+    "id": "mixed-address",
+    "snapshots": [
+      {
+        "step": "typed email and space",
+        "value": "test@example.ଚୋମ ",
+        "selection": [
+          17,
+          17
+        ],
+        "readback": "testa@ekshample.choma",
+        "candidates": [
+          "1ଚୋମnot a known word",
+          "2କୋଂKo (See)",
+          "3କୋମnot a known word",
+          "4ଚୋଂnot a known word",
+          "5ଚୋମ୍not a known word",
+          "6କୋମ୍not a known word",
+          "7ଚୋଁnot a known word",
+          "8କୋଁmaybe: What",
+          "9Keepcom"
+        ],
+        "panel": "ଅଭିଧାନ Dictionary\n\nPurṇṇachandra Oḍiā Bhāshakosha — G. C. Praharaj (1931–40)\n\nSuggestions under the caret:\n\n1\nଚୋମ\nnot a known word\n2\nକୋଂ\nକୋଂ — Koṁ ବୈଦେ. ସାଙ୍କେତିକ (ଇଂ. କୋ) — କୋ (ଦେଖ) Ko (See) [ଦ୍ର—ଏହା 'କୋ' ରେ ଅନୁସ୍ବାର ୟୁକ୍ତ ହୋଇ ଲେଖା ହୁଏ, କିନ୍ତୁ 'କୋ' ବୋଲି ଉଚ୍ଚାରିତ ହୁଏ]\n3\nକୋମ\nnot a known word\n4\nଚୋଂ\nnot a known word\n5\nଚୋମ୍\nnot a known word\n6\nକୋମ୍\nnot a known word\n7\nଚୋଁ\nnot a known word\n8\nକୋଁ\nmaybe: a form of this word\nକୋ — Ko ପ୍ରାଦେ. (ଗଞ୍ଜାମ ଓ ସମ୍ବଲପୁର) ସର୍ବ (ସଂ.କିମ୍) କେଉଁ — What; which. ବୈଦେ. (ଇଂ.) ବି. ସାଂକେତିକ ଚିହ୍ନ — କେମ୍ପାନୀ ବା ବାଣିଜ୍ଯ— ସଂଘ—(ୟଥା. ବ୍ରଜଲାଲ ଲାଭଜୀ ଆଣ୍ଡ୍ କୋ) — An abbreviation for 'Company' (e.g. Vrajalal Lavji & Co.)"
+      },
+      {
+        "step": "typed URL and space",
+        "value": "test@example.ଚୋମ https://example.ଚୋମ ",
+        "selection": [
+          37,
+          37
+        ],
+        "readback": "testa@ekshample.choma httpsa://ekshample.choma",
+        "candidates": [
+          "1ଚୋମnot a known word",
+          "2କୋଂKo (See)",
+          "3କୋମnot a known word",
+          "4ଚୋଂnot a known word",
+          "5ଚୋମ୍not a known word",
+          "6କୋମ୍not a known word",
+          "7ଚୋଁnot a known word",
+          "8କୋଁmaybe: What",
+          "9Keepcom"
+        ],
+        "panel": "ଅଭିଧାନ Dictionary\n\nPurṇṇachandra Oḍiā Bhāshakosha — G. C. Praharaj (1931–40)\n\nSuggestions under the caret:\n\n1\nଚୋମ\nnot a known word\n2\nକୋଂ\nକୋଂ — Koṁ ବୈଦେ. ସାଙ୍କେତିକ (ଇଂ. କୋ) — କୋ (ଦେଖ) Ko (See) [ଦ୍ର—ଏହା 'କୋ' ରେ ଅନୁସ୍ବାର ୟୁକ୍ତ ହୋଇ ଲେଖା ହୁଏ, କିନ୍ତୁ 'କୋ' ବୋଲି ଉଚ୍ଚାରିତ ହୁଏ]\n3\nକୋମ\nnot a known word\n4\nଚୋଂ\nnot a known word\n5\nଚୋମ୍\nnot a known word\n6\nକୋମ୍\nnot a known word\n7\nଚୋଁ\nnot a known word\n8\nକୋଁ\nmaybe: a form of this word\nକୋ — Ko ପ୍ରାଦେ. (ଗଞ୍ଜାମ ଓ ସମ୍ବଲପୁର) ସର୍ବ (ସଂ.କିମ୍) କେଉଁ — What; which. ବୈଦେ. (ଇଂ.) ବି. ସାଂକେତିକ ଚିହ୍ନ — କେମ୍ପାନୀ ବା ବାଣିଜ୍ଯ— ସଂଘ—(ୟଥା. ବ୍ରଜଲାଲ ଲାଭଜୀ ଆଣ୍ଡ୍ କୋ) — An abbreviation for 'Company' (e.g. Vrajalal Lavji & Co.)"
+      }
+    ]
+  },
+  {
+    "id": "paste",
+    "snapshots": [
+      {
+        "step": "paste full sentence",
+        "value": "ନମସ୍କାର ତୁମେ କେମିତି ଅଛ?",
+        "selection": [
+          23,
+          23
+        ],
+        "readback": "namaskaara tume kemiti achha?",
+        "candidates": [],
+        "panel": "ଅଭିଧାନ Dictionary\n\nPurṇṇachandra Oḍiā Bhāshakosha — G. C. Praharaj (1931–40)\n\nType in the roman box — meanings for each suggestion appear here as you go. Suggestions the dictionary does not know are marked, so you can still judge them by ear."
+      }
+    ]
+  },
+  {
+    "id": "paste-mixed",
+    "snapshots": [
+      {
+        "step": "paste mixed sentence",
+        "value": "ମୋତେ ତେସ୍ତ@ଏକ୍ଷମ୍ପ୍ଲେ.ଚୋମ ରେ ଏମୈଲ କର ହ୍ତ୍ତ୍ପ୍ସ://ଏକ୍ଷମ୍ପ୍ଲେ.com",
+        "selection": [
+          63,
+          63
+        ],
+        "readback": "mote testa@ekshample.choma re emaila kara httpsa://ekshample.choma",
+        "candidates": [
+          "1\nଚୋମ\nnot a known word",
+          "2\nକୋଂ\nKo (See)",
+          "3\nକୋମ\nnot a known word",
+          "4\nଚୋଂ\nnot a known word",
+          "5\nଚୋମ୍\nnot a known word",
+          "6\nକୋମ୍\nnot a known word",
+          "7\nଚୋଁ\nnot a known word",
+          "8\nକୋଁ\nmaybe: What",
+          "9\nKeep\ncom"
+        ],
+        "panel": "ଅଭିଧାନ Dictionary\n\nPurṇṇachandra Oḍiā Bhāshakosha — G. C. Praharaj (1931–40)\n\nSuggestions under the caret:\n\n1\nଚୋମ\nnot a known word\n2\nକୋଂ\nକୋଂ — Koṁ ବୈଦେ. ସାଙ୍କେତିକ (ଇଂ. କୋ) — କୋ (ଦେଖ) Ko (See) [ଦ୍ର—ଏହା 'କୋ' ରେ ଅନୁସ୍ବାର ୟୁକ୍ତ ହୋଇ ଲେଖା ହୁଏ, କିନ୍ତୁ 'କୋ' ବୋଲି ଉଚ୍ଚାରିତ ହୁଏ]\n3\nକୋମ\nnot a known word\n4\nଚୋଂ\nnot a known word\n5\nଚୋମ୍\nnot a known word\n6\nକୋମ୍\nnot a known word\n7\nଚୋଁ\nnot a known word\n8\nକୋଁ\nmaybe: a form of this word\nକୋ — Ko ପ୍ରାଦେ. (ଗଞ୍ଜାମ ଓ ସମ୍ବଲପୁର) ସର୍ବ (ସଂ.କିମ୍) କେଉଁ — What; which. ବୈଦେ. (ଇଂ.) ବି. ସାଂକେତିକ ଚିହ୍ନ — କେମ୍ପାନୀ ବା ବାଣିଜ୍ଯ— ସଂଘ—(ୟଥା. ବ୍ରଜଲାଲ ଲାଭଜୀ ଆଣ୍ଡ୍ କୋ) — An abbreviation for 'Company' (e.g. Vrajalal Lavji & Co.)"
+      }
+    ]
+  },
+  {
+    "id": "reselect-picker",
+    "text": "ମୁ\nAt\nମୁଁ\nthe i\nମୂ\nBinding\nମୁଂ\nmaybe: At\nମୂଂ\nmaybe: Binding\nmu"
+  },
+  {
+    "id": "reselect",
+    "snapshots": [
+      {
+        "step": "type and commit sentence",
+        "value": "ମୁ ଭଲ ଅଛି ",
+        "selection": [
+          10,
+          10
+        ],
+        "readback": "mu bhala achhi",
+        "candidates": [
+          "1ଅଛିhave",
+          "2ଆଛିnot a known word",
+          "3ଅଛୀnot a known word",
+          "4ଆଛୀnot a known word",
+          "5ଅଚ୍ହିnot a known word",
+          "6ଅଛ୍ହିnot a known word",
+          "7ଅକ୍ହ୍ହିnot a known word",
+          "8ଆଛ୍ହିnot a known word",
+          "9Keepachhi"
+        ],
+        "panel": "ଅଭିଧାନ Dictionary\n\nPurṇṇachandra Oḍiā Bhāshakosha — G. C. Praharaj (1931–40)\n\nSuggestions under the caret:\n\n1\nଅଛି\ntoday\nhave; has; hath\n2\nଆଛି\nnot a known word\n3\nଅଛୀ\nnot a known word\n4\nଆଛୀ\nnot a known word\n5\nଅଚ୍ହି\nmaybe: starts with this word\nଅଚ୍ — ସଂ. ବି. (ସଂ. ବ୍ଯାକରଣ) — ସ୍ବରବର୍ଣ୍ଣମାନ — A technical term in sanskrit grammer for the vowels.\n6\nଅଛ୍ହି\nnot a known word\n7\nଅକ୍ହ୍ହି\nnot a known word\n8\nଆଛ୍ହି\nnot a known word"
+      },
+      {
+        "step": "click first readback word",
+        "value": "ମୁ ଭଲ ଅଛି ",
+        "selection": [
+          10,
+          10
+        ],
+        "readback": "mu bhala achhi",
+        "candidates": [
+          "1ଅଛିhave",
+          "2ଆଛିnot a known word",
+          "3ଅଛୀnot a known word",
+          "4ଆଛୀnot a known word",
+          "5ଅଚ୍ହିnot a known word",
+          "6ଅଛ୍ହିnot a known word",
+          "7ଅକ୍ହ୍ହିnot a known word",
+          "8ଆଛ୍ହିnot a known word",
+          "9Keepachhi"
+        ],
+        "panel": "ଅଭିଧାନ Dictionary\n\nPurṇṇachandra Oḍiā Bhāshakosha — G. C. Praharaj (1931–40)\n\nSuggestions under the caret:\n\n1\nଅଛି\ntoday\nhave; has; hath\n2\nଆଛି\nnot a known word\n3\nଅଛୀ\nnot a known word\n4\nଆଛୀ\nnot a known word\n5\nଅଚ୍ହି\nmaybe: starts with this word\nଅଚ୍ — ସଂ. ବି. (ସଂ. ବ୍ଯାକରଣ) — ସ୍ବରବର୍ଣ୍ଣମାନ — A technical term in sanskrit grammer for the vowels.\n6\nଅଛ୍ହି\nnot a known word\n7\nଅକ୍ହ୍ହି\nnot a known word\n8\nଆଛ୍ହି\nnot a known word"
+      }
+    ]
+  },
+  {
+    "id": "dictionary",
+    "snapshots": [
+      {
+        "error": "locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#dict-toggle')\u001b[22m\n\u001b[2m    - locator resolved to <button type=\"button\" id=\"dict-toggle\" aria-expanded=\"true\" aria-controls=\"dict-panel\" class=\"btn btn-quiet meanings-btn\">…</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is not visible\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is not visible\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    58 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is not visible\u001b[22m\n\u001b[2m     - retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n"
+      }
+    ]
+  }
+]
