@@ -213,8 +213,13 @@ that owns the data: `core/data/`, `Appv2/data/` or `Odia_Sanskrit_Appv2/`.
 check that day found no keys, tokens or passwords in any commit (gitleaks and a custom
 scan of all history: 8 alarms, all false). The exposure is `tools/build-data/webcorpus/`
 (below) plus the owner's email (commit metadata, report button, scraper user-agents) and
-Mac username in scraper scripts. Recommended to the owner: set the repo back to private
-now; publish later from a fresh repository (stage P). See `plan/06-owner-followups.md` S-1.
+Mac username in scraper scripts.
+
+**Owner decision 2026-10-12: the repo stays public and its history stays as it is.**
+Reason: public repositories get free GitHub Actions minutes; the private quota was nearly
+used up. The owner declined all three remedies (fresh public repo, history rewrite,
+private again). Do not ask again; do not add more scraped text to the repository. If the
+owner later wants to clean up, the options are in `plan/06-owner-followups.md` S-1.
 
 The GitHub repo was **private** until then. `tools/build-data/webcorpus/` holds raw scraped
 third-party text (archive.org books, literature, news, government pages, X posts)
