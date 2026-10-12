@@ -39,6 +39,11 @@ export type AssetKey =
   // Word pairs for context ranking (core/data/bigrams-web.tsv), shared by every
   // profile. Used by engine.transliterate(sentence); single words are unaffected.
   | 'coreBigrams'
+  // Typed-spelling pairs (core/data/typed.tsv, Desh keyboard users), shared by
+  // every profile: what people typed for a key and the word they chose.
+  | 'typed'
+  // Next-word predictions (core/data/nextword.tsv, Desh keyboard users' n-grams).
+  | 'nextWords'
   // Owner-curated, shared by every profile: core/data/preferences.tsv, labels.tsv.
   | 'preferences'
   | 'labels';

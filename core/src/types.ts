@@ -25,7 +25,16 @@
  */
 import type { FilterLevel, Labels, Preferences } from './curation.js';
 
-export type CandidateSource = 'user' | 'preference' | 'lexicon' | 'rule' | 'verbatim';
+export type CandidateSource =
+  | 'user'
+  | 'preference'
+  | 'lexicon'
+  | 'typed'
+  | 'converter'
+  | 'completion'
+  | 'prediction'
+  | 'rule'
+  | 'verbatim';
 
 export interface Candidate {
   /** Canonical Odia text (or the verbatim Latin token). */
@@ -125,6 +134,24 @@ export interface RankWeights {
    * symbols.toml; absent or 0 means no context term at all.
    */
   bigram?: number;
+  /**
+   * What keyboard users typed for this key and chose (data/typed.tsv), added as
+   * typed * count(key, word) / (total(key) + typedPrior). Optional; absent or 0
+   * means no such term. Kept below one user pick, like pref and bigram.
+   */
+  typed?: number;
+  /** Prior count added to total(key) above, so a rarely typed key counts less. */
+  typedPrior?: number;
+  /**
+   * The spelling converter (core/data/converter.bin), added as
+   * weight * share(word), where share is the softmax of the converter's n-best
+   * costs at `convertTemperature`. `convert` applies when neither the lexicon
+   * nor the typed pairs know the key, `convertKnown` when one of them does.
+   * Absent or 0 means no converter term in that case.
+   */
+  convert?: number;
+  convertKnown?: number;
+  convertTemperature?: number;
 }
 
 /**
@@ -271,6 +298,22 @@ export interface Bigrams {
   score(prev: string, next: string): number;
 }
 
+/**
+ * A roman -> Odia spelling converter: n spellings with a cost each (lower is
+ * better). `core/src/converter.ts` implements it over a weighted transducer.
+ */
+export interface SpellingConverter {
+  decode(roman: string, n: number): readonly { text: string; cost: number }[];
+}
+
+/** Next-word predictions (data/nextword.tsv). See nextword.ts. */
+export interface NextWords {
+  /** Rows loaded. */
+  readonly size: number;
+  /** The likeliest next words after `previous` (canonical Odia, oldest first), best first. */
+  predict(previous: readonly string[], k: number): { word: string; score: number }[];
+}
+
 /** What the engine may know about a word's surroundings. */
 export interface WordContext {
   /** The previous word of the sentence, in Odia (canonicalised by the engine). */
@@ -311,4 +354,13 @@ export interface EngineConfig {
   filter?: FilterLevel;
   /** Word-pair counts for context ranking. Absent means no context term. */
   bigrams?: Bigrams;
+  /** Next-word predictions (nextword.ts). Absent means none. */
+  nextWords?: NextWords;
+  /** The learned spelling converter (converter.ts). Absent means no converter term. */
+  converter?: SpellingConverter;
+  /**
+   * Typed-spelling pairs (data/typed.tsv): roman key -> chosen Odia word, with
+   * the pair count as the weight. Absent means no typed term.
+   */
+  typed?: Lexicon;
 }

@@ -8,7 +8,10 @@ the source of truth for scope, staging and rationale.
 
 **Current stage** (2026-10-04, latest): **V1 is live on Vercel**: adult
 `https://odia-transliteration-web.vercel.app/`, kids `https://odia-phonetic-kids.vercel.app/`.
-V2 (better words) has started. Owner checks after the merge are open in `plan/06-owner-followups.md`. Status per item: `PLAN.md`. Earlier: Stages A and B were in progress. Three single-file web apps
+V2 (better words) has started. **2026-10-12:** the hybrid engine with Desh keyboard data
+(V2.13 typed spellings, V2.14 spelling converter, V2.15 next word, V2.16 completion) is
+built and in PR #9, not merged: merging publishes Desh data before the written permission
+(L-1), and C-11 (content probe) comes first. Owner checks after the merge are open in `plan/06-owner-followups.md`. Status per item: `PLAN.md`. Earlier: Stages A and B were in progress. Three single-file web apps
 are built and measured: `docs/odia-app.html`, `docs/odia-app-sanskrit.html` (from `Appv2/`)
 and `Odia_Sanskrit_Appv2/odia-app-sanskrit-v2.html` (adds the dictionary). The v3 direction
 and the owner's decisions are in `plan/05-v3-direction.md`. See also `plan/02-stages.md`.
@@ -219,11 +222,29 @@ scan of all history: 8 alarms, all false). The exposure is `tools/build-data/web
 (below) plus the owner's email (commit metadata, report button, scraper user-agents) and
 Mac username in scraper scripts.
 
-**Owner decision 2026-10-12: the repo stays public and its history stays as it is.**
+**Later on 2026-10-12 the owner made the repository PRIVATE again** (to use Desh keyboard
+data, below). Earlier that day: **the repo stays public and its history stays as it is.**
 Reason: public repositories get free GitHub Actions minutes; the private quota was nearly
 used up. The owner declined all three remedies (fresh public repo, history rewrite,
 private again). Do not ask again; do not add more scraped text to the repository. If the
 owner later wants to clean up, the options are in `plan/06-owner-followups.md` S-1.
+
+**Desh keyboard data (2026-10-12).** The owner reports that the company behind the Desh
+Odia keyboard agreed to the use of its data (word list, typed-spelling pairs, n-gram model)
+to improve this app, if it is credited and the app is shared with them. **Verbal; written
+confirmation pending** (`plan/06-owner-followups.md` L-1). **Owner decision 2026-10-12:**
+build with the Desh data now, in this private repository, without waiting for the email
+("Finish the build order first and then open the PR. The written permission will take
+time to arrive."). Desh-derived artifacts (`core/data/typed.tsv`, the converter, the
+next-word table) may be committed here, each with its source checksum in
+`core/data/PROVENANCE.md`. Merging to `main` deploys them to the public Vercel site: say so
+in every PR that carries them; the owner decides when to merge. Never commit the raw Desh
+files or Desh's own decoder scripts (they hold addresses from Desh's binary); the build
+scripts in `tools/build-data/` are this project's own and take the raw file paths as
+arguments. Credit Desh for the data in
+the wording the written terms give; Desh is not the author of this app's code, and LICENSE
+is not changed. A second reason, beside `webcorpus/`, never to make this repository public
+without a fresh history.
 
 The GitHub repo was **private** until then. `tools/build-data/webcorpus/` holds raw scraped
 third-party text (archive.org books, literature, news, government pages, X posts)

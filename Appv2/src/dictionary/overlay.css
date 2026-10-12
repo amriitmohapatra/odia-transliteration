@@ -320,6 +320,22 @@ body.kb-docked #dict-toggle { display: none; }
   font: inherit;
   cursor: pointer;
 }
+.dict-prefix-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 4px 0 8px;
+}
+.dict-prefix {
+  min-height: var(--tap);
+  padding: 4px 10px;
+  border: 1px solid var(--line-strong);
+  border-radius: 8px;
+  background: var(--panel);
+  color: var(--text);
+  font-size: 1.05em;
+  cursor: pointer;
+}
 .dict-english-entry .dict-tag { white-space: normal; }
 .dict-phrase-entry .dict-tag,
 .dict-loan-entry .dict-tag { white-space: normal; }

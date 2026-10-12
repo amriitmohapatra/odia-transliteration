@@ -28,8 +28,13 @@ import {
   parseUnigrams,
   parseLabels,
   parsePreferences,
+  parseConverter,
+  parseNextWords,
 } from '@odia/core';
-import type { Bigrams, DigitMode, LearnStore, Lexicon, Unigrams } from '@odia/core/types';
+import type { Bigrams, DigitMode, LearnStore, Lexicon, NextWords, SpellingConverter, Unigrams } from '@odia/core/types';
+
+import converterUrl from '../../core/data/converter.bin?url';
+import { inflate } from './dictionary/pako-inflate.js';
 
 import { mergeLexicons, mergeUnigrams, type LexiconSource } from './compose.js';
 import { PROFILES, type AssetKey, type Profile, type ProfileId } from './profiles.js';
@@ -37,6 +42,8 @@ import { verbatimEngine, type EngineLike } from './verbatim.js';
 
 /** Which build of the engine the bundler found. Injected by vite.config.ts. */
 declare const __CORE_MODE__: 'src' | 'dist' | 'stub';
+/** Which edition is being built. Injected by vite.config.ts. */
+declare const __APP_EDITION__: 'adult' | 'kids';
 
 type RawGlob = Record<string, () => Promise<unknown>>;
 
@@ -77,6 +84,24 @@ const GLOBS: Record<AssetKey, RawGlob> = {
     query: '?raw',
     import: 'default',
   }),
+  // Not in the kids edition: these are adults' chat choices, and a word that
+  // is not in labels.tsv would pass the kids filter. The constant condition
+  // lets the bundler drop the chunk from the kids build entirely.
+  typed:
+    __APP_EDITION__ === 'kids'
+      ? {}
+      : import.meta.glob('../../core/data/typed.tsv', {
+          query: '?raw',
+          import: 'default',
+        }),
+  // Not in the kids edition either: predictions from adults' chat.
+  nextWords:
+    __APP_EDITION__ === 'kids'
+      ? {}
+      : import.meta.glob('../../core/data/nextword.tsv', {
+          query: '?raw',
+          import: 'default',
+        }),
   preferences: import.meta.glob('../../core/data/preferences.tsv', {
     query: '?raw',
     import: 'default',
@@ -112,6 +137,58 @@ const rawCache = new Map<AssetKey, string | undefined>();
 const lexiconCache = new Map<AssetKey, Lexicon>();
 const unigramCache = new Map<AssetKey, Unigrams>();
 const bigramCache = new Map<AssetKey, Bigrams>();
+let converter: SpellingConverter | undefined;
+/** True once loadExtras() has parsed the typed pairs and the next-word table. */
+let extrasReady = false;
+
+/**
+ * The Desh-data layers (V2.13-V2.16): typed spellings, next-word table and the
+ * spelling converter. Parsed after the first engine is built, each in its own
+ * task, so start-up costs what it did before them (A-7); the caller rebuilds
+ * the engine when this resolves. Typing works meanwhile, without them.
+ */
+export async function loadExtras(): Promise<void> {
+  await nextTask();
+  lexiconFor('typed');
+  await nextTask();
+  nextWordsFor();
+  extrasReady = true;
+  await loadConverter();
+}
+let converterLoad: Promise<boolean> | undefined;
+
+/**
+ * Fetch and parse the spelling converter (core/data/converter.bin, gzip, ~0.8
+ * MB). Not part of loadProfileAssets: typing works without it, so the app
+ * loads it after start-up and rebuilds the engine once it is here. Resolves
+ * false when it cannot load; the engine then simply has no converter term.
+ * Like the dictionary payloads it is named .bin, so no server decompresses it,
+ * and it is inflated with the vendored pako (the browser floor is Safari 13).
+ */
+export function loadConverter(): Promise<boolean> {
+  // Inflating and parsing are separate tasks with a yield between them, so
+  // neither blocks typing for long (A-7: no long task while data loads).
+  converterLoad ??= fetch(converterUrl)
+    .then((response) => {
+      if (!response.ok) throw new Error(`converter fetch failed: ${response.status}`);
+      return response.arrayBuffer();
+    })
+    .then(async (buffer) => {
+      await nextTask();
+      const bytes = inflate(new Uint8Array(buffer));
+      await nextTask();
+      converter = parseConverter(bytes);
+      await nextTask();
+      return true;
+    })
+    .catch(() => false);
+  return converterLoad;
+}
+
+/** Let the browser handle input before the next step. */
+function nextTask(): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, 0));
+}
 
 /**
  * Fetch the assets a profile needs.
@@ -127,6 +204,8 @@ export async function loadProfileAssets(id: ProfileId): Promise<void> {
     ...profile.lexicons.map((l) => l.asset),
     ...profile.unigrams,
     'coreBigrams',
+    'typed',
+    'nextWords',
     'preferences',
     'labels',
   ];
@@ -187,6 +266,14 @@ export function buildEngine(
       // Context ranking for engine.transliterate(sentence). A missing chunk
       // means no context term; a malformed file throws, like a bad rule file.
       bigrams: bigramsFor('coreBigrams'),
+      // What keyboard users typed and chose. Parsed once like a lexicon; a
+      // missing chunk means no typed term, the engine still works.
+      typed: extrasReady ? lexiconFor('typed') : undefined,
+      // Next-word predictions after a space (V2.15).
+      nextWords: extrasReady ? nextWordsFor() : undefined,
+      // Spellings for words the word lists do not know (V2.14). Absent until
+      // loadConverter() has finished.
+      converter,
       learnStore,
       digits,
       preferences: parsePreferences(rawCache.get('preferences') ?? '', 'core/data/preferences.tsv'),
@@ -218,6 +305,16 @@ function lexiconFor(key: AssetKey): Lexicon {
     lexiconCache.set(key, parsed);
   }
   return parsed;
+}
+
+let nextWordsCache: NextWords | undefined;
+
+function nextWordsFor(): NextWords | undefined {
+  if (nextWordsCache === undefined) {
+    const raw = rawCache.get('nextWords');
+    if (raw !== undefined) nextWordsCache = parseNextWords(raw);
+  }
+  return nextWordsCache;
 }
 
 function unigramsFor(key: AssetKey): Unigrams {

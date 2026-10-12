@@ -323,7 +323,7 @@ function readSegmentWeights(raw: unknown): SegmentWeights {
 
 function readWeights(raw: unknown): RankWeights {
   const table = requireTable(raw, 'symbols.toml [weights]');
-  rejectUnknownKeys(table, ['rule', 'freq', 'user', 'pref', 'bigram'], 'symbols.toml [weights]');
+  rejectUnknownKeys(table, ['rule', 'freq', 'user', 'pref', 'bigram', 'typed', 'typed_prior', 'convert', 'convert_known', 'convert_temperature'], 'symbols.toml [weights]');
   return {
     rule: readWeight(table, 'rule', 'symbols.toml [weights]'),
     freq: readWeight(table, 'freq', 'symbols.toml [weights]'),
@@ -332,6 +332,13 @@ function readWeights(raw: unknown): RankWeights {
     // Optional: a rule file written before context ranking existed loads and
     // scores exactly as before. A present but invalid value still throws.
     bigram: table['bigram'] === undefined ? 0 : readWeight(table, 'bigram', 'symbols.toml [weights]'),
+    // Optional in the same way: absent means no typed-spelling term.
+    typed: table['typed'] === undefined ? 0 : readWeight(table, 'typed', 'symbols.toml [weights]'),
+    typedPrior: table['typed_prior'] === undefined ? 0 : readWeight(table, 'typed_prior', 'symbols.toml [weights]'),
+    convert: table['convert'] === undefined ? 0 : readWeight(table, 'convert', 'symbols.toml [weights]'),
+    convertKnown: table['convert_known'] === undefined ? 0 : readWeight(table, 'convert_known', 'symbols.toml [weights]'),
+    convertTemperature:
+      table['convert_temperature'] === undefined ? 1 : readWeight(table, 'convert_temperature', 'symbols.toml [weights]'),
   };
 }
 

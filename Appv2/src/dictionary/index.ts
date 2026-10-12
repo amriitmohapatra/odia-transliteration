@@ -52,7 +52,9 @@ export function startDictionary(
     insert?: (word: string) => boolean;
     /** Odia spellings for a roman word, best first, for the unified search. */
     spell?: (roman: string) => string[];
+    /** How common an Odia word is, for ranking "Words starting with" results. */
+    frequency?: (word: string) => number;
   } = {},
 ): void {
-  initDictionary(loadDictionaryBytes, onState, options.hide, options.insert, options.spell);
+  initDictionary(loadDictionaryBytes, onState, options.hide, options.insert, options.spell, options.frequency);
 }

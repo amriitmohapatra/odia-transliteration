@@ -11,6 +11,7 @@
  */
 
 import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
+import { gunzipSync } from 'node:zlib';
 import { dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -35,6 +36,21 @@ export function readCoreFile(relativePath: string): string | undefined {
   }
 }
 
+/** Read a binary file under `core/`, returning `undefined` when it does not exist. */
+export function readCoreBytes(relativePath: string): Uint8Array | undefined {
+  try {
+    return new Uint8Array(readFileSync(CORE_ROOT + relativePath));
+  } catch {
+    return undefined;
+  }
+}
+
+/** `data/converter.bin` is stored gzip-compressed; parseConverter() wants it inflated. */
+export function gunzipped(bytes: Uint8Array | undefined): Uint8Array | undefined {
+  if (bytes === undefined || bytes[0] !== 0x1f || bytes[1] !== 0x8b) return bytes;
+  return new Uint8Array(gunzipSync(bytes));
+}
+
 /** Absolute path of a file under `core/`, for error messages and tooling. */
 export function coreFilePath(relativePath: string): string {
   return CORE_ROOT + relativePath;
@@ -49,6 +65,9 @@ export const BIGRAMS_PATH = 'data/bigrams.tsv';
 export const BIGRAMS_WEB_PATH = 'data/bigrams-web.tsv';
 export const PREFERENCES_PATH = 'data/preferences.tsv';
 export const LABELS_PATH = 'data/labels.tsv';
+export const TYPED_PATH = 'data/typed.tsv';
+export const CONVERTER_PATH = 'data/converter.bin';
+export const NEXTWORD_PATH = 'data/nextword.tsv';
 
 export interface CreateEngineFromDiskOptions
   extends Omit<CreateEngineOptions, 'rulesToml' | 'itransToml' | 'lexiconTsv' | 'unigramsTsv' | 'bigramsTsv'> {
@@ -56,6 +75,12 @@ export interface CreateEngineFromDiskOptions
   web?: boolean;
   /** Load no bigram file (context ranking off). Default false. */
   noBigrams?: boolean;
+  /** Load no typed-spelling file (typed term off). Default false. */
+  noTyped?: boolean;
+  /** Load no spelling converter (converter term off). Default false. */
+  noConverter?: boolean;
+  /** Load no next-word table. Default false. */
+  noNextWords?: boolean;
 }
 
 /**
@@ -71,7 +96,7 @@ export function createEngineFromDisk(opts: CreateEngineFromDiskOptions = {}): En
     throw new Error(`Cannot read the rule file at ${coreFilePath(RULES_PATH)}`);
   }
 
-  const { web, noBigrams, ...engineOptions } = opts;
+  const { web, noBigrams, noTyped, typedTsv, noConverter, converterBin, noNextWords, nextwordTsv, ...engineOptions } = opts;
 
   return createEngine({
     ...engineOptions,
@@ -80,6 +105,10 @@ export function createEngineFromDisk(opts: CreateEngineFromDiskOptions = {}): En
     lexiconTsv: readCoreFile(web === true ? LEXICON_WEB_PATH : LEXICON_PATH),
     unigramsTsv: readCoreFile(UNIGRAMS_PATH),
     bigramsTsv: noBigrams === true ? undefined : readCoreFile(web === true ? BIGRAMS_WEB_PATH : BIGRAMS_PATH),
+    // An explicit typedTsv wins: the eval passes a copy without held-out pairs.
+    typedTsv: noTyped === true ? undefined : (typedTsv ?? readCoreFile(TYPED_PATH)),
+    converterBin: noConverter === true ? undefined : (converterBin ?? gunzipped(readCoreBytes(CONVERTER_PATH))),
+    nextwordTsv: noNextWords === true ? undefined : (nextwordTsv ?? readCoreFile(NEXTWORD_PATH)),
     preferencesTsv: readCoreFile(PREFERENCES_PATH),
     labelsTsv: readCoreFile(LABELS_PATH),
   });

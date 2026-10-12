@@ -16,10 +16,12 @@ import { badgeElement, DOCK_QUERY, InlineCandidates } from './inline.js';
 import { meaningsOpen, setMeaningsOpen, startDictionary, type DictionaryState } from './dictionary/index.js';
 
 import { codepoints, LocalStorageLearnStore } from '@odia/core';
-import type { DigitMode } from '@odia/core/types';
+import type { Candidate, DigitMode } from '@odia/core/types';
+import type { EngineLike } from './verbatim.js';
 
 import {
   buildEngine,
+  loadExtras,
   loadPaletteToml,
   loadProfileAssets,
   type EngineHandle,
@@ -57,6 +59,7 @@ const shareEl = must<HTMLButtonElement>('share');
 const clearEl = must<HTMLButtonElement>('clear');
 const digitsEl = must<HTMLInputElement>('toggle-digits');
 const numberPickEl = must<HTMLInputElement>('toggle-number-pick');
+const nextWordEl = must<HTMLInputElement>('toggle-next-word');
 const strictEl = must<HTMLInputElement>('toggle-strict');
 const modeEverydayEl = must<HTMLInputElement>('mode-everyday');
 const modeSlokaEl = must<HTMLInputElement>('mode-sloka');
@@ -99,6 +102,7 @@ const PREF_DIGITS = 'odia.pref.digits';
 const PREF_STRICT = 'odia.pref.strict';
 /** Number keys 1-9 take a suggestion (Microsoft IME style). Missing = on. */
 const PREF_NUMBER_PICK = 'odia.pref.numberPick';
+const PREF_NEXT_WORD = 'odia.pref.nextWord';
 /** "Hide rude words". ON by default: a missing key reads as on. */
 const PREF_FAMILY_SAFE = 'odia.pref.familySafe';
 /**
@@ -129,6 +133,11 @@ const MODE_HINT: Record<ProfileId, string> = {
 
 /** How many candidates the picker offers. */
 const TOPK = 8;
+/** Word completions in the bar, and the place of the first one (0-based). */
+const COMPLETIONS = 2;
+const COMPLETION_SLOT = 2;
+/** Next-word suggestions shown after a space. */
+const PREDICTIONS = 5;
 
 /* V1 states (proposal 3.11). Copy deck strings. */
 const LOADING_WORDS = 'Loading words\u2026 your text will convert in a moment';
@@ -197,6 +206,12 @@ async function boot(): Promise<void> {
   digitsEl.checked = readPref(PREF_DIGITS);
   strictEl.checked = readPref(PREF_STRICT);
   numberPickEl.checked = readPref(PREF_NUMBER_PICK, true);
+  nextWordEl.checked = readPref(PREF_NEXT_WORD, true);
+  // Kids edition: no next-word data (adults' chat), so no switch for it.
+  if (KIDS) {
+    const row = nextWordEl.closest<HTMLElement>('.setting');
+    if (row) row.hidden = true;
+  }
   familySafeEl.checked = KIDS ? true : readPref(PREF_FAMILY_SAFE, true);
   // Kids edition: the filter is fixed, so the switch is not shown at all.
   if (KIDS) {
@@ -222,10 +237,16 @@ async function boot(): Promise<void> {
     // The Odia word just before the caret word gives context (word pairs, V2.2),
     // so a word the user picked from the bar informs the next suggestion.
     candidates: (roman) =>
-      guard(() => handle?.engine.transliterateWord(roman, 9, { prev: previousOdiaWord(roman) }) ?? [], []),
+      guard(() => withCompletions(handle?.engine, roman, handle?.engine.transliterateWord(roman, 9, { prev: previousOdiaWord(roman) }) ?? []), []),
+    predictions: () => (nextWordEl.checked && !strictEl.checked && profileId !== 'sloka'
+      ? guard(() => handle?.engine.predictNext?.(previousWordsAtCaret(), PREDICTIONS) ?? [], [])
+      : []),
     onCommit: (roman, text) => {
-      guard(() => handle?.engine.learn(roman, text), undefined);
-      commitKeys.set(text, roman);
+      // A next-word suggestion has no typed roman: nothing to learn or map.
+      if (roman !== '') {
+        guard(() => handle?.engine.learn(roman, text), undefined);
+        commitKeys.set(text, roman);
+      }
       uncheckedWords.delete(text);
       render();
     },
@@ -286,6 +307,17 @@ async function boot(): Promise<void> {
 
   await loadProfileAssets(profileId);
   rebuildEngine();
+  // The Desh-data layers (typed spellings, next words, the converter) load
+  // after the first engine, so typing starts at once; the engine is rebuilt
+  // when they are here.
+  void loadExtras().then(() => {
+    rebuildEngine();
+    render();
+    // Re-read the caret: the bar may now have next words or completions.
+    inline?.setEnabled(!strictEl.checked);
+    // For the browser checks (desh-check.mjs): the Desh layers are in.
+    document.documentElement.dataset.extras = 'ready';
+  });
   // Loading never rewrites text the user already typed or pasted.
   inline.setEnabled(!strictEl.checked);
   render();
@@ -303,8 +335,13 @@ async function boot(): Promise<void> {
         insertAtCaret(canonical(word));
         return true;
       },
-      spell: (roman) => guard(() => (handle?.engine.transliterateWord(roman, 5) ?? [])
-        .filter((c) => c.source !== 'verbatim').map((c) => canonical(c.text)), []),
+      // The spellings of the word, then whole-word completions (V2.16).
+      spell: (roman) => guard(() => {
+        const ranked = (handle?.engine.transliterateWord(roman, 5) ?? []).filter((c) => c.source !== 'verbatim');
+        const more = handle?.engine.complete?.(roman, COMPLETIONS, ranked.map((c) => c.text)) ?? [];
+        return [...ranked, ...more].map((c) => canonical(c.text));
+      }, []),
+      frequency: (word) => guard(() => handle?.engine.wordFrequency?.(word) ?? 0, 0),
     },
   ); // glosses + side panel; its data loads lazily
 
@@ -327,6 +364,39 @@ function digitMode(): DigitMode {
  * separate them (word pairs are counted across spaces only; punctuation or a
  * line break ends the context). Undefined otherwise.
  */
+/**
+ * The one or two Odia words just before the caret, oldest first, for next-word
+ * suggestions (V2.15). Only when the caret follows "word" and one space, with
+ * no selection: not after punctuation (a new sentence), a line break, or a
+ * Roman word.
+ */
+function previousWordsAtCaret(): string[] {
+  const at = romanEl.selectionStart;
+  if (at !== romanEl.selectionEnd || at < 2) return [];
+  const before = romanEl.value.slice(Math.max(0, at - 120), at);
+  if (!before.endsWith(' ') || before.endsWith('  ')) return [];
+  const line = before.slice(0, -1).split('\n').pop() ?? '';
+  const words = line.split(' ');
+  const odia = /^[\u0B00-\u0B7F\u200C\u200D]+$/;
+  const last = words[words.length - 1] ?? '';
+  if (!odia.test(last)) return [];
+  const prev = words[words.length - 2];
+  return prev !== undefined && odia.test(prev) ? [canonical(prev), canonical(last)] : [canonical(last)];
+}
+
+/**
+ * Word completion (V2.16): up to two whole words for a key still being typed
+ * ("bhub" -> the city), from the typed-spelling data. They go third and fourth,
+ * so Space still takes the best match for what was typed, and a number key
+ * reaches them. None in the kids edition (no typed data there).
+ */
+function withCompletions(engine: EngineLike | undefined, roman: string, ranked: Candidate[]): Candidate[] {
+  const extra = engine?.complete?.(roman, COMPLETIONS, ranked.map((c) => c.text)) ?? [];
+  if (extra.length === 0) return ranked;
+  const at = Math.min(COMPLETION_SLOT, ranked.filter((c) => c.source !== 'verbatim').length);
+  return [...ranked.slice(0, at), ...extra, ...ranked.slice(at)];
+}
+
 function previousOdiaWord(roman: string): string | undefined {
   const caret = romanEl.selectionStart ?? romanEl.value.length;
   const start = editor.pending()?.start ?? Math.max(0, caret - roman.length);
@@ -1401,6 +1471,7 @@ function bindEvents(): void {
 
   clearEl.addEventListener('click', onClear);
   numberPickEl.addEventListener('change', () => writePref(PREF_NUMBER_PICK, numberPickEl.checked));
+  nextWordEl.addEventListener('change', () => writePref(PREF_NEXT_WORD, nextWordEl.checked));
 
   digitsEl.addEventListener('change', () => {
     writePref(PREF_DIGITS, digitsEl.checked);

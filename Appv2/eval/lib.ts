@@ -29,8 +29,10 @@ import {
   parseUnigrams,
   parseLabels,
   parsePreferences,
+  parseConverter,
 } from '../../core/src/index.js';
-import type { Bigrams, Lexicon, Unigrams } from '../../core/src/types.js';
+import type { Bigrams, Lexicon, SpellingConverter, Unigrams } from '../../core/src/types.js';
+import { gunzipped, readCoreBytes } from '../../core/src/node.js';
 
 import { mergeLexicons, mergeUnigrams } from '../src/compose.js';
 import { PROFILES, type AssetKey, type ProfileId } from '../src/profiles.js';
@@ -56,6 +58,8 @@ const PATHS: Record<AssetKey, string> = {
   coreUnigrams: resolve(ROOT, 'core/data/unigrams.tsv'),
   sanskritUnigrams: resolve(APPV2, 'data/sanskrit-unigrams.tsv'),
   coreBigrams: resolve(ROOT, 'core/data/bigrams.tsv'),
+  typed: resolve(ROOT, 'core/data/typed.tsv'),
+  nextWords: resolve(ROOT, 'core/data/nextword.tsv'),
   preferences: resolve(ROOT, 'core/data/preferences.tsv'),
   labels: resolve(ROOT, 'core/data/labels.tsv'),
 };
@@ -93,6 +97,16 @@ function unigrams(key: AssetKey): Unigrams {
     uniCache.set(key, parsed);
   }
   return parsed;
+}
+
+let converterCache: SpellingConverter | undefined;
+
+function converter(): SpellingConverter | undefined {
+  if (converterCache === undefined) {
+    const bytes = gunzipped(readCoreBytes('data/converter.bin'));
+    converterCache = bytes === undefined ? undefined : parseConverter(bytes);
+  }
+  return converterCache;
 }
 
 let bigramCache: Bigrams | undefined;
@@ -134,6 +148,10 @@ export function engineFor(id: ProfileId, opts: EvalEngineOptions = {}): Engine {
     unigrams: opts.rulesOnly ? emptyUnigrams() : mergeUnigrams(profile.unigrams.map(unigrams)),
     // The app loads word pairs for every profile (context in transliterate()).
     bigrams: opts.rulesOnly ? undefined : bigrams(),
+    // Typed-spelling pairs, as the adult app loads them.
+    typed: opts.rulesOnly ? undefined : lexicon('typed'),
+    // The spelling converter, as the app attaches it once loaded.
+    converter: opts.rulesOnly ? undefined : converter(),
     // Same owner data the app loads, so evals measure what users get.
     preferences: opts.rulesOnly ? undefined : parsePreferences(raw('preferences') ?? ''),
     labels: parseLabels(raw('labels') ?? ''),

@@ -6,6 +6,16 @@
  *         + weights.user * log(1 + userCount)
  *         + weights.pref * prefWeight          (owner preference, data/preferences.tsv)
  *         + weights.bigram * bigram(prev, word) (context, data/bigrams.tsv)
+ *         + weights.typed * typed(key, word)    (typed spellings, data/typed.tsv)
+ *         + convertWeight * share(word)         (spelling converter, data/converter.bin)
+ *
+ * The typed term is what keyboard users chose when they typed this exact key:
+ *
+ *   typed(key, word) = count(key, word) / (total(key) + typedPrior)
+ *
+ * 0..1. The prior keeps a key typed a handful of times from counting as much
+ * as one typed a hundred thousand times. A typed pair is also a candidate on its
+ * own, like a lexicon word. Its weight stays below one user pick (house rule).
  *
  * The context term, when the previous word `prev` of the sentence is known:
  *
@@ -45,6 +55,15 @@ export interface RankInput {
   ruleCandidates: readonly RuleCandidate[];
   /** Exact lexicon hits for this key. */
   lexiconEntries: readonly LexiconEntry[];
+  /** Typed-spelling pairs for this key; `weight` is the pair count. */
+  typedEntries?: readonly LexiconEntry[];
+  /** The spelling converter's n-best for this key, with costs (lower is better). */
+  converterEntries?: readonly { text: string; cost: number }[];
+  /**
+   * The converter weight for this key (the engine picks `convert` or
+   * `convertKnown`). 0 or absent: no converter term.
+   */
+  convertWeight?: number;
   /** Canonical Odia word -> times the user chose it for this key. */
   userCounts?: Record<string, number>;
   /** Canonical Odia word -> owner preference weight for this key. */
@@ -70,6 +89,8 @@ export interface RankInput {
 interface Evidence {
   rule: number;
   lex: number;
+  typed: number;
+  conv: number;
   user: number;
   pref: number;
 }
@@ -90,7 +111,7 @@ export function rank(input: RankInput): Candidate[] {
     const key = canonical(text);
     const existing = evidence.get(key);
     if (existing === undefined) {
-      const fresh: Evidence = { rule: 0, lex: 0, user: 0, pref: 0 };
+      const fresh: Evidence = { rule: 0, lex: 0, typed: 0, conv: 0, user: 0, pref: 0 };
       fresh[field] = value;
       evidence.set(key, fresh);
     } else if (value > existing[field]) {
@@ -109,6 +130,29 @@ export function rank(input: RankInput): Candidate[] {
   }
   if (topLexWeight > 0) {
     for (const entry of input.lexiconEntries) bump(entry.word, 'lex', entry.weight / topLexWeight);
+  }
+
+  const typedWeight = input.weights.typed ?? 0;
+  if (typedWeight > 0 && input.typedEntries !== undefined && input.typedEntries.length > 0) {
+    let total = input.weights.typedPrior ?? 0;
+    for (const entry of input.typedEntries) total += entry.weight;
+    for (const entry of input.typedEntries) bump(entry.word, 'typed', entry.weight / total);
+  }
+
+  // The converter's n-best as shares of one: a softmax of the costs, so the
+  // best spelling gets most of the weight when it is far ahead.
+  const convertWeight = input.convertWeight ?? 0;
+  if (convertWeight > 0 && input.converterEntries !== undefined && input.converterEntries.length > 0) {
+    const temperature = input.weights.convertTemperature ?? 1;
+    let best = Infinity;
+    for (const entry of input.converterEntries) if (entry.cost < best) best = entry.cost;
+    let sum = 0;
+    const shares = input.converterEntries.map((entry) => {
+      const share = Math.exp(-(entry.cost - best) / (temperature > 0 ? temperature : 1));
+      sum += share;
+      return share;
+    });
+    input.converterEntries.forEach((entry, i) => bump(entry.text, 'conv', (shares[i] as number) / sum));
   }
 
   // A word the user has chosen before is a candidate even if neither the rules
@@ -135,7 +179,10 @@ export function rank(input: RankInput): Candidate[] {
       input.weights.freq * input.unigrams.logfreq(text) +
       input.weights.user * Math.log(1 + sources.user) +
       // Guarded so callers built before `pref` existed still score as before.
-      (sources.pref > 0 ? input.weights.pref * sources.pref : 0);
+      (sources.pref > 0 ? input.weights.pref * sources.pref : 0) +
+      // Same guard: without typed data the scores are bit for bit as before.
+      (sources.typed > 0 ? typedWeight * sources.typed : 0) +
+      (sources.conv > 0 ? convertWeight * sources.conv : 0);
     // Added only when non-zero, so a list without context is bit-identical.
     if (bigram !== undefined) {
       const context = bigram(text);
@@ -192,6 +239,19 @@ export function rank(input: RankInput): Candidate[] {
     }
   }
 
+  // The house rule, made structural: the word the user picked most often for
+  // this key goes first, whatever the other evidence says. An additive user
+  // term alone could not promise that once the typed pairs and the converter
+  // gave other words strong evidence (a word kept in English has none of its
+  // own). Ties between picks go to the better-scored word. After the floor,
+  // whose re-sort by score would undo it.
+  if (input.userCounts !== undefined && limit > 0) {
+    let most = 0;
+    for (const count of Object.values(input.userCounts)) if (count > most) most = count;
+    const entry = most > 0 ? scored.find((c) => c.source === 'user' && input.userCounts?.[c.text] === most) : undefined;
+    if (entry !== undefined) out = [entry, ...out.filter((c) => c !== entry)].slice(0, limit);
+  }
+
   // The verbatim token goes last and exactly once. A ranked candidate that is
   // character-for-character the input (an all-digit token in arabic mode, say)
   // would otherwise appear twice.
@@ -209,12 +269,15 @@ export function rank(input: RankInput): Candidate[] {
 
 /**
  * Which source to report when several agree. User choice is the strongest
- * claim, then the owner's preference, then the lexicon, then the rules — the order in which a UI should
+ * claim, then the owner's preference, then the lexicon, then typed pairs, then the rules — the order in which a UI should
  * explain where a suggestion came from.
  */
 function sourceOf(sources: Evidence): CandidateSource {
   if (sources.user > 0) return 'user';
   if (sources.pref > 0) return 'preference';
   if (sources.lex > 0) return 'lexicon';
+  if (sources.typed > 0) return 'typed';
+  if (sources.rule > 0) return 'rule';
+  if (sources.conv > 0) return 'converter';
   return 'rule';
 }

@@ -302,3 +302,58 @@ Aksharantar is released by AI4Bharat under CC-BY 4.0 / CC0 and is redistributabl
 with attribution. The derived artifacts in `core/data/` are transformations of that
 dataset and inherit its terms. No AGPL code or data (Varnam/govarnam, Aksharamukha)
 was consulted in producing them.
+
+## Desh keyboard data (2026-10-12)
+
+**Source.** The Desh Odia keyboard's data, shared with the owner on 2026-10-12. The owner
+reports Desh agreed to its use, on condition of credit and sharing the app; the written
+confirmation is pending (`plan/06-owner-followups.md` L-1). Owner decision 2026-10-12:
+build and commit in this private repository before it arrives. The raw files are NOT in
+this repository; the build scripts take their paths. Licence: by agreement with Desh, not
+MIT; do not redistribute outside this app until the written terms say how.
+
+### Typed-spelling pairs (`typed.tsv`)
+
+What Desh users typed (roman key) and the Odia word they chose, with the pair count.
+
+| | |
+|---|---|
+| Raw input | `key_to_word.tsv` (from Desh `native_words.db`), 56,381 pairs, sha256 `966b50b41e6b8ab0bb3dc8c0334924242f01f38ef1facdb8097eb16e5018ec12` |
+| Build | `python3 -I tools/build-data/build_typed.py /path/to/key_to_word.tsv` |
+| Output | 55,818 rows, 47,520 keys, 1,560,460 bytes (412 KB gzipped), sha256 `28701bef3de43d2d8a5f6b801508ba2bfcbb6ecb82f2625bea2bf147bab80e55` |
+| Canonical form | 433 words with the precomposed nukta letters (U+0B5C/U+0B5D) decomposed |
+| Nukta restored | 972 chat words with a bare non-initial ଡ/ଢ moved to the nukta form when that form is the more frequent word in `unigrams.tsv` (ଓଡିଶା → ଓଡ଼ିଶା, ବଡ → ବଡ଼) |
+| Dropped | 563 pairs below 0.5% of their key's choices |
+| Held-out | 717 (key, word) pairs of `core/test/golden/heldout.tsv` are in the file (real choices, e.g. `jiba` → the verb). `tools/eval/run_eval.ts` removes them before it scores the held-out set, and decides the in-lexicon split with an engine without typed pairs, so the split matches `tools/eval/baseline.json`. |
+| Not in | the kids edition (adults' chat; the constant edition flag drops the chunk) |
+
+### Spelling converter (`converter.bin`)
+
+Desh's learned Latin → Odia spelling model (a joint n-gram weighted transducer), in this
+project's own compact format. Decoder: `core/src/converter.ts` (this project's code; Desh's
+own decoder scripts are not used and not in the repository).
+
+| | |
+|---|---|
+| Raw input | `arcs_fstprint.tsv.gz` (OpenFst `fstprint` export of Desh `transliteration.db`), 332,660 arcs, 59,668 final states, sha256 `f9067a9dc09b414fa505343cf410620740dc5d90399e64fe6dd798c95848a2bd` |
+| Build | `python3 -I tools/build-data/build_converter.py /path/to/arcs_fstprint.tsv.gz` |
+| Output | gzip-compressed binary, 843,182 bytes (1,661,412 inflated); sha256 `68ee486b64cf0e9fbf8bf1e20553d3569681d0ef34da5939f696afea91a8e2ed` (file), `e46f43861f6c8cbc074f3bc45a59700782e9a3bb696eff5f04001936f1b36d6a` (inflated). Deterministic. |
+| Weights | quantised to 1/256: held-out accuracy unchanged, top-1 the same as the float model on 99.95% of keys |
+| Check | the decoder's 5-best equals the reference decoder's on all 4,201 held-out keys (same quantised weights) |
+| Canonical form | every output goes through `canonical()` |
+| Held-out | the model was trained by Desh, not by this project; whether the Aksharantar test words were in its training data is unknown, so its held-out gain may be flattered |
+| In | adult and kids web apps (a spelling model, not a word list; outputs still pass the content filter); off in the sloka profile |
+
+### Next-word table (`nextword.tsv`)
+
+Pruned from Desh's Odia n-gram model (chat text, 30.08 M tokens).
+
+| | |
+|---|---|
+| Raw input | Desh `native_lm.db` extracts: `bigrams.tsv.gz` 266,657 rows, sha256 `04256263d763cc196a4f9e0c890448beedb22dc00e8d0e6203179c0ca125334e`; `trigrams.tsv.gz` 175,576 rows, sha256 `fe4afc330a9bbc0015243f5f2e1aaba83e0946c66167dc4149d448a0f516906f`; `odia_words.tsv` 35,208 words, sha256 `c1b114a48e6f71c08a9cc01ef36ef0326113767ac4333481c8097ca5043e2384` |
+| Build | `python3 -I tools/build-data/build_nextword.py --words … --bigrams … --trigrams … --top-bigram 4 --top-trigram 3 --min-unigram-count 0 --max-trigram-contexts 3000 --min-prob -3` (the exact command is in the file header) |
+| Output | 46,849 rows (14,438 one-word contexts, 3,000 two-word contexts), 1,655,913 bytes (293 KB gzipped), sha256 `814d4daf4a93b8591a335abfcfaa51c69a42c46e58ced876a94bcbace3d83f07` |
+| Cleaning | canonical form (331 words, 2,459 rows had precomposed nukta letters); nukta restored as in `typed.tsv` (7,691 + 3,931 rows); Odia digits dropped; one-letter fragments dropped except ତ ଓ ଏ ନ (real words); top 4 next words per word, 3 per two-word context, only two-word contexts that change the top 3 (the 3,000 with the largest expected gain) |
+| Quality | phrase table pairs: 15 of 21 in the top 3, 10 first |
+| Labels | one row predicts a word labelled offensive in `labels.tsv`; the engine never predicts it (content filter) |
+| Not in | the kids edition; the sloka profile |

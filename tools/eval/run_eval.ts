@@ -28,6 +28,7 @@ import type { Candidate } from '@odia/core/types';
 
 const REPO_ROOT = new URL('../../', import.meta.url);
 const GOLDEN_URL = new URL('core/test/golden/heldout.tsv', REPO_ROOT);
+const TYPED_URL = new URL('core/data/typed.tsv', REPO_ROOT);
 const BASELINE_URL = new URL('tools/eval/baseline.json', REPO_ROOT);
 
 /**
@@ -142,9 +143,19 @@ function main(argv: string[]): number {
   const golden = readGolden(canonical);
   if (golden === null) return 1;
 
+  // Leakage control for the typed-spelling pairs (core/data/typed.tsv keeps the
+  // held-out pairs, because users really chose them): this run scores with a
+  // copy that lacks every (key, word) pair of the golden set.
+  const typedTsv = typedWithoutGolden(golden, canonical);
+
   let engine;
+  // The in-lexicon split is decided by an engine without the typed pairs, so it
+  // is the same split as tools/eval/baseline.json and a typed word does not move
+  // a key from OOV to in-lexicon. Without the converter as well, for the same reason.
+  let splitEngine;
   try {
-    engine = createEngineFromDisk();
+    engine = createEngineFromDisk({ typedTsv: typedTsv.tsv });
+    splitEngine = createEngineFromDisk({ noTyped: true, noConverter: true });
   } catch (err) {
     console.error(`run_eval: could not load the engine: ${message(err)}`);
     return 1;
@@ -156,7 +167,9 @@ function main(argv: string[]): number {
   const startedAt = Date.now();
   for (const testCase of golden.cases) {
     const candidates: Candidate[] = engine.transliterateWord(testCase.roman, PROBE_TOPK);
-    const isInLexicon = candidates.some((c: Candidate) => c.source === 'lexicon');
+    const isInLexicon = splitEngine
+      .transliterateWord(testCase.roman, PROBE_TOPK)
+      .some((c: Candidate) => c.source === 'lexicon');
     score(
       isInLexicon ? inLexicon : oov,
       testCase,
@@ -172,6 +185,9 @@ function main(argv: string[]): number {
   };
 
   report(golden, buckets, elapsedMs);
+  if (typedTsv.removed > 0) {
+    console.log(`  typed pairs: ${typedTsv.removed} golden (key, word) pairs removed from core/data/typed.tsv for this run`);
+  }
   compareToBaseline(buckets, writeBaseline);
 
   if (writeBaseline) {
@@ -278,6 +294,31 @@ function readGolden(canonical: (s: string) => string): Golden | null {
 
   const cases = [...byRoman].map(([roman, references]) => ({ roman, references }));
   return { cases, rows, skipped };
+}
+
+/**
+ * core/data/typed.tsv without the golden pairs. `tsv` is undefined when the
+ * file does not exist, and createEngineFromDisk then reads nothing either.
+ */
+function typedWithoutGolden(golden: Golden, canonical: (s: string) => string): { tsv: string | undefined; removed: number } {
+  let raw: string;
+  try {
+    raw = readFileSync(TYPED_URL, 'utf8');
+  } catch {
+    return { tsv: undefined, removed: 0 };
+  }
+  const references = new Map(golden.cases.map((c) => [c.roman, c.references]));
+  let removed = 0;
+  const kept = raw.split('\n').filter((line) => {
+    if (line.length === 0 || line.startsWith('#')) return true;
+    const [key, word] = line.split('\t') as [string, string];
+    if (references.get(key)?.has(canonical(word)) === true) {
+      removed += 1;
+      return false;
+    }
+    return true;
+  });
+  return { tsv: kept.join('\n'), removed };
 }
 
 /* ------------------------------------------------------------------ *

@@ -391,6 +391,8 @@ let hidden: (word: string) => boolean = () => false;
 let insertWord: ((word: string) => boolean) | undefined;
 /** Odia spellings for a roman word, best first (the app's engine). */
 let spellWord: ((roman: string) => string[]) | undefined;
+/** How common an Odia word is (the engine's word counts), for ranking completions. */
+let wordFrequency: ((word: string) => number) | undefined;
 
 function chipFor(word: string): string | null {
   if (hidden(word)) return null;
@@ -906,7 +908,8 @@ function loanBlock(loan: Loan): HTMLElement {
 function spelledSection(roman: string): HTMLElement[] {
   if (!spellWord || !/^[a-z~_]+$/i.test(roman)) return [];
   const out: HTMLElement[] = [];
-  for (const word of spellWord(roman).slice(0, 5)) {
+  // Up to 5 spellings, then up to 2 whole-word completions ("bhub" -> the city).
+  for (const word of spellWord(roman).slice(0, 7)) {
     if (hidden(word)) continue;
     const ready = state === 'ready';
     const block = withLoanNote(entryBlock(word, null, ready ? lookup(word) : null, ready ? lookupModern(word) : null), word);
@@ -916,6 +919,60 @@ function spelledSection(roman: string): HTMLElement[] {
     out.push(block);
   }
   return out;
+}
+
+/** Headwords scanned per dictionary for one Odia prefix, and how many are shown. */
+const PREFIX_SCAN = 400;
+const PREFIX_SHOWN = 8;
+
+/**
+ * Dictionary words that begin with an Odia query ("ନମ" -> ନମସ୍କାର, ନମସ୍ତେ...),
+ * most common first, as buttons that open the word. For a user who knows how
+ * a word starts but not how it ends.
+ */
+function prefixSection(word: string): HTMLElement[] {
+  if (state !== 'ready' || [...word].length < 2) return [];
+  const q = fold(word);
+  const seen = new Set<string>();
+  for (const dict of [P, M]) {
+    if (!dict) continue;
+    const keys = dict.keys;
+    let lo = 0;
+    let hi = keys.length;
+    while (lo < hi) {
+      const mid = (lo + hi) >> 1;
+      if ((keys[mid] as string) < q) lo = mid + 1;
+      else hi = mid;
+    }
+    for (let i = lo; i < keys.length && i < lo + PREFIX_SCAN; i++) {
+      const head = keys[i] as string;
+      if (!head.startsWith(q)) break;
+      if (head !== q && !hidden(head)) seen.add(head);
+    }
+  }
+  if (seen.size === 0) return [];
+  const freq = wordFrequency ?? (() => 0);
+  const heads = [...seen]
+    .sort((a, b) => freq(b) - freq(a) || a.length - b.length || (a < b ? -1 : 1))
+    .slice(0, PREFIX_SHOWN);
+  const row = document.createElement('div');
+  row.className = 'dict-prefix-row';
+  for (const head of heads) {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'dict-prefix odia';
+    button.lang = 'or';
+    button.textContent = head;
+    button.setAttribute('aria-label', `Look up ${head}`);
+    button.addEventListener('click', () => {
+      if (!searchInput) return;
+      searchInput.value = head;
+      onSearch();
+      searchInput.focus();
+    });
+    row.appendChild(button);
+  }
+  return [row];
 }
 
 function englishBlock(entry: EnglishEntry, exact: boolean): HTMLElement {
@@ -1071,6 +1128,7 @@ function onSearch(): void {
     const own = blocked ? undefined : ownerGloss(word);
     const loan = !blocked && LOANS.byOdia.has(word);
     add('Odia word', entry || modern || own || loan ? [withLoanNote(entryBlock(word, null, entry, modern), word)] : []);
+    add(`Words starting with \u201c${word}\u201d`, prefixSection(word));
     add('Phrases', phraseSection(q));
   } else {
     // An English word with an exact entry (water, phone) shows its Odia word
@@ -1273,6 +1331,7 @@ export function initDictionary(
   hideWord?: (word: string) => boolean,
   insert?: (word: string) => boolean,
   spell?: (roman: string) => string[],
+  frequency?: (word: string) => number,
 ): void {
   if (started) return;
   started = true;
@@ -1281,6 +1340,7 @@ export function initDictionary(
     if (hideWord) hidden = hideWord;
     insertWord = insert;
     spellWord = spell;
+    wordFrequency = frequency;
     onState = onStateChange ?? null;
     buildPanel();
     observe();

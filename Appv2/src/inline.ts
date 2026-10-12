@@ -66,7 +66,17 @@ export interface InlineHost {
   deferBoundary(separator: string, action: () => boolean): void;
   /** Candidates for the roman word currently under the caret. */
   candidates(roman: string): Candidate[];
-  /** Called after a commit, so the page can re-render and record the choice. */
+  /**
+   * Next-word suggestions when the caret follows an Odia word and a space
+   * (V2.15); empty when there are none or they are switched off. Shown only
+   * when no roman word is pending. Taken by a tap or Alt+number only: plain
+   * number keys, Space, Enter and the arrow keys keep their normal meaning.
+   */
+  predictions?(): Candidate[];
+  /**
+   * Called after a commit, so the page can re-render and record the choice.
+   * `roman` is '' for a next-word suggestion (nothing was typed for it).
+   */
   onCommit(roman: string, text: string): void;
   /** A text badge ("offensive", "can be rude") for an Odia candidate, if flagged. */
   badge?(text: string): Badge | undefined;
@@ -120,6 +130,12 @@ export class InlineCandidates {
   /** The word the user closed with Escape. It stays Roman unless it changes. */
   private dismissed: { start: number; roman: string } | undefined;
   private active = 0;
+  /** 'predict' while the list shows next-word suggestions (no pending roman word). */
+  private mode: 'convert' | 'predict' = 'convert';
+  /** Where the shown suggestions were made: caret position and text length. */
+  private predictAt = '';
+  /** The place where the user closed the next-word suggestions with Escape. */
+  private predictDismissed = '';
   private enabled = true;
   private docked = false;
   private dockOpen = false;
@@ -294,7 +310,8 @@ export class InlineCandidates {
     if (!this.enabled) return this.hide();
 
     const pending = this.pendingAt();
-    if (pending === undefined) return this.hide();
+    if (pending === undefined) return this.showPredictions();
+    this.mode = 'convert';
     if (this.dismissed?.start === pending.start && this.dismissed.roman === pending.roman) return this.hide();
     this.dismissed = undefined;
 
@@ -327,6 +344,28 @@ export class InlineCandidates {
     this.draw();
   }
 
+  /** Caret position and text length: the same place in the same text. */
+  private caretSignature(): string {
+    const at = this.area.selectionStart;
+    return at === this.area.selectionEnd ? `${at}:${this.area.value.length}` : '';
+  }
+
+  /** Next-word suggestions at the caret, or hide. */
+  private showPredictions(): void {
+    const where = this.caretSignature();
+    const list = where === '' || where === this.predictDismissed ? [] : this.host.predictions?.() ?? [];
+    if (list.length === 0) return this.hide();
+    const candidates = list.slice(0, MAX_SHOWN);
+    const same = this.mode === 'predict' && !this.box.hidden && this.predictAt === where &&
+      this.shown.length === candidates.length;
+    this.mode = 'predict';
+    this.pending = undefined;
+    this.predictAt = where;
+    this.shown = candidates;
+    if (!same) this.active = 0;
+    this.draw();
+  }
+
   /* ---------------------------------------------------------------- keys */
 
   private onKeyDown(event: KeyboardEvent): void {
@@ -336,6 +375,20 @@ export class InlineCandidates {
     // changes do not necessarily emit click/keyup before the next key.
     this.refresh();
     if (!this.isOpen() || this.shown.length === 0) return;
+    if (this.mode === 'predict') {
+      // Next-word suggestions never take a key the user meant for the text:
+      // only Alt+number takes one, and Escape closes them here.
+      if (event.altKey && !event.shiftKey) {
+        const digit = /^Digit([1-9])$/.exec(event.code)?.[1] ?? (/^[1-9]$/.test(event.key) ? event.key : undefined);
+        const index = digit === undefined ? -1 : Number(digit) - 1;
+        if (index >= 0 && index < this.shown.length) { event.preventDefault(); this.commit(index); }
+      } else if (event.key === 'Escape' && !event.shiftKey) {
+        event.preventDefault();
+        this.predictDismissed = this.predictAt;
+        this.hide();
+      }
+      return;
+    }
     if (event.altKey) {
       const digit = /^Digit([1-9])$/.exec(event.code)?.[1] ?? (/^[1-9]$/.test(event.key) ? event.key : undefined);
       if (digit && !event.shiftKey) {
@@ -391,6 +444,7 @@ export class InlineCandidates {
   /* -------------------------------------------------------------- commit */
 
   private commit(index: number, trailing = ''): void {
+    if (this.mode === 'predict') return this.commitPrediction(index);
     const chosen = this.shown[index];
     const pending = this.pending;
     if (chosen === undefined || pending === undefined) return;
@@ -412,6 +466,25 @@ export class InlineCandidates {
     this.hide();
     this.say(`Chosen: ${said}`);
     this.host.onCommit(pending.roman, chosen.text);
+    // A word committed with a space: offer the next word straight away.
+    if (trailing === ' ') this.refresh();
+  }
+
+  /** Insert a next-word suggestion and a space at the caret. */
+  private commitPrediction(index: number): void {
+    const chosen = this.shown[index];
+    const at = this.area.selectionStart;
+    if (chosen === undefined || this.caretSignature() !== this.predictAt) {
+      this.refresh();
+      return;
+    }
+    this.host.replace(at, at, `${chosen.text} `, false);
+    const item = this.box.children[index] as HTMLElement | undefined;
+    const said = item?.getAttribute('aria-label') ?? chosen.text;
+    this.hide();
+    this.say(`Chosen: ${said}`);
+    this.host.onCommit('', chosen.text);
+    this.refresh();
   }
 
   /** Polite announcement; the same text twice is still spoken. */
@@ -437,6 +510,7 @@ export class InlineCandidates {
   /* ---------------------------------------------------------------- view */
 
   private hide(): void {
+    this.mode = 'convert';
     this.box.hidden = true;
     this.shown = [];
     this.pending = undefined;
@@ -451,15 +525,22 @@ export class InlineCandidates {
 
   private draw(): void {
     const scroll = this.box.scrollLeft;
-    const sameWord = this.box.dataset.roman === this.pending?.roman;
+    const roman = this.mode === 'predict' ? `next:${this.predictAt}` : this.pending?.roman ?? '';
+    const sameWord = this.box.dataset.roman === roman;
     this.box.textContent = '';
-    this.box.dataset.roman = this.pending?.roman ?? '';
+    this.box.dataset.roman = roman;
+    this.box.dataset.mode = this.mode;
+    this.box.setAttribute('aria-label', this.mode === 'predict' ? 'Next-word suggestions' : 'Suggestions');
     this.shown.forEach((candidate, i) => {
       const item = document.createElement('button');
       item.type = 'button';
       const latin = isLatin(candidate.text);
       item.className =
-        'inline-candidate' + (latin ? ' inline-verbatim' : '') + (i === this.active ? ' is-active' : '');
+        'inline-candidate' + (latin ? ' inline-verbatim' : '') +
+        // A whole word for a key still being typed: marked so it reads as a completion.
+        (candidate.source === 'completion' ? ' inline-completion' : '') +
+        (candidate.source === 'prediction' ? ' inline-prediction' : '') +
+        (i === this.active ? ' is-active' : '');
       item.dataset.index = String(i);
       item.id = `inline-candidate-${i}`;
       item.setAttribute('role', 'option');
