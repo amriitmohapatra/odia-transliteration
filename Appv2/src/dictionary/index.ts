@@ -47,7 +47,12 @@ export function loadDictionaryBytes(): Promise<DictionaryBytes> {
  */
 export function startDictionary(
   onState?: (s: DictionaryState) => void,
-  options: { hide?: (word: string) => boolean; insert?: (word: string) => boolean } = {},
+  options: {
+    hide?: (word: string) => boolean;
+    insert?: (word: string) => boolean;
+    /** Odia spellings for a roman word, best first, for the unified search. */
+    spell?: (roman: string) => string[];
+  } = {},
 ): void {
-  initDictionary(loadDictionaryBytes, onState, options.hide, options.insert);
+  initDictionary(loadDictionaryBytes, onState, options.hide, options.insert, options.spell);
 }

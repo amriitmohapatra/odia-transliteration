@@ -171,7 +171,7 @@ disappears, so a Playwright check guards each):
 | `body.kb-docked` | `inline.ts` | CSS (phone strip state) |
 | `data-label` on `button.inline-candidate` and `button.candidate` | `inline.ts`, `main.ts` | `overlay.ts` sets `aria-label` = label + ", " + meaning |
 | `[aria-controls="dict-panel"]`: `#dict-toggle` (in `index.html`), `#meanings-dock` | `index.html` | `overlay.ts` keeps `aria-expanded` in step; `dictionary/index.ts` exports `setMeaningsOpen` / `meaningsOpen` |
-| `.dict-direction` option `phrases`; `.dict-phrase-entry` with `.dict-insert` / `.dict-copy`; `.dict-group` headings | `overlay.ts` | `phrases-check.mjs` |
+| One `.dict-search` box (no direction select since 2026-10-12); results grouped under `.dict-group` headings: `.dict-spelled-entry` (Odia spellings of a roman query), `.dict-english-entry`, `.dict-loan-entry`, `.dict-phrase-entry`, each with `.dict-insert` / `.dict-copy`; `.dict-browse-phrases` in the empty state | `overlay.ts` | `english-check.mjs`, `phrases-check.mjs`, `mobile-check.mjs` |
 
 **Layout:** at ≥1100 px `body` is a two-column grid and `#dict-panel` is a sticky meanings
 column. The desktop caret popover is a vertical list that opens below or above the caret
@@ -201,6 +201,15 @@ candidates; number keys 1–9 take a candidate while the bar is open (Microsoft 
 the owner's original design; setting "Number keys pick suggestions", on by default), and
 Alt/Option+1–9 always does. With the setting off, number keys type digits. No
 whole-document conversion runs as a side effect of copying.
+
+**Unified dictionary search (2026-10-12, owner request):** the Meanings panel has one search
+box. Odia script → the Odia entry (Praharaj, modern, origin) and phrases. English letters →
+three groups: the Odia spellings the engine gives for it (`spell` option of
+`startDictionary`, the same top 5 as typing) with their meanings; English word → Odia
+(`english.tsv`, then at most one auto-detected loan from the modern layer's `loan` rows,
+only when `english.tsv` has no exact entry, filtered by Praharaj origin (not D/T/S) and a
+consonant-skeleton sound match, `dictionary/loanmatch.ts`); and phrases. An exact English
+match shows first. Empty box → meanings of the current suggestions, as before.
 
 **Composition (fixed 2026-10-12, after PR #5):** `isLiteralInput()` in `editor-state.ts`
 decides. Composed text that is plain Roman (Android Gboard composes whole words) is

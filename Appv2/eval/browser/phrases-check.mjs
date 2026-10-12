@@ -38,10 +38,10 @@ try {
     const editor = page.locator('#roman');
     await editor.fill('');
     await editor.focus();
-    await page.locator('.dict-direction').selectOption('phrases');
+    await page.locator('.dict-browse-phrases').click();
     await page.locator('.dict-phrase-entry').first().waitFor();
     check(await page.locator('.dict-phrase-entry').count() === rows.length, 'empty search lists every phrase');
-    check(await page.locator('.dict-group').count() === 6, 'the list has one heading per group');
+    check(await page.locator('.dict-group').count() === 7, 'the list has a Phrases heading and one heading per group');
     await page.locator('.dict-search').fill('birthday');
     await page.waitForFunction(() => document.querySelectorAll('.dict-phrase-entry').length === 1);
     const text = await page.locator('.dict-body').innerText();
@@ -60,11 +60,13 @@ try {
       'a group name lists that group');
     await page.locator('.dict-search').fill('zzzz');
     await page.waitForFunction(() => document.querySelectorAll('.dict-phrase-entry').length === 0);
-    check((await page.locator('.dict-body').innerText()).includes('No phrase found'), 'no match says so');
-    await page.locator('.dict-direction').selectOption('english');
+    check(await page.locator('.dict-spelled-entry').count() >= 1, 'a search with no phrase still lists the Odia spellings');
     await page.locator('.dict-search').fill('meeting');
     await page.waitForFunction(() => document.querySelectorAll('.dict-english-entry').length === 2);
-    check(await page.locator('.dict-phrase-entry').count() === 0, 'English mode shows no phrase blocks');
+    check(await page.locator('.dict-phrase-entry').count() === 0, 'a search with no matching phrase shows no phrase blocks');
+    await page.locator('.dict-search').fill('kemiti');
+    await page.waitForFunction(() => document.querySelectorAll('.dict-phrase-entry').length >= 2);
+    check(await page.locator('.dict-spelled-entry').count() >= 1, 'English letters (kemiti) list the Odia spellings and the matching phrases together');
     check(errors.length === 0 && external.length === 0, 'desktop: no page errors, no external requests');
     await context.close();
   }
@@ -75,7 +77,6 @@ try {
     const dock = page.locator('#meanings-dock');
     if (await dock.isVisible()) await dock.click();
     else await page.locator('#dict-toggle').click();
-    await page.locator('.dict-direction').selectOption('phrases');
     await page.locator('.dict-search').fill('you');
     await page.waitForFunction(() => document.querySelectorAll('.dict-phrase-entry').length >= 3);
     const tume = odiaFor('you (familiar)');

@@ -120,6 +120,7 @@ need them wait for a run on the owner's Mac or a later environment.
 | V2.9 | Inflected forms of offensive words | owner review (C-2) | Waiting for the owner |
 | V2.10 | Explicit offline English → Odia lookup, separate translations/loan spellings | original seed + existing owner glosses | **First version** 2026-10-12: 70 entries / 62 terms, Copy and undoable Insert Odia at the last editor selection, offline/degraded-load checks. 64 proposed entries await native review; typing aliases are separate follow-up work. |
 | V2.11 | Preserve literal text, align commit/copy and restore undo/redo | editor transactions + browser regression cases | **Implemented** 2026-10-12: addresses/identifiers and paste stay literal; Alt/Option+number candidate shortcuts; Left/Right caret movement; visible pending-word commit on Copy; shared undo for typing, candidates, insertion and Clear. Browser checks run in CI. |
+| V2.12 | One unified dictionary (owner: the two directions were misleading); search by Odia, English word or roman spelling ("when I am not sure of the matras") | data in hand | **Done** 2026-10-12, step A. Step B (clean, larger English/Hindi loan list from CMUdict + Praharaj origins, replacing the share-alike loan detector) and step C (typing English spellings such as `phone` → the loan word) to follow |
 
 The measured 12 October interface/data audit and recommended next work are in
 [`codex_review_12Oct2026.md`](codex_review_12Oct2026.md). It prioritizes literal-text
@@ -218,6 +219,7 @@ Agents do not commit; the lead reviews, measures and commits.
 
 | Date | Change |
 |---|---|
+| 2026-10-12 | V2.12 unified dictionary: one search box, grouped results (spellings, English → Odia, loans, phrases); loan rows filtered by origin and sound. Browser checks rewritten for the one box. |
 | 2026-10-12 | Bug fixes: about 1,640 raw romanization codes in Praharaj meanings (`&aline;`, `&uline;`, `$nbsp;`...) now show as letters (`dictionary/clean.ts`, test over the whole payload); the legacy `web/` build now includes `legacy-polyfills.js` (variable was unused). |
 | 2026-10-12 | Number keys 1–9 pick a suggestion again (owner request: Microsoft keyboard style, lost in PR #5). Setting "Number keys pick suggestions", on by default; Alt+number always picks. Two new editing checks (27/27). |
 | 2026-10-12 | V2.5 phrase table: data file, parser, Meanings panel "Phrases", unit and browser checks (`phrases-check.mjs`, in CI). Engine scores unchanged. |

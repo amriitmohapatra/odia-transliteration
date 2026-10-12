@@ -17,7 +17,7 @@ try {
   page.on('pageerror', error => errors.push(String(error)));
   page.on('request', request => { if (!request.url().startsWith(url) && !request.url().startsWith('data:')) external.push(request.url()); });
   await page.goto(url);
-  await page.locator('.dict-direction').selectOption('english');
+  // One unified search box (2026-10-12): no direction to choose.
   const search = page.locator('.dict-search');
   await search.fill('meeting');
   await page.waitForFunction(() => document.querySelectorAll('.dict-english-entry').length === 2);
@@ -30,7 +30,7 @@ try {
   check(await page.locator('.dict-english-entry').count() === 1, 'phrase alias uses exact lookup');
   await search.fill('big');
   await page.waitForFunction(() => document.querySelector('.dict-english-entry')?.textContent.includes('big:'));
-  await page.locator('.dict-copy').click();
+  await page.locator('.dict-english-entry .dict-copy').first().click();
   await page.waitForFunction(() => document.querySelector('.dict-body')?.textContent.includes('Copied Odia.'));
   check(await page.evaluate(() => navigator.clipboard.readText()) === '\u0b2c\u0b21\u0b3c', 'clipboard preserves decomposed nukta');
   // Choosing a dictionary result is an explicit edit at the editor selection
@@ -44,7 +44,7 @@ try {
   });
   await search.fill('big');
   await page.waitForFunction(() => document.querySelector('.dict-english-entry')?.textContent.includes('big:'));
-  await page.locator('.dict-insert').click();
+  await page.locator('.dict-english-entry .dict-insert').first().click();
   await page.waitForFunction(() => document.querySelector('.dict-body')?.textContent.includes('Inserted Odia.'));
   check(await editor.inputValue() === '\u0b18\u0b30 \u0b2c\u0b21\u0b3c \u0b26\u0b3f\u0b28',
     'Insert Odia replaces the saved editor selection and preserves surrounding words');
@@ -59,19 +59,18 @@ try {
   await page.waitForFunction(() => document.querySelector('.dict-body')?.textContent.includes('(Related headword)'));
   check(await page.locator('.dict-english-entry').count() >= 2, 'prefix results are explicitly labelled');
   await search.fill('photosynthesis');
-  await page.waitForFunction(() => document.querySelector('.dict-body')?.textContent.includes('No entry in this starter dictionary'));
-  check(await page.locator('.dict-english-entry').count() === 0, 'unknown query clears results honestly');
-  await page.locator('.dict-direction').selectOption('odia');
+  await page.waitForFunction(() => [...document.querySelectorAll('.dict-group')].some((g) => g.textContent.includes('photosynthesis')));
+  check(await page.locator('.dict-english-entry').count() === 0 && await page.locator('.dict-loan-entry').count() === 0,
+    'unknown English query shows no English results, only spellings');
   await search.fill('\u0b15\u0b47\u0b2e\u0b3f\u0b24\u0b3f');
   await page.waitForFunction(() => document.querySelector('.dict-owner')?.textContent.includes('how'));
   check(true, 'Odia lookup still shows owner meaning');
   await page.waitForFunction(() => navigator.serviceWorker.controller !== null);
   await context.setOffline(true);
   await page.reload();
-  await page.locator('.dict-direction').selectOption('english');
   await page.locator('.dict-search').fill('water');
   await page.waitForFunction(() => document.querySelector('.dict-english-entry')?.textContent.includes('water:'));
-  check((await page.locator('.dict-word').innerText()) === '\u0b2a\u0b3e\u0b23\u0b3f', 'English lookup works after offline reload');
+  check((await page.locator('.dict-word').first().innerText()) === '\u0b2a\u0b3e\u0b23\u0b3f', 'English lookup works after offline reload');
   check(errors.length === 0, 'no page errors');
   check(external.length === 0, 'no external requests');
   await context.close();
@@ -81,24 +80,21 @@ try {
   const fallback = await degraded.newPage();
   await fallback.route('**/*.bin', route => route.abort());
   await fallback.goto(url);
-  await fallback.locator('.dict-direction').selectOption('english');
   await fallback.locator('.dict-search').fill('office');
   await fallback.waitForFunction(() => document.querySelectorAll('.dict-english-entry').length === 2);
   check(true, 'English lookup survives blocked historical payloads');
   await fallback.evaluate(() => Object.defineProperty(navigator, 'clipboard', { configurable: true, value: { writeText: () => Promise.reject(new Error('Permission denied')) } }));
-  await fallback.locator('.dict-copy').first().click();
+  await fallback.locator('.dict-english-entry .dict-copy').first().click();
   await fallback.waitForFunction(() => document.querySelector('.dict-body')?.textContent.includes('Could not copy.'));
-  check(!(await fallback.locator('.dict-copy').first().isDisabled()), 'clipboard denial shows manual fallback and restores button');
+  check(!(await fallback.locator('.dict-english-entry .dict-copy').first().isDisabled()), 'clipboard denial shows manual fallback and restores button');
   await fallback.waitForFunction(() => document.querySelector('.dict-state')?.textContent.includes('Historical dictionary unavailable'));
-  await fallback.locator('.dict-direction').selectOption('odia');
-  check(await fallback.locator('.dict-english-entry').count() === 0
-    && await fallback.locator('.dict-body').innerText() === ''
-    && await fallback.locator('.dict-state').isVisible(),
-  'switching to unavailable Odia dictionary clears stale English results and keeps failure status');
-  await fallback.locator('.dict-direction').selectOption('english');
+  await fallback.locator('.dict-search').fill('\u0b15\u0b47\u0b2e\u0b3f\u0b24\u0b3f');
+  await fallback.waitForFunction(() => document.querySelectorAll('.dict-english-entry').length === 0);
+  check(await fallback.locator('.dict-state').isVisible(),
+    'an Odia search with the historical dictionary unavailable clears English results and keeps the failure status');
   await fallback.locator('.dict-search').fill('office');
   await fallback.waitForFunction(() => document.querySelectorAll('.dict-english-entry').length === 2);
-  check(true, 'switching back to English restores usable seed lookup after payload failure');
+  check(true, 'English lookup is usable again after an Odia search, with payloads failed');
   await degraded.close();
   console.log(`ALL PASS (${checks} browser checks)`);
 } finally {

@@ -55,6 +55,8 @@ import { originChipLabel, originLabel, parseOrigin } from './origin.js';
 import { parseEnglishEntries, searchEnglish, type EnglishEntry } from './english.js';
 import englishTsv from './english.tsv?raw';
 import { cleanDefinition } from './clean.js';
+import { closestLoan, soundsLike } from './loanmatch.js';
+import { romanize } from '../romanize.js';
 import { CATEGORY_LABEL, parsePhrases, searchPhrases, type Phrase } from './phrases.js';
 import phrasesTsv from '../../../core/data/phrases.tsv?raw';
 import { DOCK_QUERY } from '../inline.js';
@@ -70,7 +72,6 @@ const PHRASES: Phrase[] = (() => {
     return [];
   }
 })();
-const PHRASES_SUBTITLE = `${PHRASES.length} phrases: greetings, wishes, festivals, the three words for "you". Most await native-speaker review.`;
 
 /**
  * Raw gzip payloads. `modern` and `origin` are optional: null (or absent) when
@@ -387,6 +388,8 @@ function ownerGloss(word: string): { meaning: string; status: string } | undefin
 let hidden: (word: string) => boolean = () => false;
 // The editor owns selection and undo; the dictionary never mutates its DOM.
 let insertWord: ((word: string) => boolean) | undefined;
+/** Odia spellings for a roman word, best first (the app's engine). */
+let spellWord: ((roman: string) => string[]) | undefined;
 
 function chipFor(word: string): string | null {
   if (hidden(word)) return null;
@@ -473,8 +476,6 @@ function shortGloss(entry: Entry): string | null {
 let panelBody: HTMLDivElement | null = null;
 let panelState: HTMLParagraphElement | null = null;
 let searchInput: HTMLInputElement | null = null;
-let searchDirection: HTMLSelectElement | null = null;
-let panelSubtitle: HTMLParagraphElement | null = null;
 let lastCandidates: { text: string; num: number }[] = [];
 
 function buildPanel(): void {
@@ -512,39 +513,13 @@ function buildPanel(): void {
 
   const sub = document.createElement('p');
   sub.className = 'dict-sub';
-  panelSubtitle = sub;
-  sub.textContent = 'Pur\u1e47\u1e47achandra O\u1e0di\u0101 Bh\u0101shakosha — G. C. Praharaj (1931–40)';
 
-  const direction = document.createElement('select');
-  direction.className = 'dict-direction';
-  direction.setAttribute('aria-label', 'Dictionary direction');
-  for (const [value, text] of [['odia', 'Odia → English'], ['english', 'English → Odia'], ['phrases', 'Phrases']]) {
-    const option = document.createElement('option');
-    option.value = value as string;
-    option.textContent = text as string;
-    direction.appendChild(option);
-  }
-  searchDirection = direction;
-  direction.addEventListener('change', () => {
-    if (!searchInput || !panelSubtitle) return;
-    const english = direction.value === 'english';
-    const phrases = direction.value === 'phrases';
-    searchInput.value = '';
-    // The selected direction owns the body even while Odia payloads are
-    // loading or unavailable; never leave English results under Odia mode.
-    if (panelBody) panelBody.textContent = '';
-    searchInput.placeholder = phrases ? 'Search, e.g. birthday, festival, you'
-      : english ? 'Search English, e.g. water, meeting' : 'Search an Odia word';
-    panelSubtitle.textContent = phrases ? PHRASES_SUBTITLE : english
-      ? `${ENGLISH.length} entries for ${new Set(ENGLISH.map((entry) => entry.english)).size} English terms. Starter dictionary; most entries await native-speaker review. Translations and loan spellings are separate.`
-      : 'Pur\u1e47\u1e47achandra O\u1e0di\u0101 Bh\u0101shakosha — G. C. Praharaj (1931–40)';
-    onSearch();
-  });
+  sub.textContent = 'One dictionary: Odia words with English meanings (Praharaj 1931–40 and modern), English words and loan words in Odia, and phrases.';
 
   const search = document.createElement('input');
   search.type = 'search';
   search.className = 'dict-search odia';
-  search.placeholder = '\u0b16\u0b4b\u0b1c\u0b28\u0b4d\u0b24\u0b41\u2026  (search any Odia word)';
+  search.placeholder = 'Search Odia, English, or how you type it: \u0b2a\u0b3e\u0b23\u0b3f, water, kemiti';
   search.setAttribute('aria-label', 'Search the dictionary');
   search.addEventListener('input', debounce(onSearch, 160));
   searchInput = search;
@@ -562,7 +537,7 @@ function buildPanel(): void {
   panel.appendChild(sub);
   const tools = document.createElement('div');
   tools.className = 'dict-tools';
-  tools.append(direction, search);
+  tools.append(search);
   panel.appendChild(tools);
   panel.appendChild(stateEl);
   panel.appendChild(body);
@@ -730,8 +705,23 @@ function renderEmpty(): void {
   const p = document.createElement('p');
   p.className = 'dict-hint';
   p.textContent =
-    'Type in the roman box — meanings for each suggestion appear here as you go. A missing meaning does not mean a spelling is wrong. Choose English → Odia to look up a word by its English meaning.';
+    'Type in the text box — meanings for each suggestion appear here as you go. Or search above: an Odia word, an English word (water), or how you type it (kemiti). A missing meaning does not mean a spelling is wrong.';
   panelBody.appendChild(p);
+  panelBody.appendChild(browsePhrasesButton());
+}
+
+/** "Show all phrases": fills the search with the group word that lists them all. */
+function browsePhrasesButton(): HTMLElement {
+  const button = document.createElement('button');
+  button.type = 'button';
+  button.className = 'dict-browse-phrases';
+  button.textContent = 'Show all phrases';
+  button.addEventListener('click', () => {
+    if (!searchInput) return;
+    searchInput.value = 'phrases';
+    onSearch();
+  });
+  return button;
 }
 
 function entryBlock(word: string, num: number | null, entry: Entry | null, modern: ModernEntry | null): HTMLElement {
@@ -826,14 +816,6 @@ function entryBlock(word: string, num: number | null, entry: Entry | null, moder
 
 function renderCandidates(): void {
   if (!panelBody) return;
-  if (searchDirection?.value === 'english') {
-    renderEnglishSearch();
-    return;
-  }
-  if (searchDirection?.value === 'phrases') {
-    renderPhraseSearch();
-    return;
-  }
   if (state !== 'ready') {
     if (state === 'idle') loadData();
     return;
@@ -853,24 +835,101 @@ function renderCandidates(): void {
   }
 }
 
-/** English results are small bundled data and do not depend on historical payloads. */
-function renderEnglishSearch(): void {
-  if (!panelBody || !searchInput) return;
-  panelBody.textContent = '';
-  const query = searchInput.value.trim();
+/** A heading for one group of results. */
+function groupHeading(text: string): HTMLElement {
+  const heading = document.createElement('h3');
+  heading.className = 'dict-group';
+  heading.textContent = text;
+  return heading;
+}
+
+/**
+ * Loan words by English word, from the modern layer's `loan` rows. The loan
+ * detector also matched native words by sound (one everyday Odia word was
+ * glossed as "committee"), so a word that Praharaj marks as native or from
+ * Sanskrit (origin codes D, T, S) is left out. Built once, when data is ready.
+ */
+let loanIndex: Map<string, string[]> | null = null;
+function loansFor(english: string): string[] {
+  if (!M) return [];
+  if (!loanIndex) {
+    loanIndex = new Map();
+    for (let i = 0; i < M.keys.length; i++) {
+      const odia = M.keys[i] as string;
+      for (const line of defAt(M, i).split('\n')) {
+        const [tag, word] = line.split('\t');
+        if (tag !== 'loan' || !word) continue;
+        const code = originCode(lookup(odia)) ?? '';
+        if (code && /^[DTS](\/[DTS])*$/.test(code)) continue;
+        if (!soundsLike(word, odia)) continue;
+        const key = word.toLowerCase();
+        const list = loanIndex.get(key) ?? [];
+        if (!list.includes(odia)) list.push(odia);
+        loanIndex.set(key, list);
+      }
+    }
+  }
+  return loanIndex.get(english.toLowerCase()) ?? [];
+}
+
+/** English words and loan spellings: bundled english.tsv first, then detected loans. */
+function englishSection(query: string): HTMLElement[] {
+  const out: HTMLElement[] = [];
   const results = searchEnglish(ENGLISH, query, hidden);
-  const hint = document.createElement('p');
-  hint.className = 'dict-hint';
-  hint.setAttribute('role', 'status');
-  hint.textContent = !query
-    ? 'Look up an English word or short phrase, then insert or copy the Odia result. Try water, phone, or meeting. This does not translate sentences or change typing suggestions.'
-    : results.length
-      ? phoneLayout()
-        ? 'Choose an entry to insert or copy.'
-        : 'English lookup results. “Related headword” means a prefix match, not a translation of your exact input.'
-      : 'No entry in this starter dictionary. Try another word. This is limited coverage, not a judgment about the word.';
-  panelBody.appendChild(hint);
-  for (const { entry, exact } of results) panelBody.appendChild(englishBlock(entry, exact));
+  for (const { entry, exact } of results) out.push(englishBlock(entry, exact));
+  const shown = new Set(results.map((r) => canonical(r.entry.odia)));
+  const q = query.trim().toLowerCase().replace(/\s+/g, ' ');
+  // Auto-detected loans are noisy: only when the starter list has no exact
+  // entry, and then only the single closest spelling.
+  if (!results.some((r) => r.exact)) {
+    const odia = closestLoan(q, loansFor(q).filter((w) => !shown.has(w) && !hidden(w)), romanize);
+    if (odia) out.push(loanBlock(q, odia));
+  }
+  return out;
+}
+
+function loanBlock(english: string, odia: string): HTMLElement {
+  const block = document.createElement('section');
+  block.className = 'dict-entry dict-loan-entry';
+  const head = document.createElement('div');
+  head.className = 'dict-entry-head';
+  const word = document.createElement('span');
+  word.className = 'dict-word odia';
+  word.lang = 'or';
+  word.textContent = odia;
+  const tag = document.createElement('span');
+  tag.className = 'dict-tag';
+  tag.textContent = 'English loan spelling';
+  head.append(word, tag);
+  const sense = document.createElement('p');
+  sense.className = 'dict-hint';
+  sense.textContent = `${english}, written in Odia`;
+  const source = document.createElement('p');
+  source.className = 'dict-hint';
+  source.textContent = 'Found automatically by sound — may be wrong.';
+  const [actions, feedback] = odiaActions(odia, `${english}, loan spelling`);
+  block.append(head, sense, source, actions, feedback);
+  return block;
+}
+
+/**
+ * Odia words that a roman spelling turns into: the same suggestions as typing,
+ * each with its meaning when the dictionary has one, and Insert / Copy. For
+ * a user who knows the sound but not the matras.
+ */
+function spelledSection(roman: string): HTMLElement[] {
+  if (!spellWord || !/^[a-z~_]+$/i.test(roman)) return [];
+  const out: HTMLElement[] = [];
+  for (const word of spellWord(roman).slice(0, 5)) {
+    if (hidden(word)) continue;
+    const ready = state === 'ready';
+    const block = entryBlock(word, null, ready ? lookup(word) : null, ready ? lookupModern(word) : null);
+    block.classList.add('dict-spelled-entry');
+    const [actions, feedback] = odiaActions(word, `${word}`);
+    block.append(actions, feedback);
+    out.push(block);
+  }
+  return out;
 }
 
 function englishBlock(entry: EnglishEntry, exact: boolean): HTMLElement {
@@ -952,31 +1011,19 @@ function odiaActions(odiaText: string, name: string): [HTMLElement, HTMLElement]
 }
 
 /** The phrase table: bundled, so it works while the dictionary payloads load. */
-function renderPhraseSearch(): void {
-  if (!panelBody || !searchInput) return;
-  panelBody.textContent = '';
-  const query = searchInput.value.trim();
-  const results = searchPhrases(PHRASES, query, hidden);
-  const hint = document.createElement('p');
-  hint.className = 'dict-hint';
-  hint.setAttribute('role', 'status');
-  hint.textContent = !query
-    ? 'All phrases, group by group. Search by meaning (birthday), by how you type it (shubha), or by group (festival, you).'
-    : results.length
-      ? 'Phrases for your search. Insert puts the Odia where you were typing.'
-      : 'No phrase found. Try another word, or a group: greeting, wish, festival, you, family, everyday.';
-  panelBody.appendChild(hint);
+function phraseSection(query: string): HTMLElement[] {
+  const all = /^phrases?$/i.test(query.trim());
+  const results = searchPhrases(PHRASES, all ? '' : query, hidden);
+  const out: HTMLElement[] = [];
   let group = '';
   for (const { phrase } of results) {
-    if (!query && phrase.category !== group) {
+    if (all && phrase.category !== group) {
       group = phrase.category;
-      const heading = document.createElement('h3');
-      heading.className = 'dict-group';
-      heading.textContent = CATEGORY_LABEL[phrase.category];
-      panelBody.appendChild(heading);
+      out.push(groupHeading(CATEGORY_LABEL[phrase.category]));
     }
-    panelBody.appendChild(phraseBlock(phrase));
+    out.push(phraseBlock(phrase));
   }
+  return out;
 }
 
 function phraseBlock(phrase: Phrase): HTMLElement {
@@ -1011,32 +1058,50 @@ function phraseBlock(phrase: Phrase): HTMLElement {
 function onSearch(): void {
   if (!searchInput || !panelBody) return;
   const q = searchInput.value.trim();
-  if (searchDirection?.value === 'english') {
-    renderEnglishSearch();
-    return;
-  }
-  if (searchDirection?.value === 'phrases') {
-    renderPhraseSearch();
-    return;
-  }
-  if (state !== 'ready') {
-    loadData();
-    return;
-  }
   if (q.length === 0) {
     renderCandidates();
     return;
   }
+  if (state === 'idle') loadData();
   panelBody.textContent = '';
-  const blocked = hidden(canonical(q));
-  const entry = blocked ? null : lookup(q);
-  const modern = blocked ? null : lookupModern(q);
-  const own = blocked ? undefined : ownerGloss(q);
-  const label = document.createElement('p');
-  label.className = 'dict-hint';
-  label.textContent = entry || modern || own ? 'Search result:' : 'Nothing found for that spelling.';
-  panelBody.appendChild(label);
-  if (entry || modern || own) panelBody.appendChild(entryBlock(q, null, entry, modern));
+  const status = document.createElement('p');
+  status.className = 'dict-hint';
+  status.setAttribute('role', 'status');
+  panelBody.appendChild(status);
+  let found = 0;
+  const add = (title: string, blocks: HTMLElement[]) => {
+    if (!blocks.length || !panelBody) return;
+    found += blocks.length;
+    panelBody.appendChild(groupHeading(title));
+    for (const b of blocks) panelBody.appendChild(b);
+  };
+  if (/^phrases?$/i.test(q)) {
+    add('Phrases', phraseSection(q));
+  } else if (/[\u0B00-\u0B7F]/.test(q)) {
+    const word = canonical(q);
+    const blocked = hidden(word);
+    const entry = blocked || state !== 'ready' ? null : lookup(word);
+    const modern = blocked || state !== 'ready' ? null : lookupModern(word);
+    const own = blocked ? undefined : ownerGloss(word);
+    add('Odia word', entry || modern || own ? [entryBlock(word, null, entry, modern)] : []);
+    add('Phrases', phraseSection(q));
+  } else {
+    // An English word with an exact entry (water, phone) shows its Odia word
+    // first; otherwise the spellings of what was typed (kemiti) come first.
+    const english = englishSection(q);
+    const spelled = spelledSection(q.toLowerCase());
+    const englishExact = searchEnglish(ENGLISH, q, hidden).some((r) => r.exact) ||
+      english.some((b) => b.classList.contains('dict-loan-entry'));
+    if (englishExact) add('English word → Odia', english);
+    add(`Odia spellings of "${q}"`, spelled);
+    if (!englishExact) add('English word → Odia', english);
+    add('Phrases', phraseSection(q));
+  }
+  const loading = state === 'loading' || state === 'idle';
+  status.textContent = found
+    ? loading ? 'Results so far. Meanings from the full dictionary are still loading.' : 'Results:'
+    : loading ? 'Loading the dictionary\u2026'
+      : 'Nothing found. Try another spelling, an English word, or "phrases". This is limited coverage, not a judgment about the word.';
 }
 
 function refreshAll(): void {
@@ -1220,6 +1285,7 @@ export function initDictionary(
   onStateChange?: (s: DictionaryState) => void,
   hideWord?: (word: string) => boolean,
   insert?: (word: string) => boolean,
+  spell?: (roman: string) => string[],
 ): void {
   if (started) return;
   started = true;
@@ -1227,6 +1293,7 @@ export function initDictionary(
     loader = load;
     if (hideWord) hidden = hideWord;
     insertWord = insert;
+    spellWord = spell;
     onState = onStateChange ?? null;
     buildPanel();
     observe();

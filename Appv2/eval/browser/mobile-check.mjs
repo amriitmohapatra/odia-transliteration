@@ -41,7 +41,7 @@ async function measure(page) {
     return { width: innerWidth, height: innerHeight, documentWidth: document.documentElement.scrollWidth,
       vv: { top: vv?.offsetTop ?? 0, height: vv?.height ?? innerHeight, width: vv?.width ?? innerWidth },
       editor: box('#roman'), dock: box('#kb-bar'), candidate: box('.inline-candidate'),
-      panel: box('#dict-panel'), close: box('.dict-close'), search: box('.dict-search'), direction: box('.dict-direction') };
+      panel: box('#dict-panel'), close: box('.dict-close'), search: box('.dict-search') };
   });
 }
 function editorVisible(m) {
@@ -123,7 +123,6 @@ async function dictionary(page, name) {
   const dockButton = page.locator('#meanings-dock');
   if (await dockButton.isVisible()) await dockButton.click();
   else await page.locator('#dict-toggle').click();
-  await page.locator('.dict-direction').selectOption('english');
   await page.locator('.dict-search').fill('water');
   await page.locator('.dict-english-entry').first().waitFor();
   await settle(page);
@@ -132,7 +131,7 @@ async function dictionary(page, name) {
   check(`${name}: dictionary leaves a visible return-to-editor margin`, m.panel.height <= Math.min(m.vv.height * 0.9, 520) + 2, m.panel);
   check(`${name}: dictionary replaces the candidate dock`, !m.dock.visible, m.dock);
   check(`${name}: search font does not trigger iOS small-input zoom`, m.search.fontSize >= 16, m.search);
-  await targets(page, name + ' dictionary', ['.dict-close', '.dict-search', '.dict-direction', '.dict-insert', '.dict-copy']);
+  await targets(page, name + ' dictionary', ['.dict-close', '.dict-search', '.dict-insert', '.dict-copy']);
   check(`${name}: phone dictionary makes the background inert`, await page.evaluate(() => {
     const targets = [...document.querySelectorAll('body > .app, #kb-bar')];
     return targets.length === 2 && targets.every((el) => el.hasAttribute('inert'))

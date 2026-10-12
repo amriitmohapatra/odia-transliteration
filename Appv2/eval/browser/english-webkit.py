@@ -37,9 +37,8 @@ with sync_playwright() as pw:
             editor.click()
             editor.press_sequentially('kemiti achha ', delay=30)
             check(editor.input_value().strip() == '\u0b15\u0b47\u0b2e\u0b3f\u0b24\u0b3f \u0b05\u0b1b', name + ': ordinary typing')
-            if not page.locator('.dict-direction').is_visible():
+            if not page.locator('.dict-search').is_visible():
                 page.locator('button[aria-controls="dict-panel"]:visible').first.click()
-            page.locator('.dict-direction').select_option('english')
             search = page.locator('.dict-search')
             search.fill('meeting')
             page.wait_for_function("document.querySelectorAll('.dict-english-entry').length === 2")
@@ -64,9 +63,8 @@ with sync_playwright() as pw:
                 check(False, name + ': offline reload: ' + str(error).splitlines()[0])
                 context.close()
                 continue
-            if not page.locator('.dict-direction').is_visible():
+            if not page.locator('.dict-search').is_visible():
                 page.locator('button[aria-controls="dict-panel"]:visible').first.click()
-            page.locator('.dict-direction').select_option('english')
             page.locator('.dict-search').fill('water')
             page.wait_for_function("document.querySelector('.dict-english-entry')?.textContent.includes('water:')")
             check(page.locator('.dict-word').inner_text() == '\u0b2a\u0b3e\u0b23\u0b3f', name + ': offline lookup')

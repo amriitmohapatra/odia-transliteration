@@ -303,6 +303,8 @@ async function boot(): Promise<void> {
         insertAtCaret(canonical(word));
         return true;
       },
+      spell: (roman) => guard(() => (handle?.engine.transliterateWord(roman, 5) ?? [])
+        .filter((c) => c.source !== 'verbatim').map((c) => canonical(c.text)), []),
     },
   ); // glosses + side panel; its data loads lazily
 
