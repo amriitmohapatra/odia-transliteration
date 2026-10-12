@@ -1,5 +1,44 @@
 # Codex review — 12 October 2026
 
+## Follow-up after environment settings were published
+
+PR #4 was merged as `5ba8761`; this follow-up starts from that merged revision.
+The published environment has unrestricted network access; no configuration draft
+was pending when this follow-up began. The restored production app passed all 15 English-dictionary
+Chromium checks again, including offline reload, clipboard behavior and degraded
+historical-dictionary loading.
+Reusable startup notes for the retained WebKit tooling and the new diagnosis
+were subsequently saved as an environment-settings draft; publication is separate
+from these successful checks in the current instance.
+
+The Build macOS / Build iOS plugins still do not expose callable tools or skills
+in this session. The executor remains Linux without `xcodebuild`, `xcrun` or
+`swift`; changed network settings do not supply an Apple execution environment.
+Native builds, Simulator and device tests remain unperformed.
+
+Both requested Hugging Face dataset cards are reachable, but their data-file
+requests still return HTTP 401 and metadata still says `gated: manual`. This is
+publisher-controlled dataset access, separate from the environment's network
+policy. No gated rows were downloaded.
+
+The unresolved WebKit navigation error is now isolated to the tested
+Playwright offline-emulation path: it also occurs with a minimal worker returning
+constant HTML, without any app code or cache. With the HTTP origin actually
+stopped, both minimal controls and both app versions reload successfully; the
+current app still transliterates and returns `water` → `ପାଣି` from its dictionary.
+This establishes cached operation during origin loss in Linux WebKit, not iPhone
+airplane-mode behavior. The original failing assertions remain visible. See the
+[controlled experiment](plan/research/2026-10-12/VALIDATION.md#follow-up-distinguish-webkit-offline-emulation-from-origin-loss).
+
+New source sampling found **2,034 distinct Odia headword strings and 4,898 senses**
+in Kaikki's 4.4 MB Odia extract. Direct English entries supply useful sense-labelled
+translations, but coverage is asymmetric (`phone` has no Odia translation field
+in the sampled English entries although `ଫୋନ` exists on the Odia side), and `bank`
+exposes conflicting spellings. IndoWordNet provides useful synonyms and examples
+but some senses lack English linkage. These support an editorial review queue,
+not a blind reverse-dictionary import. Source-specific reuse terms remain to be
+resolved before bundling data. See [sample counts, sources and recommendations](plan/research/2026-10-12/resources.md#follow-up-concrete-dictionary-coverage-after-environment-publication).
+
 ## Verdict
 
 The app has a useful offline engine and a working writing surface, but it is not yet a dependable everyday Odia composer. **The problem is broader than an incomplete dictionary:** the editor can change literal text, human Roman spellings do not always reach the desired Odia candidate, ranking favors an unsuitable alternative, and a correctly spelled word can receive an unrelated English meaning. A larger corpus alone will not resolve these separate problems.
@@ -175,5 +214,5 @@ Language decisions the owner should make: everyday versus formal spelling prefer
 - New feature: 10 unit tests; browser checks cover labels/senses, alias lookup, exact versus prefix results, decomposed-nukta clipboard output, missing terms, owner meanings, offline reload, failed historical payloads, clipboard denial and direction switching after failure.
 - Full unit/fallback suite, Appv2 typecheck, production build, generated-rule consistency and theme-token checks were run. The older Sanskrit WebKit harness also proved stale: it waits for removed `#output`/`#profile` DOM in the committed single-file app; its timeout is a harness failure, not evidence of Sanskrit accuracy. Final counts and command evidence are recorded in [validation](plan/research/2026-10-12/VALIDATION.md).
 - Existing orthographic coverage failures and the older `web/` unused-variable typecheck defect remain repository limitations identified during onboarding. No source/ranking/data change in this feature is presented as fixing them.
-- Additional Linux WebKit 26.5 validation: 12 online checks passed across desktop/iPhone viewport emulation, including typing and the new lookup/copy action. Two offline reload checks failed with an internal navigation error in both baseline and feature builds despite an active worker and 26 cached requests. This remains unresolved; it is not proof of a Safari-device failure or a new-feature regression. Native iOS/macOS behavior and linguistic correctness of the seed still need device/native-speaker review.
+- Additional Linux WebKit 26.5 validation: 12 online checks passed across desktop/iPhone viewport emulation, including typing and the new lookup/copy action. Two offline reload checks failed with an internal navigation error in both baseline and feature builds despite an active worker and 26 cached requests. The follow-up above isolates the error to the tested offline-emulation path and verifies cached operation after actual origin loss; it is not proof of a Safari-device failure or a new-feature regression. Native iOS/macOS behavior and linguistic correctness of the seed still need device/native-speaker review.
 - All seven public resource pages/cards and current Apple guidance are now verified at the documentation level. The two requested datasets remain manually gated; raw rows, empirical data quality and commercial reuse clearance were not established. The newly added Build macOS / Build iOS plugins were not exposed in this chat’s active tools/skills; this Linux workspace has no Xcode/Simulator, so native build/device validation remains unperformed.

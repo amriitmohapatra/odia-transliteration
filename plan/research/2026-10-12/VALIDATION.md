@@ -119,3 +119,51 @@ their emulated profile, but these executions were on Linux. The original fixed
 probe checked 400 ms and 2 seconds for `janmadina` and `ghara` to diagnose timing;
 its results are in `legacy-webkit-timing.json`. This does not turn the original
 failed run into a pass. No source or expected output was changed to hide a failure.
+
+## Follow-up: distinguish WebKit offline emulation from origin loss
+
+A further controlled experiment narrows the earlier offline failure to this
+Linux WebKit/Playwright offline-emulation path. The portable diagnostic
+`webkit-offline-diagnosis.py` uses fresh loopback ports and browser contexts for
+four targets: a minimal worker returning constant HTML (no app code or cache), a
+minimal cache-backed worker, the frozen baseline app, and the current app.
+Each target is tested with Playwright `context.set_offline(True)` and separately
+with its HTTP server actually shut down. The latter includes an independent HTTP
+request confirming that the origin is unreachable.
+
+| Target | Playwright offline emulation | HTTP origin stopped |
+| --- | --- | --- |
+| Minimal constant-response service worker | FAIL: same WebKit internal error | PASS: reload 200 and usable page |
+| Minimal cache-backed service worker | FAIL: same WebKit internal error | PASS: reload 200 and usable page |
+| Frozen baseline app | FAIL: same WebKit internal error | PASS: reload 200; typing `kemiti achha ` yields `କେମିତି ଅଛ ` |
+| Current app | FAIL: same WebKit internal error | PASS: reload 200; same typing result; English `water` lookup yields `ପାଣି` |
+
+Both app contexts had an active service-worker controller and 26 cached entries
+before the network change. Because the constant-response control also fails
+under emulation, that failure does not require the app's service-worker code or
+its cached assets. The actual-origin-loss results independently show that the
+current app can reload, transliterate and look up an English entry from cached
+resources in this Linux WebKit runtime. No product fix is justified by this
+particular emulation failure.
+
+This is **not** equivalent to switching a physical iPhone into airplane mode:
+`navigator.onLine` remains true in the server-shutdown experiment, and this test
+does not exercise OS-level network transitions. The existing `english-webkit.py`
+retains its assertions and still reports 12 passing online checks and 2 failing
+emulated-offline checks. Native Safari/iOS validation remains outstanding.
+
+Reproduce from the repository root (Python Playwright plus an installed WebKit
+browser and its shared-library dependencies are prerequisites):
+
+```bash
+WEBKIT_EXECUTABLE_PATH=/workspace/onboarding-tools/webkit-launch.sh \
+  python3 plan/research/2026-10-12/webkit-offline-diagnosis.py \
+  Appv2/dist --output /tmp/webkit-offline-diagnosis.json
+```
+
+An optional `--baseline /path/to/frozen/dist` adds the historical comparison;
+it is not required for the minimal controls or current app checks. The committed
+`webkit-offline-diagnosis.json` records all eight observed cases. The diagnostic
+prints outcomes rather than replacing acceptance assertions; its exit status is
+not an overall offline-feature pass. No product files or existing expected test
+outputs were changed for this experiment.

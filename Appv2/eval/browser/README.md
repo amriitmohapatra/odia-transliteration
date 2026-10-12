@@ -45,3 +45,26 @@ passed in the 12 October Linux run; both offline reload checks failed with a
 WebKit internal navigation error in the baseline and feature builds. The script
 retains those checks and exits nonzero when they fail. See the review's validation
 record before treating this as a release gate.
+
+
+A follow-up diagnosis reproduced that same offline-emulation error with two
+minimal service workers containing no app code. With the actual HTTP server
+stopped instead, both minimal controls and both app builds reloaded successfully;
+the current app also typed `କେମିତି ଅଛ` and resolved English `water` to `ପାଣି`.
+This isolates the observed error to the Linux WebKit/Playwright offline-flag path
+in that runtime, rather than a failure requiring the app's service-worker code.
+The original failing checks remain intact. Server loss leaves `navigator.onLine`
+true and does not verify iPhone airplane mode or native Safari behavior.
+
+For the independent controls and origin-loss diagnostic (it starts its own
+servers on fresh ports):
+
+```bash
+python3 plan/research/2026-10-12/webkit-offline-diagnosis.py Appv2/dist --output /tmp/webkit-offline-diagnosis.json
+```
+
+The same `WEBKIT_EXECUTABLE_PATH` override works here. The optional `--baseline`
+argument accepts a frozen historical build. See
+[the complete validation record](../../../plan/research/2026-10-12/VALIDATION.md)
+for observed results and limits; the diagnostic's exit status is not an overall
+offline-feature acceptance result.
