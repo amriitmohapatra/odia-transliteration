@@ -1,0 +1,15 @@
+PASS desktop: ordinary typing
+PASS desktop: distinct meaning and loan
+PASS desktop: seed review label
+PASS desktop: clipboard write resolves in user gesture
+PASS desktop: unknown query clears results
+PASS desktop: no page errors
+FAIL desktop: offline reload: Page.reload: WebKit encountered an internal error
+PASS iPhone viewport: ordinary typing
+PASS iPhone viewport: distinct meaning and loan
+PASS iPhone viewport: seed review label
+PASS iPhone viewport: clipboard write resolves in user gesture
+PASS iPhone viewport: unknown query clears results
+PASS iPhone viewport: no page errors
+FAIL iPhone viewport: offline reload: Page.reload: WebKit encountered an internal error
+12 passed, 2 failed (14 WebKit checks; no native-device claim)

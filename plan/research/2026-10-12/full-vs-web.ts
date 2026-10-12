@@ -1,0 +1,10 @@
+import {fileURLToPath} from 'node:url';
+import {mkdirSync} from 'node:fs';
+import {join} from 'node:path';
+const outputDir=process.argv[2] || '/tmp/odia-engine-review';mkdirSync(outputDir,{recursive:true});
+import {engineFor} from '../../../Appv2/eval/lib.ts';
+import {readFileSync,writeFileSync} from 'node:fs';
+const e=engineFor('unified');const baseline=JSON.parse(readFileSync(join(outputDir, 'engine-probes.json'),'utf8'));
+const comparison=baseline.results.map(r=>({roman:r.roman,webTop:r.candidates[0].text,fullCandidates:e.transliterateWord(r.roman,9).map(c=>c.text),want:r.proposedDesired}));
+writeFileSync(join(outputDir, 'full-vs-web.json'),JSON.stringify(comparison,null,2));
+console.log(JSON.stringify(comparison.filter(r=>r.webTop!==r.fullCandidates[0]),null,2));

@@ -16,7 +16,7 @@ import { badgeElement, DOCK_QUERY, InlineCandidates } from './inline.js';
 import { meaningsOpen, setMeaningsOpen, startDictionary, type DictionaryState } from './dictionary/index.js';
 
 import { codepoints, LocalStorageLearnStore } from '@odia/core';
-import type { DigitMode, WordResult } from '@odia/core/types';
+import type { DigitMode } from '@odia/core/types';
 
 import {
   buildEngine,
@@ -29,6 +29,8 @@ import { preprocess, PREPROCESS_HINTS } from './preprocess.js';
 import { badgeFor } from './badges.js';
 import { buildSlots, hasWords, readbackText, type Slot } from './readback.js';
 import { casual } from './romanize.js';
+import { Editor } from './editor.js';
+import { canonical } from '@odia/core/normalize';
 import {
   DEFAULT_PROFILE,
   isProfileId,
@@ -175,6 +177,12 @@ let slots: Slot[] = [];
 const commitKeys = new Map<string, string>();
 /** Odia words converted in bulk (paste, late word list) and not yet picked. */
 const uncheckedWords = new Set<string>();
+const editor = new Editor(romanEl, () => {
+  // The Clear toast may only undo that exact transaction, never a later edit.
+  if (cleared) hideToast();
+  render();
+  refreshSuggestions();
+});
 
 /* ------------------------------------------------------------------ *
  * Boot
@@ -198,8 +206,14 @@ async function boot(): Promise<void> {
   buildProfileSelect();
   buildShortcutHints();
   bindEvents();
+  setupPhoneLayout();
 
   inline = new InlineCandidates(romanEl, {
+    pending: () => editor.pending(),
+    composing: () => editor.composing,
+    deferBoundary: (separator, action) => editor.deferBoundary(separator, action),
+    replace: (start, end, text, literal) => editor.replace(start, end, text, literal),
+    keep: (start, end) => editor.keep(start, end),
     // The Odia word just before the caret word gives context (word pairs, V2.2),
     // so a word the user picked from the bar informs the next suggestion.
     candidates: (roman) =>
@@ -247,7 +261,19 @@ async function boot(): Promise<void> {
   dockMeanings.title = 'Meanings';
   dockMeanings.innerHTML = meaningsEl.querySelector('svg')?.outerHTML ?? '';
   dockMeanings.addEventListener('click', () => setMeaningsOpen(!meaningsOpen()));
-  inline.toolbar.append(dockMeanings, dockShare, dockCopy);
+  const dockDone = document.createElement('button');
+  dockDone.type = 'button';
+  dockDone.id = 'done-dock';
+  dockDone.className = 'btn btn-quiet';
+  dockDone.textContent = 'Done';
+  dockDone.setAttribute('aria-label', 'Finish typing and dismiss the keyboard');
+  dockDone.addEventListener('click', () => {
+    romanEl.blur();
+    // Short viewports hide the masthead while composing. The focusout layout
+    // update must reveal it before moving keyboard/assistive-tech focus there.
+    window.requestAnimationFrame(() => openSettingsEl.focus({ preventScroll: true }));
+  });
+  inline.toolbar.append(dockMeanings, dockShare, dockCopy, dockDone);
   layoutActions();
 
   updateStates();
@@ -255,9 +281,7 @@ async function boot(): Promise<void> {
 
   await loadProfileAssets(profileId);
   rebuildEngine();
-  // Words typed while the word list loaded convert now, in place, and the
-  // word at the caret gets its suggestions.
-  convertInPlace();
+  // Loading never rewrites text the user already typed or pasted.
   inline.setEnabled(!strictEl.checked);
   render();
   startDictionary(
@@ -266,7 +290,14 @@ async function boot(): Promise<void> {
       updateStates();
     },
     // Kids edition: the dictionary never explains a labelled word either.
-    KIDS ? { hide: (w) => isKidsHidden(w) } : {},
+    {
+      ...(KIDS ? { hide: (w: string) => isKidsHidden(w) } : {}),
+      insert: (word) => {
+        if (editor.composing) return false;
+        insertAtCaret(canonical(word));
+        return true;
+      },
+    },
   ); // glosses + side panel; its data loads lazily
 
   void buildPalette();
@@ -290,7 +321,8 @@ function digitMode(): DigitMode {
  */
 function previousOdiaWord(roman: string): string | undefined {
   const caret = romanEl.selectionStart ?? romanEl.value.length;
-  const before = romanEl.value.slice(0, Math.max(0, caret - roman.length));
+  const start = editor.pending()?.start ?? Math.max(0, caret - roman.length);
+  const before = romanEl.value.slice(0, start);
   const match = /([\u0B00-\u0B7F]+)[ \t]+$/.exec(before);
   return match?.[1];
 }
@@ -328,28 +360,13 @@ function scheduleRender(): void {
 
 /**
  * The text box is the only composing surface (audit H1). What used to be the
- * ODIA output box is now two things: copyText(), which converts whatever is
- * still roman exactly as that box did, and the "Reads as" line, which shows
- * how the result reads.
+ * ODIA output box is now the document itself. The "Reads as" line describes
+ * its committed Odia, and Copy finalizes only the eligible active Roman token.
  */
 function render(): void {
-  const engine = handle?.engine;
-  const raw = romanEl.value;
-  const caret = document.activeElement === romanEl ? romanEl.selectionEnd : null;
-
-  let words: readonly WordResult[] = [];
-  if (engine) {
-    // ONE preprocessed string for the engine. Roman words are ASCII letter
-    // runs that preprocess never touches, so buildSlots finds each of them in
-    // the raw box value in order, and the slot offsets are offsets in the box.
-    const input = preprocess(raw, PROFILES[profileId].preprocess);
-    words = guard(() => engine.transliterate(input, { topk: TOPK }).words, []);
-  }
-
-  const display = strictEl.checked && engine
-    ? (word: WordResult) => guard(() => engine.strict(word.roman, 'itrans'), word.roman)
-    : undefined;
-  slots = buildSlots(raw, words, caret, display);
+  // Read back what is actually in the document. A Roman draft, pasted English,
+  // URL or kept word must never acquire a different invisible Copy rendition.
+  slots = buildSlots(romanEl.value, [], romanEl.selectionEnd);
   renderReadback();
 }
 
@@ -399,86 +416,66 @@ function tail(text: string, max: number): string {
   return text.length <= max ? text : `\u2026${text.slice(text.length - max + 1)}`;
 }
 
-/**
- * What Copy puts on the clipboard: the box with every roman word that is
- * still there converted to its top candidate (or strict ITRANS), and the
- * preprocess marks (| -> danda and so on) applied. Byte-for-byte what the old
- * output box showed, so copying never regresses.
- */
+/** Finalize only an eligible token at a collapsed caret, visibly and undoably. */
 function copyText(): string {
-  const engine = handle?.engine;
-  const input = preprocess(romanEl.value, PROFILES[profileId].preprocess);
-  if (!engine) return input;
-  if (strictEl.checked) return guard(() => engine.strict(input, 'itrans'), input);
-  return guard(() => engine.transliterate(input, { topk: 1 }).text, input);
-}
-
-/** Convert one stretch of the box the way copyText() would. */
-function convertStretch(text: string, engine: EngineHandle['engine']): string {
-  if (!/[A-Za-z]/.test(text)) return text;
-  const input = preprocess(text, PROFILES[profileId].preprocess);
-  if (strictEl.checked) return guard(() => engine.strict(input, 'itrans'), text);
-  const result = guard(() => engine.transliterate(input, { topk: 1 }), undefined);
-  if (!result) return text;
-  for (const word of result.words) {
-    const top = word.candidates[0]?.text;
-    if (top !== undefined && /[\u0B00-\u0B7F]/.test(top)) uncheckedWords.add(top);
+  if (!editor.composing && romanEl.selectionStart === romanEl.selectionEnd) {
+    if (strictEl.checked) commitStrict('');
+    else if (!inline?.commitPending()) commitMarks('');
   }
-  return result.text;
+  return romanEl.value;
 }
 
-/**
- * Convert roman words in the box to Odia IN PLACE, except the word still being
- * typed at the caret (the suggestion bar owns that one). Runs when the word
- * list becomes ready (text typed while it loaded) and after a paste. Converted
- * words are marked "not checked yet" in the read-back until the user picks.
+/** Explicit mark shortcuts at a token boundary; pasted spans stay literal. */
+function commitMarks(trailing: string): boolean {
+  const state = editor.snapshot();
+  if (editor.composing || state.start !== state.end ||
+      (state.start < state.value.length && !/\s/.test(state.value[state.start]!))) return false;
+  let start = state.start;
+  while (start > 0 && !/\s/.test(state.value[start - 1]!)) start--;
+  const token = state.value.slice(start, state.start);
+  if (!token || state.literals.some((span) => span.start < state.start && span.end > start) ||
+      /@|:\/\/|[A-Za-z]\.[A-Za-z]{2,}/.test(token)) return false;
+  let text: string;
+  if (/^[0-9]+$/.test(token) && digitsEl.checked) {
+    text = guard(() => handle?.engine.transliterate(token).text ?? token, token);
+    if (text === token) return false;
+  } else {
+    if (/[0-9]/.test(token)) return false;
+    const input = preprocess(token, PROFILES[profileId].preprocess);
+    if (input === token) return false;
+    text = guard(() => handle?.engine.transliterate(input).text ?? input, input);
+  }
+  editor.replace(start, state.start, text + trailing);
+  return true;
+}
+
+/** Strict mode accepts ITRANS capitals and mark keys, but preserves addresses,
+ * identifiers and explicit literal spans. It does not use natural-mode guessing.
  */
-function convertInPlace(): void {
+function commitStrict(trailing: string): boolean {
   const engine = handle?.engine;
-  if (!engine || !handle?.ready) return;
-  const raw = romanEl.value;
-  if (!/[A-Za-z]/.test(raw)) return;
-
-  const focused = document.activeElement === romanEl;
-  const caret = focused ? (romanEl.selectionEnd ?? raw.length) : raw.length;
-  const before = raw.slice(0, caret);
-  const after = raw.slice(caret);
-  const pending = focused ? (/[A-Za-z_~]+$/.exec(before)?.[0] ?? '') : '';
-  const head = before.slice(0, before.length - pending.length);
-
-  const newHead = convertStretch(head, engine);
-  const newAfter = convertStretch(after, engine);
-  if (newHead === head && newAfter === after) return;
-
-  romanEl.value = newHead + pending + newAfter;
-  const at = newHead.length + pending.length;
-  if (focused) romanEl.setSelectionRange(at, at);
-  render();
+  const state = editor.snapshot();
+  if (!engine || editor.composing || state.start !== state.end ||
+      (state.start < state.value.length && !/\s/.test(state.value[state.start]!))) return false;
+  let start = state.start;
+  while (start > 0 && !/\s/.test(state.value[start - 1]!)) start--;
+  const token = state.value.slice(start, state.start);
+  if (state.literals.some((span) => span.start < state.start && span.end > start) ||
+      /@|:\/\/|[A-Za-z]\.[A-Za-z]{2,}/.test(token)) return false;
+  if (!/[A-Za-z]/.test(token)) return commitMarks(trailing);
+  if (/[0-9]/.test(token)) return false;
+  const input = preprocess(token, PROFILES[profileId].preprocess);
+  const text = guard(() => engine.strict(input, 'itrans'), token);
+  editor.replace(start, state.start, text + trailing, !/[\u0B00-\u0B7F]/.test(text));
+  return true;
 }
 
-/**
- * Strict mode has no suggestion bar, so on Space or Enter the run before the
- * caret is replaced by its strict ITRANS result in place, before the key's
- * own character goes in. ITRANS uses `.` `^` `~` and capitals, so the run is
- * everything back to the previous whitespace.
- */
 function strictCommit(event: KeyboardEvent): void {
-  if (!strictEl.checked || (event.key !== ' ' && event.key !== 'Enter')) return;
-  if (event.metaKey || event.ctrlKey || event.altKey) return;
-  const engine = handle?.engine;
-  const { value, selectionStart, selectionEnd } = romanEl;
-  if (!engine || selectionStart === null || selectionStart !== selectionEnd) return;
-
-  let start = selectionStart;
-  while (start > 0 && !/\s/.test(value[start - 1] as string)) start -= 1;
-  const run = value.slice(start, selectionStart);
-  if (!/[A-Za-z]/.test(run)) return;
-
-  const input = preprocess(run, PROFILES[profileId].preprocess);
-  const odia = guard(() => engine.strict(input, 'itrans'), run);
-  romanEl.value = value.slice(0, start) + odia + value.slice(selectionStart);
-  const caret = start + odia.length;
-  romanEl.setSelectionRange(caret, caret);
+  if (event.defaultPrevented || event.isComposing || editor.composing ||
+      event.metaKey || event.ctrlKey || event.altKey || event.shiftKey) return;
+  if (event.key !== ' ' && event.key !== 'Enter') return;
+  const separator = event.key === ' ' ? ' ' : '\n';
+  if ((strictEl.checked ? commitStrict(separator) : commitMarks(separator))) event.preventDefault();
 }
 
 /* ------------------------------------------------------------------ *
@@ -616,9 +613,7 @@ function insertAtCaret(text: string): void {
   const start = romanEl.selectionStart ?? romanEl.value.length;
   const end = romanEl.selectionEnd ?? start;
 
-  romanEl.value = romanEl.value.slice(0, start) + text + romanEl.value.slice(end);
-  const caret = start + text.length;
-  romanEl.setSelectionRange(caret, caret);
+  editor.replace(start, end, text, true);
   romanEl.focus();
   render();
 }
@@ -736,16 +731,17 @@ function choose(text: string): void {
     return;
   }
 
-  romanEl.value = value.slice(0, slot.start) + text + value.slice(slot.end);
+  const selection = editor.snapshot();
+  const delta = text.length - (slot.end - slot.start);
+  const shift = (at: number): number => at <= slot.start ? at : at >= slot.end ? at + delta : slot.start + text.length;
+  editor.replace(slot.start, slot.end, text, !/[\u0B00-\u0B7F]/.test(text), {
+    start: shift(selection.start), end: shift(selection.end), direction: selection.direction,
+  });
   guard(() => handle?.engine.learn(slot.key, text), undefined);
   commitKeys.set(text, slot.key);
   uncheckedWords.delete(text);
   uncheckedWords.delete(slot.was);
 
-  // Keep the caret where it was, shifted by the change in length.
-  const caret = romanEl.selectionEnd ?? value.length;
-  const shifted = caret >= slot.end ? caret + text.length - (slot.end - slot.start) : caret;
-  romanEl.setSelectionRange(shifted, shifted);
   render();
   focusReadbackWord(index);
 }
@@ -897,10 +893,11 @@ function dismissIntro(): void {
  */
 function tryExample(): void {
   dismissIntro();
-  romanEl.value = INTRO_EXAMPLE;
+  const split = INTRO_EXAMPLE.lastIndexOf(' ') + 1;
+  const prefix = INTRO_EXAMPLE.slice(0, split);
+  const converted = guard(() => handle?.engine.transliterate(prefix).text ?? prefix, prefix);
+  editor.replace(0, romanEl.value.length, converted + INTRO_EXAMPLE.slice(split));
   romanEl.focus();
-  romanEl.setSelectionRange(INTRO_EXAMPLE.length, INTRO_EXAMPLE.length);
-  convertInPlace(); // no-op until the word list is ready; boot() converts then
   render();
   refreshSuggestions();
 }
@@ -961,8 +958,7 @@ function finish(ok: boolean, text: string): void {
  */
 function copyFailed(text: string): void {
   if (romanEl.value !== text) {
-    romanEl.value = text;
-    render();
+    editor.replace(0, romanEl.value.length, text, true);
   }
   romanEl.focus();
   romanEl.setSelectionRange(0, romanEl.value.length);
@@ -1016,7 +1012,7 @@ function layoutActions(): void {
  * ------------------------------------------------------------------ */
 
 /** What Clear removed, while its Undo toast is showing. */
-let cleared: { value: string; caret: number } | undefined;
+let cleared: boolean | undefined;
 
 function onClear(): void {
   const value = romanEl.value;
@@ -1024,14 +1020,13 @@ function onClear(): void {
     romanEl.focus();
     return;
   }
-  const keep = { value, caret: romanEl.selectionEnd ?? value.length };
-  romanEl.value = '';
+  editor.replace(0, value.length, '');
   uncheckedWords.clear();
   render();
   romanEl.focus();
   refreshSuggestions();
   toast(CLEARED, { action: { label: 'Undo', run: undoClear }, ms: UNDO_MS });
-  cleared = keep; // after toast(): showing it ends any earlier undo window
+  cleared = true; // after toast(): showing it ends any earlier undo window
 }
 
 /** Put the cleared text back, caret where it was. Only while the box is still empty. */
@@ -1039,9 +1034,8 @@ function undoClear(): void {
   const state = cleared;
   hideToast();
   if (!state || romanEl.value.length > 0) return;
-  romanEl.value = state.value;
+  editor.undo();
   romanEl.focus();
-  romanEl.setSelectionRange(state.caret, state.caret);
   render();
   refreshSuggestions();
 }
@@ -1051,7 +1045,7 @@ function undoClear(): void {
  * must re-read the word at the caret, or a tap would commit into stale offsets.
  */
 function refreshSuggestions(): void {
-  inline?.setEnabled(!strictEl.checked);
+  inline?.setEnabled(!strictEl.checked && !editor.composing);
 }
 
 /**
@@ -1310,10 +1304,43 @@ function writeProfilePref(id: ProfileId): void {
  * Events
  * ------------------------------------------------------------------ */
 
+/** A phone has a separate composing layout inside the visible viewport.
+ * The same variables also place the explicit dictionary sheet above the OS
+ * keyboard. Never infer keyboard size from a hardcoded iPhone dimension. */
+function setupPhoneLayout(): void {
+  const root = document.documentElement;
+  let queued = false;
+  const update = (): void => {
+    queued = false;
+    const viewport = window.visualViewport;
+    const phone = phoneQuery?.matches ?? window.innerWidth < 700;
+    const height = viewport?.height ?? window.innerHeight;
+    root.style.setProperty('--app-viewport-height', `${height}px`);
+    root.style.setProperty('--app-viewport-offset-top', `${viewport?.offsetTop ?? 0}px`);
+    root.style.setProperty('--app-viewport-width', `${viewport?.width ?? window.innerWidth}px`);
+    root.style.setProperty('--app-viewport-offset-left', `${viewport?.offsetLeft ?? 0}px`);
+    root.classList.toggle('phone-layout', phone);
+    root.classList.toggle('phone-short', phone && height < 300);
+    const active = document.activeElement;
+    const dictionaryInput = active instanceof HTMLElement && !!active.closest('#dict-panel') &&
+      (active.matches('input, select, textarea') || document.body.classList.contains('dict-open'));
+    root.classList.toggle('phone-editing', phone && (active === romanEl || dictionaryInput));
+  };
+  const queue = (): void => {
+    if (!queued) { queued = true; window.requestAnimationFrame(update); }
+  };
+  document.addEventListener('focusin', queue);
+  document.addEventListener('focusout', queue);
+  window.addEventListener('resize', queue);
+  window.visualViewport?.addEventListener('resize', queue);
+  window.visualViewport?.addEventListener('scroll', queue);
+  phoneQuery?.addListener(queue);
+  update();
+}
+
 function bindEvents(): void {
   romanEl.addEventListener('input', (event) => {
-    const kind = (event as InputEvent).inputType;
-    if (kind === 'insertFromPaste' || kind === 'insertFromDrop') convertInPlace();
+    void event;
     scheduleRender();
   });
   // The caret moving changes which word is "being typed".
@@ -1321,6 +1348,16 @@ function bindEvents(): void {
   romanEl.addEventListener('click', scheduleRender);
   romanEl.addEventListener('blur', scheduleRender);
   romanEl.addEventListener('keydown', strictCommit);
+  romanEl.addEventListener('beforeinput', (event) => {
+    const input = event as InputEvent;
+    if (input.isComposing || editor.composing || input.defaultPrevented) return;
+    const separator = input.inputType === 'insertLineBreak' || input.inputType === 'insertParagraph'
+      ? '\n' : input.inputType === 'insertText' ? input.data : null;
+    if (!separator || !/^[ \t\r\n]+$/.test(separator)) return;
+    const commit = (): boolean => strictEl.checked ? commitStrict(separator) : commitMarks(separator);
+    if (!input.cancelable) editor.deferBoundary(separator, commit);
+    else if (commit()) input.preventDefault();
+  });
   // Ctrl/Cmd+Enter copies (the keyboard path: type, arrows, Enter or a
   // number, then this). Ctrl/Cmd+Shift+C (proposal 3.10) is the browser's
   // inspect-element key in Chrome, so it is not used.
@@ -1349,16 +1386,6 @@ function bindEvents(): void {
   window.addEventListener('offline', updateOfflineChip);
 
   clearEl.addEventListener('click', onClear);
-  // Ctrl/Cmd+Z in the emptied box is Undo too while "Cleared" shows: the box
-  // was emptied by script, so the browser's own undo has nothing to restore.
-  romanEl.addEventListener('keydown', (event) => {
-    const undoKey = (event.ctrlKey || event.metaKey) && !event.shiftKey && event.key.toLowerCase() === 'z';
-    if (undoKey && cleared && romanEl.value.length === 0) {
-      event.preventDefault();
-      undoClear();
-    }
-  });
-
   digitsEl.addEventListener('change', () => {
     writePref(PREF_DIGITS, digitsEl.checked);
     rebuildEngine();
@@ -1369,7 +1396,7 @@ function bindEvents(): void {
     writePref(PREF_FAMILY_SAFE, familySafeEl.checked);
     // No rebuild needed: the engine reads the switch on every lookup.
     guard(() => handle?.engine.setFamilySafe?.(familySafeEl.checked), undefined);
-    inline?.setEnabled(!strictEl.checked); // re-rank the open suggestions
+    inline?.setEnabled(!strictEl.checked && !editor.composing); // re-rank the open suggestions
     render();
   });
 
@@ -1386,7 +1413,7 @@ function bindEvents(): void {
   strictEl.addEventListener('change', () => {
     writePref(PREF_STRICT, strictEl.checked);
     // Strict ITRANS has exactly one answer per word, so there is nothing to pick.
-    inline?.setEnabled(!strictEl.checked);
+    inline?.setEnabled(!strictEl.checked && !editor.composing);
     render();
   });
 

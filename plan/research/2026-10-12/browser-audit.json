@@ -1,0 +1,2593 @@
+[
+  {
+    "id": "greeting",
+    "input": "namaskar tume kemiti achha",
+    "output": "ନମସ୍କାର ତୁମେ କେମିତି ଅଛ ",
+    "readback": "namaskaara tume kemiti achha",
+    "tokens": [
+      {
+        "input": "namaskar",
+        "candidates": [
+          {
+            "text": "ନମସ୍କାର",
+            "gloss": "hello",
+            "label": "ନମସ୍କାର, hello"
+          },
+          {
+            "text": "ନମସ୍କର",
+            "gloss": "not a known word",
+            "label": "ନମସ୍କର, not a known word"
+          },
+          {
+            "text": "ଣମସ୍କର",
+            "gloss": "not a known word",
+            "label": "ଣମସ୍କର, not a known word"
+          },
+          {
+            "text": "ନମସ୍କର୍",
+            "gloss": "not a known word",
+            "label": "ନମସ୍କର୍, not a known word"
+          },
+          {
+            "text": "ନମଶ୍କର",
+            "gloss": "not a known word",
+            "label": "ନମଶ୍କର, not a known word"
+          },
+          {
+            "text": "ନମାସ୍କର",
+            "gloss": "not a known word",
+            "label": "ନମାସ୍କର, not a known word"
+          },
+          {
+            "text": "ଣମଶ୍କର",
+            "gloss": "not a known word",
+            "label": "ଣମଶ୍କର, not a known word"
+          },
+          {
+            "text": "ଣମସ୍କାର",
+            "gloss": "not a known word",
+            "label": "ଣମସ୍କାର, not a known word"
+          },
+          {
+            "text": "9Keepnamaskar",
+            "gloss": "",
+            "label": "Keep \"namaskar\", as typed"
+          }
+        ]
+      },
+      {
+        "input": "tume",
+        "candidates": [
+          {
+            "text": "ତୁମେ",
+            "gloss": "you",
+            "label": "ତୁମେ, you"
+          },
+          {
+            "text": "ତୂମେ",
+            "gloss": "not a known word",
+            "label": "ତୂମେ, not a known word"
+          },
+          {
+            "text": "ଟୁମେ",
+            "gloss": "not a known word",
+            "label": "ଟୁମେ, not a known word"
+          },
+          {
+            "text": "ଟୂମେ",
+            "gloss": "not a known word",
+            "label": "ଟୂମେ, not a known word"
+          },
+          {
+            "text": "5Keeptume",
+            "gloss": "",
+            "label": "Keep \"tume\", as typed"
+          }
+        ]
+      },
+      {
+        "input": "kemiti",
+        "candidates": [
+          {
+            "text": "କେମିତି",
+            "gloss": "how",
+            "label": "କେମିତି, how"
+          },
+          {
+            "text": "କେମିଟି",
+            "gloss": "not a known word",
+            "label": "କେମିଟି, not a known word"
+          },
+          {
+            "text": "କେମିତୀ",
+            "gloss": "not a known word",
+            "label": "କେମିତୀ, not a known word"
+          },
+          {
+            "text": "କେମୀତି",
+            "gloss": "not a known word",
+            "label": "କେମୀତି, not a known word"
+          },
+          {
+            "text": "କେମିଟୀ",
+            "gloss": "not a known word",
+            "label": "କେମିଟୀ, not a known word"
+          },
+          {
+            "text": "କେମୀଟି",
+            "gloss": "not a known word",
+            "label": "କେମୀଟି, not a known word"
+          },
+          {
+            "text": "କେମୀତୀ",
+            "gloss": "not a known word",
+            "label": "କେମୀତୀ, not a known word"
+          },
+          {
+            "text": "କେମୀଟୀ",
+            "gloss": "not a known word",
+            "label": "କେମୀଟୀ, not a known word"
+          },
+          {
+            "text": "9Keepkemiti",
+            "gloss": "",
+            "label": "Keep \"kemiti\", as typed"
+          }
+        ]
+      },
+      {
+        "input": "achha",
+        "candidates": [
+          {
+            "text": "ଅଛ",
+            "gloss": "The form taken by the verb 'To be' in present tense 2nd…",
+            "label": "ଅଛ, The form taken by the verb 'To be' in present tense 2nd…"
+          },
+          {
+            "text": "ଆଛା",
+            "gloss": "okay",
+            "label": "ଆଛା, okay"
+          },
+          {
+            "text": "ଅଛା",
+            "gloss": "not a known word",
+            "label": "ଅଛା, not a known word"
+          },
+          {
+            "text": "ଆଛ",
+            "gloss": "not a known word",
+            "label": "ଆଛ, not a known word"
+          },
+          {
+            "text": "ଅଚ୍ହ",
+            "gloss": "not a known word",
+            "label": "ଅଚ୍ହ, not a known word"
+          },
+          {
+            "text": "ଅଛ୍ହ",
+            "gloss": "not a known word",
+            "label": "ଅଛ୍ହ, not a known word"
+          },
+          {
+            "text": "ଅକ୍ହ୍ହ",
+            "gloss": "not a known word",
+            "label": "ଅକ୍ହ୍ହ, not a known word"
+          },
+          {
+            "text": "ଅଛ୍ହା",
+            "gloss": "not a known word",
+            "label": "ଅଛ୍ହା, not a known word"
+          },
+          {
+            "text": "9Keepachha",
+            "gloss": "",
+            "label": "Keep \"achha\", as typed"
+          }
+        ]
+      }
+    ],
+    "errors": []
+  },
+  {
+    "id": "pronoun",
+    "input": "mu bhala achhi",
+    "output": "ମୁ ଭଲ ଅଛି ",
+    "readback": "mu bhala achhi",
+    "tokens": [
+      {
+        "input": "mu",
+        "candidates": [
+          {
+            "text": "ମୁ",
+            "gloss": "At",
+            "label": "ମୁ, At"
+          },
+          {
+            "text": "ମୁଁ",
+            "gloss": "the i",
+            "label": "ମୁଁ, the i"
+          },
+          {
+            "text": "ମୂ",
+            "gloss": "Binding",
+            "label": "ମୂ, Binding"
+          },
+          {
+            "text": "ମୁଂ",
+            "gloss": "maybe: At",
+            "label": "ମୁଂ, maybe: At"
+          },
+          {
+            "text": "ମୂଂ",
+            "gloss": "maybe: Binding",
+            "label": "ମୂଂ, maybe: Binding"
+          },
+          {
+            "text": "6Keepmu",
+            "gloss": "",
+            "label": "Keep \"mu\", as typed"
+          }
+        ]
+      },
+      {
+        "input": "bhala",
+        "candidates": [
+          {
+            "text": "ଭଲ",
+            "gloss": "Good",
+            "label": "ଭଲ, Good"
+          },
+          {
+            "text": "ଭଳ",
+            "gloss": "not a known word",
+            "label": "ଭଳ, not a known word"
+          },
+          {
+            "text": "ଭଲା",
+            "gloss": "Praiseworthy",
+            "label": "ଭଲା, Praiseworthy"
+          },
+          {
+            "text": "ଭାଳ",
+            "gloss": "not a known word",
+            "label": "ଭାଳ, not a known word"
+          },
+          {
+            "text": "ଭାଲ",
+            "gloss": "Forehead",
+            "label": "ଭାଲ, Forehead"
+          },
+          {
+            "text": "ଭାଲା",
+            "gloss": "Spear",
+            "label": "ଭାଲା, Spear"
+          },
+          {
+            "text": "ବ୍ହଲ",
+            "gloss": "not a known word",
+            "label": "ବ୍ହଲ, not a known word"
+          },
+          {
+            "text": "ବ୍ହଳ",
+            "gloss": "not a known word",
+            "label": "ବ୍ହଳ, not a known word"
+          },
+          {
+            "text": "9Keepbhala",
+            "gloss": "",
+            "label": "Keep \"bhala\", as typed"
+          }
+        ]
+      },
+      {
+        "input": "achhi",
+        "candidates": [
+          {
+            "text": "ଅଛି",
+            "gloss": "have",
+            "label": "ଅଛି, have"
+          },
+          {
+            "text": "ଆଛି",
+            "gloss": "not a known word",
+            "label": "ଆଛି, not a known word"
+          },
+          {
+            "text": "ଅଛୀ",
+            "gloss": "not a known word",
+            "label": "ଅଛୀ, not a known word"
+          },
+          {
+            "text": "ଆଛୀ",
+            "gloss": "not a known word",
+            "label": "ଆଛୀ, not a known word"
+          },
+          {
+            "text": "ଅଚ୍ହି",
+            "gloss": "not a known word",
+            "label": "ଅଚ୍ହି, not a known word"
+          },
+          {
+            "text": "ଅଛ୍ହି",
+            "gloss": "not a known word",
+            "label": "ଅଛ୍ହି, not a known word"
+          },
+          {
+            "text": "ଅକ୍ହ୍ହି",
+            "gloss": "not a known word",
+            "label": "ଅକ୍ହ୍ହି, not a known word"
+          },
+          {
+            "text": "ଆଛ୍ହି",
+            "gloss": "not a known word",
+            "label": "ଆଛ୍ହି, not a known word"
+          },
+          {
+            "text": "9Keepachhi",
+            "gloss": "",
+            "label": "Keep \"achhi\", as typed"
+          }
+        ]
+      }
+    ],
+    "errors": []
+  },
+  {
+    "id": "pronoun-variant",
+    "input": "mun bhala achhi",
+    "output": "ମୁଁ ଭଲ ଅଛି ",
+    "readback": "mun bhala achhi",
+    "tokens": [
+      {
+        "input": "mun",
+        "candidates": [
+          {
+            "text": "ମୁଁ",
+            "gloss": "the i",
+            "label": "ମୁଁ, the i"
+          },
+          {
+            "text": "ମୁଂ",
+            "gloss": "maybe: At",
+            "label": "ମୁଂ, maybe: At"
+          },
+          {
+            "text": "ମୁନ",
+            "gloss": "not a known word",
+            "label": "ମୁନ, not a known word"
+          },
+          {
+            "text": "ମୁନ୍",
+            "gloss": "not a known word",
+            "label": "ମୁନ୍, not a known word"
+          },
+          {
+            "text": "ମୁନା",
+            "gloss": "A sharp-pointed weapon",
+            "label": "ମୁନା, A sharp-pointed weapon"
+          },
+          {
+            "text": "ମୂନ",
+            "gloss": "not a known word",
+            "label": "ମୂନ, not a known word"
+          },
+          {
+            "text": "ମୂଂ",
+            "gloss": "maybe: Binding",
+            "label": "ମୂଂ, maybe: Binding"
+          },
+          {
+            "text": "ମୁଣ୍",
+            "gloss": "not a known word",
+            "label": "ମୁଣ୍, not a known word"
+          },
+          {
+            "text": "9Keepmun",
+            "gloss": "",
+            "label": "Keep \"mun\", as typed"
+          }
+        ]
+      },
+      {
+        "input": "bhala",
+        "candidates": [
+          {
+            "text": "ଭଲ",
+            "gloss": "Good",
+            "label": "ଭଲ, Good"
+          },
+          {
+            "text": "ଭଳ",
+            "gloss": "not a known word",
+            "label": "ଭଳ, not a known word"
+          },
+          {
+            "text": "ଭଲା",
+            "gloss": "Praiseworthy",
+            "label": "ଭଲା, Praiseworthy"
+          },
+          {
+            "text": "ଭାଳ",
+            "gloss": "not a known word",
+            "label": "ଭାଳ, not a known word"
+          },
+          {
+            "text": "ଭାଲ",
+            "gloss": "Forehead",
+            "label": "ଭାଲ, Forehead"
+          },
+          {
+            "text": "ଭାଲା",
+            "gloss": "Spear",
+            "label": "ଭାଲା, Spear"
+          },
+          {
+            "text": "ବ୍ହଲ",
+            "gloss": "not a known word",
+            "label": "ବ୍ହଲ, not a known word"
+          },
+          {
+            "text": "ବ୍ହଳ",
+            "gloss": "not a known word",
+            "label": "ବ୍ହଳ, not a known word"
+          },
+          {
+            "text": "9Keepbhala",
+            "gloss": "",
+            "label": "Keep \"bhala\", as typed"
+          }
+        ]
+      },
+      {
+        "input": "achhi",
+        "candidates": [
+          {
+            "text": "ଅଛି",
+            "gloss": "have",
+            "label": "ଅଛି, have"
+          },
+          {
+            "text": "ଆଛି",
+            "gloss": "not a known word",
+            "label": "ଆଛି, not a known word"
+          },
+          {
+            "text": "ଅଛୀ",
+            "gloss": "not a known word",
+            "label": "ଅଛୀ, not a known word"
+          },
+          {
+            "text": "ଆଛୀ",
+            "gloss": "not a known word",
+            "label": "ଆଛୀ, not a known word"
+          },
+          {
+            "text": "ଅଚ୍ହି",
+            "gloss": "not a known word",
+            "label": "ଅଚ୍ହି, not a known word"
+          },
+          {
+            "text": "ଅଛ୍ହି",
+            "gloss": "not a known word",
+            "label": "ଅଛ୍ହି, not a known word"
+          },
+          {
+            "text": "ଅକ୍ହ୍ହି",
+            "gloss": "not a known word",
+            "label": "ଅକ୍ହ୍ହି, not a known word"
+          },
+          {
+            "text": "ଆଛ୍ହି",
+            "gloss": "not a known word",
+            "label": "ଆଛ୍ହି, not a known word"
+          },
+          {
+            "text": "9Keepachhi",
+            "gloss": "",
+            "label": "Keep \"achhi\", as typed"
+          }
+        ]
+      }
+    ],
+    "errors": []
+  },
+  {
+    "id": "question",
+    "input": "tume kana karucha",
+    "output": "ତୁମେ କଣ କରୁଚ ",
+    "readback": "tume kana karucha",
+    "tokens": [
+      {
+        "input": "tume",
+        "candidates": [
+          {
+            "text": "ତୁମେ",
+            "gloss": "you",
+            "label": "ତୁମେ, you"
+          },
+          {
+            "text": "ତୂମେ",
+            "gloss": "not a known word",
+            "label": "ତୂମେ, not a known word"
+          },
+          {
+            "text": "ଟୁମେ",
+            "gloss": "not a known word",
+            "label": "ଟୁମେ, not a known word"
+          },
+          {
+            "text": "ଟୂମେ",
+            "gloss": "not a known word",
+            "label": "ଟୂମେ, not a known word"
+          },
+          {
+            "text": "5Keeptume",
+            "gloss": "",
+            "label": "Keep \"tume\", as typed"
+          }
+        ]
+      },
+      {
+        "input": "kana",
+        "candidates": [
+          {
+            "text": "କଣ",
+            "gloss": "A particle",
+            "label": "କଣ, A particle"
+          },
+          {
+            "text": "କନ",
+            "gloss": "not a known word",
+            "label": "କନ, not a known word"
+          },
+          {
+            "text": "କାନ",
+            "gloss": "ear",
+            "label": "କାନ, ear"
+          },
+          {
+            "text": "କଅଣ",
+            "gloss": "not a known word",
+            "label": "କଅଣ, not a known word"
+          },
+          {
+            "text": "କନା",
+            "gloss": "A piece of cloth",
+            "label": "କନା, A piece of cloth"
+          },
+          {
+            "text": "କଂଣ",
+            "gloss": "not a known word",
+            "label": "କଂଣ, not a known word"
+          },
+          {
+            "text": "କଣା",
+            "gloss": "Hole",
+            "label": "କଣା, Hole"
+          },
+          {
+            "text": "କାଣ",
+            "gloss": "One-eyed",
+            "label": "କାଣ, One-eyed"
+          },
+          {
+            "text": "9Keepkana",
+            "gloss": "",
+            "label": "Keep \"kana\", as typed"
+          }
+        ]
+      },
+      {
+        "input": "karucha",
+        "candidates": [
+          {
+            "text": "କରୁଚ",
+            "gloss": "not a known word",
+            "label": "କରୁଚ, not a known word"
+          },
+          {
+            "text": "କରୁଛ",
+            "gloss": "not a known word",
+            "label": "କରୁଛ, not a known word"
+          },
+          {
+            "text": "କଋଚ",
+            "gloss": "not a known word",
+            "label": "କଋଚ, not a known word"
+          },
+          {
+            "text": "କରୁଚା",
+            "gloss": "not a known word",
+            "label": "କରୁଚା, not a known word"
+          },
+          {
+            "text": "କାରୁଚ",
+            "gloss": "maybe: Artisan",
+            "label": "କାରୁଚ, maybe: Artisan"
+          },
+          {
+            "text": "କରୂଚ",
+            "gloss": "not a known word",
+            "label": "କରୂଚ, not a known word"
+          },
+          {
+            "text": "କାଋଚ",
+            "gloss": "not a known word",
+            "label": "କାଋଚ, not a known word"
+          },
+          {
+            "text": "କରୁଛା",
+            "gloss": "not a known word",
+            "label": "କରୁଛା, not a known word"
+          },
+          {
+            "text": "9Keepkarucha",
+            "gloss": "",
+            "label": "Keep \"karucha\", as typed"
+          }
+        ]
+      }
+    ],
+    "errors": []
+  },
+  {
+    "id": "food",
+    "input": "mu bhata khai sarili",
+    "output": "ମୁ ଭତ୍ତା ଖାଇ ସରିଲି ",
+    "readback": "mu bhattaa khaai sarili",
+    "tokens": [
+      {
+        "input": "mu",
+        "candidates": [
+          {
+            "text": "ମୁ",
+            "gloss": "At",
+            "label": "ମୁ, At"
+          },
+          {
+            "text": "ମୁଁ",
+            "gloss": "the i",
+            "label": "ମୁଁ, the i"
+          },
+          {
+            "text": "ମୂ",
+            "gloss": "Binding",
+            "label": "ମୂ, Binding"
+          },
+          {
+            "text": "ମୁଂ",
+            "gloss": "maybe: At",
+            "label": "ମୁଂ, maybe: At"
+          },
+          {
+            "text": "ମୂଂ",
+            "gloss": "maybe: Binding",
+            "label": "ମୂଂ, maybe: Binding"
+          },
+          {
+            "text": "6Keepmu",
+            "gloss": "",
+            "label": "Keep \"mu\", as typed"
+          }
+        ]
+      },
+      {
+        "input": "bhata",
+        "candidates": [
+          {
+            "text": "ଭତ୍ତା",
+            "gloss": "allowance",
+            "label": "ଭତ୍ତା, allowance"
+          },
+          {
+            "text": "ଭାତ",
+            "gloss": "Displayed",
+            "label": "ଭାତ, Displayed"
+          },
+          {
+            "text": "ଭତ",
+            "gloss": "not a known word",
+            "label": "ଭତ, not a known word"
+          },
+          {
+            "text": "ଭତା",
+            "gloss": "Commission",
+            "label": "ଭତା, Commission"
+          },
+          {
+            "text": "ଭାଟ",
+            "gloss": "Bard",
+            "label": "ଭାଟ, Bard"
+          },
+          {
+            "text": "ଭଟ",
+            "gloss": "Hero",
+            "label": "ଭଟ, Hero"
+          },
+          {
+            "text": "ଭାଟା",
+            "gloss": "maybe: Lustre",
+            "label": "ଭାଟା, maybe: Lustre"
+          },
+          {
+            "text": "ବ୍ହତ",
+            "gloss": "not a known word",
+            "label": "ବ୍ହତ, not a known word"
+          },
+          {
+            "text": "9Keepbhata",
+            "gloss": "",
+            "label": "Keep \"bhata\", as typed"
+          }
+        ]
+      },
+      {
+        "input": "khai",
+        "candidates": [
+          {
+            "text": "ଖାଇ",
+            "gloss": "Ditch",
+            "label": "ଖାଇ, Ditch"
+          },
+          {
+            "text": "ଖଇ",
+            "gloss": "not a known word",
+            "label": "ଖଇ, not a known word"
+          },
+          {
+            "text": "ଖାଇଁ",
+            "gloss": "maybe: Ditch",
+            "label": "ଖାଇଁ, maybe: Ditch"
+          },
+          {
+            "text": "ଖୈ",
+            "gloss": "Khai (See)",
+            "label": "ଖୈ, Khai (See)"
+          },
+          {
+            "text": "ଖାଇଂ",
+            "gloss": "maybe: Ditch",
+            "label": "ଖାଇଂ, maybe: Ditch"
+          },
+          {
+            "text": "ଖଈ",
+            "gloss": "not a known word",
+            "label": "ଖଈ, not a known word"
+          },
+          {
+            "text": "କ୍ହାଇ",
+            "gloss": "not a known word",
+            "label": "କ୍ହାଇ, not a known word"
+          },
+          {
+            "text": "କ୍ହଈ",
+            "gloss": "not a known word",
+            "label": "କ୍ହଈ, not a known word"
+          },
+          {
+            "text": "9Keepkhai",
+            "gloss": "",
+            "label": "Keep \"khai\", as typed"
+          }
+        ]
+      },
+      {
+        "input": "sarili",
+        "candidates": [
+          {
+            "text": "ସରିଲି",
+            "gloss": "maybe: A string (of garland or necklace or thread)",
+            "label": "ସରିଲି, maybe: A string (of garland or necklace or thread)"
+          },
+          {
+            "text": "ସରିଳି",
+            "gloss": "maybe: A string (of garland or necklace or thread)",
+            "label": "ସରିଳି, maybe: A string (of garland or necklace or thread)"
+          },
+          {
+            "text": "ସଋଲି",
+            "gloss": "not a known word",
+            "label": "ସଋଲି, not a known word"
+          },
+          {
+            "text": "ସଋଳି",
+            "gloss": "not a known word",
+            "label": "ସଋଳି, not a known word"
+          },
+          {
+            "text": "ଶରିଲି",
+            "gloss": "maybe: Measuring so many seers",
+            "label": "ଶରିଲି, maybe: Measuring so many seers"
+          },
+          {
+            "text": "ସାରିଲି",
+            "gloss": "maybe: A player at dice",
+            "label": "ସାରିଲି, maybe: A player at dice"
+          },
+          {
+            "text": "ସରୀଲି",
+            "gloss": "maybe: A string (of garland or necklace or thread)",
+            "label": "ସରୀଲି, maybe: A string (of garland or necklace or thread)"
+          },
+          {
+            "text": "ସରିଳୀ",
+            "gloss": "maybe: A string (of garland or necklace or thread)",
+            "label": "ସରିଳୀ, maybe: A string (of garland or necklace or thread)"
+          },
+          {
+            "text": "9Keepsarili",
+            "gloss": "",
+            "label": "Keep \"sarili\", as typed"
+          }
+        ]
+      }
+    ],
+    "errors": []
+  },
+  {
+    "id": "travel",
+    "input": "mu aji ghara jauchi",
+    "output": "ମୁ ଆଜି ଘର ଯାଉଚି ",
+    "readback": "mu aaji ghara yaauchi",
+    "tokens": [
+      {
+        "input": "mu",
+        "candidates": [
+          {
+            "text": "ମୁ",
+            "gloss": "At",
+            "label": "ମୁ, At"
+          },
+          {
+            "text": "ମୁଁ",
+            "gloss": "the i",
+            "label": "ମୁଁ, the i"
+          },
+          {
+            "text": "ମୂ",
+            "gloss": "Binding",
+            "label": "ମୂ, Binding"
+          },
+          {
+            "text": "ମୁଂ",
+            "gloss": "maybe: At",
+            "label": "ମୁଂ, maybe: At"
+          },
+          {
+            "text": "ମୂଂ",
+            "gloss": "maybe: Binding",
+            "label": "ମୂଂ, maybe: Binding"
+          },
+          {
+            "text": "6Keepmu",
+            "gloss": "",
+            "label": "Keep \"mu\", as typed"
+          }
+        ]
+      },
+      {
+        "input": "aji",
+        "candidates": [
+          {
+            "text": "ଆଜି",
+            "gloss": "today",
+            "label": "ଆଜି, today"
+          },
+          {
+            "text": "ଅଜି",
+            "gloss": "Glamour",
+            "label": "ଅଜି, Glamour"
+          },
+          {
+            "text": "ଅଜୀ",
+            "gloss": "not a known word",
+            "label": "ଅଜୀ, not a known word"
+          },
+          {
+            "text": "ଆଜୀ",
+            "gloss": "not a known word",
+            "label": "ଆଜୀ, not a known word"
+          },
+          {
+            "text": "5Keepaji",
+            "gloss": "",
+            "label": "Keep \"aji\", as typed"
+          }
+        ]
+      },
+      {
+        "input": "ghara",
+        "candidates": [
+          {
+            "text": "ଘର",
+            "gloss": "House",
+            "label": "ଘର, House"
+          },
+          {
+            "text": "ଘାର",
+            "gloss": "Sprinkling",
+            "label": "ଘାର, Sprinkling"
+          },
+          {
+            "text": "ଘଡ଼",
+            "gloss": "not a known word",
+            "label": "ଘଡ଼, not a known word"
+          },
+          {
+            "text": "ଘରଂ",
+            "gloss": "maybe: House",
+            "label": "ଘରଂ, maybe: House"
+          },
+          {
+            "text": "ଘରଃ",
+            "gloss": "maybe: House",
+            "label": "ଘରଃ, maybe: House"
+          },
+          {
+            "text": "ଘରା",
+            "gloss": "Proper place or niche for a thing",
+            "label": "ଘରା, Proper place or niche for a thing"
+          },
+          {
+            "text": "ଗ୍ହର",
+            "gloss": "not a known word",
+            "label": "ଗ୍ହର, not a known word"
+          },
+          {
+            "text": "ଘାଡ଼ା",
+            "gloss": "maybe: Neck",
+            "label": "ଘାଡ଼ା, maybe: Neck"
+          },
+          {
+            "text": "9Keepghara",
+            "gloss": "",
+            "label": "Keep \"ghara\", as typed"
+          }
+        ]
+      },
+      {
+        "input": "jauchi",
+        "candidates": [
+          {
+            "text": "ଯାଉଚି",
+            "gloss": "not a known word",
+            "label": "ଯାଉଚି, not a known word"
+          },
+          {
+            "text": "ଜୌଚି",
+            "gloss": "not a known word",
+            "label": "ଜୌଚି, not a known word"
+          },
+          {
+            "text": "ଜଉଚି",
+            "gloss": "not a known word",
+            "label": "ଜଉଚି, not a known word"
+          },
+          {
+            "text": "ଯୌଚି",
+            "gloss": "not a known word",
+            "label": "ଯୌଚି, not a known word"
+          },
+          {
+            "text": "ଜୌଛି",
+            "gloss": "not a known word",
+            "label": "ଜୌଛି, not a known word"
+          },
+          {
+            "text": "ଯଉଚି",
+            "gloss": "not a known word",
+            "label": "ଯଉଚି, not a known word"
+          },
+          {
+            "text": "ଜଉଚୀ",
+            "gloss": "not a known word",
+            "label": "ଜଉଚୀ, not a known word"
+          },
+          {
+            "text": "ଯୌଛି",
+            "gloss": "not a known word",
+            "label": "ଯୌଛି, not a known word"
+          },
+          {
+            "text": "9Keepjauchi",
+            "gloss": "",
+            "label": "Keep \"jauchi\", as typed"
+          }
+        ]
+      }
+    ],
+    "errors": []
+  },
+  {
+    "id": "friend",
+    "input": "kali mo sanga asiba",
+    "output": "କଲି ମୋ ସଙ୍ଗ ଆସିବ ",
+    "readback": "kali mo sangga aasiba",
+    "tokens": [
+      {
+        "input": "kali",
+        "candidates": [
+          {
+            "text": "କଲି",
+            "gloss": "kale",
+            "label": "କଲି, kale"
+          },
+          {
+            "text": "କଳି",
+            "gloss": "The 4th age of the world according to the Hindu…",
+            "label": "କଳି, The 4th age of the world according to the Hindu…"
+          },
+          {
+            "text": "କାଲି",
+            "gloss": "Yesterday",
+            "label": "କାଲି, Yesterday"
+          },
+          {
+            "text": "କାଳି",
+            "gloss": "Ink",
+            "label": "କାଳି, Ink"
+          },
+          {
+            "text": "କାଳୀ",
+            "gloss": "Goddess Chaṇḍī or Kāḻikā",
+            "label": "କାଳୀ, Goddess Chaṇḍī or Kāḻikā"
+          },
+          {
+            "text": "କାଳିଆ",
+            "gloss": "Dark-complexioned",
+            "label": "କାଳିଆ, Dark-complexioned"
+          },
+          {
+            "text": "କାଲୀ",
+            "gloss": "See)",
+            "label": "କାଲୀ, See)"
+          },
+          {
+            "text": "କଲୀ",
+            "gloss": "Kali (See)",
+            "label": "କଲୀ, Kali (See)"
+          },
+          {
+            "text": "9Keepkali",
+            "gloss": "",
+            "label": "Keep \"kali\", as typed"
+          }
+        ]
+      },
+      {
+        "input": "mo",
+        "candidates": [
+          {
+            "text": "ମୋ",
+            "gloss": "mo",
+            "label": "ମୋ, mo"
+          },
+          {
+            "text": "ମୋଂ",
+            "gloss": "maybe: mo",
+            "label": "ମୋଂ, maybe: mo"
+          },
+          {
+            "text": "3Keepmo",
+            "gloss": "",
+            "label": "Keep \"mo\", as typed"
+          }
+        ]
+      },
+      {
+        "input": "sanga",
+        "candidates": [
+          {
+            "text": "ସଙ୍ଗ",
+            "gloss": "Association",
+            "label": "ସଙ୍ଗ, Association"
+          },
+          {
+            "text": "ସାଙ୍ଗ",
+            "gloss": "friend",
+            "label": "ସାଙ୍ଗ, friend"
+          },
+          {
+            "text": "ସଂଗ",
+            "gloss": "not a known word",
+            "label": "ସଂଗ, not a known word"
+          },
+          {
+            "text": "ଶଙ୍ଗ",
+            "gloss": "not a known word",
+            "label": "ଶଙ୍ଗ, not a known word"
+          },
+          {
+            "text": "ସଙଂ",
+            "gloss": "not a known word",
+            "label": "ସଙଂ, not a known word"
+          },
+          {
+            "text": "ସଙ",
+            "gloss": "not a known word",
+            "label": "ସଙ, not a known word"
+          },
+          {
+            "text": "ସଙା",
+            "gloss": "not a known word",
+            "label": "ସଙା, not a known word"
+          },
+          {
+            "text": "ସାଙ",
+            "gloss": "not a known word",
+            "label": "ସାଙ, not a known word"
+          },
+          {
+            "text": "9Keepsanga",
+            "gloss": "",
+            "label": "Keep \"sanga\", as typed"
+          }
+        ]
+      },
+      {
+        "input": "asiba",
+        "candidates": [
+          {
+            "text": "ଆସିବ",
+            "gloss": "maybe: Having come",
+            "label": "ଆସିବ, maybe: Having come"
+          },
+          {
+            "text": "ଆସିବା",
+            "gloss": "To come to",
+            "label": "ଆସିବା, To come to"
+          },
+          {
+            "text": "ଅସିବ",
+            "gloss": "maybe: Sword",
+            "label": "ଅସିବ, maybe: Sword"
+          },
+          {
+            "text": "ଅସିବା",
+            "gloss": "maybe: Sword",
+            "label": "ଅସିବା, maybe: Sword"
+          },
+          {
+            "text": "ଅଶିବ",
+            "gloss": "Inauspicious",
+            "label": "ଅଶିବ, Inauspicious"
+          },
+          {
+            "text": "ଅସୀବ",
+            "gloss": "not a known word",
+            "label": "ଅସୀବ, not a known word"
+          },
+          {
+            "text": "ଅଶୀବ",
+            "gloss": "not a known word",
+            "label": "ଅଶୀବ, not a known word"
+          },
+          {
+            "text": "ଅସୀବା",
+            "gloss": "not a known word",
+            "label": "ଅସୀବା, not a known word"
+          },
+          {
+            "text": "9Keepasiba",
+            "gloss": "",
+            "label": "Keep \"asiba\", as typed"
+          }
+        ]
+      }
+    ],
+    "errors": []
+  },
+  {
+    "id": "phone",
+    "input": "mote phone kara",
+    "output": "ମୋତେ ଫୋନେ କର ",
+    "readback": "mote phone kara",
+    "tokens": [
+      {
+        "input": "mote",
+        "candidates": [
+          {
+            "text": "ମୋତେ",
+            "gloss": "To me",
+            "label": "ମୋତେ, To me"
+          },
+          {
+            "text": "ମୋଟେ",
+            "gloss": "At all",
+            "label": "ମୋଟେ, At all"
+          },
+          {
+            "text": "3Keepmote",
+            "gloss": "",
+            "label": "Keep \"mote\", as typed"
+          }
+        ]
+      },
+      {
+        "input": "phone",
+        "candidates": [
+          {
+            "text": "ଫୋନେ",
+            "gloss": "not a known word",
+            "label": "ଫୋନେ, not a known word"
+          },
+          {
+            "text": "ଫୋଣେ",
+            "gloss": "not a known word",
+            "label": "ଫୋଣେ, not a known word"
+          },
+          {
+            "text": "ପ୍ହୋନେ",
+            "gloss": "not a known word",
+            "label": "ପ୍ହୋନେ, not a known word"
+          },
+          {
+            "text": "ପ୍ହୋଣେ",
+            "gloss": "not a known word",
+            "label": "ପ୍ହୋଣେ, not a known word"
+          },
+          {
+            "text": "5Keepphone",
+            "gloss": "",
+            "label": "Keep \"phone\", as typed"
+          }
+        ]
+      },
+      {
+        "input": "kara",
+        "candidates": [
+          {
+            "text": "କର",
+            "gloss": "Ray of light",
+            "label": "କର, Ray of light"
+          },
+          {
+            "text": "କାର",
+            "gloss": "car",
+            "label": "କାର, car"
+          },
+          {
+            "text": "କରା",
+            "gloss": "Kachiḻā (See)",
+            "label": "କରା, Kachiḻā (See)"
+          },
+          {
+            "text": "କଡ଼",
+            "gloss": "Edible",
+            "label": "କଡ଼, Edible"
+          },
+          {
+            "text": "କାରା",
+            "gloss": "Jail",
+            "label": "କାରା, Jail"
+          },
+          {
+            "text": "କଡ଼ା",
+            "gloss": "Irritated",
+            "label": "କଡ଼ା, Irritated"
+          },
+          {
+            "text": "କରାଅ",
+            "gloss": "maybe: Kachiḻā (See)",
+            "label": "କରାଅ, maybe: Kachiḻā (See)"
+          },
+          {
+            "text": "କାଡ଼",
+            "gloss": "not a known word",
+            "label": "କାଡ଼, not a known word"
+          },
+          {
+            "text": "9Keepkara",
+            "gloss": "",
+            "label": "Keep \"kara\", as typed"
+          }
+        ]
+      }
+    ],
+    "errors": []
+  },
+  {
+    "id": "work",
+    "input": "aji office re meeting achhi",
+    "output": "ଆଜି ଓଫ୍ଫିଚେ ରେ ମୀତିଙ ଅଛି ",
+    "readback": "aaji ophphiche re miitinga achhi",
+    "tokens": [
+      {
+        "input": "aji",
+        "candidates": [
+          {
+            "text": "ଆଜି",
+            "gloss": "today",
+            "label": "ଆଜି, today"
+          },
+          {
+            "text": "ଅଜି",
+            "gloss": "Glamour",
+            "label": "ଅଜି, Glamour"
+          },
+          {
+            "text": "ଅଜୀ",
+            "gloss": "not a known word",
+            "label": "ଅଜୀ, not a known word"
+          },
+          {
+            "text": "ଆଜୀ",
+            "gloss": "not a known word",
+            "label": "ଆଜୀ, not a known word"
+          },
+          {
+            "text": "5Keepaji",
+            "gloss": "",
+            "label": "Keep \"aji\", as typed"
+          }
+        ]
+      },
+      {
+        "input": "office",
+        "candidates": [
+          {
+            "text": "ଓଫ୍ଫିଚେ",
+            "gloss": "not a known word",
+            "label": "ଓଫ୍ଫିଚେ, not a known word"
+          },
+          {
+            "text": "ଓଫ୍ଫିକେ",
+            "gloss": "not a known word",
+            "label": "ଓଫ୍ଫିକେ, not a known word"
+          },
+          {
+            "text": "ଓଫ୍ଫୀଚେ",
+            "gloss": "not a known word",
+            "label": "ଓଫ୍ଫୀଚେ, not a known word"
+          },
+          {
+            "text": "ଓଫ୍ଫୀକେ",
+            "gloss": "not a known word",
+            "label": "ଓଫ୍ଫୀକେ, not a known word"
+          },
+          {
+            "text": "5Keepoffice",
+            "gloss": "",
+            "label": "Keep \"office\", as typed"
+          }
+        ]
+      },
+      {
+        "input": "re",
+        "candidates": [
+          {
+            "text": "ରେ",
+            "gloss": "in fess",
+            "label": "ରେ, in fess"
+          },
+          {
+            "text": "ରେଂ",
+            "gloss": "maybe: in fess",
+            "label": "ରେଂ, maybe: in fess"
+          },
+          {
+            "text": "3Keepre",
+            "gloss": "",
+            "label": "Keep \"re\", as typed"
+          }
+        ]
+      },
+      {
+        "input": "meeting",
+        "candidates": [
+          {
+            "text": "ମୀତିଙ",
+            "gloss": "not a known word",
+            "label": "ମୀତିଙ, not a known word"
+          },
+          {
+            "text": "ମୀତିଙ୍ଗ",
+            "gloss": "not a known word",
+            "label": "ମୀତିଙ୍ଗ, not a known word"
+          },
+          {
+            "text": "ମେଏତିଙ",
+            "gloss": "not a known word",
+            "label": "ମେଏତିଙ, not a known word"
+          },
+          {
+            "text": "ମୀତିଂ",
+            "gloss": "not a known word",
+            "label": "ମୀତିଂ, not a known word"
+          },
+          {
+            "text": "ମେଏତିଙ୍ଗ",
+            "gloss": "not a known word",
+            "label": "ମେଏତିଙ୍ଗ, not a known word"
+          },
+          {
+            "text": "ମୀଟିଙ",
+            "gloss": "not a known word",
+            "label": "ମୀଟିଙ, not a known word"
+          },
+          {
+            "text": "ମୀଟିଂ",
+            "gloss": "not a known word",
+            "label": "ମୀଟିଂ, not a known word"
+          },
+          {
+            "text": "ମେଏଟିଙ୍ଗ",
+            "gloss": "not a known word",
+            "label": "ମେଏଟିଙ୍ଗ, not a known word"
+          },
+          {
+            "text": "9Keepmeeting",
+            "gloss": "",
+            "label": "Keep \"meeting\", as typed"
+          }
+        ]
+      },
+      {
+        "input": "achhi",
+        "candidates": [
+          {
+            "text": "ଅଛି",
+            "gloss": "have",
+            "label": "ଅଛି, have"
+          },
+          {
+            "text": "ଆଛି",
+            "gloss": "not a known word",
+            "label": "ଆଛି, not a known word"
+          },
+          {
+            "text": "ଅଛୀ",
+            "gloss": "not a known word",
+            "label": "ଅଛୀ, not a known word"
+          },
+          {
+            "text": "ଆଛୀ",
+            "gloss": "not a known word",
+            "label": "ଆଛୀ, not a known word"
+          },
+          {
+            "text": "ଅଚ୍ହି",
+            "gloss": "not a known word",
+            "label": "ଅଚ୍ହି, not a known word"
+          },
+          {
+            "text": "ଅଛ୍ହି",
+            "gloss": "not a known word",
+            "label": "ଅଛ୍ହି, not a known word"
+          },
+          {
+            "text": "ଅକ୍ହ୍ହି",
+            "gloss": "not a known word",
+            "label": "ଅକ୍ହ୍ହି, not a known word"
+          },
+          {
+            "text": "ଆଛ୍ହି",
+            "gloss": "not a known word",
+            "label": "ଆଛ୍ହି, not a known word"
+          },
+          {
+            "text": "9Keepachhi",
+            "gloss": "",
+            "label": "Keep \"achhi\", as typed"
+          }
+        ]
+      }
+    ],
+    "errors": []
+  },
+  {
+    "id": "message",
+    "input": "mote message pathao",
+    "output": "ମୋତେ ମେଷଗେ ପଥଓ ",
+    "readback": "mote meshage pathao",
+    "tokens": [
+      {
+        "input": "mote",
+        "candidates": [
+          {
+            "text": "ମୋତେ",
+            "gloss": "To me",
+            "label": "ମୋତେ, To me"
+          },
+          {
+            "text": "ମୋଟେ",
+            "gloss": "At all",
+            "label": "ମୋଟେ, At all"
+          },
+          {
+            "text": "3Keepmote",
+            "gloss": "",
+            "label": "Keep \"mote\", as typed"
+          }
+        ]
+      },
+      {
+        "input": "message",
+        "candidates": [
+          {
+            "text": "ମେଷଗେ",
+            "gloss": "maybe: Ram",
+            "label": "ମେଷଗେ, maybe: Ram"
+          },
+          {
+            "text": "ମେଷାଗେ",
+            "gloss": "maybe: Ram",
+            "label": "ମେଷାଗେ, maybe: Ram"
+          },
+          {
+            "text": "ମେସ୍ସଗେ",
+            "gloss": "not a known word",
+            "label": "ମେସ୍ସଗେ, not a known word"
+          },
+          {
+            "text": "ମେଶ୍ସଗେ",
+            "gloss": "not a known word",
+            "label": "ମେଶ୍ସଗେ, not a known word"
+          },
+          {
+            "text": "ମେସ୍ଶଗେ",
+            "gloss": "not a known word",
+            "label": "ମେସ୍ଶଗେ, not a known word"
+          },
+          {
+            "text": "ମେସ୍ସାଗେ",
+            "gloss": "not a known word",
+            "label": "ମେସ୍ସାଗେ, not a known word"
+          },
+          {
+            "text": "ମେଶ୍ସାଗେ",
+            "gloss": "not a known word",
+            "label": "ମେଶ୍ସାଗେ, not a known word"
+          },
+          {
+            "text": "ମେସ୍ଶାଗେ",
+            "gloss": "not a known word",
+            "label": "ମେସ୍ଶାଗେ, not a known word"
+          },
+          {
+            "text": "9Keepmessage",
+            "gloss": "",
+            "label": "Keep \"message\", as typed"
+          }
+        ]
+      },
+      {
+        "input": "pathao",
+        "candidates": [
+          {
+            "text": "ପଥଓ",
+            "gloss": "not a known word",
+            "label": "ପଥଓ, not a known word"
+          },
+          {
+            "text": "ପଠଓ",
+            "gloss": "not a known word",
+            "label": "ପଠଓ, not a known word"
+          },
+          {
+            "text": "ପଥାଓ",
+            "gloss": "not a known word",
+            "label": "ପଥାଓ, not a known word"
+          },
+          {
+            "text": "ପାଥଓ",
+            "gloss": "maybe: Sun",
+            "label": "ପାଥଓ, maybe: Sun"
+          },
+          {
+            "text": "ପଠାଓ",
+            "gloss": "maybe: Carbuncle",
+            "label": "ପଠାଓ, maybe: Carbuncle"
+          },
+          {
+            "text": "ପାଠଓ",
+            "gloss": "maybe: Reading of any written matter",
+            "label": "ପାଠଓ, maybe: Reading of any written matter"
+          },
+          {
+            "text": "ପଟ୍ହଓ",
+            "gloss": "maybe: Flax",
+            "label": "ପଟ୍ହଓ, maybe: Flax"
+          },
+          {
+            "text": "ପତ୍ହାଓ",
+            "gloss": "not a known word",
+            "label": "ପତ୍ହାଓ, not a known word"
+          },
+          {
+            "text": "9Keeppathao",
+            "gloss": "",
+            "label": "Keep \"pathao\", as typed"
+          }
+        ]
+      }
+    ],
+    "errors": []
+  },
+  {
+    "id": "video",
+    "input": "mu video dekhuchi",
+    "output": "ମୁ ବିଦେଓ ଦେଖୁଚି ",
+    "readback": "mu bideo dekhuchi",
+    "tokens": [
+      {
+        "input": "mu",
+        "candidates": [
+          {
+            "text": "ମୁ",
+            "gloss": "At",
+            "label": "ମୁ, At"
+          },
+          {
+            "text": "ମୁଁ",
+            "gloss": "the i",
+            "label": "ମୁଁ, the i"
+          },
+          {
+            "text": "ମୂ",
+            "gloss": "Binding",
+            "label": "ମୂ, Binding"
+          },
+          {
+            "text": "ମୁଂ",
+            "gloss": "maybe: At",
+            "label": "ମୁଂ, maybe: At"
+          },
+          {
+            "text": "ମୂଂ",
+            "gloss": "maybe: Binding",
+            "label": "ମୂଂ, maybe: Binding"
+          },
+          {
+            "text": "6Keepmu",
+            "gloss": "",
+            "label": "Keep \"mu\", as typed"
+          }
+        ]
+      },
+      {
+        "input": "video",
+        "candidates": [
+          {
+            "text": "ବିଦେଓ",
+            "gloss": "maybe: Learned man",
+            "label": "ବିଦେଓ, maybe: Learned man"
+          },
+          {
+            "text": "ବିଡ଼େଓ",
+            "gloss": "maybe: Ordure",
+            "label": "ବିଡ଼େଓ, maybe: Ordure"
+          },
+          {
+            "text": "ବିଡେଓ",
+            "gloss": "not a known word",
+            "label": "ବିଡେଓ, not a known word"
+          },
+          {
+            "text": "ବୀଦେଓ",
+            "gloss": "not a known word",
+            "label": "ବୀଦେଓ, not a known word"
+          },
+          {
+            "text": "ୱିଦେଓ",
+            "gloss": "maybe: Learned man",
+            "label": "ୱିଦେଓ, maybe: Learned man"
+          },
+          {
+            "text": "ବୀଡ଼େଓ",
+            "gloss": "not a known word",
+            "label": "ବୀଡ଼େଓ, not a known word"
+          },
+          {
+            "text": "ୱୀଦେଓ",
+            "gloss": "not a known word",
+            "label": "ୱୀଦେଓ, not a known word"
+          },
+          {
+            "text": "ୱୀଡ଼େଓ",
+            "gloss": "not a known word",
+            "label": "ୱୀଡ଼େଓ, not a known word"
+          },
+          {
+            "text": "9Keepvideo",
+            "gloss": "",
+            "label": "Keep \"video\", as typed"
+          }
+        ]
+      },
+      {
+        "input": "dekhuchi",
+        "candidates": [
+          {
+            "text": "ଦେଖୁଚି",
+            "gloss": "not a known word",
+            "label": "ଦେଖୁଚି, not a known word"
+          },
+          {
+            "text": "ଦେଖୁଛି",
+            "gloss": "not a known word",
+            "label": "ଦେଖୁଛି, not a known word"
+          },
+          {
+            "text": "ଡେଖୁଚି",
+            "gloss": "not a known word",
+            "label": "ଡେଖୁଚି, not a known word"
+          },
+          {
+            "text": "ଡେଖୁଛି",
+            "gloss": "not a known word",
+            "label": "ଡେଖୁଛି, not a known word"
+          },
+          {
+            "text": "ଦେଖୁଚୀ",
+            "gloss": "not a known word",
+            "label": "ଦେଖୁଚୀ, not a known word"
+          },
+          {
+            "text": "ଦେଖୂଚି",
+            "gloss": "not a known word",
+            "label": "ଦେଖୂଚି, not a known word"
+          },
+          {
+            "text": "ଦେଖୂଛି",
+            "gloss": "not a known word",
+            "label": "ଦେଖୂଛି, not a known word"
+          },
+          {
+            "text": "ଡେଖୁଛୀ",
+            "gloss": "not a known word",
+            "label": "ଡେଖୁଛୀ, not a known word"
+          },
+          {
+            "text": "9Keepdekhuchi",
+            "gloss": "",
+            "label": "Keep \"dekhuchi\", as typed"
+          }
+        ]
+      }
+    ],
+    "errors": []
+  },
+  {
+    "id": "loan-phonetic",
+    "input": "mo mobail re internet chaluni",
+    "output": "ମୋ ମୋବାଇଲ ରେ ଇନ୍ତେର୍ନେତ ଚଲୁନି ",
+    "readback": "mo mobaaila re interneta chaluni",
+    "tokens": [
+      {
+        "input": "mo",
+        "candidates": [
+          {
+            "text": "ମୋ",
+            "gloss": "mo",
+            "label": "ମୋ, mo"
+          },
+          {
+            "text": "ମୋଂ",
+            "gloss": "maybe: mo",
+            "label": "ମୋଂ, maybe: mo"
+          },
+          {
+            "text": "3Keepmo",
+            "gloss": "",
+            "label": "Keep \"mo\", as typed"
+          }
+        ]
+      },
+      {
+        "input": "mobail",
+        "candidates": [
+          {
+            "text": "ମୋବାଇଲ",
+            "gloss": "not a known word",
+            "label": "ମୋବାଇଲ, not a known word"
+          },
+          {
+            "text": "ମୋବାଇଲ୍",
+            "gloss": "mobile internet",
+            "label": "ମୋବାଇଲ୍, mobile internet"
+          },
+          {
+            "text": "ମୋବୈଲ",
+            "gloss": "not a known word",
+            "label": "ମୋବୈଲ, not a known word"
+          },
+          {
+            "text": "ମୋବୈଳ",
+            "gloss": "not a known word",
+            "label": "ମୋବୈଳ, not a known word"
+          },
+          {
+            "text": "ମୋବଇଲ",
+            "gloss": "not a known word",
+            "label": "ମୋବଇଲ, not a known word"
+          },
+          {
+            "text": "ମୋବଇଳ",
+            "gloss": "not a known word",
+            "label": "ମୋବଇଳ, not a known word"
+          },
+          {
+            "text": "ମୋବଇଳ୍",
+            "gloss": "not a known word",
+            "label": "ମୋବଇଳ୍, not a known word"
+          },
+          {
+            "text": "ମୋବାଇଳ",
+            "gloss": "not a known word",
+            "label": "ମୋବାଇଳ, not a known word"
+          },
+          {
+            "text": "9Keepmobail",
+            "gloss": "",
+            "label": "Keep \"mobail\", as typed"
+          }
+        ]
+      },
+      {
+        "input": "re",
+        "candidates": [
+          {
+            "text": "ରେ",
+            "gloss": "in fess",
+            "label": "ରେ, in fess"
+          },
+          {
+            "text": "ରେଂ",
+            "gloss": "maybe: in fess",
+            "label": "ରେଂ, maybe: in fess"
+          },
+          {
+            "text": "3Keepre",
+            "gloss": "",
+            "label": "Keep \"re\", as typed"
+          }
+        ]
+      },
+      {
+        "input": "internet",
+        "candidates": [
+          {
+            "text": "ଇନ୍ତେର୍ନେତ",
+            "gloss": "maybe: A suffis added to the roots (of verbs)",
+            "label": "ଇନ୍ତେର୍ନେତ, maybe: A suffis added to the roots (of verbs)"
+          },
+          {
+            "text": "ଇନ୍ଟେର୍ନେତ",
+            "gloss": "maybe: A suffis added to the roots (of verbs)",
+            "label": "ଇନ୍ଟେର୍ନେତ, maybe: A suffis added to the roots (of verbs)"
+          },
+          {
+            "text": "ଇନ୍ତେର୍ନେଟ",
+            "gloss": "maybe: A suffis added to the roots (of verbs)",
+            "label": "ଇନ୍ତେର୍ନେଟ, maybe: A suffis added to the roots (of verbs)"
+          },
+          {
+            "text": "ଇନ୍ଟେର୍ନେଟ",
+            "gloss": "maybe: A suffis added to the roots (of verbs)",
+            "label": "ଇନ୍ଟେର୍ନେଟ, maybe: A suffis added to the roots (of verbs)"
+          },
+          {
+            "text": "ଇଣ୍ତେର୍ନେତ",
+            "gloss": "not a known word",
+            "label": "ଇଣ୍ତେର୍ନେତ, not a known word"
+          },
+          {
+            "text": "ଇନ୍ତେର୍ଣେତ",
+            "gloss": "maybe: A suffis added to the roots (of verbs)",
+            "label": "ଇନ୍ତେର୍ଣେତ, maybe: A suffis added to the roots (of verbs)"
+          },
+          {
+            "text": "ଇଣ୍ତେର୍ନେଟ",
+            "gloss": "not a known word",
+            "label": "ଇଣ୍ତେର୍ନେଟ, not a known word"
+          },
+          {
+            "text": "ଇନ୍ଟେର୍ଣେତ",
+            "gloss": "maybe: A suffis added to the roots (of verbs)",
+            "label": "ଇନ୍ଟେର୍ଣେତ, maybe: A suffis added to the roots (of verbs)"
+          },
+          {
+            "text": "9Keepinternet",
+            "gloss": "",
+            "label": "Keep \"internet\", as typed"
+          }
+        ]
+      },
+      {
+        "input": "chaluni",
+        "candidates": [
+          {
+            "text": "ଚଲୁନି",
+            "gloss": "not a known word",
+            "label": "ଚଲୁନି, not a known word"
+          },
+          {
+            "text": "ଚଳୁନି",
+            "gloss": "maybe: The hollow of an open palm",
+            "label": "ଚଳୁନି, maybe: The hollow of an open palm"
+          },
+          {
+            "text": "ଚଲୁଣି",
+            "gloss": "not a known word",
+            "label": "ଚଲୁଣି, not a known word"
+          },
+          {
+            "text": "ଛଲୁନି",
+            "gloss": "not a known word",
+            "label": "ଛଲୁନି, not a known word"
+          },
+          {
+            "text": "ଚଳୁଣି",
+            "gloss": "maybe: The hollow of an open palm",
+            "label": "ଚଳୁଣି, maybe: The hollow of an open palm"
+          },
+          {
+            "text": "ଛଳୁନି",
+            "gloss": "not a known word",
+            "label": "ଛଳୁନି, not a known word"
+          },
+          {
+            "text": "ଚଳୁନୀ",
+            "gloss": "maybe: The hollow of an open palm",
+            "label": "ଚଳୁନୀ, maybe: The hollow of an open palm"
+          },
+          {
+            "text": "ଚଲୂନି",
+            "gloss": "not a known word",
+            "label": "ଚଲୂନି, not a known word"
+          },
+          {
+            "text": "9Keepchaluni",
+            "gloss": "",
+            "label": "Keep \"chaluni\", as typed"
+          }
+        ]
+      }
+    ],
+    "errors": []
+  },
+  {
+    "id": "mixed",
+    "input": "WhatsApp re photo pathao",
+    "output": "ୱ୍ହତ୍ସପ୍ପ ରେ ଫୋଟୋ ପଥଓ ",
+    "readback": "whatsappa re photo pathao",
+    "tokens": [
+      {
+        "input": "WhatsApp",
+        "candidates": [
+          {
+            "text": "ୱ୍ହତ୍ସପ୍ପ",
+            "gloss": "not a known word",
+            "label": "ୱ୍ହତ୍ସପ୍ପ, not a known word"
+          },
+          {
+            "text": "ୱ୍ହଟ୍ସପ୍ପ",
+            "gloss": "not a known word",
+            "label": "ୱ୍ହଟ୍ସପ୍ପ, not a known word"
+          },
+          {
+            "text": "ୱ୍ହତ୍ସପ୍ପ୍",
+            "gloss": "not a known word",
+            "label": "ୱ୍ହତ୍ସପ୍ପ୍, not a known word"
+          },
+          {
+            "text": "ୱ୍ହତ୍ଶପ୍ପ",
+            "gloss": "not a known word",
+            "label": "ୱ୍ହତ୍ଶପ୍ପ, not a known word"
+          },
+          {
+            "text": "ୱ୍ହତ୍ସାପ୍ପ",
+            "gloss": "not a known word",
+            "label": "ୱ୍ହତ୍ସାପ୍ପ, not a known word"
+          },
+          {
+            "text": "ୱ୍ହାତ୍ସପ୍ପ",
+            "gloss": "not a known word",
+            "label": "ୱ୍ହାତ୍ସପ୍ପ, not a known word"
+          },
+          {
+            "text": "ୱ୍ହାଟ୍ସପ୍ପ",
+            "gloss": "not a known word",
+            "label": "ୱ୍ହାଟ୍ସପ୍ପ, not a known word"
+          },
+          {
+            "text": "ୱ୍ହତ୍ଷପ୍ପ",
+            "gloss": "not a known word",
+            "label": "ୱ୍ହତ୍ଷପ୍ପ, not a known word"
+          },
+          {
+            "text": "9KeepWhatsApp",
+            "gloss": "",
+            "label": "Keep \"WhatsApp\", as typed"
+          }
+        ]
+      },
+      {
+        "input": "re",
+        "candidates": [
+          {
+            "text": "ରେ",
+            "gloss": "in fess",
+            "label": "ରେ, in fess"
+          },
+          {
+            "text": "ରେଂ",
+            "gloss": "maybe: in fess",
+            "label": "ରେଂ, maybe: in fess"
+          },
+          {
+            "text": "3Keepre",
+            "gloss": "",
+            "label": "Keep \"re\", as typed"
+          }
+        ]
+      },
+      {
+        "input": "photo",
+        "candidates": [
+          {
+            "text": "ଫୋଟୋ",
+            "gloss": "Photo · from English",
+            "label": "ଫୋଟୋ, Photo, from English"
+          },
+          {
+            "text": "ଫୋତୋ",
+            "gloss": "not a known word",
+            "label": "ଫୋତୋ, not a known word"
+          },
+          {
+            "text": "ପ୍ହୋତୋ",
+            "gloss": "not a known word",
+            "label": "ପ୍ହୋତୋ, not a known word"
+          },
+          {
+            "text": "ପ୍ହୋଟୋ",
+            "gloss": "not a known word",
+            "label": "ପ୍ହୋଟୋ, not a known word"
+          },
+          {
+            "text": "5Keepphoto",
+            "gloss": "",
+            "label": "Keep \"photo\", as typed"
+          }
+        ]
+      },
+      {
+        "input": "pathao",
+        "candidates": [
+          {
+            "text": "ପଥଓ",
+            "gloss": "not a known word",
+            "label": "ପଥଓ, not a known word"
+          },
+          {
+            "text": "ପଠଓ",
+            "gloss": "not a known word",
+            "label": "ପଠଓ, not a known word"
+          },
+          {
+            "text": "ପଥାଓ",
+            "gloss": "not a known word",
+            "label": "ପଥାଓ, not a known word"
+          },
+          {
+            "text": "ପାଥଓ",
+            "gloss": "maybe: Sun",
+            "label": "ପାଥଓ, maybe: Sun"
+          },
+          {
+            "text": "ପଠାଓ",
+            "gloss": "maybe: Carbuncle",
+            "label": "ପଠାଓ, maybe: Carbuncle"
+          },
+          {
+            "text": "ପାଠଓ",
+            "gloss": "maybe: Reading of any written matter",
+            "label": "ପାଠଓ, maybe: Reading of any written matter"
+          },
+          {
+            "text": "ପଟ୍ହଓ",
+            "gloss": "maybe: Flax",
+            "label": "ପଟ୍ହଓ, maybe: Flax"
+          },
+          {
+            "text": "ପତ୍ହାଓ",
+            "gloss": "not a known word",
+            "label": "ପତ୍ହାଓ, not a known word"
+          },
+          {
+            "text": "9Keeppathao",
+            "gloss": "",
+            "label": "Keep \"pathao\", as typed"
+          }
+        ]
+      }
+    ],
+    "errors": []
+  },
+  {
+    "id": "user-recording",
+    "input": "namaskar mun heuchi eka nua app odia bhasa lekhiba pain",
+    "output": "ନମସ୍କାର ମୁଁ ହେଉଛି ଏକ ନୂଆ ଆପ୍ ଓଡ଼ିଆ ଭସ ଲେଖିବା ପାଇଁ ",
+    "readback": "namaskaara mun heuchhi eka nuuaa aap odiaa bhasa lekhibaa paain",
+    "tokens": [
+      {
+        "input": "namaskar",
+        "candidates": [
+          {
+            "text": "ନମସ୍କାର",
+            "gloss": "hello",
+            "label": "ନମସ୍କାର, hello"
+          },
+          {
+            "text": "ନମସ୍କର",
+            "gloss": "not a known word",
+            "label": "ନମସ୍କର, not a known word"
+          },
+          {
+            "text": "ଣମସ୍କର",
+            "gloss": "not a known word",
+            "label": "ଣମସ୍କର, not a known word"
+          },
+          {
+            "text": "ନମସ୍କର୍",
+            "gloss": "not a known word",
+            "label": "ନମସ୍କର୍, not a known word"
+          },
+          {
+            "text": "ନମଶ୍କର",
+            "gloss": "not a known word",
+            "label": "ନମଶ୍କର, not a known word"
+          },
+          {
+            "text": "ନମାସ୍କର",
+            "gloss": "not a known word",
+            "label": "ନମାସ୍କର, not a known word"
+          },
+          {
+            "text": "ଣମଶ୍କର",
+            "gloss": "not a known word",
+            "label": "ଣମଶ୍କର, not a known word"
+          },
+          {
+            "text": "ଣମସ୍କାର",
+            "gloss": "not a known word",
+            "label": "ଣମସ୍କାର, not a known word"
+          },
+          {
+            "text": "9Keepnamaskar",
+            "gloss": "",
+            "label": "Keep \"namaskar\", as typed"
+          }
+        ]
+      },
+      {
+        "input": "mun",
+        "candidates": [
+          {
+            "text": "ମୁଁ",
+            "gloss": "the i",
+            "label": "ମୁଁ, the i"
+          },
+          {
+            "text": "ମୁଂ",
+            "gloss": "maybe: At",
+            "label": "ମୁଂ, maybe: At"
+          },
+          {
+            "text": "ମୁନ",
+            "gloss": "not a known word",
+            "label": "ମୁନ, not a known word"
+          },
+          {
+            "text": "ମୁନ୍",
+            "gloss": "not a known word",
+            "label": "ମୁନ୍, not a known word"
+          },
+          {
+            "text": "ମୁନା",
+            "gloss": "A sharp-pointed weapon",
+            "label": "ମୁନା, A sharp-pointed weapon"
+          },
+          {
+            "text": "ମୂନ",
+            "gloss": "not a known word",
+            "label": "ମୂନ, not a known word"
+          },
+          {
+            "text": "ମୂଂ",
+            "gloss": "maybe: Binding",
+            "label": "ମୂଂ, maybe: Binding"
+          },
+          {
+            "text": "ମୁଣ୍",
+            "gloss": "not a known word",
+            "label": "ମୁଣ୍, not a known word"
+          },
+          {
+            "text": "9Keepmun",
+            "gloss": "",
+            "label": "Keep \"mun\", as typed"
+          }
+        ]
+      },
+      {
+        "input": "heuchi",
+        "candidates": [
+          {
+            "text": "ହେଉଛି",
+            "gloss": "is",
+            "label": "ହେଉଛି, is"
+          },
+          {
+            "text": "ହେଉଚି",
+            "gloss": "maybe: Let him or her or it be",
+            "label": "ହେଉଚି, maybe: Let him or her or it be"
+          },
+          {
+            "text": "ହେଉଚୀ",
+            "gloss": "maybe: Let him or her or it be",
+            "label": "ହେଉଚୀ, maybe: Let him or her or it be"
+          },
+          {
+            "text": "ହେଊଚି",
+            "gloss": "not a known word",
+            "label": "ହେଊଚି, not a known word"
+          },
+          {
+            "text": "ହେଉଛୀ",
+            "gloss": "maybe: Let him or her or it be",
+            "label": "ହେଉଛୀ, maybe: Let him or her or it be"
+          },
+          {
+            "text": "ହେଊଛି",
+            "gloss": "not a known word",
+            "label": "ହେଊଛି, not a known word"
+          },
+          {
+            "text": "ହେଉକ୍ହି",
+            "gloss": "maybe: Let him or her or it be",
+            "label": "ହେଉକ୍ହି, maybe: Let him or her or it be"
+          },
+          {
+            "text": "ହେଉଚ୍ହୀ",
+            "gloss": "maybe: Let him or her or it be",
+            "label": "ହେଉଚ୍ହୀ, maybe: Let him or her or it be"
+          },
+          {
+            "text": "9Keepheuchi",
+            "gloss": "",
+            "label": "Keep \"heuchi\", as typed"
+          }
+        ]
+      },
+      {
+        "input": "eka",
+        "candidates": [
+          {
+            "text": "ଏକ",
+            "gloss": "One",
+            "label": "ଏକ, One"
+          },
+          {
+            "text": "ଏକା",
+            "gloss": "Single",
+            "label": "ଏକା, Single"
+          },
+          {
+            "text": "ଏକ୍କା",
+            "gloss": "Ekā (See)",
+            "label": "ଏକ୍କା, Ekā (See)"
+          },
+          {
+            "text": "ଏକଂ",
+            "gloss": "maybe: One",
+            "label": "ଏକଂ, maybe: One"
+          },
+          {
+            "text": "ଏକଃ",
+            "gloss": "maybe: One",
+            "label": "ଏକଃ, maybe: One"
+          },
+          {
+            "text": "6Keepeka",
+            "gloss": "",
+            "label": "Keep \"eka\", as typed"
+          }
+        ]
+      },
+      {
+        "input": "nua",
+        "candidates": [
+          {
+            "text": "ନୂଆ",
+            "gloss": "New",
+            "label": "ନୂଆ, New"
+          },
+          {
+            "text": "ନୁଆ",
+            "gloss": "not a known word",
+            "label": "ନୁଆ, not a known word"
+          },
+          {
+            "text": "ନୁଅ",
+            "gloss": "not a known word",
+            "label": "ନୁଅ, not a known word"
+          },
+          {
+            "text": "ନୂଆଁ",
+            "gloss": "maybe: New",
+            "label": "ନୂଆଁ, maybe: New"
+          },
+          {
+            "text": "ଣୁଅ",
+            "gloss": "not a known word",
+            "label": "ଣୁଅ, not a known word"
+          },
+          {
+            "text": "ନୂଅ",
+            "gloss": "not a known word",
+            "label": "ନୂଅ, not a known word"
+          },
+          {
+            "text": "ଣୁଆ",
+            "gloss": "not a known word",
+            "label": "ଣୁଆ, not a known word"
+          },
+          {
+            "text": "ଣୂଅ",
+            "gloss": "not a known word",
+            "label": "ଣୂଅ, not a known word"
+          },
+          {
+            "text": "9Keepnua",
+            "gloss": "",
+            "label": "Keep \"nua\", as typed"
+          }
+        ]
+      },
+      {
+        "input": "app",
+        "candidates": [
+          {
+            "text": "ଆପ୍",
+            "gloss": "app",
+            "label": "ଆପ୍, app"
+          },
+          {
+            "text": "ଏପ୍",
+            "gloss": "not a known word",
+            "label": "ଏପ୍, not a known word"
+          },
+          {
+            "text": "ଅପ୍ପ",
+            "gloss": "maybe: Water",
+            "label": "ଅପ୍ପ, maybe: Water"
+          },
+          {
+            "text": "ଅପ୍ପ୍",
+            "gloss": "maybe: Water",
+            "label": "ଅପ୍ପ୍, maybe: Water"
+          },
+          {
+            "text": "ଆପ୍ପ",
+            "gloss": "maybe: Self one's self",
+            "label": "ଆପ୍ପ, maybe: Self one's self"
+          },
+          {
+            "text": "ଆପ୍ପ୍",
+            "gloss": "maybe: Self one's self",
+            "label": "ଆପ୍ପ୍, maybe: Self one's self"
+          },
+          {
+            "text": "7Keepapp",
+            "gloss": "",
+            "label": "Keep \"app\", as typed"
+          }
+        ]
+      },
+      {
+        "input": "odia",
+        "candidates": [
+          {
+            "text": "ଓଡ଼ିଆ",
+            "gloss": "Odia (language)",
+            "label": "ଓଡ଼ିଆ, Odia (language)"
+          },
+          {
+            "text": "ଓଡିଆ",
+            "gloss": "odyssey",
+            "label": "ଓଡିଆ, odyssey"
+          },
+          {
+            "text": "ଓଡ଼ିଅ",
+            "gloss": "maybe: Belching",
+            "label": "ଓଡ଼ିଅ, maybe: Belching"
+          },
+          {
+            "text": "ଓଡିଅ",
+            "gloss": "not a known word",
+            "label": "ଓଡିଅ, not a known word"
+          },
+          {
+            "text": "ଓଦିଅ",
+            "gloss": "not a known word",
+            "label": "ଓଦିଅ, not a known word"
+          },
+          {
+            "text": "ଓଦିଆ",
+            "gloss": "not a known word",
+            "label": "ଓଦିଆ, not a known word"
+          },
+          {
+            "text": "ଓଦୀଆ",
+            "gloss": "not a known word",
+            "label": "ଓଦୀଆ, not a known word"
+          },
+          {
+            "text": "ଓଡ଼ୀଆ",
+            "gloss": "maybe: The original people inhabiting the Utkaḻa country",
+            "label": "ଓଡ଼ୀଆ, maybe: The original people inhabiting the Utkaḻa country"
+          },
+          {
+            "text": "9Keepodia",
+            "gloss": "",
+            "label": "Keep \"odia\", as typed"
+          }
+        ]
+      },
+      {
+        "input": "bhasa",
+        "candidates": [
+          {
+            "text": "ଭସ",
+            "gloss": "not a known word",
+            "label": "ଭସ, not a known word"
+          },
+          {
+            "text": "ଭାସ",
+            "gloss": "Lustre",
+            "label": "ଭାସ, Lustre"
+          },
+          {
+            "text": "ଭସା",
+            "gloss": "The act of floating a thing on water",
+            "label": "ଭସା, The act of floating a thing on water"
+          },
+          {
+            "text": "ଭଷା",
+            "gloss": "not a known word",
+            "label": "ଭଷା, not a known word"
+          },
+          {
+            "text": "ଭଶ",
+            "gloss": "not a known word",
+            "label": "ଭଶ, not a known word"
+          },
+          {
+            "text": "ଭଷ",
+            "gloss": "not a known word",
+            "label": "ଭଷ, not a known word"
+          },
+          {
+            "text": "ଭାସା",
+            "gloss": "Lustre",
+            "label": "ଭାସା, Lustre"
+          },
+          {
+            "text": "ଭାଶା",
+            "gloss": "not a known word",
+            "label": "ଭାଶା, not a known word"
+          },
+          {
+            "text": "9Keepbhasa",
+            "gloss": "",
+            "label": "Keep \"bhasa\", as typed"
+          }
+        ]
+      },
+      {
+        "input": "lekhiba",
+        "candidates": [
+          {
+            "text": "ଲେଖିବା",
+            "gloss": "writing",
+            "label": "ଲେଖିବା, writing"
+          },
+          {
+            "text": "ଲେଖିବ",
+            "gloss": "maybe: Counted as",
+            "label": "ଲେଖିବ, maybe: Counted as"
+          },
+          {
+            "text": "ଲେଖୀବ",
+            "gloss": "maybe: Deity",
+            "label": "ଲେଖୀବ, maybe: Deity"
+          },
+          {
+            "text": "ଲେଖୀବା",
+            "gloss": "maybe: Deity",
+            "label": "ଲେଖୀବା, maybe: Deity"
+          },
+          {
+            "text": "ଲେକ୍ହିବ",
+            "gloss": "not a known word",
+            "label": "ଲେକ୍ହିବ, not a known word"
+          },
+          {
+            "text": "ଲେକ୍ହିବା",
+            "gloss": "not a known word",
+            "label": "ଲେକ୍ହିବା, not a known word"
+          },
+          {
+            "text": "ଳେଖିବା",
+            "gloss": "not a known word",
+            "label": "ଳେଖିବା, not a known word"
+          },
+          {
+            "text": "ଳେଖୀବ",
+            "gloss": "not a known word",
+            "label": "ଳେଖୀବ, not a known word"
+          },
+          {
+            "text": "9Keeplekhiba",
+            "gloss": "",
+            "label": "Keep \"lekhiba\", as typed"
+          }
+        ]
+      },
+      {
+        "input": "pain",
+        "candidates": [
+          {
+            "text": "ପାଇଁ",
+            "gloss": "in order for",
+            "label": "ପାଇଁ, in order for"
+          },
+          {
+            "text": "ପାଇଣ",
+            "gloss": "maybe: A pie",
+            "label": "ପାଇଣ, maybe: A pie"
+          },
+          {
+            "text": "ପାଇନ",
+            "gloss": "maybe: A pie",
+            "label": "ପାଇନ, maybe: A pie"
+          },
+          {
+            "text": "ପାଇଂ",
+            "gloss": "maybe: A pie",
+            "label": "ପାଇଂ, maybe: A pie"
+          },
+          {
+            "text": "ପୈନ",
+            "gloss": "not a known word",
+            "label": "ପୈନ, not a known word"
+          },
+          {
+            "text": "ପୈଁ",
+            "gloss": "not a known word",
+            "label": "ପୈଁ, not a known word"
+          },
+          {
+            "text": "ପଇଂ",
+            "gloss": "maybe: The iron-ring surrounding the rim of a cart",
+            "label": "ପଇଂ, maybe: The iron-ring surrounding the rim of a cart"
+          },
+          {
+            "text": "ପୈଣ",
+            "gloss": "not a known word",
+            "label": "ପୈଣ, not a known word"
+          },
+          {
+            "text": "9Keeppain",
+            "gloss": "",
+            "label": "Keep \"pain\", as typed"
+          }
+        ]
+      }
+    ],
+    "errors": []
+  }
+]

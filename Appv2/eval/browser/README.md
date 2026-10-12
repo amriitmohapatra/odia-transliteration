@@ -13,6 +13,8 @@ node Appv2/eval/browser/origin-check.mjs 4810  # word origin: sarakaara -> "from
 node Appv2/eval/browser/report-check.mjs 4810  # "Wrong word? Report it"
 node Appv2/eval/browser/freeze.mjs 4810        # A-7 timing (report, not pass/fail)
 node Appv2/eval/browser/context-check.mjs 4810 # word-pair context in the caret bar (V2.2)
+node Appv2/eval/browser/english-check.mjs 4810 # English lookup, clipboard, offline and degraded loading
+node Appv2/eval/browser/editing-check.mjs 4810 # literal text, caret, commits, undo and mobile input events
 ```
 
 Playwright: in the Claude Code cloud environment it loads from
@@ -20,3 +22,84 @@ Playwright: in the Claude Code cloud environment it loads from
 `npx playwright install chromium`, then change the `createRequire(...)` line to a plain
 `import { chromium } from 'playwright'`. Safari's engine is not covered: run
 `tools/eval/webkit-check.py` on a Mac (follow-up A-3).
+
+`english-check.mjs` resolves Playwright from the project or `NODE_PATH`, without
+editing the script. To use the prepared Codex cloud tools and system Chromium:
+
+```bash
+NODE_PATH=/workspace/onboarding-tools/node_modules CHROMIUM_EXECUTABLE_PATH=/usr/bin/chromium node Appv2/eval/browser/english-check.mjs 4810
+```
+
+It exits nonzero on a failed assertion. Its 19 checks include explicit translation
+versus loan labels, canonical clipboard output, unavailable historical data,
+direction switching after that failure, clipboard denial, offline reload, and
+dictionary insertion with saved selection/caret and undo/redo.
+
+`editing-check.mjs` has 21 independent scenarios. It covers addresses/identifiers,
+literal paste and readback, punctuation, visible and selected-candidate Copy,
+Alt/Option+number selection, native selected-text Copy, caret movement, Clear,
+undo/redo, explicit Keep/Escape, browser composition, typed Odia digits and strict
+ITRANS, plus phone-style input events with and without cancelable `beforeinput`.
+The browser CI job runs both scripts against a production build. Ordinary digits
+are content; the existing `regress.mjs` now uses Alt+number for its Keep check.
+
+Both scripts accept `APP_URL` for deployment checks. `editing-check.mjs` also
+accepts `EDITING_CHECK_FILTER` (a regular expression over scenario names) for a
+targeted production smoke test. They use fresh browser contexts and write only
+test text/local browser state, without a server-side mutation.
+
+For WebKit (Python Playwright plus its browser/system libraries):
+
+```bash
+python3 Appv2/eval/browser/english-webkit.py 4810
+python3 Appv2/eval/browser/editing-webkit.py 4810
+```
+
+`editing-webkit.py` checks six editor scenarios with assertions and a failing exit
+status on regressions. It verifies actual clipboard bytes through native paste,
+undo/redo, dictionary selection restoration and mobile-style boundary events.
+It accepts `APP_URL` and `WEBKIT_EXECUTABLE_PATH`. All six passed in the 12 October
+Linux run; this does not establish physical iPhone behavior.
+
+`WEBKIT_EXECUTABLE_PATH` can select an installed launcher. This runs desktop and
+iPhone viewport scenarios, **not native device tests**. The 12 online checks
+passed in the 12 October Linux run; both offline reload checks failed with a
+WebKit internal navigation error in the baseline and feature builds. The script
+retains those checks and exits nonzero when they fail. See the review's validation
+record before treating this as a release gate.
+
+
+A follow-up diagnosis reproduced that same offline-emulation error with two
+minimal service workers containing no app code. With the actual HTTP server
+stopped instead, both minimal controls and both app builds reloaded successfully;
+the current app also typed `କେମିତି ଅଛ` and resolved English `water` to `ପାଣି`.
+This isolates the observed error to the Linux WebKit/Playwright offline-flag path
+in that runtime, rather than a failure requiring the app's service-worker code.
+The original failing checks remain intact. Server loss leaves `navigator.onLine`
+true and does not verify iPhone airplane mode or native Safari behavior.
+
+For the independent controls and origin-loss diagnostic (it starts its own
+servers on fresh ports):
+
+```bash
+python3 plan/research/2026-10-12/webkit-offline-diagnosis.py Appv2/dist --output /tmp/webkit-offline-diagnosis.json
+```
+
+The same `WEBKIT_EXECUTABLE_PATH` override works here. The optional `--baseline`
+argument accepts a frozen historical build. See
+[the complete validation record](../../../plan/research/2026-10-12/VALIDATION.md)
+for observed results and limits; the diagnostic's exit status is not an overall
+offline-feature acceptance result.
+
+## Responsive phone checks
+
+```bash
+NODE_PATH=/path/to/playwright/node_modules node Appv2/eval/browser/mobile-check.mjs 4810
+```
+
+`mobile-check.mjs` accepts `APP_URL`, `CHROMIUM_EXECUTABLE_PATH` and optional
+`MOBILE_ARTIFACT_DIR` for screenshots and JSON measurements. It checks first-visit
+visibility, narrow phones, landscape, larger text, touch targets, candidate
+scrolling, explicit dictionary lookup and selection insertion, plus desktop
+layout preservation. Keyboard geometry uses a test-only `visualViewport` mock;
+it is not a physical iPhone test. CI runs it against the production build.
