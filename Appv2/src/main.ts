@@ -56,6 +56,7 @@ const meaningsEl = must<HTMLButtonElement>('dict-toggle');
 const shareEl = must<HTMLButtonElement>('share');
 const clearEl = must<HTMLButtonElement>('clear');
 const digitsEl = must<HTMLInputElement>('toggle-digits');
+const numberPickEl = must<HTMLInputElement>('toggle-number-pick');
 const strictEl = must<HTMLInputElement>('toggle-strict');
 const modeEverydayEl = must<HTMLInputElement>('mode-everyday');
 const modeSlokaEl = must<HTMLInputElement>('mode-sloka');
@@ -96,6 +97,8 @@ function must<T extends HTMLElement>(id: string): T {
 
 const PREF_DIGITS = 'odia.pref.digits';
 const PREF_STRICT = 'odia.pref.strict';
+/** Number keys 1-9 take a suggestion (Microsoft IME style). Missing = on. */
+const PREF_NUMBER_PICK = 'odia.pref.numberPick';
 /** "Hide rude words". ON by default: a missing key reads as on. */
 const PREF_FAMILY_SAFE = 'odia.pref.familySafe';
 /**
@@ -193,6 +196,7 @@ void boot();
 async function boot(): Promise<void> {
   digitsEl.checked = readPref(PREF_DIGITS);
   strictEl.checked = readPref(PREF_STRICT);
+  numberPickEl.checked = readPref(PREF_NUMBER_PICK, true);
   familySafeEl.checked = KIDS ? true : readPref(PREF_FAMILY_SAFE, true);
   // Kids edition: the filter is fixed, so the switch is not shown at all.
   if (KIDS) {
@@ -214,6 +218,7 @@ async function boot(): Promise<void> {
     deferBoundary: (separator, action) => editor.deferBoundary(separator, action),
     replace: (start, end, text, literal) => editor.replace(start, end, text, literal),
     keep: (start, end) => editor.keep(start, end),
+    numberKeysPick: () => numberPickEl.checked,
     // The Odia word just before the caret word gives context (word pairs, V2.2),
     // so a word the user picked from the bar informs the next suggestion.
     candidates: (roman) =>
@@ -298,6 +303,8 @@ async function boot(): Promise<void> {
         insertAtCaret(canonical(word));
         return true;
       },
+      spell: (roman) => guard(() => (handle?.engine.transliterateWord(roman, 5) ?? [])
+        .filter((c) => c.source !== 'verbatim').map((c) => canonical(c.text)), []),
     },
   ); // glosses + side panel; its data loads lazily
 
@@ -1393,6 +1400,8 @@ function bindEvents(): void {
   window.addEventListener('offline', updateOfflineChip);
 
   clearEl.addEventListener('click', onClear);
+  numberPickEl.addEventListener('change', () => writePref(PREF_NUMBER_PICK, numberPickEl.checked));
+
   digitsEl.addEventListener('change', () => {
     writePref(PREF_DIGITS, digitsEl.checked);
     rebuildEngine();

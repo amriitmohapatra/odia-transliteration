@@ -48,7 +48,6 @@ def dictionary_selection(page):
     before, after = "ଘର ଭଲ ଦିନ", "ଘର ବଡ\u0b3c ଦିନ"
     area.fill(before)
     area.evaluate("e => {e.focus(); e.setSelectionRange(3, 5, 'backward')}")
-    page.locator(".dict-direction").select_option("english")
     page.locator(".dict-search").fill("big")
     page.wait_for_function("document.querySelector('.dict-english-entry')?.textContent.includes('big:')")
     page.locator(".dict-insert").click()

@@ -41,6 +41,7 @@ jobs:
           export NODE_PATH="$RUNNER_TEMP/odia-browser-tools/node_modules"
           node Appv2/eval/browser/editing-check.mjs 4810
           node Appv2/eval/browser/english-check.mjs 4810
+          node Appv2/eval/browser/phrases-check.mjs 4810
           node Appv2/eval/browser/mobile-check.mjs 4810
   check:
     runs-on: ubuntu-latest

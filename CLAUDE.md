@@ -87,6 +87,7 @@ built, Rust stays limited to roughly 150 lines of clipboard and hotkey glue.
 | "For this roman key, this word comes first" (owner decision) | `core/data/preferences.tsv` |
 | A word is offensive / coarse / spoken / slang / dialect (owner-curated, whole words) | `core/data/labels.tsv` |
 | The meaning shown for a word is wrong or misleading (owner meaning, shown first) | `core/data/glosses.tsv` |
+| A greeting, wish or other whole phrase to offer in the Meanings panel (owner decision) | `core/data/phrases.tsv` |
 | The derived everyday test expects the wrong word for an ambiguous key (owner decision) | `core/test/golden/everyday-overrides.tsv` |
 
 `core/src/rules.ts` validates rule files on load and **fails loudly** on a typo or a
@@ -184,6 +185,9 @@ Rows marked unknown or unverified below are open items, not exceptions:
 | OdiaNLP `dictionary` `cleaned_pairs.json` | Repo MIT. **Origin of the text unknown.** To be replaced (D-5). | MODERN dictionary layer, `[mt]` rows |
 | Unicode CLDR `or.xml` | Unicode License v3 | MODERN dictionary layer, `[cldr]` rows |
 | wordfreq, CMUdict | Unverified (see provenance file) | Build time: loanword detection |
+| CMU Pronouncing Dictionary (data file) | BSD-2-Clause | Build time: English words and sounds for `loans.tsv` |
+| SCOWL `american-english-small` | Permissive / public domain | Build time: common English words for `loans.tsv` |
+| IndicCorp v2 Odia `or.txt` (word counts) | CC0 | Build time: attestation for `loans.tsv` (`tools/build-data/count_indiccorp.py`) |
 | pako inflate | MIT | Unpacks the dictionary payloads |
 
 The dictionary sources and their checksums are in `Odia_Sanskrit_Appv2/PROVENANCE.md`.

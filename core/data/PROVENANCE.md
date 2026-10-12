@@ -289,7 +289,14 @@ open), news, blogs, x.com and government pages (no explicit licence). Pair count
 reveal more of the source text than single-word counts (a two-word window), which is
 worth weighing in that same decision.
 
-## Licence note
+## Phrase table (`phrases.tsv`, 2026-10-12)
+
+Written for this project, not taken from any corpus or dictionary: 27 `seed` rows suggested
+by Claude from the list in `plan/research/2026-10-04/02-dictionary-sources.md` §4, each
+typed spelling checked against the engine (the first spelling turns into the phrase, word
+by word, as the top suggestion: `Appv2/test/phrases.test.ts`). Rows become `owner` when
+the owner checks them. Licence: MIT (this project).
+
 
 Aksharantar is released by AI4Bharat under CC-BY 4.0 / CC0 and is redistributable
 with attribution. The derived artifacts in `core/data/` are transformations of that

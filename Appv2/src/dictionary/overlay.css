@@ -306,19 +306,10 @@ body.kb-docked #dict-toggle { display: none; }
 }
 .dict-modern-gloss { color: var(--text); }
 
-/* English lookup is a separate, explicit direction; engine choices stay phonetic. */
-.dict-direction {
-  width: 100%;
-  min-height: var(--tap);
-  padding: 8px 10px;
-  border: 1px solid var(--line-strong);
-  border-radius: 10px;
-  background: var(--card);
-  color: var(--text);
-  font: inherit;
-}
+/* Insert / Copy buttons and "Show all phrases" in the unified search results. */
 .dict-copy,
-.dict-insert {
+.dict-insert,
+.dict-browse-phrases {
   min-height: var(--tap);
   margin-top: 8px;
   padding: 6px 12px;
@@ -330,6 +321,16 @@ body.kb-docked #dict-toggle { display: none; }
   cursor: pointer;
 }
 .dict-english-entry .dict-tag { white-space: normal; }
+.dict-phrase-entry .dict-tag,
+.dict-loan-entry .dict-tag { white-space: normal; }
+/* Group headings in the Phrases list. */
+.dict-group {
+  margin: 16px 0 4px;
+  font-size: 0.85em;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--muted);
+}
 
 .dict-actions {
   display: flex;
@@ -388,7 +389,6 @@ html.phone-layout .dict-tools {
   grid-template-columns: calc(150px * var(--fs-scale)) minmax(0, 1fr);
   gap: 6px;
 }
-html.phone-layout .dict-direction,
 html.phone-layout .dict-search {
   min-width: 0;
   min-height: 44px;
@@ -409,7 +409,8 @@ html.phone-layout .dict-modern-tag { font-size: calc(15px * var(--fs-scale)); }
 html.phone-layout .dict-modern-row { flex-wrap: wrap; gap: 4px; }
 html.phone-layout .dict-tag { white-space: normal; }
 html.phone-layout .dict-copy,
-html.phone-layout .dict-insert { min-height: 44px; font-size: calc(15px * var(--fs-scale)); }
+html.phone-layout .dict-insert,
+html.phone-layout .dict-browse-phrases { min-height: 44px; font-size: calc(15px * var(--fs-scale)); }
 
 .dict-backdrop { display: none; }
 html.phone-layout body.dict-modal-open .dict-backdrop {

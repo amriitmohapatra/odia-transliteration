@@ -19,6 +19,12 @@
  *       but waiting for the owner's check). Read by the app's dictionary
  *       module, not by the engine.
  *
+ *   phrases.tsv       roman <TAB> odia <TAB> category <TAB> meaning <TAB> status <TAB> note
+ *       Whole phrases (greetings, wishes, the three levels of "you") for the
+ *       app's Meanings panel. roman holds one or more typed spellings, `|`
+ *       separated. Read by the app, not by the engine: phrases never enter
+ *       word ranking.
+ *
  *   labels.tsv        odia <TAB> label <TAB> keys
  *       Whole words only, never substrings. Labels: offensive, coarse, spoken,
  *       slang, dialect. `keys` (optional, comma-separated roman) are the exact
@@ -150,6 +156,55 @@ export function parseGlosses(tsv: string, file = 'glosses.tsv'): Glosses {
     map.set(odia, { meaning, status: status as GlossStatus });
   }
   return { size: map.size, get: (word) => map.get(word) };
+}
+
+export const PHRASE_CATEGORIES = ['greeting', 'wish', 'festival', 'you', 'family', 'everyday'] as const;
+export type PhraseCategory = (typeof PHRASE_CATEGORIES)[number];
+
+export interface Phrase {
+  /** Typed spellings, lower case; the first is the careful one. */
+  readonly keys: readonly string[];
+  /** Canonical Odia phrase. */
+  readonly odia: string;
+  readonly category: PhraseCategory;
+  readonly meaning: string;
+  readonly status: GlossStatus;
+  /** When or to whom it is said; empty when not given. */
+  readonly note: string;
+}
+
+const PHRASE_KEY = /^[a-z][a-z']*( [a-z][a-z']*)*$/;
+/** Odia letters and signs, spaces and sentence punctuation (danda, ?, !, comma). */
+const PHRASE_ODIA = /^[\u0B00-\u0B7F\u0964\u0965\u200C\u200D ?!,]+$/;
+
+export function parsePhrases(tsv: string, file = 'phrases.tsv'): Phrase[] {
+  const phrases: Phrase[] = [];
+  const seen = new Set<string>();
+  for (const { cells, line } of rows(tsv, file)) {
+    const where = `${file}:${line}`;
+    const [keyCell, odia, category, meaning, status, note = ''] = cells;
+    if (!keyCell || !odia || !category || !meaning || !status) {
+      throw new Error(`${where}: expected "roman<TAB>odia<TAB>category<TAB>meaning<TAB>status[<TAB>note]"`);
+    }
+    const keys = keyCell.split('|');
+    for (const key of keys) {
+      if (!PHRASE_KEY.test(key)) throw new Error(`${where}: bad roman spelling "${key}" (lower case a-z, single spaces)`);
+    }
+    if (!PHRASE_ODIA.test(odia) || !/[\u0B00-\u0B7F]/.test(odia) || odia !== odia.trim() || / {2}/.test(odia)) {
+      throw new Error(`${where}: the Odia cell must be Odia script with single spaces`);
+    }
+    assertCanonical(odia, where);
+    if (!(PHRASE_CATEGORIES as readonly string[]).includes(category)) {
+      throw new Error(`${where}: unknown category "${category}" (allowed: ${PHRASE_CATEGORIES.join(', ')})`);
+    }
+    if (!(GLOSS_STATUS as readonly string[]).includes(status)) {
+      throw new Error(`${where}: unknown status "${status}" (allowed: ${GLOSS_STATUS.join(', ')})`);
+    }
+    if (seen.has(odia)) throw new Error(`${where}: duplicate phrase`);
+    seen.add(odia);
+    phrases.push({ keys, odia, category: category as PhraseCategory, meaning, status: status as GlossStatus, note });
+  }
+  return phrases;
 }
 
 export const emptyPreferences = (): Preferences => parsePreferences('');

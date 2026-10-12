@@ -280,7 +280,7 @@ export default defineConfig({
     chunkSizeWarningLimit: singleFile ? 100_000 : 2000,
     rollupOptions: {
       output: {
-        banner: POLYFILLS,
+        banner: legacy ? `${legacyPolyfills}\n${POLYFILLS}` : POLYFILLS,
         ...(singleFile ? { inlineDynamicImports: true } : {}),
       },
     },
