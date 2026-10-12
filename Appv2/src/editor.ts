@@ -1,4 +1,4 @@
-import { EditHistory, pendingRoman, replaceState, type EditState, type PendingRoman } from './editor-state.js';
+import { EditHistory, isLiteralInput, pendingRoman, replaceState, type EditState, type PendingRoman } from './editor-state.js';
 
 /** One undo history for browser edits and scripted IME/palette/dictionary edits.
  * Native beforeinput history events cover mobile undo menus as well as keys.
@@ -55,8 +55,10 @@ export class Editor {
       end: this.area.selectionEnd, direction: this.area.selectionDirection };
   }
 
+  /** Also during composition: a phone keyboard may compose a whole Roman word.
+   * Non-Roman composed text is literal, so pendingRoman() never offers it. */
   pending(): PendingRoman | undefined {
-    return this.composing ? undefined : pendingRoman(this.snapshot());
+    return pendingRoman(this.snapshot());
   }
 
   /** Some mobile beforeinput events cannot be canceled. Wait for precisely
@@ -76,6 +78,14 @@ export class Editor {
     }
     this.before = undefined;
     this.deferred = undefined;
+    // A tap on a suggestion while the keyboard still composes the word ends the
+    // composition here: first record the typed word, then the choice, as for
+    // ordinary typing. compositionend then records nothing more.
+    if (this.composing) {
+      if (this.compositionBefore) this.history.record(this.compositionBefore, before);
+      this.composing = false;
+      this.compositionBefore = undefined;
+    }
     this.history.record(before, after);
     this.apply(after);
   }
@@ -135,9 +145,9 @@ export class Editor {
       while (end > start && nextEnd > start && before.value[end - 1] === value[nextEnd - 1]) { end--; nextEnd--; }
       insertedLength = nextEnd - start;
     }
-    const literal = this.composing || event.isComposing ||
-      ['insertFromPaste', 'insertFromDrop', 'insertReplacementText', 'insertCompositionText'].includes(event.inputType);
-    const mapped = replaceState(before, start, end, value.slice(start, start + insertedLength), literal);
+    const inserted = value.slice(start, start + insertedLength);
+    const literal = isLiteralInput(event.inputType, this.composing || event.isComposing, inserted);
+    const mapped = replaceState(before, start, end, inserted, literal);
     const after = { ...mapped, value, start: this.area.selectionStart, end: this.area.selectionEnd,
       direction: this.area.selectionDirection };
     if (this.composing) this.history.current = after;

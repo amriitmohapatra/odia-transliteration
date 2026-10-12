@@ -115,6 +115,8 @@ export class InlineCandidates {
 
   private shown: Candidate[] = [];
   private pending: PendingRoman | undefined;
+  /** The word the user closed with Escape. It stays Roman unless it changes. */
+  private dismissed: { start: number; roman: string } | undefined;
   private active = 0;
   private enabled = true;
   private docked = false;
@@ -172,7 +174,6 @@ export class InlineCandidates {
     area.setAttribute('aria-autocomplete', 'list');
 
     area.addEventListener('input', () => this.refresh());
-    area.addEventListener('compositionstart', () => this.hide());
     area.addEventListener('beforeinput', (event) => {
       const input = event as InputEvent;
       if (input.defaultPrevented || input.isComposing || this.host.composing()) return;
@@ -286,14 +287,20 @@ export class InlineCandidates {
   }
 
   private refresh(): void {
-    if (!this.enabled || this.host.composing()) return this.hide();
+    // No composition guard: a phone keyboard such as Gboard composes the whole
+    // Roman word, and the user must see suggestions while typing it.
+    if (!this.enabled) return this.hide();
 
     const pending = this.pendingAt();
     if (pending === undefined) return this.hide();
+    if (this.dismissed?.start === pending.start && this.dismissed.roman === pending.roman) return this.hide();
+    this.dismissed = undefined;
 
     // The typed word itself stays in the bar, as the last item, so an English
     // word can be kept with Alt+number. Hiding it (the earlier rule) meant
-    // Escape was the only way out, and learn() never saw the choice. Once
+    // Escape was the only way out, and learn() never saw the choice. Escape
+    // now only closes the bar for this word (Space then types a plain space);
+    // Keep is the way to keep an English word. Once
     // picked, learn() moves it up for that key, so Space then commits it.
     // With no Odia candidate at all there is nothing to choose between, so the
     // bar stays hidden.
@@ -360,9 +367,10 @@ export class InlineCandidates {
         this.commit(this.active, ' ');
         break;
       case 'Escape': {
+        // Close the bar for this word only. A changed word offers suggestions again.
         event.preventDefault();
         const pending = this.pending;
-        if (pending) this.host.keep(pending.start, pending.end);
+        if (pending) this.dismissed = { start: pending.start, roman: pending.roman };
         this.hide();
         break;
       }

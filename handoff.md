@@ -129,6 +129,11 @@ that later phone changes passed.
   only Keep. **LOW:** family-safe switch not passed to English lookup (canary test added in
   `Appv2/test/english.test.ts`); Try example before the engine loads leaves Roman text.
 
+**Fixed 2026-10-12 (owner approved):** composed Roman words convert again and show the bar;
+Escape only closes the bar for the current word; Try example waits for the engine. Rule in
+`editor-state.ts` `isLiteralInput()`. Editing checks now 25/25 (4 new composition cases fail
+on `d4e941b`, pass now). Real Android (Gboard) confirmation is `plan/06` A-5.
+
 ## Resuming in another chat
 
 1. Check `gh pr view 5 --json state,mergeCommit,headRefOid,url` and `git status`.

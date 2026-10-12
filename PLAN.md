@@ -218,6 +218,7 @@ Agents do not commit; the lead reviews, measures and commits.
 
 | Date | Change |
 |---|---|
+| 2026-10-12 | Owner approved the fixes. **Fixed:** composed Roman words (Gboard) show suggestions and convert again; a tap during composition replaces the word once and undo returns the Roman word; Escape only closes the bar for the current word; "Try example" waits for the engine. Checks: 4 unit + 4 browser composition cases and a rewritten Escape case (they fail on the PR #5 build, pass now); editing 25/25, English 19/19, phone 193/193 on adult and kids builds. |
 | 2026-10-12 | Claude review of the Codex changes (PRs #4, #5): all unit, eval and browser checks pass on adult and kids builds; typing latency unchanged. **Found:** words typed through a composing keyboard (Android Gboard style) stay Roman and show no suggestions (confirmed in Chromium with CDP IME events; before #5 they converted); Escape now keeps a word as English; "Hide rude words" is not applied to English results (canary test added); "Try example" before load can stay Roman. `report-check.mjs` presses Done (phone read-back row is hidden while typing). Fixes wait for the owner. |
 | 2026-10-04 | PR #3 merged to `main`. **V1 live on Vercel** (adult and kids). First build failed: Vercel had picked `web` as the root directory; fixed by setting it to the repository root. |
 | 2026-10-04 | Browser checks moved into the repo (4.6). Docs pointers updated (CLAUDE.md, AGENTS.md, docs/README.md). |
