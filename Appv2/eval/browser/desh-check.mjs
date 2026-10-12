@@ -76,6 +76,8 @@ try {
 
   await run('completion: none in the sloka profile (typed spellings are off there)', async ({ page, area }) => {
     await page.locator('#mode-sloka').check();
+    // The switch loads the Sanskrit word list first; type once the new engine is in.
+    await page.waitForFunction(() => !document.querySelector('#status')?.textContent?.includes('Switching'));
     await area.focus();
     await page.keyboard.type('bhub');
     await page.locator('#inline-candidates .inline-candidate').first().waitFor({ state: 'visible' });
