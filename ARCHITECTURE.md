@@ -79,7 +79,7 @@ roman ──► tokenize ──► segment (rules lattice, beam) ──┐
 | `rules.ts` | Loads and validates `symbols.toml` / `itrans.toml`. Throws on any error. |
 | `segment.ts` | Builds spellings from the rules (weighted lattice, beam search, position context). |
 | `lexicon.ts`, `unigrams.ts` | Sorted lexicon (roman key → words) and word frequencies. |
-| `curation.ts` | Owner data: `preferences.tsv`, `labels.tsv`, `glosses.tsv`. Strict parsers. |
+| `curation.ts` | Owner data: `preferences.tsv`, `labels.tsv`, `glosses.tsv`, `phrases.tsv`. Strict parsers. |
 | `bigrams.ts` | Word-pair counts (`bigrams.tsv`), strict loader; the context term. |
 | `rank.ts` | Merges evidence and scores (see formula). |
 | `learn.ts` | User dictionary (`{roman: {odia: count}}`), memory or localStorage. |
@@ -120,6 +120,7 @@ mode is not filtered.
 | Owner preferences | `core/data/preferences.tsv` | Owner | Yes |
 | Word labels | `core/data/labels.tsv` | Owner (empty until curated) | Yes |
 | Owner meanings | `core/data/glosses.tsv` (read by the dictionary module, not the engine) | Owner; `seed` rows suggested by agents | Yes |
+| Phrase table | `core/data/phrases.tsv`: greetings, wishes, festival wishes, the three words for "you", family, everyday; read by the Meanings panel (direction "Phrases", `dictionary/phrases.ts`), never by the engine | Owner; `seed` rows suggested by agents, shown as awaiting review | Yes |
 | Eval overrides | `core/test/golden/everyday-overrides.tsv` | Owner decisions | Yes |
 | Colloquial test set | `core/test/golden/colloquial.tsv` | Seed by agent, checked by owner (C-3) | Yes |
 | Dictionary | `Appv2/src/dictionary/*.bin` (from `Odia_Sanskrit_Appv2/build/*.b64`) | `Odia_Sanskrit_Appv2/build/*.py` | No |
@@ -170,6 +171,7 @@ disappears, so a Playwright check guards each):
 | `body.kb-docked` | `inline.ts` | CSS (phone strip state) |
 | `data-label` on `button.inline-candidate` and `button.candidate` | `inline.ts`, `main.ts` | `overlay.ts` sets `aria-label` = label + ", " + meaning |
 | `[aria-controls="dict-panel"]`: `#dict-toggle` (in `index.html`), `#meanings-dock` | `index.html` | `overlay.ts` keeps `aria-expanded` in step; `dictionary/index.ts` exports `setMeaningsOpen` / `meaningsOpen` |
+| `.dict-direction` option `phrases`; `.dict-phrase-entry` with `.dict-insert` / `.dict-copy`; `.dict-group` headings | `overlay.ts` | `phrases-check.mjs` |
 
 **Layout:** at ≥1100 px `body` is a two-column grid and `#dict-panel` is a sticky meanings
 column. The desktop caret popover is a vertical list that opens below or above the caret

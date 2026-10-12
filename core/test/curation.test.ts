@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 
 import { createEngine } from '../src/index.js';
-import { parseLabels, parsePreferences } from '../src/curation.js';
+import { parseLabels, parsePhrases, parsePreferences } from '../src/curation.js';
 import { MemoryLearnStore } from '../src/learn.js';
 import { SYMBOLS_TOML } from './helpers.js';
 
@@ -186,3 +186,40 @@ describe('labels.tsv and the family-safe filter', () => {
     expect([...(engine.labelsOf(FAKE) ?? [])]).toEqual(['offensive']);
   });
 });
+
+describe('phrases.tsv', () => {
+  const HELLO = '\u0B28\u0B2E\u0B38\u0B4D\u0B15\u0B3E\u0B30'; // namaskara
+  const HOW_ARE_YOU = '\u0B15\u0B47\u0B2E\u0B3F\u0B24\u0B3F \u0B05\u0B1B'; // kemiti achha
+  const GOOD = [
+    '# comment',
+    `namaskara|namaskar\t${HELLO}\tgreeting\thello\towner`,
+    `kemiti achha\t${HOW_ARE_YOU}\tgreeting\thow are you?\tseed\tfamiliar`,
+  ].join('\n');
+
+  it('reads keys, the Odia phrase, category, meaning, status and optional note', () => {
+    const phrases = parsePhrases(GOOD);
+    expect(phrases).toHaveLength(2);
+    expect(phrases[0]).toEqual({ keys: ['namaskara', 'namaskar'], odia: HELLO, category: 'greeting',
+      meaning: 'hello', status: 'owner', note: '' });
+    expect(phrases[1]?.note).toBe('familiar');
+  });
+
+  it('accepts a phrase with a danda and a one-word entry', () => {
+    expect(parsePhrases(`kemiti achha\t${HOW_ARE_YOU}\u0964\tgreeting\thow are you?\tseed`)).toHaveLength(1);
+  });
+
+  it('fails loudly on a bad row', () => {
+    expect(() => parsePhrases(`Namaskara\t${HELLO}\tgreeting\thello\tseed`)).toThrow(/bad roman/);
+    expect(() => parsePhrases(`namaskara\thello\tgreeting\thello\tseed`)).toThrow(/Odia script/);
+    expect(() => parsePhrases(`namaskara\t${HELLO}\tsong\thello\tseed`)).toThrow(/unknown category/);
+    expect(() => parsePhrases(`namaskara\t${HELLO}\tgreeting\thello\tmaybe`)).toThrow(/unknown status/);
+    expect(() => parsePhrases(`namaskara\t${HELLO}\tgreeting`)).toThrow(/expected/);
+    expect(() => parsePhrases(`${GOOD}\nnamaste\t${HELLO}\tgreeting\thello\tseed`)).toThrow(/duplicate/);
+  });
+
+  it('rejects a precomposed nukta letter', () => {
+    expect(() => parsePhrases(`odisha\t\u0B13${PRECOMPOSED_RRA}\u0B3F\u0B36\u0B3E\tfamily\tOdisha\tseed`))
+      .toThrow(/Non-canonical/);
+  });
+});
+

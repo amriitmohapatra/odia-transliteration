@@ -14,6 +14,7 @@ node Appv2/eval/browser/report-check.mjs 4810  # "Wrong word? Report it"
 node Appv2/eval/browser/freeze.mjs 4810        # A-7 timing (report, not pass/fail)
 node Appv2/eval/browser/context-check.mjs 4810 # word-pair context in the caret bar (V2.2)
 node Appv2/eval/browser/english-check.mjs 4810 # English lookup, clipboard, offline and degraded loading
+node Appv2/eval/browser/phrases-check.mjs 4810 # phrase table: browse, search, Insert, Copy (desktop and phone)
 node Appv2/eval/browser/editing-check.mjs 4810 # literal text, caret, commits, undo and mobile input events
 ```
 

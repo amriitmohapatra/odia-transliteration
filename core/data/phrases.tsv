@@ -1,0 +1,47 @@
+# phrases.tsv — the phrase table: whole phrases with their meaning and when to use them.
+#
+# Shown in the app's Meanings panel (direction "Phrases"): search by English meaning,
+# by the typed roman key, or by category ("festival", "greeting", "you"...), then Insert
+# or Copy the Odia. It does not change typing suggestions or word ranking.
+#
+# Format: roman <TAB> odia <TAB> category <TAB> meaning <TAB> status <TAB> note
+#   roman     how people type it, lower case; more than one spelling separated by |
+#             (the first is the careful spelling that the engine turns into this Odia)
+#   odia      the phrase in Odia script; canonical (nukta decomposed: U+0B21 U+0B3C)
+#   category  greeting | wish | festival | you | family | everyday
+#   meaning   short English meaning
+#   status    owner = written or checked by the owner; seed = suggested by an agent,
+#             shown with "awaiting native-speaker review" until the owner checks it
+#   note      optional: when or to whom it is said (register, season, region)
+#
+# Example:   kemiti achha<TAB>OdiaText<TAB>greeting<TAB>how are you?<TAB>owner<TAB>familiar
+#
+# Owner: change seed to owner when a row is right; fix or delete it when it is wrong;
+# add your own rows (send them in chat if you prefer). Licence: MIT (this project).
+namaskara|namaskar	ନମସ୍କାର	greeting	hello; respectful greeting	seed	any time of day, often with folded hands
+jay jagannatha|jai jagannath	ଜୟ ଜଗନ୍ନାଥ	greeting	hello and goodbye, in Lord Jagannath's name	seed	very common Odia greeting and farewell
+kemiti achha	କେମିତି ଅଛ	greeting	how are you?	seed	familiar (to someone you call tume)
+kemiti achhanti	କେମିତି ଅଛନ୍ତି	greeting	how are you?	seed	respectful (to someone you call apana)
+bhala achhi	ଭଲ ଅଛି	greeting	I am fine	seed	reply to "how are you?"
+dhanyabad	ଧନ୍ୟବାଦ	greeting	thank you	seed
+shubha sakaala|shubha sakala	ଶୁଭ ସକାଳ	greeting	good morning	seed	common in WhatsApp messages
+shubha ratri	ଶୁଭ ରାତ୍ରି	greeting	good night	seed
+janmadinara shubhechchha|janmadinara shubhechha	ଜନ୍ମଦିନର ଶୁଭେଚ୍ଛା	wish	happy birthday	seed
+bibaha barshikira shubhechchha|bibaha barshikira shubhechha	ବିବାହ ବାର୍ଷିକୀର ଶୁଭେଚ୍ଛା	wish	happy wedding anniversary	seed
+shubhakamana	ଶୁଭକାମନା	wish	best wishes	seed
+rathajatrara shubhechchha|rathajatrara shubhechha	ରଥଯାତ୍ରାର ଶୁଭେଚ୍ଛା	festival	happy Rath Yatra	seed	Lord Jagannath's chariot festival (June/July)
+raja parbara shubhechchha|raja parbara shubhechha	ରଜ ପର୍ବର ଶୁଭେଚ୍ଛା	festival	happy Raja festival	seed	three-day festival in mid-June
+nuakhai juhar	ନୂଆଖାଇ ଜୁହାର	festival	Nuakhai greeting	seed	harvest festival of western Odisha (August/September); juhar is said to elders
+shubha dipabali	ଶୁଭ ଦୀପାବଳି	festival	happy Diwali	seed
+nuabarshara shubhechchha|nuabarshara shubhechha	ନୂଆବର୍ଷର ଶୁଭେଚ୍ଛା	festival	happy new year	seed
+utkala dibasara shubhechchha|utkala dibasara shubhechha	ଉତ୍କଳ ଦିବସର ଶୁଭେଚ୍ଛା	festival	happy Odisha Day	seed	1 April, the day Odisha became a separate province (1936)
+apana	ଆପଣ	you	you (respectful)	seed	for elders, strangers and formal writing
+tume	ତୁମେ	you	you (familiar)	seed	for friends, siblings and people of your age
+tu	ତୁ	you	you (intimate)	seed	for small children and very close friends; rude to elders
+bou	ବୋଉ	family	mother	seed
+bapa	ବାପା	family	father	seed
+bhai	ଭାଇ	family	brother	seed	also a friendly way to address a man
+apaa|apa	ଅପା	family	elder sister	seed	also a polite way to address a woman
+thik achhi	ଠିକ୍ ଅଛି	everyday	okay; all right	seed
+chinta karani	ଚିନ୍ତା କରନି	everyday	don't worry	seed	familiar
+pare katha hebaa|pare katha heba	ପରେ କଥା ହେବା	everyday	let's talk later	seed

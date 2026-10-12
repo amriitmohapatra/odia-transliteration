@@ -54,10 +54,22 @@ import { inflate } from './pako-inflate.js';
 import { originChipLabel, originLabel, parseOrigin } from './origin.js';
 import { parseEnglishEntries, searchEnglish, type EnglishEntry } from './english.js';
 import englishTsv from './english.tsv?raw';
+import { CATEGORY_LABEL, parsePhrases, searchPhrases, type Phrase } from './phrases.js';
+import phrasesTsv from '../../../core/data/phrases.tsv?raw';
 import { DOCK_QUERY } from '../inline.js';
 import './overlay.css';
 
 const ENGLISH = parseEnglishEntries(englishTsv);
+/** The phrase table. A broken file shows no phrases rather than breaking the panel. */
+const PHRASES: Phrase[] = (() => {
+  try {
+    return parsePhrases(phrasesTsv, 'core/data/phrases.tsv');
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
+})();
+const PHRASES_SUBTITLE = `${PHRASES.length} phrases: greetings, wishes, festivals, the three words for "you". Most await native-speaker review.`;
 
 /**
  * Raw gzip payloads. `modern` and `origin` are optional: null (or absent) when
@@ -505,7 +517,7 @@ function buildPanel(): void {
   const direction = document.createElement('select');
   direction.className = 'dict-direction';
   direction.setAttribute('aria-label', 'Dictionary direction');
-  for (const [value, text] of [['odia', 'Odia → English'], ['english', 'English → Odia']]) {
+  for (const [value, text] of [['odia', 'Odia → English'], ['english', 'English → Odia'], ['phrases', 'Phrases']]) {
     const option = document.createElement('option');
     option.value = value as string;
     option.textContent = text as string;
@@ -515,12 +527,14 @@ function buildPanel(): void {
   direction.addEventListener('change', () => {
     if (!searchInput || !panelSubtitle) return;
     const english = direction.value === 'english';
+    const phrases = direction.value === 'phrases';
     searchInput.value = '';
     // The selected direction owns the body even while Odia payloads are
     // loading or unavailable; never leave English results under Odia mode.
     if (panelBody) panelBody.textContent = '';
-    searchInput.placeholder = english ? 'Search English, e.g. water, meeting' : 'Search an Odia word';
-    panelSubtitle.textContent = english
+    searchInput.placeholder = phrases ? 'Search, e.g. birthday, festival, you'
+      : english ? 'Search English, e.g. water, meeting' : 'Search an Odia word';
+    panelSubtitle.textContent = phrases ? PHRASES_SUBTITLE : english
       ? `${ENGLISH.length} entries for ${new Set(ENGLISH.map((entry) => entry.english)).size} English terms. Starter dictionary; most entries await native-speaker review. Translations and loan spellings are separate.`
       : 'Pur\u1e47\u1e47achandra O\u1e0di\u0101 Bh\u0101shakosha — G. C. Praharaj (1931–40)';
     onSearch();
@@ -815,6 +829,10 @@ function renderCandidates(): void {
     renderEnglishSearch();
     return;
   }
+  if (searchDirection?.value === 'phrases') {
+    renderPhraseSearch();
+    return;
+  }
   if (state !== 'ready') {
     if (state === 'idle') loadData();
     return;
@@ -875,11 +893,22 @@ function englishBlock(entry: EnglishEntry, exact: boolean): HTMLElement {
   source.textContent = entry.status === 'owner'
     ? 'Based on an existing owner-reviewed meaning.'
     : 'Suggested entry — awaiting native-speaker review.';
+  const [actions, feedback] = odiaActions(entry.odia, `${entry.english}, ${entry.sense}`);
+  block.append(head, sense, source, actions, feedback);
+  return block;
+}
+
+/**
+ * Insert (into the text box, at the last editing position) and Copy buttons
+ * for one Odia result, with a status line. `name` completes the labels
+ * "Insert <name> in Odia" and "Copy <name> in Odia".
+ */
+function odiaActions(odiaText: string, name: string): [HTMLElement, HTMLElement] {
   const copy = document.createElement('button');
   copy.type = 'button';
   copy.className = 'dict-copy';
   copy.textContent = 'Copy Odia';
-  copy.setAttribute('aria-label', `Copy ${entry.english}, ${entry.sense}, in Odia`);
+  copy.setAttribute('aria-label', `Copy ${name}, in Odia`);
   const feedback = document.createElement('p');
   feedback.className = 'dict-hint';
   feedback.setAttribute('role', 'status');
@@ -888,11 +917,11 @@ function englishBlock(entry: EnglishEntry, exact: boolean): HTMLElement {
     feedback.textContent = '';
     try {
       if (!navigator.clipboard?.writeText) throw new Error('Clipboard unavailable');
-      await navigator.clipboard.writeText(canonical(entry.odia));
+      await navigator.clipboard.writeText(canonical(odiaText));
       feedback.textContent = 'Copied Odia.';
     } catch {
-      // Keep the word selectable when clipboard permission or file:// blocks copying.
-      feedback.textContent = 'Could not copy. Select the Odia word above and copy it manually.';
+      // Keep the text selectable when clipboard permission or file:// blocks copying.
+      feedback.textContent = 'Could not copy. Select the Odia text above and copy it manually.';
     } finally {
       copy.disabled = false;
     }
@@ -904,21 +933,77 @@ function englishBlock(entry: EnglishEntry, exact: boolean): HTMLElement {
     insert.type = 'button';
     insert.className = 'dict-insert';
     insert.textContent = 'Insert Odia';
-    insert.setAttribute('aria-label', `Insert ${entry.english}, ${entry.sense}, in Odia`);
+    insert.setAttribute('aria-label', `Insert ${name}, in Odia`);
     insert.addEventListener('click', () => {
       try {
-        const word = canonical(entry.odia);
-        const inserted = !hidden(word) && insertWord?.(word);
-        feedback.textContent = inserted ? 'Inserted Odia.' : 'Could not insert. Copy the Odia word instead.';
+        const text = canonical(odiaText);
+        const inserted = !text.split(' ').some((w) => hidden(w)) && insertWord?.(text);
+        feedback.textContent = inserted ? 'Inserted Odia.' : 'Could not insert. Copy the Odia text instead.';
         if (inserted && phoneLayout()) closePanel(true, true);
       } catch {
-        feedback.textContent = 'Could not insert. Copy the Odia word instead.';
+        feedback.textContent = 'Could not insert. Copy the Odia text instead.';
       }
     });
     actions.appendChild(insert);
   }
   actions.appendChild(copy);
-  block.append(head, sense, source, actions, feedback);
+  return [actions, feedback];
+}
+
+/** The phrase table: bundled, so it works while the dictionary payloads load. */
+function renderPhraseSearch(): void {
+  if (!panelBody || !searchInput) return;
+  panelBody.textContent = '';
+  const query = searchInput.value.trim();
+  const results = searchPhrases(PHRASES, query, hidden);
+  const hint = document.createElement('p');
+  hint.className = 'dict-hint';
+  hint.setAttribute('role', 'status');
+  hint.textContent = !query
+    ? 'All phrases, group by group. Search by meaning (birthday), by how you type it (shubha), or by group (festival, you).'
+    : results.length
+      ? 'Phrases for your search. Insert puts the Odia where you were typing.'
+      : 'No phrase found. Try another word, or a group: greeting, wish, festival, you, family, everyday.';
+  panelBody.appendChild(hint);
+  let group = '';
+  for (const { phrase } of results) {
+    if (!query && phrase.category !== group) {
+      group = phrase.category;
+      const heading = document.createElement('h3');
+      heading.className = 'dict-group';
+      heading.textContent = CATEGORY_LABEL[phrase.category];
+      panelBody.appendChild(heading);
+    }
+    panelBody.appendChild(phraseBlock(phrase));
+  }
+}
+
+function phraseBlock(phrase: Phrase): HTMLElement {
+  const block = document.createElement('section');
+  block.className = 'dict-entry dict-phrase-entry';
+  const head = document.createElement('div');
+  head.className = 'dict-entry-head';
+  const text = document.createElement('span');
+  text.className = 'dict-word odia';
+  text.lang = 'or';
+  text.textContent = phrase.odia;
+  const tag = document.createElement('span');
+  tag.className = 'dict-tag';
+  tag.textContent = CATEGORY_LABEL[phrase.category];
+  head.append(text, tag);
+  const meaning = document.createElement('p');
+  meaning.className = 'dict-hint dict-phrase-meaning';
+  meaning.textContent = phrase.note ? `${phrase.meaning} — ${phrase.note}` : phrase.meaning;
+  const reads = document.createElement('p');
+  reads.className = 'dict-hint';
+  reads.textContent = `Type it: ${phrase.keys[0]}`;
+  const source = document.createElement('p');
+  source.className = 'dict-hint';
+  source.textContent = phrase.status === 'owner'
+    ? 'Checked by the app owner.'
+    : 'Suggested phrase — awaiting native-speaker review.';
+  const [actions, feedback] = odiaActions(phrase.odia, `${phrase.meaning}`);
+  block.append(head, meaning, reads, source, actions, feedback);
   return block;
 }
 
@@ -927,6 +1012,10 @@ function onSearch(): void {
   const q = searchInput.value.trim();
   if (searchDirection?.value === 'english') {
     renderEnglishSearch();
+    return;
+  }
+  if (searchDirection?.value === 'phrases') {
+    renderPhraseSearch();
     return;
   }
   if (state !== 'ready') {
