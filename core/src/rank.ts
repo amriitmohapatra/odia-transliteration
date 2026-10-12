@@ -6,6 +6,15 @@
  *         + weights.user * log(1 + userCount)
  *         + weights.pref * prefWeight          (owner preference, data/preferences.tsv)
  *         + weights.bigram * bigram(prev, word) (context, data/bigrams.tsv)
+ *         + weights.typed * typed(key, word)    (typed spellings, data/typed.tsv)
+ *
+ * The typed term is what keyboard users chose when they typed this exact key:
+ *
+ *   typed(key, word) = count(key, word) / (total(key) + typedPrior)
+ *
+ * 0..1. The prior keeps a key typed a handful of times from counting as much
+ * as one typed a hundred thousand times. A typed pair is also a candidate on its
+ * own, like a lexicon word. Its weight stays below one user pick (house rule).
  *
  * The context term, when the previous word `prev` of the sentence is known:
  *
@@ -45,6 +54,8 @@ export interface RankInput {
   ruleCandidates: readonly RuleCandidate[];
   /** Exact lexicon hits for this key. */
   lexiconEntries: readonly LexiconEntry[];
+  /** Typed-spelling pairs for this key; `weight` is the pair count. */
+  typedEntries?: readonly LexiconEntry[];
   /** Canonical Odia word -> times the user chose it for this key. */
   userCounts?: Record<string, number>;
   /** Canonical Odia word -> owner preference weight for this key. */
@@ -70,6 +81,7 @@ export interface RankInput {
 interface Evidence {
   rule: number;
   lex: number;
+  typed: number;
   user: number;
   pref: number;
 }
@@ -90,7 +102,7 @@ export function rank(input: RankInput): Candidate[] {
     const key = canonical(text);
     const existing = evidence.get(key);
     if (existing === undefined) {
-      const fresh: Evidence = { rule: 0, lex: 0, user: 0, pref: 0 };
+      const fresh: Evidence = { rule: 0, lex: 0, typed: 0, user: 0, pref: 0 };
       fresh[field] = value;
       evidence.set(key, fresh);
     } else if (value > existing[field]) {
@@ -109,6 +121,13 @@ export function rank(input: RankInput): Candidate[] {
   }
   if (topLexWeight > 0) {
     for (const entry of input.lexiconEntries) bump(entry.word, 'lex', entry.weight / topLexWeight);
+  }
+
+  const typedWeight = input.weights.typed ?? 0;
+  if (typedWeight > 0 && input.typedEntries !== undefined && input.typedEntries.length > 0) {
+    let total = input.weights.typedPrior ?? 0;
+    for (const entry of input.typedEntries) total += entry.weight;
+    for (const entry of input.typedEntries) bump(entry.word, 'typed', entry.weight / total);
   }
 
   // A word the user has chosen before is a candidate even if neither the rules
@@ -135,7 +154,9 @@ export function rank(input: RankInput): Candidate[] {
       input.weights.freq * input.unigrams.logfreq(text) +
       input.weights.user * Math.log(1 + sources.user) +
       // Guarded so callers built before `pref` existed still score as before.
-      (sources.pref > 0 ? input.weights.pref * sources.pref : 0);
+      (sources.pref > 0 ? input.weights.pref * sources.pref : 0) +
+      // Same guard: without typed data the scores are bit for bit as before.
+      (sources.typed > 0 ? typedWeight * sources.typed : 0);
     // Added only when non-zero, so a list without context is bit-identical.
     if (bigram !== undefined) {
       const context = bigram(text);
@@ -209,12 +230,13 @@ export function rank(input: RankInput): Candidate[] {
 
 /**
  * Which source to report when several agree. User choice is the strongest
- * claim, then the owner's preference, then the lexicon, then the rules — the order in which a UI should
+ * claim, then the owner's preference, then the lexicon, then typed pairs, then the rules — the order in which a UI should
  * explain where a suggestion came from.
  */
 function sourceOf(sources: Evidence): CandidateSource {
   if (sources.user > 0) return 'user';
   if (sources.pref > 0) return 'preference';
   if (sources.lex > 0) return 'lexicon';
+  if (sources.typed > 0) return 'typed';
   return 'rule';
 }

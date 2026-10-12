@@ -49,6 +49,7 @@ export const BIGRAMS_PATH = 'data/bigrams.tsv';
 export const BIGRAMS_WEB_PATH = 'data/bigrams-web.tsv';
 export const PREFERENCES_PATH = 'data/preferences.tsv';
 export const LABELS_PATH = 'data/labels.tsv';
+export const TYPED_PATH = 'data/typed.tsv';
 
 export interface CreateEngineFromDiskOptions
   extends Omit<CreateEngineOptions, 'rulesToml' | 'itransToml' | 'lexiconTsv' | 'unigramsTsv' | 'bigramsTsv'> {
@@ -56,6 +57,8 @@ export interface CreateEngineFromDiskOptions
   web?: boolean;
   /** Load no bigram file (context ranking off). Default false. */
   noBigrams?: boolean;
+  /** Load no typed-spelling file (typed term off). Default false. */
+  noTyped?: boolean;
 }
 
 /**
@@ -71,7 +74,7 @@ export function createEngineFromDisk(opts: CreateEngineFromDiskOptions = {}): En
     throw new Error(`Cannot read the rule file at ${coreFilePath(RULES_PATH)}`);
   }
 
-  const { web, noBigrams, ...engineOptions } = opts;
+  const { web, noBigrams, noTyped, typedTsv, ...engineOptions } = opts;
 
   return createEngine({
     ...engineOptions,
@@ -80,6 +83,8 @@ export function createEngineFromDisk(opts: CreateEngineFromDiskOptions = {}): En
     lexiconTsv: readCoreFile(web === true ? LEXICON_WEB_PATH : LEXICON_PATH),
     unigramsTsv: readCoreFile(UNIGRAMS_PATH),
     bigramsTsv: noBigrams === true ? undefined : readCoreFile(web === true ? BIGRAMS_WEB_PATH : BIGRAMS_PATH),
+    // An explicit typedTsv wins: the eval passes a copy without held-out pairs.
+    typedTsv: noTyped === true ? undefined : (typedTsv ?? readCoreFile(TYPED_PATH)),
     preferencesTsv: readCoreFile(PREFERENCES_PATH),
     labelsTsv: readCoreFile(LABELS_PATH),
   });

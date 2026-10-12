@@ -229,9 +229,16 @@ owner later wants to clean up, the options are in `plan/06-owner-followups.md` S
 **Desh keyboard data (2026-10-12).** The owner reports that the company behind the Desh
 Odia keyboard agreed to the use of its data (word list, typed-spelling pairs, n-gram model)
 to improve this app, if it is credited and the app is shared with them. **Verbal; written
-confirmation pending** (`plan/06-owner-followups.md` L-1). Until the email exists, Desh-derived
-data is measured in sessions only and is not committed. Never commit the raw Desh files or
-the decoder scripts (they hold addresses from Desh's binary). Credit Desh for the data in
+confirmation pending** (`plan/06-owner-followups.md` L-1). **Owner decision 2026-10-12:**
+build with the Desh data now, in this private repository, without waiting for the email
+("Finish the build order first and then open the PR. The written permission will take
+time to arrive."). Desh-derived artifacts (`core/data/typed.tsv`, the converter, the
+next-word table) may be committed here, each with its source checksum in
+`core/data/PROVENANCE.md`. Merging to `main` deploys them to the public Vercel site: say so
+in every PR that carries them; the owner decides when to merge. Never commit the raw Desh
+files or Desh's own decoder scripts (they hold addresses from Desh's binary); the build
+scripts in `tools/build-data/` are this project's own and take the raw file paths as
+arguments. Credit Desh for the data in
 the wording the written terms give; Desh is not the author of this app's code, and LICENSE
 is not changed. A second reason, beside `webcorpus/`, never to make this repository public
 without a fresh history.

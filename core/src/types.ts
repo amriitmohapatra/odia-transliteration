@@ -25,7 +25,7 @@
  */
 import type { FilterLevel, Labels, Preferences } from './curation.js';
 
-export type CandidateSource = 'user' | 'preference' | 'lexicon' | 'rule' | 'verbatim';
+export type CandidateSource = 'user' | 'preference' | 'lexicon' | 'typed' | 'rule' | 'verbatim';
 
 export interface Candidate {
   /** Canonical Odia text (or the verbatim Latin token). */
@@ -125,6 +125,14 @@ export interface RankWeights {
    * symbols.toml; absent or 0 means no context term at all.
    */
   bigram?: number;
+  /**
+   * What keyboard users typed for this key and chose (data/typed.tsv), added as
+   * typed * count(key, word) / (total(key) + typedPrior). Optional; absent or 0
+   * means no such term. Kept below one user pick, like pref and bigram.
+   */
+  typed?: number;
+  /** Prior count added to total(key) above, so a rarely typed key counts less. */
+  typedPrior?: number;
 }
 
 /**
@@ -311,4 +319,9 @@ export interface EngineConfig {
   filter?: FilterLevel;
   /** Word-pair counts for context ranking. Absent means no context term. */
   bigrams?: Bigrams;
+  /**
+   * Typed-spelling pairs (data/typed.tsv): roman key -> chosen Odia word, with
+   * the pair count as the weight. Absent means no typed term.
+   */
+  typed?: Lexicon;
 }

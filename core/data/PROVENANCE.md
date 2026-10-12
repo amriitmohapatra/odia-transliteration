@@ -302,3 +302,27 @@ Aksharantar is released by AI4Bharat under CC-BY 4.0 / CC0 and is redistributabl
 with attribution. The derived artifacts in `core/data/` are transformations of that
 dataset and inherit its terms. No AGPL code or data (Varnam/govarnam, Aksharamukha)
 was consulted in producing them.
+
+## Desh keyboard data (2026-10-12)
+
+**Source.** The Desh Odia keyboard's data, shared with the owner on 2026-10-12. The owner
+reports Desh agreed to its use, on condition of credit and sharing the app; the written
+confirmation is pending (`plan/06-owner-followups.md` L-1). Owner decision 2026-10-12:
+build and commit in this private repository before it arrives. The raw files are NOT in
+this repository; the build scripts take their paths. Licence: by agreement with Desh, not
+MIT; do not redistribute outside this app until the written terms say how.
+
+### Typed-spelling pairs (`typed.tsv`)
+
+What Desh users typed (roman key) and the Odia word they chose, with the pair count.
+
+| | |
+|---|---|
+| Raw input | `key_to_word.tsv` (from Desh `native_words.db`), 56,381 pairs, sha256 `966b50b41e6b8ab0bb3dc8c0334924242f01f38ef1facdb8097eb16e5018ec12` |
+| Build | `python3 -I tools/build-data/build_typed.py /path/to/key_to_word.tsv` |
+| Output | 55,818 rows, 47,520 keys, 1,560,460 bytes (412 KB gzipped), sha256 `28701bef3de43d2d8a5f6b801508ba2bfcbb6ecb82f2625bea2bf147bab80e55` |
+| Canonical form | 433 words with the precomposed nukta letters (U+0B5C/U+0B5D) decomposed |
+| Nukta restored | 972 chat words with a bare non-initial ଡ/ଢ moved to the nukta form when that form is the more frequent word in `unigrams.tsv` (ଓଡିଶା → ଓଡ଼ିଶା, ବଡ → ବଡ଼) |
+| Dropped | 563 pairs below 0.5% of their key's choices |
+| Held-out | 717 (key, word) pairs of `core/test/golden/heldout.tsv` are in the file (real choices, e.g. `jiba` → the verb). `tools/eval/run_eval.ts` removes them before it scores the held-out set, and decides the in-lexicon split with an engine without typed pairs, so the split matches `tools/eval/baseline.json`. |
+| Not in | the kids edition (adults' chat; the constant edition flag drops the chunk) |

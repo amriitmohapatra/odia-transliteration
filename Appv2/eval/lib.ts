@@ -56,6 +56,7 @@ const PATHS: Record<AssetKey, string> = {
   coreUnigrams: resolve(ROOT, 'core/data/unigrams.tsv'),
   sanskritUnigrams: resolve(APPV2, 'data/sanskrit-unigrams.tsv'),
   coreBigrams: resolve(ROOT, 'core/data/bigrams.tsv'),
+  typed: resolve(ROOT, 'core/data/typed.tsv'),
   preferences: resolve(ROOT, 'core/data/preferences.tsv'),
   labels: resolve(ROOT, 'core/data/labels.tsv'),
 };
@@ -134,6 +135,8 @@ export function engineFor(id: ProfileId, opts: EvalEngineOptions = {}): Engine {
     unigrams: opts.rulesOnly ? emptyUnigrams() : mergeUnigrams(profile.unigrams.map(unigrams)),
     // The app loads word pairs for every profile (context in transliterate()).
     bigrams: opts.rulesOnly ? undefined : bigrams(),
+    // Typed-spelling pairs, as the adult app loads them.
+    typed: opts.rulesOnly ? undefined : lexicon('typed'),
     // Same owner data the app loads, so evals measure what users get.
     preferences: opts.rulesOnly ? undefined : parsePreferences(raw('preferences') ?? ''),
     labels: parseLabels(raw('labels') ?? ''),

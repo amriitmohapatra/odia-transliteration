@@ -58,6 +58,7 @@ export class Engine {
   private readonly lexicon: Lexicon;
   private readonly unigrams: Unigrams;
   private readonly bigrams: Bigrams;
+  private readonly typed: Lexicon | undefined;
   private readonly learnStore: LearnStore | undefined;
   private readonly preferences: Preferences;
   private readonly labels: Labels;
@@ -71,6 +72,7 @@ export class Engine {
     this.lexicon = cfg.lexicon;
     this.unigrams = cfg.unigrams;
     this.bigrams = cfg.bigrams ?? emptyBigrams();
+    this.typed = cfg.typed;
     this.learnStore = cfg.learnStore;
     this.preferences = cfg.preferences ?? emptyPreferences();
     this.labels = cfg.labels ?? emptyLabels();
@@ -153,6 +155,7 @@ export class Engine {
         limit: Math.max(wanted, this.beam),
       }),
       lexiconEntries: this.lexicon.lookup(key),
+      typedEntries: this.typed?.lookup(key),
       userCounts: this.learnStore?.get(key),
       prefWeights: this.preferences.get(key),
       isBlocked: this.blockerFor(key),
@@ -282,6 +285,8 @@ export interface CreateEngineOptions {
   unigramsTsv?: string;
   /** Contents of `data/bigrams.tsv` (or `-web`). Absent means no context term. */
   bigramsTsv?: string;
+  /** Contents of `data/typed.tsv` (typed-spelling pairs). Absent means no typed term. */
+  typedTsv?: string;
   /** Contents of `data/preferences.tsv` (owner-curated). Absent means none. */
   preferencesTsv?: string;
   /** Contents of `data/labels.tsv` (owner-curated). Absent means none. */
@@ -309,6 +314,7 @@ export function createEngine(opts: CreateEngineOptions): Engine {
     lexicon: opts.lexiconTsv === undefined ? emptyLexicon() : parseLexicon(opts.lexiconTsv),
     unigrams: opts.unigramsTsv === undefined ? emptyUnigrams() : parseUnigrams(opts.unigramsTsv),
     bigrams: opts.bigramsTsv === undefined ? undefined : parseBigrams(opts.bigramsTsv),
+    typed: opts.typedTsv === undefined ? undefined : parseLexicon(opts.typedTsv),
     preferences: opts.preferencesTsv === undefined ? undefined : parsePreferences(opts.preferencesTsv),
     labels: opts.labelsTsv === undefined ? undefined : parseLabels(opts.labelsTsv),
     familySafe: opts.familySafe,

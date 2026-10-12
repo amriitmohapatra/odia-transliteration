@@ -23,7 +23,7 @@ to the owner. Claude marks each item done here, with the date, when it is done.
 
 | # | Item | How | Since |
 |---|---|---|---|
-| L-1 | **Written permission from Desh** for the data the app will use. The email should name: (1) the data (word list with counts, typed-spelling pairs, word-pair and word-triple model; not the transliteration FST or the English model unless wanted); (2) the use (a free web app, public website, and later phone apps; data stored in this private repository); (3) the credit wording they want (for the data; the app's code and licence stay the owner's); (4) whether the data may stay in the app if the arrangement ends. Forward it to Claude or save it; Claude records the terms (no personal details). | Ask Desh by email | 2026-10-12 |
+| L-1 | **Written permission from Desh** for the data the app will use. The email should name: (1) the data (word list with counts, typed-spelling pairs, word-pair and word-triple model, and the transliteration converter (FST), which the hybrid speller uses; not the English model); (2) the use (a free web app, public website, and later phone apps; data stored in this private repository); (3) the credit wording they want (for the data; the app's code and licence stay the owner's); (4) whether the data may stay in the app if the arrangement ends. Forward it to Claude or save it; Claude records the terms (no personal details). **Owner decision 2026-10-12: the build goes ahead before the email arrives** (private repository; merging to `main` publishes the data on the website, the owner decides when). | Ask Desh by email | 2026-10-12 |
 
 ## A. Needs the owner's Mac
 

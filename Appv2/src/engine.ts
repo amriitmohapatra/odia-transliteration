@@ -37,6 +37,8 @@ import { verbatimEngine, type EngineLike } from './verbatim.js';
 
 /** Which build of the engine the bundler found. Injected by vite.config.ts. */
 declare const __CORE_MODE__: 'src' | 'dist' | 'stub';
+/** Which edition is being built. Injected by vite.config.ts. */
+declare const __APP_EDITION__: 'adult' | 'kids';
 
 type RawGlob = Record<string, () => Promise<unknown>>;
 
@@ -77,6 +79,16 @@ const GLOBS: Record<AssetKey, RawGlob> = {
     query: '?raw',
     import: 'default',
   }),
+  // Not in the kids edition: these are adults' chat choices, and a word that
+  // is not in labels.tsv would pass the kids filter. The constant condition
+  // lets the bundler drop the chunk from the kids build entirely.
+  typed:
+    __APP_EDITION__ === 'kids'
+      ? {}
+      : import.meta.glob('../../core/data/typed.tsv', {
+          query: '?raw',
+          import: 'default',
+        }),
   preferences: import.meta.glob('../../core/data/preferences.tsv', {
     query: '?raw',
     import: 'default',
@@ -127,6 +139,7 @@ export async function loadProfileAssets(id: ProfileId): Promise<void> {
     ...profile.lexicons.map((l) => l.asset),
     ...profile.unigrams,
     'coreBigrams',
+    'typed',
     'preferences',
     'labels',
   ];
@@ -187,6 +200,9 @@ export function buildEngine(
       // Context ranking for engine.transliterate(sentence). A missing chunk
       // means no context term; a malformed file throws, like a bad rule file.
       bigrams: bigramsFor('coreBigrams'),
+      // What keyboard users typed and chose. Parsed once like a lexicon; a
+      // missing chunk means no typed term, the engine still works.
+      typed: lexiconFor('typed'),
       learnStore,
       digits,
       preferences: parsePreferences(rawCache.get('preferences') ?? '', 'core/data/preferences.tsv'),

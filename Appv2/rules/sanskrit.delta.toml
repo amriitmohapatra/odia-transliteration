@@ -37,6 +37,10 @@ Devanagari transposition — see Appv2/data/lla-preference.tsv for the evidence.
 # --------------------------------------------------------------------------
 [set]
 "weights.freq" = 2.2
+# Typed spellings (core/data/typed.tsv) are everyday chat: in verse they pull
+# "na" to the chat word and cost sloka whole lines (34.4% -> 28.1%, 2026-10-12).
+# Off in the sloka profile only; [set] is not inherited, so unified keeps 1.3.
+"weights.typed" = 0
 
 
 # ==========================================================================
