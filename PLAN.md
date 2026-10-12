@@ -219,6 +219,7 @@ Agents do not commit; the lead reviews, measures and commits.
 
 | Date | Change |
 |---|---|
+| 2026-10-12 | Owner preference `ra` → the letter RA alone (weight 3). Evals unchanged (held-out, everyday, context, colloquial). |
 | 2026-10-12 | Repository private again (owner). Desh keyboard data: owner reports permission; written confirmation pending (L-1); measured in session only until then. CI runs on pull requests and on `main` only. Stage P (public repository) now also depends on Desh's terms. |
 | 2026-10-12 | V2.12 step B: loan-word list `loans.tsv` (3,855 rows, licence-clean inputs), English search uses it; Odia results show "English loan word: …". IndicCorp v2 Odia counted (CC0, 5.58 M lines) for attestation. |
 | 2026-10-12 | V2.12 unified dictionary: one search box, grouped results (spellings, English → Odia, loans, phrases); loan rows filtered by origin and sound. Browser checks rewritten for the one box. |
