@@ -204,7 +204,9 @@ export class Engine {
    */
   complete(roman: string, k = 2, exclude: readonly string[] = []): Candidate[] {
     const key = roman.toLowerCase();
-    if (this.typed === undefined || key.length < COMPLETE_MIN_KEY || k <= 0) return [];
+    // Off where the typed term is off (the sloka profile sets typed = 0).
+    if (this.typed === undefined || (this.rules.weights.typed ?? 0) <= 0) return [];
+    if (key.length < COMPLETE_MIN_KEY || k <= 0) return [];
     const totals = new Map<string, number>();
     for (const row of this.typed.prefix(key, COMPLETE_SCAN)) {
       if (row.key.length <= key.length) continue;

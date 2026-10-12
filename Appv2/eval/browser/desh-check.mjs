@@ -74,6 +74,14 @@ try {
     assert.equal(await editor(page), CITY);
   });
 
+  await run('completion: none in the sloka profile (typed spellings are off there)', async ({ page, area }) => {
+    await page.locator('#mode-sloka').check();
+    await area.focus();
+    await page.keyboard.type('bhub');
+    await page.locator('#inline-candidates .inline-candidate').first().waitFor({ state: 'visible' });
+    assert.equal(await page.locator('#inline-candidates .inline-completion').count(), 0);
+  });
+
   await run('completion: Space keeps the best match for the typed letters', async ({ page }) => {
     await page.keyboard.type('bhub');
     await page.locator('#inline-candidates .inline-completion').first().waitFor({ state: 'visible' });

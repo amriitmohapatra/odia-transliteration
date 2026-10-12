@@ -126,6 +126,11 @@ describe('word completion from typed pairs', () => {
     expect(texts(engine.complete('bhuban', 3))).toEqual([CITY]);
   });
 
+  it('is off where the typed term is off ([weights] typed = 0)', () => {
+    const off = createEngine({ rulesToml: SYMBOLS_TOML.replace(/^typed = .*$/m, 'typed = 0'), typedTsv: TYPED_CITY });
+    expect(off.complete('bhub', 3)).toEqual([]);
+  });
+
   it('is empty without typed data', () => {
     expect(createEngine({ rulesToml: SYMBOLS_TOML }).complete('bhub', 3)).toEqual([]);
   });

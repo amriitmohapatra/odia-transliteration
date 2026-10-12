@@ -8,7 +8,10 @@ the source of truth for scope, staging and rationale.
 
 **Current stage** (2026-10-04, latest): **V1 is live on Vercel**: adult
 `https://odia-transliteration-web.vercel.app/`, kids `https://odia-phonetic-kids.vercel.app/`.
-V2 (better words) has started. Owner checks after the merge are open in `plan/06-owner-followups.md`. Status per item: `PLAN.md`. Earlier: Stages A and B were in progress. Three single-file web apps
+V2 (better words) has started. **2026-10-12:** the hybrid engine with Desh keyboard data
+(V2.13 typed spellings, V2.14 spelling converter, V2.15 next word, V2.16 completion) is
+built and in PR #9, not merged: merging publishes Desh data before the written permission
+(L-1), and C-11 (content probe) comes first. Owner checks after the merge are open in `plan/06-owner-followups.md`. Status per item: `PLAN.md`. Earlier: Stages A and B were in progress. Three single-file web apps
 are built and measured: `docs/odia-app.html`, `docs/odia-app-sanskrit.html` (from `Appv2/`)
 and `Odia_Sanskrit_Appv2/odia-app-sanskrit-v2.html` (adds the dictionary). The v3 direction
 and the owner's decisions are in `plan/05-v3-direction.md`. See also `plan/02-stages.md`.
