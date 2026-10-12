@@ -10,6 +10,15 @@ to the owner. Claude marks each item done here, with the date, when it is done.
 
 ---
 
+## S. Security (found 2026-10-12, do first)
+
+| # | Item | How | Since |
+|---|---|---|---|
+| S-1 | **Set the GitHub repository back to private.** It is public. No passwords or keys are in it, but `tools/build-data/webcorpus/` (102 files, 247 MB of scraped books, news, government pages and X posts, with third-party phone numbers and emails) is not ours to publish, and deleting the files in a new commit does not remove them from history. The websites keep working: Vercel deploys from private repositories. | GitHub → the repository → Settings → General → Danger Zone → Change visibility → Make private | 2026-10-12 |
+| S-2 | Turn on GitHub's free security features (they matter while the repository is public, and Dependabot also works when private): Dependabot alerts and, if shown, secret scanning with push protection. | Settings → Advanced Security (or Code security) → Enable | 2026-10-12 |
+| S-3 | Hide your email in future commits. Your Gmail address is already in the commit history and in the report button (on purpose). | github.com/settings/emails → tick "Keep my email addresses private" and "Block command line pushes that expose my email" | 2026-10-12 |
+| S-4 | Later, for a public code repository: follow section D "Public repository" (a fresh repository without `webcorpus/`). | When the owner says "project finished" | 2026-10-12 |
+
 ## A. Needs the owner's Mac
 
 **Owner timing (2026-10-04):** A-1 and A-3 only after the final app is ready. All other

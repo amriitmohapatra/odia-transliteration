@@ -209,7 +209,14 @@ that owns the data: `core/data/`, `Appv2/data/` or `Odia_Sanskrit_Appv2/`.
 
 ## Before this repository is ever made public (user reminder, 2026-10-04)
 
-The GitHub repo is **private**. `tools/build-data/webcorpus/` holds raw scraped
+**Status 2026-10-12: the repo was found PUBLIC** (owner had changed it). A security
+check that day found no keys, tokens or passwords in any commit (gitleaks and a custom
+scan of all history: 8 alarms, all false). The exposure is `tools/build-data/webcorpus/`
+(below) plus the owner's email (commit metadata, report button, scraper user-agents) and
+Mac username in scraper scripts. Recommended to the owner: set the repo back to private
+now; publish later from a fresh repository (stage P). See `plan/06-owner-followups.md` S-1.
+
+The GitHub repo was **private** until then. `tools/build-data/webcorpus/` holds raw scraped
 third-party text (archive.org books, literature, news, government pages, X posts)
 that the MIT `LICENSE` does not cover.
 

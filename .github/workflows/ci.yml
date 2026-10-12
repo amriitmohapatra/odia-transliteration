@@ -7,6 +7,11 @@ on:
   push:
   pull_request:
 
+# Public repository: the CI token can only read. No job needs to write, and no
+# secret is used, so a pull request from a fork cannot change anything.
+permissions:
+  contents: read
+
 jobs:
   editor-browser:
     runs-on: ubuntu-latest
