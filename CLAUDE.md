@@ -185,6 +185,9 @@ Rows marked unknown or unverified below are open items, not exceptions:
 | OdiaNLP `dictionary` `cleaned_pairs.json` | Repo MIT. **Origin of the text unknown.** To be replaced (D-5). | MODERN dictionary layer, `[mt]` rows |
 | Unicode CLDR `or.xml` | Unicode License v3 | MODERN dictionary layer, `[cldr]` rows |
 | wordfreq, CMUdict | Unverified (see provenance file) | Build time: loanword detection |
+| CMU Pronouncing Dictionary (data file) | BSD-2-Clause | Build time: English words and sounds for `loans.tsv` |
+| SCOWL `american-english-small` | Permissive / public domain | Build time: common English words for `loans.tsv` |
+| IndicCorp v2 Odia `or.txt` (word counts) | CC0 | Build time: attestation for `loans.tsv` (`tools/build-data/count_indiccorp.py`) |
 | pako inflate | MIT | Unpacks the dictionary payloads |
 
 The dictionary sources and their checksums are in `Odia_Sanskrit_Appv2/PROVENANCE.md`.

@@ -55,14 +55,15 @@ import { originChipLabel, originLabel, parseOrigin } from './origin.js';
 import { parseEnglishEntries, searchEnglish, type EnglishEntry } from './english.js';
 import englishTsv from './english.tsv?raw';
 import { cleanDefinition } from './clean.js';
-import { closestLoan, soundsLike } from './loanmatch.js';
-import { romanize } from '../romanize.js';
+import { LANGUAGE_LABEL, parseLoans, type Loan } from './loans.js';
+import loansTsv from './loans.tsv?raw';
 import { CATEGORY_LABEL, parsePhrases, searchPhrases, type Phrase } from './phrases.js';
 import phrasesTsv from '../../../core/data/phrases.tsv?raw';
 import { DOCK_QUERY } from '../inline.js';
 import './overlay.css';
 
 const ENGLISH = parseEnglishEntries(englishTsv);
+const LOANS = parseLoans(loansTsv);
 /** The phrase table. A broken file shows no phrases rather than breaking the panel. */
 const PHRASES: Phrase[] = (() => {
   try {
@@ -844,51 +845,36 @@ function groupHeading(text: string): HTMLElement {
 }
 
 /**
- * Loan words by English word, from the modern layer's `loan` rows. The loan
- * detector also matched native words by sound (one everyday Odia word was
- * glossed as "committee"), so a word that Praharaj marks as native or from
- * Sanskrit (origin codes D, T, S) is left out. Built once, when data is ready.
+ * English word -> Odia: the hand-made starter list first, then the loan-word
+ * list (English loans, and Persian / Arabic / Hindi words by English meaning).
  */
-let loanIndex: Map<string, string[]> | null = null;
-function loansFor(english: string): string[] {
-  if (!M) return [];
-  if (!loanIndex) {
-    loanIndex = new Map();
-    for (let i = 0; i < M.keys.length; i++) {
-      const odia = M.keys[i] as string;
-      for (const line of defAt(M, i).split('\n')) {
-        const [tag, word] = line.split('\t');
-        if (tag !== 'loan' || !word) continue;
-        const code = originCode(lookup(odia)) ?? '';
-        if (code && /^[DTS](\/[DTS])*$/.test(code)) continue;
-        if (!soundsLike(word, odia)) continue;
-        const key = word.toLowerCase();
-        const list = loanIndex.get(key) ?? [];
-        if (!list.includes(odia)) list.push(odia);
-        loanIndex.set(key, list);
-      }
-    }
-  }
-  return loanIndex.get(english.toLowerCase()) ?? [];
-}
-
-/** English words and loan spellings: bundled english.tsv first, then detected loans. */
 function englishSection(query: string): HTMLElement[] {
   const out: HTMLElement[] = [];
   const results = searchEnglish(ENGLISH, query, hidden);
   for (const { entry, exact } of results) out.push(englishBlock(entry, exact));
   const shown = new Set(results.map((r) => canonical(r.entry.odia)));
   const q = query.trim().toLowerCase().replace(/\s+/g, ' ');
-  // Auto-detected loans are noisy: only when the starter list has no exact
-  // entry, and then only the single closest spelling.
-  if (!results.some((r) => r.exact)) {
-    const odia = closestLoan(q, loansFor(q).filter((w) => !shown.has(w) && !hidden(w)), romanize);
-    if (odia) out.push(loanBlock(q, odia));
+  for (const loan of (LOANS.byEnglish.get(q) ?? []).slice(0, 4)) {
+    if (shown.has(loan.odia) || hidden(loan.odia)) continue;
+    shown.add(loan.odia);
+    out.push(loanBlock(loan));
   }
   return out;
 }
 
-function loanBlock(english: string, odia: string): HTMLElement {
+/** "English loan word: phone" under an Odia word that is in the loan list. */
+function withLoanNote(block: HTMLElement, word: string): HTMLElement {
+  const loans = LOANS.byOdia.get(word);
+  if (loans?.length) {
+    const note = document.createElement('p');
+    note.className = 'dict-hint dict-loan-note';
+    note.textContent = `${LANGUAGE_LABEL[loans[0]!.language]}: ${[...new Set(loans.map((l) => l.english))].slice(0, 3).join(', ')}`;
+    block.querySelector('.dict-entry-head')?.after(note);
+  }
+  return block;
+}
+
+function loanBlock(loan: Loan): HTMLElement {
   const block = document.createElement('section');
   block.className = 'dict-entry dict-loan-entry';
   const head = document.createElement('div');
@@ -896,18 +882,18 @@ function loanBlock(english: string, odia: string): HTMLElement {
   const word = document.createElement('span');
   word.className = 'dict-word odia';
   word.lang = 'or';
-  word.textContent = odia;
+  word.textContent = loan.odia;
   const tag = document.createElement('span');
   tag.className = 'dict-tag';
-  tag.textContent = 'English loan spelling';
+  tag.textContent = LANGUAGE_LABEL[loan.language];
   head.append(word, tag);
   const sense = document.createElement('p');
   sense.className = 'dict-hint';
-  sense.textContent = `${english}, written in Odia`;
+  sense.textContent = loan.language === 'en' ? `${loan.english}, written in Odia` : `meaning: ${loan.english}`;
   const source = document.createElement('p');
   source.className = 'dict-hint';
-  source.textContent = 'Found automatically by sound — may be wrong.';
-  const [actions, feedback] = odiaActions(odia, `${english}, loan spelling`);
+  source.textContent = 'Loan-word list, found automatically — not yet reviewed.';
+  const [actions, feedback] = odiaActions(loan.odia, `${loan.english}, loan word`);
   block.append(head, sense, source, actions, feedback);
   return block;
 }
@@ -923,7 +909,7 @@ function spelledSection(roman: string): HTMLElement[] {
   for (const word of spellWord(roman).slice(0, 5)) {
     if (hidden(word)) continue;
     const ready = state === 'ready';
-    const block = entryBlock(word, null, ready ? lookup(word) : null, ready ? lookupModern(word) : null);
+    const block = withLoanNote(entryBlock(word, null, ready ? lookup(word) : null, ready ? lookupModern(word) : null), word);
     block.classList.add('dict-spelled-entry');
     const [actions, feedback] = odiaActions(word, `${word}`);
     block.append(actions, feedback);
@@ -1083,7 +1069,8 @@ function onSearch(): void {
     const entry = blocked || state !== 'ready' ? null : lookup(word);
     const modern = blocked || state !== 'ready' ? null : lookupModern(word);
     const own = blocked ? undefined : ownerGloss(word);
-    add('Odia word', entry || modern || own ? [entryBlock(word, null, entry, modern)] : []);
+    const loan = !blocked && LOANS.byOdia.has(word);
+    add('Odia word', entry || modern || own || loan ? [withLoanNote(entryBlock(word, null, entry, modern), word)] : []);
     add('Phrases', phraseSection(q));
   } else {
     // An English word with an exact entry (water, phone) shows its Odia word
