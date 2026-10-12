@@ -24,7 +24,7 @@ jobs:
           "$RUNNER_TEMP/odia-browser-tools/node_modules/.bin/playwright" install --with-deps chromium
       - name: Build production app
         run: npx vite build --config Appv2/vite.config.ts
-      - name: Editor and English dictionary browser regressions
+      - name: Editor, dictionary and phone browser regressions
         run: |
           python3 -m http.server 4810 --bind 127.0.0.1 --directory Appv2/dist > "$RUNNER_TEMP/odia-browser-server.log" 2>&1 &
           odia_server_pid=$!
@@ -36,6 +36,7 @@ jobs:
           export NODE_PATH="$RUNNER_TEMP/odia-browser-tools/node_modules"
           node Appv2/eval/browser/editing-check.mjs 4810
           node Appv2/eval/browser/english-check.mjs 4810
+          node Appv2/eval/browser/mobile-check.mjs 4810
   check:
     runs-on: ubuntu-latest
     timeout-minutes: 20

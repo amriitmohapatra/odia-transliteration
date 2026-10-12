@@ -221,8 +221,10 @@ export class InlineCandidates {
     window.addEventListener(
       'scroll',
       (e) => {
-        // The strip's own horizontal scroll is not a page scroll.
-        if (e.target instanceof Node && this.dock.contains(e.target)) return;
+        // Internal editor scrolling is an explicit reading action. Repositioning
+        // the dock would reveal the caret again and undo the user's scroll.
+        // The strip's own horizontal scroll is not a page scroll either.
+        if (e.target === this.area || (e.target instanceof Node && this.dock.contains(e.target))) return;
         if (this.docked) this.queuePosition();
         else this.hide();
       },
@@ -622,6 +624,7 @@ export class InlineCandidates {
   private positionDock(): void {
     if (!this.dockOpen) return;
     const height = this.dock.offsetHeight;
+    if (height > 0) document.documentElement.style.setProperty('--phone-dock-height', `${height}px`);
     const vv = window.visualViewport;
 
     let stripTop: number; // in layout-viewport client coordinates
@@ -642,7 +645,8 @@ export class InlineCandidates {
       stripTop = window.innerHeight - height;
     }
 
-    document.body.style.paddingBottom = `${height}px`;
+    const phoneEditing = document.documentElement.classList.contains('phone-editing');
+    document.body.style.paddingBottom = phoneEditing ? '' : `${height}px`;
 
     // Keep the caret line visible above the strip.
     const style = window.getComputedStyle(this.area);
@@ -653,6 +657,15 @@ export class InlineCandidates {
       rect.bottom,
       rect.top + marker.offsetTop - this.area.scrollTop + lineHeight + 8,
     );
+    if (phoneEditing) {
+      // The phone editor is already sized above the dock. Scroll its contents,
+      // not the page, so Safari cannot pan the whole composing surface away.
+      const caretTop = marker.offsetTop - this.area.scrollTop;
+      const room = this.area.clientHeight - lineHeight - 8;
+      if (caretTop > room) this.area.scrollTop += caretTop - room;
+      else if (caretTop < 0) this.area.scrollTop += caretTop;
+      return;
+    }
     const visibleTop = vv ? vv.offsetTop : 0;
     if (caretBottom > stripTop) {
       window.scrollBy(0, Math.ceil(caretBottom - stripTop));

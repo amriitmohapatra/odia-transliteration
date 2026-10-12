@@ -206,6 +206,7 @@ async function boot(): Promise<void> {
   buildProfileSelect();
   buildShortcutHints();
   bindEvents();
+  setupPhoneLayout();
 
   inline = new InlineCandidates(romanEl, {
     pending: () => editor.pending(),
@@ -260,7 +261,19 @@ async function boot(): Promise<void> {
   dockMeanings.title = 'Meanings';
   dockMeanings.innerHTML = meaningsEl.querySelector('svg')?.outerHTML ?? '';
   dockMeanings.addEventListener('click', () => setMeaningsOpen(!meaningsOpen()));
-  inline.toolbar.append(dockMeanings, dockShare, dockCopy);
+  const dockDone = document.createElement('button');
+  dockDone.type = 'button';
+  dockDone.id = 'done-dock';
+  dockDone.className = 'btn btn-quiet';
+  dockDone.textContent = 'Done';
+  dockDone.setAttribute('aria-label', 'Finish typing and dismiss the keyboard');
+  dockDone.addEventListener('click', () => {
+    romanEl.blur();
+    // Short viewports hide the masthead while composing. The focusout layout
+    // update must reveal it before moving keyboard/assistive-tech focus there.
+    window.requestAnimationFrame(() => openSettingsEl.focus({ preventScroll: true }));
+  });
+  inline.toolbar.append(dockMeanings, dockShare, dockCopy, dockDone);
   layoutActions();
 
   updateStates();
@@ -1290,6 +1303,40 @@ function writeProfilePref(id: ProfileId): void {
 /* ------------------------------------------------------------------ *
  * Events
  * ------------------------------------------------------------------ */
+
+/** A phone has a separate composing layout inside the visible viewport.
+ * The same variables also place the explicit dictionary sheet above the OS
+ * keyboard. Never infer keyboard size from a hardcoded iPhone dimension. */
+function setupPhoneLayout(): void {
+  const root = document.documentElement;
+  let queued = false;
+  const update = (): void => {
+    queued = false;
+    const viewport = window.visualViewport;
+    const phone = phoneQuery?.matches ?? window.innerWidth < 700;
+    const height = viewport?.height ?? window.innerHeight;
+    root.style.setProperty('--app-viewport-height', `${height}px`);
+    root.style.setProperty('--app-viewport-offset-top', `${viewport?.offsetTop ?? 0}px`);
+    root.style.setProperty('--app-viewport-width', `${viewport?.width ?? window.innerWidth}px`);
+    root.style.setProperty('--app-viewport-offset-left', `${viewport?.offsetLeft ?? 0}px`);
+    root.classList.toggle('phone-layout', phone);
+    root.classList.toggle('phone-short', phone && height < 300);
+    const active = document.activeElement;
+    const dictionaryInput = active instanceof HTMLElement && !!active.closest('#dict-panel') &&
+      (active.matches('input, select, textarea') || document.body.classList.contains('dict-open'));
+    root.classList.toggle('phone-editing', phone && (active === romanEl || dictionaryInput));
+  };
+  const queue = (): void => {
+    if (!queued) { queued = true; window.requestAnimationFrame(update); }
+  };
+  document.addEventListener('focusin', queue);
+  document.addEventListener('focusout', queue);
+  window.addEventListener('resize', queue);
+  window.visualViewport?.addEventListener('resize', queue);
+  window.visualViewport?.addEventListener('scroll', queue);
+  phoneQuery?.addListener(queue);
+  update();
+}
 
 function bindEvents(): void {
   romanEl.addEventListener('input', (event) => {

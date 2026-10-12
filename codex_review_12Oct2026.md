@@ -17,6 +17,29 @@ for the 21 editor checks, 19 dictionary checks and WebKit evidence. Dictionary
 coverage, preferred spellings and ranking limitations remain separate work; this
 release does not claim to fix them or to complete native iOS parity.
 
+## Phone usability follow-up
+
+The owner subsequently brought phone layout into this release. A 320px first-visit
+baseline left only about 16px of the editor visible above the fold. The previous
+Odia Box font also enlarged glyphs by 32%, and the typing dock consumed about
+128px before accounting for the system keyboard.
+
+The app now uses a dedicated responsive phone writing view in the same URL. On
+focus, the editor moves above the keyboard; introductory controls are hidden
+until Done. Unscaled Noto Odia text and a single scrollable candidate row reduce
+crowding while preserving larger-text preferences. Meanings is a separate,
+explicitly opened lookup sheet with scrollable results and Back to typing.
+English dictionary insertion closes the sheet and restores the editing position.
+The desktop layout remains available at larger widths.
+
+`Appv2/eval/browser/mobile-check.mjs` checks narrow screens, landscape, larger text,
+editor/dock geometry, dictionary insertion and simulated visual-viewport changes.
+The final build passed all 193 assertions, plus the existing 21 editor, 19 dictionary
+and six Linux WebKit editing scenarios.
+These are browser checks; actual iPhone keyboard animation, VoiceOver and iPad
+behavior still need hardware validation. The implementation does not deliver
+a native Desh replacement. See `handoff.md` for the latest release record.
+
 ## Follow-up after environment settings were published
 
 PR #4 was merged as `5ba8761`; this follow-up starts from that merged revision.
@@ -222,7 +245,7 @@ Once composition quality and these milestones hold, differentiate with reviewed 
 2. **Next language review:** validate the 64 new seed senses, then supply 50–100 consented everyday messages written naturally in Roman Odia, with intended output and acceptable spoken/formal variants. Include work, family, food, travel, names and English mixing; do not romanize a predetermined Odia list to manufacture all inputs.
 3. **Next ranking/data PR:** shipped-asset evaluation, explicit common aliases and loan-plus-suffix cases; review candidate-generation limits and curated everyday glosses. Track regressions by category and correction burden.
 4. **Then source ingestion:** sample and license-check the most relevant paired/sense resources; measure incremental gain before downloading or shipping larger corpora/models.
-5. **Then iOS spike:** signed containing app + extension, pure-core JS bridge and actual device tests, followed by the parity checklist above. Keep phone layout polish after core functionality as requested.
+5. **Then iOS spike:** signed containing app + extension, pure-core JS bridge and actual device tests, followed by the parity checklist above. The phone writing layout was subsequently brought into this release at the owner’s request.
 
 Language decisions the owner should make: everyday versus formal spelling preferences; colloquial ଚ/ଛ treatment; preferred loan variants/terminal halants; English preservation versus loan conversion; and which multiple senses should lead in common contexts. Do not force these decisions through a global ranking-weight change.
 

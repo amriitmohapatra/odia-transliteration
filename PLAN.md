@@ -1,7 +1,7 @@
 # PLAN.md — what we build, in what order, and how we check it
 
 **Living document.** Claude updates this file at the start and end of every stage, and
-whenever a task changes status. Last updated: 2026-10-04 (V1 in progress).
+whenever a task changes status. Last updated: 2026-10-12 (editor reliability and responsive phone follow-up).
 
 | File | Holds |
 |---|---|
@@ -67,6 +67,18 @@ whenever a task changes status. Last updated: 2026-10-04 (V1 in progress).
 | 2.5 | UI/UX pass from the design proposal (§5) | **Done** — Run A (items 1–5, 8, mode names) and Run B (6 Share/Copy/Undo, 7 tokens + text size, 9 first-run card + Help, 10 desktop list + meanings column, 11 screen reader + keyboard). Open: M9 "Show full entry"; phone Meanings panel above the iOS keyboard |
 | 2.6 | "Report this word" button: copies word, output, code points, version; opens an email link. No network call. | **Done** — "Wrong word? Report it" in the Alternatives sheet; recipient empty until the owner decides (follow-up D) |
 
+### Phone follow-up — 12 October 2026
+
+The owner requested phone usability now, after reporting oversized type and an
+obscured editor. The same web URL has a dedicated responsive writing view: compact
+Noto Odia text, an editor fitted above the software keyboard, one scrollable
+candidate row, Copy and Done. The dictionary opens only on request as a focused
+sheet; Insert returns to the saved editor selection. Desktop keeps its meanings
+column. Text-size preferences still apply. Browser viewport and interaction
+checks cover narrow phones, landscape, larger text and simulated keyboard changes;
+physical iPhone/iPad validation remains an owner follow-up. See `handoff.md` for
+the release state and reproducible commands.
+
 ### 3.3 Backend
 
 V1 has **no backend**: Vercel serves static files. The backend starts in V3 (the assist
@@ -87,7 +99,7 @@ layer, `ARCHITECTURE.md` §7). Two things are set up now so V3 starts safely:
 | 4.4 | Rollback = promote the previous Vercel deployment | From first deploy |
 | 4.5 | A rule for when `tools/eval/baseline.json` may be refreshed: only in its own commit, with the reason | To do |
 | 4.6 | Browser checks in the repo: `Appv2/eval/browser/` (regress, gloss-check, report-check, freeze) | **Done** |
-| 4.7 | Run the browser checks in CI (needs a Playwright + Chromium install step) | To do |
+| 4.7 | Run editor, English dictionary and phone browser checks in CI against the production build | **Done** 2026-10-12 |
 
 ## 3b. V2 — better words (started 2026-10-04)
 

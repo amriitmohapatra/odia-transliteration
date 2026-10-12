@@ -90,3 +90,16 @@ argument accepts a frozen historical build. See
 [the complete validation record](../../../plan/research/2026-10-12/VALIDATION.md)
 for observed results and limits; the diagnostic's exit status is not an overall
 offline-feature acceptance result.
+
+## Responsive phone checks
+
+```bash
+NODE_PATH=/path/to/playwright/node_modules node Appv2/eval/browser/mobile-check.mjs 4810
+```
+
+`mobile-check.mjs` accepts `APP_URL`, `CHROMIUM_EXECUTABLE_PATH` and optional
+`MOBILE_ARTIFACT_DIR` for screenshots and JSON measurements. It checks first-visit
+visibility, narrow phones, landscape, larger text, touch targets, candidate
+scrolling, explicit dictionary lookup and selection insertion, plus desktop
+layout preservation. Keyboard geometry uses a test-only `visualViewport` mock;
+it is not a physical iPhone test. CI runs it against the production build.

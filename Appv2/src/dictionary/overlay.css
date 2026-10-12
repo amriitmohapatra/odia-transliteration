@@ -336,3 +336,89 @@ body.kb-docked #dict-toggle { display: none; }
   flex-wrap: wrap;
   gap: 8px;
 }
+
+
+.dict-close-label { display: none; }
+.dict-tools { display: flex; flex-direction: column; gap: 8px; }
+
+/* Phone lookup is an explicitly opened focused sheet. It replaces the phone
+ * candidate dock while open; typing itself never opens the sheet. The viewport
+ * variables come from main.ts and follow the visible area above the keyboard. */
+html.phone-layout {
+  --phone-dictionary-height: min(520px, calc(var(--app-viewport-height, 100dvh) * 0.9));
+}
+html.phone-layout #dict-panel {
+  display: none;
+  position: fixed;
+  top: calc(var(--app-viewport-offset-top, 0px) + var(--app-viewport-height, 100dvh) - var(--phone-dictionary-height));
+  left: var(--app-viewport-offset-left, 0px);
+  right: auto;
+  bottom: auto;
+  width: var(--app-viewport-width, 100vw);
+  height: var(--phone-dictionary-height);
+  max-height: var(--app-viewport-height, 100dvh);
+  box-sizing: border-box;
+  padding: 6px 10px 8px;
+  gap: 6px;
+  border: 1px solid var(--line);
+  border-bottom: 0;
+  border-radius: 14px 14px 0 0;
+  box-shadow: 0 -8px 28px rgb(0 0 0 / 18%);
+  overflow: hidden;
+}
+html.phone-layout body.dict-open #dict-panel { display: flex; }
+html.phone-layout .dict-head,
+html.phone-layout .dict-tools,
+html.phone-layout .dict-state { flex-shrink: 0; }
+html.phone-layout .dict-head { min-height: 44px; }
+html.phone-layout .dict-head h2 { font-size: max(16px, calc(16px * var(--fs-scale))); }
+html.phone-layout .dict-head h2 .odia { display: none; }
+html.phone-layout .dict-close {
+  display: block;
+  min-width: 44px;
+  min-height: 44px;
+  font-size: calc(15px * var(--fs-scale));
+  padding: 6px 8px;
+}
+html.phone-layout .dict-close-glyph { display: none; }
+html.phone-layout .dict-close-label { display: inline; }
+html.phone-layout .dict-sub { display: none; }
+html.phone-layout .dict-tools {
+  display: grid;
+  grid-template-columns: calc(150px * var(--fs-scale)) minmax(0, 1fr);
+  gap: 6px;
+}
+html.phone-layout .dict-direction,
+html.phone-layout .dict-search {
+  min-width: 0;
+  min-height: 44px;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 6px;
+  font-size: max(16px, calc(16px * var(--fs-scale)));
+}
+html.phone-layout .dict-body { padding-bottom: 4px; gap: 8px; }
+html.phone-layout .dict-entry { padding: 8px; }
+html.phone-layout .dict-word { font-size: calc(22px * var(--fs-scale)); }
+html.phone-layout .dict-tag,
+html.phone-layout .dict-hint,
+html.phone-layout .dict-state,
+html.phone-layout .dict-def,
+html.phone-layout .dict-modern-row,
+html.phone-layout .dict-modern-tag { font-size: calc(15px * var(--fs-scale)); }
+html.phone-layout .dict-modern-row { flex-wrap: wrap; gap: 4px; }
+html.phone-layout .dict-tag { white-space: normal; }
+html.phone-layout .dict-copy,
+html.phone-layout .dict-insert { min-height: 44px; font-size: calc(15px * var(--fs-scale)); }
+
+.dict-backdrop { display: none; }
+html.phone-layout body.dict-modal-open .dict-backdrop {
+  display: block;
+  position: fixed;
+  top: var(--app-viewport-offset-top, 0px);
+  left: var(--app-viewport-offset-left, 0px);
+  width: var(--app-viewport-width, 100vw);
+  height: var(--app-viewport-height, 100dvh);
+  z-index: 34;
+  background: rgb(0 0 0 / 18%);
+}

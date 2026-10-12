@@ -1552,3 +1552,96 @@ code {
   margin: var(--space-1) 0 0;
   color: var(--text);
 }
+
+/* Dedicated phone composition view. The visual viewport shrinks with the OS
+ * keyboard; the editor owns the remaining space instead of sitting below a
+ * desktop-sized introduction. Text-size preferences still scale all text. */
+.phone-layout {
+  --app-viewport-height: 100dvh;
+  --app-viewport-width: 100vw;
+  --app-viewport-offset-top: 0px;
+  --app-viewport-offset-left: 0px;
+  --phone-dock-height: 102px;
+  --fs-body: calc(16px * var(--fs-scale));
+  --odia-scale: 1;
+  --fs-odia-cand: calc(18px * var(--fs-scale));
+}
+.phone-layout .app { padding: 10px 12px 24px; }
+.phone-layout .masthead { gap: 8px; padding: 0 0 12px; }
+.phone-layout .masthead h1 { font-size: calc(17px * var(--fs-scale)); }
+.phone-layout .masthead .mark { width: 36px; height: 36px; font-size: 22px; border-radius: 10px; }
+.phone-layout .tagline { display: none; }
+.phone-layout .intro-body { display: none; }
+.phone-layout .icon-btn { min-width: 44px; }
+.phone-layout .intro { padding: 12px; margin-bottom: 12px; }
+.phone-layout #roman {
+  font-family: 'Noto Sans Oriya', var(--ui-font);
+  font-size: calc(18px * var(--fs-scale));
+  line-height: 1.65;
+  padding: 10px 12px;
+  min-height: 150px;
+}
+.phone-layout .palette { margin-block: 10px; }
+.phone-layout .readback-words { font-size: calc(16px * var(--fs-scale)); }
+.phone-layout .actions { gap: 8px; }
+
+.phone-layout.phone-editing { overflow: hidden; }
+.phone-layout.phone-editing body { overflow: hidden; }
+.phone-layout.phone-editing .app {
+  position: fixed;
+  top: var(--app-viewport-offset-top, 0px);
+  left: var(--app-viewport-offset-left, 0px);
+  width: var(--app-viewport-width, 100%);
+  height: var(--app-viewport-height, 100dvh);
+  max-width: none;
+  margin: 0;
+  padding: max(4px, env(safe-area-inset-top)) max(10px, env(safe-area-inset-right)) calc(var(--phone-dock-height) + 6px) max(10px, env(safe-area-inset-left));
+  display: flex;
+  flex-direction: column;
+}
+.phone-layout.phone-editing .masthead { flex: 0 0 44px; min-height: 44px; padding: 0; }
+.phone-layout.phone-editing .masthead .mark,
+.phone-layout.phone-editing .masthead .tagline,
+.phone-layout.phone-editing .masthead .chip { display: none; }
+.phone-layout.phone-editing .masthead > div { min-width: 0; }
+.phone-layout.phone-editing .masthead h1 { font-size: calc(16px * var(--fs-scale)); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.phone-layout.phone-editing .app > main { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+.phone-layout.phone-editing .pane { display: flex; flex-direction: column; flex: 1; min-height: 0; margin: 0; }
+.phone-layout.phone-editing .pane-head,
+.phone-layout.phone-editing .segmented,
+.phone-layout.phone-editing #intro,
+.phone-layout.phone-editing #readback-row,
+.phone-layout.phone-editing #profile-hint,
+.phone-layout.phone-editing #palette,
+.phone-layout.phone-editing #shortcuts,
+.phone-layout.phone-editing .actions,
+.phone-layout.phone-editing .colophon { display: none; }
+.phone-layout.phone-editing #roman { flex: 1; height: 0; min-height: 72px; resize: none; }
+.phone-layout.phone-editing .status { flex: none; margin-block: 4px; font-size: calc(15px * var(--fs-scale)); }
+.phone-layout.phone-editing .status-loading { display: none; }
+.phone-layout.phone-editing.phone-short .masthead { display: none; }
+.phone-layout.phone-editing body.dict-open .app { padding-bottom: 8px; }
+.phone-layout body.dict-open .kb-bar[data-mode='docked'] { display: none; }
+
+.phone-layout .kb-bar[data-mode='docked'] {
+  padding: 4px max(8px, env(safe-area-inset-right)) max(4px, env(safe-area-inset-bottom)) max(8px, env(safe-area-inset-left));
+}
+.phone-layout .kb-bar[data-mode='docked'] .kb-bar-top { min-height: 44px; gap: 4px; }
+.phone-layout .kb-bar[data-mode='docked'] .kb-bar-note { display: none; }
+.phone-layout .kb-bar[data-mode='docked'] .kb-bar-tools { margin-left: auto; gap: 4px; }
+.phone-layout .kb-bar[data-mode='docked'] .kb-bar-tools .btn { min-height: 44px; padding: 0 12px; font-size: calc(16px * var(--fs-scale)); }
+.phone-layout .kb-bar[data-mode='docked'] .kb-bar-page { min-width: 44px; min-height: 44px; }
+.phone-layout .kb-bar[data-mode='docked'] .inline-candidates { gap: 4px; margin-top: 4px; }
+.phone-layout .kb-bar[data-mode='docked'] .inline-candidate {
+  min-width: 84px;
+  min-height: 44px;
+  padding: 4px 12px;
+  flex-direction: row;
+  align-items: center;
+  gap: 4px;
+  border-radius: 8px;
+}
+.phone-layout .kb-bar[data-mode='docked'] .inline-text { font-size: var(--fs-odia-cand); line-height: 1.5; }
+.phone-layout .kb-bar[data-mode='docked'] .inline-latin { font-size: calc(16px * var(--fs-scale)); }
+.phone-layout .kb-bar[data-mode='docked'] .inline-candidate .dict-gloss { display: none; }
+.phone-layout .kb-bar[data-mode='docked'] .inline-keep { font-size: calc(15px * var(--fs-scale)); }

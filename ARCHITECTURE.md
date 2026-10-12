@@ -176,6 +176,19 @@ column. The desktop caret popover is a vertical list that opens below or above t
 (`keepClear()`), so it never covers the "Reads as" line. Help (header button) holds the
 first-run card and the cheat sheets.
 
+**Phone layout (12 October 2026):** the shared `DOCK_QUERY` selects the responsive
+phone/coarse-tablet view. `main.ts` mirrors `visualViewport` dimensions and offsets
+into CSS variables and toggles `phone-editing` while composing. The editor fills
+the space above the measured candidate dock; caret scrolling stays inside the
+textarea. Surrounding introductory controls return after Done. Phone Odia uses
+unscaled Noto Sans Oriya with the selected text-size multiplier.
+
+The phone dictionary is an explicitly opened modal sheet, bounded by the visible
+viewport. Its results scroll separately, the background is inert, and focus stays
+in the sheet. Back to typing and successful insertion return to the editor.
+Desktop retains the sticky meanings column. This remains a browser app, not an
+iOS system keyboard; viewport simulations do not establish device parity.
+
 **Editor transactions (12 October 2026):** the editor value is the document being
 copied or shared. Space/newline commits an eligible Roman token with its punctuation;
 Copy visibly finishes the current eligible token before reading the value. Addresses,
