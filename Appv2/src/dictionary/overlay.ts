@@ -54,6 +54,7 @@ import { inflate } from './pako-inflate.js';
 import { originChipLabel, originLabel, parseOrigin } from './origin.js';
 import { parseEnglishEntries, searchEnglish, type EnglishEntry } from './english.js';
 import englishTsv from './english.tsv?raw';
+import { DOCK_QUERY } from '../inline.js';
 import './overlay.css';
 
 const ENGLISH = parseEnglishEntries(englishTsv);
@@ -371,6 +372,8 @@ function ownerGloss(word: string): { meaning: string; status: string } | undefin
 /* Kids edition: words the app must never explain (labelled offensive or coarse).
  * Set by initDictionary; the default hides nothing. */
 let hidden: (word: string) => boolean = () => false;
+// The editor owns selection and undo; the dictionary never mutates its DOM.
+let insertWord: ((word: string) => boolean) | undefined;
 
 function chipFor(word: string): string | null {
   if (hidden(word)) return null;
@@ -477,18 +480,20 @@ function buildPanel(): void {
   const close = document.createElement('button');
   close.type = 'button';
   close.className = 'dict-close';
-  close.textContent = '×';
+  const closeGlyph = document.createElement('span');
+  closeGlyph.className = 'dict-close-glyph';
+  closeGlyph.textContent = '×';
+  const closeLabel = document.createElement('span');
+  closeLabel.className = 'dict-close-label';
+  closeLabel.textContent = 'Back to typing';
+  close.append(closeGlyph, closeLabel);
   close.setAttribute('aria-label', 'Close meanings');
   // mousedown: opened from the phone strip, the text box keeps focus (and
   // the keyboard stays up) through the close.
   close.addEventListener('mousedown', (event) => {
     if (document.activeElement && document.activeElement.tagName === 'TEXTAREA') event.preventDefault();
   });
-  close.addEventListener('click', () => {
-    setPanelOpen(false);
-    if (opener && document.activeElement !== opener && opener.isConnected) opener.focus();
-    opener = null;
-  });
+  close.addEventListener('click', () => closePanel(true, phoneLayout()));
   head.appendChild(title);
   head.appendChild(close);
 
@@ -540,21 +545,132 @@ function buildPanel(): void {
 
   panel.appendChild(head);
   panel.appendChild(sub);
-  panel.appendChild(direction);
-  panel.appendChild(search);
+  const tools = document.createElement('div');
+  tools.className = 'dict-tools';
+  tools.append(direction, search);
+  panel.appendChild(tools);
   panel.appendChild(stateEl);
   panel.appendChild(body);
-  document.body.appendChild(panel);
+  const backdrop = document.createElement('div');
+  backdrop.className = 'dict-backdrop';
+  backdrop.setAttribute('aria-hidden', 'true');
+  backdrop.addEventListener('click', () => closePanel());
+  document.body.append(backdrop, panel);
+  document.addEventListener('focusin', (event) => {
+    if (phoneLayout() && meaningsOpen() && event.target instanceof Node && !panel.contains(event.target)) {
+      close.focus({ preventScroll: true });
+    }
+  });
+  document.addEventListener('keydown', (event) => {
+    if (!meaningsOpen()) return;
+    if (event.key === 'Tab' && phoneLayout()) {
+      const focusable = Array.from(panel.querySelectorAll<HTMLElement>('button, input, select, a[href], [tabindex="0"]'))
+        .filter((element) => !element.hasAttribute('disabled') && element.getClientRects().length > 0);
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last?.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first?.focus();
+      }
+    }
+    if (event.key !== 'Escape' || (window.innerWidth >= 1100 && !phoneLayout())) return;
+    const active = document.activeElement;
+    if (!panel.contains(active) && active !== editorOpener) return;
+    event.preventDefault();
+    closePanel();
+  });
 
-  setPanelOpen(window.innerWidth >= 1100);
+  const layoutQuery = window.matchMedia(DOCK_QUERY);
+  const layoutChanged = () => {
+    // A desktop column must not become an automatically opened phone dialog.
+    // Viewport resize never focuses search or opens the software keyboard.
+    if (layoutQuery.matches) closePanel(false);
+    else applyPhoneModal(false);
+  };
+  if (typeof layoutQuery.addEventListener === 'function') layoutQuery.addEventListener('change', layoutChanged);
+  else layoutQuery.addListener(layoutChanged);
+  setPanelOpen(window.innerWidth >= 1100 && !phoneLayout());
   renderEmpty();
 }
 
 /** The button that opened the panel on a narrow screen; focus returns there on close. */
 let opener: HTMLElement | null = null;
+let editorOpener: HTMLTextAreaElement | null = null;
+
+// Same phone/coarse-tablet breakpoint as main.ts and the candidate dock.
+function phoneLayout(): boolean {
+  return window.matchMedia(DOCK_QUERY).matches;
+}
+
+const inerted: HTMLElement[] = [];
+function applyPhoneModal(open: boolean): void {
+  const panel = document.getElementById('dict-panel');
+  const modal = open && phoneLayout();
+  panel?.querySelector('.dict-close')?.setAttribute('aria-label', modal ? 'Back to typing' : 'Close meanings');
+  document.body.classList.toggle('dict-modal-open', modal);
+  if (modal) {
+    panel?.setAttribute('role', 'dialog');
+    panel?.setAttribute('aria-modal', 'true');
+    for (const element of document.querySelectorAll<HTMLElement>('body > .app, #kb-bar')) {
+      if (!element.hasAttribute('inert')) {
+        element.setAttribute('inert', '');
+        inerted.push(element);
+      }
+    }
+  } else {
+    panel?.removeAttribute('role');
+    panel?.removeAttribute('aria-modal');
+    for (const element of inerted.splice(0)) element.removeAttribute('inert');
+  }
+}
+
+/** Let the composing layout collapse before choosing a visible non-text control. */
+function restorePhoneControlFocus(preferred: HTMLElement | null): void {
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    if (meaningsOpen()) return;
+    const active = document.activeElement;
+    // A later tap or key action owns focus; this deferred close must not steal it.
+    if (active && active !== document.body && active !== document.documentElement && !active.closest('#dict-panel')) return;
+    const controls = [preferred, document.getElementById('dict-toggle'), document.getElementById('open-help')];
+    const target = controls.find((element): element is HTMLButtonElement =>
+      element instanceof HTMLButtonElement && element.isConnected && !element.disabled &&
+      element.getClientRects().length > 0 && getComputedStyle(element).visibility !== 'hidden');
+    target?.focus({ preventScroll: true });
+  }));
+}
+
+function closePanel(restoreFocus = true, returnToTyping = false): void {
+  setPanelOpen(false);
+  if (restoreFocus) {
+    // A dismissed software keyboard must stay dismissed. Refocus the editor
+    // only if its keyboard is still visibly open, or on a desktop layout.
+    const viewport = window.visualViewport;
+    const keyboardVisible = viewport !== null && viewport.height < window.innerHeight - 100;
+    const activeEditor = document.activeElement === editorOpener;
+    const target = returnToTyping
+      ? document.getElementById('roman')
+      : editorOpener && (!phoneLayout() || keyboardVisible || activeEditor) ? editorOpener
+        : phoneLayout() && opener instanceof HTMLTextAreaElement ? null : opener;
+    if (target?.isConnected && target.getClientRects().length && document.activeElement !== target) {
+      target.focus({ preventScroll: true });
+    }
+    if (!returnToTyping && phoneLayout()) {
+      const active = document.activeElement;
+      // Queue the host's focusout layout update before the deferred fallback.
+      if (active instanceof HTMLElement && active.closest('#dict-panel')) active.blur();
+      restorePhoneControlFocus(opener);
+    }
+  }
+  opener = null;
+  editorOpener = null;
+}
 
 function setPanelOpen(open: boolean): void {
   document.body.classList.toggle('dict-open', open);
+  applyPhoneModal(open);
   const controls = document.querySelectorAll('[aria-controls="dict-panel"]');
   for (let i = 0; i < controls.length; i++) controls[i]?.setAttribute('aria-expanded', String(open));
   if (open && state === 'idle') loadData();
@@ -563,15 +679,22 @@ function setPanelOpen(open: boolean): void {
 /**
  * Open or close the Meanings panel (the "Meanings" buttons in main.ts).
  * At 1100px and wider the panel is a fixed column and always shown.
- * Opened from a button (not from the strip, where the text box keeps focus),
- * focus moves to the panel's close button and comes back on close.
+ * The phone dialog receives focus on its Back to typing button; the editor
+ * retains its saved selection. Explicit Back/Insert returns to typing in the
+ * user gesture. Generic dismissal restores an appropriate visible control.
  */
 export function setMeaningsOpen(open: boolean, from?: HTMLElement): void {
   if (!started) return;
-  setPanelOpen(open);
-  if (open && from && document.activeElement === from) {
-    opener = from;
-    document.querySelector<HTMLElement>('#dict-panel .dict-close')?.focus();
+  if (!open) {
+    closePanel();
+    return;
+  }
+  const active = document.activeElement;
+  opener = from ?? (active instanceof HTMLElement ? active : null);
+  editorOpener = active instanceof HTMLTextAreaElement ? active : null;
+  setPanelOpen(true);
+  if (phoneLayout() || (from && active === from)) {
+    document.querySelector<HTMLElement>('#dict-panel .dict-close')?.focus({ preventScroll: true });
   }
 }
 
@@ -721,9 +844,11 @@ function renderEnglishSearch(): void {
   hint.className = 'dict-hint';
   hint.setAttribute('role', 'status');
   hint.textContent = !query
-    ? 'Look up an English word or short phrase, then copy the Odia result. Try water, phone, or meeting. This does not translate sentences or change typing suggestions.'
+    ? 'Look up an English word or short phrase, then insert or copy the Odia result. Try water, phone, or meeting. This does not translate sentences or change typing suggestions.'
     : results.length
-      ? 'English lookup results. “Related headword” means a prefix match, not a translation of your exact input.'
+      ? phoneLayout()
+        ? 'Choose an entry to insert or copy.'
+        : 'English lookup results. “Related headword” means a prefix match, not a translation of your exact input.'
       : 'No entry in this starter dictionary. Try another word. This is limited coverage, not a judgment about the word.';
   panelBody.appendChild(hint);
   for (const { entry, exact } of results) panelBody.appendChild(englishBlock(entry, exact));
@@ -772,7 +897,28 @@ function englishBlock(entry: EnglishEntry, exact: boolean): HTMLElement {
       copy.disabled = false;
     }
   });
-  block.append(head, sense, source, copy, feedback);
+  const actions = document.createElement('div');
+  actions.className = 'dict-actions';
+  if (insertWord) {
+    const insert = document.createElement('button');
+    insert.type = 'button';
+    insert.className = 'dict-insert';
+    insert.textContent = 'Insert Odia';
+    insert.setAttribute('aria-label', `Insert ${entry.english}, ${entry.sense}, in Odia`);
+    insert.addEventListener('click', () => {
+      try {
+        const word = canonical(entry.odia);
+        const inserted = !hidden(word) && insertWord?.(word);
+        feedback.textContent = inserted ? 'Inserted Odia.' : 'Could not insert. Copy the Odia word instead.';
+        if (inserted && phoneLayout()) closePanel(true, true);
+      } catch {
+        feedback.textContent = 'Could not insert. Copy the Odia word instead.';
+      }
+    });
+    actions.appendChild(insert);
+  }
+  actions.appendChild(copy);
+  block.append(head, sense, source, actions, feedback);
   return block;
 }
 
@@ -983,12 +1129,14 @@ export function initDictionary(
   load: DictionaryLoader,
   onStateChange?: (s: DictionaryState) => void,
   hideWord?: (word: string) => boolean,
+  insert?: (word: string) => boolean,
 ): void {
   if (started) return;
   started = true;
   try {
     loader = load;
     if (hideWord) hidden = hideWord;
+    insertWord = insert;
     onState = onStateChange ?? null;
     buildPanel();
     observe();

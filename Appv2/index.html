@@ -129,8 +129,9 @@
             placeholder="Type here, e.g. kemiti achha…"
           ></textarea>
           <p id="roman-help" class="sr-only">
-            Suggestions appear as you type. Up and down arrows choose one, Enter or its number
-            takes it, Space takes the highlighted one. Control Enter copies the Odia.
+            Suggestions appear as you type. Up and down arrows choose one; Enter or Alt plus
+            its number takes it. Space takes the highlighted one. Left and right move the caret.
+            Control or Command Enter copies the text. Control or Command Z undoes an edit.
           </p>
           <!--
             States next to the text, not at the bottom of the page (proposal
@@ -330,6 +331,21 @@
 
             <details class="guide">
               <summary>What to type</summary>
+
+              <p class="note">
+                Use Up and Down to choose a suggestion, then Space to take it and start
+                the next word, or Enter to take it and start a new line. Tab takes it without a separator.
+                Alt (Option on Mac) plus 1–9 selects a numbered suggestion; ordinary number
+                keys type digits. Left and Right move through your text. Undo with Ctrl+Z
+                or Command+Z; redo with Ctrl+Shift+Z or Command+Shift+Z.
+              </p>
+              <p class="note">
+                Links, email addresses and identifiers such as PCR2 stay as typed. Pasted
+                text stays as pasted. Choose “Keep” to keep an English word. Copy finishes
+                the current eligible word visibly, then copies the text in the editor.
+                In Meanings, choose English → Odia and use Insert Odia to place a chosen
+                meaning or loan spelling at your last editing position.
+              </p>
 
               <p class="note">
                 Case is ignored for ordinary letters, so <code>ta</code> and <code>Ta</code> behave the

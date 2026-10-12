@@ -1,5 +1,84 @@
 # Codex review — 12 October 2026
 
+## Implemented after the review
+
+The owner subsequently authorized implementation and release to Vercel. The app
+now preserves addresses, identifiers and pasted text; plain digits no longer
+select candidates. Alt/Option+number selects a candidate, Left/Right moves the
+caret, and punctuation commits consistently at word boundaries. Copy visibly
+finishes the active eligible word and copies the editor contents. Shared
+transactions provide undo/redo for typing, commits, Clear and insertion, including
+mobile input events and browser composition. English dictionary results now offer
+**Insert Odia** at the saved editor selection, alongside Copy.
+
+The historical findings below explain why these changes were needed. See the
+[implementation and validation record](plan/research/2026-10-12/EDITOR-IMPLEMENTATION.md)
+for the 21 editor checks, 19 dictionary checks and WebKit evidence. Dictionary
+coverage, preferred spellings and ranking limitations remain separate work; this
+release does not claim to fix them or to complete native iOS parity.
+
+## Phone usability follow-up
+
+The owner subsequently brought phone layout into this release. A 320px first-visit
+baseline left only about 16px of the editor visible above the fold. The previous
+Odia Box font also enlarged glyphs by 32%, and the typing dock consumed about
+128px before accounting for the system keyboard.
+
+The app now uses a dedicated responsive phone writing view in the same URL. On
+focus, the editor moves above the keyboard; introductory controls are hidden
+until Done. Unscaled Noto Odia text and a single scrollable candidate row reduce
+crowding while preserving larger-text preferences. Meanings is a separate,
+explicitly opened lookup sheet with scrollable results and Back to typing.
+English dictionary insertion closes the sheet and restores the editing position.
+The desktop layout remains available at larger widths.
+
+`Appv2/eval/browser/mobile-check.mjs` checks narrow screens, landscape, larger text,
+editor/dock geometry, dictionary insertion and simulated visual-viewport changes.
+The final build passed all 193 assertions, plus the existing 21 editor, 19 dictionary
+and six Linux WebKit editing scenarios.
+These are browser checks; actual iPhone keyboard animation, VoiceOver and iPad
+behavior still need hardware validation. The implementation does not deliver
+a native Desh replacement. See `handoff.md` for the latest release record.
+
+## Follow-up after environment settings were published
+
+PR #4 was merged as `5ba8761`; this follow-up starts from that merged revision.
+The published environment has unrestricted network access; no configuration draft
+was pending when this follow-up began. The restored production app passed all 15 English-dictionary
+Chromium checks again, including offline reload, clipboard behavior and degraded
+historical-dictionary loading.
+Reusable startup notes for the retained WebKit tooling and the new diagnosis
+were subsequently saved as an environment-settings draft; publication is separate
+from these successful checks in the current instance.
+
+The Build macOS / Build iOS plugins still do not expose callable tools or skills
+in this session. The executor remains Linux without `xcodebuild`, `xcrun` or
+`swift`; changed network settings do not supply an Apple execution environment.
+Native builds, Simulator and device tests remain unperformed.
+
+Both requested Hugging Face dataset cards are reachable, but their data-file
+requests still return HTTP 401 and metadata still says `gated: manual`. This is
+publisher-controlled dataset access, separate from the environment's network
+policy. No gated rows were downloaded.
+
+The unresolved WebKit navigation error is now isolated to the tested
+Playwright offline-emulation path: it also occurs with a minimal worker returning
+constant HTML, without any app code or cache. With the HTTP origin actually
+stopped, both minimal controls and both app versions reload successfully; the
+current app still transliterates and returns `water` → `ପାଣି` from its dictionary.
+This establishes cached operation during origin loss in Linux WebKit, not iPhone
+airplane-mode behavior. The original failing assertions remain visible. See the
+[controlled experiment](plan/research/2026-10-12/VALIDATION.md#follow-up-distinguish-webkit-offline-emulation-from-origin-loss).
+
+New source sampling found **2,034 distinct Odia headword strings and 4,898 senses**
+in Kaikki's 4.4 MB Odia extract. Direct English entries supply useful sense-labelled
+translations, but coverage is asymmetric (`phone` has no Odia translation field
+in the sampled English entries although `ଫୋନ` exists on the Odia side), and `bank`
+exposes conflicting spellings. IndoWordNet provides useful synonyms and examples
+but some senses lack English linkage. These support an editorial review queue,
+not a blind reverse-dictionary import. Source-specific reuse terms remain to be
+resolved before bundling data. See [sample counts, sources and recommendations](plan/research/2026-10-12/resources.md#follow-up-concrete-dictionary-coverage-after-environment-publication).
+
 ## Verdict
 
 The app has a useful offline engine and a working writing surface, but it is not yet a dependable everyday Odia composer. **The problem is broader than an incomplete dictionary:** the editor can change literal text, human Roman spellings do not always reach the desired Odia candidate, ranking favors an unsuitable alternative, and a correctly spelled word can receive an unrelated English meaning. A larger corpus alone will not resolve these separate problems.
@@ -166,7 +245,7 @@ Once composition quality and these milestones hold, differentiate with reviewed 
 2. **Next language review:** validate the 64 new seed senses, then supply 50–100 consented everyday messages written naturally in Roman Odia, with intended output and acceptable spoken/formal variants. Include work, family, food, travel, names and English mixing; do not romanize a predetermined Odia list to manufacture all inputs.
 3. **Next ranking/data PR:** shipped-asset evaluation, explicit common aliases and loan-plus-suffix cases; review candidate-generation limits and curated everyday glosses. Track regressions by category and correction burden.
 4. **Then source ingestion:** sample and license-check the most relevant paired/sense resources; measure incremental gain before downloading or shipping larger corpora/models.
-5. **Then iOS spike:** signed containing app + extension, pure-core JS bridge and actual device tests, followed by the parity checklist above. Keep phone layout polish after core functionality as requested.
+5. **Then iOS spike:** signed containing app + extension, pure-core JS bridge and actual device tests, followed by the parity checklist above. The phone writing layout was subsequently brought into this release at the owner’s request.
 
 Language decisions the owner should make: everyday versus formal spelling preferences; colloquial ଚ/ଛ treatment; preferred loan variants/terminal halants; English preservation versus loan conversion; and which multiple senses should lead in common contexts. Do not force these decisions through a global ranking-weight change.
 
@@ -175,5 +254,5 @@ Language decisions the owner should make: everyday versus formal spelling prefer
 - New feature: 10 unit tests; browser checks cover labels/senses, alias lookup, exact versus prefix results, decomposed-nukta clipboard output, missing terms, owner meanings, offline reload, failed historical payloads, clipboard denial and direction switching after failure.
 - Full unit/fallback suite, Appv2 typecheck, production build, generated-rule consistency and theme-token checks were run. The older Sanskrit WebKit harness also proved stale: it waits for removed `#output`/`#profile` DOM in the committed single-file app; its timeout is a harness failure, not evidence of Sanskrit accuracy. Final counts and command evidence are recorded in [validation](plan/research/2026-10-12/VALIDATION.md).
 - Existing orthographic coverage failures and the older `web/` unused-variable typecheck defect remain repository limitations identified during onboarding. No source/ranking/data change in this feature is presented as fixing them.
-- Additional Linux WebKit 26.5 validation: 12 online checks passed across desktop/iPhone viewport emulation, including typing and the new lookup/copy action. Two offline reload checks failed with an internal navigation error in both baseline and feature builds despite an active worker and 26 cached requests. This remains unresolved; it is not proof of a Safari-device failure or a new-feature regression. Native iOS/macOS behavior and linguistic correctness of the seed still need device/native-speaker review.
+- Additional Linux WebKit 26.5 validation: 12 online checks passed across desktop/iPhone viewport emulation, including typing and the new lookup/copy action. Two offline reload checks failed with an internal navigation error in both baseline and feature builds despite an active worker and 26 cached requests. The follow-up above isolates the error to the tested offline-emulation path and verifies cached operation after actual origin loss; it is not proof of a Safari-device failure or a new-feature regression. Native iOS/macOS behavior and linguistic correctness of the seed still need device/native-speaker review.
 - All seven public resource pages/cards and current Apple guidance are now verified at the documentation level. The two requested datasets remain manually gated; raw rows, empirical data quality and commercial reuse clearance were not established. The newly added Build macOS / Build iOS plugins were not exposed in this chat’s active tools/skills; this Linux workspace has no Xcode/Simulator, so native build/device validation remains unperformed.

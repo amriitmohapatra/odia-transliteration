@@ -33,14 +33,14 @@ const shown = (p) => p.evaluate(() => {
   await p.fill('textarea', ''); await ta.click(); await ta.type('dina', { delay: 20 }); await p.waitForTimeout(1200);
   bar = await barTexts(p);
   check('dina: glosses include Day and Poor', /day/i.test(bar.join('|')) && /poor/i.test(bar.join('|')), JSON.stringify(bar.slice(0, 3)));
-  // 4. bus + 9 keeps bus; next bus lists it first
+  // 4. bus + Alt+9 keeps bus; ordinary digits remain literal content.
   await p.fill('textarea', ''); await ta.click(); await ta.type('bus', { delay: 20 }); await p.waitForTimeout(800);
   bar = await barTexts(p);
   const latinLast = await p.evaluate(() => { const bs = [...document.querySelectorAll('div.inline-candidates button.inline-candidate')]; const last = bs[bs.length - 1]; return !!last && !!last.querySelector('.inline-latin'); });
   check('bus: Latin item is last in the bar', latinLast, JSON.stringify(bar));
-  await ta.press(String(bar.length)); await p.waitForTimeout(400);
+  await ta.press(`Alt+Digit${bar.length}`); await p.waitForTimeout(400);
   s = await shown(p);
-  check('bus + last number keeps "bus"', s.area === 'bus', JSON.stringify(s.area));
+  check('bus + Alt + last number keeps "bus"', s.area === 'bus', JSON.stringify(s.area));
   await ta.type(' bus', { delay: 20 }); await p.waitForTimeout(800);
   bar = await barTexts(p);
   check('next bus lists "bus" first', /bus/.test(bar[0] ?? ''), JSON.stringify(bar.slice(0, 2)));

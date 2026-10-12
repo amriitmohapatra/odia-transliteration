@@ -133,7 +133,7 @@ caret bar, the picker and the output, plus a side panel with search. It imports
 The panel also has an explicit English → Odia direction (12 October 2026).
 `english.ts` searches the small bundled `english.tsv` by headword/alias, preserving
 separate senses, translations and loan spellings. Each result shows review status
-and supports Copy Odia. It applies the same hidden-word callback as Odia lookup,
+and supports Copy Odia and undoable insertion into the editor. It applies the same hidden-word callback as Odia lookup,
 works independently of the historical binary payloads, and does not feed engine
 ranking. See `Appv2/src/dictionary/PROVENANCE.md` for coverage and review limits.
 
@@ -149,6 +149,8 @@ index.html ─ main.ts ─┬─ engine.ts      loads assets per mode (lazy chun
                       ├─ preprocess.ts  | → ।  || → ॥  ' → ଽ  (before the engine)
                       ├─ inline.ts      caret popover (desktop) / strip docked on the phone
                       │                 keyboard via visualViewport (1–8 Odia + "Keep" as 9)
+                      ├─ editor.ts      native input, composition and scripted edit transactions
+                      ├─ editor-state.ts selection, literal spans and bounded undo/redo history
                       ├─ readback.ts    the "Reads as" line; tap a word → alternatives
                       ├─ romanize.ts    Odia → Latin for the read-back (copy of the eval one)
                       ├─ badges.ts      "offensive" / "can be rude" badges, from engine.labelsOf()
@@ -173,6 +175,35 @@ disappears, so a Playwright check guards each):
 column. The desktop caret popover is a vertical list that opens below or above the caret
 (`keepClear()`), so it never covers the "Reads as" line. Help (header button) holds the
 first-run card and the cheat sheets.
+
+**Phone layout (12 October 2026):** the shared `DOCK_QUERY` selects the responsive
+phone/coarse-tablet view. `main.ts` mirrors `visualViewport` dimensions and offsets
+into CSS variables and toggles `phone-editing` while composing. The editor fills
+the space above the measured candidate dock; caret scrolling stays inside the
+textarea. Surrounding introductory controls return after Done. Phone Odia uses
+unscaled Noto Sans Oriya with the selected text-size multiplier.
+
+The phone dictionary is an explicitly opened modal sheet, bounded by the visible
+viewport. Its results scroll separately, the background is inert, and focus stays
+in the sheet. Back to typing and successful insertion return to the editor.
+Desktop retains the sticky meanings column. This remains a browser app, not an
+iOS system keyboard; viewport simulations do not establish device parity.
+
+**Editor transactions (12 October 2026):** the editor value is the document being
+copied or shared. Space/newline commits an eligible Roman token with its punctuation;
+Copy visibly finishes the current eligible token before reading the value. Addresses,
+domains, acronyms and alphanumeric identifiers stay literal. Paste, browser composition
+and explicit Keep choices retain literal-span metadata through subsequent edits and
+undo/redo. Left/Right move the caret; Up/Down choose candidates; Alt/Option+1–9 selects
+a candidate without consuming ordinary digits. Native composition stays under the
+browser's control. No whole-document conversion runs as a side effect of copying.
+
+The English dictionary's optional insertion callback delegates to the editor. It
+replaces the last editor selection with the explicitly chosen canonical Odia form;
+the dictionary never assigns textarea values itself. Insert, candidate commits,
+palette edits and Clear share the same document history. History and literal ranges
+are in memory, not a server or persistent draft store. The proposed dictionary
+entries retain their review labels and do not change transliteration rankings.
 
 **Accessibility:** the text box has `aria-controls`, `aria-activedescendant`,
 `aria-autocomplete`, `aria-describedby`; options have `tabindex=-1` and are named "word,
@@ -215,8 +246,9 @@ and `dictionary/overlay.css` together.
 - Vercel serves `Appv2/dist/` as static files. No server code runs in V1.
 - `vercel.json` (repo root) sets the install and build commands, the output folder and
   headers (`sw.js` must not be cached long, so updates reach users).
-- Every push to a branch gets a Vercel preview address. The owner checks the preview.
-  Promote to production = release. Rollback = promote the previous deployment.
+- Every push to a branch gets a Vercel preview address. The configured production
+  branch is `main`; merging there triggers production deployments for both editions.
+  Release after checks and user authorization. Rollback = promote the previous deployment.
 - No analytics script. "Nothing sent online" is part of the value proposition.
 - **Two editions from one repository** (owner, 2026-10-04): adult (default) and kids. Set
   `APP_EDITION=kids` at build time for the kids app: core filter level `kids` (offensive

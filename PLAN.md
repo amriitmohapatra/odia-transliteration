@@ -1,7 +1,7 @@
 # PLAN.md — what we build, in what order, and how we check it
 
 **Living document.** Claude updates this file at the start and end of every stage, and
-whenever a task changes status. Last updated: 2026-10-04 (V1 in progress).
+whenever a task changes status. Last updated: 2026-10-12 (editor reliability and responsive phone follow-up).
 
 | File | Holds |
 |---|---|
@@ -67,6 +67,18 @@ whenever a task changes status. Last updated: 2026-10-04 (V1 in progress).
 | 2.5 | UI/UX pass from the design proposal (§5) | **Done** — Run A (items 1–5, 8, mode names) and Run B (6 Share/Copy/Undo, 7 tokens + text size, 9 first-run card + Help, 10 desktop list + meanings column, 11 screen reader + keyboard). Open: M9 "Show full entry"; phone Meanings panel above the iOS keyboard |
 | 2.6 | "Report this word" button: copies word, output, code points, version; opens an email link. No network call. | **Done** — "Wrong word? Report it" in the Alternatives sheet; recipient empty until the owner decides (follow-up D) |
 
+### Phone follow-up — 12 October 2026
+
+The owner requested phone usability now, after reporting oversized type and an
+obscured editor. The same web URL has a dedicated responsive writing view: compact
+Noto Odia text, an editor fitted above the software keyboard, one scrollable
+candidate row, Copy and Done. The dictionary opens only on request as a focused
+sheet; Insert returns to the saved editor selection. Desktop keeps its meanings
+column. Text-size preferences still apply. Browser viewport and interaction
+checks cover narrow phones, landscape, larger text and simulated keyboard changes;
+physical iPhone/iPad validation remains an owner follow-up. See `handoff.md` for
+the release state and reproducible commands.
+
 ### 3.3 Backend
 
 V1 has **no backend**: Vercel serves static files. The backend starts in V3 (the assist
@@ -87,7 +99,7 @@ layer, `ARCHITECTURE.md` §7). Two things are set up now so V3 starts safely:
 | 4.4 | Rollback = promote the previous Vercel deployment | From first deploy |
 | 4.5 | A rule for when `tools/eval/baseline.json` may be refreshed: only in its own commit, with the reason | To do |
 | 4.6 | Browser checks in the repo: `Appv2/eval/browser/` (regress, gloss-check, report-check, freeze) | **Done** |
-| 4.7 | Run the browser checks in CI (needs a Playwright + Chromium install step) | To do |
+| 4.7 | Run editor, English dictionary and phone browser checks in CI against the production build | **Done** 2026-10-12 |
 
 ## 3b. V2 — better words (started 2026-10-04)
 
@@ -106,12 +118,18 @@ need them wait for a run on the owner's Mac or a later environment.
 | V2.7 | Replace the MODERN meanings layer (D-5) | Samanantar / BPCC (HuggingFace), Wikidata | **Blocked here** |
 | V2.8 | Phrases with offensive meaning made of innocent words | needs V2.2 | Later |
 | V2.9 | Inflected forms of offensive words | owner review (C-2) | Waiting for the owner |
-| V2.10 | Explicit offline English → Odia lookup, separate translations/loan spellings | original seed + existing owner glosses | **First version** 2026-10-12: 70 entries / 62 terms, Copy Odia, offline/degraded-load checks. 64 proposed entries await native review; typing aliases are separate follow-up work. |
+| V2.10 | Explicit offline English → Odia lookup, separate translations/loan spellings | original seed + existing owner glosses | **First version** 2026-10-12: 70 entries / 62 terms, Copy and undoable Insert Odia at the last editor selection, offline/degraded-load checks. 64 proposed entries await native review; typing aliases are separate follow-up work. |
+| V2.11 | Preserve literal text, align commit/copy and restore undo/redo | editor transactions + browser regression cases | **Implemented** 2026-10-12: addresses/identifiers and paste stay literal; Alt/Option+number candidate shortcuts; Left/Right caret movement; visible pending-word commit on Copy; shared undo for typing, candidates, insertion and Clear. Browser checks run in CI. |
 
 The measured 12 October interface/data audit and recommended next work are in
 [`codex_review_12Oct2026.md`](codex_review_12Oct2026.md). It prioritizes literal-text
 preservation, consistent commit/copy/undo, and shipped-asset evaluation before
 larger corpus imports or native-keyboard packaging.
+
+The owner authorized implementing these fixes and publishing them to the Vercel
+app on 12 October. This release uses a reviewed PR into the configured production
+branch, `main`, after its checks pass. Linguistic data imports and new preferred
+spellings remain separate from these editing fixes.
 
 **Release step (owner approval, 2026-10-04):** when V2 is merged into this branch and all
 checks pass, Claude opens a pull request from `claude/festive-hawking-ie6xyt` to `main`.

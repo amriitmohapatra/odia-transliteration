@@ -1,0 +1,36 @@
+{
+  "source": "https://kaikki.org/dictionary/Odia/kaikki.org-dictionary-Odia.jsonl",
+  "retrieved": "2026-10-12",
+  "dump_date": "2026-09-02",
+  "extraction_date": "2026-10-03",
+  "bytes": 4397359,
+  "sha256": "bde773876ec15b22577adaf0d0901ed28c0eaf52394b0dd839f643b3cbc3a939",
+  "entries": 2211,
+  "distinct_headwords": 2034,
+  "senses": 4898,
+  "purpose": "research only; not imported into app",
+  "english_odia_category": {
+    "url": "https://kaikki.org/dictionary/English/categories-other/91/Terms%20with%20Odia%20translations/index.html",
+    "publisher_declared_senses": 2590,
+    "publisher_declared_download_mb": 96.0,
+    "downloaded": false,
+    "count_kind": "website category count, not independently verified translation-pair count"
+  },
+  "individual_english_entries_sampled": {
+    "water": {
+      "entries": 2,
+      "odia_translation_records": 2
+    },
+    "bank": {
+      "entries": 7,
+      "odia_translation_records": 1
+    },
+    "phone": {
+      "entries": 3,
+      "odia_translation_records": 0
+    }
+  },
+  "license_status": "Exact applicable content and merged-source reuse terms not verified; no app import",
+  "format_status": "Kaikki postprocessed JSONL marked deprecated",
+  "application_data_modified": false
+}

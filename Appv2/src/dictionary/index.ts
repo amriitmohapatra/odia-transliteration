@@ -42,10 +42,12 @@ export function loadDictionaryBytes(): Promise<DictionaryBytes> {
 /**
  * Start the overlay with the bundled data. Data loads lazily, after start-up.
  * `onState` hears 'loading' / 'ready' / 'failed' (V1 loading and failure lines).
+ * `insert` is a host-owned edit transaction at the saved editor selection. It
+ * returns true only after inserting the exact word, with an undo checkpoint.
  */
 export function startDictionary(
   onState?: (s: DictionaryState) => void,
-  options: { hide?: (word: string) => boolean } = {},
+  options: { hide?: (word: string) => boolean; insert?: (word: string) => boolean } = {},
 ): void {
-  initDictionary(loadDictionaryBytes, onState, options.hide);
+  initDictionary(loadDictionaryBytes, onState, options.hide, options.insert);
 }

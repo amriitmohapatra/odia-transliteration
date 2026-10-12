@@ -1,0 +1,159 @@
+[
+  {
+    "target": "minimal-direct-response",
+    "mechanism": "playwright-offline",
+    "origin": "http://127.0.0.1:36875/",
+    "before": {
+      "controlled": true,
+      "online": true,
+      "caches": []
+    },
+    "reload": "failure",
+    "error": "Page.reload: WebKit encountered an internal error"
+  },
+  {
+    "target": "minimal-direct-response",
+    "mechanism": "origin-stopped",
+    "origin": "http://127.0.0.1:40597/",
+    "before": {
+      "controlled": true,
+      "online": true,
+      "caches": []
+    },
+    "origin_unavailable": true,
+    "reload": "success",
+    "status": 200,
+    "after": {
+      "controlled": true,
+      "online": true,
+      "title": "Offline control"
+    },
+    "usable": true
+  },
+  {
+    "target": "minimal-cache",
+    "mechanism": "playwright-offline",
+    "origin": "http://127.0.0.1:44837/",
+    "before": {
+      "controlled": true,
+      "online": true,
+      "caches": [
+        {
+          "key": "control",
+          "entries": 1
+        }
+      ]
+    },
+    "reload": "failure",
+    "error": "Page.reload: WebKit encountered an internal error"
+  },
+  {
+    "target": "minimal-cache",
+    "mechanism": "origin-stopped",
+    "origin": "http://127.0.0.1:39903/",
+    "before": {
+      "controlled": true,
+      "online": true,
+      "caches": [
+        {
+          "key": "control",
+          "entries": 1
+        }
+      ]
+    },
+    "origin_unavailable": true,
+    "reload": "success",
+    "status": 200,
+    "after": {
+      "controlled": true,
+      "online": true,
+      "title": "Offline control"
+    },
+    "usable": true
+  },
+  {
+    "target": "baseline",
+    "mechanism": "playwright-offline",
+    "origin": "http://127.0.0.1:41215/",
+    "before": {
+      "controlled": true,
+      "online": true,
+      "caches": [
+        {
+          "key": "odia-appv2-shsim0",
+          "entries": 26
+        }
+      ]
+    },
+    "reload": "failure",
+    "error": "Page.reload: WebKit encountered an internal error"
+  },
+  {
+    "target": "baseline",
+    "mechanism": "origin-stopped",
+    "origin": "http://127.0.0.1:37079/",
+    "before": {
+      "controlled": true,
+      "online": true,
+      "caches": [
+        {
+          "key": "odia-appv2-shsim0",
+          "entries": 26
+        }
+      ]
+    },
+    "origin_unavailable": true,
+    "reload": "success",
+    "status": 200,
+    "after": {
+      "controlled": true,
+      "online": true,
+      "title": "Odia Phonetic — Sanskrit"
+    },
+    "typed": "କେମିତି ଅଛ ",
+    "usable": true
+  },
+  {
+    "target": "current",
+    "mechanism": "playwright-offline",
+    "origin": "http://127.0.0.1:39829/",
+    "before": {
+      "controlled": true,
+      "online": true,
+      "caches": [
+        {
+          "key": "odia-appv2-rc1y52",
+          "entries": 26
+        }
+      ]
+    },
+    "reload": "failure",
+    "error": "Page.reload: WebKit encountered an internal error"
+  },
+  {
+    "target": "current",
+    "mechanism": "origin-stopped",
+    "origin": "http://127.0.0.1:44077/",
+    "before": {
+      "controlled": true,
+      "online": true,
+      "caches": [
+        {
+          "key": "odia-appv2-rc1y52",
+          "entries": 26
+        }
+      ]
+    },
+    "origin_unavailable": true,
+    "reload": "success",
+    "status": 200,
+    "after": {
+      "controlled": true,
+      "online": true,
+      "title": "Odia Phonetic — Sanskrit"
+    },
+    "typed": "କେମିତି ଅଛ ",
+    "usable": true,
+    "english_lookup": "ପାଣି"
+  }
+]
