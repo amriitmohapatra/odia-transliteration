@@ -38,7 +38,7 @@ whenever a task changes status. Last updated: 2026-10-12 (editor reliability and
 | V4 Lens | Browser extension, then camera/screenshot input | Not started |
 | V5 Native | macOS input method with the real engine; Android, iOS (skills first) | Not started |
 | E-1 Experiment | Laya against a simple word-origin tagger | Not started |
-| P Public repository | When the owner says "project finished": a fresh public repository without the scraped corpus, the derived-counts decision, the licence-table check (`plan/06-owner-followups.md`, section D) | Waiting for "project finished" |
+| P Public repository | When the owner says "project finished": a fresh public repository without the scraped corpus, the derived-counts decision, the licence-table check (`plan/06-owner-followups.md`, section D), and Desh's terms for any Desh-derived data (L-1) | Waiting for "project finished" |
 
 ## 3. V1 — work by area
 
@@ -219,6 +219,7 @@ Agents do not commit; the lead reviews, measures and commits.
 
 | Date | Change |
 |---|---|
+| 2026-10-12 | Repository private again (owner). Desh keyboard data: owner reports permission; written confirmation pending (L-1); measured in session only until then. CI runs on pull requests and on `main` only. Stage P (public repository) now also depends on Desh's terms. |
 | 2026-10-12 | V2.12 step B: loan-word list `loans.tsv` (3,855 rows, licence-clean inputs), English search uses it; Odia results show "English loan word: …". IndicCorp v2 Odia counted (CC0, 5.58 M lines) for attestation. |
 | 2026-10-12 | V2.12 unified dictionary: one search box, grouped results (spellings, English → Odia, loans, phrases); loan rows filtered by origin and sound. Browser checks rewritten for the one box. |
 | 2026-10-12 | Bug fixes: about 1,640 raw romanization codes in Praharaj meanings (`&aline;`, `&uline;`, `$nbsp;`...) now show as letters (`dictionary/clean.ts`, test over the whole payload); the legacy `web/` build now includes `legacy-polyfills.js` (variable was unused). |

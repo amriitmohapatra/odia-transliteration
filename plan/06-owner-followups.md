@@ -14,10 +14,16 @@ to the owner. Claude marks each item done here, with the date, when it is done.
 
 | # | Item | How | Since |
 |---|---|---|---|
-| ~~S-1~~ | **Decided 2026-10-12: the repository stays public, history unchanged** (owner: Actions minutes are free for public repositories). Options if this changes: a fresh public repository without `webcorpus/` and its history (recommended), a history rewrite plus a GitHub Support purge of pull-request refs, or private again. Original item: **Set the GitHub repository back to private.** It is public. No passwords or keys are in it, but `tools/build-data/webcorpus/` (102 files, 247 MB of scraped books, news, government pages and X posts, with third-party phone numbers and emails) is not ours to publish, and deleting the files in a new commit does not remove them from history. The websites keep working: Vercel deploys from private repositories. | GitHub → the repository → Settings → General → Danger Zone → Change visibility → Make private | 2026-10-12 |
+| ~~S-1~~ | **Done later on 2026-10-12: the owner made the repository private.** (Earlier that day: stays public, history unchanged.) (owner: Actions minutes are free for public repositories). Options if this changes: a fresh public repository without `webcorpus/` and its history (recommended), a history rewrite plus a GitHub Support purge of pull-request refs, or private again. Original item: **Set the GitHub repository back to private.** It is public. No passwords or keys are in it, but `tools/build-data/webcorpus/` (102 files, 247 MB of scraped books, news, government pages and X posts, with third-party phone numbers and emails) is not ours to publish, and deleting the files in a new commit does not remove them from history. The websites keep working: Vercel deploys from private repositories. | GitHub → the repository → Settings → General → Danger Zone → Change visibility → Make private | 2026-10-12 |
 | S-2 | Turn on GitHub's free security features (they matter while the repository is public, and Dependabot also works when private): Dependabot alerts and, if shown, secret scanning with push protection. | Settings → Advanced Security (or Code security) → Enable | 2026-10-12 |
 | S-3 | Hide your email in future commits. Your Gmail address is already in the commit history and in the report button (on purpose). | github.com/settings/emails → tick "Keep my email addresses private" and "Block command line pushes that expose my email" | 2026-10-12 |
 | S-4 | Later, for a public code repository: follow section D "Public repository" (a fresh repository without `webcorpus/`). | When the owner says "project finished" | 2026-10-12 |
+
+## L. Licences and permissions
+
+| # | Item | How | Since |
+|---|---|---|---|
+| L-1 | **Written permission from Desh** for the data the app will use. The email should name: (1) the data (word list with counts, typed-spelling pairs, word-pair and word-triple model; not the transliteration FST or the English model unless wanted); (2) the use (a free web app, public website, and later phone apps; data stored in this private repository); (3) the credit wording they want (for the data; the app's code and licence stay the owner's); (4) whether the data may stay in the app if the arrangement ends. Forward it to Claude or save it; Claude records the terms (no personal details). | Ask Desh by email | 2026-10-12 |
 
 ## A. Needs the owner's Mac
 

@@ -219,11 +219,22 @@ scan of all history: 8 alarms, all false). The exposure is `tools/build-data/web
 (below) plus the owner's email (commit metadata, report button, scraper user-agents) and
 Mac username in scraper scripts.
 
-**Owner decision 2026-10-12: the repo stays public and its history stays as it is.**
+**Later on 2026-10-12 the owner made the repository PRIVATE again** (to use Desh keyboard
+data, below). Earlier that day: **the repo stays public and its history stays as it is.**
 Reason: public repositories get free GitHub Actions minutes; the private quota was nearly
 used up. The owner declined all three remedies (fresh public repo, history rewrite,
 private again). Do not ask again; do not add more scraped text to the repository. If the
 owner later wants to clean up, the options are in `plan/06-owner-followups.md` S-1.
+
+**Desh keyboard data (2026-10-12).** The owner reports that the company behind the Desh
+Odia keyboard agreed to the use of its data (word list, typed-spelling pairs, n-gram model)
+to improve this app, if it is credited and the app is shared with them. **Verbal; written
+confirmation pending** (`plan/06-owner-followups.md` L-1). Until the email exists, Desh-derived
+data is measured in sessions only and is not committed. Never commit the raw Desh files or
+the decoder scripts (they hold addresses from Desh's binary). Credit Desh for the data in
+the wording the written terms give; Desh is not the author of this app's code, and LICENSE
+is not changed. A second reason, beside `webcorpus/`, never to make this repository public
+without a fresh history.
 
 The GitHub repo was **private** until then. `tools/build-data/webcorpus/` holds raw scraped
 third-party text (archive.org books, literature, news, government pages, X posts)

@@ -3,8 +3,11 @@
 # the run log is the evidence for a change.
 name: ci
 
+# Pull requests, and pushes to main only: one run per change, not two (the repository
+# is private again and uses the monthly Actions minutes).
 on:
   push:
+    branches: [main]
   pull_request:
 
 # Public repository: the CI token can only read. No job needs to write, and no
