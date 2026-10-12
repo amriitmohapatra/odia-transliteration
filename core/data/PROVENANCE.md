@@ -343,3 +343,17 @@ own decoder scripts are not used and not in the repository).
 | Canonical form | every output goes through `canonical()` |
 | Held-out | the model was trained by Desh, not by this project; whether the Aksharantar test words were in its training data is unknown, so its held-out gain may be flattered |
 | In | adult and kids web apps (a spelling model, not a word list; outputs still pass the content filter); off in the sloka profile |
+
+### Next-word table (`nextword.tsv`)
+
+Pruned from Desh's Odia n-gram model (chat text, 30.08 M tokens).
+
+| | |
+|---|---|
+| Raw input | Desh `native_lm.db` extracts: `bigrams.tsv.gz` 266,657 rows, sha256 `04256263d763cc196a4f9e0c890448beedb22dc00e8d0e6203179c0ca125334e`; `trigrams.tsv.gz` 175,576 rows, sha256 `fe4afc330a9bbc0015243f5f2e1aaba83e0946c66167dc4149d448a0f516906f`; `odia_words.tsv` 35,208 words, sha256 `c1b114a48e6f71c08a9cc01ef36ef0326113767ac4333481c8097ca5043e2384` |
+| Build | `python3 -I tools/build-data/build_nextword.py --words … --bigrams … --trigrams … --top-bigram 4 --top-trigram 3 --min-unigram-count 0 --max-trigram-contexts 3000 --min-prob -3` (the exact command is in the file header) |
+| Output | 46,849 rows (14,438 one-word contexts, 3,000 two-word contexts), 1,655,913 bytes (293 KB gzipped), sha256 `814d4daf4a93b8591a335abfcfaa51c69a42c46e58ced876a94bcbace3d83f07` |
+| Cleaning | canonical form (331 words, 2,459 rows had precomposed nukta letters); nukta restored as in `typed.tsv` (7,691 + 3,931 rows); Odia digits dropped; one-letter fragments dropped except ତ ଓ ଏ ନ (real words); top 4 next words per word, 3 per two-word context, only two-word contexts that change the top 3 (the 3,000 with the largest expected gain) |
+| Quality | phrase table pairs: 15 of 21 in the top 3, 10 first |
+| Labels | one row predicts a word labelled offensive in `labels.tsv`; the engine never predicts it (content filter) |
+| Not in | the kids edition; the sloka profile |

@@ -59,6 +59,7 @@ const PATHS: Record<AssetKey, string> = {
   sanskritUnigrams: resolve(APPV2, 'data/sanskrit-unigrams.tsv'),
   coreBigrams: resolve(ROOT, 'core/data/bigrams.tsv'),
   typed: resolve(ROOT, 'core/data/typed.tsv'),
+  nextWords: resolve(ROOT, 'core/data/nextword.tsv'),
   preferences: resolve(ROOT, 'core/data/preferences.tsv'),
   labels: resolve(ROOT, 'core/data/labels.tsv'),
 };

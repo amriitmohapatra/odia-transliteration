@@ -25,7 +25,16 @@
  */
 import type { FilterLevel, Labels, Preferences } from './curation.js';
 
-export type CandidateSource = 'user' | 'preference' | 'lexicon' | 'typed' | 'converter' | 'completion' | 'rule' | 'verbatim';
+export type CandidateSource =
+  | 'user'
+  | 'preference'
+  | 'lexicon'
+  | 'typed'
+  | 'converter'
+  | 'completion'
+  | 'prediction'
+  | 'rule'
+  | 'verbatim';
 
 export interface Candidate {
   /** Canonical Odia text (or the verbatim Latin token). */
@@ -297,6 +306,14 @@ export interface SpellingConverter {
   decode(roman: string, n: number): readonly { text: string; cost: number }[];
 }
 
+/** Next-word predictions (data/nextword.tsv). See nextword.ts. */
+export interface NextWords {
+  /** Rows loaded. */
+  readonly size: number;
+  /** The likeliest next words after `previous` (canonical Odia, oldest first), best first. */
+  predict(previous: readonly string[], k: number): { word: string; score: number }[];
+}
+
 /** What the engine may know about a word's surroundings. */
 export interface WordContext {
   /** The previous word of the sentence, in Odia (canonicalised by the engine). */
@@ -337,6 +354,8 @@ export interface EngineConfig {
   filter?: FilterLevel;
   /** Word-pair counts for context ranking. Absent means no context term. */
   bigrams?: Bigrams;
+  /** Next-word predictions (nextword.ts). Absent means none. */
+  nextWords?: NextWords;
   /** The learned spelling converter (converter.ts). Absent means no converter term. */
   converter?: SpellingConverter;
   /**

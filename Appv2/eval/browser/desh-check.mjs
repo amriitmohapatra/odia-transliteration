@@ -35,6 +35,8 @@ async function run(name, test, mobile = false) {
     page.on('pageerror', (error) => errors.push(String(error)));
     await page.goto(appUrl);
     await page.locator('.dict-search').waitFor({ state: 'attached' });
+    // Typed pairs, next words and the converter load after start-up.
+    await page.locator('html[data-extras="ready"]').waitFor({ state: 'attached', timeout: 20000 });
     const area = page.locator('#roman');
     await area.focus();
     await test({ page, area });
@@ -94,6 +96,68 @@ try {
     await page.keyboard.press('Space');
     assert.equal(await editor(page), `${ATANKI} `);
   });
+
+  const predictionsShown = (page) =>
+    page.locator('#inline-candidates[data-mode="predict"] .inline-prediction').first().waitFor({ state: 'visible' });
+
+  await run('next word: after a word and a space, Alt+1 inserts the first suggestion and a space', async ({ page }) => {
+    await page.keyboard.type('kemiti ');
+    await predictionsShown(page);
+    const typed = await editor(page);
+    const first = (await barWords(page))[0];
+    assert.ok(first && /[\u0B00-\u0B7F]/.test(first), `first prediction: ${first}`);
+    await page.keyboard.press('Alt+1');
+    assert.equal(await editor(page), `${typed}${first} `);
+    // The chain goes on: suggestions for the word after that.
+    await predictionsShown(page);
+  });
+
+  await run('next word: number keys, Space and letters keep their normal meaning', async ({ page }) => {
+    await page.keyboard.type('kemiti ');
+    await predictionsShown(page);
+    const typed = await editor(page);
+    await page.keyboard.press('2');
+    assert.equal(await editor(page), `${typed}2`, 'a plain digit types the digit');
+    await page.keyboard.press('Backspace');
+    await predictionsShown(page);
+    await page.keyboard.type('a');
+    await page.locator('#inline-candidates[data-mode="convert"] .inline-candidate').first().waitFor({ state: 'visible' });
+    assert.equal(await page.locator('#inline-candidates .inline-prediction').count(), 0, 'a letter starts a new word');
+    await page.keyboard.press('Backspace');
+    await predictionsShown(page);
+    await page.keyboard.press('Space');
+    assert.equal(await editor(page), `${typed} `, 'Space types a space');
+  });
+
+  await run('next word: Escape closes the suggestions at that place', async ({ page }) => {
+    await page.keyboard.type('kemiti ');
+    await predictionsShown(page);
+    await page.keyboard.press('Escape');
+    assert.equal(await page.locator('#inline-candidates').isVisible(), false);
+    await page.locator('#roman').click();
+    await page.keyboard.press('End');
+    assert.equal(await page.locator('#inline-candidates').isVisible(), false, 'stays closed at the same place');
+  });
+
+  await run('next word: the setting turns it off', async ({ page, area }) => {
+    await page.locator('#open-settings').click();
+    await page.locator('#toggle-next-word').uncheck();
+    await page.locator('#settings button[data-settings-close]').click();
+    await area.focus();
+    await page.keyboard.type('kemiti ');
+    await page.waitForTimeout(300);
+    assert.equal(await page.locator('#inline-candidates .inline-prediction').count(), 0);
+  });
+
+  await run('next word on a phone: a tap inserts the suggestion', async ({ page }) => {
+    await page.keyboard.type('kemiti ');
+    await predictionsShown(page);
+    const typed = await editor(page);
+    const item = page.locator('#inline-candidates .inline-prediction').first();
+    const word = await item.locator('.inline-text').innerText();
+    await item.tap();
+    assert.equal(await editor(page), `${typed}${word} `);
+  }, true);
 
   await run('dictionary: an English-letter search lists the completion too', async ({ page }) => {
     await openMeanings(page);

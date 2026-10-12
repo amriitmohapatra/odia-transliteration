@@ -29,6 +29,8 @@ export interface EngineLike {
   learn(roman: string, chosen: string): void;
   /** Whole words for a key still being typed (typed-spelling data). Absent on the degraded engine. */
   complete?(roman: string, k?: number, exclude?: readonly string[]): Candidate[];
+  /** The likeliest next words after the given Odia words. Absent on the degraded engine. */
+  predictNext?(previous: readonly string[], k?: number): Candidate[];
   /** How common an Odia word is (log frequency, 0 when unknown). Absent on the degraded engine. */
   wordFrequency?(word: string): number;
   strict(input: string, scheme?: 'itrans'): string;

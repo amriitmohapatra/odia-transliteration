@@ -67,6 +67,7 @@ export const PREFERENCES_PATH = 'data/preferences.tsv';
 export const LABELS_PATH = 'data/labels.tsv';
 export const TYPED_PATH = 'data/typed.tsv';
 export const CONVERTER_PATH = 'data/converter.bin';
+export const NEXTWORD_PATH = 'data/nextword.tsv';
 
 export interface CreateEngineFromDiskOptions
   extends Omit<CreateEngineOptions, 'rulesToml' | 'itransToml' | 'lexiconTsv' | 'unigramsTsv' | 'bigramsTsv'> {
@@ -78,6 +79,8 @@ export interface CreateEngineFromDiskOptions
   noTyped?: boolean;
   /** Load no spelling converter (converter term off). Default false. */
   noConverter?: boolean;
+  /** Load no next-word table. Default false. */
+  noNextWords?: boolean;
 }
 
 /**
@@ -93,7 +96,7 @@ export function createEngineFromDisk(opts: CreateEngineFromDiskOptions = {}): En
     throw new Error(`Cannot read the rule file at ${coreFilePath(RULES_PATH)}`);
   }
 
-  const { web, noBigrams, noTyped, typedTsv, noConverter, converterBin, ...engineOptions } = opts;
+  const { web, noBigrams, noTyped, typedTsv, noConverter, converterBin, noNextWords, nextwordTsv, ...engineOptions } = opts;
 
   return createEngine({
     ...engineOptions,
@@ -105,6 +108,7 @@ export function createEngineFromDisk(opts: CreateEngineFromDiskOptions = {}): En
     // An explicit typedTsv wins: the eval passes a copy without held-out pairs.
     typedTsv: noTyped === true ? undefined : (typedTsv ?? readCoreFile(TYPED_PATH)),
     converterBin: noConverter === true ? undefined : (converterBin ?? gunzipped(readCoreBytes(CONVERTER_PATH))),
+    nextwordTsv: noNextWords === true ? undefined : (nextwordTsv ?? readCoreFile(NEXTWORD_PATH)),
     preferencesTsv: readCoreFile(PREFERENCES_PATH),
     labelsTsv: readCoreFile(LABELS_PATH),
   });

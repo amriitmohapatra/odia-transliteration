@@ -16,6 +16,7 @@ import { emptyLabels, emptyPreferences, parseLabels, parsePreferences } from './
 import type { FilterLevel, Labels, Preferences } from './curation.js';
 import { canonical } from './normalize.js';
 import { parseConverter } from './converter.js';
+import { parseNextWords } from './nextword.js';
 import { emptyLexicon, parseLexicon } from './lexicon.js';
 import { rank } from './rank.js';
 import { loadRules } from './rules.js';
@@ -31,6 +32,7 @@ import type {
   LearnStore,
   Lexicon,
   Result,
+  NextWords,
   Rules,
   SpellingConverter,
   StrictSchemeName,
@@ -48,6 +50,8 @@ const COMPLETE_MIN_KEY = 3;
 const COMPLETE_SCAN = 5000;
 const COMPLETE_MIN_COUNT = 100;
 const COMPLETE_MIN_SHARE = 0.02;
+/** Extra predictions read, so filtered words do not leave the list short. */
+const PREDICT_SPARE = 3;
 /** Spellings asked of the converter per key. */
 const CONVERT_NBEST = 5;
 
@@ -70,6 +74,7 @@ export class Engine {
   private readonly bigrams: Bigrams;
   private readonly typed: Lexicon | undefined;
   private readonly converter: SpellingConverter | undefined;
+  private readonly nextWords: NextWords | undefined;
   private readonly learnStore: LearnStore | undefined;
   private readonly preferences: Preferences;
   private readonly labels: Labels;
@@ -85,6 +90,7 @@ export class Engine {
     this.bigrams = cfg.bigrams ?? emptyBigrams();
     this.typed = cfg.typed;
     this.converter = cfg.converter;
+    this.nextWords = cfg.nextWords;
     this.learnStore = cfg.learnStore;
     this.preferences = cfg.preferences ?? emptyPreferences();
     this.labels = cfg.labels ?? emptyLabels();
@@ -220,6 +226,25 @@ export class Engine {
     return out;
   }
 
+  /**
+   * The likeliest words to type next, after `previous` (the Odia words before
+   * the caret, oldest first; the last one or two are used). Through the
+   * content filter: in family mode an offensive word is never predicted (no
+   * key vouches for it), in kids mode neither is a coarse one. Empty without
+   * next-word data.
+   */
+  predictNext(previous: readonly string[], k = 5): Candidate[] {
+    if (this.nextWords === undefined || k <= 0) return [];
+    const blocked = this.blockerFor('');
+    const out: Candidate[] = [];
+    for (const row of this.nextWords.predict(previous, k + PREDICT_SPARE)) {
+      if (out.length >= k) break;
+      if (blocked?.(row.word, { user: false, pref: false }) === true) continue;
+      out.push({ text: row.word, score: row.score, source: 'prediction' });
+    }
+    return out;
+  }
+
   /** How common an Odia word is: its log frequency, 0 for a word the counts never saw. */
   wordFrequency(word: string): number {
     return this.unigrams.logfreq(canonical(word));
@@ -346,6 +371,8 @@ export interface CreateEngineOptions {
   bigramsTsv?: string;
   /** Contents of `data/typed.tsv` (typed-spelling pairs). Absent means no typed term. */
   typedTsv?: string;
+  /** Contents of `data/nextword.tsv` (next-word predictions). Absent means none. */
+  nextwordTsv?: string;
   /** Bytes of `data/converter.bin` (the spelling converter). Absent means no converter term. */
   converterBin?: Uint8Array;
   /** Contents of `data/preferences.tsv` (owner-curated). Absent means none. */
@@ -377,6 +404,7 @@ export function createEngine(opts: CreateEngineOptions): Engine {
     bigrams: opts.bigramsTsv === undefined ? undefined : parseBigrams(opts.bigramsTsv),
     typed: opts.typedTsv === undefined ? undefined : parseLexicon(opts.typedTsv),
     converter: opts.converterBin === undefined ? undefined : parseConverter(opts.converterBin),
+    nextWords: opts.nextwordTsv === undefined ? undefined : parseNextWords(opts.nextwordTsv),
     preferences: opts.preferencesTsv === undefined ? undefined : parsePreferences(opts.preferencesTsv),
     labels: opts.labelsTsv === undefined ? undefined : parseLabels(opts.labelsTsv),
     familySafe: opts.familySafe,
@@ -416,6 +444,7 @@ export { emptyLexicon, parseLexicon } from './lexicon.js';
 export { emptyUnigrams, parseUnigrams } from './unigrams.js';
 export { emptyBigrams, parseBigrams } from './bigrams.js';
 export { parseConverter } from './converter.js';
+export { emptyNextWords, parseNextWords } from './nextword.js';
 export type { Converter, ConverterCandidate, ConverterOptions } from './converter.js';
 export { rank } from './rank.js';
 export type { RankInput } from './rank.js';
