@@ -1,0 +1,55 @@
+# C-13 sample, batch 5: 50 AI-written meanings picked at random from the batch 5 rows of core/data/meanings.tsv.
+# Rows that start "to ..." are verbs: the words after "to" up to ";" are shown in every form of the verb
+# ("get + have …-ed (they, or respectful)"), so check that part most.
+# For each row, fill "verdict": ok, wrong, or fix. For "fix", write the better meaning in "correction".
+odia	meaning	senses	origin	verdict	correction
+ଖେଳିବା	to play; playing	to play (a game, a match); playing; to play (a role, a trick)	native		
+ପଡିବା	to fall, have to; falling	to fall, drop; to have to, must (after a verbal noun: will have to go); to lie (be lying); to fall on, occur (a date, a festival); after a word: to become (e.g. be needed); falling	native		
+ପକାଇବା	to throw, put; throwing	to throw, drop, put (in); to cast (a vote); to have (an effect: prabhab pakaiba); after a verb: to do completely (bury, shower with praise); with mane: to remember, recall; throwing	native		
+ହରାଇବା	to lose, defeat; losing	to lose (a life, a job, a seat); to defeat, beat (a team; the loser takes -ku); losing	native		
+ଶୁଣିବା	to hear, listen; hearing	to hear, listen (to); to heed, obey; hearing; passive: to be heard, be rumoured	native		
+ଉଠିବା	to rise, get up; rising	to rise, get up, stand up; to arise, be raised (a question, a demand); to be withdrawn (money); to be lifted (a ban); rising	native		
+ବୁଲିବା	to wander, roam; wandering	to roam, wander, go around; to go out for a visit or outing (to a place); to turn (around); wandering	native		
+ପଢ଼ିବା	to read, study; reading	to read; to study (at a school, in a class); to recite (a prayer, a mantra); reading, studies	native		
+ଭାଙ୍ଗିବା	to break; breaking	to break, be broken; to collapse, cave in; to break (a record, a rule); to demolish (a house); breaking	native		
+ଲଢ଼ିବା	to fight, contest; fighting	to fight, to struggle; to contest (an election); fighting, a fight	native		
+ବଢାଇବା	to increase, raise; increasing	to increase, to raise, to extend (a deadline); to boost; increasing, raising	native		
+ଦର୍ଶାଇବା	to show, state; showing	to show, to state, to point out; to cite (a reason); showing, displaying	native		
+ବଞ୍ଚାଇବା	to save, rescue; saving	to save, to rescue (a life); to protect, preserve; to save (money); saving	native		
+ଘେରିବା	to surround, gherao; surrounding	to surround, to encircle; to gherao (protesters surrounding an official); to beset (debts, troubles); surrounding	native		
+ଲଢିବା	to fight, contest; fighting	to fight, to struggle; to contest (an election); fighting, a fight	native		
+ଜଳିବା	to burn; burning	to burn, to be on fire, to be lit (a lamp, a kiln); to burn with envy; burning	native		
+ବିକିବା	to sell; selling	to sell; selling, sale; to sell off	native		
+ଲୁଚାଇବା	to hide, conceal; hiding	to hide, conceal (something); hiding, concealing; keeping secret	native		
+ପହଞ୍ଚାଇବା	to deliver, bring; delivering	to deliver, take or bring (to a place or person); delivering; to take (a score, a level) up to	native		
+ଫସିବା	to get trapped, be stuck; getting trapped	to get trapped, be stuck (in a tunnel, flood); to be caught, get entangled (in a case, a scam, a trap)	native		
+ବାଜିବା	to hit, sound; hitting	to hit, strike (a bullet, a stone hits someone); to sound, ring (a bell, an alarm); striking, ringing	native		
+ଲାଗିରହିବା	to continue, go on; continuing	to continue, go on, persist (suspense, rain, a protest); to keep at (something); continuing	native		
+ଶୋଇବା	to sleep; sleeping	to sleep, lie down; sleeping	native		
+ସୁଧାରିବା	to correct, improve; correcting	to correct, put right (a mistake); to improve, reform; to repair, mend; correcting	native		
+ଧରାପଡିବା	to be caught; being caught	to be caught, get caught, be arrested; to be found out, be detected	native		
+ରିସର୍ଚ୍ଚ	research	research (as in Indian Council of Medical Research)	english		
+ଅଗ୍ରୱାଲ	Agarwal (surname)	Agarwal, Agrawal (surname)	name		
+ସୂଚନାନୁଯାୟୀ	according to information, as reported	according to (the) information, as per reports	sanskrit		
+ହାଇକୋର୍ଟର	of the High Court	of the High Court	english		
+ହେବନାହିଁ	will not be; will not happen	will not be, will not happen, will not take place (future negative)	native		
+ଘଟଣାସ୍ଥଳରୁ	from the scene (of the incident)	from the scene, from the spot (of the incident)	sanskrit		
+ଅଲିମ୍ପିକ୍ସରେ	in the Olympics	in the Olympics, at the Olympic Games	english		
+ଡ୍ୟାନ୍ସ	dance	dance	english		
+ଅନ୍ଲାଇନ୍	online	online	english		
+ଅଫର	offer	offer, proposal; discount offer (in shops)	english		
+ଗ୍ରୁପ	group	group (of people, companies; a WhatsApp group)	english		
+ଅନୁଭୂତି	experience	experience; feeling, perception	sanskrit		
+ଯିଏକି	who (relative: who, in fact)	who (relative pronoun, adding detail about someone just named)	native		
+ଆଇଏଏସ୍	IAS (Indian Administrative Service)	IAS, Indian Administrative Service; an IAS officer	english		
+ଗାଇଡଲାଇନ୍	guideline(s)	guideline, guidelines (official instructions, rules to follow)	english		
+ଏହାସହିତ	along with this; besides, also	along with this, in addition, besides, also; with it	mixed		
+ହରିୟାଣା	Haryana, an Indian state	Haryana, a state in north India	name		
+ପରିକ୍ରମା	circling round (a shrine); a round, tour	circumambulation, walking round a temple, shrine or the chariots; a round, a tour (of a place); orbit	sanskrit		
+ରଖାଯାଇଥିବା	which had been kept, placed; put forward	which had been kept, placed or stored; (demands) which had been put forward (passive participle, before a noun)	native		
+ନିର୍ଦେଶକ	director (film; managing director)	director (of a film; managing director of a company; head of a directorate); one who directs	sanskrit		
+ରେଜଲ୍ଟ	result (of an exam)	result, results (of an examination); outcome	english		
+ଶ୍ରୀକାନ୍ତ	Srikanta (given name)	Srikanta, Srikant, a male given name; a name of Vishnu (lit. husband of Lakshmi)	name		
+ଜାଣିଛନ୍ତି	know; have come to know (they; or you, resp.)	know, have learnt, have come to know (they; or you/he/she, respectful; present perfect)	native		
+ଖେଳିଯାଇଛି	has spread (over), has descended	has spread over, has swept over (a mood, grief, joy); has played (he/she/it)	native		
+ହେଇଥିଲା	was; had happened, had been (he/she/it)	was, had been, had happened, had become (he/she/it; past)	native		

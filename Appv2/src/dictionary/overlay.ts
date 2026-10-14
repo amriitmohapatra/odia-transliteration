@@ -45,16 +45,42 @@
  */
 
 import { canonical } from '@odia/core/normalize';
-import { parseGlosses, type Glosses } from '@odia/core';
+import { parseGlosses, parseMeanings, parseVerbEndings, type Glosses, type Meaning } from '@odia/core';
 // Owner meanings (core/data/glosses.tsv): shown first, where the dictionary's
 // first sense misleads today. Small, so bundled with the app, not lazy.
 import glossesTsv from '../../../core/data/glosses.tsv?raw';
+// AI-written modern meanings (core/data/meanings.tsv, D-13): after the owner's,
+// before the modern [mt] layer and Praharaj. Small while it is a pilot; move it
+// next to the lazy payloads when it passes ~300 KB (A-7).
+import meaningsTsv from '../../../core/data/meanings.tsv?raw';
+// Verb endings (core/data/verb-endings.tsv): "get + have …-ed (they)" for paaichhanti.
+import verbEndingsTsv from '../../../core/data/verb-endings.tsv?raw';
 
 import { inflate } from './pako-inflate.js';
+import {
+  defAt,
+  findEntry,
+  findModern,
+  fold,
+  explainEnding,
+  explainVerb,
+  readNumber,
+  foldKey,
+  meaningFinder,
+  meaningSource,
+  MODERN_LABEL,
+  modernChip,
+  modernLines,
+  parsePayload,
+  shortGlossOf,
+  tidyGloss,
+  type Dict,
+  type Entry,
+  type ModernEntry,
+} from './lookup.js';
 import { originChipLabel, originLabel, parseOrigin } from './origin.js';
 import { parseEnglishEntries, searchEnglish, type EnglishEntry } from './english.js';
 import englishTsv from './english.tsv?raw';
-import { cleanDefinition } from './clean.js';
 import { LANGUAGE_LABEL, parseLoans, type Loan } from './loans.js';
 import loansTsv from './loans.tsv?raw';
 import { CATEGORY_LABEL, parsePhrases, searchPhrases, type Phrase } from './phrases.js';
@@ -86,79 +112,9 @@ export interface DictionaryBytes {
 
 export type DictionaryLoader = () => Promise<DictionaryBytes>;
 
-/** Field separator inside an inflated payload (U+0002). */
-const SEP = '\u0002';
-
-/* ------------------------------------------------------------ *
- * Normalisation: canonical() from core, plus the 1930s-orthography
- * fold used when the payload was built.
- * ------------------------------------------------------------ */
-
-/* U+0B5F -> U+0B2F, U+0B71 -> U+0B2C, U+0B35 -> U+0B2C : Praharaj-era spellings. */
-function fold(w: string): string {
-  return w
-    .split('\u0b5f').join('\u0b2f')
-    .split('\u0b71').join('\u0b2c')
-    .split('\u0b35').join('\u0b2c');
-}
-
-/* Inflectional suffixes tried (longest first) when the exact form is not a
- * headword. Kept in sync with the payload builder; folded forms. */
-const SUFFIXES: readonly string[] = [
-  '\u0b2e\u0b3e\u0b28\u0b19\u0b4d\u0b15\u0b30', /* -maananjkara */
-  '\u0b2e\u0b3e\u0b28\u0b19\u0b4d\u0b15\u0b41', /* -maananjku */
-  '\u0b17\u0b41\u0b21\u0b3c\u0b3f\u0b15\u0b41', /* -gudiku */
-  '\u0b17\u0b41\u0b21\u0b3c\u0b3f\u0b15\u0b30', /* -gudikara */
-  '\u0b2e\u0b3e\u0b28\u0b19\u0b4d\u0b15', /* -maananjka */
-  '\u0b17\u0b41\u0b21\u0b3c\u0b3f\u0b15', /* -gudika */
-  '\u0b17\u0b41\u0b21\u0b3c\u0b3e\u0b0f', /* -gudaae */
-  '\u0b2e\u0b3e\u0b28\u0b47', /* -maane */
-  '\u0b19\u0b4d\u0b15\u0b30', /* -njkara */
-  '\u0b19\u0b4d\u0b15\u0b41', /* -njku */
-  '\u0b1f\u0b3f\u0b15\u0b41', /* -tiku */
-  '\u0b1f\u0b3f\u0b30\u0b47', /* -tire */
-  '\u0b19\u0b4d\u0b15', /* -njka */
-  '\u0b1f\u0b3f\u0b30', /* -tira */
-  '\u0b30\u0b47', /* -re */
-  '\u0b30\u0b41', /* -ru */
-  '\u0b15\u0b41', /* -ku */
-  '\u0b1f\u0b3f', /* -ti */
-  '\u0b1f\u0b3e', /* -taa */
-  '\u0b30', /* -ra */
-  '\u0b01', /* candrabindu */
-  '\u0b02', /* anusvara */
-  '\u0b03', /* visarga */
-];
-
-/* ------------------------------------------------------------ *
- * Data: gzip(payload), inflated lazily.
- * payload = N SEP keys(\n-joined, sorted) SEP lens(,-joined) SEP defs(concat)
- * ------------------------------------------------------------ */
-
-interface Dict {
-  keys: string[];
-  offsets: Float64Array;
-  lens: Uint32Array;
-  defs: string;
-}
-
-type How = 'exact' | 'stem' | 'prefix';
-
-interface Entry {
-  how: How;
-  head: string;
-  index: number;
-}
-
-interface ModernLine {
-  tag: string;
-  gloss: string;
-}
-
-interface ModernEntry {
-  how: 'exact' | 'stem';
-  lines: ModernLine[];
-}
+/* The fold, the payload format, entry lookup and the short gloss live in
+ * ./lookup.ts, shared with the Odia Lens extension. This module keeps the
+ * loaded dictionaries, the caches and the panel. */
 
 type LoadState = 'idle' | 'loading' | 'ready' | 'failed';
 
@@ -179,27 +135,6 @@ function setState(next: LoadState): void {
   } catch {
     /* the app's listener must never break the overlay */
   }
-}
-
-function parsePayload(gz: Uint8Array): Dict {
-  const inflated = inflate(gz);
-  const text = new TextDecoder('utf-8').decode(inflated);
-  const a = text.indexOf(SEP);
-  const b = text.indexOf(SEP, a + 1);
-  const c = text.indexOf(SEP, b + 1);
-  const count = parseInt(text.slice(0, a), 10);
-  const keys = text.slice(a + 1, b).split('\n');
-  const lenParts = text.slice(b + 1, c).split(',');
-  const lens = new Uint32Array(count);
-  const offsets = new Float64Array(count);
-  let off = 0;
-  for (let i = 0; i < count; i++) {
-    lens[i] = +(lenParts[i] as string);
-    offsets[i] = off;
-    off += lens[i] as number;
-  }
-  if (keys.length !== count) throw new Error('key count mismatch');
-  return { keys, offsets, lens, defs: text.slice(c + 1) };
 }
 
 /* ------------------------------------------------------------ *
@@ -248,116 +183,32 @@ function loadData(): void {
     });
 }
 
-function bsearch(dict: Dict | null, key: string): number {
-  if (!dict) return -1;
-  const keys = dict.keys;
-  let lo = 0;
-  let hi = keys.length - 1;
-  while (lo <= hi) {
-    const mid = (lo + hi) >> 1;
-    const k = keys[mid] as string;
-    if (k === key) return mid;
-    if (k < key) lo = mid + 1;
-    else hi = mid - 1;
-  }
-  return -1;
-}
-
-function defAt(dict: Dict, i: number): string {
-  const start = dict.offsets[i] as number;
-  return cleanDefinition(dict.defs.slice(start, start + (dict.lens[i] as number)));
-}
-
 let lookupCache = Object.create(null) as Record<string, Entry | null>;
 let modernCache = Object.create(null) as Record<string, ModernEntry | null>;
 
-/*
- * Praharaj lookup with fallbacks:
- *   exact / stem (one suffix removed) / prefix (longest headword the word
- *   begins with, for sandhi compounds) — each marked in the UI.
- */
+/* Praharaj lookup (exact / stem / prefix, see lookup.ts), cached per key. */
 function lookup(word: string): Entry | null {
-  const q = fold(canonical(word));
+  const q = foldKey(word);
   if (q.length === 0) return null;
   const hit = lookupCache[q];
   if (hit !== undefined) return hit;
-  let res: Entry | null = null;
-  const i = bsearch(P, q);
-  if (i >= 0 && P) {
-    res = { how: 'exact', head: P.keys[i] as string, index: i };
-  } else if (P) {
-    for (let s = 0; s < SUFFIXES.length && !res; s++) {
-      const suf = SUFFIXES[s] as string;
-      if (q.length - suf.length >= 2 && q.slice(-suf.length) === suf) {
-        const j = bsearch(P, q.slice(0, q.length - suf.length));
-        if (j >= 0) res = { how: 'stem', head: P.keys[j] as string, index: j };
-      }
-    }
-    if (!res) {
-      let lo = 0;
-      let hi = P.keys.length;
-      while (lo < hi) {
-        const mid = (lo + hi) >> 1;
-        if ((P.keys[mid] as string) < q) lo = mid + 1;
-        else hi = mid;
-      }
-      let best = -1;
-      let bestLen = 2;
-      for (let back = lo - 1; back >= 0 && back > lo - 400; back--) {
-        const k = P.keys[back] as string;
-        if (k.length > bestLen && q.length > k.length && q.lastIndexOf(k, 0) === 0) {
-          best = back;
-          bestLen = k.length;
-        }
-        if (k.charAt(0) !== q.charAt(0)) break;
-      }
-      if (best >= 0) res = { how: 'prefix', head: P.keys[best] as string, index: best };
-    }
-  }
+  const res = P ? findEntry(P.keys, q) : null;
   lookupCache[q] = res;
   return res;
 }
 
-/*
- * Modern-layer lookup (loanwords, community MT glosses, CLDR names).
- * Exact and stem only — a prefix fallback on this data would invent loans.
- */
+/* Modern-layer lookup (exact and stem only, see lookup.ts), cached per key. */
 function lookupModern(word: string): ModernEntry | null {
   if (!M) return null;
-  const q = fold(canonical(word));
+  const q = foldKey(word);
   if (q.length === 0) return null;
   const hit = modernCache[q];
   if (hit !== undefined) return hit;
-  let res: ModernEntry | null = null;
-  let i = bsearch(M, q);
-  let how: 'exact' | 'stem' = 'exact';
-  if (i < 0) {
-    for (let s = 0; s < SUFFIXES.length && i < 0; s++) {
-      const suf = SUFFIXES[s] as string;
-      if (q.length - suf.length >= 2 && q.slice(-suf.length) === suf) {
-        i = bsearch(M, q.slice(0, q.length - suf.length));
-      }
-    }
-    how = 'stem';
-  }
-  if (i >= 0) {
-    const lines = defAt(M, i)
-      .split('\n')
-      .map((line) => {
-        const t = line.indexOf('\t');
-        return { tag: line.slice(0, t), gloss: line.slice(t + 1) };
-      });
-    res = { how, lines };
-  }
+  const found = findModern(M.keys, q);
+  const res = found ? { how: found.how, lines: modernLines(defAt(M, found.index)) } : null;
   modernCache[q] = res;
   return res;
 }
-
-const MODERN_LABEL: Record<string, string> = {
-  loan: 'English loan (auto-detected)',
-  mt: 'modern usage — community translation data, approximate',
-  cldr: 'standard modern name (CLDR)',
-};
 
 /* One short meaning per suggestion (plan/design/v1-ux-proposal.md 3.6):
  * the modern layer's first sense if there is one, else the first Praharaj
@@ -384,6 +235,29 @@ function ownerGloss(word: string): { meaning: string; status: string } | undefin
   return OWNER.get(canonical(word));
 }
 
+/* Parsed once; a bad row fails the unit test (core/test/curation.test.ts), never the app. */
+const AI = (() => {
+  try {
+    return meaningFinder(parseMeanings(meaningsTsv, 'core/data/meanings.tsv'));
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+})();
+
+function aiMeaning(word: string): Meaning | undefined {
+  return AI?.word(word);
+}
+
+const VERBS = (() => {
+  try {
+    return parseVerbEndings(verbEndingsTsv, 'core/data/verb-endings.tsv');
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+})();
+
 /* Kids edition: words the app must never explain (labelled offensive or coarse).
  * Set by initDictionary; the default hides nothing. */
 let hidden: (word: string) => boolean = () => false;
@@ -398,11 +272,28 @@ function chipFor(word: string): string | null {
   if (hidden(word)) return null;
   const own = ownerGloss(word);
   if (own) return tidyGloss(own.meaning, false);
-  const m = modernChip(lookupModern(word));
-  if (m) return m;
+  const ai = aiMeaning(word);
+  if (ai) return tidyGloss(ai.meaning, false);
+  const number = readNumber(word, AI);
+  if (number) return number.text;
+  const mo = lookupModern(word);
+  const exact = mo && mo.how === 'exact' ? modernChip(mo) : null;
+  if (exact) return exact;
   const entry = lookup(word);
+  const explained = explained_(word, entry);
+  if (explained) return explained.text;
+  const m = modernChip(mo);
+  if (m) return m;
   const g = entry ? shortGloss(entry) : null;
   return entry && g ? tidyGloss(g, entry.how !== 'exact') : null;
+}
+
+/* A form explained by its ending: a noun's ("state + in, at, on") or a verb's
+ * ("get + have …-ed (they; or respectful)"); see lookup.ts. */
+function explained_(word: string, entry: Entry | null): { text: string; formation: string } | null {
+  // Owner or AI meanings only (see lookup.ts explainEnding).
+  const meaningOf = (w: string): string | null => ownerGloss(w)?.meaning ?? aiMeaning(w)?.meaning ?? null;
+  return explainEnding(word, entry, AI, meaningOf) ?? explainVerb(word, entry, VERBS, meaningOf);
 }
 
 /** Origin suffix for a suggestion ("from Persian"), or null. Same gate as chipFor. */
@@ -425,49 +316,16 @@ function fillGloss(span: HTMLElement, word: string, g: string | null): string {
   return g + ', ' + o;
 }
 
-function modernChip(mo: ModernEntry | null): string | null {
-  if (!mo) return null;
-  const line = mo.lines.find((l) => l.tag !== 'loan');
-  return line ? tidyGloss(line.gloss, mo.how !== 'exact') : null;
-}
-
-function tidyGloss(gloss: string, approximate: boolean): string | null {
-  let g = (gloss.split(';')[0] as string).replace(/\s+/g, ' ').trim().replace(/[\s.,:]+$/, '');
-  if (g.length < 2) return null;
-  if (g.length > 56) g = g.slice(0, 56).replace(/\s+\S*$/, '') + '\u2026';
-  return (approximate ? 'maybe: ' : '') + g;
-}
-
 /** Shown where a suggestion has no dictionary entry (was a faint dot). */
 const NO_ENTRY = 'meaning unavailable';
 
-/* Short English gloss for the inline chip.
- *
- * Entries open "<headword> — Translit \u2026", so the FIRST Latin run is the
- * romanisation, not the meaning. Skip that, then prefer the English text of
- * sense 1 ("1. Trouble; distress"), then any Latin run after a dash. */
+/* Short English gloss for the inline chip (lookup.ts), cached per headword. */
 const glossCache = Object.create(null) as Record<string, string | null>;
 function shortGloss(entry: Entry): string | null {
   if (!P) return null;
   const cached = glossCache[entry.head];
   if (cached !== undefined) return cached;
-  const def = defAt(P, entry.index).slice(0, 4000);
-  /* drop "head — Translit" prefix (translit = Latin with diacritics) */
-  const body = def.replace(/^[^\u2014\u2013\n]{0,50}[\u2014\u2013]\s*[A-Za-z\u0100-\u02af\u1e00-\u1eff']+[.,]?\s*/, '');
-  let g: string | null = null;
-  let m = body.match(/\b\d\.\s*([A-Za-z][^\u0964\u0965\n]{2,90})/);
-  if (!m) m = body.match(/[\u2014\u2013]\s*(?:\d+\s*)?([A-Z][a-z][^\u0964\u0965\n]{2,90})/);
-  if (!m) m = body.match(/\b([A-Z][a-z][^\u0964\u0965\n]{2,90})/);
-  if (m) {
-    g = m[1] as string;
-    /* chip is English-only: stop at the first Odia character, the next
-     * numbered sense, or an opening bracket of a commentary note */
-    g = g.split(/[\u0b00-\u0b7f]/)[0] as string;
-    g = g.split(/\s\d\.?\s|\s*[\u2014\u2013]\s*\d|\s*\[/)[0] as string;
-    g = g.replace(/\s+/g, ' ').replace(/[\s;,([\u2014\u2013-]+$/, '').trim();
-    if (g.length > 56) g = g.slice(0, 56).replace(/\s+\S*$/, '') + '\u2026';
-    if (g.length < 2) g = null;
-  }
+  const g = shortGlossOf(defAt(P, entry.index));
   glossCache[entry.head] = g;
   return g;
 }
@@ -727,6 +585,38 @@ function browsePhrasesButton(): HTMLElement {
   return button;
 }
 
+/* The AI-written entry (D-13): meaning, other senses, how the word is made,
+ * origin, and the label that says it is not yet checked. */
+function aiBox(ai: Meaning): HTMLElement {
+  const box = document.createElement('div');
+  box.className = 'dict-modern dict-ai';
+  const add = (label: string, title: string, text: string, odia = false): void => {
+    const row = document.createElement('div');
+    row.className = 'dict-modern-row';
+    const lab = document.createElement('span');
+    lab.className = 'dict-modern-tag dict-modern-tag-ai';
+    lab.textContent = label;
+    lab.title = title;
+    const val = document.createElement('span');
+    val.className = 'dict-modern-gloss' + (odia ? ' odia' : '');
+    if (odia) val.lang = 'or';
+    val.textContent = text;
+    row.append(lab, val);
+    box.appendChild(row);
+  };
+  const source = meaningSource(ai);
+  add('meaning', source, ai.meaning);
+  const more = ai.senses.filter((x) => x.toLowerCase() !== ai.meaning.toLowerCase());
+  if (more.length) add('senses', source, more.join('; '));
+  if (ai.formation) add('made of', source, ai.formation, true);
+  if (ai.note) add('note', source, ai.note);
+  const by = document.createElement('p');
+  by.className = 'dict-hint dict-ai-source';
+  by.textContent = source.charAt(0).toUpperCase() + source.slice(1) + '.';
+  box.appendChild(by);
+  return box;
+}
+
 function entryBlock(word: string, num: number | null, entry: Entry | null, modern: ModernEntry | null): HTMLElement {
   const block = document.createElement('section');
   block.className = 'dict-entry';
@@ -748,10 +638,17 @@ function entryBlock(word: string, num: number | null, entry: Entry | null, moder
   const tag = document.createElement('span');
   tag.className = 'dict-tag';
   const own = ownerGloss(word);
-  if (!entry && !modern && !own) {
+  const ai = hidden(word) ? undefined : aiMeaning(word);
+  const number = own || ai ? null : readNumber(word, AI);
+  const explained = own || ai || number || hidden(word) ? null : explained_(word, entry);
+  if (number) {
+    tag.textContent = number.formation ? `${number.text} (${number.formation})` : `the number ${number.text}`;
+  } else if (explained) {
+    tag.textContent = `${explained.text} (${explained.formation})`;
+  } else if (!entry && !modern && !own && !ai) {
     tag.textContent = NO_ENTRY;
     tag.classList.add('dict-tag-none');
-  } else if (entry && entry.how === 'stem') {
+  } else if (entry && entry.how === 'stem' && !own && !ai) {
     tag.textContent = 'maybe: a form of this word';
   } else if (entry && entry.how === 'prefix') {
     tag.textContent = 'maybe: starts with this word';
@@ -787,6 +684,8 @@ function entryBlock(word: string, num: number | null, entry: Entry | null, moder
     obox.appendChild(row);
     block.appendChild(obox);
   }
+
+  if (ai) block.appendChild(aiBox(ai));
 
   if (modern && modern.lines.length) {
     const mbox = document.createElement('div');
@@ -926,7 +825,7 @@ const PREFIX_SCAN = 400;
 const PREFIX_SHOWN = 8;
 
 /**
- * Dictionary words that begin with an Odia query ("ନମ" -> ନମସ୍କାର, ନମସ୍ତେ...),
+ * Dictionary words that begin with an Odia query ("\u0b28\u0b2e" -> \u0b28\u0b2e\u0b38\u0b4d\u0b15\u0b3e\u0b30, \u0b28\u0b2e\u0b38\u0b4d\u0b24\u0b47...),
  * most common first, as buttons that open the word. For a user who knows how
  * a word starts but not how it ends.
  */
@@ -1127,7 +1026,8 @@ function onSearch(): void {
     const modern = blocked || state !== 'ready' ? null : lookupModern(word);
     const own = blocked ? undefined : ownerGloss(word);
     const loan = !blocked && LOANS.byOdia.has(word);
-    add('Odia word', entry || modern || own || loan ? [withLoanNote(entryBlock(word, null, entry, modern), word)] : []);
+    const ai = !blocked && aiMeaning(word);
+    add('Odia word', entry || modern || own || loan || ai ? [withLoanNote(entryBlock(word, null, entry, modern), word)] : []);
     add(`Words starting with \u201c${word}\u201d`, prefixSection(word));
     add('Phrases', phraseSection(q));
   } else {

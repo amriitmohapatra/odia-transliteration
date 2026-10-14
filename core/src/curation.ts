@@ -207,5 +207,190 @@ export function parsePhrases(tsv: string, file = 'phrases.tsv'): Phrase[] {
   return phrases;
 }
 
+/* ------------------------------------------------------------------ *
+ * AI-written meanings (core/data/meanings.tsv)
+ * ------------------------------------------------------------------ */
+
+/**
+ * ai     written by Claude for this project, not yet checked by a native speaker
+ * owner  checked (or written) by the owner
+ * wrong  rejected: never shown, kept so the row is not written again
+ */
+export const MEANING_STATUS = ['ai', 'owner', 'wrong'] as const;
+export type MeaningStatus = (typeof MEANING_STATUS)[number];
+
+/** Where a word comes from, in one word. Empty when unknown. */
+export const MEANING_ORIGINS = [
+  'native', 'sanskrit', 'persian', 'arabic', 'english', 'hindi', 'portuguese', 'name', 'mixed',
+] as const;
+export type MeaningOrigin = (typeof MEANING_ORIGINS)[number];
+
+export interface Meaning {
+  /** The key as written: one word, two words, "-suffix word" (a construction) or "-suffix" (an ending). */
+  odia: string;
+  /** One line for the suggestion chip and the lens (at most 56 characters). */
+  meaning: string;
+  /** All senses, modern first. */
+  senses: string[];
+  /** How the word is made, for prefixed or compound words ("ana (not) + chhaatra (student)", written in Odia). */
+  formation: string;
+  origin: MeaningOrigin | '';
+  status: MeaningStatus;
+  note: string;
+}
+
+export interface Meanings {
+  readonly size: number;
+  /** The entry for one canonical word, or for two words "a b"; never a "wrong" row. */
+  get(key: string): Meaning | undefined;
+  /**
+   * A construction for `word` after `previous` ("-ku nei": nei after a word
+   * ending in -ku, "over, regarding"), or undefined.
+   */
+  construction(previous: string, word: string): Meaning | undefined;
+  /** Every shown entry (not "wrong"), single words and pairs, in file order. */
+  all(): readonly Meaning[];
+  /** The entry for an ending ("-re": in, at), keyed without the hyphen, or undefined. */
+  ending(suffix: string): Meaning | undefined;
+}
+
+/** A word, two words, "-suffix word" or "-suffix": Odia letters and single spaces. */
+const MEANING_KEY = /^-?[\u0B00-\u0B7F\u200C\u200D]+( [\u0B00-\u0B7F\u200C\u200D]+)?$/;
+/** The longest one-line meaning: the chip's limit (Appv2/src/dictionary/lookup.ts tidyGloss). */
+const MEANING_MAX = 56;
+
+export function parseMeanings(tsv: string, file = 'meanings.tsv'): Meanings {
+  const map = new Map<string, Meaning>();
+  const constructions = new Map<string, Meaning[]>();
+  const endings = new Map<string, Meaning>();
+  const ordered: Meaning[] = [];
+  let size = 0;
+  for (const { cells, line } of rows(tsv, file)) {
+    const where = `${file}:${line}`;
+    const [odia, meaning, senses = '', formation = '', origin = '', status, note = ''] = cells;
+    if (!odia || !meaning || status === undefined) {
+      throw new Error(`${where}: expected "odia<TAB>meaning<TAB>senses<TAB>formation<TAB>origin<TAB>status[<TAB>note]"`);
+    }
+    if (!MEANING_KEY.test(odia)) throw new Error(`${where}: the key must be Odia: a word, two words, or "-suffix word"`);
+    assertCanonical(odia, where);
+    if (!(MEANING_STATUS as readonly string[]).includes(status)) {
+      throw new Error(`${where}: unknown status "${status}" (allowed: ${MEANING_STATUS.join(', ')})`);
+    }
+    if (origin !== '' && !(MEANING_ORIGINS as readonly string[]).includes(origin)) {
+      throw new Error(`${where}: unknown origin "${origin}" (allowed: ${MEANING_ORIGINS.join(', ')}, or empty)`);
+    }
+    if (meaning.length > MEANING_MAX) throw new Error(`${where}: the meaning is longer than ${MEANING_MAX} characters`);
+    for (const [name, cell] of [['meaning', meaning], ['senses', senses]] as const) {
+      if (/[\u0B00-\u0B7F]/.test(cell)) throw new Error(`${where}: the ${name} column must be English (Odia goes in formation or note)`);
+    }
+    assertCanonical(formation, where);
+    const isEnding = odia.startsWith('-') && !odia.includes(' ');
+    if (map.has(odia) || (isEnding && endings.has(odia.slice(1))) ||
+        constructions.get(odia.slice(1).split(' ')[1] ?? '')?.some((m) => m.odia === odia)) {
+      throw new Error(`${where}: duplicate entry`);
+    }
+    const entry: Meaning = {
+      odia,
+      meaning,
+      senses: senses.split(';').map((x) => x.trim()).filter((x) => x.length > 0),
+      formation,
+      origin: origin as MeaningOrigin | '',
+      status: status as MeaningStatus,
+      note,
+    };
+    size += 1;
+    if (isEnding) {
+      endings.set(odia.slice(1), entry);
+      continue;
+    }
+    if (entry.status !== 'wrong') ordered.push(entry);
+    if (odia.startsWith('-')) {
+      const word = odia.split(' ')[1] as string;
+      const list = constructions.get(word) ?? [];
+      list.push(entry);
+      constructions.set(word, list);
+    } else {
+      map.set(odia, entry);
+    }
+  }
+  const shown = (m: Meaning | undefined): Meaning | undefined => (m && m.status !== 'wrong' ? m : undefined);
+  return {
+    size,
+    get: (key) => shown(map.get(key)),
+    all: () => ordered,
+    ending: (suffix) => shown(endings.get(suffix)),
+    construction(previous, word) {
+      const exact = shown(map.get(`${previous} ${word}`));
+      if (exact) return exact;
+      // The longest matching suffix wins ("-nku" before "-ku").
+      let best: Meaning | undefined;
+      for (const m of constructions.get(word) ?? []) {
+        const suffix = m.odia.slice(1).split(' ')[0] as string;
+        if (m.status !== 'wrong' && previous.endsWith(suffix) && previous.length > suffix.length &&
+            (best === undefined || suffix.length > best.odia.split(' ')[0]!.length - 1)) best = m;
+      }
+      return best;
+    },
+  };
+}
+
+/* ------------------------------------------------------------ *
+ * Verb endings (core/data/verb-endings.tsv)
+ * ------------------------------------------------------------ */
+
+export interface VerbEnding {
+  /** The ending as written after a root that ends in a consonant (starts with a vowel sign), or ''. */
+  readonly afterConsonant: string;
+  /** The ending as written after a root that ends in a vowel, or ''. */
+  readonly afterVowel: string;
+  /** English, "…" for the verb: "have …-ed (they; or respectful)". */
+  readonly meaning: string;
+  readonly note: string;
+}
+
+export interface VerbEndings {
+  readonly size: number;
+  /** Every written form, longest first: the order to try them in. */
+  forms(): readonly { form: string; afterVowel: boolean; ending: VerbEnding }[];
+}
+
+const VERB_ENDING_MAX = 40;
+const ODIA_ONLY = /^[\u0b00-\u0b7f]+$/;
+
+export function parseVerbEndings(tsv: string, file = 'verb-endings.tsv'): VerbEndings {
+  const seen = new Set<string>();
+  const forms: { form: string; afterVowel: boolean; ending: VerbEnding }[] = [];
+  let size = 0;
+  for (const { cells, line } of rows(tsv, file)) {
+    const where = `${file}:${line}`;
+    const [afterConsonant = '', afterVowel = '', meaning = '', note = ''] = cells;
+    if (!meaning || (!afterConsonant && !afterVowel)) {
+      throw new Error(`${where}: expected "after_consonant<TAB>after_vowel<TAB>meaning[<TAB>note]" with at least one ending`);
+    }
+    for (const form of [afterConsonant, afterVowel]) {
+      if (form === '') continue;
+      if (!ODIA_ONLY.test(form)) throw new Error(`${where}: an ending must be Odia letters only: "${form}"`);
+      assertCanonical(form, where);
+    }
+    if (/[\u0b00-\u0b7f]/.test(meaning)) throw new Error(`${where}: the meaning column must be English`);
+    if (meaning.includes(';')) throw new Error(`${where}: no ";" in a verb-ending meaning (the chip stops at the first one)`);
+    if (meaning.length > VERB_ENDING_MAX) throw new Error(`${where}: the meaning is longer than ${VERB_ENDING_MAX} characters`);
+    const ending: VerbEnding = { afterConsonant, afterVowel, meaning, note };
+    for (const [form, vowel] of [[afterConsonant, false], [afterVowel, true]] as const) {
+      if (form === '') continue;
+      const key = `${vowel ? 'v' : 'c'}:${form}`;
+      if (seen.has(key)) throw new Error(`${where}: duplicate ending "${form}"`);
+      seen.add(key);
+      forms.push({ form, afterVowel: vowel, ending });
+    }
+    size += 1;
+  }
+  forms.sort((a, b) => b.form.length - a.form.length);
+  return { size, forms: () => forms };
+}
+
+export const emptyVerbEndings = (): VerbEndings => parseVerbEndings('');
+
 export const emptyPreferences = (): Preferences => parsePreferences('');
 export const emptyLabels = (): Labels => parseLabels('');
+export const emptyMeanings = (): Meanings => parseMeanings('');

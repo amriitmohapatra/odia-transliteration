@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 
 import { createEngine } from '../src/index.js';
-import { parseLabels, parsePhrases, parsePreferences } from '../src/curation.js';
+import { parseLabels, parseMeanings, parsePhrases, parsePreferences, parseVerbEndings } from '../src/curation.js';
 import { MemoryLearnStore } from '../src/learn.js';
 import { SYMBOLS_TOML } from './helpers.js';
 
@@ -220,6 +220,80 @@ describe('phrases.tsv', () => {
   it('rejects a precomposed nukta letter', () => {
     expect(() => parsePhrases(`odisha\t\u0B13${PRECOMPOSED_RRA}\u0B3F\u0B36\u0B3E\tfamily\tOdisha\tseed`))
       .toThrow(/Non-canonical/);
+  });
+});
+
+
+describe('meanings.tsv (AI-written meanings)', () => {
+  const WORD = 'ନେଇ'; // nei: taking; regarding
+  const KU = 'କୁ';
+  const NKU = 'ଙ୍କୁ';
+  const ROW = (odia: string, meaning: string, status = 'ai', extra = '') =>
+    `${odia}\t${meaning}\tsense one; sense two\t\tnative\t${status}\t${extra}\n`;
+
+  it('reads a word, a two-word key and a "-suffix word" construction', () => {
+    const m = parseMeanings(
+      ROW(WORD, 'taking') + ROW(`-${KU} ${WORD}`, 'over; regarding') + ROW(`-${NKU} ${WORD}`, 'about them'),
+    );
+    expect(m.size).toBe(3);
+    expect(m.get(WORD)?.senses).toEqual(['sense one', 'sense two']);
+    expect(m.construction(`ପ୍ରବେଶ${KU}`, WORD)?.meaning).toBe('over; regarding');
+    // The longest matching suffix wins.
+    expect(m.construction(`ତା${NKU}`, WORD)?.meaning).toBe('about them');
+    expect(m.construction(KU, WORD)).toBeUndefined(); // the suffix alone is not a word
+  });
+
+  it('reads an ending row, and a word that ends like an ending is still a word', () => {
+    const RE = '\u0B30\u0B47'; // -re: in, at
+    const KARE = '\u0B15' + RE; // a word made of ka + re
+    const m = parseMeanings(ROW(`-${RE}`, 'in, at, on') + ROW(KARE, 'does'));
+    expect(m.ending(RE)?.meaning).toBe('in, at, on');
+    expect(m.get(KARE)?.meaning).toBe('does');
+    expect(m.all().map((x) => x.odia)).toEqual([KARE]);
+    expect(() => parseMeanings(ROW(`-${RE}`, 'a') + ROW(`-${RE}`, 'b'))).toThrow(/duplicate/);
+  });
+
+  it('never shows a row marked wrong', () => {
+    const m = parseMeanings(ROW(WORD, 'no', 'wrong'));
+    expect(m.get(WORD)).toBeUndefined();
+    expect(m.all()).toEqual([]);
+  });
+
+  it('fails loudly on bad rows, with the line number', () => {
+    expect(() => parseMeanings(ROW(WORD, 'x', 'seed'))).toThrow(/meanings.tsv:1: unknown status/);
+    expect(() => parseMeanings(`${WORD}\tx\t\t\tklingon\tai\n`)).toThrow(/unknown origin/);
+    expect(() => parseMeanings(ROW(WORD, `odia ${WORD}`))).toThrow(/must be English/);
+    expect(() => parseMeanings(ROW(WORD, 'x'.repeat(57)))).toThrow(/longer than 56/);
+    expect(() => parseMeanings(ROW(WORD, 'a') + ROW(WORD, 'b'))).toThrow(/meanings.tsv:2: duplicate/);
+    expect(() => parseMeanings(ROW('nei', 'x'))).toThrow(/must be Odia/);
+    expect(() => parseMeanings(ROW(`ପ${PRECOMPOSED_RRA}`, 'x'))).toThrow();
+  });
+});
+
+describe('verb-endings.tsv (verb endings)', () => {
+  const ICHHI = 'ିଛି'; // -ichhi after a consonant root: kar + ichhi
+  const ICHHI_V = 'ଇଛି'; // after a vowel root: paa + ichhi
+  const I = 'ି';
+  const ROW = (c: string, v: string, m: string) => `${c}\t${v}\t${m}\n`;
+
+  it('reads both written forms of an ending, longest first', () => {
+    const e = parseVerbEndings(ROW(I, 'ଇ', 'having …-ed') + ROW(ICHHI, ICHHI_V, 'has …-ed (he/she/it)'));
+    expect(e.size).toBe(2);
+    expect(e.forms().map((f) => [f.form, f.afterVowel])).toEqual([
+      [ICHHI, false], [ICHHI_V, true], [I, false], ['ଇ', true],
+    ]);
+    expect(e.forms()[0]?.ending.meaning).toBe('has …-ed (he/she/it)');
+    // The passive follows a consonant root only.
+    expect(parseVerbEndings(ROW('ାଯାଇଛି', '', 'has been …-ed')).forms()).toHaveLength(1);
+  });
+
+  it('fails loudly on bad rows, with the line number', () => {
+    expect(() => parseVerbEndings(ROW(ICHHI, ICHHI_V, 'a') + ROW(ICHHI, '', 'b'))).toThrow(/verb-endings.tsv:2: duplicate/);
+    expect(() => parseVerbEndings(ROW(ICHHI, ICHHI_V, 'has; had'))).toThrow(/no ";"/);
+    expect(() => parseVerbEndings(ROW(ICHHI, ICHHI_V, `odia ${I}`))).toThrow(/must be English/);
+    expect(() => parseVerbEndings(ROW('ichhi', '', 'x'))).toThrow(/Odia letters only/);
+    expect(() => parseVerbEndings(ROW('', '', 'x'))).toThrow(/at least one ending/);
+    expect(() => parseVerbEndings(ROW(ICHHI, ICHHI_V, 'x'.repeat(41)))).toThrow(/longer than 40/);
   });
 });
 

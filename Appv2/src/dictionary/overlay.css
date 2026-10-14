@@ -305,6 +305,10 @@ body.kb-docked #dict-toggle { display: none; }
   cursor: help;
 }
 .dict-modern-gloss { color: var(--text); }
+/* AI-written entry (core/data/meanings.tsv): a dashed tag, so it reads as
+ * different from the owner's checked meaning. */
+.dict-modern-tag-ai { border-style: dashed; }
+.dict-ai-source { margin: 4px 0 0; }
 
 /* Insert / Copy buttons and "Show all phrases" in the unified search results. */
 .dict-copy,

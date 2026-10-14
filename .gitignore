@@ -16,3 +16,6 @@ tools/build-data/webcorpus/raw-archive-books.jsonl
 !.env.example
 # Temporary git worktrees made for agents by Claude Code; never project content.
 .claude/worktrees/
+# Odia Lens builds (node lens/build.mjs): the test build and the zip for loading unpacked.
+lens/dist-test/
+lens/odia-lens.zip

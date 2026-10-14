@@ -1,0 +1,19 @@
+{
+  "extends": "../tsconfig.base.json",
+  "compilerOptions": {
+    // esbuild bundles src/ (lens/build.mjs); vitest runs test/.
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "types": ["node"],
+    "paths": {
+      "@odia/core": ["../core/src/index.ts"],
+      "@odia/core/types": ["../core/src/types.ts"],
+      "@odia/core/normalize": ["../core/src/normalize.ts"]
+    },
+    "noEmit": true,
+    "declaration": false,
+    "sourceMap": false
+  },
+  "include": ["src/**/*.ts", "test/**/*.ts", "vitest.config.ts"]
+}

@@ -47,6 +47,10 @@ jobs:
           node Appv2/eval/browser/phrases-check.mjs 4810
           node Appv2/eval/browser/desh-check.mjs 4810
           node Appv2/eval/browser/mobile-check.mjs 4810
+      - name: Odia Lens extension (build, then check in Chromium)
+        run: |
+          node lens/build.mjs --test
+          NODE_PATH="$RUNNER_TEMP/odia-browser-tools/node_modules" node lens/eval/lens-check.mjs
   check:
     runs-on: ubuntu-latest
     timeout-minutes: 20
