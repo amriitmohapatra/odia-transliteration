@@ -38,7 +38,7 @@ whenever a task changes status. Last updated: 2026-10-12 (editor reliability and
 | V4 Lens | Browser extension, then camera/screenshot input | Not started |
 | V5 Native | macOS input method with the real engine; Android, iOS (skills first) | Not started |
 | E-1 Experiment | Laya against a simple word-origin tagger | Not started |
-| P Public repository | When the owner says "project finished": a fresh public repository without the scraped corpus, the derived-counts decision, the licence-table check (`plan/06-owner-followups.md`, section D), and Desh's terms for any Desh-derived data (L-1) | Waiting for "project finished" |
+| P Public repository | When the owner says "project finished": a fresh public repository without the scraped corpus, the derived-counts decision, the licence-table check (`plan/06-owner-followups.md`, section D), and Desh's terms for any Desh-derived data (L-1). **Owner 2026-10-14: the public version ships no Desh data** (typed pairs, converter, next words); a placeholder or a public chat dataset replaces it, chosen then. Probably a fresh public repository, filled by copying selected files from this one | Waiting for "project finished" |
 
 ## 3. V1 — work by area
 
@@ -223,6 +223,7 @@ Agents do not commit; the lead reviews, measures and commits.
 
 | Date | Change |
 |---|---|
+| 2026-10-14 | Owner: the future public repository ships no Desh data (placeholder or public chat dataset instead); recorded in stage P and `plan/06` section D. Lens v1 (browser extension) started. |
 | 2026-10-12 | V2.15 next-word suggestions. The Desh layers (typed pairs, next words, converter) now load after start-up, each in its own task: A-7 start-up task 270 → 270 ms (normal CPU), 1.48 → 1.32 s (4×); worst key delay at 4× 2 s → 0.1 s. Context check now uses `dui jana` (the typed pairs put କୁମାର first even alone). |
 | 2026-10-12 | V2.14 hybrid speller: Desh spelling converter for unknown words, loaded after start-up. Held-out vs baseline: in-lexicon −3.1/+1.4, OOV +18.7/+26.1, overall +14.9/+22.0 pp. Most-picked word first (rank.ts). |
 | 2026-10-12 | V2.16 word completion (bar and dictionary search). A word kept in English is first for its key while it is the user's most picked word (the typed data gave many English keys an Odia word with frequency evidence). Engine scores otherwise unchanged; editing 27/27, English 19/19, phrases 15/15, phone 193/193, Desh 4/4. |
