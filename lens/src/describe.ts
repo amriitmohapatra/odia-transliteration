@@ -15,6 +15,7 @@ import {
   findModern,
   defAt,
   explainEnding,
+  readNumber,
   meaningSource,
   modernLines,
   shortGlossOf,
@@ -118,7 +119,10 @@ export function describeWord(
     return data.ai?.word(head)?.meaning ?? null;
   });
   if (explained) add(explained.text, 'explained from its ending');
-  const settled = own !== undefined || first !== undefined || explained !== null;
+  // A number in Odia digits: "24", "6 (things)", "2019 + in, at, on".
+  const number = own || first || explained ? null : readNumber(odia, data.ai);
+  if (number) add(number.text, 'number in Odia digits');
+  const settled = own !== undefined || first !== undefined || explained !== null || number !== null;
   if (data.modern && !settled) {
     const found = findModern(data.modern.keys, key);
     if (found) {
@@ -147,10 +151,10 @@ export function describeWord(
     roman: romanize(odia),
     meanings,
     // An owner or AI meaning is for this exact word: no "approximate" note then.
-    approximateHead: entry && entry.how !== 'exact' && !own && !first && !explained ? entry.head : null,
+    approximateHead: entry && entry.how !== 'exact' && !own && !first && !explained && !number ? entry.head : null,
     origin,
     loan,
-    formation: ai?.formation || phrase?.formation || explained?.formation || null,
+    formation: ai?.formation || phrase?.formation || explained?.formation || number?.formation || null,
     more: more.length > 0 ? `Also: ${more}` : null,
   };
 }

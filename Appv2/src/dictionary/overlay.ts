@@ -61,6 +61,7 @@ import {
   findModern,
   fold,
   explainEnding,
+  readNumber,
   foldKey,
   meaningFinder,
   meaningSource,
@@ -261,6 +262,8 @@ function chipFor(word: string): string | null {
   if (own) return tidyGloss(own.meaning, false);
   const ai = aiMeaning(word);
   if (ai) return tidyGloss(ai.meaning, false);
+  const number = readNumber(word, AI);
+  if (number) return number.text;
   const mo = lookupModern(word);
   const exact = mo && mo.how === 'exact' ? modernChip(mo) : null;
   if (exact) return exact;
@@ -626,7 +629,10 @@ function entryBlock(word: string, num: number | null, entry: Entry | null, moder
   tag.className = 'dict-tag';
   const own = ownerGloss(word);
   const ai = hidden(word) ? undefined : aiMeaning(word);
-  if (!entry && !modern && !own && !ai) {
+  const number = own || ai ? null : readNumber(word, AI);
+  if (number) {
+    tag.textContent = number.formation ? `${number.text} (${number.formation})` : `the number ${number.text}`;
+  } else if (!entry && !modern && !own && !ai) {
     tag.textContent = NO_ENTRY;
     tag.classList.add('dict-tag-none');
   } else if (entry && entry.how === 'stem' && !own && !ai) {
@@ -807,7 +813,7 @@ const PREFIX_SCAN = 400;
 const PREFIX_SHOWN = 8;
 
 /**
- * Dictionary words that begin with an Odia query ("ନମ" -> ନମସ୍କାର, ନମସ୍ତେ...),
+ * Dictionary words that begin with an Odia query ("\u0b28\u0b2e" -> \u0b28\u0b2e\u0b38\u0b4d\u0b15\u0b3e\u0b30, \u0b28\u0b2e\u0b38\u0b4d\u0b24\u0b47...),
  * most common first, as buttons that open the word. For a user who knows how
  * a word starts but not how it ends.
  */

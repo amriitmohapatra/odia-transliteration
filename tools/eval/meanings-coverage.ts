@@ -12,6 +12,7 @@
  *   ai           core/data/meanings.tsv (when present; AI-written, status not "wrong")
  *   exact        Praharaj headword with a readable gloss, or a modern-layer exact hit
  *   ending       a known word plus a known ending ("state + in, at, on"; lookup.ts explainEnding)
+ *   number       a number in Odia digits, with a counting word or ending (lookup.ts readNumber)
  *   stem         only an inflected form matches (shown as "maybe:")
  *   no-gloss     Praharaj headword, but no English gloss the extractor can read
  *   prefix-only  only a shorter headword the word starts with (often a different word)
@@ -35,6 +36,7 @@ import {
   foldKey,
   meaningFinder,
   modernLines,
+  readNumber,
   parsePayload,
   shortGlossOf,
   type MeaningFinder,
@@ -51,7 +53,7 @@ const { values } = parseArgs({
   },
 });
 
-const BUCKETS = ['owner', 'ai', 'exact', 'ending', 'stem', 'no-gloss', 'prefix-only', 'none'] as const;
+const BUCKETS = ['owner', 'ai', 'exact', 'ending', 'number', 'stem', 'no-gloss', 'prefix-only', 'none'] as const;
 type Bucket = (typeof BUCKETS)[number];
 
 const P = parsePayload(new Uint8Array(read('Appv2/src/dictionary/praharaj.bin')));
@@ -77,6 +79,7 @@ function bucketOf(word: string): Bucket {
   // As the app and the lens: owner or AI meanings of the stem only.
   const stemMeaning = (head: string): string | null => owner.get(head)?.meaning ?? ai?.word(head)?.meaning ?? null;
   if (explainEnding(word, entry, ai, stemMeaning)) return 'ending';
+  if (readNumber(word, ai)) return 'number';
   if (entry?.how === 'stem' || (modern && modernGloss)) return 'stem';
   if (entry?.how === 'prefix') return 'prefix-only';
   return 'none';
@@ -107,6 +110,10 @@ if (values.list) {
     const m = list.reduce((s, r) => s + r.count, 0);
     console.log(`  ${b.padEnd(13)} ${String(list.length).padStart(7)}    ${((100 * m) / mass).toFixed(1).padStart(5)}%`);
   }
-  const good = ['owner', 'ai', 'exact', 'ending'].reduce((s, b) => s + byBucket.get(b as Bucket)!.reduce((t, r) => t + r.count, 0), 0);
-  console.log(`\n  a clear meaning (owner, ai, exact, ending): ${((100 * good) / mass).toFixed(1)}% of the running text`);
+  const share = (bs: string[]): number =>
+    (100 * bs.reduce((s, b) => s + byBucket.get(b as Bucket)!.reduce((t, r) => t + r.count, 0), 0)) / mass;
+  console.log(`\n  words with a clear meaning (owner, ai, exact, ending): ${share(['owner', 'ai', 'exact', 'ending']).toFixed(1)}%`);
+  console.log(`  numbers read out (number): ${share(['number']).toFixed(1)}%`);
+  const good = ['owner', 'ai', 'exact', 'ending', 'number'].reduce((s, b) => s + byBucket.get(b as Bucket)!.reduce((t, r) => t + r.count, 0), 0);
+  console.log(`  together (words and numbers): ${((100 * good) / mass).toFixed(1)}% of the running text`);
 }

@@ -67,6 +67,14 @@ describe('describeWord: the lens card', () => {
     expect(c.approximateHead).toBeNull();
   });
 
+  it('reads a number in Odia digits, with no approximate note', () => {
+    const c = card('\u0B68\u0B66\u0B67\u0B6F\u0B30\u0B47'); // 2019 + re
+    expect(c.meanings[0]).toEqual({ text: '2019 + in, at, on', source: 'number in Odia digits' });
+    expect(c.meanings).toHaveLength(1);
+    expect(c.approximateHead).toBeNull();
+    expect(card('\u0B68\u0B6A').meanings[0]?.text).toBe('24');
+  });
+
   it('marks a stem match as approximate when the stem has no modern meaning', () => {
     const CROCODILE_IN = '\u0B15\u0B41\u0B2E\u0B4D\u0B2D\u0B40\u0B30\u0B30\u0B47'; // kumbhira + re: Praharaj only
     const c = card(CROCODILE_IN);

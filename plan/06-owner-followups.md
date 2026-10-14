@@ -8,6 +8,10 @@ and to get a reminder **when the software is developed**.
 finishes, and in particular when the V1 web app is live on Vercel, Claude shows this list
 to the owner. Claude marks each item done here, with the date, when it is done.
 
+**Testing rule (owner, 2026-10-14):** ask the owner to test both the Vercel website and the
+Odia Lens only when a change affects both (for example `Appv2/src/dictionary/lookup.ts` or
+`core/data/meanings.tsv`, which both read). A change to one of them: ask for that one only.
+
 ---
 
 ## S. Security (found 2026-10-12, do first)

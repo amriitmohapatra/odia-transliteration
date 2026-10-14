@@ -1,7 +1,19 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 
-import { defAt, findEntry, findModern, foldKey, modernLines, parsePayload, shortGlossOf } from '../src/dictionary/lookup.js';
+import { parseMeanings } from '@odia/core';
+
+import {
+  defAt,
+  findEntry,
+  findModern,
+  foldKey,
+  meaningFinder,
+  modernLines,
+  parsePayload,
+  readNumber,
+  shortGlossOf,
+} from '../src/dictionary/lookup.js';
 
 /*
  * The shared lookup (app Meanings panel and the Odia Lens extension), on the
@@ -40,5 +52,34 @@ describe('shared dictionary lookup', () => {
       { tag: 'mt', gloss: 'good' },
       { tag: 'cldr', gloss: 'Odia' },
     ]);
+  });
+});
+
+describe('readNumber: numbers in Odia digits', () => {
+  const AI = meaningFinder(
+    parseMeanings(readFileSync(new URL('../../core/data/meanings.tsv', import.meta.url), 'utf8'), 'meanings.tsv'),
+  );
+  const read = (w: string) => readNumber(w, AI)?.text ?? null;
+
+  it('reads a bare number, a counting word and a case ending', () => {
+    expect(read('୨୪')).toBe('24');
+    expect(read('୬ଟି')).toBe('6 (things)');
+    expect(read('୨ଜଣ')).toBe('2 (persons)');
+    expect(read('୨୦୧୯ରେ')).toBe('2019 + in, at, on');
+    expect(readNumber('୨୦୧୯ରେ', AI)?.formation).toBe(
+      '୨୦୧୯ (2019) + ରେ (in, at, on)',
+    );
+  });
+
+  it('reads ordinals, including 11th to 13th', () => {
+    expect(read('୨ୟ')).toBe('2nd');
+    expect(read('୪ର୍ଥ')).toBe('4th');
+    expect(read('୧୧ମ')).toBe('11th');
+    expect(read('୨୧ମ')).toBe('21st');
+  });
+
+  it('gives nothing for a word, or a number with an unknown rest', () => {
+    expect(read('ଦିନ')).toBeNull();
+    expect(read('୨କୋଟି')).toBeNull(); // 2 + koti (crore): not a known ending
   });
 });

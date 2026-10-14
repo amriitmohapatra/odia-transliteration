@@ -226,6 +226,7 @@ Agents do not commit; the lead reviews, measures and commits.
 
 | Date | Change |
 |---|---|
+| 2026-10-14 | Numbers in Odia digits are read out in the app and the lens (`readNumber`, no data): 3.4% of running news text. Coverage tool reports words (82.7%) and numbers apart. Owner testing rule recorded in `plan/06`. |
 | 2026-10-14 | V2.17 batches 1 and 2 (666 reviewed rows): running news text with a clear meaning 71.0 → 82.7%. V2.18 textbook research done (licences: L-2). |
 | 2026-10-14 | V2.17 pilot: AI-written meanings layer (`meanings.tsv`, 58 rows) in the app and the lens; coverage tool; decision D-13 (owner → AI → modern → Praharaj). |
 | 2026-10-14 | V4.1 Odia Lens browser extension (`lens/`); dictionary lookup moved into `lookup.ts`, shared with the app (no behaviour change: all app checks green). |

@@ -7,6 +7,7 @@ Point at an Odia word on any web page. A small card shows:
   (`core/data/meanings.tsv`, labelled "AI-written, not yet checked"), then the modern
   layer, then the Praharaj dictionary (1931–40). A phrase reading comes first where
   one applies: ନେଇ after a word ending in -କୁ is "over; regarding";
+- a number in Odia digits read out: ୨୪ → 24, ୬ଟି → 6 (things), ୨୦୧୯ରେ → 2019 + in, at, on;
 - "Approximate" when only the stem or the start of the word is in the dictionary;
 - "English loan word: …" and the word's origin ("from Persian") when known;
 - **Say it**, when the computer has an Odia voice.

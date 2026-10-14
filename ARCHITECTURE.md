@@ -125,6 +125,7 @@ mode is not filtered.
 | Next words (Desh) | `core/data/nextword.tsv` (1.66 MB, 293 KB gzipped; adult only) | `tools/build-data/build_nextword.py` (raw files outside the repo) | No |
 | Sanskrit lexicon | `Appv2/data/*.tsv` | `Appv2/scripts/mine_webfreq_sanskrit.py` | No |
 | AI-written meanings | `core/data/meanings.tsv` (word / pair / "-suffix word" keys; status ai, owner, wrong) | Claude, in sessions; checked by the owner (C-13) | Yes |
+| Numbers in Odia digits | no data: `readNumber()` in `Appv2/src/dictionary/lookup.ts` reads digits, counting words (-ti, -taa, -jana), ordinals and the ending rows of `meanings.tsv` ("2019 + in, at, on") | code | Yes |
 | Owner preferences | `core/data/preferences.tsv` | Owner | Yes |
 | Word labels | `core/data/labels.tsv` | Owner (empty until curated) | Yes |
 | Owner meanings | `core/data/glosses.tsv` (read by the dictionary module, not the engine) | Owner; `seed` rows suggested by agents | Yes |

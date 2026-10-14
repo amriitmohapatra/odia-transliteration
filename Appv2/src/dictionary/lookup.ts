@@ -307,6 +307,58 @@ export function explainEnding(
   return text ? { text, formation: `${entry.head} + ${suffix} (${end.meaning})` } : null;
 }
 
+/* ------------------------------------------------------------ *
+ * Numbers written in Odia digits
+ * ------------------------------------------------------------ */
+
+/* Counting words after a number: -ti and -taa (things; -taa also o'clock), -jana (persons). */
+const COUNTERS: readonly (readonly [string, string])[] = [
+  ['\u0b1c\u0b23', 'persons'],
+  ['\u0b1f\u0b3f', 'things'],
+  ['\u0b1f\u0b3e', "things; or o'clock"],
+];
+/* Ordinal endings: 1-ma (1st), 2-ya, 3-ya (2nd, 3rd), 4-rtha (4th), 6-shtha (6th). */
+const ORDINALS: readonly string[] = ['\u0b30\u0b4d\u0b25', '\u0b37\u0b4d\u0b20', '\u0b2e', '\u0b5f', '\u0b2f'];
+
+function ordinal(n: string): string {
+  const v = Number(n);
+  const teen = v % 100 >= 11 && v % 100 <= 13;
+  const end = teen ? 'th' : ['th', 'st', 'nd', 'rd'][v % 10] ?? 'th';
+  return `${n}${end}`;
+}
+
+/**
+ * A number in Odia digits, alone or with a counting word and a case ending:
+ * 24 -> "24"; 6-ti -> "6 (things)"; 2019-re -> "2019 + in, at, on"; 2-ya -> "2nd".
+ * Null when the word does not start with a digit, or the rest is not known.
+ * Endings come from the AI layer's ending rows (ai.ending), as for words.
+ */
+export function readNumber(word: string, ai: MeaningFinder | null): { text: string; formation: string } | null {
+  const odia = canonical(word).replace(/[\u200c\u200d]/g, '');
+  const m = /^([\u0b66-\u0b6f]+)(.*)$/.exec(odia);
+  if (!m) return null;
+  const digits = m[1] as string;
+  let rest = m[2] as string;
+  const n = [...digits].map((c) => String(c.charCodeAt(0) - 0x0b66)).join('');
+  if (rest.length === 0) return { text: n, formation: '' };
+  if (ORDINALS.includes(rest)) return { text: ordinal(n), formation: `${digits} (${n}) + ${rest} (ordinal)` };
+  const parts = [`${digits} (${n})`];
+  let text = n;
+  const counter = COUNTERS.find(([c]) => rest.startsWith(c));
+  if (counter) {
+    text += ` (${counter[1]})`;
+    parts.push(`${counter[0]} (${counter[1]})`);
+    rest = rest.slice(counter[0].length);
+  }
+  if (rest.length > 0) {
+    const end = ai?.ending(rest);
+    if (!end) return null;
+    text += ` + ${end.meaning}`;
+    parts.push(`${rest} (${end.meaning})`);
+  }
+  return { text, formation: parts.join(' + ') };
+}
+
 /** The label under an AI-layer meaning, on every surface. */
 export function meaningSource(m: Meaning): string {
   return m.status === 'owner' ? 'meaning checked by the app owner' : 'AI-written, not yet checked by a native speaker';
