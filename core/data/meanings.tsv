@@ -1382,3 +1382,245 @@
 ରଖାଯିବ	will be kept	will be kept, will be placed, will be stored; will be maintained (passive, future)	ରଖା (kept) + ଯିବ (will go): passive	native	ai	
 ଗୁଡିକର	of the (things)	of the (things), of these: plural marker + of, after a noun	ଗୁଡିକ (plural marker) + ର (of)	native	ai	Also spelt ଗୁଡ଼ିକର.
 ସେସବୁ	all those, those things	all those, those (things), all that	ସେ (that) + ସବୁ (all)	native	ai	
+
+# Batch 5 (2026-10-14): verbal nouns in -ba for the verbs of the most frequent verb forms
+# still unexplained (their meaning "to X; X-ing" gives the verb for verb-endings.tsv:
+# "get + have …-ed (they, or respectful)"), and the next 120 frequent words. Written by
+# 5 agents from news contexts; every row reviewed by a separate agent (13 minor fixes).
+# Participles, compounds and wrong cuts skipped.
+ରହିବା	to stay, remain; staying	to stay, remain; to live, reside; after a verb: to keep on (doing), go on; to be there, exist; staying	ରହ (stay) + ଇବା (verbal noun)	native	ai	
+ଖେଳିବା	to play; playing	to play (a game, a match); playing; to play (a role, a trick)	ଖେଳ (play) + ଇବା (verbal noun)	native	ai	Passive: played (a match was played).
+ପାରିବା	to be able, manage; being able	to be able, can (after a verb: will be able to do); being able, ability; with a negative: cannot, could not	ପାର (be able) + ଇବା (verbal noun)	native	ai	Used after a verb form in -i: kari paribe, will be able to do.
+ପଡିବା	to fall, have to; falling	to fall, drop; to have to, must (after a verbal noun: will have to go); to lie (be lying); to fall on, occur (a date, a festival); after a word: to become (e.g. be needed); falling	ପଡ (fall) + ଇବା (verbal noun)	native	ai	Also spelt ପଡ଼ିବା (with nukta).
+ବାହାରିବା	to come out, set out; coming out	to come out, emerge; to set out, leave (for a place); to be published, be released (a result, a notice); (of runs) to come off (a bat); coming out	ବାହାର (come out) + ଇବା (verbal noun)	native	ai	
+ମିଳିବା	to be got, be found; getting	to be got, be received, be available (the receiver takes -ku: he got); to be found (a body was found); getting, availability	ମିଳ (be got, be found) + ଇବା (verbal noun)	native	ai	
+ଜିତିବା	to win; winning	to win (a match, an election, a medal); to defeat, conquer; winning	ଜିତ (win) + ଇବା (verbal noun)	native	ai	
+ପକାଇବା	to throw, put; throwing	to throw, drop, put (in); to cast (a vote); to have (an effect: prabhab pakaiba); after a verb: to do completely (bury, shower with praise); with mane: to remember, recall; throwing	ପକା (throw, put) + ଇବା (verbal noun)	native	ai	mane pakaiba: to remember.
+ଫେରିବା	to return, come back; returning	to return, come back, go back; to turn back; returning, return	ଫେର (return) + ଇବା (verbal noun)	native	ai	
+ମାରିବା	to hit, kill; hitting	to hit, beat (mada mariba: to beat up); to kill; to score (a century, a six, a goal); to strike; hitting, killing	ମାର (hit, kill) + ଇବା (verbal noun)	native	ai	
+ଲଗାଇବା	to put, apply; putting	to attach, fix, put on, apply; to set (fire), impose (a tariff, a ban), install (a camera); to plant (trees); to make (an allegation); to put (a stop); putting	ଲଗା (attach, put) + ଇବା (verbal noun)	native	ai	Causative of lagiba.
+ଚଳାଇବା	to run, carry on; running	to run, operate (a bus, a business, a scheme); to carry on, conduct (a campaign, a hunger strike, a raid); to fire (shots: guli chalaiba); to manage, support (a family); to drive (a vehicle); running	ଚଳା (run, operate) + ଇବା (verbal noun)	native	ai	
+ପଠାଇବା	to send; sending	to send, dispatch; to send (someone to jail, a sample for testing); sending	ପଠା (send) + ଇବା (verbal noun)	native	ai	
+ବସିବା	to sit; sitting	to sit, sit down; to be held (a meeting sits); to settle, be fitted; after a verb: to set in, take hold (adi basiba: dig in one's heels); sitting	ବସ (sit) + ଇବା (verbal noun)	native	ai	
+କମିବା	to decrease, fall; decreasing	to decrease, go down, fall (prices, temperature, cases); to lessen, reduce; decreasing, reduction	କମ (decrease) + ଇବା (verbal noun)	native	ai	
+ବଢିବା	to grow, increase; growing	to grow, increase, rise; to swell (a river); to be extended (a deadline); growing, rise	ବଢ (grow) + ଇବା (verbal noun)	native	ai	Also spelt ବଢ଼ିବା (with nukta).
+କିଣିବା	to buy; buying	to buy, purchase; buying	କିଣ (buy) + ଇବା (verbal noun)	native	ai	
+ପଚାରିବା	to ask; asking	to ask, inquire, question; asking	ପଚାର (ask) + ଇବା (verbal noun)	native	ai	
+ଧରିବା	to hold, catch; holding	to hold, grasp; to catch, arrest (police caught); to take up, adopt (a path, a role); to catch (fire, an illness); holding, catching	ଧର (hold) + ଇବା (verbal noun)	native	ai	Passive: will be caught.
+ପହଞ୍ଚିବା	to reach, arrive; reaching	to reach, arrive (at); to get to (a final, a figure); reaching, arrival	ପହଞ୍ଚ (reach) + ଇବା (verbal noun)	native	ai	
+ଲାଗିବା	to feel, be attached; feeling	to feel, seem (it feels bad); to take (time, effort); to be attached, stick; to begin (after a verbal noun in -ku); to break out (a fire); to be engaged in; feeling	ଲାଗ (feel, be attached) + ଇବା (verbal noun)	native	ai	kharap lage: it feels bad; samay lage: it takes time.
+ହରାଇବା	to lose, defeat; losing	to lose (a life, a job, a seat); to defeat, beat (a team; the loser takes -ku); losing	ହରା (lose) + ଇବା (verbal noun)	native	ai	X-ku haraila: defeated X.
+ଶୁଣିବା	to hear, listen; hearing	to hear, listen (to); to heed, obey; hearing; passive: to be heard, be rumoured	ଶୁଣ (hear) + ଇବା (verbal noun)	native	ai	
+ଓହ୍ଲାଇବା	to get down, descend; getting down	to get down, descend, alight (from a chariot, a vehicle); to take to (the streets); to enter (a contest, the field); to unload, bring down (goods); getting down	ଓହ୍ଲା (get down) + ଇବା (verbal noun)	native	ai	
+ଭେଟିବା	to meet; meeting	to meet (a person), call on; meeting	ଭେଟ (meet) + ଇବା (verbal noun)	native	ai	
+ପଡ଼ିବା	to fall, have to; falling	to fall, drop; to have to, must (after a verbal noun: will have to go); to lie (be lying); to fall on, occur (a date, a festival); after a word: to become (e.g. be needed); falling	ପଡ଼ (fall) + ଇବା (verbal noun)	native	ai	Also spelt ପଡିବା (without nukta).
+ମାଗିବା	to ask for, demand; asking for	to ask for, demand, seek (votes, justice, compensation); to beg; to request; asking for	ମାଗ (ask for) + ଇବା (verbal noun)	native	ai	
+ଜଣାଇବା	to inform, state; informing	to inform, state, let know (in reports: said); to express (thanks, condolence, a demand); informing	ଜଣା (inform) + ଇବା (verbal noun)	native	ai	dabi janaiba: to demand; dhanyabad janaiba: to thank.
+ପଢିବା	to read, study; reading	to read; to study (at a school, in a class); to recite (a prayer, a mantra); reading, studies	ପଢ (read) + ଇବା (verbal noun)	native	ai	Also spelt ପଢ଼ିବା (with nukta).
+ଚାଲିବା	to go on, walk; going on	to go on, continue, be under way (a meeting, a hearing); to walk; to run, work (a machine, a scheme); to move, proceed; after a verb: to go away; going on	ଚାଲ (go on, walk) + ଇବା (verbal noun)	native	ai	
+ଉଠାଇବା	to lift, raise; lifting	to lift, raise (a weight); to raise (a question, a demand, an issue); to take (a step); to withdraw (money); to pick up; lifting	ଉଠା (lift) + ଇବା (verbal noun)	native	ai	
+ଉଠିବା	to rise, get up; rising	to rise, get up, stand up; to arise, be raised (a question, a demand); to be withdrawn (money); to be lifted (a ban); rising	ଉଠ (rise) + ଇବା (verbal noun)	native	ai	
+ପିନ୍ଧିବା	to wear, put on; wearing	to wear, put on (clothes, a mask, a helmet); wearing	ପିନ୍ଧ (wear) + ଇବା (verbal noun)	native	ai	
+ଲେଖିବା	to write; writing	to write; writing; passive: to be written	ଲେଖ (write) + ଇବା (verbal noun)	native	ai	
+ବୁଲିବା	to wander, roam; wandering	to roam, wander, go around; to go out for a visit or outing (to a place); to turn (around); wandering	ବୁଲ (roam) + ଇବା (verbal noun)	native	ai	ghuri buliba: to roam about.
+ସାଜିବା	to become, turn into; becoming	to become, turn into, emerge as (a cause of worry, an attraction, a hurdle); to dress up, pose as; to be decorated; becoming	ସାଜ (become, dress up) + ଇବା (verbal noun)	native	ai	
+ଭାବିବା	to think; thinking	to think, consider; to suppose, believe; to worry (about); thinking	ଭାବ (think) + ଇବା (verbal noun)	native	ai	
+ବ୍ୟାପିବା	to spread; spreading	to spread, pervade, extend (to); spreading	ବ୍ୟାପ (spread) + ଇବା (verbal noun)	sanskrit	ai	Root from Sanskrit, Odia verb endings.
+ସରିବା	to end, be over; ending	to end, be over, finish; to run out, be used up (stock); after a verb: to be done completely; ending	ସର (end) + ଇବା (verbal noun)	native	ai	
+ଯୋଗାଇବା	to supply, provide; supplying	to supply, provide (energy, nutrients, water, funds); to arrange, procure; supplying	ଯୋଗା (supply) + ଇବା (verbal noun)	native	ai	
+ଛାଡ଼ିବା	to leave, quit; leaving	to leave, quit, give up (a party, a habit); to release, let go, set free (water from a dam, a prisoner); to leave out, spare; to depart (a train leaves); leaving	ଛାଡ଼ (leave) + ଇବା (verbal noun)	native	ai	
+ପଢ଼ିବା	to read, study; reading	to read; to study (at a school, in a class); to recite (a prayer, a mantra); reading, studies	ପଢ଼ (read) + ଇବା (verbal noun)	native	ai	Also spelt ପଢିବା (without nukta).
+ଭାଙ୍ଗିବା	to break; breaking	to break, be broken; to collapse, cave in; to break (a record, a rule); to demolish (a house); breaking	ଭାଙ୍ଗ (break) + ଇବା (verbal noun)	native	ai	
+ପଳାଇବା	to flee, run away; fleeing	to flee, run away, escape; to elope; fleeing	ପଳା (flee) + ଇବା (verbal noun)	native	ai	
+ବୁଝିବା	to understand; understanding	to understand, to grasp; understanding; to find out, take stock (of a situation); to settle (accounts, with)	ବୁଝ (understand) + ଇବା (verbal noun)	native	ai	ପରିସ୍ଥିତି ବୁଝିଥିଲେ: took stock of the situation.
+ଲଢ଼ିବା	to fight, contest; fighting	to fight, to struggle; to contest (an election); fighting, a fight	ଲଢ଼ (fight) + ଇବା (verbal noun)	native	ai	ନିର୍ବାଚନ ଲଢ଼ିବା: to contest an election.
+ବଢାଇବା	to increase, raise; increasing	to increase, to raise, to extend (a deadline); to boost; increasing, raising	ବଢ଼ା (raise) + ଇବା (verbal noun)	native	ai	Also spelt ବଢ଼ାଇବା (with nukta).
+ଦର୍ଶାଇବା	to show, state; showing	to show, to state, to point out; to cite (a reason); showing, displaying	ଦର୍ଶା (show) + ଇବା (verbal noun)	native	ai	"X ଦର୍ଶାଇ": citing X (as a reason).
+ସାରିବା	to finish; finishing	to finish, to complete; finishing; after another verb: to have already done (kari sarichhanti: have already done)	ସାର (finish) + ଇବା (verbal noun)	native	ai	After a verb in -ଇ it means already or completely.
+ଛାଡିବା	to leave, quit; leaving	to leave, to quit; to release, let go, set free; to give up; to drop (someone off); leaving	ଛାଡ଼ (leave) + ଇବା (verbal noun)	native	ai	Also spelt ଛାଡ଼ିବା (with nukta). ଦଳ ଛାଡ଼ିବା: to quit a party.
+ହୋଇପଡ଼ିବା	to become; becoming	to become (often suddenly), to get, to fall into (a state: ill, scared); becoming	ହୋଇ (being) + ପଡ଼ିବା (falling)	native	ai	ଅସୁସ୍ଥ ହୋଇପଡ଼ିବା: to fall ill. Also spelt ହୋଇପଡିବା (without nukta).
+ହୋଇପଡିବା	to become; becoming	to become (often suddenly), to get, to fall into (a state: ill, scared); becoming	ହୋଇ (being) + ପଡ଼ିବା (falling)	native	ai	Also spelt ହୋଇପଡ଼ିବା (with nukta).
+ଉପୁଜିବା	to arise, crop up; arising	to arise, to crop up, to emerge (a problem, a doubt, a situation); to grow, spring up; arising	ଉପୁଜ (arise) + ଇବା (verbal noun)	native	ai	ସମସ୍ୟା ଉପୁଜିଛି: a problem has arisen.
+ରୋକିବା	to stop, prevent; stopping	to stop, to prevent, to check, to curb; to block, halt; stopping, prevention	ରୋକ (stop) + ଇବା (verbal noun)	native	ai	
+ପିଇବା	to drink; drinking	to drink; drinking (water, liquor); to smoke (in some phrases)	ପି (drink) + ଇବା (verbal noun)	native	ai	ପିଇବା ପାଣି: drinking water.
+କାଟିବା	to cut; cutting	to cut, to chop, to fell (trees); to bite (a snake, a dog); to deduct; to spend (time); cutting	କାଟ (cut) + ଇବା (verbal noun)	native	ai	ସାପ କାଟିବା: snakebite.
+ମାନିବା	to accept, obey; accepting	to accept, to admit; to obey, follow (a rule, an order); to believe in, worship; to observe (a vow); accepting	ମାନ (accept) + ଇବା (verbal noun)	native	ai	ନିୟମ ମାନିବା: to follow the rules.
+ଘଟାଇବା	to cause, commit; causing	to cause, to bring about; to commit (a crime), carry out (an attack); causing	ଘଟା (cause to happen) + ଇବା (verbal noun)	native	ai	ଘଟଣା ଘଟାଇବା: to commit (a crime).
+ଟପିବା	to cross, exceed; crossing	to cross, to exceed, to surpass (a mark, a figure); to jump over, leap across; crossing	ଟପ (cross, leap) + ଇବା (verbal noun)	native	ai	୪୦ ଡିଗ୍ରୀ ଟପିଛି: has crossed 40 degrees.
+ଗାଇବା	to sing; singing	to sing; singing; to sing (someone's praises)	ଗା (sing) + ଇବା (verbal noun)	native	ai	
+ପାଲଟିବା	to turn into, become; turning	to turn into, to become; to change; to turn over, flip; turning	ପାଲଟ (turn, change) + ଇବା (verbal noun)	native	ai	"X ପାଲଟିଛି": has turned into X.
+ଡାକିବା	to call, summon; calling	to call, to summon; to invite; to call (a meeting, a strike, a bandh); calling	ଡାକ (call) + ଇବା (verbal noun)	native	ai	ବନ୍ଦ ଡାକିବା: to call a bandh.
+ବଞ୍ଚାଇବା	to save, rescue; saving	to save, to rescue (a life); to protect, preserve; to save (money); saving	ବଞ୍ଚା (cause to live) + ଇବା (verbal noun)	native	ai	ଜୀବନ ବଞ୍ଚାଇବା: to save a life.
+ଖସିବା	to slip, fall; slipping	to slip, to fall, to slide down; to collapse (a hill, a roof); to drop (a price, a rank); to slip away, escape; slipping	ଖସ (slip) + ଇବା (verbal noun)	native	ai	ଖସିଲା ପାହାଡ଼: a landslide struck.
+ବଦଳିବା	to change; changing	to change, to be changed; to be transferred (an officer); changing	ବଦଳ (change) + ଇବା (verbal noun)	native	ai	Intransitive; ବଦଳାଇବା: to change (something).
+ଘେରିବା	to surround, gherao; surrounding	to surround, to encircle; to gherao (protesters surrounding an official); to beset (debts, troubles); surrounding	ଘେର (surround) + ଇବା (verbal noun)	native	ai	ଋଣରେ ଘେରି: beset by debt.
+ପଶିବା	to enter, break in; entering	to enter, to go in; to break into, intrude, sneak in; to get into (a business); entering	ପଶ (enter) + ଇବା (verbal noun)	native	ai	
+ଘଟିବା	to happen, occur; happening	to happen, to occur, to take place (an incident, an accident); happening	ଘଟ (happen) + ଇବା (verbal noun)	native	ai	ଘଟଣା ଘଟିବା ପରେ: after the incident.
+ଖୋଜିବା	to search, look for; searching	to search, to look for, to seek; to trace (a missing person); searching	ଖୋଜ (search) + ଇବା (verbal noun)	native	ai	
+ଭୋଗିବା	to suffer, endure; suffering	to suffer, to endure, to undergo (hardship, a sentence); to enjoy (a benefit); suffering	ଭୋଗ (suffer, enjoy) + ଇବା (verbal noun)	native	ai	ଦଣ୍ଡ ଭୋଗିବା: to serve a sentence.
+ବଞ୍ଚିବା	to live, survive; living	to live, to survive, to stay alive; to be saved; living, survival	ବଞ୍ଚ (live) + ଇବା (verbal noun)	native	ai	
+ଭାସିବା	to float, drift; floating	to float, to drift; to be swept away (by water: bhasi jiba); to be flooded; to appear (bhasi uthiba); floating	ଭାସ (float) + ଇବା (verbal noun)	native	ai	ଭାସି ଯିବା: to be swept away.
+ଲଢିବା	to fight, contest; fighting	to fight, to struggle; to contest (an election); fighting, a fight	ଲଢ଼ (fight) + ଇବା (verbal noun)	native	ai	Also spelt ଲଢ଼ିବା (with nukta).
+ବର୍ଷିବା	to rain, pour; raining	to rain, to pour down; to lash out at, rain (criticism or attacks) on someone; raining	ବର୍ଷ (rain) + ଇବା (verbal noun)	native	ai	ବିରୋଧୀଙ୍କ ଉପରେ ବର୍ଷିଲେ: lashed out at the opposition.
+ଫିଙ୍ଗିବା	to throw, fling; throwing	to throw, to fling, to hurl (stones); to throw away, dump; throwing	ଫିଙ୍ଗ (throw) + ଇବା (verbal noun)	native	ai	ପଥର ଫିଙ୍ଗିବା: stone-pelting.
+ସମ୍ଭାଳିବା	to handle, manage; handling	to handle, to manage, to take charge of (a post, a situation); to control, hold back; to look after; handling	ସମ୍ଭାଳ (handle) + ଇବା (verbal noun)	native	ai	ଦାୟିତ୍ୱ ସମ୍ଭାଳିବା: to take charge.
+ପହଁଚିବା	to reach, arrive; reaching	to reach, to arrive (at a place); to rise to (a figure); reaching, arrival	ପହଁଚ (reach) + ଇବା (verbal noun)	native	ai	Also spelt ପହଞ୍ଚିବା (the usual spelling).
+ନକରିବା	to not do; not doing	not to do; not doing, failure to do (negative verbal noun)	ନ (not) + କର (do) + ଇବା (verbal noun)	native	ai	ନକରନ୍ତି: (they) do not (do); ନକରିବାରୁ: for not doing.
+ଶୁଣାଇବା	to tell, announce; telling	to tell, to narrate; to announce, pronounce (a verdict, a decision); to make (someone) hear, read out; telling	ଶୁଣା (cause to hear) + ଇବା (verbal noun)	native	ai	ରାୟ ଶୁଣାଇବା: to pronounce a verdict.
+ବୁଝାଇବା	to explain, persuade; explaining	to explain, to make (someone) understand; to persuade, pacify, talk round; explaining	ବୁଝା (cause to understand) + ଇବା (verbal noun)	native	ai	ବୁଝାସୁଝା: persuasion, talks.
+ହାରିବା	to lose, be defeated; losing	to lose, to be defeated (a match, an election); to give up (hope); losing, defeat	ହାର (lose) + ଇବା (verbal noun)	native	ai	
+ଜଳିବା	to burn; burning	to burn, to be on fire, to be lit (a lamp, a kiln); to burn with envy; burning	ଜଳ (burn) + ଇବା (verbal noun)	native	ai	Intransitive; ଜଳାଇବା: to burn (something).
+ତୁଲାଇବା	to discharge, shoulder; discharging	to discharge, to shoulder (a duty, a charge); to meet, manage (expenses); to lift, raise; discharging	ତୁଲା (lift, bear) + ଇବା (verbal noun)	native	ai	ଦାୟିତ୍ୱ ତୁଲାଇବା: to hold or discharge a responsibility.
+ବିକିବା	to sell; selling	to sell; selling, sale; to sell off	ବିକ (sell) + ଇବା (verbal noun)	native	ai	
+ଲୁଚାଇବା	to hide, conceal; hiding	to hide, conceal (something); hiding, concealing; keeping secret	ଲୁଚା (hide) + ଇବା (verbal noun)	native	ai	Causative of ଲୁଚିବା (to hide oneself).
+ପହଞ୍ଚାଇବା	to deliver, bring; delivering	to deliver, take or bring (to a place or person); delivering; to take (a score, a level) up to	ପହଞ୍ଚା (cause to reach) + ଇବା (verbal noun)	native	ai	Causative of ପହଞ୍ଚିବା (to reach).
+ଚଳିବା	to get by, be acceptable; getting by	to get by, manage, live on; to be acceptable, to do (in the negative: will not be tolerated); to conduct oneself; to be in use, be current	ଚଳ (move, go on) + ଇବା (verbal noun)	native	ai	"X ଚଳିବ ନାହିଁ": X will not be tolerated.
+ପହଂଚିବା	to reach, arrive; reaching	to reach, arrive (at); reaching, arrival	ପହଂଚ (reach) + ଇବା (verbal noun)	native	ai	Also spelt ପହଞ୍ଚିବା (the usual spelling).
+ଫସିବା	to get trapped, be stuck; getting trapped	to get trapped, be stuck (in a tunnel, flood); to be caught, get entangled (in a case, a scam, a trap)	ଫସ (be trapped) + ଇବା (verbal noun)	native	ai	
+ଗାଧୋଇବା	to bathe; bathing	to bathe, take a bath (also in a river or pond); bathing	ଗାଧୋ (bathe) + ଇବା (verbal noun)	native	ai	
+ଅଟକାଇବା	to stop, detain; stopping	to stop, halt, hold back; to detain, intercept; to block, obstruct; stopping	ଅଟକା (cause to stop) + ଇବା (verbal noun)	native	ai	Causative of ଅଟକିବା (to stop, be stuck).
+ଜମିବା	to gather, collect; gathering	to gather, collect, accumulate (a crowd, water, dirt); to set, freeze, thicken; to warm up, catch on (a game, a party)	ଜମ (gather) + ଇବା (verbal noun)	native	ai	"ଭିଡ଼ ଜମୁଛି": a crowd is gathering.
+ବାଣ୍ଟିବା	to distribute, share; distributing	to distribute, hand out; to share, divide (between people); distributing, sharing	ବାଣ୍ଟ (divide) + ଇବା (verbal noun)	native	ai	
+ବାଜିବା	to hit, sound; hitting	to hit, strike (a bullet, a stone hits someone); to sound, ring (a bell, an alarm); striking, ringing	ବାଜ (strike, sound) + ଇବା (verbal noun)	native	ai	"ଗୁଳି ବାଜିଛି": a bullet has hit.
+ଧରାପଡ଼ିବା	to be caught; being caught	to be caught, get caught, be arrested; to be found out, be detected	ଧରା (caught) + ପଡ଼ିବା (falling)	native	ai	
+ବୁଜିବା	to close, shut; closing	to close, shut (the eyes); with "eyes": to die, pass away (polite); closing	ବୁଜ (close) + ଇବା (verbal noun)	native	ai	"ଆଖି ବୁଜିଲେ": passed away (he/she, respectful).
+ବିତାଇବା	to spend, pass; spending	to spend, pass (time, a day, one's life); spending	ବିତା (cause to pass) + ଇବା (verbal noun)	native	ai	Causative of ବିତିବା (time passes).
+ରହିଆସିବା	to remain, continue; remaining	to have remained, continue (from long ago up to now); remaining, continuing (a custom, a belief)	ରହି (staying) + ଆସିବା (coming)	native	ai	"ରହିଆସିଛି": has remained, has been (all along).
+ଲାଗିରହିବା	to continue, go on; continuing	to continue, go on, persist (suspense, rain, a protest); to keep at (something); continuing	ଲାଗି (attached) + ରହିବା (staying)	native	ai	"ସସପେନ୍ସ ଲାଗିରହିଛି": the suspense continues.
+ମିଶିବା	to join, meet; joining	to join (a party, a group); to meet (someone); to mix, merge, combine; joining, meeting	ମିଶ (mix, join) + ଇବା (verbal noun)	native	ai	"ବିଜେପିରେ ମିଶିଲେ": joined the BJP.
+ଯୋଗଦେବା	to join, attend; joining	to join (a post, a party, a job); to attend, take part in (a meeting, a function); joining	ଯୋଗ (joining) + ଦେବା (to give)	mixed	ai	Often written as two words: ଯୋଗ ଦେବା. ଯୋଗଦେଇଛନ୍ତି: have joined, have attended.
+ହଟିବା	to be removed, move away; being removed	to be removed, go away, move aside (an encroachment, a ban, a rule); to retreat, back off; being removed, removal	ହଟ (move away) + ଇବା (verbal noun)	native	ai	"ହଟିଲା ଜବରଦଖଲ": the encroachment was removed.
+ଶୋଇବା	to sleep; sleeping	to sleep, lie down; sleeping	ଶୋ (sleep, lie) + ଇବା (verbal noun)	native	ai	
+ପିଟିବା	to beat, hit; beating	to beat, hit, thrash (someone); to beat (a drum); beating	ପିଟ (beat) + ଇବା (verbal noun)	native	ai	
+ଶିଖିବା	to learn; learning	to learn; learning	ଶିଖ (learn) + ଇବା (verbal noun)	native	ai	
+ରଚିବା	to create, compose; creating	to create, make (with "history": to make history); to compose, write (a poem, a song); creating	ରଚ (make, compose) + ଇବା (verbal noun)	sanskrit	ai	"ଇତିହାସ ରଚିଛନ୍ତି": have made history.
+ଡକାଇବା	to call, summon; calling	to call, summon, send for; to call (a meeting, a doctor); calling	ଡକା (cause to call) + ଇବା (verbal noun)	native	ai	Causative of ଡାକିବା (to call).
+ଛୁଟିବା	to run, rush; running	to run, rush, dash; to flow, pour (a stream, a crowd); running	ଛୁଟ (run) + ଇବା (verbal noun)	native	ai	"ଶ୍ରଦ୍ଧାଳୁଙ୍କ ସୁଅ ଛୁଟିଛି": devotees are pouring in.
+ଝୁଲିବା	to hang, swing; hanging	to hang, dangle (a lock on a door, a body); to swing; hanging	ଝୁଲ (hang, swing) + ଇବା (verbal noun)	native	ai	"ତାଲା ଝୁଲୁଛି": is locked up (a lock is hanging).
+ଚାଲିଯିବା	to go away, leave; leaving	to go away, leave, depart; to be gone, be lost; to pass away (euphemism); leaving	ଚାଲି (walking) + ଯିବା (going)	native	ai	
+ଗଡ଼ିବା	to roll; rolling	to roll, roll along (a chariot, a train); to roll down, tumble; rolling	ଗଡ଼ (roll) + ଇବା (verbal noun)	native	ai	"ରଥ ଗଡ଼ିଲା": the chariot rolled.
+ଆପଣାଇବା	to adopt, embrace; adopting	to adopt, embrace, take up (a method, a lifestyle); to accept as one's own; adopting	ଆପଣା (own) + ଇବା (verbal noun)	native	ai	
+ହାତେଇବା	to grab, win; grabbing	to grab, get hold of; to win, bag (a title, a medal, a seat); to snatch, seize; grabbing	ହାତ (hand) + ଏଇବା (verbal noun)	native	ai	"ଟାଇଟଲ ହାତେଇବାକୁ": to win the title.
+ସୁଧାରିବା	to correct, improve; correcting	to correct, put right (a mistake); to improve, reform; to repair, mend; correcting	ସୁଧାର (correct, improve) + ଇବା (verbal noun)	native	ai	
+ଥରିବା	to tremble, shake; trembling	to tremble, shake, shiver (with fear, cold, an earthquake); trembling	ଥର (tremble) + ଇବା (verbal noun)	native	ai	"ଥରି ଉଠିଛି": has started shaking.
+ଲୋଡ଼ିବା	to seek, ask for; seeking	to seek, ask for (help, blessing, support); to want, need; seeking	ଲୋଡ଼ (seek, want) + ଇବା (verbal noun)	native	ai	"ସହଯୋଗ ଲୋଡ଼ିଥିଲେ": had sought help.
+ଧରାପଡିବା	to be caught; being caught	to be caught, get caught, be arrested; to be found out, be detected	ଧରା (caught) + ପଡ଼ିବା (falling)	native	ai	Also spelt ଧରାପଡ଼ିବା (with nukta).
+ବାବଦକୁ	towards, under the head of; for (expenses)	towards, on account of, under the head of (money, grants, expenses); for, regarding	ବାବଦ (account, head) + କୁ (to)	persian	ai	"ଅନୁଦାନ ବାବଦକୁ" = by way of grants.
+ସୂଚନାନୁସାରେ	according to information, as reported	according to (the) information, as per reports	ସୂଚନା (information) + ଅନୁସାରେ (according to)	sanskrit	ai	
+ଡାଉନ	down	down (in lockdown, download, countdown, down train)		english	ai	Often written as part of a compound: ଲକ ଡାଉନ = lockdown.
+ଲଣ୍ଡନ	London	London, the capital of the United Kingdom		name	ai	
+ରଖିଥିଲା	had kept; had set (it)	had kept, had placed, had set (a target), had held (he/she/it; past perfect)	ରଖ (keep) + ଇଥିଲା (had)	native	ai	"ଲକ୍ଷ୍ୟ ରଖିଥିଲା" = had set a target.
+ଡୋନାଲ୍ଡ	Donald (given name)	Donald, a given name (as in Donald Trump)		name	ai	
+ରିସର୍ଚ୍ଚ	research	research (as in Indian Council of Medical Research)		english	ai	
+ଆତଙ୍କୀ	terrorist	terrorist, militant; one who spreads terror	ଆତଙ୍କ (terror) + ଈ (one who)	hindi	ai	Short for ଆତଙ୍କବାଦୀ.
+ଅଗ୍ରୱାଲ	Agarwal (surname)	Agarwal, Agrawal (surname)		name	ai	
+ଜିଏସଟି	GST (goods and services tax)	GST, goods and services tax		english	ai	
+ସୂଚନାନୁଯାୟୀ	according to information, as reported	according to (the) information, as per reports	ସୂଚନା (information) + ଅନୁଯାୟୀ (according to)	sanskrit	ai	"ମିଳିଥିବା ସୂଚନାନୁଯାୟୀ" = according to information received.
+ଦାବୀ	demand, claim	demand, claim; (legal) claim, right asserted		arabic	ai	Also spelt ଦାବି. Came into Odia through Persian or Urdu.
+ରକ୍ତଦାନ	blood donation	blood donation, donating blood	ରକ୍ତ (blood) + ଦାନ (donation, gift)	sanskrit	ai	
+ସାନିଟାଇଜର	sanitizer	sanitizer, hand sanitizer		english	ai	
+ହାଇକୋର୍ଟର	of the High Court	of the High Court	ହାଇକୋର୍ଟ (High Court) + ର (of)	english	ai	
+ହେବନାହିଁ	will not be; will not happen	will not be, will not happen, will not take place (future negative)	ହେବ (will be) + ନାହିଁ (not)	native	ai	"ରିଲିଜ ହେବନାହିଁ" = will not be released.
+ଦୁର୍ଘଟଣାଗ୍ରସ୍ତ	met with an accident; crashed	met with an accident, crashed, involved in an accident	ଦୁର୍ଘଟଣା (accident) + ଗ୍ରସ୍ତ (seized by, affected by)	sanskrit	ai	"ବିମାନ ଦୁର୍ଘଟଣାଗ୍ରସ୍ତ ହେଲା" = the plane crashed.
+ଘଟଣାସ୍ଥଳରୁ	from the scene (of the incident)	from the scene, from the spot (of the incident)	ଘଟଣା (incident) + ସ୍ଥଳ (place) + ରୁ (from)	sanskrit	ai	
+ଅଲିମ୍ପିକ୍ସରେ	in the Olympics	in the Olympics, at the Olympic Games	ଅଲିମ୍ପିକ୍ସ (Olympics) + ରେ (in, at)	english	ai	
+ଡ୍ୟାନ୍ସ	dance	dance		english	ai	
+ବଢ଼ୁଛି	is increasing, is growing	is increasing, is growing, is rising (he/she/it; present continuous)	ବଢ଼ (grow, increase) + ଉଛି (is -ing)	native	ai	"ଅସନ୍ତୋଷ ବଢ଼ୁଛି" = discontent is growing.
+ଡେଇଁ	jumping over, having jumped; crossing	jumping over, having jumped (a wall etc.); crossing, going beyond (a border)	ଡେଇଁ (jump) + ଇ (having), merged	native	ai	"କାନ୍ଥ ଡେଇଁ" = jumping over the wall.
+କଲ	call (phone call); did (you)	call, phone call, video call; (verb) did (you, familiar plural)			ai	The verb sense is native: ତୁମେ କଲ = you did. Not କଳ (machine).
+ସମ୍ବୋଧିତ	addressed (a meeting, rally)	addressed (a meeting, a rally, a person); called by a name	ସମ୍ବୋଧ (address, calling) + ଇତ (-ed)	sanskrit	ai	"ସମାବେଶକୁ ସମ୍ବୋଧିତ କରିଥିଲେ" = addressed the rally.
+ଅନ୍ଲାଇନ୍	online	online		english	ai	Also spelt ଅନଲାଇନ.
+ଅଫର	offer	offer, proposal; discount offer (in shops)		english	ai	
+ଗ୍ରୁପ	group	group (of people, companies; a WhatsApp group)		english	ai	
+ରଘୁନାଥ	Raghunath (given name); Lord Rama	Raghunath, a given name; Raghunatha, a name of Lord Rama (lord of the Raghu line)	ରଘୁ (Raghu dynasty) + ନାଥ (lord)	name	ai	
+ଅନୁଭୂତି	experience	experience; feeling, perception		sanskrit	ai	
+ପାଆନ୍ତି	get, receive (they; or he/she, respectful)	get, receive, find (they; or he/she, respectful; habitual present); with bhala: like, love (bhala paanti: they like)	ପା (get) + ଆନ୍ତି (they do: present)	native	ai	"ଖାଦ୍ୟ ପାଆନ୍ତି ନାହିଁ" = do not get food.
+ଆସୁଥିଲା	was coming; had been (doing) (it)	was coming (he/she/it; past continuous); after another verb: had been doing all along	ଆସ (come) + ଉଥିଲା (was -ing)	native	ai	"ମେଣ୍ଟାଇ ଆସୁଥିଲା" = had been quenching (for a long time).
+ଏହାବ୍ୟତୀତ	besides this, apart from this	besides this, apart from this, in addition, moreover	ଏହା (this) + ବ୍ୟତୀତ (besides, except)	mixed	ai	
+ଦିବ୍ୟାଙ୍ଗ	person with a disability; disabled	person with a disability, differently abled (polite term, lit. "divine-limbed"); disabled	ଦିବ୍ୟ (divine) + ଅଙ୍ଗ (limb, body)	sanskrit	ai	Modern polite term used in place of ବିକଳାଙ୍ଗ.
+ଅପରାହ୍ଣ	afternoon	afternoon, post-meridian (p.m.)	ଅପର (later) + ଅହ୍ନ (day)	sanskrit	ai	Also spelt ଅପରାହ୍ନ.
+ଯିଏକି	who (relative: who, in fact)	who (relative pronoun, adding detail about someone just named)	ଯିଏ (who) + କି (that)	native	ai	"X, ଯିଏକି ..." = X, who ...
+କେସ	case (police or court case)	case (a police or court case); case (of illness); case, instance		english	ai	"କେସ ହେବନି" = no case will be filed.
+ନେଇପାରିବେ	can take; will be able to take (they)	can take, will be able to take, may carry (they; or he/she, respectful)	ନେଇ (taking) + ପାରିବେ (will be able)	native	ai	
+ଧାମନଗର	Dhamnagar (town in Bhadrak district)	Dhamnagar, a town, block and assembly seat in Bhadrak district of Odisha		name	ai	
+ବୁକ୍	book	book (as in Guinness Book of World Records, pass book)		english	ai	
+ଜୋନ	zone	zone, region (as in Central Zone, red zone, railway zone)		english	ai	
+ବାଲିଗୁଡା	Baliguda (town in Kandhamal district)	Baliguda, a town and subdivision in Kandhamal district of Odisha		name	ai	Also spelt ବାଲିଗୁଡ଼ା.
+ମିଡ଼ିଆ	media	media (as in social media, news media)		english	ai	
+ତଦନ୍ତକାରୀ	investigating (officer); investigator	investigating (officer, agency); investigator	ତଦନ୍ତ (investigation) + କାରୀ (doer)	sanskrit	ai	"ତଦନ୍ତକାରୀ ଅଫିସର" = investigating officer.
+ଗାଇଡଲାଇନ	guideline(s)	guideline, guidelines		english	ai	
+ମୃତୁ୍ୟ	death	death		sanskrit	ai	Mis-encoded spelling of ମୃତ୍ୟୁ (old font conversion: sign order swapped).
+ନେଗେଟିଭ୍	negative	negative (a test result; a role or attitude, as in a villain role)		english	ai	"ନେଗେଟିଭ୍ ଭୂମିକା" = negative (villain) role.
+କରାଇଛନ୍ତି	have had (it) done; have made (they)	have had (it) done, have caused to be done, have made (someone) do (they; or he/she, respectful)	କରା (cause to do) + ଇଛନ୍ତି (have: present perfect)	native	ai	"ଅବଗତ କରାଇଛନ୍ତି" = have informed.
+ଜିଲାପାଳଙ୍କ	of the district collector	of the district collector (respectful); the district collector's	ଜିଲାପାଳ (district collector) + ଙ୍କ (of, respectful)	mixed	ai	
+ଯାହାଦ୍ୱାରା	by which, whereby; due to which	by which, whereby, through which; due to which, so that	ଯାହା (which) + ଦ୍ୱାରା (by)	mixed	ai	
+ପ୍ଲାଜମା	plasma	plasma (blood plasma, as in plasma therapy); plasma (physics)		english	ai	
+ରାଜନାଥ	Rajnath (given name)	Rajnath, a given name (as in Rajnath Singh, BJP leader)	ରାଜ (king) + ନାଥ (lord)	name	ai	
+ଏମ୍ସ	AIIMS (All India Institute of Medical Sciences)	AIIMS, All India Institute of Medical Sciences (as in AIIMS Bhubaneswar)		english	ai	
+ଇମ୍ରାନ	Imran (given name)	Imran, a Muslim given name (as in Imran Khan, Pakistani cricketer and politician)		name	ai	
+ଆଇଏଏସ୍	IAS (Indian Administrative Service)	IAS, Indian Administrative Service; an IAS officer		english	ai	
+ଷଡ଼ଯନ୍ତ୍ର	conspiracy, plot	conspiracy, plot, intrigue		sanskrit	ai	
+ରାଜନଗର	Rajnagar (place in Kendrapara district)	Rajnagar, a town, block and assembly seat in Kendrapara district of Odisha; also other places of this name		name	ai	
+ଅର୍ଦ୍ଧଶତକ	half-century (fifty runs)	half-century, fifty runs (cricket); half a century, fifty years	ଅର୍ଦ୍ଧ (half) + ଶତକ (century, hundred)	sanskrit	ai	
+ଠିକାଦାର	contractor	contractor (for building works, supplies)	ଠିକା (contract) + ଦାର (holder)	mixed	ai	
+ରେଞ୍ଜ	range (forest range; reach)	range: a forest range (administrative unit); reach, distance (missile range); a range (of values)		english	ai	"ଲଙ୍ଗ୍ ରେଞ୍ଜ" = long range.
+ଜିଏସ୍ଟି	GST (goods and services tax)	GST, the goods and services tax of India		english	ai	
+ଖୁବ୍ଶୀଘ୍ର	very soon	very soon, very quickly, shortly	ଖୁବ୍ (very) + ଶୀଘ୍ର (soon, quick)	mixed	ai	Usually written as two words: ଖୁବ୍ ଶୀଘ୍ର.
+ପ୍ରଭାରୀ	in charge (of a district, for a party)	in charge, the person in charge (a party's observer for a district or state); officer in charge		hindi	ai	"ଜିଲ୍ଲା ପ୍ରଭାରୀ" = district in-charge. Sanskrit-based word taken from Hindi political usage.
+ହୋଇଗଲାଣି	has now become; has already happened	has now become, has already become, has already happened (he/she/it; by now)	ହୋଇ (becoming) + ଗଲାଣି (has gone by now)	native	ai	"ଦୁର୍ନୀତିଗ୍ରସ୍ତ ହୋଇଗଲାଣି" = has become corrupt by now.
+କମିଶନରେଟ୍	commissionerate (police)	commissionerate, an area policed under a police commissioner (Bhubaneswar-Cuttack Commissionerate Police)		english	ai	
+ଅପରପକ୍ଷେ	on the other hand	on the other hand, meanwhile; on the other side	ଅପର (other) + ପକ୍ଷେ (on the side)	sanskrit	ai	
+ଗାଇଡଲାଇନ୍	guideline(s)	guideline, guidelines (official instructions, rules to follow)		english	ai	
+ପାରିତ	passed (a resolution, a bill)	passed, adopted (a resolution, a bill, a proposal)		sanskrit	ai	"ପ୍ରସ୍ତାବ ପାରିତ" = resolution passed.
+କରୁନାହାନ୍ତି	are not doing (they; or he/she, resp.)	are not doing, do not do (they; or he/she, respectful; present)	କରୁ (doing) + ନାହାନ୍ତି (are not)	native	ai	
+ଦମଦାର	powerful, strong, impressive	powerful, strong, impressive, forceful (a performance, an innings); full of vigour	ଦମ (breath, vigour) + ଦାର (having)	persian	ai	"ଦମଦାର ପ୍ରଦର୍ଶନ" = a strong performance.
+ବଜେଟରେ	in the budget; on a budget of	in the budget; on a budget of (a film made on a budget of X crore)	ବଜେଟ (budget) + ରେ (in)	english	ai	
+ପ୍ଲାଷ୍ଟିକ	plastic	plastic; made of plastic		english	ai	
+ସଂଗ୍ରାମୀ	fighter; freedom fighter	fighter, campaigner; freedom fighter (short for swadhinata sangrami); fighting, militant	ସଂଗ୍ରାମ (struggle, battle) + ଈ (one who)	sanskrit	ai	ସ୍ୱାଧୀନତା ସଂଗ୍ରାମୀ = freedom fighter.
+ସୁନ୍ଦରଗଡ଼ରୁ	from Sundargarh	from Sundargarh (a district and town of north-western Odisha)	ସୁନ୍ଦରଗଡ଼ (Sundargarh) + ରୁ (from)	name	ai	
+ପଞ୍ଜାବର	of Punjab; Punjab's	of Punjab, Punjab's (Punjab, a state in north India)	ପଞ୍ଜାବ (Punjab) + ର (of)	name	ai	
+ସ୍ୱାସ୍ଥ୍ୟସେବା	health care, health services	health care, health services, medical services	ସ୍ୱାସ୍ଥ୍ୟ (health) + ସେବା (service)	sanskrit	ai	
+ଏହାସହିତ	along with this; besides, also	along with this, in addition, besides, also; with it	ଏହା (this) + ସହିତ (with)	mixed	ai	
+ହରିୟାଣା	Haryana, an Indian state	Haryana, a state in north India		name	ai	
+ଭାଇରସର	of the virus	of the virus, the virus's	ଭାଇରସ (virus) + ର (of)	english	ai	
+ଜଣାଯାଏ	it is known; it appears; is known as	it is known, it is learnt; it appears, it seems; (after "X bhabe") is known as X	ଜଣା (known) + ଯାଏ (goes): passive	native	ai	"ଦେଖିଲେ ଜଣାଯାଏ ଯେ" = looking at it, one finds that.
+ପରିକ୍ରମା	circling round (a shrine); a round, tour	circumambulation, walking round a temple, shrine or the chariots; a round, a tour (of a place); orbit	ପରି (around) + କ୍ରମ (step, going)	sanskrit	ai	"ବେଢ଼ା ପରିକ୍ରମା" = walking round the temple compound.
+ଷ୍ଟାଡିୟମ	stadium	stadium		english	ai	
+ରାଜ୍ୟସ୍ତରୀୟ	state-level	state-level, at the level of the state (event, holiday, meeting); between states	ରାଜ୍ୟ (state) + ସ୍ତରୀୟ (of the level)	sanskrit	ai	
+ଛାତ୍ରୀଙ୍କ	of the girl student(s); girl students'	of the girl student, of girl students (respectful/plural possessive)	ଛାତ୍ରୀ (girl student) + ଙ୍କ (of, respectful/plural)	sanskrit	ai	
+ଶ୍ରୀନଗର	Srinagar, capital of Jammu and Kashmir	Srinagar, the (summer) capital of Jammu and Kashmir; also a common place name	ଶ୍ରୀ (fortune) + ନଗର (city)	name	ai	
+କହୁଥିଲେ	were saying; used to say (they; or he/she, resp.)	were saying, used to say, would say (they; or he/she, respectful; past continuous or habitual)	କହ (say) + ଉଥିଲେ (were ...-ing)	native	ai	
+କରିନଥିଲେ	had not done; did not (they; or he/she, resp.)	had not done, did not do (they; or he/she, respectful; negative past)	କରି (done) + ନ (not) + ଥିଲେ (had)	native	ai	
+ଆଲୋକପାତ	throwing light on, highlighting	throwing light on, highlighting, shedding light on (a subject); (with karibaa) to discuss, to explain	ଆଲୋକ (light) + ପାତ (casting, falling)	sanskrit	ai	"X ଉପରେ ଆଲୋକପାତ କରି" = highlighting X.
+ରଖାଯାଇଥିବା	which had been kept, placed; put forward	which had been kept, placed or stored; (demands) which had been put forward (passive participle, before a noun)	ରଖା (kept) + ଯାଇଥିବା (which had gone): passive	native	ai	"ରଖାଯାଇଥିବା ଦାବି" = demands put forward.
+ଡିଜିପି	DGP (Director General of Police)	DGP, Director General of Police, the head of a state's police force		english	ai	
+ହାଟଡିହି	Hatadihi, a place (block) in Odisha	Hatadihi, a block and village in Odisha (Keonjhar district)		name	ai	? Keonjhar district from memory; no context given.
+ସାମନ୍ତରାୟ	Samantaray (surname)	Samantaray, Samantray, an Odia surname		name	ai	
+ପାଢ଼ୀ	Padhi (surname)	Padhi, an Odia surname		name	ai	
+ଗଞ୍ଜାମରୁ	from Ganjam	from Ganjam (a coastal district in southern Odisha)	ଗଞ୍ଜାମ (Ganjam) + ରୁ (from)	name	ai	
+ନିର୍ଦେଶକ	director (film; managing director)	director (of a film; managing director of a company; head of a directorate); one who directs		sanskrit	ai	Usual spelling ନିର୍ଦ୍ଦେଶକ.
+ରେଜଲ୍ଟ	result (of an exam)	result, results (of an examination); outcome		english	ai	"ମାଟ୍ରିକ ରେଜଲ୍ଟ" = matric (class 10) results.
+ଏହାଛଡା	besides this; apart from this; also	besides this, apart from this, in addition; moreover	ଏହା (this) + ଛଡା (apart from)	native	ai	Usual spelling ଏହାଛଡ଼ା (with nukta).
+ଶ୍ରୀକାନ୍ତ	Srikanta (given name)	Srikanta, Srikant, a male given name; a name of Vishnu (lit. husband of Lakshmi)	ଶ୍ରୀ (Lakshmi) + କାନ୍ତ (beloved, husband)	name	ai	
+ଗରଦପୁର	Garadpur, a place (block) in Odisha	Garadpur, Garadapur, a block and village in Odisha (Kendrapara district)		name	ai	? Kendrapara district from memory; no context given.
+ଶୁଟିଂ	shooting (of a film); shooting (sport)	shooting (of a film, video or scene); shooting (sport, firing)		english	ai	
+ଶିଳାନ୍ୟାସ	foundation stone laying	laying of the foundation stone (of a project, building)	ଶିଳା (stone) + ନ୍ୟାସ (placing)	sanskrit	ai	"ଉଦଘାଟନ ଓ ଶିଳାନ୍ୟାସ" = inauguration and foundation laying.
+ସ୍ୱାସ୍ଥ୍ୟମନ୍ତ୍ରୀ	health minister	health minister (of the state or the centre)	ସ୍ୱାସ୍ଥ୍ୟ (health) + ମନ୍ତ୍ରୀ (minister)	sanskrit	ai	
+ଜାଣିଛନ୍ତି	know; have come to know (they; or you, resp.)	know, have learnt, have come to know (they; or you/he/she, respectful; present perfect)	ଜାଣ (know) + ଇଛନ୍ତି (have: plural/respectful)	native	ai	"ଜାଣିଛନ୍ତି କି?" = do you know?
+ଦେଇପାରିବେ	can give; will be able to give (they; resp.)	can give, will be able to give, can provide (they; or you/he/she, respectful; future)	ଦେଇ (giving) + ପାରିବେ (will be able)	native	ai	
+ଖେଳିଯାଇଛି	has spread (over), has descended	has spread over, has swept over (a mood, grief, joy); has played (he/she/it)	ଖେଳି (playing) + ଯାଇଛି (has gone)	native	ai	"ଶୋକର ଛାୟା ଖେଳିଯାଇଛି" = a pall of grief has descended.
+ଉଚ୍ଚସ୍ତରୀୟ	high-level	high-level (committee, meeting, inquiry, task force)	ଉଚ୍ଚ (high) + ସ୍ତରୀୟ (of the level)	sanskrit	ai	
+ଟେଷ୍ଟ୍	test	test, examination (medical, lab, exam); Test match (cricket)		english	ai	Also spelt ଟେଷ୍ଟ.
+ହେଇଥିଲା	was; had happened, had been (he/she/it)	was, had been, had happened, had become (he/she/it; past)	ହେଇ (being) + ଥିଲା (was)	native	ai	Spoken spelling of ହୋଇଥିଲା.
+ବାସୁଦେବପୁର	Basudevpur, a town in Bhadrak district	Basudevpur, a town (NAC) and assembly seat in Bhadrak district, Odisha	ବାସୁଦେବ (Vasudeva) + ପୁର (town)	name	ai	
+ଫୁଟବଲ	football	football (the game; the ball)		english	ai	
+ପରଦିନ	the next day	the next day, the following day	ପର (next) + ଦିନ (day)	sanskrit	ai	
+ତେଲେଙ୍ଗାନା	Telangana, an Indian state	Telangana, a state in south India (capital Hyderabad)		name	ai	
+ଚାଇନାର	of China; China's	of China, China's, Chinese	ଚାଇନା (China) + ର (of)	name	ai	
+ଯେଉଁଭଳି	the way (in which); just as	the way in which, the kind of, just as; such as (relative, answered by taahaa or sebhali)	ଯେଉଁ (which) + ଭଳି (like)	native	ai	"ଯେଉଁଭଳି ଆଶୀର୍ବାଦ ଦେଇଛନ୍ତି" = the way they have blessed.
+ଦୂରତ୍ୱ	distance	distance; remoteness, being far away; (emotional) distance	ଦୂର (far) + ତ୍ୱ (-ness)	sanskrit	ai	
+ଫାଷ୍ଟ	fast	fast (fast-track court, fast bowler, fast food)		english	ai	
+ହୋଇପାରି	being able to be (with na: could not be)	being able to be, managing to become; with nahanti or nathile after it: could not (be, appear, stand)	ହୋଇ (being) + ପାରି (being able)	native	ai	"ହାଜର ହୋଇପାରି ନାହାନ୍ତି" = could not appear.
+ଆକ୍ଟିଭ୍	active	active (on social media; in work); activated (with karibaa: to activate)		english	ai	
+ଯାନବାହନ	vehicles; traffic	vehicles, motor vehicles; vehicular traffic	ଯାନ (vehicle) + ବାହନ (carrier)	sanskrit	ai	"ଯାନବାହନ ଚଳାଚଳ ବନ୍ଦ" = traffic stopped.
+ଆଇନରେ	in the law; in the act	in the law, in the act (legislation); under the law	ଆଇନ (law) + ରେ (in)	persian	ai	
