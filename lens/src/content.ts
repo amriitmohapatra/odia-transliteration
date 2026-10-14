@@ -15,7 +15,7 @@
  */
 
 import type { LensCard } from './describe.js';
-import { wordAt } from './word.js';
+import { wordAt, wordBefore } from './word.js';
 import { LOOKUP, type LookupRequest, type LookupResponse } from './messages.js';
 
 interface Lens {
@@ -167,14 +167,17 @@ function start(): Lens {
         list.append(li);
       }
       card.append(list);
-      for (const line of [
-        lensCard.approximateHead ? `Approximate: the dictionary word is ${lensCard.approximateHead}` : null,
-        lensCard.loan,
-        lensCard.origin,
-      ]) {
+      for (const [line, odia] of [
+        [lensCard.approximateHead ? `Approximate: the dictionary word is ${lensCard.approximateHead}` : null, false],
+        [lensCard.more, false],
+        [lensCard.formation, true],
+        [lensCard.loan, false],
+        [lensCard.origin, false],
+      ] as const) {
         if (!line) continue;
         const note = document.createElement('span');
         note.className = 'note';
+        if (odia) note.lang = 'or';
         note.textContent = line;
         card.append(note);
       }
@@ -188,7 +191,7 @@ function start(): Lens {
   }
 
   /** The Odia word under the point, with its box, or null. */
-  function wordAtPoint(x: number, y: number): { word: string; node: Node; start: number; rect: DOMRect } | null {
+  function wordAtPoint(x: number, y: number): { word: string; previous: string; node: Node; start: number; rect: DOMRect } | null {
     let node: Node | null = null;
     let offset = 0;
     const doc = document as Document & { caretPositionFromPoint?(x: number, y: number): { offsetNode: Node; offset: number } | null };
@@ -212,7 +215,7 @@ function start(): Lens {
     // a line: only a pointer over the word's own box counts.
     for (const r of Array.from(range.getClientRects())) {
       if (x >= r.left - 1 && x <= r.right + 1 && y >= r.top - 1 && y <= r.bottom + 1) {
-        return { word: found.word, node, start: found.start, rect: r };
+        return { word: found.word, previous: wordBefore((node as Text).data, found.start), node, start: found.start, rect: r };
       }
     }
     return null;
@@ -230,7 +233,7 @@ function start(): Lens {
     currentNode = hit.node;
     currentStart = hit.start;
     const ticket = ++asked;
-    const request: LookupRequest = { type: LOOKUP, word: hit.word };
+    const request: LookupRequest = { type: LOOKUP, word: hit.word, previous: hit.previous };
     chrome.runtime.sendMessage(request, (response: LookupResponse | undefined) => {
       if (ticket !== asked || current !== hit.word || !active) return;
       if (chrome.runtime.lastError || !response) return render(hit.word, null, hit.rect);

@@ -207,5 +207,123 @@ export function parsePhrases(tsv: string, file = 'phrases.tsv'): Phrase[] {
   return phrases;
 }
 
+/* ------------------------------------------------------------------ *
+ * AI-written meanings (core/data/meanings.tsv)
+ * ------------------------------------------------------------------ */
+
+/**
+ * ai     written by Claude for this project, not yet checked by a native speaker
+ * owner  checked (or written) by the owner
+ * wrong  rejected: never shown, kept so the row is not written again
+ */
+export const MEANING_STATUS = ['ai', 'owner', 'wrong'] as const;
+export type MeaningStatus = (typeof MEANING_STATUS)[number];
+
+/** Where a word comes from, in one word. Empty when unknown. */
+export const MEANING_ORIGINS = [
+  'native', 'sanskrit', 'persian', 'arabic', 'english', 'hindi', 'portuguese', 'name', 'mixed',
+] as const;
+export type MeaningOrigin = (typeof MEANING_ORIGINS)[number];
+
+export interface Meaning {
+  /** The key as written: one word, two words, or "-suffix word" (a construction). */
+  odia: string;
+  /** One line for the suggestion chip and the lens (at most 56 characters). */
+  meaning: string;
+  /** All senses, modern first. */
+  senses: string[];
+  /** How the word is made, for prefixed or compound words ("ana (not) + chhaatra (student)", written in Odia). */
+  formation: string;
+  origin: MeaningOrigin | '';
+  status: MeaningStatus;
+  note: string;
+}
+
+export interface Meanings {
+  readonly size: number;
+  /** The entry for one canonical word, or for two words "a b"; never a "wrong" row. */
+  get(key: string): Meaning | undefined;
+  /**
+   * A construction for `word` after `previous` ("-ku nei": nei after a word
+   * ending in -ku, "over, regarding"), or undefined.
+   */
+  construction(previous: string, word: string): Meaning | undefined;
+  /** Every shown entry (not "wrong"), single words and pairs, in file order. */
+  all(): readonly Meaning[];
+}
+
+/** A word, two words, or "-suffix word": Odia letters and single spaces. */
+const MEANING_KEY = /^-?[\u0B00-\u0B7F\u200C\u200D]+( [\u0B00-\u0B7F\u200C\u200D]+)?$/;
+/** The longest one-line meaning: the chip's limit (Appv2/src/dictionary/lookup.ts tidyGloss). */
+const MEANING_MAX = 56;
+
+export function parseMeanings(tsv: string, file = 'meanings.tsv'): Meanings {
+  const map = new Map<string, Meaning>();
+  const constructions = new Map<string, Meaning[]>();
+  const ordered: Meaning[] = [];
+  let size = 0;
+  for (const { cells, line } of rows(tsv, file)) {
+    const where = `${file}:${line}`;
+    const [odia, meaning, senses = '', formation = '', origin = '', status, note = ''] = cells;
+    if (!odia || !meaning || status === undefined) {
+      throw new Error(`${where}: expected "odia<TAB>meaning<TAB>senses<TAB>formation<TAB>origin<TAB>status[<TAB>note]"`);
+    }
+    if (!MEANING_KEY.test(odia)) throw new Error(`${where}: the key must be Odia: a word, two words, or "-suffix word"`);
+    assertCanonical(odia, where);
+    if (!(MEANING_STATUS as readonly string[]).includes(status)) {
+      throw new Error(`${where}: unknown status "${status}" (allowed: ${MEANING_STATUS.join(', ')})`);
+    }
+    if (origin !== '' && !(MEANING_ORIGINS as readonly string[]).includes(origin)) {
+      throw new Error(`${where}: unknown origin "${origin}" (allowed: ${MEANING_ORIGINS.join(', ')}, or empty)`);
+    }
+    if (meaning.length > MEANING_MAX) throw new Error(`${where}: the meaning is longer than ${MEANING_MAX} characters`);
+    for (const [name, cell] of [['meaning', meaning], ['senses', senses]] as const) {
+      if (/[\u0B00-\u0B7F]/.test(cell)) throw new Error(`${where}: the ${name} column must be English (Odia goes in formation or note)`);
+    }
+    assertCanonical(formation, where);
+    if (map.has(odia) || constructions.get(odia.slice(1).split(' ')[1] ?? '')?.some((m) => m.odia === odia)) {
+      throw new Error(`${where}: duplicate entry`);
+    }
+    const entry: Meaning = {
+      odia,
+      meaning,
+      senses: senses.split(';').map((x) => x.trim()).filter((x) => x.length > 0),
+      formation,
+      origin: origin as MeaningOrigin | '',
+      status: status as MeaningStatus,
+      note,
+    };
+    size += 1;
+    if (entry.status !== 'wrong') ordered.push(entry);
+    if (odia.startsWith('-')) {
+      const word = odia.split(' ')[1] as string;
+      const list = constructions.get(word) ?? [];
+      list.push(entry);
+      constructions.set(word, list);
+    } else {
+      map.set(odia, entry);
+    }
+  }
+  const shown = (m: Meaning | undefined): Meaning | undefined => (m && m.status !== 'wrong' ? m : undefined);
+  return {
+    size,
+    get: (key) => shown(map.get(key)),
+    all: () => ordered,
+    construction(previous, word) {
+      const exact = shown(map.get(`${previous} ${word}`));
+      if (exact) return exact;
+      // The longest matching suffix wins ("-nku" before "-ku").
+      let best: Meaning | undefined;
+      for (const m of constructions.get(word) ?? []) {
+        const suffix = m.odia.slice(1).split(' ')[0] as string;
+        if (m.status !== 'wrong' && previous.endsWith(suffix) && previous.length > suffix.length &&
+            (best === undefined || suffix.length > best.odia.split(' ')[0]!.length - 1)) best = m;
+      }
+      return best;
+    },
+  };
+}
+
 export const emptyPreferences = (): Preferences => parsePreferences('');
 export const emptyLabels = (): Labels => parseLabels('');
+export const emptyMeanings = (): Meanings => parseMeanings('');

@@ -20,6 +20,8 @@ const EXT = fileURLToPath(new URL('../dist-test', import.meta.url));
 
 const DINA = '\u0B26\u0B3F\u0B28'; // day: owner meaning "day"
 const DINARE = DINA + '\u0B30\u0B47'; // in the day: stem match
+const PRABESHAKU = '\u0B2A\u0B4D\u0B30\u0B2C\u0B47\u0B36\u0B15\u0B41'; // to (the) entry
+const NEI = '\u0B28\u0B47\u0B07'; // after -ku: over, regarding
 const ODISHA_CANONICAL = '\u0B13\u0B21\u0B3C\u0B3F\u0B36\u0B3E';
 const ODISHA_PRECOMPOSED = '\u0B13\u0B5C\u0B3F\u0B36\u0B3E'; // as some web pages write it
 // An English loan word from the app's list (Appv2/src/dictionary/loans.tsv).
@@ -33,6 +35,7 @@ const PAGES = {
     <p>Day: <span id="dina">${ref(DINA)}</span> and <span id="dinare">${ref(DINARE)}</span>&#x0964;</p>
     <p>State: <span id="odisha">${ref(ODISHA_PRECOMPOSED)}</span></p>
     <p>Loan: <span id="loan">${ref(loanOdia)}</span></p>
+    <p>Phrase: <span id="phrase">${ref(PRABESHAKU)} ${ref(NEI)}</span></p>
     <p id="latin">Only English words here.</p>`,
   '/latin.html': `<!doctype html><meta charset="utf-8"><title>Latin</title><p id="latin" style="font:22px sans-serif">No Odia on this page at all.</p>`,
 };
@@ -125,6 +128,18 @@ await check(`a loan word: "English loan word: ${loanEnglish}"`, async () => {
   await hover('loan');
   await page.waitForFunction(() => document.querySelector('odia-lens')?.shadowRoot?.querySelector('.card')?.textContent?.includes('English loan word'));
   assert.ok((await cardText()).includes(`English loan word: ${loanEnglish}`));
+});
+
+await check('a phrase: nei after a word in -ku reads "over; regarding" (AI-written, in this phrase)', async () => {
+  await page.mouse.move(5, 5);
+  const box = await page.locator('#phrase').boundingBox();
+  // The second word of the span: a point three quarters along it.
+  await page.mouse.move(box.x + box.width * 0.85, box.y + box.height / 2, { steps: 3 });
+  await page.waitForFunction((w) => document.querySelector('odia-lens')?.shadowRoot?.querySelector('.word')?.textContent === w, NEI);
+  const text = await cardText();
+  assert.ok(text.includes('over; regarding'), text);
+  assert.ok(text.includes('in this phrase'), text);
+  assert.ok(!/\bNot\b/.test(text), text);
 });
 
 await check('Latin text shows no card; Escape closes a card', async () => {

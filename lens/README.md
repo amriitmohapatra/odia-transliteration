@@ -3,8 +3,10 @@
 Point at an Odia word on any web page. A small card shows:
 
 - the word, and how to say it in English letters (`ଦିନ` → *dina*);
-- its meaning: the app owner's meaning first, then the modern layer, then the
-  Praharaj dictionary (1931–40);
+- its meaning: the app owner's meaning first, then the AI-written modern meanings
+  (`core/data/meanings.tsv`, labelled "AI-written, not yet checked"), then the modern
+  layer, then the Praharaj dictionary (1931–40). A phrase reading comes first where
+  one applies: ନେଇ after a word ending in -କୁ is "over; regarding";
 - "Approximate" when only the stem or the start of the word is in the dictionary;
 - "English loan word: …" and the word's origin ("from Persian") when known;
 - **Say it**, when the computer has an Odia voice.

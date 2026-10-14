@@ -15,6 +15,7 @@
  */
 
 import { canonical } from '@odia/core/normalize';
+import type { Meaning, Meanings } from '@odia/core';
 
 import { inflate } from './pako-inflate.js';
 import { cleanDefinition } from './clean.js';
@@ -241,4 +242,43 @@ export function shortGlossOf(definition: string): string | null {
     if (g.length < 2) g = null;
   }
   return g;
+}
+
+/* ------------------------------------------------------------ *
+ * AI-written meanings (core/data/meanings.tsv, decision D-13)
+ * ------------------------------------------------------------ */
+
+export interface MeaningFinder {
+  /** The entry for a word: its canonical form, else its folded spelling. */
+  word(word: string): Meaning | undefined;
+  /** A two-word or "-suffix word" construction for `word` after `previous`. */
+  after(previous: string, word: string): Meaning | undefined;
+}
+
+/**
+ * Lookup over the AI layer. Exact keys first; then the same 1930s-spelling fold
+ * the Praharaj keys use, so a page that writes the va letter or ya differently
+ * still finds the entry.
+ */
+export function meaningFinder(meanings: Meanings): MeaningFinder {
+  const folded = new Map<string, Meaning>();
+  for (const m of meanings.all()) {
+    if (m.odia.startsWith('-') || m.odia.includes(' ')) continue;
+    const key = foldKey(m.odia);
+    if (!folded.has(key)) folded.set(key, m);
+  }
+  return {
+    word(word) {
+      const odia = canonical(word);
+      return meanings.get(odia) ?? folded.get(foldKey(odia));
+    },
+    after(previous, word) {
+      return previous.length === 0 ? undefined : meanings.construction(canonical(previous), canonical(word));
+    },
+  };
+}
+
+/** The label under an AI-layer meaning, on every surface. */
+export function meaningSource(m: Meaning): string {
+  return m.status === 'owner' ? 'meaning checked by the app owner' : 'AI-written, not yet checked by a native speaker';
 }

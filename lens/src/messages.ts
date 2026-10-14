@@ -10,6 +10,8 @@ export const TOGGLE_COMMAND = 'toggle-lens';
 export interface LookupRequest {
   type: typeof LOOKUP;
   word: string;
+  /** The Odia word just before it on the page (one space apart), or ''. */
+  previous?: string;
 }
 
 export type LookupResponse = { ok: true; card: LensCard | null } | { ok: false; error: string };

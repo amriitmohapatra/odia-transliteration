@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 
 import { createEngine } from '../src/index.js';
-import { parseLabels, parsePhrases, parsePreferences } from '../src/curation.js';
+import { parseLabels, parseMeanings, parsePhrases, parsePreferences } from '../src/curation.js';
 import { MemoryLearnStore } from '../src/learn.js';
 import { SYMBOLS_TOML } from './helpers.js';
 
@@ -223,3 +223,39 @@ describe('phrases.tsv', () => {
   });
 });
 
+
+describe('meanings.tsv (AI-written meanings)', () => {
+  const WORD = 'ନେଇ'; // nei: taking; regarding
+  const KU = 'କୁ';
+  const NKU = 'ଙ୍କୁ';
+  const ROW = (odia: string, meaning: string, status = 'ai', extra = '') =>
+    `${odia}\t${meaning}\tsense one; sense two\t\tnative\t${status}\t${extra}\n`;
+
+  it('reads a word, a two-word key and a "-suffix word" construction', () => {
+    const m = parseMeanings(
+      ROW(WORD, 'taking') + ROW(`-${KU} ${WORD}`, 'over; regarding') + ROW(`-${NKU} ${WORD}`, 'about them'),
+    );
+    expect(m.size).toBe(3);
+    expect(m.get(WORD)?.senses).toEqual(['sense one', 'sense two']);
+    expect(m.construction(`ପ୍ରବେଶ${KU}`, WORD)?.meaning).toBe('over; regarding');
+    // The longest matching suffix wins.
+    expect(m.construction(`ତା${NKU}`, WORD)?.meaning).toBe('about them');
+    expect(m.construction(KU, WORD)).toBeUndefined(); // the suffix alone is not a word
+  });
+
+  it('never shows a row marked wrong', () => {
+    const m = parseMeanings(ROW(WORD, 'no', 'wrong'));
+    expect(m.get(WORD)).toBeUndefined();
+    expect(m.all()).toEqual([]);
+  });
+
+  it('fails loudly on bad rows, with the line number', () => {
+    expect(() => parseMeanings(ROW(WORD, 'x', 'seed'))).toThrow(/meanings.tsv:1: unknown status/);
+    expect(() => parseMeanings(`${WORD}\tx\t\t\tklingon\tai\n`)).toThrow(/unknown origin/);
+    expect(() => parseMeanings(ROW(WORD, `odia ${WORD}`))).toThrow(/must be English/);
+    expect(() => parseMeanings(ROW(WORD, 'x'.repeat(57)))).toThrow(/longer than 56/);
+    expect(() => parseMeanings(ROW(WORD, 'a') + ROW(WORD, 'b'))).toThrow(/meanings.tsv:2: duplicate/);
+    expect(() => parseMeanings(ROW('nei', 'x'))).toThrow(/must be Odia/);
+    expect(() => parseMeanings(ROW(`ପ${PRECOMPOSED_RRA}`, 'x'))).toThrow();
+  });
+});

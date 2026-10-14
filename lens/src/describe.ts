@@ -9,9 +9,19 @@
  */
 
 import { canonical } from '@odia/core/normalize';
-import type { Glosses } from '@odia/core';
+import type { Glosses, Meaning } from '@odia/core';
 
-import { findModern, defAt, modernLines, shortGlossOf, tidyGloss, type Dict, type Entry } from '../../Appv2/src/dictionary/lookup.js';
+import {
+  findModern,
+  defAt,
+  meaningSource,
+  modernLines,
+  shortGlossOf,
+  tidyGloss,
+  type Dict,
+  type Entry,
+  type MeaningFinder,
+} from '../../Appv2/src/dictionary/lookup.js';
 import { originLabel } from '../../Appv2/src/dictionary/origin.js';
 import { LANGUAGE_LABEL, type LoanIndex } from '../../Appv2/src/dictionary/loans.js';
 import { romanize } from '../../Appv2/src/romanize.js';
@@ -23,6 +33,8 @@ export interface LensData {
   origin: string[] | null;
   owner: Glosses;
   loans: LoanIndex;
+  /** AI-written meanings (core/data/meanings.tsv), or null without them. */
+  ai: MeaningFinder | null;
 }
 
 export interface LensMeaning {
@@ -43,7 +55,24 @@ export interface LensCard {
   origin: string | null;
   /** "English loan word: mobile" when the word is a known loan, or null. */
   loan: string | null;
+  /** How the word is made ("ana (not) + chhaatra (student)", in Odia), or null. */
+  formation: string | null;
+  /** More senses of the first AI or owner meaning, or null. */
+  more: string | null;
 }
+
+/** The AI layer's one-word origin, as a phrase like Praharaj's origin labels. */
+const ORIGIN_PHRASE: Record<string, string> = {
+  native: 'native Odia',
+  sanskrit: 'from Sanskrit',
+  persian: 'from Persian',
+  arabic: 'from Arabic',
+  english: 'from English',
+  hindi: 'from Hindi',
+  portuguese: 'from Portuguese',
+  name: 'a name',
+  mixed: 'mixed origin',
+};
 
 /** Meanings shown at most. */
 const MAX_MEANINGS = 3;
@@ -54,6 +83,8 @@ export function describeWord(
   entry: Entry | null,
   definition: string | null,
   data: LensData,
+  /** The Odia word before this one on the page, for constructions ("...-ku nei"). */
+  previous = '',
 ): LensCard {
   const odia = canonical(word);
   const meanings: LensMeaning[] = [];
@@ -66,7 +97,19 @@ export function describeWord(
   const own = data.owner.get(odia);
   if (own) add(tidyGloss(own.meaning, false), 'meaning checked by the app owner');
 
-  if (data.modern) {
+  // Decision D-13: owner, then the AI layer (a construction with the previous
+  // word first: "over, regarding" for nei after -ku), then modern, then Praharaj.
+  const phrase = data.ai?.after(previous, odia);
+  if (phrase) add(phrase.meaning, `${meaningSource(phrase)} (in this phrase)`);
+  const ai: Meaning | undefined = data.ai?.word(odia);
+  if (ai) add(ai.meaning, meaningSource(ai));
+  const first = phrase ?? ai;
+
+  // A quick-glance card: with an owner or AI meaning for this exact word, the
+  // older layers (the modern [mt] lines, Praharaj's 1930s senses) stay in the
+  // app's full panel, so "Not" for nei never sits under "over; regarding".
+  const settled = own !== undefined || first !== undefined;
+  if (data.modern && !settled) {
     const found = findModern(data.modern.keys, key);
     if (found) {
       const line = modernLines(defAt(data.modern, found.index)).find((l) => l.tag !== 'loan');
@@ -74,7 +117,7 @@ export function describeWord(
     }
   }
 
-  if (entry && definition !== null) {
+  if (entry && definition !== null && !settled) {
     const gloss = shortGlossOf(definition);
     add(gloss === null ? null : tidyGloss(gloss, entry.how !== 'exact'), 'Praharaj dictionary (1931–40)');
   }
@@ -84,14 +127,20 @@ export function describeWord(
     ? `${LANGUAGE_LABEL[loans[0].language]}: ${loans[0].english}`
     : null;
 
-  const origin = entry && entry.how !== 'prefix' && data.origin ? originLabel(data.origin[entry.index]) : null;
+  const origin =
+    (entry && entry.how !== 'prefix' && data.origin ? originLabel(data.origin[entry.index]) : null) ??
+    (ai?.origin ? ORIGIN_PHRASE[ai.origin] ?? null : null);
+  const more = first ? first.senses.filter((x) => x.toLowerCase() !== first.meaning.toLowerCase()).slice(0, 2).join('; ') : '';
 
   return {
     word: odia,
     roman: romanize(odia),
     meanings,
-    approximateHead: entry && entry.how !== 'exact' ? entry.head : null,
+    // An owner or AI meaning is for this exact word: no "approximate" note then.
+    approximateHead: entry && entry.how !== 'exact' && !own && !first ? entry.head : null,
     origin,
     loan,
+    formation: ai?.formation || phrase?.formation || null,
+    more: more.length > 0 ? `Also: ${more}` : null,
   };
 }

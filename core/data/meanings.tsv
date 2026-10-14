@@ -1,0 +1,83 @@
+# meanings.tsv — AI-written modern meanings: the dictionary layer for words that the
+# Praharaj dictionary (1931–40) does not have, or explains with an old or wrong sense
+# for modern text (verb forms, compounds, prefixed words, names, function words).
+#
+# Written by Claude (Anthropic) in sessions for this project, from its own knowledge
+# of Odia; not copied from any dictionary. Corpus sentences were read only to pick the
+# words and their sense in use; none is stored here. Licence: MIT (this project).
+#
+# Shown after the owner's meanings (glosses.tsv) and before the modern [mt] layer and
+# Praharaj (decision D-13). Every surface labels status "ai" as AI-written and not yet
+# checked by a native speaker.
+#
+# Format: odia <TAB> meaning <TAB> senses <TAB> formation <TAB> origin <TAB> status <TAB> note
+#   odia       a word; two words "a b"; or a construction "-suffix word" (the word after
+#              a word that ends in the suffix: "-କୁ ନେଇ" is ନେଇ after ...କୁ). Canonical.
+#   meaning    one short line (at most 56 characters), the chip and the lens card
+#   senses     all senses, ";"-separated, the modern one first
+#   formation  how the word is made, in Odia with English glosses (may be empty)
+#   origin     native | sanskrit | persian | arabic | english | hindi | portuguese |
+#              name | mixed | (empty when unsure)
+#   status     ai (not yet checked) | owner (checked by the owner) | wrong (never shown)
+#   note       optional, English (Odia examples allowed)
+#
+# Checked by core/src/curation.ts parseMeanings (strict: canonical Odia, no duplicates,
+# English columns without Odia). Coverage: npx tsx tools/eval/meanings-coverage.ts
+ରଣକ୍ଷେତ୍ର	battlefield	battlefield; a scene of fierce fighting or a violent clash (figurative)	ରଣ (battle) + କ୍ଷେତ୍ର (field)	sanskrit	ai
+ପାଲଟିଲା	turned into; became	turned into, became (past, he/she/it); turned over, flipped	ପାଲଟ (turn, change) + ଇଲା (past)	native	ai	"X ପାଲଟିଲା": X turned into a battlefield etc.
+ପାଲଟି	turning into; a turn	having turned into; a turn, a somersault	ପାଲଟ (turn) + ଇ	native	ai
+ପାଲଟିଛି	has turned into	has turned into, has become	ପାଲଟ (turn) + ଇଛି (has)	native	ai
+ଉତ୍କଳ	Utkal, old name of Odisha	Utkala, the ancient name of Odisha; Odia, of Odisha (Utkal University, Utkal Divas)		name	ai
+ଅଣଛାତ୍ର	non-student; outsider	a person who is not a student; an outsider on a campus	ଅଣ (non-, not) + ଛାତ୍ର (student)	mixed	ai
+ଛାତ୍ର	student	student, pupil (male, or students in general)		sanskrit	ai
+ଛାତ୍ରୀ	student (female)	female student, pupil		sanskrit	ai
+ନେଇ	taking; with; regarding	taking, having taken; with (taking along); regarding, over (after a word ending in -ku)	ନେ (take) + ଇ (having)	native	ai	Not the Hindi "nahin".
+-କୁ ନେଇ	over; regarding	over (a dispute or matter), regarding, about, concerning	-କୁ (to) + ନେଇ (taking)	native	ai	"X କୁ ନେଇ ବିବାଦ": a dispute over X
+ଓ	and	and		native	ai
+ଏ	this; he, she	this (before a noun); he, she (spoken)		native	ai
+ମୁହାଁମୁହିଁ	face to face; clashing	face to face; confronting each other, at loggerheads, clashing	ମୁହାଁ (facing) + ମୁହିଁ (facing): doubled	native	ai
+ବିଶ୍ୱବିଦ୍ୟାଳୟ	university	university	ବିଶ୍ୱ (world, universal) + ବିଦ୍ୟାଳୟ (school)	sanskrit	ai
+ନିର୍ବାଚନ	election	election; choosing, selection		sanskrit	ai
+ପୂର୍ବରୁ	before; beforehand	before (in time), beforehand, earlier; from the east	ପୂର୍ବ (before; east) + ରୁ (from)	sanskrit	ai
+ପ୍ରବେଶ	entry; admission	entry, entrance, admission		sanskrit	ai
+ପ୍ରବେଶକୁ	entry (to, of)	entry, admission (as object: "over entry", "to the entrance")	ପ୍ରବେଶ (entry) + କୁ (to)	sanskrit	ai
+ହୋଇଛି	has happened; has become	has been, has happened, has become (it)	ହୋ (be) + ଇଛି (has)	native	ai
+ରହିଛି	remains; is (there)	has remained, is there (continuing); stays, lives	ରହ (stay) + ଇଛି (has)	native	ai
+ହୋଇଥିବା	that happened; held	that has or had been; which took place (before a noun)	ହୋ (be) + ଇଥିବା (that had)	native	ai
+ହୋଇ	being; having become; as	having been, having become; as (in "as X")	ହୋ (be) + ଇ (having)	native	ai
+ହୋଇଥିଲା	was; had happened	was, had been, had happened, took place (it)	ହୋ (be) + ଇଥିଲା (had)	native	ai
+ହୋଇଛନ୍ତି	have become (they)	have become, have been (they; or he/she, respectful)	ହୋ (be) + ଇଛନ୍ତି (have)	native	ai
+ହୋଇଥିଲେ	had been; became (they)	had been, had become (they; or he/she, respectful)	ହୋ (be) + ଇଥିଲେ (had)	native	ai
+ଥିଲେ	was; were (they)	were (they); was (he/she, respectful); had been	ଥି (be, past) + ଲେ	native	ai
+ଅଛନ୍ତି	are; is (respectful)	are (they); is (he/she, respectful)		native	ai
+କରୋନା	corona(virus)	coronavirus; COVID-19		english	ai
+କରିଥିଲେ	did; had done (they)	did, had done (they; or he/she, respectful)	କର (do) + ଇଥିଲେ (had)	native	ai
+କରିଛନ୍ତି	have done (they)	have done (they; or he/she, respectful)	କର (do) + ଇଛନ୍ତି (have)	native	ai
+କରିଛି	has done (it)	has done (it; or he/she, informal)	କର (do) + ଇଛି (has)	native	ai
+କରିଥିବା	that did; that had done	which/who had done (before a noun)	କର (do) + ଇଥିବା (that had)	native	ai
+କରିଥିଲା	did; had done (it)	did, had done (it; or he/she, informal)	କର (do) + ଇଥିଲା (had)	native	ai
+କରୁଥିବା	doing; who is doing	which/who is or was doing (before a noun)	କର (do) + ଉଥିବା (that is)	native	ai
+କରୁଛନ୍ତି	are doing	are doing (they; or he/she, respectful)	କର (do) + ଉଛନ୍ତି (are)	native	ai
+କରାଯାଇଥିଲା	was done	was done, was carried out (passive)	କରା (cause to do) + ଯାଇଥିଲା (went): passive	native	ai
+କରାଯିବ	will be done	will be done, will be carried out (passive)	କରା (cause to do) + ଯିବ (will go): passive	native	ai
+କରାଯାଉଛି	is being done	is being done, is being carried out (passive)	କରା (cause to do) + ଯାଉଛି (is going): passive	native	ai
+କଲେ	did (they)	did (they; or he/she, respectful); if (someone) does	କ (do) + ଲେ	native	ai
+କହିଥିଲେ	said; had said	said, had said (they; or he/she, respectful)	କହ (say) + ଇଥିଲେ (had)	native	ai
+ଦେଇଛନ୍ତି	have given (they)	have given (they; or he/she, respectful)	ଦେ (give) + ଇଛନ୍ତି (have)	native	ai
+ଦେଇଥିଲେ	gave; had given	gave, had given (they; or he/she, respectful)	ଦେ (give) + ଇଥିଲେ (had)	native	ai
+ଦିଆଯାଇଛି	has been given	has been given (passive)	ଦିଆ (given) + ଯାଇଛି (has gone): passive	native	ai
+ମିଳିଛି	has been received	has been received, has been found, is available	ମିଳ (be got) + ଇଛି (has)	native	ai
+ମିଳିବ	will be available	will be received, will be available, will be found	ମିଳ (be got) + ଇବ (will)	native	ai
+ରହିବ	will stay; will remain	will stay, will remain, will be (there)	ରହ (stay) + ଇବ (will)	native	ai
+ହେଉଥିବା	happening; being held	which is or was happening, being held (before a noun)	ହେ (be) + ଉଥିବା (that is)	native	ai
+ଭାବେ	as; in the manner of	as ("as a minister"); in the manner of	ଭାବ (manner) + ଏ	sanskrit	ai
+ସେହିପରି	likewise; similarly	likewise, similarly, in the same way	ସେହି (that) + ପରି (like)	native	ai
+ମୁଖ୍ୟମନ୍ତ୍ରୀ	Chief Minister	Chief Minister (head of a state government)	ମୁଖ୍ୟ (chief) + ମନ୍ତ୍ରୀ (minister)	sanskrit	ai
+ପ୍ରଧାନମନ୍ତ୍ରୀ	Prime Minister	Prime Minister	ପ୍ରଧାନ (chief) + ମନ୍ତ୍ରୀ (minister)	sanskrit	ai
+ନୂଆଦିଲ୍ଲୀ	New Delhi	New Delhi, the capital of India	ନୂଆ (new) + ଦିଲ୍ଲୀ (Delhi)	name	ai
+ବିଜେପି	BJP (political party)	BJP, Bharatiya Janata Party		name	ai
+ବିଜେଡି	BJD (Odisha political party)	BJD, Biju Janata Dal, a political party of Odisha		name	ai
+ପଟ୍ଟନାୟକ	Patnaik (surname)	Patnaik, an Odia surname		name	ai
+ପୁଲିସ	police	police		english	ai
+ଟିମ୍	team	team		english	ai
+ସାମିଲ	included; joined	included, part of; joined		persian	ai	Came into Odia through Persian or Urdu.

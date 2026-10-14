@@ -357,3 +357,14 @@ Pruned from Desh's Odia n-gram model (chat text, 30.08 M tokens).
 | Quality | phrase table pairs: 15 of 21 in the top 3, 10 first |
 | Labels | one row predicts a word labelled offensive in `labels.tsv`; the engine never predicts it (content filter) |
 | Not in | the kids edition; the sloka profile |
+
+## AI-written meanings (`meanings.tsv`, 2026-10-14)
+
+Written by Claude (Anthropic) in sessions for this project, from its own knowledge of
+Odia; not copied from Praharaj or any other dictionary. To choose words and the sense in
+use, the sessions read the IndicCorp v2 word counts (CC0; top 20,000 in
+`tools/eval/data/indiccorp-top20k.tsv`) and sentences of the in-repo news corpus
+(`tools/build-data/webcorpus/news-raw.jsonl`, scraped; read only, nothing from it is
+stored in the file). Licence: MIT (this project), like `phrases.tsv`. Every row is status
+`ai` until the owner checks it (C-13). Words on the owner's offensive or coarse list are
+never defined (`Appv2/test/meanings.test.ts`).

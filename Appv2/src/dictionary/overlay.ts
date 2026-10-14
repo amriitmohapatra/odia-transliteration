@@ -45,10 +45,14 @@
  */
 
 import { canonical } from '@odia/core/normalize';
-import { parseGlosses, type Glosses } from '@odia/core';
+import { parseGlosses, parseMeanings, type Glosses, type Meaning } from '@odia/core';
 // Owner meanings (core/data/glosses.tsv): shown first, where the dictionary's
 // first sense misleads today. Small, so bundled with the app, not lazy.
 import glossesTsv from '../../../core/data/glosses.tsv?raw';
+// AI-written modern meanings (core/data/meanings.tsv, D-13): after the owner's,
+// before the modern [mt] layer and Praharaj. Small while it is a pilot; move it
+// next to the lazy payloads when it passes ~300 KB (A-7).
+import meaningsTsv from '../../../core/data/meanings.tsv?raw';
 
 import { inflate } from './pako-inflate.js';
 import {
@@ -57,6 +61,8 @@ import {
   findModern,
   fold,
   foldKey,
+  meaningFinder,
+  meaningSource,
   MODERN_LABEL,
   modernChip,
   modernLines,
@@ -224,6 +230,20 @@ function ownerGloss(word: string): { meaning: string; status: string } | undefin
   return OWNER.get(canonical(word));
 }
 
+/* Parsed once; a bad row fails the unit test (core/test/curation.test.ts), never the app. */
+const AI = (() => {
+  try {
+    return meaningFinder(parseMeanings(meaningsTsv, 'core/data/meanings.tsv'));
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+})();
+
+function aiMeaning(word: string): Meaning | undefined {
+  return AI?.word(word);
+}
+
 /* Kids edition: words the app must never explain (labelled offensive or coarse).
  * Set by initDictionary; the default hides nothing. */
 let hidden: (word: string) => boolean = () => false;
@@ -238,6 +258,8 @@ function chipFor(word: string): string | null {
   if (hidden(word)) return null;
   const own = ownerGloss(word);
   if (own) return tidyGloss(own.meaning, false);
+  const ai = aiMeaning(word);
+  if (ai) return tidyGloss(ai.meaning, false);
   const m = modernChip(lookupModern(word));
   if (m) return m;
   const entry = lookup(word);
@@ -534,6 +556,38 @@ function browsePhrasesButton(): HTMLElement {
   return button;
 }
 
+/* The AI-written entry (D-13): meaning, other senses, how the word is made,
+ * origin, and the label that says it is not yet checked. */
+function aiBox(ai: Meaning): HTMLElement {
+  const box = document.createElement('div');
+  box.className = 'dict-modern dict-ai';
+  const add = (label: string, title: string, text: string, odia = false): void => {
+    const row = document.createElement('div');
+    row.className = 'dict-modern-row';
+    const lab = document.createElement('span');
+    lab.className = 'dict-modern-tag dict-modern-tag-ai';
+    lab.textContent = label;
+    lab.title = title;
+    const val = document.createElement('span');
+    val.className = 'dict-modern-gloss' + (odia ? ' odia' : '');
+    if (odia) val.lang = 'or';
+    val.textContent = text;
+    row.append(lab, val);
+    box.appendChild(row);
+  };
+  const source = meaningSource(ai);
+  add('meaning', source, ai.meaning);
+  const more = ai.senses.filter((x) => x.toLowerCase() !== ai.meaning.toLowerCase());
+  if (more.length) add('senses', source, more.join('; '));
+  if (ai.formation) add('made of', source, ai.formation, true);
+  if (ai.note) add('note', source, ai.note);
+  const by = document.createElement('p');
+  by.className = 'dict-hint dict-ai-source';
+  by.textContent = source.charAt(0).toUpperCase() + source.slice(1) + '.';
+  box.appendChild(by);
+  return box;
+}
+
 function entryBlock(word: string, num: number | null, entry: Entry | null, modern: ModernEntry | null): HTMLElement {
   const block = document.createElement('section');
   block.className = 'dict-entry';
@@ -555,7 +609,8 @@ function entryBlock(word: string, num: number | null, entry: Entry | null, moder
   const tag = document.createElement('span');
   tag.className = 'dict-tag';
   const own = ownerGloss(word);
-  if (!entry && !modern && !own) {
+  const ai = hidden(word) ? undefined : aiMeaning(word);
+  if (!entry && !modern && !own && !ai) {
     tag.textContent = NO_ENTRY;
     tag.classList.add('dict-tag-none');
   } else if (entry && entry.how === 'stem') {
@@ -594,6 +649,8 @@ function entryBlock(word: string, num: number | null, entry: Entry | null, moder
     obox.appendChild(row);
     block.appendChild(obox);
   }
+
+  if (ai) block.appendChild(aiBox(ai));
 
   if (modern && modern.lines.length) {
     const mbox = document.createElement('div');
@@ -934,7 +991,8 @@ function onSearch(): void {
     const modern = blocked || state !== 'ready' ? null : lookupModern(word);
     const own = blocked ? undefined : ownerGloss(word);
     const loan = !blocked && LOANS.byOdia.has(word);
-    add('Odia word', entry || modern || own || loan ? [withLoanNote(entryBlock(word, null, entry, modern), word)] : []);
+    const ai = !blocked && aiMeaning(word);
+    add('Odia word', entry || modern || own || loan || ai ? [withLoanNote(entryBlock(word, null, entry, modern), word)] : []);
     add(`Words starting with \u201c${word}\u201d`, prefixSection(word));
     add('Phrases', phraseSection(q));
   } else {

@@ -20,3 +20,15 @@ export function wordAt(text: string, offset: number): { start: number; end: numb
   // A lone sign (a vowel sign or virama with no letter) is not a word.
   return /[\u0B05-\u0B39\u0B5C-\u0B61\u0B71]/.test(word) ? { start, end, word } : null;
 }
+
+/**
+ * The Odia word just before position `start`, separated from it by one space
+ * (or a non-breaking space) only; '' otherwise. A danda, a comma or a line
+ * break between them means a new phrase, so no word is returned.
+ */
+export function wordBefore(text: string, start: number): string {
+  const gap = text.charAt(start - 1);
+  if (gap !== ' ' && gap !== '\u00A0') return '';
+  const found = wordAt(text, start - 2);
+  return found !== null && found.end === start - 1 ? found.word : '';
+}

@@ -13,15 +13,16 @@
  * takes to unpack the whole 24 MB text.
  */
 
-import { parseGlosses } from '@odia/core';
+import { parseGlosses, parseMeanings } from '@odia/core';
 import { canonical } from '@odia/core/normalize';
 
-import { findEntry, foldKey, parsePayload, type Dict } from '../../Appv2/src/dictionary/lookup.js';
+import { findEntry, foldKey, meaningFinder, parsePayload, type Dict } from '../../Appv2/src/dictionary/lookup.js';
 import { cleanDefinition } from '../../Appv2/src/dictionary/clean.js';
 import { parseOrigin } from '../../Appv2/src/dictionary/origin.js';
 import { parseLoans } from '../../Appv2/src/dictionary/loans.js';
 import { inflate } from '../../Appv2/src/dictionary/pako-inflate.js';
 import glossesTsv from '../../core/data/glosses.tsv';
+import meaningsTsv from '../../core/data/meanings.tsv';
 import loansTsv from '../../Appv2/src/dictionary/loans.tsv';
 
 import { describeWord, type LensCard, type LensData } from './describe.js';
@@ -70,7 +71,13 @@ function loadExtras(): Promise<LensData> {
     } catch {
       origin = null;
     }
-    return { modern, origin, owner: parseGlosses(glossesTsv, 'core/data/glosses.tsv'), loans: parseLoans(loansTsv) };
+    let ai: LensData['ai'] = null;
+    try {
+      ai = meaningFinder(parseMeanings(meaningsTsv, 'core/data/meanings.tsv'));
+    } catch {
+      ai = null; // a broken file must not take the lens down; the unit tests catch it
+    }
+    return { modern, origin, owner: parseGlosses(glossesTsv, 'core/data/glosses.tsv'), loans: parseLoans(loansTsv), ai };
   })();
   return extras;
 }
@@ -87,19 +94,19 @@ async function definition(i: number): Promise<string> {
   return cleanDefinition((await chunk)[i - n * index.chunk] ?? '');
 }
 
-async function lookup(word: string): Promise<LensCard | null> {
+async function lookup(word: string, previous: string): Promise<LensCard | null> {
   const odia = canonical(word);
   const key = foldKey(odia);
   if (key.length === 0) return null;
   const [{ keys: k }, data] = await Promise.all([loadKeys(), loadExtras()]);
   const entry = findEntry(k, key);
   const def = entry ? await definition(entry.index) : null;
-  return describeWord(odia, key, entry, def, data);
+  return describeWord(odia, key, entry, def, data, previous);
 }
 
 chrome.runtime.onMessage.addListener((message: LookupRequest, sender, sendResponse: (r: LookupResponse) => void) => {
   if (message?.type !== LOOKUP || sender.id !== chrome.runtime.id) return false;
-  lookup(message.word).then(
+  lookup(message.word, message.previous ?? '').then(
     (card) => sendResponse({ ok: true, card }),
     (error: unknown) => sendResponse({ ok: false, error: String(error) }),
   );
