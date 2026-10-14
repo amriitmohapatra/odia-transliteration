@@ -1,0 +1,54 @@
+# C-13 sample, batch 3: 50 AI-written meanings picked at random from the batch 3 rows of core/data/meanings.tsv.
+# For each row, fill "verdict": ok, wrong, or fix. For "fix", write the better meaning in "correction".
+# Leave a row empty if you are not sure. Send the file back; Claude applies it (ok -> status owner).
+odia	meaning	senses	origin	verdict	correction
+ଯାଇଛନ୍ତି	have gone (they; or he/she, respectful)	have gone, went (they; or he/she, respectful); after another verb: have become, have ended up (doing)	native		
+କହିଲା	said (he/she/it)	said, told (he/she/it; simple past)	native		
+ପଡ଼ିଥିଲା	had fallen; had to (after -ibaku)	had fallen, fell (he/she/it); had to (after a verb in -ibaku); was lying; in compounds marks a sudden event (overflowed, broke out)	native		
+ଲକଡାଉନ୍	lockdown	lockdown (as in the Covid-19 lockdown)	english		
+କହୁଛନ୍ତି	are saying (they; or he/she, respectful)	are saying, say, are telling (they; or he/she, respectful; present continuous)	native		
+ଜଣାଯାଇଛି	it is learnt; it has been reported	it is learnt, it has come to be known, it has been reported; has been informed (by letter)	native		
+କିମି	km (kilometre)	km, short for kilometre	english		
+ଲଘୁଚାପ	low pressure (area), weather system	low-pressure area (weather), a system that can bring rain or grow into a depression or cyclone	sanskrit		
+କରୁ	(we) do; let (him/it) do	(we) do (present, first person plural); let (him/her/it) do, should do (wish); doing (in "karu karu", while doing)	native		
+ରଖିଥିବା	(who/which) had kept; kept	who/which had kept, having kept; kept, placed (relative participle)	native		
+ଜିଲ୍ଲାପାଳଙ୍କ	of the (district) collector	of the district collector (district magistrate); the collector's	mixed		
+ଚଳିତବର୍ଷ	this year, the current year	this year, the current year	sanskrit		
+କରାଯାଉ	let (it) be done; should be done	let it be done, should be done (passive, wish or demand)	native		
+ସେଣ୍ଟର	centre	centre (a place or office: control centre, coaching centre)	english		
+ଓଡିଶାରେ	in Odisha	in Odisha, in the state of Odisha	name		
+କୋରୋନା	corona, COVID-19	coronavirus, COVID-19 (the disease or the pandemic)	english		
+ମାଝୀ	Majhi (surname)	Majhi, a surname (Chief Minister Mohan Majhi); boatman, helmsman (older sense)	name		
+କରିପାରିବ	will be able to do; can do (he/she/it)	will be able to do, can do (future; he/she/it, or you, familiar)	native		
+ଆଗେଇ	advancing; taking forward	going ahead, advancing, moving forward; taking forward (with 'take')	native		
+ନେଇଥିଲା	took; had taken (he/she/it)	took, had taken (past; he/she/it); took (someone) to (a place)	native		
+ଊର୍ଦ୍ଧ୍ୱ	more than, above; upward	more than, above, over (40 and above); upward, upper, high	sanskrit		
+ଚାଇନା	China	China, the country; china, porcelain	name		
+ପରିପ୍ରେକ୍ଷୀରେ	in the context of; in view of	in the context of, in view of, against the background of	sanskrit		
+ଡଃ	Dr. (doctor, title)	Dr., short for doctor: a title before a name (a physician or a PhD holder)	english		
+ଇଣ୍ଡିଆର	of India; India's (Team India's)	of India, India's (in names: Team India's)	name		
+ଷ୍ଟାର	star (hotel, player, film star)	star (celebrity, film star, star player); star (rating, as in star hotel); star (in the sky, rare)	english		
+ବିଏମସି	BMC, Bhubaneswar Municipal Corporation	BMC, Bhubaneswar Municipal Corporation, the city body of Bhubaneswar; (elsewhere) other bodies with these initials	name		
+ଟୋକିଓ	Tokyo, capital of Japan	Tokyo, the capital of Japan; the Tokyo Olympics (2021)	name		
+ଯିବେ	will go (they; or he/she, respectful)	will go (future; they, or he/she respectful); will leave	native		
+ଦୃଢ	firm, strong, determined	firm, strong, solid; determined, resolute (effort, will); tough (rival)	sanskrit		
+ବର୍ତମାନ	present; now, currently	present, current; now, at present, currently; so far, till now	sanskrit		
+ଅପରେସନ	operation	operation (military, police or rescue); surgical operation; working of a machine or service	english		
+କରୋନାକୁ	to corona; against corona (as object)	corona (COVID-19) as object: against corona, to corona (fighting corona, defeating corona)	english		
+ବିଡିଓ	BDO, Block Development Officer	BDO, Block Development Officer, the officer who heads a block	english		
+ଲାଇନ	line	line (a queue; a row; a railway or power line); line of a text	english		
+ରଂଜନ	Ranjan (name)	Ranjan, a part of men's names (Binay Ranjan, Sudhi Ranjan)	name		
+ବଲିଉଡର	of Bollywood; Bollywood's	of Bollywood, Bollywood's (the Hindi film industry)	english		
+ଅମିତାଭ	Amitabh (name)	Amitabh, a man's name (Amitabh Bachchan, Hindi film actor); boundless light (a name of the Buddha)	name		
+ଷ୍ଟାଡିୟମରେ	in the stadium; at the stadium	in the stadium, at the stadium	english		
+ପାଇଲେ	got; received (they; or he/she, resp.)	got, received, found (they; or he/she, respectful); if (one) gets (conditional)	native		
+ରାକେଶ	Rakesh (male given name)	Rakesh, a male given name	name		
+ନେଉଥିବା	that is taking; while taking	that is taking, who takes (present participle); while taking (with -bele)	native		
+ବିଏମ୍ସି	BMC, Bhubaneswar Municipal Corporation	BMC, Bhubaneswar Municipal Corporation, the city body of Bhubaneswar; also Brihanmumbai Municipal Corporation (Mumbai)	name		
+ଗୁଡିକୁ	the (plural) ... (object); to the ...	plural marker with object/to: the (things or days) as object, to the ...; written apart from its noun	native		
+ଉଠିଛି	has risen; has arisen (he/she/it)	has risen, has got up (he/she/it); has arisen, has been raised (a question, a demand)	native		
+ବିଜେଡ଼ି	BJD, a political party of Odisha	BJD, Biju Janata Dal, a regional political party of Odisha	name		
+ସୋନୁ	Sonu (pet name or given name)	Sonu, a common pet name or given name	name		
+ବଜେଟ	budget	budget; (low) cost, money available	english		
+ସୁନ୍ଦରଗଡ	Sundargarh, a town and district of Odisha	Sundargarh, a town and district in north-western Odisha	name		
+ଯେଉଁଥିପାଇଁ	for which; because of which, so	for which, because of which, which is why; so that	native		

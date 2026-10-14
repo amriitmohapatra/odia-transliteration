@@ -780,3 +780,302 @@
 ଆକାରରେ	in the form of; in size	in the form of, as (as prize money); in shape, in size	ଆକାର (shape, form) + ରେ (in)	sanskrit	ai	ପୁରସ୍କାର ରାଶି ଆକାରରେ: as prize money.
 ଖୁସି	happiness, joy; happy	happiness, joy; happy, glad, pleased		persian	ai	
 ପରିଷଦ	council	council, board (Council of Ministers, Board of Secondary Education); assembly		sanskrit	ai	
+
+# Batch 3 (2026-10-14): the 300 most frequent remaining words with no meaning or only a
+# wrong prefix match (IndicCorp top 20,000; numbers excluded, lookup.ts reads them):
+# verb forms, names, English loans, spelling variants. Written by 5 agents from news
+# contexts; every row reviewed by a separate agent (11 fixes: 1 wrong origin, 10 minor).
+# Fragments and the single letters i and da skipped.
+ଯାଇଛନ୍ତି	have gone (they; or he/she, respectful)	have gone, went (they; or he/she, respectful); after another verb: have become, have ended up (doing)	ଯା (go) + ଇଛନ୍ତି (have: present perfect, plural/respectful)	native	ai	
+କରୁଥିଲା	was doing (he/she/it)	was doing, used to do (he/she/it; past continuous)	କର (do) + ଉଥିଲା (was ...-ing)	native	ai	
+ସେନେଇ	about that; in that regard	about that, in that regard, on that matter (refers back to the preceding clause)	ସେ (that) + ନେଇ (regarding)	native	ai	"କିଏ ହେବେ ସେନେଇ ସସପେନ୍ସ": suspense over who will be.
+ପାଇଛନ୍ତି	have got, received (they; or he/she, resp.)	have got, have received, have found, have won (they; or he/she, respectful)	ପା (get) + ଇଛନ୍ତି (have: present perfect, plural/respectful)	native	ai	
+ଜମ୍ମୁ	Jammu, city and region in Jammu and Kashmir	Jammu, a city and region in the union territory of Jammu and Kashmir		name	ai	
+କହିଲା	said (he/she/it)	said, told (he/she/it; simple past)	କହ (say) + ଇଲା (past)	native	ai	
+ପଡ଼ିଥିଲା	had fallen; had to (after -ibaku)	had fallen, fell (he/she/it); had to (after a verb in -ibaku); was lying; in compounds marks a sudden event (overflowed, broke out)	ପଡ଼ (fall) + ଇଥିଲା (had)	native	ai	"କାଟିବାକୁ ପଡ଼ିଥିଲା" = had to be cut.
+ଚର୍ଚ୍ଚାରେ	in the news; being talked about	in discussion, in the news, being talked about	ଚର୍ଚ୍ଚା (discussion) + ରେ (in)	sanskrit	ai	
+ସକ୍ରୀୟ	active	active, working, in operation (of a person, group, system or weather)		sanskrit	ai	Common misspelling of ସକ୍ରିୟ (short i).
+ଲକଡାଉନ୍	lockdown	lockdown (as in the Covid-19 lockdown)		english	ai	
+ଜଣାଇଥିଲେ	had conveyed, expressed (they; or he/she, resp.)	had informed, had conveyed, expressed (thanks, a demand, a view) (they; or he/she, respectful)	ଜଣା (make known) + ଇଥିଲେ (had)	native	ai	"ଧନ୍ୟବାଦ ଜଣାଇଥିଲେ" = thanked.
+ଶୁଭାରମ୍ଭ	inauguration, launch	inauguration, launch, formal start (of a scheme, event, service); an auspicious beginning	ଶୁଭ (auspicious) + ଆରମ୍ଭ (beginning)	sanskrit	ai	"ଶୁଭାରମ୍ଭ କରିବା" = to inaugurate, launch.
+କହୁଛନ୍ତି	are saying (they; or he/she, respectful)	are saying, say, are telling (they; or he/she, respectful; present continuous)	କହ (say) + ଉଛନ୍ତି (are ...-ing)	native	ai	
+ବିଜେଡିର	of the BJD, BJD's	of the BJD (Biju Janata Dal), a political party of Odisha	ବିଜେଡି (BJD) + ର (of)	name	ai	
+ଟାର୍ଗେଟ	target	target; to target, attack (with karibaa)		english	ai	
+ଜଣାଯାଇଛି	it is learnt; it has been reported	it is learnt, it has come to be known, it has been reported; has been informed (by letter)	ଜଣା (known) + ଯାଇଛି (has gone): passive	native	ai	News phrase: "... ବୋଲି ଜଣାଯାଇଛି" = it is learnt that ....
+ଟ୍ରେନ	train	train (railway)		english	ai	
+କରାଯାଇପାରିବ	can be done	can be done, may be carried out (passive, future of ability)	କରା (cause to do) + ଯାଇ (going) + ପାରିବ (will be able): passive	native	ai	
+ପାରାଦୀପ	Paradip, port town in Odisha	Paradip, a major port town in Jagatsinghpur district, Odisha		name	ai	
+କିମି	km (kilometre)	km, short for kilometre	କି (kilo) + ମି (metre): abbreviation	english	ai	Short for କିଲୋମିଟର.
+ଲଘୁଚାପ	low pressure (area), weather system	low-pressure area (weather), a system that can bring rain or grow into a depression or cyclone	ଲଘୁ (light, low) + ଚାପ (pressure)	sanskrit	ai	
+ଓଭରରେ	in (the) overs (cricket)	in the overs, in ... overs (cricket); in the over	ଓଭର (over) + ରେ (in)	english	ai	"ନିର୍ଦ୍ଧାରିତ ଓଭରରେ" = in the allotted overs.
+ଉପସ୍ଥାପନ	presentation; tabling (a bill)	presentation, presenting; tabling, introducing (a bill, a report); putting forward		sanskrit	ai	"ଉପସ୍ଥାପନ କରିବା" = to present, to table.
+କରୁ	(we) do; let (him/it) do	(we) do (present, first person plural); let (him/her/it) do, should do (wish); doing (in "karu karu", while doing)	କର (do) + ଉ (present / optative)	native	ai	"ଆମେ ବିଶ୍ୱାସ କରୁ" = we believe.
+ଦୁଇଜଣ	two people	two people, two persons	ଦୁଇ (two) + ଜଣ (person, counter for people)	native	ai	
+ନିଆଯିବ	will be taken	will be taken (passive future): a step will be taken, will be carried	ନିଆ (taken) + ଯିବ (will go): passive	native	ai	"ପଦକ୍ଷେପ ନିଆଯିବ" = steps will be taken.
+ଧିରେ	slowly; gradually	slowly, gradually; softly ("dhire dhire" = little by little)		sanskrit	ai	Variant spelling of ଧୀରେ (long i).
+ଛାତ୍ରଛାତ୍ରୀଙ୍କ	of (the) students	of the students, students' (boys and girls)	ଛାତ୍ର (male student) + ଛାତ୍ରୀ (female student) + ଙ୍କ (of, plural/respectful)	sanskrit	ai	
+ଅବକାରୀ	excise (department)	excise; the excise department (liquor and narcotics control); excise duty		persian	ai	From Persian aabkaari (liquor trade).
+ରଖିଥିବା	(who/which) had kept; kept	who/which had kept, having kept; kept, placed (relative participle)	ରଖ (keep) + ଇଥିବା (having ...-ed: relative)	native	ai	
+ସେମିତି	like that; in that way	like that, in that way, so; such (with kichhi: anything like that)		native	ai	
+ଜିଲ୍ଲାପାଳଙ୍କ	of the (district) collector	of the district collector (district magistrate); the collector's	ଜିଲ୍ଲା (district) + ପାଳ (keeper) + ଙ୍କ (of, respectful)	mixed	ai	
+ଲାଗିଲା	began (to); struck, hit; felt	began to (after a verb in -ibaku); struck, hit, got (a shock, a blow); was attached; felt, seemed	ଲାଗ (attach, start) + ଇଲା (past)	native	ai	"ମିସ୍ତ୍ରୀଙ୍କୁ ଲାଗିଲା କରେଣ୍ଟ" = the carpenter got an electric shock.
+ବିକ୍ଷୋଭ	protest, agitation	protest, agitation, demonstration; unrest, turmoil		sanskrit	ai	"ବିକ୍ଷୋଭ ପ୍ରଦର୍ଶନ" = staging a protest.
+ଚଳିତବର୍ଷ	this year, the current year	this year, the current year	ଚଳିତ (current) + ବର୍ଷ (year)	sanskrit	ai	
+କରାଯାଉ	let (it) be done; should be done	let it be done, should be done (passive, wish or demand)	କରା (cause to do) + ଯାଉ (let go): passive	native	ai	Used in demands: "... କରାଯାଉ ବୋଲି ଦାବି".
+କରାଗଲା	was done	was done, was carried out (passive, simple past)	କରା (cause to do) + ଗଲା (went): passive	native	ai	"ଉଦ୍ଧାର କରାଗଲା" = was rescued.
+ଯେକୌଣସି	any, any ... whatever	any, any at all, whatever, whichever	ଯେ (which) + କୌଣସି (some, any)	native	ai	
+ବାରିପଦା	Baripada, town in Odisha	Baripada, the headquarters town of Mayurbhanj district, Odisha		name	ai	
+ନେଲେ	took (they; or he/she, resp.); if taken	took (they; or he/she, respectful; simple past); if (one) takes, on taking	ନେ (take) + ଲେ (past plural / if)	native	ai	"ଦାୟିତ୍ୱ ନେଲେ" = took charge.
+ଡକ୍ଟର	doctor; Dr. (title)	doctor; Dr., title before a name (medical or PhD)		english	ai	
+ଫେରିଛନ୍ତି	have returned (they; or he/she, resp.)	have returned, came back (they; or he/she, respectful); (cricket) went back to the pavilion	ଫେର (return) + ଇଛନ୍ତି (have: present perfect, plural/respectful)	native	ai	
+ଚିକିତ୍ସାଧୀନ	under treatment	under (medical) treatment, being treated	ଚିକିତ୍ସା (treatment) + ଅଧୀନ (under)	sanskrit	ai	"ଚିକିତ୍ସାଧୀନ ଅବସ୍ଥାରେ" = while under treatment.
+ଲାଗିଥିବା	installed, fitted; (which) broke out	installed, fitted, attached (of a camera, sign); which had broken out (fire); engaged in, busy with (relative participle); going on, under way (lagithiba bele: while ... is going on)	ଲାଗ (attach) + ଇଥିବା (having ...-ed: relative)	native	ai	
+ହାଜର	present; appearing (before police, court)	present, in attendance; appearing (before the police, a court, an office)		arabic	ai	"ହାଜର ହେବା" = to appear, report.
+ଚାଲିଥିଲା	was going on	was going on, was running, was under way; had walked, had gone	ଚାଲ (go on, walk) + ଇଥିଲା (had)	native	ai	
+ଏସ	S (letter), an initial before a name	S, the English letter, used as an initial (S. Jaishankar); part of an abbreviation (HAM-S)		english	ai	
+ଡ୍ରଗ୍ସ	drugs (narcotics)	drugs, narcotics; medicines (rare)		english	ai	
+ମୁତୟନ	deployed; deployment	deployed, posted, stationed (police, forces); deployment		arabic	ai	"ଫୋର୍ସ ମୁତୟନ" = force deployed. Came into Odia through Persian or Urdu.
+ମିଶନ	mission	mission (a campaign or scheme; a diplomatic mission; a space mission)		english	ai	
+ସେଣ୍ଟର	centre	centre (a place or office: control centre, coaching centre)		english	ai	
+ହୋଇଯାଇଥିଲେ	had become, had got (they; or he/she, resp.)	had become, had got (they; or he/she, respectful); with pharaar: had run away	ହୋଇ (being) + ଯାଇଥିଲେ (had gone)	native	ai	"ଫେରାର ହୋଇଯାଇଥିଲେ" = had absconded.
+ଚଢାଉ	raid	raid (by police or officials); attack, assault; climbing (old)		native	ai	Usual spelling ଚଢ଼ାଉ (with nukta).
+ଗ୍ୟାସ	gas	gas (cooking gas, LPG; natural gas; tear gas); gas, flatulence		english	ai	
+କରିପାରେ	can do; may do (he/she/it)	can do, may do, is able to do (he/she/it, or I); may bring, may cause	କରି (having done) + ପାରେ (can)	native	ai	
+ଏସପି	SP, Superintendent of Police	SP, Superintendent of Police, the head of a district's police; SP, Samajwadi Party (a political party)		english	ai	Usually the police rank in Odisha news.
+ଦେଖାଦେଇଛି	has appeared; has arisen (a problem)	has appeared, has shown up; has arisen, has broken out (a problem, terror, a disease)	ଦେଖା (sight, appearance) + ଦେଇଛି (has given)	native	ai	ସମସ୍ୟା ଦେଖାଦେଇଛି: a problem has arisen.
+ପହଞ୍ଚିଥିଲେ	reached, arrived (they; or he/she, respectful)	reached, arrived, had reached (past; they, or he/she, respectful)	ପହଞ୍ଚ (reach) + ଇଥିଲେ (had)	native	ai	
+ଓଡିଶାରେ	in Odisha	in Odisha, in the state of Odisha	ଓଡିଶା (Odisha) + ରେ (in)	name	ai	Spelling without the nukta; the standard spelling has ଡ଼.
+ଓଡ଼ିଶାଲାଇଭ୍	OdishaLive, a news website	OdishaLive, an Odia news website (in bylines: OdishaLive Bureau)	ଓଡ଼ିଶା (Odisha) + ଲାଇଭ୍ (live)	name	ai	
+ଏମ୍	M (the English letter, in initials)	M, the English letter, as in initials and abbreviations (M. K., MKCG)		english	ai	ଏମ୍ କେସିଜି: MKCG Medical College, Berhampur.
+ଦେଉଥିବା	giving; who is or was giving	giving, who is or was giving (participle); raising (slogans), paying (tax), providing	ଦେ (give) + ଉଥିବା (who is ...ing)	native	ai	
+ହେଲାଣି	has now become; it has been (time)	has now become, has already happened; it has been (a stretch of time) by now	ହେଲା (became) + ଣି (now, already)	native	ai	ବର୍ଷେ ହେଲାଣି: it has been a year now.
+ରମେଶ	Ramesh (a man's name)	Ramesh, a man's given name; (literary) Vishnu, lord of Lakshmi	ରମା (Lakshmi) + ଈଶ (lord)	name	ai	
+ମେଡିକାଲରେ	at the medical college hospital	in or at the medical college hospital; in medical (studies, the medical field)	ମେଡିକାଲ (medical college) + ରେ (in, at)	english	ai	In Odia news 'medical' usually means a medical college hospital.
+ଏସ୍ପି	SP, Superintendent of Police	SP, Superintendent of Police, the head of a district's police; SP, Samajwadi Party (a political party)		english	ai	Spelling with a halant; also written ଏସପି.
+ଖାନ୍	Khan (surname)	Khan, a surname (Salman Khan); khan, a title (old: chief, lord)		name	ai	
+ପଏଣ୍ଟ	point	point (score in a game; points table); point, item (in an argument or list); point, spot (a place)		english	ai	
+କୋରୋନା	corona, COVID-19	coronavirus, COVID-19 (the disease or the pandemic)		english	ai	
+ଫେରାଇ	returning (something); bringing back	having returned (something), giving back; bringing back (with 'bring'), sending back (with 'give')	ଫେରା (cause to return) + ଇ (having)	native	ai	ଫେରାଇ ଆଣିବା: to bring back.
+ହରାଇଛନ୍ତି	have lost (they; or he/she, respectful)	have lost (they; or he/she, respectful): a life, a job, a match, money	ହରା (lose) + ଇଛନ୍ତି (have)	native	ai	ପ୍ରାଣ ହରାଇଛନ୍ତି: have lost their life, died.
+ତାହେଲେ	then; in that case	then, in that case, if so (after an if-clause, also a negative one)	ତା (that) + ହେଲେ (if it is)	native	ai	Also written ତା'ହେଲେ.
+ପଠାଇ	sending; having sent	sending, having sent, dispatched; sent off (to jail, to hospital)	ପଠା (send) + ଇ (having)	native	ai	ଜେଲ ପଠାଇ ଦିଆଯାଇଛି: has been sent to jail.
+ବିଶେଷକରି	especially, particularly	especially, particularly, in particular	ବିଶେଷ (special) + କରି (making)	mixed	ai	
+ଦେଉଛି	is giving (he/she/it)	is giving, gives (present continuous; he/she/it, or I); is causing (pain, trouble)	ଦେ (give) + ଉଛି (is ...ing)	native	ai	
+ପାରନ୍ତି	can; are able to (they; or he/she, respectful)	can, are able to (present; they, or he/she, respectful); after a verb: can do it	ପାର (be able) + ଅନ୍ତି (they)	native	ai	Follows a verb: ଚୋବାଇ ପାରନ୍ତି, can chew.
+ମନ୍ତ୍ରାଳୟ	ministry	ministry (a department of a government)	ମନ୍ତ୍ର (counsel) + ଆଳୟ (abode, house)	sanskrit	ai	
+ମୌସୁମୀ	monsoon; seasonal	monsoon (monsoon wind, monsoon rain); seasonal; Mausumi, a woman's name		arabic	ai	From Arabic mausim (season), through Persian or Urdu.
+ପିନ୍ଧି	wearing; having put on	wearing, having put on (clothes, shoes, a garland)	ପିନ୍ଧ (wear) + ଇ (having)	native	ai	
+ଟିକେଟ	ticket; party ticket (nomination)	ticket (travel, film); party ticket, nomination to contest an election		english	ai	
+ନୂଆପଡ଼ା	Nuapada, a district of Odisha	Nuapada, a district in western Odisha and its headquarters town; new hamlet (a common village name)	ନୂଆ (new) + ପଡ଼ା (hamlet, quarter)	name	ai	
+ରହିଲେ	stayed; remained (they; or he/she, respectful)	stayed, remained; kept (doing) (past; they, or he/she, respectful); if (one) stays	ରହ (stay) + ଇଲେ (past; if)	native	ai	ଜଗି ରହିଲେ: kept watch.
+ଉଦଘାଟନ	inauguration	inauguration, opening (ceremony); uncovering, revealing (literary)	ଉତ୍ (up) + ଘାଟନ (opening)	sanskrit	ai	Also spelled ଉଦ୍‌ଘାଟନ.
+ଲାଲ	red	red; Lal, part of names (Lal Bahadur)		persian	ai	
+ଭାଇରାଲ୍	viral (spreading widely online)	viral (a video or post spreading widely online); viral (fever, infection)		english	ai	
+ମାଝୀ	Majhi (surname)	Majhi, a surname (Chief Minister Mohan Majhi); boatman, helmsman (older sense)		name	ai	
+କପୁର	Kapoor (surname)	Kapoor, a surname (film actors Ranbir Kapoor, Kareena Kapoor); camphor (colloquial)		name	ai	Camphor is more often written କର୍ପୂର.
+ହୋଇଥାନ୍ତି	are, become (habitually; they, or respectful)	are, become, happen (habitual; they, or he/she, respectful)	ହୋ (be) + ଇଥାନ୍ତି (habitual, they)	native	ai	ରଥାରୂଢ଼ ହୋଇଥାନ୍ତି: (each year) mounts the chariot.
+ପ୍ରଶିକ୍ଷଣ	training	training, coaching (sports, job or professional training)	ପ୍ର (forth) + ଶିକ୍ଷଣ (teaching)	sanskrit	ai	
+ଦିଅନ୍ତି	give (they; or he/she, respectful)	give, offer (present or habitual; they, or he/she, respectful)	ଦିଅ (give) + ଅନ୍ତି (they)	native	ai	
+କରିପାରିବ	will be able to do; can do (he/she/it)	will be able to do, can do (future; he/she/it, or you, familiar)	କରି (having done) + ପାରିବ (will be able)	native	ai	With ନାହିଁ: cannot do.
+କରାଇଥିଲେ	had (it) done; made (someone) do (they)	caused to be done, had (something) done, made (someone) do (past; they, or he/she, respectful)	କରା (cause to do) + ଇଥିଲେ (had)	native	ai	
+ଆଗେଇ	advancing; taking forward	going ahead, advancing, moving forward; taking forward (with 'take')	ଆଗ (front, ahead) + ଏଇ (verb-forming; having ...ed)	native	ai	ଆଗେଇ ନେଇଥିଲେ: took (it) forward.
+ପଡ଼ିଥିବା	lying (left lying); that had fallen	lying (left lying), that has or had fallen; that has occurred	ପଡ଼ (fall, lie) + ଇଥିବା (that had)	native	ai	ପଡ଼ିଥିବା ଦେଖିବାକୁ ମିଳିଛି: was seen lying.
+ନେଇଥିଲା	took; had taken (he/she/it)	took, had taken (past; he/she/it); took (someone) to (a place)	ନେ (take) + ଇଥିଲା (had)	native	ai	
+ପ୍ରଧାନମନ୍ତ୍ରୀଙ୍କ	the Prime Minister's	the Prime Minister's, of the Prime Minister (respectful)	ପ୍ରଧାନମନ୍ତ୍ରୀ (Prime Minister) + ଙ୍କ (of, respectful)	sanskrit	ai	ପ୍ରଧାନମନ୍ତ୍ରୀଙ୍କ ପାଖକୁ: to the Prime Minister.
+ପାଇପାରିବେ	will be able to get (they; or respectful)	can get, will be able to get or receive (future; they, or he/she/you, respectful)	ପାଇ (having got) + ପାରିବେ (will be able)	native	ai	With ନାହିଁ: will not get.
+ଊର୍ଦ୍ଧ୍ୱ	more than, above; upward	more than, above, over (40 and above); upward, upper, high		sanskrit	ai	୪୦ରୁ ଊର୍ଦ୍ଧ୍ୱ: more than 40.
+ରହୁଥିଲେ	used to live; were staying (they)	lived, used to live, were living or staying (past continuous; they, or he/she, respectful)	ରହ (stay, live) + ଉଥିଲେ (was ...ing)	native	ai	
+ଚାଇନା	China	China, the country; china, porcelain		name	ai	Also called ଚୀନ.
+ଅର୍ଥମନ୍ତ୍ରୀ	finance minister	finance minister	ଅର୍ଥ (money, finance) + ମନ୍ତ୍ରୀ (minister)	sanskrit	ai	
+ପରିପ୍ରେକ୍ଷୀରେ	in the context of; in view of	in the context of, in view of, against the background of	ପରିପ୍ରେକ୍ଷୀ (context, perspective) + ରେ (in)	sanskrit	ai	ଏହି ପରିପ୍ରେକ୍ଷୀରେ: in this context.
+ସିରିଜ୍	series	series (a cricket series; a TV or web series; a product series)		english	ai	
+କଥାଚିତ୍ରଟିର	of the film (feature film)	of the (this) feature film, the film's	କଥାଚିତ୍ର (feature film) + ଟି (the) + ର (of)	sanskrit	ai	No context seen; ଟି marks a definite thing.
+ଡଃ	Dr. (doctor, title)	Dr., short for doctor: a title before a name (a physician or a PhD holder)		english	ai	The visarga serves as the abbreviation dot.
+ଆଫଗାନିସ୍ତାନ	Afghanistan	Afghanistan, the country; the Afghanistan cricket team		name	ai	
+ଯୋଡ଼ି	joining, linking; pair	joining, having joined or linked (X with Y); pair, couple (noun)	ଯୋଡ଼ (join) + ଇ (having)	native	ai	ସହିତ ଯୋଡ଼ି ଦେଖୁଛନ୍ତି: are linking (it) with.
+ଅର୍ଥନୈତିକ	economic	economic, financial	ଅର୍ଥନୀତି (economics) + ଇକ (relating to)	sanskrit	ai	
+ଇଣ୍ଡିଆର	of India; India's (Team India's)	of India, India's (in names: Team India's)	ଇଣ୍ଡିଆ (India) + ର (of)	name	ai	
+ଭାଜପା	BJP, Bharatiya Janata Party	BJP, the Bharatiya Janata Party, a national political party		name	ai	Hindi short form (Bha-Ja-Pa); also written ବିଜେପି.
+ପଂଚାୟତ	panchayat, village council	panchayat, an elected village council (gram panchayat); panchayat samiti, the block-level body			ai	Variant spelling with anusvara; standard ପଞ୍ଚାୟତ.
+ରହୁଛି	is staying; keeps on (he/she/it)	is staying, remains (he/she/it, or I); keeps on, persists (after a verb: keeps occurring)	ରହ (stay) + ଉଛି (is ...ing)	native	ai	
+ଦଫା	point (of demands); section (of law)	point, item (in a charter of demands); section, clause (of a law); time, occasion (this time)		arabic	ai	Came into Odia through Persian or Urdu. ଦଫା ଦାବି: point-wise demands.
+କହନ୍ତି	say (they; or he/she, respectful)	say, tell (present or habitual; they, or he/she respectful); it is said, people say	କହ (say) + ନ୍ତି (present, they)	native	ai	
+ପାଉଛି	is getting, is receiving	is getting, is receiving, is finding (present continuous, he/she/it); with 'increase': is increasing	ପା (get) + ଉଛି (is -ing)	native	ai	ବୃଦ୍ଧି ପାଉଛି: is increasing.
+ରିଲିଜ	release (of a film, statement)	release (of a film, song, result); press release; released		english	ai	
+କରିଥିବାରୁ	because (he/she/they) had done	because (he/she/they) had done, since ... did; for having done	କର (do) + ଇଥିବା (having done) + ରୁ (from, because)	native	ai	
+ସହିଦ	martyr	martyr; one killed in a freedom struggle or on duty; martyrs' (memorial, as in martyrs' shrine)		arabic	ai	Came through Persian or Urdu; also spelled ଶହୀଦ. ସହିଦ ପୀଠ: martyrs' memorial.
+ଏହାରି	of this very (one); this very	of this very (one), of this itself (emphatic of 'of this'); with 'inside': meanwhile, amid this	ଏହାର (of this) + ଇ (emphatic)	native	ai	ଏହାରି ଭିତରେ: meanwhile, amid all this.
+ଷ୍ଟାର	star (hotel, player, film star)	star (celebrity, film star, star player); star (rating, as in star hotel); star (in the sky, rare)		english	ai	
+ଲାଗିଥିଲା	had been fixed; felt; had begun	had been attached, fixed, installed (camera); felt, seemed (liked: felt good); had begun, had set in (past, it)	ଲାଗ (attach; feel; begin) + ଇଥିଲା (had, past)	native	ai	ଭଲ ଲାଗିଥିଲା: (he/she) liked it.
+ବିଏମସି	BMC, Bhubaneswar Municipal Corporation	BMC, Bhubaneswar Municipal Corporation, the city body of Bhubaneswar; (elsewhere) other bodies with these initials		name	ai	
+ହେବାପରେ	after (it) became, after being	after (it) became, after it was (clear, over); once ... happened	ହେବା (being, becoming) + ପରେ (after)	native	ai	Usually written as two words: ହେବା ପରେ.
+ରହୁଛନ୍ତି	are staying, are living (they)	are staying, are living, are residing (present continuous; they, or he/she respectful); are remaining	ରହ (stay) + ଉଛନ୍ତି (are -ing, they)	native	ai	
+କ୍ରାଇମବ୍ରାଞ୍ଚ	Crime Branch (of the state police)	Crime Branch, the investigation wing of the state police that takes up serious cases		english	ai	
+ନୟାଗଡ	Nayagarh, a district and town of Odisha	Nayagarh, a district of Odisha and its headquarters town		name	ai	Spelled here without the nukta; the usual spelling is ନୟାଗଡ଼.
+ଟୋକିଓ	Tokyo, capital of Japan	Tokyo, the capital of Japan; the Tokyo Olympics (2021)		name	ai	
+ବିସିସିଆଇ	BCCI, Indian cricket board	BCCI, the Board of Control for Cricket in India		name	ai	
+ମୃତ୍ୟୁବରଣ	death; with 'do': to die, pass away	death, dying (formal); with 'do': to die, to pass away, to lose one's life	ମୃତ୍ୟୁ (death) + ବରଣ (embracing, accepting)	sanskrit	ai	ମୃତ୍ୟୁବରଣ କରିଛନ୍ତି: has died (respectful).
+ହାଇଦ୍ରାବାଦ	Hyderabad, capital of Telangana	Hyderabad, capital city of Telangana; Sunrisers Hyderabad (IPL team)		name	ai	
+ସୁଟିଂ	shooting (of a film)	shooting, filming (of a film, serial, video); shooting (with a gun, as a sport)		english	ai	
+ଉତ୍ତରପ୍ରଦେଶ	Uttar Pradesh, a state of India	Uttar Pradesh, a state in north India	ଉତ୍ତର (north) + ପ୍ରଦେଶ (province, state)	name	ai	
+କରୁଛୁ	(we) are doing; (you, intimate) are doing	are doing, are making (present continuous; we); you are doing (intimate, with tu)	କର (do) + ଉଛୁ (are -ing, we / you intimate)	native	ai	ଆମେ କରୁଛୁ: we are doing; ତୁ କରୁଛୁ: you are doing (intimate).
+ସୋସିଆଲ୍	social (social media)	social, as in social media, social worker		english	ai	
+ଚୌଧୁରୀ	Choudhury (surname)	Choudhury, Chaudhary (surname); (historically) a title of a village or revenue headman		name	ai	
+ଆକାଉଣ୍ଟ	account (bank, social media)	account (bank account, social media or online account); account, record of money		english	ai	
+କ୍ରିକେଟର	cricketer	cricketer, cricket player		english	ai	
+କରିଥିବାବେଳେ	while (they) did; whereas	while (he/she/they) did or had done; whereas, while on the other hand	କର (do) + ଇଥିବା (having done) + ବେଳେ (when, while)	native	ai	Joins two clauses: X କରିଥିବାବେଳେ Y ..., while X did ..., Y ...
+ଯିବେ	will go (they; or he/she, respectful)	will go (future; they, or he/she respectful); will leave	ଯି (go) + ବେ (future, they)	native	ai	Stem ଯା (go).
+ଦୃଢ	firm, strong, determined	firm, strong, solid; determined, resolute (effort, will); tough (rival)		sanskrit	ai	Spelled here without the nukta; the usual spelling is ଦୃଢ଼.
+ନକରି	without doing; not having done	without doing, without having done; not doing	ନ (not) + କରି (having done)	native	ai	Also written ନ କରି.
+ଦେଇଥାଏ	gives; provides (habitually)	gives, provides (habitual or general present; he/she/it); grants (permission)	ଦେ (give) + ଇଥାଏ (habitual present)	native	ai	
+ଲାଗୁଛି	is forming (queue, crowd); seems	is being attached, fixed; is forming (a queue, a crowd); seems, feels; is taking (time)	ଲାଗ (attach; feel) + ଉଛି (is -ing)	native	ai	ଧାଡ଼ି ଲାଗୁଛି: a queue is forming.
+ଏହିଭଳି	like this; such	like this, in this way; such, of this kind	ଏହି (this) + ଭଳି (like)	native	ai	
+ଭାବି	thinking; having thought	thinking, having thought; thinking (it to be), taking as; (with 'not had') had not thought	ଭାବ (think) + ଇ (having)	native	ai	ଭାବି ନଥିଲି: I had not thought.
+ଲାଗିବ	will be installed; will take (time)	will be attached, fixed, installed; will take (time, money); will be needed; will feel, will seem	ଲାଗ (attach; feel; take) + ଇବ (future, it)	native	ai	ସମୟ ଲାଗିବ: it will take time.
+ଅଟକି	stuck; stopping, having stopped	getting stuck, stopping, having stopped; held up, pending (with 'stay': stalled)	ଅଟକ (stop, get stuck) + ଇ (having)	native	ai	ଅଟକି ରହିଥିବା କାମ: stalled work.
+ପଞ୍ଚାୟତରେ	in the panchayat	in the panchayat, in the village council area	ପଞ୍ଚାୟତ (panchayat, village council) + ରେ (in)		ai	
+କରାଯାଉଥିଲା	was being done	was being done, was being made; was being considered (as) (passive, past continuous)	କରା (cause to do) + ଯାଉଥିଲା (was going): passive	native	ai	
+ସଂପର୍କ	relationship; contact, connection	relationship, relation; contact, connection, link; ties (between countries)		sanskrit	ai	Variant spelling of ସମ୍ପର୍କ.
+କଡ଼ାକଡ଼ି	strict; strictly	strict, stringent, tight (security, rules); strictly (with 'manner')	କଡ଼ା (strict, hard), doubled	native	ai	କଡ଼ାକଡ଼ି ଭାବେ: strictly.
+ଫୋର୍ସ	force (task force, air force)	force, as in task force, air force, police force		english	ai	
+ଆଣିଛନ୍ତି	have brought (they; or he/she, resp.)	have brought (present perfect; they, or he/she respectful); have moved (a motion), have introduced	ଆଣ (bring) + ଇଛନ୍ତି (have, they)	native	ai	ଅନାସ୍ଥା ଆଣିଛନ୍ତି: have moved a no-confidence motion.
+ଜଣାଇ	informing; expressing (support)	informing, telling, having informed; conveying, expressing (support, thanks, protest)	ଜଣା (make known) + ଇ (having)	native	ai	ସମର୍ଥନ ଜଣାଇ: expressing support; ଜଣାଇ ଦେଲା: told, made clear.
+ନିଆଯାଇଥିଲା	was taken (decision; to hospital)	was taken (a decision; a person to hospital); was taken away (passive, past)	ନିଆ (taken) + ଯାଇଥିଲା (went): passive	native	ai	
+ଗଣଶିକ୍ଷା	mass education	mass education, education of the people (School and Mass Education Department)	ଗଣ (people, mass) + ଶିକ୍ଷା (education)	sanskrit	ai	
+ବର୍ତମାନ	present; now, currently	present, current; now, at present, currently; so far, till now		sanskrit	ai	Misspelling of ବର୍ତ୍ତମାନ.
+ବଢୁଛି	is increasing, is growing	is increasing, is growing, is rising (present continuous, it)	ବଢ଼ (grow) + ଉଛି (is -ing)	native	ai	Spelled here without the nukta; the usual spelling is ବଢ଼ୁଛି.
+ପଡିଥିଲା	had fallen; had to (after -ibaku)	had fallen, fell (he/she/it); had to (after a verb in -ibaku); was lying; in compounds marks a sudden event (overflowed, broke out)	ପଡ଼ (fall) + ଇଥିଲା (had, past)	native	ai	Spelled here without the nukta; the usual spelling is ପଡ଼ିଥିଲା.
+ମିଳି	being received; having been found	being got, received; having been found, obtained (with 'not': not received)	ମିଳ (be got, be found) + ଇ (having)	native	ai	ମିଳି ନ ଥିବା: not having been received. Also in ମିଳିମିଶି, together.
+ବାନାର୍ଜୀ	Banerjee (surname)	Banerjee (surname, chiefly Bengali)		name	ai	
+ଡିଜିଟାଲ	digital	digital (digital payment, digital India)		english	ai	
+ଏପଟେ	on this side; meanwhile, here	on this side, over here; meanwhile, on the other hand (joining news items)	ଏ (this) + ପଟେ (on the side)	native	ai	
+ଯାଉଥିଲେ	were going (they; or he/she, resp.)	were going, was going (past continuous; they, or he/she respectful)	ଯା (go) + ଉଥିଲେ (were -ing, they)	native	ai	
+ହେଉଥିବାରୁ	because (it) is happening; since	because (it) is or was happening, since ... is being (there)	ହେ (be, happen) + ଉଥିବା (being) + ରୁ (from, because)	native	ai	
+ନିର୍ଦେଶ	instruction, direction, order	instruction, direction, order; directive		sanskrit	ai	Variant spelling of ନିର୍ଦ୍ଦେଶ.
+ଜଣିଆ	-member (e.g. a five-member team)	having so many persons, -member (after a number: a five-member team)	ଜଣ (person) + ଇଆ (having)	native	ai	The number comes before it: ପାଞ୍ଚ ଜଣିଆ, five-member.
+ନେଉଛନ୍ତି	are taking (they; or he/she, resp.)	are taking (present continuous; they, or he/she respectful); are taking (steps, decisions)	ନେ (take) + ଉଛନ୍ତି (are -ing, they)	native	ai	
+କରାଯାଇପାରେ	can be done; may be done	can be done, may be done (passive, with 'can')	କରା (cause to do) + ଯାଇ (going) + ପାରେ (can)	native	ai	
+ଦିଆଯିବା	being given; to be given	being given, to be given (passive verbal noun); with 'should': should be given	ଦିଆ (given) + ଯିବା (going): passive	native	ai	ଦିଆଯିବା ଉଚିତ: should be given.
+ଖୁବଶୀଘ୍ର	very soon	very soon, shortly	ଖୁବ (very) + ଶୀଘ୍ର (soon)	mixed	ai	Usually written as two words: ଖୁବ୍ ଶୀଘ୍ର.
+କଥାଚିତ୍ର	feature film, movie	feature film, movie, film (especially an Odia film)	କଥା (story) + ଚିତ୍ର (picture)	sanskrit	ai	
+ଏଜେନ୍ସି	agency (news, third-party)	agency (news agency, government or private agency, third-party agency)		english	ai	
+ଲଢ଼େଇ	fight; battle; contest	fight, battle; contest, race (an election or sports contest); struggle (for rights); quarrel		native	ai	Also spelt ଲଢେଇ.
+ଏହିସବୁ	all these; these things	all these, these (things, matters)	ଏହି (this, these) + ସବୁ (all)	native	ai	
+କେଜି	kg, kilogram	kg, kilogram (weight); KG, kindergarten (rare)		english	ai	
+ଲେଖିଥିଲେ	had written; wrote (they; or he/she, resp.)	had written, wrote (they; or he/she, respectful)	ଲେଖ (write) + ଇଥିଲେ (had)	native	ai	
+ଆଣିଥିଲେ	had brought; brought (they; or he/she, resp.)	had brought, brought (they; or he/she, respectful); had introduced (a law, a scheme)	ଆଣ (bring) + ଇଥିଲେ (had)	native	ai	
+ବିଜେପିରେ	in the BJP; into the BJP	in the BJP (Bharatiya Janata Party); into the BJP (joining it)	ବିଜେପି (BJP) + ରେ (in)	name	ai	
+ଅପରେସନ	operation	operation (military, police or rescue); surgical operation; working of a machine or service		english	ai	
+ବେସରକାରୀ	private; non-government	private, non-government (private sector, private hospital); unofficial	ବେ (without, non-) + ସରକାରୀ (government)	persian	ai	
+ଅଧ୍ୟକ୍ଷା	chairperson (woman); president (woman)	chairperson, chairwoman, president (of a council, block or body; a woman)	ଅଧ୍ୟକ୍ଷ (chairman, head) + ଆ (feminine)	sanskrit	ai	
+ପଡି	falling; having fallen	falling, having fallen (on someone, into something); getting caught (in a noose, a trap)	ପଡ (fall) + ଇ (having)	native	ai	Also spelt ପଡ଼ି.
+ଅଫିସରେ	in the office; at the office	in the office, at the office	ଅଫିସ (office) + ରେ (in)	english	ai	
+ପଡୁଛି	is falling; has to (with a -baku verb)	is falling; has to, is having to (after a verbal noun in -baku: dekhibaku paduchhi, has to be seen); is lying, is happening	ପଡ (fall) + ଉଛି (is -ing)	native	ai	Also spelt ପଡ଼ୁଛି. କରିବାକୁ ପଡୁଛି: has to do.
+ସାମିଲ୍	included; joined	included, part of; joined, took part (with 'hela')		persian	ai	Variant spelling of ସାମିଲ.
+କରିଦେଇଥିଲେ	had done (it); did (they; or he/she, resp.)	had done (it), had gone ahead and done (completive; they, or he/she, respectful)	କରି (doing) + ଦେଇଥିଲେ (had given): completive	native	ai	
+ଲକ୍ଷାଧିକ	over a lakh; more than 100,000	more than one lakh (100,000); lakhs of, hundreds of thousands	ଲକ୍ଷ (lakh, 100,000) + ଅଧିକ (more than)	sanskrit	ai	
+ଟାଉନ	town	town (as in town police station, town hall)		english	ai	
+ଆଜିଠାରୁ	from today; starting today	from today, starting today, with effect from today	ଆଜି (today) + ଠାରୁ (from)	native	ai	
+ୟୁନିଟ୍	unit	unit (a branch of an organisation; a unit of measure; a factory or power unit)		english	ai	
+ଆଜିଠୁ	from today; starting today	from today, starting today (spoken form)	ଆଜି (today) + ଠୁ (from)	native	ai	Short, spoken form of ଆଜିଠାରୁ.
+ଦ	the (in English titles)	the, the English article, in titles of films and books (The Odyssey)		english	ai	Only in English names written in Odia; not an Odia word.
+ମୁମ୍ବାଇରେ	in Mumbai	in Mumbai, at Mumbai	ମୁମ୍ବାଇ (Mumbai) + ରେ (in)	name	ai	
+କରୋନାକୁ	to corona; against corona (as object)	corona (COVID-19) as object: against corona, to corona (fighting corona, defeating corona)	କରୋନା (corona) + କୁ (to)	english	ai	
+ରିଲାଏନ୍ସ	Reliance (Indian company)	Reliance, Reliance Industries and its group companies (Jio, Reliance Retail)		name	ai	
+ମୟୁରଭଞ୍ଜ	Mayurbhanj, a district of Odisha	Mayurbhanj, a district in north Odisha (headquarters Baripada); a former princely state		name	ai	
+ସଫେଇ	cleaning	cleaning, clean-up (of drains, roads); sanitation	ସଫା (clean) + ଏଇ (-ing, noun)	persian	ai	Came into Odia through Hindi or Urdu (safai).
+ମେହେର	Meher (surname)	Meher, a surname common in western Odisha		name	ai	
+ଏହାପୂର୍ବରୁ	before this; earlier; previously	before this, earlier, previously	ଏହା (this) + ପୂର୍ବରୁ (before)	mixed	ai	
+ବିଡିଓ	BDO, Block Development Officer	BDO, Block Development Officer, the officer who heads a block		english	ai	Not the word video (ଭିଡ଼ିଓ).
+ଲାଇନ	line	line (a queue; a row; a railway or power line); line of a text		english	ai	
+ରଂଜନ	Ranjan (name)	Ranjan, a part of men's names (Binay Ranjan, Sudhi Ranjan)		name	ai	Also spelt ରଞ୍ଜନ.
+ଦିଆଯାଇ	being given; having been given	being given, having been given (passive participle); given (honoured, awarded)	ଦିଆ (given) + ଯାଇ (having gone): passive	native	ai	
+ଆକାଉଣ୍ଟରେ	in the account; into the account	in the (bank) account, into the account; on the (social media) account	ଆକାଉଣ୍ଟ (account) + ରେ (in)	english	ai	
+ହୋଇଗଲେ	became (they; or he/she, respectful)	became, turned into, got (done) (completive; they, or he/she, respectful); if (it) becomes (conditional)	ହୋଇ (becoming) + ଗଲେ (went): completive	native	ai	
+କୁହାଯାଇଥିଲା	was said; was told	was said, was told; was called, was named (passive, past)	କୁହା (said) + ଯାଇଥିଲା (had gone): passive	native	ai	
+ରେଡ୍	red (red warning, red alert)	red (in red warning, red alert, red zone); raid (a search by police or officials)		english	ai	Spelt the same for red and raid; usually red in weather news.
+ପଟେଲ	Patel (surname)	Patel, a surname (Sardar Patel, Amisha Patel, Axar Patel)		name	ai	
+ଏକଥା	this (thing, matter); this fact	this thing, this matter, this fact (as said or known)	ଏ (this) + କଥା (matter, word)	native	ai	Often: ଏକଥା କହିଛନ୍ତି, has said this.
+ଭିଡ଼ିଓ	video	video, video clip		english	ai	
+ଏମ	M (the English letter)	M, the English letter, in abbreviations and initials (M.A., M.P., names)		english	ai	? No context sentences; probably the letter M in an abbreviation.
+ମୁକ୍ତିଲାଭ	release (of a film); getting freedom	release (of a film or book: mukti labha kariba, to be released); liberation, getting freedom (from prison, a burden or rebirth)	ମୁକ୍ତି (freedom, release) + ଲାଭ (gain)	sanskrit	ai	
+ଯାହାଫଳରେ	as a result of which; due to which	as a result of which, due to which, so that	ଯାହା (which) + ଫଳରେ (as a result)	mixed	ai	
+ନାହାଁନ୍ତି	are not; are not there (they; or he/she, resp.)	are not, are not there, are absent (they; or he/she, respectful); have not (with past participles: aasi nahaanti, have not come)	ନାହିଁ (not) + ଅନ୍ତି (they are)	native	ai	Also spelt ନାହାନ୍ତି.
+ନୋଟିସ	notice	notice (an official letter or order: show-cause notice, legal notice)		english	ai	
+ବଲିଉଡର	of Bollywood; Bollywood's	of Bollywood, Bollywood's (the Hindi film industry)	ବଲିଉଡ (Bollywood) + ର (of)	english	ai	
+ଅମିତାଭ	Amitabh (name)	Amitabh, a man's name (Amitabh Bachchan, Hindi film actor); boundless light (a name of the Buddha)		name	ai	
+ମୁମ୍ବାଇର	of Mumbai; Mumbai's	of Mumbai, Mumbai's	ମୁମ୍ବାଇ (Mumbai) + ର (of)	name	ai	
+ପିସିସି	PCC, Pradesh Congress Committee	PCC, Pradesh Congress Committee, the state unit of the Congress party		english	ai	ପିସିସି ସଭାପତି: state Congress president.
+ଉପସଭାପତି	vice-president; vice-chairperson	vice-president, vice-chairperson (of a body, party or council); deputy chairman	ଉପ (vice-, deputy) + ସଭାପତି (president)	sanskrit	ai	
+ଜେନେରାଲ	general	general (army rank: Major General); general (not special: general category, general hospital)		english	ai	
+ଆଇପିଏଲ	IPL, Indian Premier League (cricket)	IPL, the Indian Premier League, a T20 cricket tournament		english	ai	
+ସ୍କୁଲ୍	school	school		english	ai	
+ସେଥିମଧ୍ୟରୁ	out of those; from among them	out of those, from among them, of these (of which)	ସେଥି (that, those) + ମଧ୍ୟରୁ (from among)	mixed	ai	
+ଷ୍ଟାଡିୟମରେ	in the stadium; at the stadium	in the stadium, at the stadium	ଷ୍ଟାଡିୟମ (stadium) + ରେ (in)	english	ai	
+ପୀଡିତ	suffering (from); affected; victim	suffering (from a disease: rogare pidita), afflicted, affected; victim (of a crime or disaster)		sanskrit	ai	Also spelt ପୀଡ଼ିତ.
+ଶାହ	Shah (surname; Amit Shah)	Shah, a surname (in news usually Amit Shah, Union Home Minister); shah, king (old)		name	ai	
+ପାଇଲେ	got; received (they; or he/she, resp.)	got, received, found (they; or he/she, respectful); if (one) gets (conditional)	ପା (get) + ଇଲେ (past; or 'if')	native	ai	
+ରହିଥିବାରୁ	because (it) is or was there; since	because (it) is or was there, since (it) has been; because (one) stayed or remained	ରହି (staying) + ଥିବା (being) + ରୁ (because, from)	native	ai	
+ଆଇପିଏଲ୍	IPL, Indian Premier League (cricket)	IPL, the Indian Premier League, a T20 cricket tournament		english	ai	
+ଚର୍ଚ୍ଚିତ	much-discussed; talked-about; noted	much-discussed, talked-about, in the news; well-known, noted (actor, case)	ଚର୍ଚ୍ଚା (discussion) + ଇତ (-ed)	sanskrit	ai	
+ଖେଳାଯିବ	will be played	will be played (a match, a game)	ଖେଳା (played) + ଯିବ (will go): passive	native	ai	
+କ୍ଷୟକ୍ଷତି	damage; loss (to property, crops)	damage, loss, destruction (to houses, crops, property); harm	କ୍ଷୟ (decay, loss) + କ୍ଷତି (damage)	sanskrit	ai	
+ବିଜେପିକୁ	to the BJP; the BJP (object)	to the BJP, for the BJP (Bharatiya Janata Party); the BJP (as object)	ବିଜେପି (BJP) + କୁ (to)	name	ai	
+ଛାତ୍ରଛାତ୍ରୀମାନେ	students (boys and girls)	students, male and female students (plural, subject)	ଛାତ୍ର (male student) + ଛାତ୍ରୀ (female student) + ମାନେ (plural)	sanskrit	ai	
+ରଖିବେ	will keep; will put (they; or respectful)	will keep, will put, will place (they; or he/she/you, respectful); will continue (with jari)	ରଖ (keep) + ଇବେ (will, plural)	native	ai	ଜାରି ରଖିବେ: will continue.
+କଙ୍ଗନା	Kangana (female given name)	Kangana, a female given name (e.g. the actress Kangana Ranaut)		name	ai	
+ପାଉଥିବା	that is getting; that is receiving	that is getting, receiving, that gets (present participle); with a noun of growth: increasing, rising	ପା (get) + ଉଥିବା (that is -ing)	native	ai	ବୃଦ୍ଧି ପାଉଥିବା: increasing; ପୂଜା ପାଉଥିବା: being worshipped.
+ରାକେଶ	Rakesh (male given name)	Rakesh, a male given name		name	ai	
+ଟୁଇଟ୍	tweet	tweet, a post on X (Twitter); to tweet (with kariba)		english	ai	
+ଅଂଚଳର	of the area; of the region	of the area, of the region, of the locality	ଅଂଚଳ (area, region) + ର (of)	sanskrit	ai	Also spelt ଅଞ୍ଚଳର.
+ନେଉଥିବା	that is taking; while taking	that is taking, who takes (present participle); while taking (with -bele)	ନେ (take) + ଉଥିବା (that is -ing)	native	ai	ଲାଞ୍ଚ ନେଉଥିବା ବେଳେ: while taking a bribe.
+ରାଜ୍ୟସଭା	Rajya Sabha, upper house of Parliament	Rajya Sabha, the upper house of India's Parliament (Council of States)	ରାଜ୍ୟ (state) + ସଭା (assembly)	name	ai	
+ଗାନ୍ଧୀଙ୍କ	Gandhi's; of Gandhi (respectful)	of Gandhi, Gandhi's (respectful): of Mahatma Gandhi; of a member of the Gandhi family (Rahul, Priyanka, Sonia)	ଗାନ୍ଧୀ (Gandhi) + ଙ୍କ (of, respectful)	name	ai	
+ନଥାଏ	is not (usually); there is no	is not, there is no (general or habitual statement); does not stay, does not remain	ନ (not) + ଥାଏ (is, usually)	native	ai	ଆବଶ୍ୟକତା ନଥାଏ: is not needed.
+ବିଏମ୍ସି	BMC, Bhubaneswar Municipal Corporation	BMC, Bhubaneswar Municipal Corporation, the city body of Bhubaneswar; also Brihanmumbai Municipal Corporation (Mumbai)		name	ai	Which BMC depends on the story.
+କରିଦେଇଛନ୍ତି	have done (it) (they; or respectful)	have done it, have gone and done (completed action; they; or he/she, respectful); have made (someone feel etc.)	କରି (having done) + ଦେ (give) + ଇଛନ୍ତି (have, plural)	native	ai	ଆରମ୍ଭ କରିଦେଇଛନ୍ତି: have already started.
+ଜଷ୍ଟିସ	Justice (title of a judge)	Justice, title of a judge (Justice X; Justice X commission); justice		english	ai	
+ଛାତ୍ରଛାତ୍ରୀଙ୍କୁ	to the students; students (object)	to the students, for the students (boys and girls); the students (as object)	ଛାତ୍ରଛାତ୍ରୀ (students) + ଙ୍କୁ (to, plural)	sanskrit	ai	
+ନହେଲେ	otherwise; if not; unless	otherwise, or else; if not, if it does not happen; unless; (with an amount) for less than	ନ (not) + ହେଲେ (if it becomes)	native	ai	୫୦ ଟଙ୍କା ନହେଲେ ମିଳୁନାହିଁ: not available for less than 50 rupees.
+ବିଶ୍ୱକପ୍	World Cup	World Cup (cricket, football, etc.)	ବିଶ୍ୱ (world) + କପ୍ (cup)	mixed	ai	
+ଅନଲାଇନ	online	online; on the internet (online application, online classes)		english	ai	
+ହୋଇଯାଇଥିବା	that had become; that had gone (missing etc.)	that had become, that had gone (missing, closed, etc.), that has happened (perfect participle); having become (with ... jana padichhi: it is learnt that ... has become)	ହୋଇ (having become) + ଯାଇ (gone) + ଥିବା (that was)	native	ai	ନିଖୋଜ ହୋଇଯାଇଥିବା: that had gone missing.
+ଗୁଡିକୁ	the (plural) ... (object); to the ...	plural marker with object/to: the (things or days) as object, to the ...; written apart from its noun	ଗୁଡିକ (plural marker) + କୁ (to, object)	native	ai	Usually joined: ଦିନଗୁଡ଼ିକୁ (the days). Also spelt ଗୁଡ଼ିକୁ.
+ଟେଷ୍ଟରେ	in the Test (match); in the test	in the Test match (cricket); in a test, in an examination or medical test	ଟେଷ୍ଟ (test) + ରେ (in)	english	ai	
+ପଶ୍ଚିମବଙ୍ଗରେ	in West Bengal	in West Bengal, an Indian state	ପଶ୍ଚିମ (west) + ବଙ୍ଗ (Bengal) + ରେ (in)	name	ai	
+ଝାରସୁଗୁଡା	Jharsuguda, a town and district of Odisha	Jharsuguda, a town and district in western Odisha		name	ai	Also spelt ଝାରସୁଗୁଡ଼ା.
+ଲଞ୍ଚ	launch; lunch	launch (of a product, scheme, satellite); lunch, the midday meal; a launch, small motor boat		english	ai	Two English words share this spelling: ଲଞ୍ଚ ହେଲା = was launched; ସହ ଲଞ୍ଚ କରିଥିଲେ = had lunch with.
+ୟେଲୋ	yellow (as in yellow warning)	yellow; yellow warning, yellow alert (weather)		english	ai	ୟେଲୋ ୱାର୍ଣ୍ଣିଂ: yellow warning (weather alert).
+ଆଇନକୁ	the law (object); to the law	the law, the act (as object); to the law	ଆଇନ (law) + କୁ (to, object)	persian	ai	Came into Odia through Persian or Urdu.
+ଆଇଆଇସି	IIC, inspector in charge of a police station	IIC: Inspector-in-Charge, the officer heading a police station (Odisha police)		english	ai	
+ଆସୁଥିଲେ	were coming; used to come (they; or respectful)	were coming, used to come (they; or he/she, respectful); past continuous or habitual	ଆସ (come) + ଉଥିଲେ (were -ing)	native	ai	
+ରଖାଯାଇଥିଲା	was kept; was placed	was kept, was placed, was put (passive); was adjourned (with mulatabi); was aimed (with lakshya kari)	ରଖା (cause to keep) + ଯାଇଥିଲା (went): passive	native	ai	ମୁଲତବୀ ରଖାଯାଇଥିଲା: was adjourned.
+ରବୀନ୍ଦ୍ର	Rabindra (male given name)	Rabindra, a male given name; Rabindranath Tagore (in Rabindra Sangeet etc.)		name	ai	
+ପଡ଼ିଲା	fell; had to; happened (he/she/it)	fell (past, he/she/it); turned out, proved (costly etc.); had to (with -iba); in compound verbs: suddenly, out, down	ପଡ଼ (fall) + ଇଲା (past)	native	ai	ପଡ଼ିଲା ମହଙ୍ଗା: proved costly; ବାହାରି ପଡ଼ିଲା: came out, spilled out.
+ଚ୍ୟାଲେଞ୍ଜ	challenge	challenge; to challenge (with kariba); a difficult task		english	ai	
+ସିସିଟିଭି	CCTV (camera)	CCTV, closed-circuit TV camera; CCTV footage		english	ai	
+ଉଠିଛି	has risen; has arisen (he/she/it)	has risen, has got up (he/she/it); has arisen, has been raised (a question, a demand)	ଉଠ (rise) + ଇଛି (has)	native	ai	ପ୍ରଶ୍ନ ଉଠିଛି: questions have been raised.
+ଦେଖାଯାଇଛି	has been seen; has been noticed	has been seen, has been observed (passive); it is seen that	ଦେଖା (seen) + ଯାଇଛି (has gone): passive	native	ai	
+ସେଭଳି	like that; such, that kind of	like that, in that way; such, of that kind	ସେ (that) + ଭଳି (like)	native	ai	
+ସମାଜସେବୀ	social worker	social worker, one who serves society; public-spirited person	ସମାଜ (society) + ସେବୀ (one who serves)	sanskrit	ai	
+ଏହାଛଡ଼ା	besides this; apart from this; also	besides this, apart from this, in addition; moreover	ଏହା (this) + ଛଡ଼ା (apart from)	native	ai	
+ବିଜେଡ଼ି	BJD, a political party of Odisha	BJD, Biju Janata Dal, a regional political party of Odisha		name	ai	Usually spelt ବିଜେଡି.
+ନିଅନ୍ତୁ	take (please; polite imperative)	take, please take (polite imperative, you); let them take; in recipes: take (an ingredient)	ନି (take) + ଅନ୍ତୁ (imperative, respectful)	native	ai	ଫାଇଦା ନିଅନ୍ତୁ: take advantage.
+ସୋନୁ	Sonu (pet name or given name)	Sonu, a common pet name or given name		name	ai	
+ହୋଇସାରିଛି	has already happened; is already done	has already happened, has already become, is already done (he/she/it)	ହୋଇ (having become) + ସାର (finish) + ଇଛି (has)	native	ai	
+ମିଳୁଥିବା	that is available; that one gets	that is available, that is found, that one gets or receives (present participle)	ମିଳ (be got, be found) + ଉଥିବା (that is -ing)	native	ai	
+ହାଇକୋର୍ଟରେ	in the High Court	in the High Court, at the High Court	ହାଇକୋର୍ଟ (High Court) + ରେ (in)	english	ai	
+ରିଲିଫ	relief	relief, aid for victims (of disaster, accident); relief fund		english	ai	ମୁଖ୍ୟମନ୍ତ୍ରୀ ରିଲିଫ ପାଣ୍ଠି: Chief Minister's Relief Fund.
+ଆଇସିସି	ICC, International Cricket Council	ICC: International Cricket Council (rankings, tournaments); also other bodies with these initials		english	ai	
+ପୂଜାର୍ଚ୍ଚନା	worship; prayers and rituals	worship, ritual worship, offering prayers	ପୂଜା (worship) + ଅର୍ଚ୍ଚନା (worship, adoration)	sanskrit	ai	
+ବଜେଟ	budget	budget; (low) cost, money available		english	ai	
+କରିବି	I will do	will do (I); I will (do it)	କର (do) + ଇବି (will, I)	native	ai	
+ତହସିଲ	tahsil, a revenue subdivision	tahsil, a revenue subdivision of a district; tahsil office, tahsil administration		arabic	ai	Came into Odia through Persian or Urdu.
+ସୁନ୍ଦରଗଡ	Sundargarh, a town and district of Odisha	Sundargarh, a town and district in north-western Odisha		name	ai	Also spelt ସୁନ୍ଦରଗଡ଼.
+ଫେରିଥିଲେ	returned; had returned (they; or respectful)	returned, had come back (they; or he/she, respectful); (cricket) went back to the pavilion, was out	ଫେର (return) + ଇଥିଲେ (had)	native	ai	ପାଭିଲିଅନ ଫେରିଥିଲେ: was out (cricket).
+ଯେଉଁଥିପାଇଁ	for which; because of which, so	for which, because of which, which is why; so that	ଯେଉଁଥି (which) + ପାଇଁ (for)	native	ai	
+ଢଙ୍ଗରେ	in a manner; in a way	in a manner, in a way, in a style	ଢଙ୍ଗ (manner, style) + ରେ (in)	native	ai	ନିଆରା ଢଙ୍ଗରେ: in a unique way.
+ନିହାତି	absolutely; very (necessary)	absolutely, extremely, very; utterly (mostly before words for necessary)		arabic	ai	ନିହାତି ଆବଶ୍ୟକ: absolutely necessary. Probably via Urdu nihayat.
+ୱିକେଟ	wicket (cricket)	wicket (cricket): a batter's dismissal; the stumps; partnership for a wicket		english	ai	
+ଟିଏମସି	TMC, Trinamool Congress party	TMC, All India Trinamool Congress, a political party based in West Bengal		name	ai	
+ବଢ଼ିବ	will increase; will grow (he/she/it)	will increase, will grow, will rise (he/she/it)	ବଢ଼ (grow, increase) + ଇବ (will)	native	ai	
