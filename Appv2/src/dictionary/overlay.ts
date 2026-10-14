@@ -51,10 +51,25 @@ import { parseGlosses, type Glosses } from '@odia/core';
 import glossesTsv from '../../../core/data/glosses.tsv?raw';
 
 import { inflate } from './pako-inflate.js';
+import {
+  defAt,
+  findEntry,
+  findModern,
+  fold,
+  foldKey,
+  MODERN_LABEL,
+  modernChip,
+  modernLines,
+  parsePayload,
+  shortGlossOf,
+  tidyGloss,
+  type Dict,
+  type Entry,
+  type ModernEntry,
+} from './lookup.js';
 import { originChipLabel, originLabel, parseOrigin } from './origin.js';
 import { parseEnglishEntries, searchEnglish, type EnglishEntry } from './english.js';
 import englishTsv from './english.tsv?raw';
-import { cleanDefinition } from './clean.js';
 import { LANGUAGE_LABEL, parseLoans, type Loan } from './loans.js';
 import loansTsv from './loans.tsv?raw';
 import { CATEGORY_LABEL, parsePhrases, searchPhrases, type Phrase } from './phrases.js';
@@ -86,79 +101,9 @@ export interface DictionaryBytes {
 
 export type DictionaryLoader = () => Promise<DictionaryBytes>;
 
-/** Field separator inside an inflated payload (U+0002). */
-const SEP = '\u0002';
-
-/* ------------------------------------------------------------ *
- * Normalisation: canonical() from core, plus the 1930s-orthography
- * fold used when the payload was built.
- * ------------------------------------------------------------ */
-
-/* U+0B5F -> U+0B2F, U+0B71 -> U+0B2C, U+0B35 -> U+0B2C : Praharaj-era spellings. */
-function fold(w: string): string {
-  return w
-    .split('\u0b5f').join('\u0b2f')
-    .split('\u0b71').join('\u0b2c')
-    .split('\u0b35').join('\u0b2c');
-}
-
-/* Inflectional suffixes tried (longest first) when the exact form is not a
- * headword. Kept in sync with the payload builder; folded forms. */
-const SUFFIXES: readonly string[] = [
-  '\u0b2e\u0b3e\u0b28\u0b19\u0b4d\u0b15\u0b30', /* -maananjkara */
-  '\u0b2e\u0b3e\u0b28\u0b19\u0b4d\u0b15\u0b41', /* -maananjku */
-  '\u0b17\u0b41\u0b21\u0b3c\u0b3f\u0b15\u0b41', /* -gudiku */
-  '\u0b17\u0b41\u0b21\u0b3c\u0b3f\u0b15\u0b30', /* -gudikara */
-  '\u0b2e\u0b3e\u0b28\u0b19\u0b4d\u0b15', /* -maananjka */
-  '\u0b17\u0b41\u0b21\u0b3c\u0b3f\u0b15', /* -gudika */
-  '\u0b17\u0b41\u0b21\u0b3c\u0b3e\u0b0f', /* -gudaae */
-  '\u0b2e\u0b3e\u0b28\u0b47', /* -maane */
-  '\u0b19\u0b4d\u0b15\u0b30', /* -njkara */
-  '\u0b19\u0b4d\u0b15\u0b41', /* -njku */
-  '\u0b1f\u0b3f\u0b15\u0b41', /* -tiku */
-  '\u0b1f\u0b3f\u0b30\u0b47', /* -tire */
-  '\u0b19\u0b4d\u0b15', /* -njka */
-  '\u0b1f\u0b3f\u0b30', /* -tira */
-  '\u0b30\u0b47', /* -re */
-  '\u0b30\u0b41', /* -ru */
-  '\u0b15\u0b41', /* -ku */
-  '\u0b1f\u0b3f', /* -ti */
-  '\u0b1f\u0b3e', /* -taa */
-  '\u0b30', /* -ra */
-  '\u0b01', /* candrabindu */
-  '\u0b02', /* anusvara */
-  '\u0b03', /* visarga */
-];
-
-/* ------------------------------------------------------------ *
- * Data: gzip(payload), inflated lazily.
- * payload = N SEP keys(\n-joined, sorted) SEP lens(,-joined) SEP defs(concat)
- * ------------------------------------------------------------ */
-
-interface Dict {
-  keys: string[];
-  offsets: Float64Array;
-  lens: Uint32Array;
-  defs: string;
-}
-
-type How = 'exact' | 'stem' | 'prefix';
-
-interface Entry {
-  how: How;
-  head: string;
-  index: number;
-}
-
-interface ModernLine {
-  tag: string;
-  gloss: string;
-}
-
-interface ModernEntry {
-  how: 'exact' | 'stem';
-  lines: ModernLine[];
-}
+/* The fold, the payload format, entry lookup and the short gloss live in
+ * ./lookup.ts, shared with the Odia Lens extension. This module keeps the
+ * loaded dictionaries, the caches and the panel. */
 
 type LoadState = 'idle' | 'loading' | 'ready' | 'failed';
 
@@ -179,27 +124,6 @@ function setState(next: LoadState): void {
   } catch {
     /* the app's listener must never break the overlay */
   }
-}
-
-function parsePayload(gz: Uint8Array): Dict {
-  const inflated = inflate(gz);
-  const text = new TextDecoder('utf-8').decode(inflated);
-  const a = text.indexOf(SEP);
-  const b = text.indexOf(SEP, a + 1);
-  const c = text.indexOf(SEP, b + 1);
-  const count = parseInt(text.slice(0, a), 10);
-  const keys = text.slice(a + 1, b).split('\n');
-  const lenParts = text.slice(b + 1, c).split(',');
-  const lens = new Uint32Array(count);
-  const offsets = new Float64Array(count);
-  let off = 0;
-  for (let i = 0; i < count; i++) {
-    lens[i] = +(lenParts[i] as string);
-    offsets[i] = off;
-    off += lens[i] as number;
-  }
-  if (keys.length !== count) throw new Error('key count mismatch');
-  return { keys, offsets, lens, defs: text.slice(c + 1) };
 }
 
 /* ------------------------------------------------------------ *
@@ -248,116 +172,32 @@ function loadData(): void {
     });
 }
 
-function bsearch(dict: Dict | null, key: string): number {
-  if (!dict) return -1;
-  const keys = dict.keys;
-  let lo = 0;
-  let hi = keys.length - 1;
-  while (lo <= hi) {
-    const mid = (lo + hi) >> 1;
-    const k = keys[mid] as string;
-    if (k === key) return mid;
-    if (k < key) lo = mid + 1;
-    else hi = mid - 1;
-  }
-  return -1;
-}
-
-function defAt(dict: Dict, i: number): string {
-  const start = dict.offsets[i] as number;
-  return cleanDefinition(dict.defs.slice(start, start + (dict.lens[i] as number)));
-}
-
 let lookupCache = Object.create(null) as Record<string, Entry | null>;
 let modernCache = Object.create(null) as Record<string, ModernEntry | null>;
 
-/*
- * Praharaj lookup with fallbacks:
- *   exact / stem (one suffix removed) / prefix (longest headword the word
- *   begins with, for sandhi compounds) — each marked in the UI.
- */
+/* Praharaj lookup (exact / stem / prefix, see lookup.ts), cached per key. */
 function lookup(word: string): Entry | null {
-  const q = fold(canonical(word));
+  const q = foldKey(word);
   if (q.length === 0) return null;
   const hit = lookupCache[q];
   if (hit !== undefined) return hit;
-  let res: Entry | null = null;
-  const i = bsearch(P, q);
-  if (i >= 0 && P) {
-    res = { how: 'exact', head: P.keys[i] as string, index: i };
-  } else if (P) {
-    for (let s = 0; s < SUFFIXES.length && !res; s++) {
-      const suf = SUFFIXES[s] as string;
-      if (q.length - suf.length >= 2 && q.slice(-suf.length) === suf) {
-        const j = bsearch(P, q.slice(0, q.length - suf.length));
-        if (j >= 0) res = { how: 'stem', head: P.keys[j] as string, index: j };
-      }
-    }
-    if (!res) {
-      let lo = 0;
-      let hi = P.keys.length;
-      while (lo < hi) {
-        const mid = (lo + hi) >> 1;
-        if ((P.keys[mid] as string) < q) lo = mid + 1;
-        else hi = mid;
-      }
-      let best = -1;
-      let bestLen = 2;
-      for (let back = lo - 1; back >= 0 && back > lo - 400; back--) {
-        const k = P.keys[back] as string;
-        if (k.length > bestLen && q.length > k.length && q.lastIndexOf(k, 0) === 0) {
-          best = back;
-          bestLen = k.length;
-        }
-        if (k.charAt(0) !== q.charAt(0)) break;
-      }
-      if (best >= 0) res = { how: 'prefix', head: P.keys[best] as string, index: best };
-    }
-  }
+  const res = P ? findEntry(P.keys, q) : null;
   lookupCache[q] = res;
   return res;
 }
 
-/*
- * Modern-layer lookup (loanwords, community MT glosses, CLDR names).
- * Exact and stem only — a prefix fallback on this data would invent loans.
- */
+/* Modern-layer lookup (exact and stem only, see lookup.ts), cached per key. */
 function lookupModern(word: string): ModernEntry | null {
   if (!M) return null;
-  const q = fold(canonical(word));
+  const q = foldKey(word);
   if (q.length === 0) return null;
   const hit = modernCache[q];
   if (hit !== undefined) return hit;
-  let res: ModernEntry | null = null;
-  let i = bsearch(M, q);
-  let how: 'exact' | 'stem' = 'exact';
-  if (i < 0) {
-    for (let s = 0; s < SUFFIXES.length && i < 0; s++) {
-      const suf = SUFFIXES[s] as string;
-      if (q.length - suf.length >= 2 && q.slice(-suf.length) === suf) {
-        i = bsearch(M, q.slice(0, q.length - suf.length));
-      }
-    }
-    how = 'stem';
-  }
-  if (i >= 0) {
-    const lines = defAt(M, i)
-      .split('\n')
-      .map((line) => {
-        const t = line.indexOf('\t');
-        return { tag: line.slice(0, t), gloss: line.slice(t + 1) };
-      });
-    res = { how, lines };
-  }
+  const found = findModern(M.keys, q);
+  const res = found ? { how: found.how, lines: modernLines(defAt(M, found.index)) } : null;
   modernCache[q] = res;
   return res;
 }
-
-const MODERN_LABEL: Record<string, string> = {
-  loan: 'English loan (auto-detected)',
-  mt: 'modern usage — community translation data, approximate',
-  cldr: 'standard modern name (CLDR)',
-};
 
 /* One short meaning per suggestion (plan/design/v1-ux-proposal.md 3.6):
  * the modern layer's first sense if there is one, else the first Praharaj
@@ -425,49 +265,16 @@ function fillGloss(span: HTMLElement, word: string, g: string | null): string {
   return g + ', ' + o;
 }
 
-function modernChip(mo: ModernEntry | null): string | null {
-  if (!mo) return null;
-  const line = mo.lines.find((l) => l.tag !== 'loan');
-  return line ? tidyGloss(line.gloss, mo.how !== 'exact') : null;
-}
-
-function tidyGloss(gloss: string, approximate: boolean): string | null {
-  let g = (gloss.split(';')[0] as string).replace(/\s+/g, ' ').trim().replace(/[\s.,:]+$/, '');
-  if (g.length < 2) return null;
-  if (g.length > 56) g = g.slice(0, 56).replace(/\s+\S*$/, '') + '\u2026';
-  return (approximate ? 'maybe: ' : '') + g;
-}
-
 /** Shown where a suggestion has no dictionary entry (was a faint dot). */
 const NO_ENTRY = 'meaning unavailable';
 
-/* Short English gloss for the inline chip.
- *
- * Entries open "<headword> — Translit \u2026", so the FIRST Latin run is the
- * romanisation, not the meaning. Skip that, then prefer the English text of
- * sense 1 ("1. Trouble; distress"), then any Latin run after a dash. */
+/* Short English gloss for the inline chip (lookup.ts), cached per headword. */
 const glossCache = Object.create(null) as Record<string, string | null>;
 function shortGloss(entry: Entry): string | null {
   if (!P) return null;
   const cached = glossCache[entry.head];
   if (cached !== undefined) return cached;
-  const def = defAt(P, entry.index).slice(0, 4000);
-  /* drop "head — Translit" prefix (translit = Latin with diacritics) */
-  const body = def.replace(/^[^\u2014\u2013\n]{0,50}[\u2014\u2013]\s*[A-Za-z\u0100-\u02af\u1e00-\u1eff']+[.,]?\s*/, '');
-  let g: string | null = null;
-  let m = body.match(/\b\d\.\s*([A-Za-z][^\u0964\u0965\n]{2,90})/);
-  if (!m) m = body.match(/[\u2014\u2013]\s*(?:\d+\s*)?([A-Z][a-z][^\u0964\u0965\n]{2,90})/);
-  if (!m) m = body.match(/\b([A-Z][a-z][^\u0964\u0965\n]{2,90})/);
-  if (m) {
-    g = m[1] as string;
-    /* chip is English-only: stop at the first Odia character, the next
-     * numbered sense, or an opening bracket of a commentary note */
-    g = g.split(/[\u0b00-\u0b7f]/)[0] as string;
-    g = g.split(/\s\d\.?\s|\s*[\u2014\u2013]\s*\d|\s*\[/)[0] as string;
-    g = g.replace(/\s+/g, ' ').replace(/[\s;,([\u2014\u2013-]+$/, '').trim();
-    if (g.length > 56) g = g.slice(0, 56).replace(/\s+\S*$/, '') + '\u2026';
-    if (g.length < 2) g = null;
-  }
+  const g = shortGlossOf(defAt(P, entry.index));
   glossCache[entry.head] = g;
   return g;
 }
