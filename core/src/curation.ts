@@ -334,6 +334,63 @@ export function parseMeanings(tsv: string, file = 'meanings.tsv'): Meanings {
   };
 }
 
+/* ------------------------------------------------------------ *
+ * Verb endings (core/data/verb-endings.tsv)
+ * ------------------------------------------------------------ */
+
+export interface VerbEnding {
+  /** The ending as written after a root that ends in a consonant (starts with a vowel sign), or ''. */
+  readonly afterConsonant: string;
+  /** The ending as written after a root that ends in a vowel, or ''. */
+  readonly afterVowel: string;
+  /** English, "…" for the verb: "have …-ed (they; or respectful)". */
+  readonly meaning: string;
+  readonly note: string;
+}
+
+export interface VerbEndings {
+  readonly size: number;
+  /** Every written form, longest first: the order to try them in. */
+  forms(): readonly { form: string; afterVowel: boolean; ending: VerbEnding }[];
+}
+
+const VERB_ENDING_MAX = 40;
+const ODIA_ONLY = /^[\u0b00-\u0b7f]+$/;
+
+export function parseVerbEndings(tsv: string, file = 'verb-endings.tsv'): VerbEndings {
+  const seen = new Set<string>();
+  const forms: { form: string; afterVowel: boolean; ending: VerbEnding }[] = [];
+  let size = 0;
+  for (const { cells, line } of rows(tsv, file)) {
+    const where = `${file}:${line}`;
+    const [afterConsonant = '', afterVowel = '', meaning = '', note = ''] = cells;
+    if (!meaning || (!afterConsonant && !afterVowel)) {
+      throw new Error(`${where}: expected "after_consonant<TAB>after_vowel<TAB>meaning[<TAB>note]" with at least one ending`);
+    }
+    for (const form of [afterConsonant, afterVowel]) {
+      if (form === '') continue;
+      if (!ODIA_ONLY.test(form)) throw new Error(`${where}: an ending must be Odia letters only: "${form}"`);
+      assertCanonical(form, where);
+    }
+    if (/[\u0b00-\u0b7f]/.test(meaning)) throw new Error(`${where}: the meaning column must be English`);
+    if (meaning.includes(';')) throw new Error(`${where}: no ";" in a verb-ending meaning (the chip stops at the first one)`);
+    if (meaning.length > VERB_ENDING_MAX) throw new Error(`${where}: the meaning is longer than ${VERB_ENDING_MAX} characters`);
+    const ending: VerbEnding = { afterConsonant, afterVowel, meaning, note };
+    for (const [form, vowel] of [[afterConsonant, false], [afterVowel, true]] as const) {
+      if (form === '') continue;
+      const key = `${vowel ? 'v' : 'c'}:${form}`;
+      if (seen.has(key)) throw new Error(`${where}: duplicate ending "${form}"`);
+      seen.add(key);
+      forms.push({ form, afterVowel: vowel, ending });
+    }
+    size += 1;
+  }
+  forms.sort((a, b) => b.form.length - a.form.length);
+  return { size, forms: () => forms };
+}
+
+export const emptyVerbEndings = (): VerbEndings => parseVerbEndings('');
+
 export const emptyPreferences = (): Preferences => parsePreferences('');
 export const emptyLabels = (): Labels => parseLabels('');
 export const emptyMeanings = (): Meanings => parseMeanings('');

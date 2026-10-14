@@ -2,7 +2,7 @@ import { readFileSync } from 'node:fs';
 import { gunzipSync } from 'node:zlib';
 import { describe, expect, it } from 'vitest';
 
-import { parseGlosses, parseMeanings } from '@odia/core';
+import { parseGlosses, parseMeanings, parseVerbEndings } from '@odia/core';
 import { canonical } from '@odia/core/normalize';
 import { findEntry, foldKey, defAt, meaningFinder, parsePayload } from '../../Appv2/src/dictionary/lookup.js';
 import { parseOrigin } from '../../Appv2/src/dictionary/origin.js';
@@ -25,6 +25,7 @@ const data: LensData = {
   owner: parseGlosses(file('../../core/data/glosses.tsv').toString('utf8')),
   loans: parseLoans(file('../../Appv2/src/dictionary/loans.tsv').toString('utf8')),
   ai: meaningFinder(parseMeanings(file('../../core/data/meanings.tsv').toString('utf8'))),
+  verbs: parseVerbEndings(file('../../core/data/verb-endings.tsv').toString('utf8')),
 };
 const card = (word: string, previous = '') => {
   const key = foldKey(word);
@@ -64,6 +65,13 @@ describe('describeWord: the lens card', () => {
   it('explains a stem match with the owner meaning of its stem: "day + in, at, on"', () => {
     const c = card(DINARE);
     expect(c.meanings[0]?.text).toBe('day + in, at, on');
+    expect(c.approximateHead).toBeNull();
+  });
+
+  it('explains a verb form by its verb and ending, with no approximate note', () => {
+    const c = card('\u0B16\u0B4B\u0B32\u0B3F\u0B1B\u0B3F'); // kholichhi: has opened
+    expect(c.meanings[0]).toEqual({ text: 'open + has …-ed (he/she/it)', source: 'explained from its ending' });
+    expect(c.meanings).toHaveLength(1);
     expect(c.approximateHead).toBeNull();
   });
 

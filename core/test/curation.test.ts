@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 
 import { createEngine } from '../src/index.js';
-import { parseLabels, parseMeanings, parsePhrases, parsePreferences } from '../src/curation.js';
+import { parseLabels, parseMeanings, parsePhrases, parsePreferences, parseVerbEndings } from '../src/curation.js';
 import { MemoryLearnStore } from '../src/learn.js';
 import { SYMBOLS_TOML } from './helpers.js';
 
@@ -269,3 +269,31 @@ describe('meanings.tsv (AI-written meanings)', () => {
     expect(() => parseMeanings(ROW(`ପ${PRECOMPOSED_RRA}`, 'x'))).toThrow();
   });
 });
+
+describe('verb-endings.tsv (verb endings)', () => {
+  const ICHHI = 'ିଛି'; // -ichhi after a consonant root: kar + ichhi
+  const ICHHI_V = 'ଇଛି'; // after a vowel root: paa + ichhi
+  const I = 'ି';
+  const ROW = (c: string, v: string, m: string) => `${c}\t${v}\t${m}\n`;
+
+  it('reads both written forms of an ending, longest first', () => {
+    const e = parseVerbEndings(ROW(I, 'ଇ', 'having …-ed') + ROW(ICHHI, ICHHI_V, 'has …-ed (he/she/it)'));
+    expect(e.size).toBe(2);
+    expect(e.forms().map((f) => [f.form, f.afterVowel])).toEqual([
+      [ICHHI, false], [ICHHI_V, true], [I, false], ['ଇ', true],
+    ]);
+    expect(e.forms()[0]?.ending.meaning).toBe('has …-ed (he/she/it)');
+    // The passive follows a consonant root only.
+    expect(parseVerbEndings(ROW('ାଯାଇଛି', '', 'has been …-ed')).forms()).toHaveLength(1);
+  });
+
+  it('fails loudly on bad rows, with the line number', () => {
+    expect(() => parseVerbEndings(ROW(ICHHI, ICHHI_V, 'a') + ROW(ICHHI, '', 'b'))).toThrow(/verb-endings.tsv:2: duplicate/);
+    expect(() => parseVerbEndings(ROW(ICHHI, ICHHI_V, 'has; had'))).toThrow(/no ";"/);
+    expect(() => parseVerbEndings(ROW(ICHHI, ICHHI_V, `odia ${I}`))).toThrow(/must be English/);
+    expect(() => parseVerbEndings(ROW('ichhi', '', 'x'))).toThrow(/Odia letters only/);
+    expect(() => parseVerbEndings(ROW('', '', 'x'))).toThrow(/at least one ending/);
+    expect(() => parseVerbEndings(ROW(ICHHI, ICHHI_V, 'x'.repeat(41)))).toThrow(/longer than 40/);
+  });
+});
+

@@ -1,0 +1,81 @@
+# verb-endings.tsv — verb endings, so the app and the Odia Lens can explain a verb form
+# as "verb + ending": ପାଇଛନ୍ତି = "get + have …-ed (they; or respectful)".
+#
+# Written by Claude (Anthropic) for this project from its own knowledge of Odia grammar.
+# Licence: MIT (this project). Not yet checked by a native speaker (C-13).
+#
+# The verb comes from the meaning of its verbal noun in -ବା (owner glosses.tsv or
+# meanings.tsv, a meaning that starts "to …"); a form whose verb has no such meaning is
+# not explained. Read by explainVerb() in Appv2/src/dictionary/lookup.ts.
+#
+# Format: after_consonant <TAB> after_vowel <TAB> meaning <TAB> note
+#   after_consonant  the ending as written after a root that ends in a consonant: କର + ିଛି
+#                    = କରିଛି (it starts with a vowel sign). Empty if none.
+#   after_vowel      as written after a root that ends in a vowel: ପା + ଇଛି = ପାଇଛି.
+#                    Empty if none (the passive ାଯାଇଛି follows consonant roots only).
+#   meaning          English, at most 40 characters; "…" stands for the verb.
+#                    Person tags: (he/she/it), (they, or respectful), (I), (we), (you).
+#                    No ";" (the chip stops at the first one).
+#   note             optional
+#
+# Checked by core/src/curation.ts parseVerbEndings (strict: canonical Odia, no duplicates).
+ୁଛି	ଉଛି	is …-ing (he/she/it)
+ୁଛନ୍ତି	ଉଛନ୍ତି	are …-ing (they, or respectful)
+ୁଛୁ	ଉଛୁ	are …-ing (we)
+ୁଛ	ଉଛ	are …-ing (you)
+ୁଛେ	ଉଛେ	am …-ing (I)
+ୁଥିଲା	ଉଥିଲା	was …-ing (he/she/it)
+ୁଥିଲେ	ଉଥିଲେ	were …-ing (they, or respectful)
+ୁଥିଲି	ଉଥିଲି	was …-ing (I)
+ୁଥିବା	ଉଥିବା	that is …-ing, or who …-s
+ୁଥିବାରୁ	ଉଥିବାରୁ	because … is …-ing
+ୁନାହିଁ	ଉନାହିଁ	is not …-ing, or does not …
+ୁନାହାନ୍ତି	ଉନାହାନ୍ତି	are not …-ing (they, or respectful)
+ିଛି	ଇଛି	has …-ed (he/she/it)
+ିଛନ୍ତି	ଇଛନ୍ତି	have …-ed (they, or respectful)
+ିଛୁ	ଇଛୁ	have …-ed (we)
+ିଛ	ଇଛ	have …-ed (you)
+ିଛେ	ଇଛେ	have …-ed (I)
+ିଥିଲା	ଇଥିଲା	had …-ed, or …-ed (he/she/it)
+ିଥିଲେ	ଇଥିଲେ	had …-ed (they, or respectful)
+ିଥିଲି	ଇଥିଲି	had …-ed (I)
+ିଥିଲୁ	ଇଥିଲୁ	had …-ed (we)
+ିଥିବା	ଇଥିବା	that has …-ed, or who …-ed
+ିଥିବାରୁ	ଇଥିବାରୁ	because … had …-ed
+ିଥାଏ	ଇଥାଏ	usually …-s (he/she/it)
+ିଥାନ୍ତି	ଇଥାନ୍ତି	usually … (they, or respectful)
+ିନାହିଁ	ଇନାହିଁ	has not …-ed
+ିନଥିଲା	ଇନଥିଲା	had not …-ed (he/she/it)
+ିନଥିଲେ	ଇନଥିଲେ	had not …-ed (they, or respectful)
+ିଲା	ଇଲା	…-ed (he/she/it)
+ିଲେ	ଇଲେ	…-ed (they, or respectful), or if …	Also the conditional: ଆସିଲେ = if (someone) comes.
+ିଲି	ଇଲି	…-ed (I)
+ିଲୁ	ଇଲୁ	…-ed (we)
+ିବ	ଇବ	will … (he/she/it, or you)
+ିବେ	ଇବେ	will … (they, or respectful)
+ିବି	ଇବି	will … (I)
+ିବୁ	ଇବୁ	will … (we)
+ିବାକୁ	ଇବାକୁ	to …, in order to …
+ିବାରେ	ଇବାରେ	in …-ing
+ିବାର	ଇବାର	of …-ing
+ିବାରୁ	ଇବାରୁ	from …-ing, or because of …-ing
+ି	ଇ	having …-ed, or …-ing	One letter: shown only when the verb has a meaning (ଯାଇ, କରି).
+ିପାରିବ	ଇପାରିବ	can …, will be able to …
+ିପାରିବେ	ଇପାରିବେ	can … (they, or respectful)
+ିପାରିଛି	ଇପାରିଛି	has been able to …
+ିପାରିଛନ୍ତି	ଇପାରିଛନ୍ତି	have been able to … (they)
+ିପାରିଲେ	ଇପାରିଲେ	could … (they), or if … can
+ିପାରିନଥିଲେ	ଇପାରିନଥିଲେ	could not … (they, or respectful)
+ିପାରି	ଇପାରି	being able to …
+ିପାରେ	ଇପାରେ	can …, may … (he/she/it)
+େ	ଏ	…-s (he/she/it)	One letter: shown only when the verb has a meaning (କରେ, ପାଏ).
+ନ୍ତି	ଆନ୍ତି	… (they, or respectful)	After a vowel: ପାଆନ୍ତି (they get).
+ନ୍ତୁ	ଆନ୍ତୁ	please …, or let (them) …	After a vowel: ପାଆନ୍ତୁ.
+ାଯାଇଛି		has been …-ed
+ାଯାଇଥିଲା		had been …-ed, or was …-ed
+ାଯାଇଥିଲେ		were …-ed (they, or respectful)
+ାଯାଇଥିବା		that was …-ed
+ାଯାଉଛି		is being …-ed
+ାଯିବ		will be …-ed
+ାଯାଇପାରିବ		can be …-ed
+ାଯାଇନାହିଁ		has not been …-ed

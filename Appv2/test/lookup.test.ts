@@ -1,10 +1,11 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 
-import { parseMeanings } from '@odia/core';
+import { parseMeanings, parseVerbEndings } from '@odia/core';
 
 import {
   defAt,
+  explainVerb,
   findEntry,
   findModern,
   foldKey,
@@ -13,6 +14,7 @@ import {
   parsePayload,
   readNumber,
   shortGlossOf,
+  verbOf,
 } from '../src/dictionary/lookup.js';
 
 /*
@@ -83,3 +85,43 @@ describe('readNumber: numbers in Odia digits', () => {
     expect(read('୨କୋଟି')).toBeNull(); // 2 + koti (crore): not a known ending
   });
 });
+
+describe('explainVerb: verb forms by their ending', () => {
+  const VERBS = parseVerbEndings(readFileSync(new URL('../../core/data/verb-endings.tsv', import.meta.url), 'utf8'));
+  const KARIBAA = 'କରିବା'; // to do
+  const PAAIBAA = 'ପାଇବା'; // to get
+  const YIBAA = 'ଯିବା'; // to go
+  const DEKHIBAA = 'ଦେଖିବା'; // to see
+  const known = new Map([
+    [KARIBAA, 'to do; doing'],
+    [PAAIBAA, 'to get; getting'],
+    [YIBAA, 'to go; going'],
+    [DEKHIBAA, 'to see; seeing'],
+  ]);
+  const read = (w: string) => explainVerb(w, null, VERBS, (x) => known.get(x) ?? null)?.text ?? null;
+
+  it('reads a consonant root, a vowel root and an irregular root', () => {
+    expect(read('କରିଛନ୍ତି')).toBe('do + have …-ed (they, or respectful)'); // karichhanti
+    expect(read('ପାଇଛନ୍ତି')).toBe('get + have …-ed (they, or respectful)'); // paaichhanti
+    expect(read('ଯାଇଛି')).toBe('go + has …-ed (he/she/it)'); // yaaichhi
+    expect(read('କରାଯାଇଛି')).toBe('do + has been …-ed'); // karaayaaichhi
+    expect(explainVerb('କରିବେ', null, VERBS, (x) => known.get(x) ?? null)?.formation).toBe(
+      'କର (do) + ିବେ (will … (they, or respectful))',
+    );
+  });
+
+  it('does not take a causative, a noun or an exact headword for a verb form', () => {
+    expect(read('ଦେଖାଇଛନ୍ତି')).toBeNull(); // dekhaaichhanti: "have shown", not "see"
+    expect(read('ଘରେ')).toBeNull(); // ghare: in the house
+    expect(explainVerb('କରିଛି', { how: 'exact', head: 'x', index: 0 }, VERBS, () => 'to do')).toBeNull();
+    // Only a meaning that starts "to ..." is a verb.
+    expect(explainVerb('କରିଛି', null, VERBS, () => 'doing')).toBeNull();
+  });
+
+  it('takes the verb from a verbal-noun meaning', () => {
+    expect(verbOf('to throw, drop; throwing')).toBe('throw, drop');
+    expect(verbOf('to be, to become; becoming')).toBe('be, become');
+    expect(verbOf('doing')).toBeNull();
+  });
+});
+

@@ -368,3 +368,6 @@ use, the sessions read the IndicCorp v2 word counts (CC0; top 20,000 in
 stored in the file). Licence: MIT (this project), like `phrases.tsv`. Every row is status
 `ai` until the owner checks it (C-13). Words on the owner's offensive or coarse list are
 never defined (`Appv2/test/meanings.test.ts`).
+
+`verb-endings.tsv` (2026-10-14): the verb endings (60 rows) that explain a verb form from
+its verb, written by Claude from its own knowledge of Odia grammar on the same terms.

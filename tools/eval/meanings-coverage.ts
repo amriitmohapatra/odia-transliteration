@@ -12,6 +12,7 @@
  *   ai           core/data/meanings.tsv (when present; AI-written, status not "wrong")
  *   exact        Praharaj headword with a readable gloss, or a modern-layer exact hit
  *   ending       a known word plus a known ending ("state + in, at, on"; lookup.ts explainEnding)
+ *   verb         a verb form: a known verb plus a verb ending ("get + have …-ed"; lookup.ts explainVerb)
  *   number       a number in Odia digits, with a counting word or ending (lookup.ts readNumber)
  *   stem         only an inflected form matches (shown as "maybe:")
  *   no-gloss     Praharaj headword, but no English gloss the extractor can read
@@ -25,12 +26,13 @@
 import { readFileSync } from 'node:fs';
 import { parseArgs } from 'node:util';
 
-import { parseGlosses, parseMeanings } from '@odia/core';
+import { parseGlosses, parseMeanings, parseVerbEndings } from '@odia/core';
 import { canonical } from '@odia/core/normalize';
 
 import {
   defAt,
   explainEnding,
+  explainVerb,
   findEntry,
   findModern,
   foldKey,
@@ -53,7 +55,7 @@ const { values } = parseArgs({
   },
 });
 
-const BUCKETS = ['owner', 'ai', 'exact', 'ending', 'number', 'stem', 'no-gloss', 'prefix-only', 'none'] as const;
+const BUCKETS = ['owner', 'ai', 'exact', 'ending', 'verb', 'number', 'stem', 'no-gloss', 'prefix-only', 'none'] as const;
 type Bucket = (typeof BUCKETS)[number];
 
 const P = parsePayload(new Uint8Array(read('Appv2/src/dictionary/praharaj.bin')));
@@ -65,6 +67,8 @@ try {
 } catch (error) {
   if ((error as NodeJS.ErrnoException).code !== 'ENOENT') throw error;
 }
+
+const verbs = parseVerbEndings(read('core/data/verb-endings.tsv').toString('utf8'), 'core/data/verb-endings.tsv');
 
 function bucketOf(word: string): Bucket {
   if (owner.get(word)) return 'owner';
@@ -79,6 +83,7 @@ function bucketOf(word: string): Bucket {
   // As the app and the lens: owner or AI meanings of the stem only.
   const stemMeaning = (head: string): string | null => owner.get(head)?.meaning ?? ai?.word(head)?.meaning ?? null;
   if (explainEnding(word, entry, ai, stemMeaning)) return 'ending';
+  if (explainVerb(word, entry, verbs, stemMeaning)) return 'verb';
   if (readNumber(word, ai)) return 'number';
   if (entry?.how === 'stem' || (modern && modernGloss)) return 'stem';
   if (entry?.how === 'prefix') return 'prefix-only';
@@ -113,7 +118,8 @@ if (values.list) {
   const share = (bs: string[]): number =>
     (100 * bs.reduce((s, b) => s + byBucket.get(b as Bucket)!.reduce((t, r) => t + r.count, 0), 0)) / mass;
   console.log(`\n  words with a clear meaning (owner, ai, exact, ending): ${share(['owner', 'ai', 'exact', 'ending']).toFixed(1)}%`);
+  console.log(`  verb forms explained (verb): ${share(['verb']).toFixed(1)}%`);
   console.log(`  numbers read out (number): ${share(['number']).toFixed(1)}%`);
-  const good = ['owner', 'ai', 'exact', 'ending', 'number'].reduce((s, b) => s + byBucket.get(b as Bucket)!.reduce((t, r) => t + r.count, 0), 0);
-  console.log(`  together (words and numbers): ${((100 * good) / mass).toFixed(1)}% of the running text`);
+  const good = ['owner', 'ai', 'exact', 'ending', 'verb', 'number'].reduce((s, b) => s + byBucket.get(b as Bucket)!.reduce((t, r) => t + r.count, 0), 0);
+  console.log(`  together (words, verb forms and numbers): ${((100 * good) / mass).toFixed(1)}% of the running text`);
 }

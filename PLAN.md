@@ -226,6 +226,7 @@ Agents do not commit; the lead reviews, measures and commits.
 
 | Date | Change |
 |---|---|
+| 2026-10-14 | Verb forms explained by verb + ending in the app and the lens (`verb-endings.tsv`, 60 endings, `explainVerb`): ପାଇଛନ୍ତି = "get + have …-ed (they, or respectful)". Before batch 5's verbs: 0.5% of running text. |
 | 2026-10-14 | V2.17 batch 4 (297 reviewed rows): words with a clear meaning 84.7 → 86.0%; with numbers 89.4%. |
 | 2026-10-14 | V2.17 batch 3 (293 reviewed rows): words with a clear meaning 82.7 → 84.7%; with numbers 88.1%. |
 | 2026-10-14 | Numbers in Odia digits are read out in the app and the lens (`readNumber`, no data): 3.4% of running news text. Coverage tool reports words (82.7%) and numbers apart. Owner testing rule recorded in `plan/06`. |

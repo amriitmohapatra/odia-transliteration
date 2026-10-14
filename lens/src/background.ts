@@ -13,7 +13,7 @@
  * takes to unpack the whole 24 MB text.
  */
 
-import { parseGlosses, parseMeanings } from '@odia/core';
+import { parseGlosses, parseMeanings, parseVerbEndings } from '@odia/core';
 import { canonical } from '@odia/core/normalize';
 
 import { findEntry, foldKey, meaningFinder, parsePayload, type Dict } from '../../Appv2/src/dictionary/lookup.js';
@@ -23,6 +23,7 @@ import { parseLoans } from '../../Appv2/src/dictionary/loans.js';
 import { inflate } from '../../Appv2/src/dictionary/pako-inflate.js';
 import glossesTsv from '../../core/data/glosses.tsv';
 import meaningsTsv from '../../core/data/meanings.tsv';
+import verbEndingsTsv from '../../core/data/verb-endings.tsv';
 import loansTsv from '../../Appv2/src/dictionary/loans.tsv';
 
 import { describeWord, type LensCard, type LensData } from './describe.js';
@@ -77,7 +78,13 @@ function loadExtras(): Promise<LensData> {
     } catch {
       ai = null; // a broken file must not take the lens down; the unit tests catch it
     }
-    return { modern, origin, owner: parseGlosses(glossesTsv, 'core/data/glosses.tsv'), loans: parseLoans(loansTsv), ai };
+    let verbs: LensData['verbs'] = null;
+    try {
+      verbs = parseVerbEndings(verbEndingsTsv, 'core/data/verb-endings.tsv');
+    } catch {
+      verbs = null;
+    }
+    return { modern, origin, owner: parseGlosses(glossesTsv, 'core/data/glosses.tsv'), loans: parseLoans(loansTsv), ai, verbs };
   })();
   return extras;
 }
@@ -125,7 +132,7 @@ async function toggle(tabId: number): Promise<void> {
   } catch {
     // Pages the browser protects (the Chrome Web Store, chrome:// pages) refuse
     // scripts. Say so on the badge rather than failing silently.
-    await chrome.action.setBadgeText({ tabId, text: '✕' }).catch(() => undefined);
+    await chrome.action.setBadgeText({ tabId, text: '\u2715' }).catch(() => undefined);
   }
 }
 

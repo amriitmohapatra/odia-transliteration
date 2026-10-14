@@ -93,6 +93,7 @@ built, Rust stays limited to roughly 150 lines of clipboard and hotkey glue.
 | The meaning shown for a word is wrong or misleading (owner meaning, shown first) | `core/data/glosses.tsv` |
 | A greeting, wish or other whole phrase to offer in the Meanings panel (owner decision) | `core/data/phrases.tsv` |
 | A word has no meaning, or an old/wrong one, in the app and the lens (AI-written, status `ai` until the owner checks it; D-13) | `core/data/meanings.tsv` |
+| A verb form is explained with the wrong tense or person ("get + have …-ed (they, or respectful)"; AI-written) | `core/data/verb-endings.tsv` |
 | The derived everyday test expects the wrong word for an ambiguous key (owner decision) | `core/test/golden/everyday-overrides.tsv` |
 
 `core/src/rules.ts` validates rule files on load and **fails loudly** on a typo or a

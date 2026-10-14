@@ -15,7 +15,7 @@
  */
 
 import { canonical } from '@odia/core/normalize';
-import type { Meaning, Meanings } from '@odia/core';
+import type { Meaning, Meanings, VerbEndings } from '@odia/core';
 
 import { inflate } from './pako-inflate.js';
 import { cleanDefinition } from './clean.js';
@@ -301,7 +301,8 @@ export function explainEnding(
   const suffix = q.slice(entry.head.length);
   const end = suffix.length > 0 ? ai.ending(suffix) : undefined;
   const stem = end ? stemMeaning(entry.head) : null;
-  if (!end || !stem) return null;
+  // A verbal noun ("to play; playing"): explainVerb reads its forms (khelibaaku = "play + to …").
+  if (!end || !stem || verbOf(stem) !== null) return null;
   const head = tidyGloss(stem, false);
   const text = head ? tidyGloss(`${head.replace(/\u2026$/, '')} + ${end.meaning}`, false) : null;
   return text ? { text, formation: `${entry.head} + ${suffix} (${end.meaning})` } : null;
@@ -357,6 +358,66 @@ export function readNumber(word: string, ai: MeaningFinder | null): { text: stri
     parts.push(`${rest} (${end.meaning})`);
   }
   return { text, formation: parts.join(' + ') };
+}
+
+/* ------------------------------------------------------------ *
+ * Verb forms (core/data/verb-endings.tsv)
+ * ------------------------------------------------------------ */
+
+/** The verb in a verbal-noun meaning: "to throw, drop; throwing" -> "throw, drop". Null otherwise. */
+export function verbOf(meaning: string): string | null {
+  const m = /^to ([^;()]+)/.exec(meaning.trim());
+  // "be, to become" -> "be, become"
+  const verb = m ? (m[1] as string).trim().replace(/,$/, '').replace(/(,\s*)to /g, '$1') : '';
+  return verb.length > 0 ? verb : null;
+}
+
+const ROOT_AFTER_CONSONANT = /[\u0b15-\u0b39\u0b5c-\u0b5f]\u0b3c?$/;
+const ROOT_AFTER_VOWEL = /[\u0b3e-\u0b4c]$/;
+
+/* Irregular roots: yaa (go) -> yibaa, ho (be) -> hebaa. Not a rule for every -aa root:
+ * dekhaa (show) is not dekh (see). */
+const IRREGULAR: ReadonlyMap<string, string> = new Map([
+  ['\u0b2f\u0b3e', '\u0b2f\u0b3f\u0b2c\u0b3e'],
+  ['\u0b39\u0b4b', '\u0b39\u0b47\u0b2c\u0b3e'],
+]);
+
+/* The verbal nouns a root can have: kar -> karibaa; paa -> paaibaa; de -> debaa. */
+function verbalNouns(root: string, afterVowel: boolean): string[] {
+  const baa = '\u0b2c\u0b3e';
+  if (!afterVowel) return [`${root}\u0b3f${baa}`];
+  const irregular = IRREGULAR.get(root);
+  return irregular ? [irregular] : [`${root}\u0b07${baa}`, `${root}${baa}`];
+}
+
+/**
+ * A verb form explained by its ending: paaichhanti = "get + have …-ed (they; or
+ * respectful)", made of paa + ichhanti. The verb comes from `wordMeaning` of its
+ * verbal noun in -baa (the owner's or the AI layer's meaning, as for explainEnding),
+ * and only a meaning that starts "to …" counts, so a noun that merely ends like a
+ * verb ending (gharare) is not taken for one. Longest ending first. Null when no
+ * ending fits a root whose verb has a meaning, or the word is an exact headword.
+ */
+export function explainVerb(
+  word: string,
+  entry: Entry | null,
+  endings: VerbEndings | null,
+  wordMeaning: (word: string) => string | null,
+): { text: string; formation: string } | null {
+  if (!endings || entry?.how === 'exact') return null;
+  const odia = canonical(word).replace(/[\u200c\u200d]/g, '');
+  for (const { form, afterVowel, ending } of endings.forms()) {
+    if (odia.length <= form.length || !odia.endsWith(form)) continue;
+    const root = odia.slice(0, -form.length);
+    if (!(afterVowel ? ROOT_AFTER_VOWEL : ROOT_AFTER_CONSONANT).test(root)) continue;
+    for (const noun of verbalNouns(root, afterVowel)) {
+      const verb = verbOf(wordMeaning(noun) ?? '');
+      if (!verb) continue;
+      const text = tidyGloss(`${verb} + ${ending.meaning}`, false);
+      if (text) return { text, formation: `${root} (${verb}) + ${form} (${ending.meaning})` };
+    }
+  }
+  return null;
 }
 
 /** The label under an AI-layer meaning, on every surface. */

@@ -45,7 +45,7 @@
  */
 
 import { canonical } from '@odia/core/normalize';
-import { parseGlosses, parseMeanings, type Glosses, type Meaning } from '@odia/core';
+import { parseGlosses, parseMeanings, parseVerbEndings, type Glosses, type Meaning } from '@odia/core';
 // Owner meanings (core/data/glosses.tsv): shown first, where the dictionary's
 // first sense misleads today. Small, so bundled with the app, not lazy.
 import glossesTsv from '../../../core/data/glosses.tsv?raw';
@@ -53,6 +53,8 @@ import glossesTsv from '../../../core/data/glosses.tsv?raw';
 // before the modern [mt] layer and Praharaj. Small while it is a pilot; move it
 // next to the lazy payloads when it passes ~300 KB (A-7).
 import meaningsTsv from '../../../core/data/meanings.tsv?raw';
+// Verb endings (core/data/verb-endings.tsv): "get + have …-ed (they)" for paaichhanti.
+import verbEndingsTsv from '../../../core/data/verb-endings.tsv?raw';
 
 import { inflate } from './pako-inflate.js';
 import {
@@ -61,6 +63,7 @@ import {
   findModern,
   fold,
   explainEnding,
+  explainVerb,
   readNumber,
   foldKey,
   meaningFinder,
@@ -246,6 +249,15 @@ function aiMeaning(word: string): Meaning | undefined {
   return AI?.word(word);
 }
 
+const VERBS = (() => {
+  try {
+    return parseVerbEndings(verbEndingsTsv, 'core/data/verb-endings.tsv');
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+})();
+
 /* Kids edition: words the app must never explain (labelled offensive or coarse).
  * Set by initDictionary; the default hides nothing. */
 let hidden: (word: string) => boolean = () => false;
@@ -276,14 +288,12 @@ function chipFor(word: string): string | null {
   return entry && g ? tidyGloss(g, entry.how !== 'exact') : null;
 }
 
-/* A stem match explained by its ending ("state + in, at, on"); see lookup.ts. */
+/* A form explained by its ending: a noun's ("state + in, at, on") or a verb's
+ * ("get + have …-ed (they; or respectful)"); see lookup.ts. */
 function explained_(word: string, entry: Entry | null): { text: string; formation: string } | null {
-  return explainEnding(word, entry, AI, (head) => {
-    const owned = ownerGloss(head)?.meaning;
-    if (owned) return owned;
-    // Owner or AI meanings only (see lookup.ts explainEnding).
-    return aiMeaning(head)?.meaning ?? null;
-  });
+  // Owner or AI meanings only (see lookup.ts explainEnding).
+  const meaningOf = (w: string): string | null => ownerGloss(w)?.meaning ?? aiMeaning(w)?.meaning ?? null;
+  return explainEnding(word, entry, AI, meaningOf) ?? explainVerb(word, entry, VERBS, meaningOf);
 }
 
 /** Origin suffix for a suggestion ("from Persian"), or null. Same gate as chipFor. */
@@ -630,14 +640,16 @@ function entryBlock(word: string, num: number | null, entry: Entry | null, moder
   const own = ownerGloss(word);
   const ai = hidden(word) ? undefined : aiMeaning(word);
   const number = own || ai ? null : readNumber(word, AI);
+  const explained = own || ai || number || hidden(word) ? null : explained_(word, entry);
   if (number) {
     tag.textContent = number.formation ? `${number.text} (${number.formation})` : `the number ${number.text}`;
+  } else if (explained) {
+    tag.textContent = `${explained.text} (${explained.formation})`;
   } else if (!entry && !modern && !own && !ai) {
     tag.textContent = NO_ENTRY;
     tag.classList.add('dict-tag-none');
   } else if (entry && entry.how === 'stem' && !own && !ai) {
-    const explained = explained_(word, entry);
-    tag.textContent = explained ? `${explained.text} (${explained.formation})` : 'maybe: a form of this word';
+    tag.textContent = 'maybe: a form of this word';
   } else if (entry && entry.how === 'prefix') {
     tag.textContent = 'maybe: starts with this word';
   }

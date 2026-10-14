@@ -9,12 +9,13 @@
  */
 
 import { canonical } from '@odia/core/normalize';
-import type { Glosses, Meaning } from '@odia/core';
+import type { Glosses, Meaning, VerbEndings } from '@odia/core';
 
 import {
   findModern,
   defAt,
   explainEnding,
+  explainVerb,
   readNumber,
   meaningSource,
   modernLines,
@@ -37,6 +38,8 @@ export interface LensData {
   loans: LoanIndex;
   /** AI-written meanings (core/data/meanings.tsv), or null without them. */
   ai: MeaningFinder | null;
+  /** Verb endings (core/data/verb-endings.tsv), or null without them. */
+  verbs: VerbEndings | null;
 }
 
 export interface LensMeaning {
@@ -111,13 +114,13 @@ export function describeWord(
   // older layers (the modern [mt] lines, Praharaj's 1930s senses) stay in the
   // app's full panel, so "Not" for nei never sits under "over; regarding".
   // A stem match with a known ending: "state + in, at, on" (rajya + re), not "maybe: State".
-  const explained = own || first ? null : explainEnding(odia, entry, data.ai, (head) => {
-    const owned = data.owner.get(head)?.meaning;
-    if (owned) return owned;
-    // Owner or AI meanings only: Praharaj's 1930s first sense of a stem is too
-    // often not today's sense (tanka "thigh", not rupee; sarakaara "lord").
-    return data.ai?.word(head)?.meaning ?? null;
-  });
+  // A verb form likewise: "get + have …-ed (they; or respectful)" (paa + ichhanti).
+  // Owner or AI meanings only: Praharaj's 1930s first sense of a stem is too
+  // often not today's sense (tanka "thigh", not rupee; sarakaara "lord").
+  const meaningOf = (w: string): string | null => data.owner.get(w)?.meaning ?? data.ai?.word(w)?.meaning ?? null;
+  const explained = own || first
+    ? null
+    : explainEnding(odia, entry, data.ai, meaningOf) ?? explainVerb(odia, entry, data.verbs, meaningOf);
   if (explained) add(explained.text, 'explained from its ending');
   // A number in Odia digits: "24", "6 (things)", "2019 + in, at, on".
   const number = own || first || explained ? null : readNumber(odia, data.ai);
