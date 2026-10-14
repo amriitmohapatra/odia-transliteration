@@ -284,7 +284,8 @@ export function parseMeanings(tsv: string, file = 'meanings.tsv'): Meanings {
       if (/[\u0B00-\u0B7F]/.test(cell)) throw new Error(`${where}: the ${name} column must be English (Odia goes in formation or note)`);
     }
     assertCanonical(formation, where);
-    if (map.has(odia) || endings.has(odia.slice(1)) ||
+    const isEnding = odia.startsWith('-') && !odia.includes(' ');
+    if (map.has(odia) || (isEnding && endings.has(odia.slice(1))) ||
         constructions.get(odia.slice(1).split(' ')[1] ?? '')?.some((m) => m.odia === odia)) {
       throw new Error(`${where}: duplicate entry`);
     }
@@ -298,7 +299,7 @@ export function parseMeanings(tsv: string, file = 'meanings.tsv'): Meanings {
       note,
     };
     size += 1;
-    if (odia.startsWith('-') && !odia.includes(' ')) {
+    if (isEnding) {
       endings.set(odia.slice(1), entry);
       continue;
     }

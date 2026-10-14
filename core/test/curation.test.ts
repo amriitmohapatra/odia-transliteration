@@ -243,6 +243,16 @@ describe('meanings.tsv (AI-written meanings)', () => {
     expect(m.construction(KU, WORD)).toBeUndefined(); // the suffix alone is not a word
   });
 
+  it('reads an ending row, and a word that ends like an ending is still a word', () => {
+    const RE = '\u0B30\u0B47'; // -re: in, at
+    const KARE = '\u0B15' + RE; // a word made of ka + re
+    const m = parseMeanings(ROW(`-${RE}`, 'in, at, on') + ROW(KARE, 'does'));
+    expect(m.ending(RE)?.meaning).toBe('in, at, on');
+    expect(m.get(KARE)?.meaning).toBe('does');
+    expect(m.all().map((x) => x.odia)).toEqual([KARE]);
+    expect(() => parseMeanings(ROW(`-${RE}`, 'a') + ROW(`-${RE}`, 'b'))).toThrow(/duplicate/);
+  });
+
   it('never shows a row marked wrong', () => {
     const m = parseMeanings(ROW(WORD, 'no', 'wrong'));
     expect(m.get(WORD)).toBeUndefined();
