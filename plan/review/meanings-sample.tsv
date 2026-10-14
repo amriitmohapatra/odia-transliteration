@@ -1,0 +1,54 @@
+# C-13 sample: 50 AI-written meanings picked at random from core/data/meanings.tsv.
+# For each row, fill "verdict": ok, wrong, or fix. For "fix", write the better meaning in "correction".
+# Leave a row empty if you are not sure. Send the file back; Claude applies it (ok -> status owner).
+odia	meaning	senses	origin	verdict	correction
+ବିଶ୍ୱବିଦ୍ୟାଳୟ	university	university	sanskrit		
+ପ୍ରଧାନମନ୍ତ୍ରୀ	Prime Minister	Prime Minister	sanskrit		
+ମୁମ୍ବାଇ	Mumbai, city in Maharashtra	Mumbai, capital of Maharashtra state, India (formerly Bombay)	name		
+ରହୁଥିବା	living; staying; who lives (in)	living, residing (who lives in); staying, remaining (e.g. temperature staying above 40); while ... stays (with -bele)	native		
+ଏଥିସହିତ	along with this; besides; also	along with this, besides this; also, in addition	mixed		
+କରିଥାଏ	does (usually)	does, makes (habitual, he/she/it); causes to be	native		
+ଏସବୁ	all these; all this	all these, all this, all of these	native		
+ସେଠୀ	Sethi (surname)	Sethi (surname)	name		
+ଜବତ	seized; confiscated	seized, confiscated (by police or officials); seizure	arabic		
+ସୁନ୍ଦରଗଡ଼	Sundargarh, a district and town of Odisha	Sundargarh, a district of north-western Odisha; its headquarters town	name		
+ଜଣାପଡ଼ିଛି	it has come to light; it is learnt	it has come to light, it is learnt, it is known; it appears, it seems (news phrase)	native		
+ଥିବାବେଳେ	while (it) is/was; whereas	while (X) is/was, when there is/was; whereas, while (contrast)	native		
+ପାଇଥିଲା	got; had got (he/she/it)	got, had got, received, found (he/she/it); with a noun: came out, was expressed ("got expression")	native		
+ଅନ୍ୟପକ୍ଷରେ	on the other hand; meanwhile	on the other hand; meanwhile, elsewhere; on the other side	sanskrit		
+ଜଣାଇଛନ୍ତି	has informed; has conveyed (respectful)	has informed, has stated, has said; has conveyed (thanks, greetings) (they; or he/she, respectful)	native		
+ପାଇବ	will get; will find (he/she/it)	will get, will receive, will find (he/she/it; or you, familiar); (after a noun) will undergo, e.g. will decrease, will increase	native		
+କର୍ମଚାରୀ	employee, staff member	employee, staff member, worker (esp. government)	sanskrit		
+ଦୃଷ୍ଟିରୁ	from the point of view (of)	from the point of view (of), in terms of; from sight	sanskrit		
+କାର୍ଯ୍ୟ	work, task; action	work, task, job; action, act; function; event, programme	sanskrit		
+ଯୁବକ	young man, youth	young man, youth	sanskrit		
+ସପ୍ତାହ	week	week	sanskrit		
+ଭିତ	inside; side	inside, within (usually as bhitara); side, direction	native		
+ବଢ଼ିବାକୁ	to grow; in order to increase	to grow, to increase; in order to increase	native		
+ପାରେ	can; may	can, may, is able to (he/she/it); might	native		
+ଜାଗା	place, spot	place, spot, space; land, plot	persian		
+ସେମାନଙ୍କ	their; of them	their, of them; them (before a postposition: from among them)	native		
+ମାନଙ୍କ	of (the plural, written apart)	of the ... (plural, respectful), written as a separate word after a noun: paksha manank = of the parties	native		
+ରୋଗୀ	patient	patient, sick person	sanskrit		
+ଦାସ	Das (surname); servant	Das, a common Odia surname; servant, slave; devotee (in names: Achyutananda Das)	name		
+ନଥିବା	not being; that is/was not (participle)	that is not, that was not, lacking (negative participle, before a noun: an area without facilities)	native		
+ନଥିବାର	of not being; that ... is/was not	of not being, of not having; (the fact) that ... is/was not	native		
+ପ୍ରାର୍ଥୀ	candidate	candidate (election, exam); applicant; (literary) one who asks, petitioner	sanskrit		
+ପାର୍ଟିକୁ	to the party	to the party; the party (object)	english		
+ଗ୍ରାମବାସୀ	villager(s)	villager, villagers, village residents	sanskrit		
+ନେତା	leader	leader; political leader, politician	sanskrit		
+ପ୍ରଶାସନ	administration	administration; the authorities, officials (district, police etc.)	sanskrit		
+କମିଟିକୁ	to the committee	to the committee; the committee (as object)	english		
+ଶିକ୍ଷକ	teacher	teacher	sanskrit		
+ତାକୁ	him, her, it (to)	him, her, it; to him, to her, to it (familiar)	native		
+ମନ୍ଦିର	temple	temple, shrine	sanskrit		
+ମୋଦି	Modi (surname)	Modi, a surname; in news usually Prime Minister Narendra Modi	name		
+ଫେରା	round (of the wedding fire), phera	a round around the sacred fire in a Hindu wedding, phera; a round, a turn; return, coming back (in compounds: gharaphera, homecoming)	mixed		
+ସରକାର	government	government, the state administration; (old) master, lord	persian		
+ଜଣ	person (counting word)	person, used when counting people (two persons); one person	native		
+ଗ୍ରାମ	village	village; gram (unit of weight)	sanskrit		
+ଶ୍ରମିକ	worker, labourer	worker, labourer, wage earner	sanskrit		
+କାହାକୁ	whom; to whom; anyone (object)	whom, to whom; anyone, someone (as object; with a negative: no one)	native		
+ନାଗରିକ	citizen	citizen; civic, civil (adjective, as in civic amenities); townsman (old)	sanskrit		
+ଆକାର	shape, size; form	shape, form; size; appearance	sanskrit		
+ପରିଷଦ	council	council, board (Council of Ministers, Board of Secondary Education); assembly	sanskrit		

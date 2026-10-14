@@ -24,6 +24,7 @@ to the owner. Claude marks each item done here, with the date, when it is done.
 | # | Item | How | Since |
 |---|---|---|---|
 | L-1 | **Written permission from Desh** for the data the app will use. The email should name: (1) the data (word list with counts, typed-spelling pairs, word-pair and word-triple model, and the transliteration converter (FST), which the hybrid speller uses; not the English model); (2) the use (a free web app, public website, and later phone apps; data stored in this private repository); (3) the credit wording they want (for the data; the app's code and licence stay the owner's); (4) whether the data may stay in the app if the arrangement ends. Forward it to Claude or save it; Claude records the terms (no personal details). **Owner decision 2026-10-12: the build goes ahead before the email arrives** (private repository; merging to `main` publishes the data on the website, the owner decides when). | Ask Desh by email | 2026-10-12 |
+| L-2 | **Permission to use Odisha school textbooks** (optional). The full Odia books (OSEPA classes 1–10, CHSE +2) are "all rights reserved"; the DIKSHA copies are CC BY-ND 4.0, which does not allow a dictionary made from their glossaries. To use their word lists (ଶବ୍ଦାର୍ଥ) and grammar, ask OSEPA, SCERT Odisha, BSE Odisha or the Odisha Textbook Bureau by email for written permission. Without it, Claude uses only the CC BY 4.0 items (DIKSHA supplements, StoryWeaver). Details: `plan/research/odia-school-textbooks.md`. | Email, if wanted | 2026-10-14 |
 
 ## A. Needs the owner's Mac
 
