@@ -15,13 +15,14 @@
     "web"
   ],
   "scripts": {
-    "test": "npm run test --workspace @odia/core && vitest run --root Appv2 && node docs/odia-simple.test.mjs",
+    "test": "npm run test --workspace @odia/core && vitest run --root Appv2 && vitest run --root lens && node docs/odia-simple.test.mjs",
     "build": "npm run build --workspaces --if-present",
     "eval": "tsx tools/eval/run_eval.ts",
     "dev:web": "npm run dev --workspace @odia/web",
     "clean": "rm -rf core/dist cli/dist web/dist **/*.tsbuildinfo",
     "build:app": "npm run build:single --workspace @odia/web",
-    "build:app:legacy": "npm run build:legacy --workspace @odia/web"
+    "build:app:legacy": "npm run build:legacy --workspace @odia/web",
+    "build:lens": "node lens/build.mjs --zip"
   },
   "devDependencies": {
     "@types/node": "^25.9.5",

@@ -55,7 +55,7 @@ npm run -w cli start -- "odisha" --codepoints    # expect U+0B21 U+0B3C
 
 ## Architecture
 
-One TypeScript engine, four consumers.
+One TypeScript engine, five consumers.
 
 ```
 core/  ──────────────────────────────┐
@@ -64,6 +64,7 @@ core/  ────────────────────────�
   ├─ cli/         node               │  direct import
   ├─ web/         browser            │  direct import
   ├─ Appv2/       Sanskrit web app   │  direct import
+  ├─ lens/        browser extension  │  esbuild bundle (V4.1)
   └─ ime-macos/   Swift input method │  JavaScriptCore
                                      ┘
 ```

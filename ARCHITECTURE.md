@@ -43,7 +43,7 @@ end.
                      │ /api/translate          │  → Sarvam, Google/Claude
                      └─────────────────────────┘
 
-   ime-macos/ (Swift, JavaScriptCore) · lens extension (V4) · Android/iOS (V5): later
+   lens/ (browser extension, V4.1, built) · ime-macos/ (Swift, JavaScriptCore) · Android/iOS (V5): later
 ```
 
 ## 2. Invariants (never break these)
@@ -314,6 +314,26 @@ and `dictionary/overlay.css` together.
 Rules: keys only in Vercel environment variables; `.env*` never committed; rate limit per
 visitor; provider spending limit; hard cap US$20/month (D-4); logs never hold user text;
 every result passes `canonical()`; cache by canonical text.
+
+## 7b. Odia Lens, the browser extension (`lens/`, V4.1)
+
+Point at an Odia word on any web page: pronunciation, meaning, origin. Chrome and Edge,
+Manifest V3. Details and install steps: `lens/README.md`.
+
+| Part | Does |
+|---|---|
+| `lens/src/background.ts` | Toolbar click or Alt+Shift+O → injects `content.js` into that tab and toggles it (badge ON). Answers lookups from the packed dictionary. |
+| `lens/src/content.ts` | Word under the pointer (`caretRangeFromPoint`, `word.ts`), card in a shadow root (constructed style sheet, so page CSP cannot block it), Esc, scroll hides. |
+| `lens/src/describe.ts` | Word + entry → card: `romanize()` (the app's read-back), owner meaning, modern layer, Praharaj gloss, loan note, origin. |
+| `Appv2/src/dictionary/lookup.ts` | The lookup the app's Meanings panel uses too (fold, exact / stem / prefix, short gloss). |
+| `lens/build.mjs` | esbuild bundles (classic scripts); splits `praharaj.bin` into a keys file and 78 gzip chunks of 500 definitions, so a restarted worker answers in ~0.3 s instead of unpacking 24 MB. |
+
+**Privacy:** permissions `activeTab` and `scripting` only, no host permissions (a unit test
+checks the shipped manifest); nothing leaves the computer (the browser check fails on any
+outside request). **No Desh data** in the extension. Package: 6.3 MB zip.
+
+**Limits of v1:** top frame, real text only (no OCR: lens v2), one word at a time, no
+sentence translation (`/api/translate`, V3), Chrome and Edge only.
 
 ## 8. Testing and measurement
 
