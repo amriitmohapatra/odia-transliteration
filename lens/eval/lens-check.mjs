@@ -110,11 +110,12 @@ await check('a headword: pronunciation and meaning (owner meaning first)', async
   assert.ok(/\bday\b/.test(text), `meaning: ${text}`);
 });
 
-await check('an inflected word: a stem match, marked approximate', async () => {
+await check('an inflected word: explained from its stem and ending ("day + in, at, on")', async () => {
   await hover('dinare');
-  await page.waitForFunction(() => document.querySelector('odia-lens')?.shadowRoot?.querySelector('.card')?.textContent?.includes('Approximate'));
+  await page.waitForFunction(() => document.querySelector('odia-lens')?.shadowRoot?.querySelector('.card')?.textContent?.includes('explained from its ending'));
   const text = await cardText();
-  assert.ok(text.includes(`dictionary word is ${DINA}`), text);
+  assert.ok(text.includes('day + in, at, on'), text);
+  assert.ok(!text.includes('Approximate'), text);
 });
 
 await check('a precomposed nukta letter on the page: the card shows the canonical word', async () => {

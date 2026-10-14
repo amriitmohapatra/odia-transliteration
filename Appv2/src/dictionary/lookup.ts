@@ -253,6 +253,8 @@ export interface MeaningFinder {
   word(word: string): Meaning | undefined;
   /** A two-word or "-suffix word" construction for `word` after `previous`. */
   after(previous: string, word: string): Meaning | undefined;
+  /** The meaning of an ending ("re": in, at), or undefined. */
+  ending(suffix: string): Meaning | undefined;
 }
 
 /**
@@ -275,7 +277,34 @@ export function meaningFinder(meanings: Meanings): MeaningFinder {
     after(previous, word) {
       return previous.length === 0 ? undefined : meanings.construction(canonical(previous), canonical(word));
     },
+    ending: (suffix) => meanings.ending(suffix),
   };
+}
+
+/**
+ * A stem match explained by its ending: rajyare = "state + in, at, on", made of
+ * rajya + re. `stemMeaning` gives the headword's own short meaning: the owner's
+ * or the AI layer's only. Praharaj's first sense of a stem is too often not
+ * today's (tanka came out as "thigh + in", sarakaara as "lord + to"), so a
+ * stem without a modern meaning stays a plain "maybe:" stem match. Null when the match is not a stem
+ * match, the ending has no entry, or the stem has no meaning.
+ */
+export function explainEnding(
+  word: string,
+  entry: Entry | null,
+  ai: MeaningFinder | null,
+  stemMeaning: (head: string) => string | null,
+): { text: string; formation: string } | null {
+  if (!entry || entry.how !== 'stem' || !ai) return null;
+  const q = foldKey(word);
+  if (!q.startsWith(entry.head)) return null;
+  const suffix = q.slice(entry.head.length);
+  const end = suffix.length > 0 ? ai.ending(suffix) : undefined;
+  const stem = end ? stemMeaning(entry.head) : null;
+  if (!end || !stem) return null;
+  const head = tidyGloss(stem, false);
+  const text = head ? tidyGloss(`${head.replace(/\u2026$/, '')} + ${end.meaning}`, false) : null;
+  return text ? { text, formation: `${entry.head} + ${suffix} (${end.meaning})` } : null;
 }
 
 /** The label under an AI-layer meaning, on every surface. */

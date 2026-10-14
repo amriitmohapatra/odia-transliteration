@@ -14,6 +14,7 @@ import type { Glosses, Meaning } from '@odia/core';
 import {
   findModern,
   defAt,
+  explainEnding,
   meaningSource,
   modernLines,
   shortGlossOf,
@@ -108,7 +109,16 @@ export function describeWord(
   // A quick-glance card: with an owner or AI meaning for this exact word, the
   // older layers (the modern [mt] lines, Praharaj's 1930s senses) stay in the
   // app's full panel, so "Not" for nei never sits under "over; regarding".
-  const settled = own !== undefined || first !== undefined;
+  // A stem match with a known ending: "state + in, at, on" (rajya + re), not "maybe: State".
+  const explained = own || first ? null : explainEnding(odia, entry, data.ai, (head) => {
+    const owned = data.owner.get(head)?.meaning;
+    if (owned) return owned;
+    // Owner or AI meanings only: Praharaj's 1930s first sense of a stem is too
+    // often not today's sense (tanka "thigh", not rupee; sarakaara "lord").
+    return data.ai?.word(head)?.meaning ?? null;
+  });
+  if (explained) add(explained.text, 'explained from its ending');
+  const settled = own !== undefined || first !== undefined || explained !== null;
   if (data.modern && !settled) {
     const found = findModern(data.modern.keys, key);
     if (found) {
@@ -137,10 +147,10 @@ export function describeWord(
     roman: romanize(odia),
     meanings,
     // An owner or AI meaning is for this exact word: no "approximate" note then.
-    approximateHead: entry && entry.how !== 'exact' && !own && !first ? entry.head : null,
+    approximateHead: entry && entry.how !== 'exact' && !own && !first && !explained ? entry.head : null,
     origin,
     loan,
-    formation: ai?.formation || phrase?.formation || null,
+    formation: ai?.formation || phrase?.formation || explained?.formation || null,
     more: more.length > 0 ? `Also: ${more}` : null,
   };
 }

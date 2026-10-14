@@ -61,9 +61,16 @@ describe('describeWord: the lens card', () => {
     expect(c.approximateHead).toBeNull();
   });
 
-  it('marks a stem match as approximate and names the headword', () => {
+  it('explains a stem match with the owner meaning of its stem: "day + in, at, on"', () => {
     const c = card(DINARE);
-    expect(c.approximateHead).toBe(DINA);
+    expect(c.meanings[0]?.text).toBe('day + in, at, on');
+    expect(c.approximateHead).toBeNull();
+  });
+
+  it('marks a stem match as approximate when the stem has no modern meaning', () => {
+    const CROCODILE_IN = '\u0B15\u0B41\u0B2E\u0B4D\u0B2D\u0B40\u0B30\u0B30\u0B47'; // kumbhira + re: Praharaj only
+    const c = card(CROCODILE_IN);
+    expect(c.approximateHead).not.toBeNull();
     expect(c.meanings.some((m) => m.text.startsWith('maybe: '))).toBe(true);
   });
 
@@ -124,5 +131,14 @@ describe('the owner\'s headline (odia.news18.com, 2026-10-14): every word has a 
     const text = `${words[7]} ${words[8]}`;
     expect(wordBefore(text, text.indexOf(words[8]!))).toBe(words[7]);
     expect(wordBefore(`${words[7]}\u0964 ${words[8]}`, words[7]!.length + 2)).toBe('');
+  });
+});
+
+describe('a known word plus a known ending', () => {
+  it('explains a stem match from the AI layer: "entry + in, at, on" (prabesha + re)', () => {
+    const c = card('\u0B2A\u0B4D\u0B30\u0B2C\u0B47\u0B36\u0B30\u0B47');
+    expect(c.meanings[0]).toEqual({ text: 'entry + in, at, on', source: 'explained from its ending' });
+    expect(c.formation).toContain('\u0B30\u0B47');
+    expect(c.approximateHead).toBeNull();
   });
 });

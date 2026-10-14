@@ -11,6 +11,7 @@
  *   owner        core/data/glosses.tsv
  *   ai           core/data/meanings.tsv (when present; AI-written, status not "wrong")
  *   exact        Praharaj headword with a readable gloss, or a modern-layer exact hit
+ *   ending       a known word plus a known ending ("state + in, at, on"; lookup.ts explainEnding)
  *   stem         only an inflected form matches (shown as "maybe:")
  *   no-gloss     Praharaj headword, but no English gloss the extractor can read
  *   prefix-only  only a shorter headword the word starts with (often a different word)
@@ -23,10 +24,21 @@
 import { readFileSync } from 'node:fs';
 import { parseArgs } from 'node:util';
 
-import { parseGlosses } from '@odia/core';
+import { parseGlosses, parseMeanings } from '@odia/core';
 import { canonical } from '@odia/core/normalize';
 
-import { defAt, findEntry, findModern, foldKey, modernLines, parsePayload, shortGlossOf } from '../../Appv2/src/dictionary/lookup.js';
+import {
+  defAt,
+  explainEnding,
+  findEntry,
+  findModern,
+  foldKey,
+  meaningFinder,
+  modernLines,
+  parsePayload,
+  shortGlossOf,
+  type MeaningFinder,
+} from '../../Appv2/src/dictionary/lookup.js';
 
 const ROOT = new URL('../../', import.meta.url);
 const read = (p: string): Buffer => readFileSync(new URL(p, ROOT));
@@ -39,26 +51,22 @@ const { values } = parseArgs({
   },
 });
 
-const BUCKETS = ['owner', 'ai', 'exact', 'stem', 'no-gloss', 'prefix-only', 'none'] as const;
+const BUCKETS = ['owner', 'ai', 'exact', 'ending', 'stem', 'no-gloss', 'prefix-only', 'none'] as const;
 type Bucket = (typeof BUCKETS)[number];
 
 const P = parsePayload(new Uint8Array(read('Appv2/src/dictionary/praharaj.bin')));
 const M = parsePayload(new Uint8Array(read('Appv2/src/dictionary/modern.bin')));
 const owner = parseGlosses(read('core/data/glosses.tsv').toString('utf8'));
-const ai = new Set<string>();
+let ai: MeaningFinder | null = null;
 try {
-  for (const line of read('core/data/meanings.tsv').toString('utf8').split('\n')) {
-    if (!line || line.startsWith('#')) continue;
-    const cells = line.split('\t');
-    if (cells[5] !== 'wrong') ai.add(canonical(cells[0] as string));
-  }
-} catch {
-  // no AI layer yet
+  ai = meaningFinder(parseMeanings(read('core/data/meanings.tsv').toString('utf8'), 'core/data/meanings.tsv'));
+} catch (error) {
+  if ((error as NodeJS.ErrnoException).code !== 'ENOENT') throw error;
 }
 
 function bucketOf(word: string): Bucket {
   if (owner.get(word)) return 'owner';
-  if (ai.has(word)) return 'ai';
+  if (ai?.word(word)) return 'ai';
   const key = foldKey(word);
   const modern = findModern(M.keys, key);
   const modernGloss = modern ? modernLines(defAt(M, modern.index)).some((l) => l.tag !== 'loan') : false;
@@ -66,6 +74,9 @@ function bucketOf(word: string): Bucket {
   const entry = findEntry(P.keys, key);
   const gloss = entry ? shortGlossOf(defAt(P, entry.index)) : null;
   if (entry?.how === 'exact') return gloss ? 'exact' : 'no-gloss';
+  // As the app and the lens: owner or AI meanings of the stem only.
+  const stemMeaning = (head: string): string | null => owner.get(head)?.meaning ?? ai?.word(head)?.meaning ?? null;
+  if (explainEnding(word, entry, ai, stemMeaning)) return 'ending';
   if (entry?.how === 'stem' || (modern && modernGloss)) return 'stem';
   if (entry?.how === 'prefix') return 'prefix-only';
   return 'none';
@@ -96,6 +107,6 @@ if (values.list) {
     const m = list.reduce((s, r) => s + r.count, 0);
     console.log(`  ${b.padEnd(13)} ${String(list.length).padStart(7)}    ${((100 * m) / mass).toFixed(1).padStart(5)}%`);
   }
-  const good = ['owner', 'ai', 'exact'].reduce((s, b) => s + byBucket.get(b as Bucket)!.reduce((t, r) => t + r.count, 0), 0);
-  console.log(`\n  a clear meaning (owner, ai, exact): ${((100 * good) / mass).toFixed(1)}% of the running text`);
+  const good = ['owner', 'ai', 'exact', 'ending'].reduce((s, b) => s + byBucket.get(b as Bucket)!.reduce((t, r) => t + r.count, 0), 0);
+  console.log(`\n  a clear meaning (owner, ai, exact, ending): ${((100 * good) / mass).toFixed(1)}% of the running text`);
 }

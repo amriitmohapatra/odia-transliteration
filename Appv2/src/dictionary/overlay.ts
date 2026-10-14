@@ -60,6 +60,7 @@ import {
   findEntry,
   findModern,
   fold,
+  explainEnding,
   foldKey,
   meaningFinder,
   meaningSource,
@@ -260,11 +261,26 @@ function chipFor(word: string): string | null {
   if (own) return tidyGloss(own.meaning, false);
   const ai = aiMeaning(word);
   if (ai) return tidyGloss(ai.meaning, false);
-  const m = modernChip(lookupModern(word));
-  if (m) return m;
+  const mo = lookupModern(word);
+  const exact = mo && mo.how === 'exact' ? modernChip(mo) : null;
+  if (exact) return exact;
   const entry = lookup(word);
+  const explained = explained_(word, entry);
+  if (explained) return explained.text;
+  const m = modernChip(mo);
+  if (m) return m;
   const g = entry ? shortGloss(entry) : null;
   return entry && g ? tidyGloss(g, entry.how !== 'exact') : null;
+}
+
+/* A stem match explained by its ending ("state + in, at, on"); see lookup.ts. */
+function explained_(word: string, entry: Entry | null): { text: string; formation: string } | null {
+  return explainEnding(word, entry, AI, (head) => {
+    const owned = ownerGloss(head)?.meaning;
+    if (owned) return owned;
+    // Owner or AI meanings only (see lookup.ts explainEnding).
+    return aiMeaning(head)?.meaning ?? null;
+  });
 }
 
 /** Origin suffix for a suggestion ("from Persian"), or null. Same gate as chipFor. */
@@ -613,8 +629,9 @@ function entryBlock(word: string, num: number | null, entry: Entry | null, moder
   if (!entry && !modern && !own && !ai) {
     tag.textContent = NO_ENTRY;
     tag.classList.add('dict-tag-none');
-  } else if (entry && entry.how === 'stem') {
-    tag.textContent = 'maybe: a form of this word';
+  } else if (entry && entry.how === 'stem' && !own && !ai) {
+    const explained = explained_(word, entry);
+    tag.textContent = explained ? `${explained.text} (${explained.formation})` : 'maybe: a form of this word';
   } else if (entry && entry.how === 'prefix') {
     tag.textContent = 'maybe: starts with this word';
   }

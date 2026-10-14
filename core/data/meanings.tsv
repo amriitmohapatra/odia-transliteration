@@ -81,3 +81,26 @@
 ପୁଲିସ	police	police		english	ai
 ଟିମ୍	team	team		english	ai
 ସାମିଲ	included; joined	included, part of; joined		persian	ai	Came into Odia through Persian or Urdu.
+
+# Endings: "-ending" rows explain a known word with a case or plural ending
+# (ରାଜ୍ୟରେ = ରାଜ୍ୟ state + ରେ in). Same suffixes as Appv2/src/dictionary/lookup.ts SUFFIXES.
+-ମାନଙ୍କର	of the (plural)	of the ...s, their (plural possessive)	ମାନଙ୍କ (plural) + ର (of)	native	ai	
+-ମାନଙ୍କୁ	to the (plural)	to the ...s; the ...s (plural object)	ମାନଙ୍କ (plural) + କୁ (to)	native	ai	
+-ଗୁଡ଼ିକୁ	to the (plural)	to the ...s; the ...s (plural object, things)	ଗୁଡ଼ିକ (plural) + କୁ (to)	native	ai	
+-ଗୁଡ଼ିକର	of the (plural)	of the ...s (plural possessive, things)	ଗୁଡ଼ିକ (plural) + ର (of)	native	ai	
+-ମାନଙ୍କ	of the (plural)	of the ...s, their (plural, people)		native	ai	
+-ଗୁଡ଼ିକ	the ...s (plural)	plural marker (mostly for things)		native	ai	
+-ଗୁଡ଼ାଏ	a lot of	a lot of, several (quantity marker)		native	ai	
+-ମାନେ	the ...s (plural)	plural marker (mostly for people)		native	ai	
+-ଙ୍କର	of (respectful)	of (respectful singular or plural)	ଙ୍କ (respectful) + ର (of)	native	ai	
+-ଙ୍କୁ	to (respectful)	to; the (object), respectful singular or plural	ଙ୍କ (respectful) + କୁ (to)	native	ai	
+-ଟିକୁ	to the (one)	to the (one); the (object)	ଟି (the) + କୁ (to)	native	ai	
+-ଟିରେ	in the (one)	in, at, on the (one)	ଟି (the) + ରେ (in)	native	ai	
+-ଙ୍କ	of (respectful)	of (respectful singular or plural)		native	ai	
+-ଟିର	of the (one)	of the (one)	ଟି (the) + ର (of)	native	ai	
+-ରେ	in, at, on	in, at, on; by (means)		native	ai	
+-ରୁ	from	from; out of; than (comparing)		native	ai	
+-କୁ	to	to, towards; the (object marker)		native	ai	
+-ଟି	the (one)	the; one (classifier for a thing)		native	ai	
+-ଟା	the (one, informal)	the; one (classifier, informal)		native	ai	
+-ର	of	of; -'s (possessive)		native	ai	

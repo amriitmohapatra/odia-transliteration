@@ -226,7 +226,7 @@ export const MEANING_ORIGINS = [
 export type MeaningOrigin = (typeof MEANING_ORIGINS)[number];
 
 export interface Meaning {
-  /** The key as written: one word, two words, or "-suffix word" (a construction). */
+  /** The key as written: one word, two words, "-suffix word" (a construction) or "-suffix" (an ending). */
   odia: string;
   /** One line for the suggestion chip and the lens (at most 56 characters). */
   meaning: string;
@@ -250,9 +250,11 @@ export interface Meanings {
   construction(previous: string, word: string): Meaning | undefined;
   /** Every shown entry (not "wrong"), single words and pairs, in file order. */
   all(): readonly Meaning[];
+  /** The entry for an ending ("-re": in, at), keyed without the hyphen, or undefined. */
+  ending(suffix: string): Meaning | undefined;
 }
 
-/** A word, two words, or "-suffix word": Odia letters and single spaces. */
+/** A word, two words, "-suffix word" or "-suffix": Odia letters and single spaces. */
 const MEANING_KEY = /^-?[\u0B00-\u0B7F\u200C\u200D]+( [\u0B00-\u0B7F\u200C\u200D]+)?$/;
 /** The longest one-line meaning: the chip's limit (Appv2/src/dictionary/lookup.ts tidyGloss). */
 const MEANING_MAX = 56;
@@ -260,6 +262,7 @@ const MEANING_MAX = 56;
 export function parseMeanings(tsv: string, file = 'meanings.tsv'): Meanings {
   const map = new Map<string, Meaning>();
   const constructions = new Map<string, Meaning[]>();
+  const endings = new Map<string, Meaning>();
   const ordered: Meaning[] = [];
   let size = 0;
   for (const { cells, line } of rows(tsv, file)) {
@@ -281,7 +284,8 @@ export function parseMeanings(tsv: string, file = 'meanings.tsv'): Meanings {
       if (/[\u0B00-\u0B7F]/.test(cell)) throw new Error(`${where}: the ${name} column must be English (Odia goes in formation or note)`);
     }
     assertCanonical(formation, where);
-    if (map.has(odia) || constructions.get(odia.slice(1).split(' ')[1] ?? '')?.some((m) => m.odia === odia)) {
+    if (map.has(odia) || endings.has(odia.slice(1)) ||
+        constructions.get(odia.slice(1).split(' ')[1] ?? '')?.some((m) => m.odia === odia)) {
       throw new Error(`${where}: duplicate entry`);
     }
     const entry: Meaning = {
@@ -294,6 +298,10 @@ export function parseMeanings(tsv: string, file = 'meanings.tsv'): Meanings {
       note,
     };
     size += 1;
+    if (odia.startsWith('-') && !odia.includes(' ')) {
+      endings.set(odia.slice(1), entry);
+      continue;
+    }
     if (entry.status !== 'wrong') ordered.push(entry);
     if (odia.startsWith('-')) {
       const word = odia.split(' ')[1] as string;
@@ -309,6 +317,7 @@ export function parseMeanings(tsv: string, file = 'meanings.tsv'): Meanings {
     size,
     get: (key) => shown(map.get(key)),
     all: () => ordered,
+    ending: (suffix) => shown(endings.get(suffix)),
     construction(previous, word) {
       const exact = shown(map.get(`${previous} ${word}`));
       if (exact) return exact;
