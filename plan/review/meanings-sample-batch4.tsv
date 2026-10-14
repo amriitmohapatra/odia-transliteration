@@ -1,0 +1,54 @@
+# C-13 sample, batch 4: 50 AI-written meanings picked at random from the batch 4 rows of core/data/meanings.tsv.
+# For each row, fill "verdict": ok, wrong, or fix. For "fix", write the better meaning in "correction".
+# Leave a row empty if you are not sure. Send the file back; Claude applies it (ok -> status owner).
+odia	meaning	senses	origin	verdict	correction
+ଫୁଲବାଣୀ	Phulbani, HQ town of Kandhamal district	Phulbani, the headquarters town of Kandhamal district, Odisha	name		
+ନିର୍ବାଚନୀ	electoral; election (as adjective)	electoral, of elections, election (election politics, election campaign, constituency)	sanskrit		
+ସଚିନ	Sachin (male given name)	Sachin, a male given name (e.g. the cricketer Sachin Tendulkar)	name		
+ହଠାତ	suddenly; sudden	suddenly, all of a sudden; sudden (decision etc.)	sanskrit		
+କରାଯିବାକୁ	to be done; to be held (passive)	to be done, to be held, to be carried out (passive verbal noun + to)	native		
+ନୁହନ୍ତି	are not (they; or respectful)	are not, is not (they; or he/she, respectful)	native		
+ଧରିଛି	has caught; has held; has gained	has caught, has held, has taken hold (he/she/it); has gained (momentum)	native		
+ଗୁଡିକରେ	in the (plural) ...; in these	plural marker with 'in': in the (things), in these ...; written apart from its noun	native		
+ମିଳିନାହିଁ	has not been found; not received; not available	has not been found, has not been received, has not been got; is not available; no (reply, result) has come	native		
+ଶିକ୍ଷାନୁଷ୍ଠାନ	educational institution(s)	educational institution, school or college; educational institutions (in general)	sanskrit		
+କୋଭିଡ଼	Covid (COVID-19)	Covid, COVID-19, the coronavirus disease; pandemic-related (Covid hospital, Covid rules)	english		
+କମ୍ପାନି	company	company, firm	english		
+ଭାରସାମ୍ୟ	balance	balance, equilibrium (losing balance: losing control of a vehicle); balance between things	sanskrit		
+ମହାବିଦ୍ୟାଳୟ	college	college, degree college; (in names) Mahavidyalaya	sanskrit		
+ମାରିଥିଲେ	hit; had hit; struck (they; or respectful)	hit, struck, had hit (they; or he/she, respectful); beat, killed; fired (shots); hit (fours or sixes, in cricket)	native		
+ଭୁଲି	forgetting; having forgotten	forgetting, having forgotten (with jiba: to forget; with paariba: be able to forget)	native		
+କରିଦେଇଛି	has made; has done (it, he/she)	has made, has done, has rendered (it, he/she; a completed action: has made X silent, has thrown X into disarray)	native		
+ଖୋଜି	searching; looking for; having searched	searching, looking for; having searched (with paiba: to find; sought out and returned)	native		
+ଇଣ୍ଡିଆନ୍	Indian (in English names)	Indian (in English names: Indian Idol, Indian Oil, Indian Railways)	english		
+କେତେଜଣ	some people, a few persons; how many	some people, a few persons (several); how many persons (in a question)	native		
+ରକ୍ତଚାପ	blood pressure	blood pressure (high blood pressure, hypertension)	sanskrit		
+ରନରେ	by (so many) runs; in runs	by (so many) runs (won or lost by 20 runs); in runs	english		
+ଫାଣ୍ଡି	police outpost	police outpost, a small police post under a police station			
+ଅଧିନରେ	under (a command, authority)	under, within (a command, authority, scheme); under the control of	sanskrit		
+କରିଦେଲେ	did (it); if (one) does (they; or respectful)	did it, went and did, made (completed action; they, or he/she, respectful); if (one) does, if (it) stops etc. (conditional)	native		
+ରହିଥିବାବେଳେ	while (it) remains; while there is	while (it) remains, while (it) is (still) ...; whereas, even as (linking two facts)	native		
+ଟ୍ରଷ୍ଟ	trust (an organisation)	trust, a charitable or religious trust (temple trust); a trust holding property	english		
+ଉତ୍ତରପ୍ରଦେଶର	of Uttar Pradesh; Uttar Pradesh's	of Uttar Pradesh, in Uttar Pradesh, from Uttar Pradesh (a state in north India)	name		
+ରିୟା	Riya (female given name)	Riya, a female given name	name		
+ଆନନ୍ଦପୁର	Anandapur, a town in Keonjhar district	Anandapur, a town and subdivision in Keonjhar district, Odisha; Anandpur (Sahib), a town in Punjab	name		
+ୟୁନିଟ	unit	unit (a branch of an organisation; a unit of measure, e.g. units of insulin or electricity)	english		
+ବେଙ୍ଗାଲୁରୁ	Bengaluru, capital of Karnataka	Bengaluru (Bangalore), the capital of Karnataka	name		
+କରିଛୁ	have done (we; or you, familiar 'tu')	have done (we; also you, familiar 'tu')	native		
+ପୂର୍ବାହ୍ନ	forenoon; a.m., morning	forenoon, morning, before midday (a.m., with clock times)	sanskrit		
+ପହଂଚି	reaching; having reached	reaching, having reached, arriving	native		
+ସୁପ୍ରିମୋ	supremo (party chief)	supremo, the top leader of a party or organisation	english		
+କାର୍ଯ୍ୟକାଳ	term of office, tenure	term of office, tenure; working period, period of service	sanskrit		
+ହୋଇପାରିଛି	has been able to (be); could be done (I; or he/she/it)	has been possible, could be done, has been done, has become (it; present perfect); has been able to become (I: I could become the winner)	native		
+ଆଇନର	of the law	of the law; of the act (legislation)	persian		
+ହୋଇପଡ଼ିଛି	has become (it)	has become, has turned, has got (it); has fallen into (a state)	native		
+ପାସ	pass; passed	pass, passed (an exam, a bill, a censor board); a pass (entry pass); a pass in a game	english		
+ଉପଜିଲ୍ଲାପାଳ	sub-collector (head of a subdivision)	sub-collector, the chief administrative officer of a subdivision of a district	mixed		
+ଆଫଗାନିସ୍ତାନର	of Afghanistan	of Afghanistan; Afghanistan's	name		
+ଆସନ୍ତି	come (they; or he/she, resp.)	come, arrive (they; or he/she, respectful; present or habitual)	native		
+ଅଲିମ୍ପିକ୍ସ	Olympics	the Olympics, the Olympic Games	english		
+ଅଂଚଳ	area, region	area, region, locality, zone	sanskrit		
+ଯାଆନ୍ତି	go (they; or he/she, resp.)	go (they; or he/she, respectful; present or habitual)	native		
+ଲିଙ୍ଗରାଜ	Lingaraj (Shiva temple in Bhubaneswar)	Lingaraj, the great Shiva temple in Bhubaneswar; Shiva as worshipped there; a given name	name		
+ବଲିଉଡରେ	in Bollywood	in Bollywood, in the Hindi film industry	english		
+ରଣବୀର	Ranbir (given name)	Ranbir, a male given name; brave in battle (literal)	name		
