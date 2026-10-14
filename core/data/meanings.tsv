@@ -1408,7 +1408,7 @@
 ପଚାରିବା	to ask; asking	to ask, inquire, question; asking	ପଚାର (ask) + ଇବା (verbal noun)	native	ai	
 ଧରିବା	to hold, catch; holding	to hold, grasp; to catch, arrest (police caught); to take up, adopt (a path, a role); to catch (fire, an illness); holding, catching	ଧର (hold) + ଇବା (verbal noun)	native	ai	Passive: will be caught.
 ପହଞ୍ଚିବା	to reach, arrive; reaching	to reach, arrive (at); to get to (a final, a figure); reaching, arrival	ପହଞ୍ଚ (reach) + ଇବା (verbal noun)	native	ai	
-ଲାଗିବା	to feel, be attached; feeling	to feel, seem (it feels bad); to take (time, effort); to be attached, stick; to begin (after a verbal noun in -ku); to break out (a fire); to be engaged in; feeling	ଲାଗ (feel, be attached) + ଇବା (verbal noun)	native	ai	kharap lage: it feels bad; samay lage: it takes time.
+ଲାଗିବା	to seem, take time, be engaged; feeling	to feel, seem (it feels bad); to take (time, effort); to be attached, stick; to begin (after a verbal noun in -ku); to break out (a fire); to be engaged in; feeling	ଲାଗ (seem, take, be engaged) + ଇବା (verbal noun)	native	ai	kharap lage: it feels bad; samay lage: it takes time.
 ହରାଇବା	to lose, defeat; losing	to lose (a life, a job, a seat); to defeat, beat (a team; the loser takes -ku); losing	ହରା (lose) + ଇବା (verbal noun)	native	ai	X-ku haraila: defeated X.
 ଶୁଣିବା	to hear, listen; hearing	to hear, listen (to); to heed, obey; hearing; passive: to be heard, be rumoured	ଶୁଣ (hear) + ଇବା (verbal noun)	native	ai	
 ଓହ୍ଲାଇବା	to get down, descend; getting down	to get down, descend, alight (from a chariot, a vehicle); to take to (the streets); to enter (a contest, the field); to unload, bring down (goods); getting down	ଓହ୍ଲା (get down) + ଇବା (verbal noun)	native	ai	
@@ -1624,3 +1624,19 @@
 ଆକ୍ଟିଭ୍	active	active (on social media; in work); activated (with karibaa: to activate)		english	ai	
 ଯାନବାହନ	vehicles; traffic	vehicles, motor vehicles; vehicular traffic	ଯାନ (vehicle) + ବାହନ (carrier)	sanskrit	ai	"ଯାନବାହନ ଚଳାଚଳ ବନ୍ଦ" = traffic stopped.
 ଆଇନରେ	in the law; in the act	in the law, in the act (legislation); under the law	ଆଇନ (law) + ରେ (in)	persian	ai	
+
+# Verb-form fixes (2026-10-14): words that the verb explainer read wrongly (verb-endings.tsv),
+# found by a separate agent that checked all 940 explained forms. An exact row wins.
+ବର୍ଷେ	a year, one year	a year, one year (a year later, a year ago, for a year); rains, pours (literary verb form)	ବର୍ଷ (year) + ଏ (one, a)	sanskrit	ai	ବର୍ଷେ ପରେ: a year later. The verb sense (it rains) is rare in news.
+ବର୍ଷିଛନ୍ତି	has lashed out at (he/she, respectful; they)	has lashed out at, has slammed, has attacked verbally (they; or he/she, respectful); have rained down (literal, rare)	ବର୍ଷ (rain, lash out) + ଇଛନ୍ତି (have)	native	ai	X ଉପରେ ବର୍ଷିଛନ୍ତି: has lashed out at X.
+ବର୍ଷିଲେ	lashed out at (he/she, respectful; they)	lashed out at, slammed, attacked verbally (they; or he/she, respectful); if it rains (conditional)	ବର୍ଷ (rain, lash out) + ଇଲେ (past; or if)	native	ai	X ଉପରେ ବର୍ଷିଲେ: lashed out at X.
+ବର୍ଷିଥିଲେ	had lashed out at (he/she, respectful; they)	had lashed out at, slammed, attacked verbally (they; or he/she, respectful); had rained down (literal, rare)	ବର୍ଷ (rain, lash out) + ଇଥିଲେ (had)	native	ai	X ଉପରେ ବର୍ଷିଥିଲେ: had lashed out at X.
+ବୁଜିଲେ	passed away (with eyes); closed (he/she, respectful)	passed away, died (in "closed the eyes", he/she, respectful); closed, shut (the eyes) (they); if (one) closes	ବୁଜ (close) + ଇଲେ (past; or if)	native	ai	ଆଖି ବୁଜିଲେ: passed away (polite).
+ବୁଜିଛନ୍ତି	has passed away (with eyes); have closed	has passed away, has died (in "has closed the eyes", he/she, respectful); have closed, shut (they)	ବୁଜ (close) + ଇଛନ୍ତି (have)	native	ai	ଆଖି ବୁଜିଛନ୍ତି: has passed away (polite).
+ବୁଝାଏ	means, refers to; explains	means, signifies, refers to (he/she/it); explains, makes (someone) understand; persuades	ବୁଝା (explain, mean) + ଏ (present)	native	ai	X କୁ ବୁଝାଏ: means X, refers to X.
+ଲାଗିପାରେ	may take (time); may seem, may be felt	may take (time, days, weeks); may seem, may be felt; may come on (nausea), may catch (fire)	ଲାଗ (take, seem) + ଇପାରେ (may)	native	ai	ସମୟ ଲାଗିପାରେ: it may take time.
+କରୁଛେ	(we) are doing	(we) are doing, are making; with a noun: we are living, we are trying	କର (do) + ଉଛେ (are …-ing, we)	native	ai	Used with ଆମେ (we); same as କରୁଛୁ.
+ଚାଲିଛନ୍ତି	keep on (doing); are going (they; respectful)	after a verb: keep on, go on (doing) (they; or he/she, respectful); are going, are walking, are heading	ଚାଲ (go on, walk) + ଇଛନ୍ତି	native	ai	କରି ଚାଲିଛନ୍ତି: keep on doing.
+ଚାଲିଥିଲେ	kept on (doing); were going (they; respectful)	after a verb: kept on, went on (doing) (they; or he/she, respectful); were going, were walking; before madhya: even though (it) was going on	ଚାଲ (go on, walk) + ଇଥିଲେ	native	ai	କରି ଚାଲିଥିଲେ: kept on doing.
+ଚଳନ୍ତୁ	please conduct yourselves, live by (rules)	please conduct yourselves, behave, live (by the rules, carefully) (you, respectful; or let them); please get by, manage	ଚଳ (conduct oneself) + ନ୍ତୁ (please)	native	ai	?Not seen in the local corpus. X ମାନି ଚଳନ୍ତୁ: please abide by X.
+ଚଳି	being in practice; getting by, managing	being in practice, being current (with asiba: to have long been followed, of a custom); getting by, managing; moving (literary)	ଚଳ (be current, get by) + ଇ	native	ai	ଚଳି ଆସୁଥିବା ପରମ୍ପରା: a long-standing tradition.
