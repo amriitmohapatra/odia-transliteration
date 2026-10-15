@@ -1,0 +1,55 @@
+# C-13 sample, batches 6 and 7: 50 AI-written meanings picked at random from the batch 6 and 7 rows of core/data/meanings.tsv.
+# These replace old or machine meanings of very common words (batch 6) and of words in that day's ePapers (batch 7):
+# check most that the meaning (the first line the app shows) is the everyday modern sense.
+# For each row, fill "verdict": ok, wrong, or fix. For "fix", write the better meaning in "correction".
+odia	meaning	senses	origin	verdict	correction
+ବୁଲି	going around; touring; turning	going around, wandering, touring (gharaku ghara buli: door to door); having turned; going out on a trip (buli jiba)	native		
+ସେତିକି	that much; only that much	that much, so much; only that much, just that; that many	native		
+ଶୁଭ	auspicious; good, happy (wishes)	auspicious, lucky; good, happy; ceremonial (of an opening); Subha (name)	sanskrit		
+ମୁକାବିଲା	facing, tackling (a crisis); contest, match	facing, tackling, coping with (a disaster, a situation); confrontation; contest, match, clash (in sport)	arabic		
+ହେଲେ	but, however; if (it) is; became (they)	but, however (linking two clauses); if (it) is, if (it) happens (conditional); became, were (they; or he/she, respectful); even if (with 'also')	native		
+ନିମନ୍ତେ	for, in order to	for, for the sake of, in order to (formal); because of, owing to	sanskrit		
+ଧରି	for (a span of time); holding; taking along	for, over (a span); holding, having caught; taking along, including	native		
+ପରିଚୟ	identity; introduction	identity; introduction; acquaintance, familiarity	sanskrit		
+ଭାସ୍କର	Bhaskar (given name); the sun	Bhaskar, a given name; the sun (literary)	name		
+ମୂଲ୍ଯ	price, cost; value	price, cost; value, worth	sanskrit		
+କେତେ	how much, how many	how much, how many; how (very), so (exclamation); some	native		
+ଅର୍ଥ	money, funds; meaning	money, funds, finance; meaning, sense; purpose, aim; wealth	sanskrit		
+ସ୍ବାଭାବିକ	normal; natural	normal, back to normal; natural; innate, inborn	sanskrit		
+ନିଲାମ	auction	auction, public sale	portuguese		
+ବାୟୁ	air; wind (monsoon wind)	air, wind; atmosphere (in air pollution); breath, vital air (literary)	sanskrit		
+ପାତ୍ର	Patra (surname); vessel; groom	Patra (surname); vessel, pot, container; bridegroom; character (in a story or play); deserving person	name		
+କୋଭିଡ୍	COVID, Covid-19	COVID, Covid-19 (the coronavirus disease)	english		
+ଅର୍ପଣ	offering; handing over; dedicating	offering, handing over, presenting; dedication (shraddhanjali arpana: paying tribute)	sanskrit		
+ପଦକ୍ଷେପ	step, measure, action	step, measure, move, action (padakshepa neba = take steps, take action); footstep (literal)	sanskrit		
+ପ୍ରତିକ୍ରିୟା	reaction, response	reaction, response (to an event, a remark); response (emergency response)	sanskrit		
+ପାଇ	having got; getting	having got, getting, receiving, on finding; with a noun it makes a verb; pie, an old coin (old)	native		
+ପାଣିଗ୍ରାହୀ	Panigrahi (surname)	Panigrahi, a surname in Odisha	name		
+ମଣ୍ଡପ	pandal, pavilion (puja mandap)	pandal, pavilion (e.g. Durga Puja mandap); hall; temple porch	sanskrit		
+ଆୟ	income	income, earnings, revenue; profit	sanskrit		
+ପହଞ୍ଚି	having reached; reaching	having reached, arriving, on reaching	native		
+ଯୋଗାଯୋଗ	contact; communication	contact, getting in touch; communication; connectivity (roads, transport)	sanskrit		
+ଅନ୍ତିମ	final, last	final, last (antima sanskara: last rites; antima dina: last day)	sanskrit		
+ମହାନ୍ତି	Mohanty (surname)	Mohanty, a common Odia surname	name		
+ସରକାରୀ	government (adj.), official, public	government, of the government, official, public (sarakari karmachari: government employee)	persian		
+ସଚେତନ	aware, alert; conscious	aware, alert, vigilant (of citizens, about an issue); conscious	sanskrit		
+ଶୋ	show (film, TV, stage show)	show (a film show, TV show, stage show, reality show)	english		
+ବିଶ୍ୱାଳ	Biswal (surname)	Biswal, a surname in Odisha	name		
+ଶାନ୍ତି	peace; calm	peace; calm, quiet; relief, rest	sanskrit		
+ମାନେ	plural marker (-s, for people); means, i.e.	plural marker for people and nouns, often written apart; that is, i.e., it means (colloquial); obeys, accepts (he/she/it)	native		
+ଉପ	deputy, vice-, sub-	deputy, vice-, sub-, assistant; near (Sanskrit prefix)	sanskrit		
+ହେଲା	became; happened; was (done)	became, happened, took place (past, he/she/it); was (done), in a passive; it has been (a time)	native		
+ନବୀନ	new; Naveen (given name)	new, fresh, young; Naveen (given name)	sanskrit		
+ଶେଷରେ	finally, in the end, at last	finally, in the end, at last, eventually	sanskrit		
+ଏକ	one; a, an	one (the number); a, an (before a noun); single; same, united (in compounds)	sanskrit		
+ଖବରପାଇ	on getting the news, on being informed	on getting the news, on being informed (khabar pai, written as one word)	mixed		
+ଯେତେବେଳେ	when (at the time when)	when, at the time when, whenever (relative)	native		
+ସଂପୃକ୍ତ	concerned; connected, involved	concerned, relevant; connected with, involved in	sanskrit		
+ପ୍ରଥମ	first	first; earliest; foremost, primary	sanskrit		
+ବାରମ୍ବାର	again and again, repeatedly	again and again, repeatedly, time and again	sanskrit		
+ଆଭିମୁଖ୍ୟ	theme, aim; approach, orientation	theme, motto (of a day or programme); aim, approach, orientation; outlook	sanskrit		
+ଅଭିନୟ	acting (in films, plays)	acting, performance on stage or screen; pretending, putting on an act	sanskrit		
+ପରିଚାଳନା	management, running, administration	management, running, operation; administration; managing (parichalana nirdeshaka = managing director)	sanskrit		
+ଆସି	having come; coming	having come, after coming; coming (with another verb); in compound verbs: towards here	native		
+ଲେଖାଏଁ	each; apiece	each, apiece, at the rate of	native		
+ଗଠିତ	formed, constituted, set up	formed, constituted, set up (a team, committee, bench); built, made of	sanskrit		

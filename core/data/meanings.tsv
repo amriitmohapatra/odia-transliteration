@@ -1640,3 +1640,786 @@
 ଚାଲିଥିଲେ	kept on (doing); were going (they; respectful)	after a verb: kept on, went on (doing) (they; or he/she, respectful); were going, were walking; before madhya: even though (it) was going on	ଚାଲ (go on, walk) + ଇଥିଲେ	native	ai	କରି ଚାଲିଥିଲେ: kept on doing.
 ଚଳନ୍ତୁ	please conduct yourselves, live by (rules)	please conduct yourselves, behave, live (by the rules, carefully) (you, respectful; or let them); please get by, manage	ଚଳ (conduct oneself) + ନ୍ତୁ (please)	native	ai	?Not seen in the local corpus. X ମାନି ଚଳନ୍ତୁ: please abide by X.
 ଚଳି	being in practice; getting by, managing	being in practice, being current (with asiba: to have long been followed, of a custom); getting by, managing; moving (literary)	ଚଳ (be current, get by) + ଇ	native	ai	ଚଳି ଆସୁଥିବା ପରମ୍ପରା: a long-standing tradition.
+# Batch 6 (2026-10-15): the 300 most frequent words whose first meaning was an old
+# Praharaj sense (hela "Neglect", khabara "Care", tadanta "Its end") and the 200 most
+# frequent whose only meaning came from the machine-made modern list (bi "wee", ki
+# "kyrie"). Written by 3 agents from news contexts; every row reviewed by a separate
+# agent (7 wrong, 34 minor fixes); initials such as ke, bhi lead with the letter.
+ଏହି	this; these	this, these (pointing to something near or just mentioned); the said, the same		native	ai	Written form; the spoken form is ଏଇ.
+ଏକ	one; a, an	one (the number); a, an (before a noun); single; same, united (in compounds)		sanskrit	ai	
+କରି	having done; doing; by (doing)	having done, after doing; doing, by doing (joins two actions); making (X into Y); starting from (with the verb begin)	କର (do) + ଇ (having)	native	ai	ଶେୟାର କରି = sharing; ଆରମ୍ଭ କରି = starting from.
+ସହ	with, along with	with, along with, together with; and also, besides (after a verbal noun)		sanskrit	ai	Short form of ସହିତ. ହେବା ସହ = besides becoming.
+ବେଳେ	while, when; at the time of	while, when (after a participle); at the time of; whereas (in contrast)	ବେଳ (time) + ଏ (at)	native	ai	ଥିବା ବେଳେ = while ...
+ଯେ	that (introducing a clause); who	that (introducing what is said or known); who, which (relative, paired with 'se'); so that		native	ai	କହିଲେ ଯେ ... = said that ...; ଯେ ... ସେ ... = who ... he ...
+ତାଙ୍କ	his, her (respectful); their	his, her (respectful); their; of him, of her	ତା (he, she) + ଙ୍କ (of, respectful)	native	ai	
+ତେବେ	however; then (if)	however, but, yet (opening a sentence); then, in that case (after 'if'); so, well		native	ai	ଯଦି ... ତେବେ ... = if ... then ...
+ଜଣେ	one (person); a, a certain (person)	one person, someone; a, a certain (before a word for a person)	ଜଣ (person, counter) + ଏ (one)	native	ai	ଜଣେ ଯୁବକ = a young man.
+ହେବ	will be; will happen; will have to	will be, will become, will happen (he/she/it); will have to (after a verbal noun in -baku); will be held	ହେ (be) + ବ (will)	native	ai	ବୁଝିବାକୁ ହେବ = one will have to understand.
+ହେଲେ	but, however; if (it) is; became (they)	but, however (linking two clauses); if (it) is, if (it) happens (conditional); became, were (they; or he/she, respectful); even if (with 'also')	ହେ (be) + ଇଲେ (if; past, they)	native	ai	ହେଲେ ବି = even if, even so.
+ଆଉ	more; and; (with not) no longer	more, further, another; and, and also; again; (with a negative) no longer, any more		native	ai	ଆଉ ନାହାନ୍ତି = is no more (has died).
+କୌଣସି	any; some	any, some, a certain; (with a negative) no, not any		native	ai	କୌଣସି ... ନାହିଁ = no ..., none.
+ପ୍ରଥମ	first	first; earliest; foremost, primary		sanskrit	ai	ପ୍ରଥମ ଥର = for the first time.
+ଗତ	last, past (week, year)	last, previous; past, gone; gone to, reached (in compounds)		sanskrit	ai	ଗତ ବର୍ଷ = last year.
+ନୂଆ	new	new; fresh; recent, latest		native	ai	Everyday word; the formal word is ନୂତନ. ନୂଆଦିଲ୍ଲୀ = New Delhi.
+ଲାଗି	for; for the sake of	for, for the sake of, in order to (after a noun or verbal noun); being attached, sticking	ଲାଗ (be attached) + ଇ (having)	native	ai	As a postposition it means the same as ପାଇଁ (for).
+ତଥା	and, as well as; also	and, as well as, and also (formal; often joins two titles of one person); likewise, so (older sense)		sanskrit	ai	ମନ୍ତ୍ରୀ ତଥା ନେତା = minister and leader (one person).
+ସବୁ	all, every	all, every, whole; everything		native	ai	ସବୁଦିନ = every day.
+କୁମାର	Kumar (middle name or surname); prince	Kumar, a common middle name or surname; prince, son; boy, youth; Kartikeya (the god)		name	ai	In news mostly part of a name: ସୁଶାନ୍ତ କୁମାର ଜେନା.
+ଦେଇ	having given; through, via	having given, giving; through, via, by way of; after another verb: completely, off	ଦେ (give) + ଇ (having)	native	ai	ଚେତାବନୀ ଦେଇ = warning; କରିଦେଇ = having done (it) fully.
+ଏଭଳି	such; like this, in this way	such, of this kind; like this, in this way	ଏ (this) + ଭଳି (like)	native	ai	
+ସେହି	that; the same	that, those (the one mentioned); the same		native	ai	Written form; the spoken form is ସେଇ. ସେହିପରି = likewise.
+କୋଟି	crore (ten million)	crore, ten million (100 lakh); countless; pointed end, tip (old)		sanskrit	ai	100 କୋଟି ଟଙ୍କା = Rs 100 crore = one billion rupees. କୋଟି କୋଟି = millions of.
+ହେଲା	became; happened; was (done)	became, happened, took place (past, he/she/it); was (done), in a passive; it has been (a time)	ହେ (be) + ଇଲା (past)	native	ai	ଦୁଇ ବର୍ଷ ହେଲା = it has been two years.
+ଭଳି	like, similar to	like, similar to, as; kind, sort		native	ai	ଏଭଳି = like this, such.
+ଭଲ	good; well	good, fine; well (adverb); kind, nice; healthy		native	ai	ଭଲ ପାଇବା = to love, like.
+ପୁଣି	again; also; moreover	again, once more; also, and also, moreover; then		native	ai	
+ଖବର	news; information	news, report; information, word (about something); inquiry after someone (with take)		arabic	ai	ଖବର ନେବା = to inquire after, look after. Came into Odia through Persian or Urdu.
+ମାତ୍ର	but; only, just	but, however (opening a clause); only, just, merely; mere; measure (old)		sanskrit	ai	ମାତ୍ର ୫ ଟଙ୍କା = only 5 rupees.
+ଧରି	for (a span of time); holding; taking along	for, over (a span); holding, having caught; taking along, including	ଧର (hold, catch) + ଇ (having)	native	ai	ଦୀର୍ଘ ସମୟ ଧରି = for a long time; ସାଥିରେ ଧରି = taking with.
+ଲୋକେ	people (as subject)	people, persons (plural subject); the public	ଲୋକ (person, people) + ଏ (plural subject)	native	ai	ଲୋକେ କହନ୍ତି = people say.
+ବଡ଼	big, large; major; elder	big, large, great; major, serious; elder, senior; important		native	ai	ବଡ଼ ଘୋଷଣା = big announcement; ବଡ଼ ଭାଇ = elder brother.
+ତଦନ୍ତ	investigation, inquiry	investigation, inquiry, probe (by police, a court or a commission); its end (old, literal)	ତଦ୍ (that) + ଅନ୍ତ (end)	sanskrit	ai	ତଦନ୍ତ କରିବା = to investigate.
+ବହୁ	many, much; a lot of	many, much, a lot of; very; multi- (in compounds)		sanskrit	ai	ବହୁମୁଖୀ = multipurpose.
+ଏପରି	such; like this, in this way	such, of this kind; like this, in this way, so	ଏ (this) + ପରି (like)	native	ai	
+ହିଁ	only, indeed (emphasis)	only, indeed, itself, very (emphatic particle after a word)		native	ai	ସେ ହିଁ = he himself, only he.
+ସମେତ	including; along with	including, together with, along with		sanskrit	ai	
+ହେବେ	will be; will become (they; or respectful)	will be, will become (they; or he/she, respectful); will be present, will take part	ହେ (be) + ବେ (will, they)	native	ai	
+ସୁଦ୍ଧା	by (a time); even; including	by, up to (a time); even; including, along with			ai	ଶନିବାର ସକାଳ ସୁଦ୍ଧା = by Saturday morning; ସେ ସୁଦ୍ଧା = even he.
+ଅନୁଷ୍ଠିତ	held (of an event)	held, conducted, organised (of a meeting, festival or exam); performed (of a rite)		sanskrit	ai	ଅନୁଷ୍ଠିତ ହେଲା = was held.
+ନିମନ୍ତେ	for, in order to	for, for the sake of, in order to (formal); because of, owing to		sanskrit	ai	Formal word for ପାଇଁ (for).
+ସଭାପତି	president, chairman	president (of a party or body); chairman, chairperson (of a meeting or committee)	ସଭା (assembly, meeting) + ପତି (head, lord)	sanskrit	ai	
+ପାଳନ	observance; carrying out; upbringing	observance, celebration (of a day or festival); carrying out, following (a duty or an order); bringing up, rearing, maintenance		sanskrit	ai	ପାଳନ କରିବା = to observe.
+ପୂର୍ବତନ	former, ex-	former, ex-; old, earlier		sanskrit	ai	ପୂର୍ବତନ ମୁଖ୍ୟମନ୍ତ୍ରୀ = former chief minister.
+ଆସନ୍ତା	next, coming (week, year)	next, coming, upcoming	ଆସ (come) + ଅନ୍ତା (participle ending)	native	ai	ଆସନ୍ତା ବର୍ଷ = next year. The formation is approximate.
+ନବୀନ	new; Naveen (given name)	new, fresh, young; Naveen (given name)		sanskrit	ai	ନବୀନ ପଟ୍ଟନାୟକ, former chief minister of Odisha.
+ରୁ	from (case ending: -ru)	from (ablative ending); since (a time); than (with -tharu); out of		native	ai	Stands alone only when split from its word, e.g. after a number: ୧୦ରୁ. ଘରୁ = from home; ଜୁଲାଇରୁ = from July; ଏହାଠାରୁ = than this.
+ମୋଟ	total; in all	total, in all, altogether; thick, fat, coarse			ai	Also spelt ମୋଟ୍.
+ଥର	time(s), occasion	time, occasion		native	ai	Not the verb ଥରିବା (tremble). ପ୍ରଥମ ଥର = the first time; ତିନି ଥର = three times.
+କେହି	anyone; someone; (with not) no one	someone, anyone; (with a negative) no one, nobody		native	ai	କେହି ନାହାନ୍ତି = there is no one.
+ଚଳିତ	current, this (year, month)	current, present, this; in use, prevalent, in force		sanskrit	ai	ଚଳିତ ବର୍ଷ = this year.
+ଯୋଗୁ	because of, due to	because of, due to, owing to		native	ai	
+ବରିଷ୍ଠ	senior	senior; eldest; most excellent, most honoured		sanskrit	ai	ବରିଷ୍ଠ ନେତା = senior leader; ବରିଷ୍ଠ ନାଗରିକ = senior citizen.
+ଏମିତି	like this, in this way; such	like this, in this way, so; such; just like that, for no reason		native	ai	Everyday form of ଏପରି.
+ଦେଖି	seeing; having seen	seeing, having seen, on seeing; in view of, considering	ଦେଖ (see) + ଇ (having)	native	ai	ପରିସ୍ଥିତି ଦେଖି = given the situation.
+ଅନ୍ତର୍ଗତ	under; part of, within	under, within, coming under; included in, part of (a scheme or area)	ଅନ୍ତଃ (inside) + ଗତ (gone)	sanskrit	ai	ଥାନା ଅନ୍ତର୍ଗତ = under the police station.
+ଉକ୍ତ	the said, the mentioned	the said, the aforesaid, the mentioned; said, spoken		sanskrit	ai	ଉକ୍ତ ଘଟଣା = the said incident.
+ଆସି	having come; coming	having come, after coming; coming (with another verb); in compound verbs: towards here	ଆସ (come) + ଇ (having)	native	ai	ଆସି ପହଞ୍ଚିଲେ = arrived.
+ପାଇ	having got; getting	having got, getting, receiving, on finding; with a noun it makes a verb; pie, an old coin (old)	ପା (get) + ଇ (having)	native	ai	Sometimes a misspelling of ପାଇଁ (for). ବୃଦ୍ଧି ପାଇ = increasing; ଭୟ ପାଇ = being afraid.
+ନାୟକ	Nayak (surname); leader; hero	Nayak, a common surname; leader, chief; hero (of a film or story); captain		name	ai	
+ଜଳ	water	water; water-, hydro- (in compounds); burn (stem of the verb 'to burn')		sanskrit	ai	ଜଳପ୍ରପାତ = waterfall; ଜଳସେଚନ = irrigation; ଜଳିବା = to burn.
+ପହଞ୍ଚି	having reached; reaching	having reached, arriving, on reaching	ପହଞ୍ଚ (reach) + ଇ (having)	native	ai	
+କଟକଣା	restriction, curb	restriction, curb, restraint; strict rule or control; strict arrangement (old)			ai	କଟକଣା କୋହଳ = restrictions eased.
+ଦୀର୍ଘ	long	long (in time or length); lengthy; tall; long (of a vowel)		sanskrit	ai	ଦୀର୍ଘ ସମୟ = a long time.
+ବେହେରା	Behera (surname)	Behera, a common Odia surname		name	ai	
+ନରେନ୍ଦ୍ର	Narendra (given name)	Narendra, a given name (as in Narendra Modi, Prime Minister of India); king, lord of men (literary)	ନର (man) + ଇନ୍ଦ୍ର (lord)	name	ai	
+ନଜର	watch, eye; attention	watch, eye, attention; look, gaze, sight; view		arabic	ai	Came into Odia through Persian or Urdu. ନଜର ରଖିବା = to keep a watch on.
+ମହାନ୍ତି	Mohanty (surname)	Mohanty, a common Odia surname		name	ai	
+କେଉଁ	which; what	which, what (question); any (with 'also')		native	ai	କେଉଁ ଦିନ = which day; କେଉଁ ବି = any.
+ଆହତ	injured, wounded	injured, wounded, hurt; struck		sanskrit	ai	ଆହତ ହେଲେ = were injured.
+ସଫଳ	successful	successful; fruitful, bearing fruit	ସ (with) + ଫଳ (fruit, result)	sanskrit	ai	ସଫଳ ହେବା = to succeed.
+ମହାପାତ୍ର	Mohapatra (surname)	Mohapatra, a common Odia surname; chief officer or minister of a king (old title)	ମହା (great) + ପାତ୍ର (officer, minister)	name	ai	
+ନମ୍ବର	number	number (phone, vehicle or case number); marks, score (in an exam); rank, position		english	ai	
+ଧାନ	paddy, rice (crop)	paddy, rice in the husk; the rice crop		native	ai	ଧାନ ରୋଇବା = to transplant paddy.
+ସବୁଠାରୁ	most; -est (than all)	most, -est (superlative); than all, from all	ସବୁ (all) + ଠାରୁ (from, than)	native	ai	ସବୁଠାରୁ ବଡ଼ = the biggest.
+ଔଷଧ	medicine, drug	medicine, drug, remedy		sanskrit	ai	
+ଜଣକ	the (said) person; that one	the person just mentioned; one person (counting)	ଜଣ (person, counter) + କ (the one)	native	ai	ମୃତ ଯୁବକ ଜଣକ = the dead young man.
+ଆଶଙ୍କା	fear, apprehension; likelihood	fear, apprehension, worry; possibility, likelihood (of something bad); suspicion, doubt		sanskrit	ai	ବର୍ଷା ଆଶଙ୍କା = rain is likely.
+ପୁଲିସ୍	police	police (force, department, officer)		english	ai	Also spelt ପୁଲିସ, ପୋଲିସ.
+ଗଠନ	formation, setting up; structure	formation, forming, setting up (of a government or committee); structure, build, shape; construction		sanskrit	ai	ଗଠନ ହେଲା = was formed.
+ଥାଏ	is (usually); stays; there is	is, there is, stays (habitual, he/she/it); after a verb it marks a habit (usually does)	ଥା (be, stay) + ଏ (he/she/it)	native	ai	କରିଥାଏ = usually does.
+କଣ	what	what (question word); is it, whether (in a yes/no question)		native	ai	କଣ କରିବ = what will he do; ସତରେ କଣ ... = is it really .... Standard spelling କ'ଣ; also written କଣ or କ ଣ.
+ରାଜନୈତିକ	political	political	ରାଜନୀତି (politics) + ଇକ (of, relating to)	sanskrit	ai	ରାଜନୈତିକ ଦଳ = political party.
+ଅତି	very, extremely	very, extremely, too; over-, excessive (in compounds)		sanskrit	ai	ଅତିବୃଷ୍ଟି = excess rain.
+ଖୁବ୍	very; a lot	very, very much, a lot; well, fine		persian	ai	Came into Odia through Persian or Urdu.
+ଦର	price, rate	price, rate; half-, partly (in compounds); fear (old)			ai	ପେଟ୍ରୋଲ ଦର = petrol price; କିଲୋ ପ୍ରତି ଦର = rate per kilo.
+ଜରିଆରେ	through, by means of	through, by means of, via	ଜରିଆ (means) + ରେ (by, in)	mixed	ai	ଫୋନ ଜରିଆରେ = by phone.
+ସମାଚାର	news	news, report; message, information		sanskrit	ai	
+ଯାଜପୁର	Jajpur, a district and town of Odisha	Jajpur, a district of Odisha and its headquarters town		name	ai	
+ନାମକ	named, called	named, called, by the name of	ନାମ (name) + କ (having)	sanskrit	ai	ନାମକ ଜଣେ = one named ...
+ଅନ୍ୟାନ୍ୟ	other; others	other, others, various other	ଅନ୍ୟ (other) + ଅନ୍ୟ (other)	sanskrit	ai	ଅନ୍ୟାନ୍ୟ ବିଭାଗ = other departments.
+ବ୍ୟତୀତ	besides, apart from; except	besides, apart from, in addition to; except, without; passed, gone (old)		sanskrit	ai	ଏହା ବ୍ୟତୀତ = besides this.
+କେନ୍ଦୁଝର	Keonjhar, a district and town of Odisha	Keonjhar (Kendujhar), a district of Odisha and its headquarters town		name	ai	
+ରୁଜୁ	registered, filed (of a case)	registered, filed, lodged (of a police or court case); begun (old)			ai	ରୁଜୁ କରିବା = to register (a case). ମାମଲା ରୁଜୁ = a case was registered.
+ଜେନା	Jena (surname)	Jena, a common Odia surname		name	ai	
+ମୋତେ	me, to me	me, to me (object form of 'I')	ମୋ (my, me) + ତେ (to)	native	ai	Object form of ମୁଁ (I).
+ଯାଏ	up to, until; goes	up to, until, as far as (everyday form); goes (habitual, he/she/it); is (done), after a passive stem	ଯା (go) + ଏ (he/she/it)	native	ai	Everyday form of ଯାଏଁ: ରାତି ୧୦ଟା ଯାଏ = until 10 pm.
+ଯାଏଁ	until, up to, as far as	until, up to, as far as, till (of time or place)		native	ai	
+ଉଚିତ	should; proper, right	should, ought to (after a verbal noun); proper, right, fair, just		sanskrit	ai	କରିବା ଉଚିତ = should do.
+ଆୟୋଜିତ	organised, held (of an event)	organised, arranged, held; prepared		sanskrit	ai	ଆୟୋଜିତ ହେଲା = was held.
+ଆମର	our, ours	our, ours (of 'we')	ଆମ (our) + ର (of)	native	ai	From ଆମେ (we).
+ବାତ୍ୟା	cyclone, storm	cyclone, severe storm; tempest, gale		sanskrit	ai	
+ଯାଇଥିବା	that went; who had gone	that went, that had gone, who had gone (participle); that was (done), in a passive	ଯା (go) + ଇଥିବା (that had)	native	ai	ଦିଆଯାଇଥିବା = that was given.
+ଏଥର	this time	this time, on this occasion; this year (of a yearly event)	ଏ (this) + ଥର (time)	native	ai	
+ପୂରଣ	fulfilment; filling (posts, a need)	fulfilment (of a demand or promise); filling, filling up (posts, a form); meeting (a target); multiplication (maths)		sanskrit	ai	ଦାବି ପୂରଣ = fulfilment of a demand.
+ହେଉ	let (it) be; may (it) be; whether	let it be, may it be (a wish or demand); whether ... or; being (inside longer forms)	ହେ (be) + ଉ (let, imperative)	native	ai	X ହେଉ କି Y = whether X or Y; also inside ହେଉଛି (is), ହେଉଥିବା (that is).
+ଯୁବ	young; youth (in compounds)	young, youth-		sanskrit	ai	ଯୁବ ନେତା = young leader; ଯୁବ ଚାଷୀ = young farmer.
+କଳାହାଣ୍ଡି	Kalahandi, a district of Odisha	Kalahandi, a district of western Odisha		name	ai	
+ମଦ	liquor, alcohol	liquor, alcohol; intoxication; pride, frenzy (literary)		sanskrit	ai	ମଦ ଦୋକାନ = liquor shop.
+ନଷ୍ଟ	destroyed, damaged; wasted	destroyed, damaged, ruined; wasted, spoiled; lost		sanskrit	ai	ନଷ୍ଟ ହେବା = to be destroyed.
+କେ	K (letter in initials: K. C., kV)	K, the English letter as an initial or in an abbreviation (K. C., kV, KIIT); who (literary, in sayings: ke jane, who knows)		english	ai	In news almost always an initial; କେ ଭି = kV, kilovolt.
+ସ୍ଥିତ	located, situated (at)	located, situated, based (at) (often joined); standing, stationed		sanskrit	ai	ଭୁବନେଶ୍ୱରସ୍ଥିତ = located in Bhubaneswar.
+ବିଜୁ	Biju (given name); in Biju Janata Dal (BJD)	Biju, a given name; Biju Janata Dal (BJD), a political party of Odisha; part of names of schemes and places named after Biju Patnaik		name	ai	ବିଜୁ ଜନତା ଦଳ = Biju Janata Dal (BJD).
+ବେଶ	attire of a deity; dress; quite, fairly	festive attire of the deities (as in the golden attire of Jagannath); dress, costume, guise; quite, fairly, rather (for besh)		sanskrit	ai	ସୁନା ବେଶ = the golden attire (Suna Besha); also used for ବେଶ୍ (quite).
+କମ	less, little; low	less, little, low; short of, lacking		persian	ai	Came into Odia through Persian or Urdu. Also spelt କମ୍. କମ ହେବା = to decrease.
+କେନ୍ଦ୍ରାପଡ଼ା	Kendrapara, a district of Odisha	Kendrapara, a coastal district of Odisha and its headquarters town		name	ai	
+ଲେଖାଏଁ	each; apiece	each, apiece, at the rate of		native	ai	ଗୋଟିଏ ଲେଖାଏଁ = one each.
+ବେଶ୍	quite, fairly; very	quite, fairly, rather; very, well, good			ai	ବେଶ୍ ଲୋକପ୍ରିୟ = quite popular.
+ବ୍ରହ୍ମପୁର	Berhampur (Brahmapur), city in Odisha	Berhampur (Brahmapur), a city in Ganjam district of southern Odisha		name	ai	
+ଆୟୋଜନ	organising; arrangement; event	organising, arranging, hosting; arrangement, preparation; an event, a function		sanskrit	ai	ଆୟୋଜନ କରିବା = to organise.
+ସକାଳେ	in the morning	in the morning	ସକାଳ (morning) + ଏ (in, at)	native	ai	
+ଦେବ	will give; god, deity; Deb (name)	will give (he/she/it); after another verb: will do (it); god, deity; Deb, Dev (surname or name part)	ଦେ (give) + ବ (will)		ai	Two words: the verb form (will give) and the Sanskrit noun (god). ଭାଙ୍ଗି ଦେବ = will break; ଶନି ଦେବ = the god Shani.
+ଶହ	hundred	hundred, a hundred		native	ai	ଶହ ଶହ = hundreds.
+ରଥ	chariot, temple car (Rath Yatra)	chariot, the temple car of Jagannath; carriage, cart; Rath (surname)		sanskrit	ai	ରଥ ଯାତ୍ରା = Rath Yatra, the car festival.
+ମତ	opinion, view	opinion, view; vote; doctrine, creed		sanskrit	ai	ମତ ଦେବା = to give one's view; ମତଦାନ = voting.
+ପିଛା	per (each); chase (with do)	per, each; chasing			ai	ବ୍ୟାରେଲ ପିଛା = per barrel; ପିଛା କରିବା = to chase, also a target in cricket.
+ସବୁଠୁ	most; -est (than all)	most, -est (superlative); than all, from all	ସବୁ (all) + ଠୁ (from, than)	native	ai	Everyday form of ସବୁଠାରୁ. ସବୁଠୁ ବଡ଼ = the biggest.
+ନାଁରେ	in the name of; on the pretext of	in the name of (land in one's name); under the pretext of; against (a person, of a motion or complaint)	ନାଁ (name) + ରେ (in)	native	ai	ଚାକିରି ନାଁରେ = on the pretext of a job.
+ଢେଙ୍କାନାଳ	Dhenkanal, a district of Odisha	Dhenkanal, a district of central Odisha and its headquarters town		name	ai	
+ଦୈନିକ	daily	daily, every day; per day; a daily newspaper		sanskrit	ai	ଦୈନିକ ମଜୁରି = daily wage.
+ଏନ୍	N (letter in initials or abbreviations)	N, the English letter as an initial or in an abbreviation		english	ai	ଏନ୍ ଓସି = NOC.
+ମନେ	in mind (remember, consider)	in mind; (with keep) remember; (with do) consider, think; (with fall) come to mind, recall	ମନ (mind) + ଏ (in)	native	ai	ମନେ ରଖିବା = to remember; ମନେ କରିବା = to consider; ମନେ ପଡ଼ିବା = to recall.
+ଋଣ	loan, debt	loan, debt; obligation		sanskrit	ai	
+କନ୍ଧମାଳ	Kandhamal, a district of Odisha	Kandhamal, a district of central Odisha		name	ai	
+ଛାଡ଼ି	leaving; except, apart from	leaving, having left, quitting; except, apart from, besides; letting go	ଛାଡ଼ (leave) + ଇ (having)	native	ai	ଛାଡ଼ି ଦେବା = to release.
+ପ୍ରସାଦ	prasad (sacred food); Prasad (name)	prasad, food offered to a deity and shared by devotees; Prasad, a given name or surname; grace, favour (literary)		sanskrit	ai	In names: ଶିବ ପ୍ରସାଦ.
+ଗଜପତି	Gajapati, a district; title of Odisha's kings	Gajapati, a district of southern Odisha; Gajapati, title of the old kings of Odisha and of the Puri king; lord of elephants (literal)	ଗଜ (elephant) + ପତି (lord)	name	ai	
+ରୂପେ	as, in the form of	as, in the form of, in the role of; in a ... way, -ly	ରୂପ (form) + ଏ (in)	sanskrit	ai	ଉଦାହରଣ ରୂପେ = as an example; ସମ୍ପୂର୍ଣ୍ଣ ରୂପେ = completely.
+ନୟାଗଡ଼	Nayagarh, a district of Odisha	Nayagarh, a district of Odisha and its headquarters town		name	ai	
+ଜଗନ୍ନାଥ	Jagannath, the deity of Puri	Lord Jagannath, the deity of the Puri temple; Jagannath, a given name	ଜଗତ୍ (world) + ନାଥ (lord)	name	ai	
+ମୋଦୀ	Modi (surname)	Modi, a surname (Narendra Modi, Prime Minister of India); grocer (modi dokana: grocery shop)		name	ai	Also spelt ମୋଦି. ନରେନ୍ଦ୍ର ମୋଦୀ, Prime Minister of India.
+ଶର୍ମା	Sharma (surname)	Sharma, a surname; a title added to Brahmin names (old)		name	ai	
+ମାଆ	mother; the Mother Goddess	mother; the Mother Goddess; mum (address)		native	ai	Before names of goddesses: ମାଆ ତାରିଣୀ, ମାଆ ସମଲେଶ୍ୱରୀ.
+ବେଳକୁ	by the time (that); at, around (a time)	by the time (that); at, around (a time)	ବେଳ (time) + କୁ (to, by)	native	ai	ପୋଲିସ ପହଞ୍ଚିବା ବେଳକୁ = by the time the police arrived; ରାତି ୯ଟା ବେଳକୁ = around 9 pm.
+ପୂରା	whole, entire; fully, completely	whole, entire, full; fully, completely, totally		native	ai	ପୂରା ଜାମ = completely jammed.
+ମମତା	affection, love; Mamata (given name)	affection, love, tender care; attachment; Mamata, a given name (as in Mamata Banerjee)		sanskrit	ai	
+ପଦକ	medal	medal; pendant, locket		sanskrit	ai	ସୁନା ପଦକ = gold medal.
+ଚଳାଚଳ	movement, plying (of vehicles)	movement, plying, running (of vehicles, buses or trains); coming and going; moving and unmoving (literary)	ଚଳ (moving) + ଅଚଳ (unmoving)	sanskrit	ai	ଯାନବାହନ ଚଳାଚଳ ବନ୍ଦ = traffic stopped.
+ଇଂଲଣ୍ଡ	England	England; the England team (in cricket news)		name	ai	
+ସଦର	Sadar, headquarters (town, police station)	Sadar, main or headquarters; chief, main			ai	ସଦର ଥାନା = Sadar police station; ସଦର ମହକୁମା = headquarters subdivision.
+ଏମାନେ	these (people); they	these (people), they (subject form)	ଏ (this) + ମାନେ (plural)	native	ai	
+ଅନ୍ତର୍ଜାତୀୟ	international	international	ଅନ୍ତଃ (between) + ଜାତୀୟ (national)	sanskrit	ai	
+ସମ୍ମୁଖୀନ	facing, faced with	facing, confronting, faced with; in front		sanskrit	ai	ସମ୍ମୁଖୀନ ହେବା = to face a problem, a court or a question.
+ଏଣୁ	so, therefore	so, therefore, hence; from here (old)		native	ai	
+ଆଣି	bringing; having brought	bringing, having brought; fetching	ଆଣ (bring) + ଇ (having)	native	ai	ଥାନାକୁ ଆଣି = bringing to the police station.
+ସକାଳୁ	in the morning; since morning	in the morning (with a day: on Tuesday morning); since the morning, from morning; early in the morning (sakalu sakalu)	ସକାଳ (morning) + ଉ (from)	native	ai	ସକାଳୁ ସକାଳୁ = early in the morning.
+ଚାଲି	walking; going, moving (with another verb)	walking, on foot; going, moving (with another verb)	ଚାଲ (walk, move) + ଇ (having)	native	ai	ଚାଲି ଆସିବା = to come away, to reach; ଚାଲି ଯିବା = to go away.
+ଯୋଗେ	by, through, via (phone, car)	by, through, via, by means of; because of, owing to	ଯୋଗ (link, means) + ଏ (by)	sanskrit	ai	ଫୋନ ଯୋଗେ = by phone.
+ରାଉତ	Rout (surname)	Rout, Raut, a common Odia surname; horseman, rider (old)		name	ai	
+ବାକି	remaining, the rest; due	remaining, the rest, left over; due, outstanding, arrears; yet to be (done)			ai	ବାକି ଟଙ୍କା = the remaining or due amount.
+ଜନିତ	caused by; -related	caused by, resulting from, -related; born of (literary)		sanskrit	ai	ବର୍ଷା ଜନିତ = rain-related.
+ନିୟୋଜିତ	employed, engaged; deployed	employed, engaged, working (in a post); deployed, posted (of police or staff); appointed		sanskrit	ai	
+ପରିଣତ	turned into, changed into	turned into, changed into, transformed; developed, mature, ripe		sanskrit	ai	ପରିଣତ ହେବା = to turn into.
+ନାରାୟଣ	Narayan (name); Lord Vishnu	Narayana, a name of Lord Vishnu; Narayan, a given name or middle name		name	ai	
+ହେତୁ	because of, due to	because of, due to, owing to (after a noun or participle); cause, reason		sanskrit	ai	ଥିବା ହେତୁ = because (he) is.
+ସମ୍ମୁଖରେ	in front of; before	in front of, before, facing	ସମ୍ମୁଖ (front) + ରେ (in)	sanskrit	ai	
+ବସି	sitting; having sat	sitting, having sat, seated; sitting and doing	ବସ (sit) + ଇ (having)	native	ai	ଅଫିସରେ ବସି = sitting in the office.
+ଏକାଠି	together	together, in one place, at the same time		native	ai	ଏକାଠି ହେବା = to come together, unite.
+ଉନ୍ନୟନ	development	development, improvement, uplift		sanskrit	ai	ଗ୍ରାମ୍ୟ ଉନ୍ନୟନ = rural development.
+ସଂପୃକ୍ତ	concerned; connected, involved	concerned, relevant; connected with, involved in		sanskrit	ai	Also spelt ସମ୍ପୃକ୍ତ. ସଂପୃକ୍ତ ବିଭାଗ = the department concerned.
+ଧର୍ମେନ୍ଦ୍ର	Dharmendra (given name)	Dharmendra, a given name; lord of dharma (literal)	ଧର୍ମ (dharma, righteousness) + ଇନ୍ଦ୍ର (lord)	name	ai	ଧର୍ମେନ୍ଦ୍ର ପ୍ରଧାନ, a politician from Odisha.
+ବିଦ୍ୟୁତ	electricity, power	electricity, electric power; lightning; Bidyut (given name)		sanskrit	ai	Also spelt ବିଦ୍ୟୁତ୍. ବିଦ୍ୟୁତ ଯୋଗାଣ = power supply.
+ସୁଶାନ୍ତ	Sushant (given name); very calm	Sushant, a given name; very calm, peaceful (literary)	ସୁ (very) + ଶାନ୍ତ (calm)	name	ai	
+ଆକଳନ	estimate, assessment	estimate, assessment, calculation; forecast; reckoning		sanskrit	ai	ସରକାରୀ ଆକଳନ ଅନୁଯାୟୀ = according to official estimates.
+ଦାଶ	Das (surname)	Das, Dash, a common Odia surname; servant (old)		name	ai	
+ବୌଦ୍ଧ	Boudh (district of Odisha); Buddhist	Boudh, a district of western Odisha and its town; Buddhist; of the Buddha		name	ai	
+ପଇସା	money; paisa (1/100 rupee)	money, cash; paisa, one hundredth of a rupee			ai	ପଇସା ଦେବା = to pay.
+ଲଗାଇ	putting on, applying; setting (fire); planting	applying, putting on, attaching; setting (fire); planting (trees); imposing (a ban), levelling (a charge)	ଲଗା (attach, apply) + ଇ (having)	native	ai	ନିଆଁ ଲଗାଇ = setting fire; ଅଭିଯୋଗ ଲଗାଇ = alleging.
+ଅବସ୍ଥିତ	located, situated	located, situated, lying (at); staying		sanskrit	ai	
+ଉପ	deputy, vice-, sub-	deputy, vice-, sub-, assistant; near (Sanskrit prefix)		sanskrit	ai	ଉପ ନିର୍ଦ୍ଦେଶକ = deputy director; ଉପ ନିର୍ବାଚନ = by-election.
+କର	do! (command); tax	do, make (command, to a friend); tax, levy; hand (literary); ray (literary)			ai	Two words: the verb କର (do) and the Sanskrit noun (tax, hand). ଦାବି ପୂରଣ କର = fulfil the demand; ଆୟକର = income tax.
+ବନ	forest	forest, woods; wild		sanskrit	ai	ବନ ବିଭାଗ = forest department.
+ରାମ	Rama, the god; Ram (given name)	Lord Rama, hero of the Ramayana; Ram, a given name or name part		sanskrit	ai	
+ଆୟ	income	income, earnings, revenue; profit		sanskrit	ai	
+ମୟୂରଭଞ୍ଜ	Mayurbhanj, a district of Odisha	Mayurbhanj, a district of northern Odisha; a former princely state		name	ai	
+ଏଇ	this; just (now)	this, these (everyday form); just, right		native	ai	Everyday form of ଏହି; ଏଇ ମାତ୍ର = just now.
+ଅଟକ	detention; stop, hold	detention, custody; stop, halt, hindrance			ai	ଅଟକ ରଖିବା = to detain.
+ପାଖକୁ	to (someone), towards	to, towards, near (a person or place)	ପାଖ (near, side) + କୁ (to)	native	ai	ଡାକ୍ତର ପାଖକୁ = to the doctor.
+ପ୍ରତାପ	Pratap (given name); valour, glory	Pratap, a given name or middle name; valour, glory, might; majesty		name	ai	
+ଶବ	dead body, corpse	dead body, corpse		sanskrit	ai	
+ଫସଲ	crop, harvest	crop, harvest, produce			ai	ଫସଲ ନଷ୍ଟ = crop loss.
+ରାଷ୍ଟ୍ରୀୟ	national	national; of the nation or state	ରାଷ୍ଟ୍ର (nation) + ଈୟ (of)	sanskrit	ai	ରାଷ୍ଟ୍ରୀୟ ରାଜପଥ = national highway.
+ରଞ୍ଜନ	Ranjan (given or middle name)	Ranjan, a given name or middle name; delighting, pleasing; colouring, dyeing (old)		name	ai	
+ଅନ୍ୟତମ	one of (the)	one of (the); one among many		sanskrit	ai	ଅନ୍ୟତମ ପ୍ରମୁଖ = one of the main ...
+ସତ	true; truth	true, real; truth; come true (with be); really (with -re)		native	ai	ସତ କଥା = the truth; ସତ ହେବା = to come true; ସତରେ = really.
+ବାହାରି	coming out; setting out	coming out, having come out, emerging; setting out, leaving; appearing	ବାହାର (come out) + ଇ (having)	native	ai	ଘରୁ ବାହାରି = leaving home.
+କେଉଁଠି	where; somewhere	where (question); somewhere, anywhere; (with a negative) nowhere	କେଉଁ (which) + ଠି (at, place)	native	ai	
+ଭାସ୍କର	Bhaskar (given name); the sun	Bhaskar, a given name; the sun (literary)		name	ai	
+ସମିତି	committee; society, association	committee, panel; society, association, union		sanskrit	ai	ପଞ୍ଚାୟତ ସମିତି = block-level council.
+ଅଶୋକ	Ashok (male given name); Emperor Ashoka	Ashok, a male given name; Ashoka, the Mauryan emperor; the ashoka tree; free from sorrow (literary)		name	ai	
+ଜାଣି	knowing; having learnt (of)	knowing, having come to know, on learning (of); knowingly, deliberately (jaanishuni)	ଜାଣ (know) + ଇ (having)	native	ai	ଜାଣିବା ପରେ: after learning (of it).
+ହୋମ୍	home (in English terms: home loan, home guard)	home (in English terms: home loan, home guard, home minister, home delivery)		english	ai	
+ସେତିକି	that much; only that much	that much, so much; only that much, just that; that many		native	ai	ଯେତିକି ... ସେତିକି: as much as ..., that much.
+ମାଡ଼	beating, assault; attack	beating, assault (maada maariba: to beat up); attack, onslaught; blows; (of cold, flood) spreading over		native	ai	ମାଡ଼ ମାରି: beating (someone) up.
+ଅବଗତ	informed, aware (of)	informed, aware, acquainted (with); abagata karaiba: to inform, apprise		sanskrit	ai	ଅବଗତ କରାଇଛନ୍ତି: have informed.
+ବିଳମ୍ବିତ	late; delayed	late (bilambita raatire: late at night); delayed, belated; slow (tempo, in music and dance)	ବିଳମ୍ବ (delay) + ଇତ (-ed)	sanskrit	ai	
+କ୍ରମେ	on, following (a complaint); as per; gradually	on the basis of, following (a complaint, decision, report); as per; gradually, step by step	କ୍ରମ (order, sequence) + ଏ (in)	sanskrit	ai	ଅଭିଯୋଗ କ୍ରମେ: on (the basis of) a complaint.
+ନିକଟସ୍ଥ	nearby; neighbouring	nearby, located near, neighbouring, nearest	ନିକଟ (near) + ସ୍ଥ (situated)	sanskrit	ai	
+ସଙ୍ଗେ	with, along with	with, along with, together with; at once (sange sange: immediately)	ସଙ୍ଗ (company) + ଏ (in)	sanskrit	ai	sange sange: immediately.
+ସତ୍ତ୍ୱେ	despite, in spite of	despite, in spite of, even though		sanskrit	ai	X ସତ୍ତ୍ୱେ: despite X.
+କନ୍ୟା	daughter; girl; bride	daughter; girl, maiden; bride (kanya paksha: bride's side); Virgo (zodiac sign)		sanskrit	ai	
+ମିଶି	together with; joining; mixing	together (with), jointly (X saha mishi: together with X); having joined, mixing, meeting	ମିଶ (mix, join) + ଇ (having)	native	ai	
+ଦୁଃଖ	sorrow, grief; regret	sorrow, grief, sadness; regret (dukha prakasha: expressed grief or regret); pain, suffering, hardship		sanskrit	ai	ଦୁଃଖ ପ୍ରକାଶ କରିଛନ୍ତି: have expressed grief, condolence.
+ସେଥିରୁ	from that; out of those	from that, from it; out of that, of those (sethiru jane: one of them)	ସେଥି (that) + ରୁ (from)	native	ai	
+ପରାସ୍ତ	defeated	defeated, beaten, vanquished (paraasta kariba: to defeat)		sanskrit	ai	
+ବୁଲି	going around; touring; turning	going around, wandering, touring (gharaku ghara buli: door to door); having turned; going out on a trip (buli jiba)	ବୁଲ (roam, turn) + ଇ (having)	native	ai	
+ଆର	the other; next	the other, the next (aara pata: the other side; aara barsha: next year); R, the English letter (in names and abbreviations, R. Iyer)		native	ai	Also spelt ଆର୍ for the letter R.
+ପଥର	stone; rock	stone, rock; stone-pelting (pathara maada); stone (kidney stone)		native	ai	ପଥର ମାଡ଼: stone pelting.
+କଡ଼ା	strict, stern, tough	strict, stern, tough (kada chetabani: stern warning; kada byabastha: tight security); hard, firm; ring, link (of metal)		native	ai	
+ଅକ୍ଷୟ	Akshay (given name); everlasting	Akshay, a male given name; imperishable, everlasting (the festival Akshaya Tritiya)		name	ai	
+ଚିକିତ୍ସିତ	treated (medically); under treatment	treated (medically), being treated, under treatment (chikitsita heuchhanti: is being treated)	ଚିକିତ୍ସା (treatment) + ଇତ (-ed)	sanskrit	ai	
+ସନ୍ତୋଷ	satisfaction; Santosh (given name)	satisfaction, contentment (santosha prakasha: expressed satisfaction); Santosh, a male given name		sanskrit	ai	
+କନକ	Kanak (given name, TV channel); gold	Kanak, a given name (also Kanak News, an Odia TV channel); gold (literary)		name	ai	
+ଚଢ଼ାଉ	raid	raid, swoop (by police, vigilance, excise); attack, assault		native	ai	ଚଢ଼ାଉ କରିବା: to raid.
+ଧମକ	threat; threatening	threat, intimidation (dhamaka deba: to threaten); rebuke, scolding		native	ai	
+ଯେତେ	as much as; however much	as much as, as many as; however much, however (jete shighra: as soon as)		native	ai	ଯେତେ ... ସେତେ: the more ..., the more.
+ନଗର	city, town	city, town (nagara nigama: municipal corporation; nagara unnayana: urban development)		sanskrit	ai	
+ଅମିତ	Amit (male given name)	Amit, a male given name (e.g. Amit Shah); boundless, immeasurable (literary)		name	ai	
+ସେଇ	that very, that same	that very, that same, that (spoken form of sehi)		native	ai	Spoken form of ସେହି.
+ମନୋଜ	Manoj (male given name)	Manoj, a male given name; Kama, god of love (literary)		name	ai	
+ଅରୁଣ	Arun (male given name); rising sun	Arun, a male given name; the rising sun, dawn; red, reddish (literary)		name	ai	
+ଅନୁଗୋଳ	Angul, a district of Odisha	Angul, a district in central Odisha, and its headquarters town		name	ai	
+ଭି	V (letter in initials: kV, VC, VIP)	V, the English letter in initials and abbreviations (kV, kilovolt; VC, vice-chancellor; VIP); also, too (spoken, from Hindi bhi)		english	ai	Standard Odia for "also" is ବି or ମଧ୍ୟ.
+ପାଳିତ	observed, celebrated (a festival, day)	observed, celebrated (a festival, a day); reared, raised, adopted (palita pashu: domestic animal)	ପାଳ (observe, rear) + ଇତ (-ed)	sanskrit	ai	ପାଳିତ ହେଲା: was celebrated.
+ଧାର୍ଯ୍ୟ	fixed, scheduled, set; levied	fixed, scheduled, set (dharjya samaya: the set time); levied, imposed (a fee, tax)		sanskrit	ai	ଧାର୍ଯ୍ୟ ହୋଇଛି: has been fixed.
+ଦୂରେଇ	moving away; keeping away (from)	moving away, keeping (oneself) away, distancing (durei rahiba: to stay away); having moved away	ଦୂର (far) + ଏଇ (having made)	native	ai	
+ଚୟନ	selection	selection, choice (chayana kariba: to select); collection, gathering (literary)		sanskrit	ai	
+ଅର୍ପଣ	offering; handing over; dedicating	offering, handing over, presenting; dedication (shraddhanjali arpana: paying tribute)		sanskrit	ai	
+ପାଣିଗ୍ରାହୀ	Panigrahi (surname)	Panigrahi, a surname in Odisha		name	ai	
+ଠିକ	right, correct; exactly; OK	right, correct, proper (thika bhabare: properly); exactly, just (thika sehipari); fine, OK		native	ai	Also spelt ଠିକ୍.
+ସ୍ୱାଇଁ	Swain (surname)	Swain, a surname in Odisha		name	ai	
+ଅନୁଧ୍ୟାନ	review; follow-up study	review, close examination, follow-up (anudhyana baithaka: review meeting); reflection, contemplation (literary)		sanskrit	ai	
+ଶୋ	show (film, TV, stage show)	show (a film show, TV show, stage show, reality show)		english	ai	Also spelt ସୋ.
+ପଦବୀ	post, position	post, position, office (padabiru istapha: resignation from a post); rank, title		sanskrit	ai	
+ଖସି	slipping; escaping; having slipped	slipping, having slipped (khasi padiba: to slip, fall off); escaping, getting away (khasi paribe ni: cannot escape)	ଖସ (slip) + ଇ (having)	native	ai	
+ଗତବର୍ଷ	last year	last year, the previous year	ଗତ (past, last) + ବର୍ଷ (year)	sanskrit	ai	Also written ଗତ ବର୍ଷ.
+ନିରଞ୍ଜନ	Niranjan (male given name)	Niranjan, a male given name; spotless, pure (an epithet of God, literary)		name	ai	
+ରୋହିତ	Rohit (male given name)	Rohit, a male given name (e.g. Rohit Sharma); rohu, a carp (old)		name	ai	
+ହେଁ	though, even though (after -le)	though, even though (after a verb in -le: thile hen = though (he) was); indeed, even (emphasis)		native	ai	X ହେଲେ ହେଁ: even though X.
+ଓଜନ	weight	weight (body weight, load); importance (figurative)		arabic	ai	Came into Odia through Persian or Urdu.
+ଜନ	people, public (in compounds)	people, public (jana abhijoga: public grievance; jana andolana: mass movement); person, man (literary)		sanskrit	ai	
+ପବନ	wind, air; Pavan (given name)	wind, air, breeze; Pavan, a male given name		sanskrit	ai	
+ଯୁକ୍ତ	plus (Plus Two, higher secondary); joined, added	plus (jukta dui: Plus Two, higher secondary; its exams, students and streams); joined, added, attached; united, combined		sanskrit	ai	
+ଜୟପୁର	Jeypore (Koraput); Jaipur (Rajasthan)	Jeypore, a town in Koraput district, Odisha; Jaipur, capital of Rajasthan		name	ai	In Odisha news usually Jeypore of Koraput.
+ଏକର	acre	acre, a unit of land area		english	ai	
+ହୁଅନ୍ତି	are; become (they; or respectful)	are, become, happen to be (present, they; or he/she, respectful); usually are (habitual)	ହୁ (be) + ଅନ୍ତି (present, they)	native	ai	
+ଦି	two, a couple (spoken)	two, a couple, a few (spoken: di paisa = a little money, di pada = a few words); the (in English names: The Indian Express)		native	ai	In English names ଦି = "the".
+ଜିତି	winning; having won	winning, having won (a title, match, seat); on winning	ଜିତ (win) + ଇ (having)	native	ai	
+ମାରି	hitting; having hit; killing	hitting, beating, having hit (maada mari: beating up); killing, having killed; scoring (a century, a six)	ମାର (hit, kill) + ଇ (having)	native	ai	
+ତ୍ରିପାଠୀ	Tripathy (surname)	Tripathy, a surname in Odisha and North India		name	ai	
+ବୟାନ	statement, remark	statement, remark (to the press); testimony, account (of a witness)		arabic	ai	Came into Odia through Persian or Urdu.
+ଅଜୟ	Ajay (male given name)	Ajay, a male given name; unconquered, invincible (literary)		name	ai	
+ପଡ଼ି	falling; having fallen; under (pressure)	falling, having fallen (gachha padi: a tree having fallen); caught in, under (chaapare padi: under pressure)	ପଡ଼ (fall) + ଇ (having)	native	ai	Also spelt ପଡି.
+ଲହର	wave (of joy, support)	wave (khusira lahara: wave of joy; a political wave); ripple, wave of water			ai	
+ବଜାୟ	maintained, kept up (bajaya rakhiba)	maintained, kept up, retained (bajaya rakhiba: to maintain; bajaya rahiba: to remain)			ai	
+ସୁରେଶ	Suresh (male given name)	Suresh, a male given name; Indra, lord of the gods (literary)		name	ai	
+ଯାଦବ	Yadav (surname)	Yadav, a surname; of the Yadu dynasty (Krishna's clan)		name	ai	
+ତମ	your (familiar, spoken); -th (ordinal: 15 tama)	your, you (familiar, spoken form of tuma); -th, the ordinal suffix written apart after a number (15 tama: 15th)		mixed	ai	Usually joined: ୧୫ତମ.
+ଏଣିକି	from now on, henceforth	from now on, henceforth, hereafter		native	ai	
+ରାଜସ୍ଥାନ	Rajasthan, an Indian state	Rajasthan, a state in north-western India		name	ai	
+ବାହିନୀ	force (army, police); squad	force, forces (army, police: suraksha bahini: security forces); squad, team (agnishama bahini: fire service)		sanskrit	ai	
+ସଂଖ୍ୟକ	in number, numbering (adhika sankhyaka: many)	numbering, in number (adhika sankhyaka: a large number of; bahu sankhyaka: many)	ସଂଖ୍ୟା (number) + କ (of)	sanskrit	ai	
+ପାରି	able to (pari nahin: could not)	being able to (with a verb: bhuli pari nahanti = could not forget); across, the other bank; spreading (a mat)	ପାର (be able) + ଇ (having)	native	ai	
+ନିର୍ଦ୍ଧାରିତ	scheduled, fixed, set	scheduled, fixed, set, determined (nirddharita samaya: the scheduled time)		sanskrit	ai	Also spelt ନିର୍ଧାରିତ.
+ନିର୍ଭର	dependent; reliance (upare nirbhara: depends on)	dependent, relying (X upare nirbhara kare: depends on X); reliance, dependence		sanskrit	ai	
+ବିଶ୍ୱାଳ	Biswal (surname)	Biswal, a surname in Odisha		name	ai	
+ଅନ୍ତିମ	final, last	final, last (antima sanskara: last rites; antima dina: last day)		sanskrit	ai	
+ଖେଳି	playing; having played	playing, having played (a match, an innings)	ଖେଳ (play) + ଇ (having)	native	ai	
+ଏତିକି	this much; only this much	this much, so much; only this, just this		native	ai	
+ଦୁହେଁ	both (of them), the two	both, the two of them (people)		native	ai	
+କେତେବେଳେ	when?; sometimes	when?, at what time?; sometimes (ketebele ketebele: now and then)	କେତେ (how much) + ବେଳେ (at the time)	native	ai	
+ବଦଳି	transfer (of a post); changing	transfer (of an official to another post); changing, having changed (badali jiba: to change)	ବଦଳ (change) + ଇ (having)	native	ai	
+ଶିବ	Lord Shiva; Shiv (given name)	Shiva, the Hindu god; Shiv, part of male given names; auspicious (literary)		sanskrit	ai	
+ଐତିହାସିକ	historic; historical	historic, momentous; historical, of history; historian	ଇତିହାସ (history) + ଇକ (of)	sanskrit	ai	
+ଫୁଟ	foot, feet (unit of length)	foot, feet (unit of length: 10 feet high); foot- (footpath)		english	ai	The verb ଫୁଟିବା (bloom, boil) is a different word.
+ସନ୍ତାନ	child, offspring	child, children, offspring, progeny		sanskrit	ai	
+ସମୀର	Sameer (male given name)	Sameer, a male given name; breeze, wind (literary)		name	ai	
+ମୋହନ	Mohan (male given name)	Mohan, a male given name (as in Mohan Majhi); charming, enchanting; Krishna		name	ai	
+ଆହ୍ୱାନ	call, appeal; challenge	call, appeal (ahwana deba: to call on, urge); challenge; invitation		sanskrit	ai	
+ସାବ୍ୟସ୍ତ	proved, established (doshi sabyasta: found guilty)	proved, established, held to be (doshi sabyasta: found guilty, convicted)			ai	
+ଚରଣ	Charan (in names); feet; phase	Charan, part of male given names (Mohan Charan); foot, feet (respectful: of God, elders); phase, stage (prathama charana: first phase)		name	ai	
+ପରିବା	vegetable(s)	vegetable, vegetables (sabuja paribaa: green vegetables)		native	ai	
+ଟାଇମ୍	time	time (as in English: time-pass, full-time, prime time)		english	ai	
+ବାନ୍ଧି	tying; having tied	tying, having tied (up), binding; tying (a vehicle) to tow	ବାନ୍ଧ (tie) + ଇ (having)	native	ai	
+ଦୃଢ଼	firm, strong; resolute	firm, strong, solid; resolute, determined (drudha padakshepa: firm step)		sanskrit	ai	
+ତୈଳ	oil (formal)	oil (khaiba taila: edible oil); petroleum (taila company: oil company)		sanskrit	ai	Everyday word: ତେଲ.
+ଦିନିକିଆ	one-day (ODI cricket); for one day	one-day (dinikia match: one-day international); lasting one day; daily-wage (dinikia majuria: day labourer)	ଦିନ (day) + ଇକିଆ (lasting)	native	ai	
+ଶତାଧିକ	over a hundred, more than 100	more than a hundred, hundreds of	ଶତ (hundred) + ଅଧିକ (more)	sanskrit	ai	
+ବ୍ୟୟ	expenditure, cost	expenditure, spending, cost (byaya atakala: estimated cost)		sanskrit	ai	
+ପାଇଁ	for; in order to (after -ba)	for, for the sake of; in order to (after a verbal noun: karibaa paain = in order to do); for (a time: dui dina paain)		native	ai	ପ୍ରଥମ ଥର ପାଇଁ: for the first time.
+ଏବଂ	and	and		sanskrit	ai	
+ପରେ	after; later	after (X pare: after X); later, afterwards, then	ପର (after, other) + ଏ (at)	native	ai	
+ମଧ୍ୟ	also, too; even	also, too, as well; even; middle, centre (in compounds: madhya rati = midnight; Madhya Pradesh)		sanskrit	ai	ସେ ମଧ୍ୟ: he too.
+ଉପରେ	on, upon; over, about; against	on, upon, above; over, about, regarding (bishaya upare); against, on (an attack on someone)	ଉପର (top) + ଏ (on)	native	ai	
+ନାହିଁ	no; is not, there is not; did not	no; is not, there is not (absence); did not, does not (after a verb); not (with a request: karantu nahin = do not)		native	ai	
+କିଛି	some, something; (with not) nothing	some, something, a little; any, anything; (with a negative) nothing, not anything		native	ai	କିଛି ଦିନ: some days.
+ମଧ୍ୟରେ	among, between; within	among, between (two sides); within, in (a period: ek masa madhyare = within a month); during	ମଧ୍ୟ (middle) + ରେ (in)	sanskrit	ai	
+ଆଜି	today	today; nowadays, these days (aji kali)		native	ai	
+ସୂଚନା	information; notice	information, news; notice, intimation; (suchana anujayi) according to information; suchana deba: to inform, to state		sanskrit	ai	ସୂଚନା ଦେଇଛନ୍ତି: has informed, has said.
+ଏବେ	now	now, at present; just now; these days		native	ai	
+ଅଧିକ	more; much, extra	more (than: thaaru adhika); much, a lot; extra, excess; over (in numbers: 100ru adhika = over 100)		sanskrit	ai	
+କିନ୍ତୁ	but	but, however		sanskrit	ai	
+ସହିତ	with, along with	with, along with, together with; and (linking items)		sanskrit	ai	Short form: ସହ.
+ବି	also, too; even	also, too; even (hele bi = even if, even though); B, the letter (in abbreviations)			ai	Spoken word for ମଧ୍ୟ (also).
+ବିଭିନ୍ନ	various, different	various, different, diverse (bibhinna sthanare: in various places)		sanskrit	ai	
+ତାଙ୍କୁ	him, her (respectful); them	him, her (respectful, object form); to him, to her; them	ତାଙ୍କ (his, her, respectful) + କୁ (to)	native	ai	
+ଅନେକ	many, several	many, several, numerous; a lot of		sanskrit	ai	
+ରେ	in, at, on (case ending -re)	in, at, on (locative case ending -re, here written apart from the word); by, with (means: train-re = by train); with (cause)		native	ai	Usually joined to the word: ଘରରେ, ମ୍ୟାଚରେ.
+ଗୋଟିଏ	one, a (single)	one, a, an (single item); a certain		native	ai	ଗୋଟିଏ ଦିନ: one day.
+ପର୍ଯ୍ୟନ୍ତ	until, up to; till	until, till, up to (a time or place); as much as, up to (an amount); even (ebe parjyanta = so far, till now)		sanskrit	ai	ଏବେ ପର୍ଯ୍ୟନ୍ତ: so far, till now.
+ଥିଲା	was; had (been)	was, there was (past, he/she/it); had (with a past participle: kari thila = had done)	ଥି (be, past) + ଲା	native	ai	
+ଭାରତୀୟ	Indian	Indian, of India; an Indian (person)	ଭାରତ (India) + ଈୟ (of)	sanskrit	ai	ଭାରତୀୟ ଜନତା ପାର୍ଟି: BJP.
+ପ୍ରକାଶ	expressing; publication; Prakash (name)	expression, expressing (prakasha kariba: to express, to state); publication, release (of results, a book); light; Prakash, a male given name		sanskrit	ai	ଦୁଃଖ ପ୍ରକାଶ କଲେ: expressed grief.
+ମୁଖ୍ୟ	chief, main; head	chief, main, principal (mukhya mantri: chief minister); head (of an office)		sanskrit	ai	
+ବୃଦ୍ଧି	increase, rise, growth	increase, rise, growth (bruddhi paibaa: to rise; bruddhi kariba: to raise)		sanskrit	ai	ଦର ବୃଦ୍ଧି: price rise.
+ଜାରି	issued; continuing, ongoing	issued (an order, notice, warning: jari kariba); continuing, ongoing (jari rahiba: to continue); in force		persian	ai	Came into Odia through Persian or Urdu.
+ସେମାନେ	they	they (people)	ସେ (he, she) + ମାନେ (plural)	native	ai	
+କି	or; question word (is it?, whether)	or (between choices); whether; question marker at the end of a yes/no question (is it?, did they?); km (in ki mi, kilometre)		native	ai	ଯିବ କି?: will (he) go?
+ମୁଁ	I	I (first person singular)		native	ai	
+ଚିହ୍ନଟ	identified; identification	identified, detected, traced (chihnata kariba: to identify); identification		mixed	ai	
+କେବଳ	only, just, merely	only, just, merely, solely		sanskrit	ai	
+ଦ୍ୱାରା	by, through (agent or means)	by (the doer, in passive sentences), through, by means of		sanskrit	ai	ପୋଲିସ ଦ୍ୱାରା: by the police.
+ବା	or; that is (giving another name)	or; that is, also called (X ba Y); (in questions) at all, really		native	ai	
+ସୃଷ୍ଟି	creation; created, caused	creation; created, caused, produced (srushti kariba: to create, cause; srushti hoichi: has arisen); the universe		sanskrit	ai	ଚାଞ୍ଚଲ୍ୟ ସୃଷ୍ଟି ହୋଇଛି: there is a stir.
+ଯଦି	if	if, in case (often followed by tebe: then)		sanskrit	ai	
+ପ୍ରାୟ	about, nearly, almost	about, approximately, nearly, almost; mostly, usually		sanskrit	ai	
+ପ୍ରଦାନ	giving; awarding, granting	giving, granting, awarding, providing (pradana kariba: to give, grant, present)		sanskrit	ai	
+ବନ୍ଦ	closed, shut; stopped; bandh, shutdown	closed, shut; stopped, halted, banned (banda kariba: to stop, close); bandh, a general shutdown		persian	ai	
+ତେଣୁ	so, therefore	so, therefore, hence, that is why		native	ai	
+ଭିତରେ	inside, within; in	inside, within; in (a time: dui dina bhitare = within two days); among	ଭିତର (inside) + ଏ (in)	native	ai	
+ନୁହେଁ	is not; not	is not, are not (negative of 'is': se doshi nuhen = he is not guilty); not		native	ai	
+ଅନୁଯାୟୀ	according to, as per	according to, as per, in line with		sanskrit	ai	ସୂଚନା ଅନୁଯାୟୀ: according to information.
+ଘୋଷଣା	announcement, declaration	announcement, declaration (ghoshana kariba: to announce, declare)		sanskrit	ai	
+ଅନୁସାରେ	according to, as per	according to, as per, in accordance with	ଅନୁସାର (accordance) + ଏ (in)	sanskrit	ai	
+ଆମେ	we	we (first person plural)		native	ai	
+ନିକଟରେ	near; with, to (someone); recently	near, close to; with, before, to (someone: complaint to the police); recently, lately	ନିକଟ (near) + ରେ (at)	sanskrit	ai	ଥାନା ନିକଟରେ: near the police station / to the police.
+ପ୍ରତି	per, each, every; towards	per, each, every (prati dina: every day); towards, to (respect, attitude towards); copy (of a document)		sanskrit	ai	
+କଂଗ୍ରେସ	Congress (Indian National Congress party)	Congress, the Indian National Congress, a political party; a congress, conference		name	ai	
+ବର୍ତ୍ତମାନ	now, at present; current	now, at present; current, present (bartamana sarakara: the present government); the present (time)		sanskrit	ai	
+ଗ୍ରହଣ	taking, accepting (an oath, a step)	taking, accepting, receiving (shapatha grahana: oath-taking; padakshepa grahana: taking a step); eclipse		sanskrit	ai	
+ସ୍ଥାନରେ	at (a) place; in (N) places	at a place, in places (9ti sthanare: at nine places); in place of, instead of	ସ୍ଥାନ (place) + ରେ (at)	sanskrit	ai	
+ଠାରୁ	from; than (in comparisons)	from (a person, a place, a time: then thaaru = since then); than (X thaaru adhika = more than X)	ଠା (place) + ରୁ (from)	native	ai	
+କିମ୍ବା	or	or, either ... or		native	ai	
+ବ୍ୟବହାର	use; behaviour, conduct	use, usage (byabahara kariba: to use); behaviour, conduct, treatment (of a person)		sanskrit	ai	
+ଅଛି	is, there is; has	is, there is, exists; has, have (mo pakhare achhi = I have); (after -i) has done (kari achhi)		native	ai	
+ଘରେ	at home; in the house	at home, in the house; in the household	ଘର (house) + ଏ (in)	native	ai	
+ଶେଷ	end; last, final; finished	end; last, final (shesha dina: last day); finished, over (shesha heba: to end)		sanskrit	ai	ଶେଷରେ: finally, in the end.
+ପ୍ରସ୍ତୁତ	ready, prepared; made	ready, prepared (prastuta heba: to get ready); made, produced (prastuta kariba: to make, prepare)		sanskrit	ai	
+ସରକାରୀ	government (adj.), official, public	government, of the government, official, public (sarakari karmachari: government employee)	ସରକାର (government) + ଈ (of)	persian	ai	
+ସ୍ଥାନୀୟ	local	local, of the place (sthaniya loka: local people)	ସ୍ଥାନ (place) + ଈୟ (of)	sanskrit	ai	
+ଶ୍ରୀ	Mr, Shri (title); holy, sacred (Sri-)	Mr, Shri (title before a man's name); holy, sacred, revered (Sri Jagannath, Srimandir); prosperity, beauty		sanskrit	ai	
+ସ୍ୱାସ୍ଥ୍ୟ	health	health (swasthya bibhaga: health department; swasthya kendra: health centre)		sanskrit	ai	
+ନିଷ୍ପତ୍ତି	decision	decision, resolution (nishpatti neba: to decide); settlement (of a case)		sanskrit	ai	
+ନିର୍ମାଣ	construction, building; making	construction, building (nirmana kariba: to build); making, production (of a film)		sanskrit	ai	
+ସାଧାରଣ	general, ordinary; public	general, ordinary, common; the public (sadharana loka: common people); general (sadharana nirbachana: general election)		sanskrit	ai	ସାଧାରଣତଃ: usually.
+ସୁରକ୍ଷା	security, safety, protection	security, safety, protection (suraksha bahini: security forces)		sanskrit	ai	
+ମୋ	my; me (before endings)	my (mo pua: my son); me (stem before endings: mote, mora)		native	ai	
+ଆଲୋଚନା	discussion, talks	discussion, talks, deliberation; review, criticism (of a book)		sanskrit	ai	
+କୁ	to; object marker (case ending -ku)	to, towards (case ending -ku, here written apart); marks the object (him, it); for (a time, an amount)		native	ai	Usually joined to the word: ଘରକୁ, ତାଙ୍କୁ.
+ଜାତୀୟ	national	national (jatiya rajapatha: national highway); ethnic, communal (of a community, caste)	ଜାତି (nation) + ଈୟ (of)	sanskrit	ai	
+ମଧ୍ୟରୁ	out of, from among	out of, from among (semananka madhyaru jane: one of them); from within	ମଧ୍ୟ (middle) + ରୁ (from)	sanskrit	ai	
+ସେଠାରେ	there	there, at that place	ସେ (that) + ଠାରେ (at, place)	native	ai	
+ହେବାକୁ	to be, to become; (have) to be	to be, to become; have to be (heba-ku padiba: to have to); about to (shesha heba-ku: about to end)	ହେବା (being) + କୁ (to)	native	ai	ସମ୍ମୁଖୀନ ହେବାକୁ ପଡ଼ୁଛି: has to face.
+ସୁସ୍ଥ	healthy, well; recovered	healthy, well, fit; recovered (sustha heba: to recover); sound, wholesome (sustha samaja)		sanskrit	ai	
+ହୁଏ	happens; is, becomes (usually)	happens, takes place; is, becomes (habitual or general: it is, it gets)	ହୁ (be) + ଏ (present, it)	native	ai	
+ପ୍ରମୁଖ	major, prominent; and others (after names)	major, prominent, leading, chief; and others, among others (at the end of a list of names)		sanskrit	ai	X, Y ପ୍ରମୁଖ: X, Y and others.
+ଯୋଗୁଁ	because of, due to	because of, due to, owing to		native	ai	
+ଟି	counter for things (9 ti = nine); the (gharati)	counter suffix for things, written apart (9 ti = nine of them); the (gharati: the house); T, the letter (P T I, T20)		mixed	ai	Usually joined: ୯ଟି.
+ପ୍ରତିଶତ	percent	percent, per cent	ପ୍ରତି (per) + ଶତ (hundred)	sanskrit	ai	
+ବହୁତ	very; a lot, many	very, much, a lot; many, plenty		native	ai	
+ଚିକିତ୍ସା	treatment, medical care	treatment, medical care, therapy (chikitsa chaliche: is under treatment)		sanskrit	ai	
+ଆବଶ୍ୟକ	necessary, needed, required	necessary, needed, required (abashyaka pade: is needed)		sanskrit	ai	
+ଏଠାରେ	here	here, at this place	ଏ (this) + ଠାରେ (at, place)	native	ai	
+ପ୍ରଥମେ	first, at first, firstly	first, at first, firstly, in the beginning	ପ୍ରଥମ (first) + ଏ (at)	sanskrit	ai	
+ପାଖରେ	near, beside; with (has)	near, beside, close to; with, in the possession of (tanka pakhare achhi = he has); to (someone)	ପାଖ (side) + ରେ (at)	native	ai	
+ଏଥିପାଇଁ	for this; that is why	for this, for it; that is why, for this reason	ଏଥି (this) + ପାଇଁ (for)	native	ai	
+ବ୍ଲକ	block (administrative block)	block, community development block (an administrative unit below a district); block (of a building)		english	ai	Also spelt ବ୍ଲକ୍.
+ଉତ୍ତର	answer, reply; north	answer, reply (uttara deba: to answer); north, northern (Uttar Pradesh: uttara pradesha)		sanskrit	ai	
+ହତ୍ୟା	murder, killing	murder, killing (hatya kariba: to murder)		sanskrit	ai	
+ନିର୍ଦ୍ଦେଶ	instruction, order, direction	instruction, order, direction (nirddesha deba: to direct, order); guideline		sanskrit	ai	
+ବିକାଶ	development; Bikash (given name)	development, growth, progress; Bikash, a male given name		sanskrit	ai	
+ଆଦି	etc., and so on	etc., and so on, and others (after a list); first, original, primordial (adi basi: original inhabitants)		sanskrit	ai	
+ପ୍ରଧାନ	chief, head, main; Pradhan (surname)	chief, head, main, principal (pradhana mantri: prime minister); Pradhan, a surname; head of a village		sanskrit	ai	
+ଦ୍ୱିତୀୟ	second	second (in order)		sanskrit	ai	
+ଶିକ୍ଷା	education; lesson	education, schooling (shiksha bibhaga: education department); lesson, teaching		sanskrit	ai	
+ଉଦ୍ଧାର	rescue; recovery (of a body, seized goods)	rescue, rescued (uddhara kariba: to rescue); recovery, recovered (of a body, of stolen or seized goods); salvation		sanskrit	ai	
+ସାରା	whole, entire, all over	whole, entire, all over (sara rajyare: across the state); Sara, a female given name		native	ai	
+ଭିଡିଓ	video	video		english	ai	
+କମ୍	less, low, few	less, low, few, reduced (kam kariba: to reduce)		persian	ai	Also spelt କମ.
+ମାନେ	plural marker (-s, for people); means, i.e.	plural marker for people and nouns, often written apart; that is, i.e., it means (colloquial); obeys, accepts (he/she/it)		native	ai	The sense 'that is, it means' is colloquial. Usually joined to the noun: ଲୋକମାନେ (people), ଆମେମାନେ (we). ଛାତ୍ରମାନେ: students; ମାନିବା: to obey.
+ଯୋଗ	joining, attending, taking part; yoga	joining, participation; yoga; addition, sum; union, connection; astrological conjunction (in horoscopes)		sanskrit	ai	ଯୋଗ ଦେବା: to join, attend; ଯୋଗ ଦିବସ: Yoga Day.
+କୋଭିଡ୍	COVID, Covid-19	COVID, Covid-19 (the coronavirus disease)		english	ai	
+ବିଜୟ	victory, win; Bijay, Vijay (given name)	victory, win, triumph; Bijay or Vijay (given name, common in Odisha)		sanskrit	ai	
+ଖାଦ୍ୟ	food	food; food grain, foodstuff; edible		sanskrit	ai	ଖାଦ୍ୟ ଓ ଖାଉଟି: food and consumer affairs.
+ଅର୍ଥ	money, funds; meaning	money, funds, finance; meaning, sense; purpose, aim; wealth		sanskrit	ai	ଅର୍ଥ ମନ୍ତ୍ରୀ: finance minister; ଏହାର ଅର୍ଥ: this means. ଅର୍ଥ ଅଭାବ: lack of money.
+ଆହୁରି	more; further, even more	more, still more, further; even more (before an adjective); besides		native	ai	ଆହୁରି ଖରାପ: even worse. ଆହୁରି ପଢନ୍ତୁ: read more (link text on news sites).
+ଗତକାଲି	yesterday	yesterday	ଗତ (last, past) + କାଲି (yesterday)	mixed	ai	
+କେତେକ	some, a few, several	some, a few, several, certain (of them)	କେତେ (how many) + କ	native	ai	
+ତଥ୍ୟ	information, facts; data	information, facts; data; truth (literary)		sanskrit	ai	
+ଗୁରୁତର	serious, critical; seriously (injured)	serious, critical (condition), grave; seriously (injured, ill); heavy, weighty (literary)	ଗୁରୁ (heavy) + ତର (more)	sanskrit	ai	In headlines after a name: X ଗୁରୁତର = X critically injured.
+ପରି	like, as, similar to	like, as, similar to (after a noun); as if; manner, way		native	ai	ସାବୁନ ପରି: like soap. Not ପରୀ (fairy).
+ତଳେ	under, below; ago (after a time)	under, below, beneath, at the bottom; ago; down, on the ground	ତଳ (bottom) + ଏ (at)	native	ai	୪ ବର୍ଷ ତଳେ: 4 years ago.
+ତିଆରି	made; making (tiari kariba: to make)	made, manufactured, built; making; ready, prepared (colloquial)		persian	ai	ତିଆରି ହେବା: be made; ତିଆରି କରିବା: to make, prepare. Came into Odia through Persian or Urdu (tayyar, ready).
+ସାମାଜିକ	social	social, of society; sociable	ସମାଜ (society) + ଇକ (-al)	sanskrit	ai	ସାମାଜିକ ଗଣମାଧ୍ୟମ: social media.
+ପୂଜା	worship, puja; prayer ritual	worship, puja, ritual prayer; festival worship (Durga Puja etc.); Puja (female given name)		sanskrit	ai	
+ନୂତନ	new	new, fresh, recent; newly (appointed etc.)		sanskrit	ai	Formal word; everyday Odia uses ନୂଆ.
+ଲାଭ	benefit; profit, gain	benefit, advantage; profit, gain		sanskrit	ai	ଲାଭ ପାଇବା: to benefit, to gain.
+ତିନି	three	three (3)		native	ai	
+ବିଶେଷ	special; particular; especially	special; particular, specific; especially; much, very (with negation: not much)		sanskrit	ai	ବିଶେଷ କରି: especially.
+ଉପସ୍ଥିତ	present, in attendance	present, in attendance; present, current (situation)		sanskrit	ai	ଉପସ୍ଥିତ ରହିବା: to be present, attend.
+ସ୍ୱତନ୍ତ୍ର	special; separate	special (also a news section); separate, distinct, dedicated; independent, self-governing (older sense)	ସ୍ୱ (own, self) + ତନ୍ତ୍ର (system, rule)	sanskrit	ai	
+ଅନୁମତି	permission	permission, consent, approval, sanction		sanskrit	ai	
+କୃଷି	agriculture, farming	agriculture, farming; agricultural		sanskrit	ai	କୃଷି ମନ୍ତ୍ରୀ: agriculture minister.
+ସମ୍ଭାବନା	possibility, likelihood; prospect	possibility, likelihood, chance; prospect, potential		sanskrit	ai	ସମ୍ଭାବନା ରହିଛି: is likely.
+ସିଂହ	Singh (surname); lion	Singh, Sinha (surname); lion; Leo (zodiac sign)		name	ai	ସିଂହ ରାଶି: Leo.
+ଟଙ୍କାର	of rupees; of money (worth X rupees)	of rupees, of money; worth (so many) rupees	ଟଙ୍କା (rupee, money) + ର (of)	native	ai	କୋଟି ଟଙ୍କାର ସମ୍ପତ୍ତି: property worth crores.
+ସଚିବ	secretary (official)	secretary, a senior government or party official; minister, counsellor (old sense)		sanskrit	ai	ମୁଖ୍ୟ ଶାସନ ସଚିବ: chief secretary.
+ପୂର୍ବ	east; previous, earlier	east, eastern; previous, earlier, former; before, prior		sanskrit	ai	ପୂର୍ବ ଉପକୂଳ: east coast; ପୂର୍ବରୁ: before.
+ପରାମର୍ଶ	advice; consultation	advice, counsel, suggestion; consultation		sanskrit	ai	ପରାମର୍ଶ ଦେବା: to advise.
+ପରିବର୍ତ୍ତନ	change	change, alteration; transformation; shift, transfer		sanskrit	ai	
+ହ୍ରାସ	decrease, reduction, fall	decrease, reduction, fall, decline		sanskrit	ai	ହ୍ରାସ ପାଇବା: to fall; ହ୍ରାସ କରିବା: to reduce.
+କେତେ	how much, how many	how much, how many; how (very), so (exclamation); some		native	ai	କେତେ ଜଣ: some people.
+ବ୍ୟୁରୋ	bureau; news bureau (staff report)	bureau, office, agency (Central Bureau of Investigation etc.); news bureau, staff reporter (in datelines)		english	ai	
+ଘରୋଇ	private (not government); domestic; household	private, non-government; domestic, internal; household, home (remedy)		native	ai	ଘରୋଇ ହସ୍ପିଟାଲ: private hospital; ଘରୋଇ ବିମାନ: domestic flight. From ଘର (home).
+ଯେତେବେଳେ	when (at the time when)	when, at the time when, whenever (relative)	ଯେତେ (as much as) + ବେଳେ (at the time)	native	ai	paired with ସେତେବେଳେ: then.
+ସ୍ପଷ୍ଟ	clear; clearly	clear, evident, plain; clearly		sanskrit	ai	ସ୍ପଷ୍ଟ କରିବା: to make clear, clarify.
+ସମ୍ପୂର୍ଣ୍ଣ	complete, entire; completely, fully	complete, entire, whole; completely, fully, totally; completed, finished		sanskrit	ai	
+ଆଶା	hope; expectation; ASHA (health worker)	hope, expectation; ASHA, a village health worker; Asha (female given name)		sanskrit	ai	ଆଶା କରାଯାଉଛି: it is expected; ଆଶା କର୍ମୀ: ASHA worker.
+ସୁଯୋଗ	opportunity, chance	opportunity, chance; good timing	ସୁ (good) + ଯୋଗ (union, occasion)	sanskrit	ai	
+ସମସ୍ତେ	everyone, all (people)	everyone, everybody, all (people); all of them	ସମସ୍ତ (all) + ଏ (plural, people)	mixed	ai	
+ମୃତ	dead; deceased	dead, deceased; lifeless		sanskrit	ai	ମୃତ ଦେହ: dead body; ମୃତକ: the deceased.
+ସୁବିଧା	facility, amenity; convenience	facility, amenity, service; convenience, ease; benefit, advantage		sanskrit	ai	ସୁବିଧା ଯୋଗାଇବା: to provide facilities.
+ରବିବାର	Sunday	Sunday	ରବି (sun) + ବାର (day)	sanskrit	ai	
+ଛୋଟ	small, little; minor	small, little; minor, petty; young, younger; short		native	ai	ଛୋଟ ଭାଇ: younger brother.
+ନା	or (in a question); no	or (in alternative questions: X or Y?); no; not (colloquial, before a verb); isn't it? (tag at the end of a sentence)		native	ai	Not ନାଁ (name).
+ତୃତୀୟ	third	third (3rd)		sanskrit	ai	
+କାହିଁକି	why	why, for what reason		native	ai	
+ବିକ୍ରି	sale, selling (bikri kariba: to sell)	sale, selling; sales		sanskrit	ai	ବିକ୍ରି କରିବା: to sell; ବିକ୍ରି ହେବା: be sold.
+କେବେ	when? (question); ever	when? (question); ever, at any time (with not: never)		native	ai	କେବେ ବି: ever.
+ଶୁଭ	auspicious; good, happy (wishes)	auspicious, lucky; good, happy; ceremonial (of an opening); Subha (name)		sanskrit	ai	ଶୁଭ ଫଳ: good results; ଶୁଭ ଦୀପାବଳି: Happy Diwali; ଶୁଭ ଉଦ୍ଘାଟନ: inauguration.
+ଜନ୍ମ	birth; born (janma heba: be born)	birth; birth anniversary; origin		sanskrit	ai	ଜନ୍ମ ହେବା: to be born; ଜନ୍ମ ଦେବା: to give birth; ଜନ୍ମ ଜୟନ୍ତୀ: birth anniversary.
+ପୁରସ୍କାର	award, prize; reward	award, prize; reward		sanskrit	ai	
+ପ୍ରତ୍ୟେକ	each, every	each, every, every single		sanskrit	ai	
+ପ୍ରଦର୍ଶନ	performance; display, show; demonstration, protest	performance (of a player, a team, an artist); display, show, exhibition; staging (a dance, a film); demonstration, protest (birodha pradarshana)	ପ୍ର (forth) + ଦର୍ଶନ (showing)	sanskrit	ai	ବିରୋଧ ପ୍ରଦର୍ଶନ: protest.
+ଉଦ୍ୟମ	effort, initiative; endeavour	effort, initiative, endeavour; enterprise, venture		sanskrit	ai	ଉଦ୍ୟମ ଜାରି: efforts on.
+ଅଭିନୟ	acting (in films, plays)	acting, performance on stage or screen; pretending, putting on an act		sanskrit	ai	
+ଦକ୍ଷିଣ	south, southern	south, southern; right-hand side (literary)		sanskrit	ai	ଦକ୍ଷିଣ ଭାରତ: South India.
+ଆଗାମୀ	upcoming, coming, next	upcoming, coming, forthcoming, next		sanskrit	ai	ଆଗାମୀ ନିର୍ବାଚନ: the coming election.
+ଶକ୍ତି	power, strength; energy (department)	power, strength, force; energy; Shakti, the goddess; Shakti (given name)		sanskrit	ai	ଶକ୍ତି ବିଭାଗ: energy department.
+କିଏ	who? (question)	who? (question); someone		native	ai	କିଏ ଜଣେ: somebody.
+ଚନ୍ଦ୍ର	moon; Chandra (in names)	moon; a moon, a natural satellite (of any planet); Chandra (part of given names, e.g. Ramesh Chandra)		sanskrit	ai	
+ଗୁରୁବାର	Thursday	Thursday	ଗୁରୁ (Jupiter) + ବାର (day)	sanskrit	ai	
+ନିଜେ	himself, herself, themselves; in person	himself, herself, themselves, oneself (emphatic); in person, personally; by oneself	ନିଜ (self, own) + ଏ	native	ai	
+ମୋର	my, mine	my, mine (of me)	ମୋ (me) + ର (of)	native	ai	
+ଥରେ	once; one time (puni thare: once again)	once, one time; once (in the past), at one time	ଥର (time, occasion) + ଏ	native	ai	ପୁଣି ଥରେ: once again.
+ଠିକ୍	right, correct; exactly; okay	right, correct, fine; exactly, just; proper, on time			ai	ଠିକ୍ ଅଛି: it is fine; ଠିକ୍ ଏହାର ପରେ: just after this.
+ତାର	wire, (power) line; his, her, its	wire, cable, electric line; his, her, its (informal); telegram (old)			ai	କେଭି ତାର: high-voltage line. Two words with one spelling: wire (via Persian tar) and the genitive of ତା.
+ଅଧ୍ୟକ୍ଷ	chairman, chairperson; president (of a body)	chairman, chairperson, president (of a party, committee, tribunal); head; principal (of a college)		sanskrit	ai	
+ସକାଳ	morning	morning		native	ai	ସକାଳେ: in the morning.
+ତୁରନ୍ତ	immediately, at once	immediately, at once, right away; immediate, urgent			ai	
+ନିଯୁକ୍ତି	appointment; recruitment, job	appointment (to a post); recruitment, employment, job		sanskrit	ai	ନିଯୁକ୍ତି ପରୀକ୍ଷା: recruitment exam.
+ଉଚ୍ଚ	high; higher (as in higher education)	high; higher, upper; tall; loud		sanskrit	ai	ଉଚ୍ଚ ଆର୍ଦ୍ରତା: high humidity; ଉଚ୍ଚ ଶିକ୍ଷା: higher education; ଉଚ୍ଚ ବିଦ୍ୟାଳୟ: high school.
+ଚେଷ୍ଟା	attempt, effort, try	attempt, effort, try		sanskrit	ai	ଚେଷ୍ଟା କରିବା: to try.
+ଚାଷ	farming, cultivation	farming, cultivation, agriculture; farm; crop		native	ai	ଖରିଫ ଚାଷ: kharif crop; ଚାଷ ଜମି: farmland.
+କିପରି	how; in what way	how, in what way, by what means	କି (what) + ପରି (like, manner)	native	ai	
+ସାଂସଦ	MP, member of parliament	MP, member of parliament (Lok Sabha or Rajya Sabha)	ସଂସଦ (parliament) + ଅ	sanskrit	ai	
+ମିଡିଆରେ	in the media	in the media, on the media	ମିଡିଆ (media) + ରେ (in)	english	ai	ସୋସିଆଲ ମିଡିଆରେ: on social media.
+ନାଁ	name	name (colloquial form); fame, reputation		native	ai	ନାମ: name, formal. Not ନା (no, or).
+ସଂଗ୍ରହ	collection; gathering; scored (runs)	collection, gathering; compiled collection, anthology; scored, made (runs, in cricket)		sanskrit	ai	ସଂଗ୍ରହ କରିବା: to collect, gather.
+ଦର୍ଶନ	darshan, seeing a deity; sight	darshan, seeing a deity or a holy person; sight, view, visit; philosophy; Darshan (given name)		sanskrit	ai	ସୁନା ବେଶ ଦର୍ଶନ: seeing the deities in the golden attire; ଦର୍ଶନ ଶାସ୍ତ୍ର: philosophy.
+ଏତେ	so much, so many; this much	so much, so many, this much; so (very)		native	ai	ଏତେ ଦିନ: so many days.
+ରନ୍	run (in cricket)	run, runs (in cricket)		english	ai	
+ଲକ୍ଷ୍ୟ	target, goal, aim	target, goal, aim, objective; notice, observation		sanskrit	ai	ଲକ୍ଷ୍ୟ କରିବା: to notice.
+ଭିନ୍ନ	different; various	different, distinct, separate; various		sanskrit	ai	ଭିନ୍ନ ଭିନ୍ନ: various, different kinds.
+ମାର୍ଚ୍ଚ	March (the month)	March (the third month); march, protest march (less often)		english	ai	
+ନିର୍ଦ୍ଦେଶକ	director (of an office, a film)	director (of a department or institute; of a film); one who directs or instructs	ନିର୍ଦ୍ଦେଶ (direction, order) + କ (-er)	sanskrit	ai	
+ବିରୋଧୀ	opposition (party); opponent; opposed	opposition, the opposition parties; opponent, rival; opposed to, against	ବିରୋଧ (opposition) + ଈ (-er)	sanskrit	ai	ବିରୋଧୀ ଦଳ: opposition party.
+ପୁରୁଷ	man, male; men's	man, male; men's (event, team); person (in grammar)		sanskrit	ai	
+ସାମଗ୍ରୀ	goods, materials, items; supplies	goods, materials, items, supplies; equipment		sanskrit	ai	ଖାଦ୍ୟ ସାମଗ୍ରୀ: food items.
+ଅପେକ୍ଷା	waiting, wait; than (in comparisons)	waiting, wait; than (in comparisons); expectation		sanskrit	ai	ଅପେକ୍ଷା କରିବା: to wait; X ଅପେକ୍ଷା ଅଧିକ: more than X.
+ଅନୁଭବ	feeling; experience	feeling, sensation; experience, realisation		sanskrit	ai	ଅନୁଭବ କରିବା: to feel.
+ମୁକାବିଲା	facing, tackling (a crisis); contest, match	facing, tackling, coping with (a disaster, a situation); confrontation; contest, match, clash (in sport)		arabic	ai	Came into Odia through Persian or Urdu.
+ଠାରେ	at (a place); in, with (a person)	at, in (after a place name); in, with (after a person)		native	ai	X ଠାରେ: at X; ବ୍ୟକ୍ତିଙ୍କ ଠାରେ: in people. Postposition. Related: ଠାରୁ (from; than).
+ବିଶିଷ୍ଟ	having, with (N-match series); eminent	having, with, marked by (after a noun); eminent, distinguished, prominent		sanskrit	ai	୩ ମ୍ୟାଚ୍ ବିଶିଷ୍ଟ ସିରିଜ୍: a 3-match series.
+ରାଷ୍ଟ୍ରପତି	President (of India, of a country)	President (head of state; of India or another country)	ରାଷ୍ଟ୍ର (nation) + ପତି (head, lord)	sanskrit	ai	
+ବାହାର	out; outside (bahara kariba: take out)	out, outside; exterior; outsider		native	ai	ବାହାର କରିବା: to take out, remove, expel; ବାହାରିବା: to come out.
+ପ୍ରସ୍ତୁତି	preparation(s)	preparation, preparations, readiness		sanskrit	ai	
+କଲା	did; made (past, he/she/it)	did, made (past, he/she/it); with a noun forms a verb	କର (do) + ଇଲା (past)	native	ai	ଉଦ୍ଧାର କଲା: rescued; କୋହଳ କଲା: relaxed. Short form of କରିଲା. Not କଳା (art; black).
+ସମାଧାନ	solution, resolution (of a problem)	solution, resolution, settlement (of a problem or dispute)		sanskrit	ai	
+# Batch 7 (2026-10-15): words read by OCR from that day's Sambad, Samaja and Dharitri
+# ePaper pages (46 pages) that are real words (in the IndicCorp list) with no meaning, a
+# guessed one or a wrong one (budhabara "out of wedlock", mrutadeha "dead ducks"). Written
+# by 3 agents; every row reviewed by a separate agent (2 wrong, 28 minor fixes); 27 OCR
+# misreads skipped (the lens corrects them at run time). No page text is stored here.
+ଏବିଭିପି	ABVP, a students' organisation	ABVP (Akhil Bharatiya Vidyarthi Parishad), a national students' organisation that contests campus elections		name	ai	
+ରଖୁ	let (him, her) keep	let (him, her, it) keep (3rd person wish or command); keeping (doubled: rakhu rakhu, while keeping)	ରଖ (keep) + ଉ (let, 3rd person)	native	ai	In ePaper OCR often a misread of ରଖି (ଦୃଷ୍ଟିରେ ରଖି = keeping in view).
+ବିଡିଏ	BDA, Bhubaneswar Development Authority	BDA, the Bhubaneswar Development Authority, the planning body for the city		name	ai	
+ଏସ୍ଆଇ	SI, sub-inspector (of police)	SI, sub-inspector of police		english	ai	
+ମିଟିଂ	meeting	meeting		english	ai	
+ପୋଲିସ	police	police		english	ai	Variant spelling of ପୁଲିସ.
+ମଙ୍ଗଳବାର	Tuesday	Tuesday	ମଙ୍ଗଳ (Mars) + ବାର (day)	sanskrit	ai	
+ଗିରଫ	arrested; arrest	arrested (giraph hela = was arrested); arrest		persian	ai	From Persian giraft, as in giraftar.
+ପରିଚାଳନା	management, running, administration	management, running, operation; administration; managing (parichalana nirdeshaka = managing director)		sanskrit	ai	
+ପଦକ୍ଷେପ	step, measure, action	step, measure, move, action (padakshepa neba = take steps, take action); footstep (literal)	ପଦ (foot) + କ୍ଷେପ (throw, putting)	sanskrit	ai	
+ବୁଧବାର	Wednesday	Wednesday	ବୁଧ (Mercury) + ବାର (day)	sanskrit	ai	
+ଦୁର୍ଘଟଣା	accident	accident, mishap; road accident	ଦୁର୍ (bad) + ଘଟଣା (event)	sanskrit	ai	
+ପ୍ରକଳ୍ପ	project, scheme	project, scheme (a planned work, e.g. a railway or housing project)		sanskrit	ai	
+ବାତିଲ	cancelled; cancellation	cancelled, called off, annulled; cancellation		arabic	ai	Came into Odia through Persian or Urdu.
+ମନ୍ତ୍ରଣାଳୟ	ministry	ministry, government department under a minister	ମନ୍ତ୍ରଣା (counsel) + ଆଳୟ (house, place)	sanskrit	ai	
+ମୃତଦେହ	dead body, body	dead body, corpse, body (of a deceased person)	ମୃତ (dead) + ଦେହ (body)	sanskrit	ai	
+ସଫଳତା	success	success, achievement	ସଫଳ (successful) + ତା (-ness)	sanskrit	ai	
+ବିଚାରପତି	judge, justice	judge, justice (of a court; mukhya bicharapati = chief justice)	ବିଚାର (judgment, trial) + ପତି (master)	sanskrit	ai	
+ସଚେତନତା	awareness	awareness, consciousness (sachetanata shibira = awareness camp)	ସଚେତନ (aware) + ତା (-ness)	sanskrit	ai	
+ପରିବହନ	transport, transportation	transport, transportation; carrying (of goods or passengers)		sanskrit	ai	
+ପ୍ରକଳ୍ପର	of the project	of the project, the project's	ପ୍ରକଳ୍ପ (project) + ର (of)	sanskrit	ai	
+କମିଶନର	commissioner	commissioner (e.g. election commissioner)		english	ai	
+ବ୍ୟାପକ	widespread, extensive, large-scale	widespread, extensive, large-scale, wide; byapaka bhabe = widely, on a large scale		sanskrit	ai	
+ପ୍ରଭାବିତ	affected; influenced	affected, hit (by); influenced	ପ୍ରଭାବ (effect, influence) + ଇତ (-ed)	sanskrit	ai	
+ଖବରଦାତା	reporter, journalist; the press	reporter, journalist, correspondent; the press (khabaradata sammilani = press conference); informant	ଖବର (news) + ଦାତା (giver)	mixed	ai	
+ଜବାବ	reply, answer, response	reply, answer, response (jabab dakhal = file a reply)		arabic	ai	Came into Odia through Persian or Urdu.
+କୁମାରଙ୍କ	of Kumar (respectful); Kumar's	of Kumar, Kumar's (respectful); Kumar is a given name or surname	କୁମାର (Kumar) + ଙ୍କ (of, respectful)	name	ai	
+ସୋମବାର	Monday	Monday	ସୋମ (Moon) + ବାର (day)	sanskrit	ai	
+ମୋଦୀଙ୍କ	of Modi (respectful); Modi's	of Modi, Modi's (respectful); Narendra Modi, Prime Minister of India	ମୋଦୀ (Modi) + ଙ୍କ (of, respectful)	name	ai	
+ଭବନରେ	in the building, at the bhawan	in, at the building, hall or bhawan (Lok Seva Bhawan etc.)	ଭବନ (building) + ରେ (in)	sanskrit	ai	
+ରବିନାରାୟଣ	Rabinarayan (given name)	Rabinarayan, a male given name	ରବି (sun) + ନାରାୟଣ (Vishnu)	name	ai	
+ଆବାସିକ	residential; resident	residential (abasika bidyalaya = residential school); resident (abasika ayukta = resident commissioner); housing	ଆବାସ (residence) + ଇକ (-al)	sanskrit	ai	
+ତାପମାତ୍ରା	temperature	temperature	ତାପ (heat) + ମାତ୍ରା (measure)	sanskrit	ai	
+ଅନିୟମିତତା	irregularity, irregularities	irregularity, irregularities, malpractice	ଅନିୟମିତ (irregular) + ତା (-ness)	sanskrit	ai	
+ସପକ୍ଷରେ	in favour of, in support of	in favour of, in support of, for	ସପକ୍ଷ (favour, own side) + ରେ (in)	sanskrit	ai	
+ପୋଲିସକୁ	to the police	to the police; the police (object)	ପୋଲିସ (police) + କୁ (to)	english	ai	Variant spelling of ପୁଲିସକୁ.
+ପଦକ୍ଷେପକୁ	the step, the move (object)	the step, the measure, the move (as object); to the step	ପଦକ୍ଷେପ (step, measure) + କୁ (object, to)	sanskrit	ai	
+ମୂଲ୍ଯ	price, cost; value	price, cost; value, worth		sanskrit	ai	Variant spelling of ମୂଲ୍ୟ (ଯ for ୟ).
+ଶୋଭାଯାତ୍ରା	procession	procession, rally (religious or festive)	ଶୋଭା (splendour) + ଯାତ୍ରା (journey)	sanskrit	ai	
+ପ୍ରଶାସନିକ	administrative	administrative	ପ୍ରଶାସନ (administration) + ଇକ (-ive)	sanskrit	ai	
+ଉଲ୍ଲଂଘନ	violation, breach	violation, breach, infringement (of a rule, law)		sanskrit	ai	
+ସାଧାରଣରେ	in public, among the people	in public, among the public, among the people; generally	ସାଧାରଣ (public, general) + ରେ (in)	sanskrit	ai	
+ଭିତରକୁ	into, inside (going in)	into, inside (motion towards the inside)	ଭିତର (inside) + କୁ (to)	native	ai	
+ମୂଲ୍ୟ	price, cost; value	price, cost; value, worth		sanskrit	ai	
+ପ୍ରାଥମିକତା	priority	priority, precedence	ପ୍ରାଥମିକ (primary, first) + ତା (-ness)	sanskrit	ai	
+ଖର୍ଚ୍ଚ	expense, cost, expenditure	expense, cost, expenditure, spending		persian	ai	
+ମହାନଗର	metropolis, big city	metropolis, big city; mahanagara nigama = municipal corporation	ମହା (great) + ନଗର (city)	sanskrit	ai	
+କୁହାଯାଇଛି	has been said; it is said	has been said, it is said, it has been stated (passive)	କୁହା (said) + ଯାଇଛି (has gone): passive	native	ai	
+କଳାକାର	artist, performer	artist, performer (actor, singer, dancer, painter)	କଳା (art) + କାର (maker)	sanskrit	ai	
+ସୂଚନାଯୋଗ୍ୟ	notably; it may be noted (that)	it may be noted (that), notably (news phrase); worth noting	ସୂଚନା (information, notice) + ଯୋଗ୍ୟ (worthy)	sanskrit	ai	
+ଖବରପାଇ	on getting the news, on being informed	on getting the news, on being informed (khabar pai, written as one word)	ଖବର (news) + ପାଇ (having got)	mixed	ai	Usually written as two words: ଖବର ପାଇ.
+ଛାତ୍ରୀଛାତ୍ର	students (girls and boys)	students, girl and boy students	ଛାତ୍ରୀ (girl student) + ଛାତ୍ର (student)	sanskrit	ai	More often written ଛାତ୍ରଛାତ୍ରୀ.
+ଆଧାରିତ	based (on)	based (on), founded on	ଆଧାର (basis) + ଇତ (-ed)	sanskrit	ai	
+ଘଟିକା	o'clock, hours (formal)	o'clock, hours (formal: dasha ghatika = 10 o'clock); old: a ghati, a traditional unit of time		sanskrit	ai	Used in formal notices for clock time (10 ghatika = 10 o'clock).
+ଉପକରଣ	equipment, instrument, apparatus	equipment, instrument, apparatus, device; materials, ingredients		sanskrit	ai	
+ସୁଦୃଢ଼	strong, firm, robust	strong, firm, robust; sudrudha kariba = to strengthen	ସୁ (well) + ଦୃଢ଼ (firm)	sanskrit	ai	
+ଅଦାଲତ	court (of law)	court, court of law (lok adalat = people's court)		arabic	ai	Came into Odia through Persian or Urdu.
+ଦଶମ	tenth; Class 10	tenth; Class 10 (dashama shreni = tenth standard)		sanskrit	ai	
+ଜରି	plastic bag; zari, gold or silver thread	plastic (polythene) carry bag; zari, gold or silver thread (embroidery)			ai	In ePaper OCR often a misread of କରି (doing): ଅଭିଯୋଗ କରି, ପ୍ରଶ୍ନ କରି.
+ଅପହରଣ	kidnapping, abduction; hijacking	kidnapping, abduction; hijacking (of a plane); seizing, carrying off	ଅପ (away) + ହରଣ (taking)	sanskrit	ai	
+ଆରବ	Arab; Arabia (Saudi Arabia)	Arab, Arabia (saudi arab = Saudi Arabia); Arabic, Arab (adj.)		name	ai	
+ବୈଷୟିକ	technical	technical (baishayika shiksha = technical education); old: worldly, material	ବିଷୟ (subject, matter) + ଇକ (-al)	sanskrit	ai	
+ହେଇଛି	has become; has happened; is (done)	has become, has happened, has been; is (done) (present perfect, he/she/it)	ହେଇ (being) + ଛି (has)	native	ai	Spoken spelling of ହୋଇଛି. In ePaper OCR also often a misread of it (lost o sign).
+ରାଷ୍ଟ୍ର	nation, country	nation, country, state; rashtra pramukha = head of state		sanskrit	ai	
+ସୁନିଶ୍ଚିତ	ensured; certain, sure	ensured, certain, sure; sunishchita kariba = to ensure	ସୁ (well) + ନିଶ୍ଚିତ (certain)	sanskrit	ai	
+ମଣ୍ଡପ	pandal, pavilion (puja mandap)	pandal, pavilion (e.g. Durga Puja mandap); hall; temple porch		sanskrit	ai	
+ବୈଦେଶିକ	foreign; external	foreign, external (baideshika mantranalaya = foreign ministry)	ବିଦେଶ (foreign country) + ଇକ (-al)	sanskrit	ai	
+ଦଖଲ	occupation, possession; encroachment	occupation, possession, seizure; encroachment (jami dakhal = land grab)		arabic	ai	Came into Odia through Persian or Urdu.
+ପ୍ରମୋଦ	Pramod (given name); joy, pleasure	Pramod, a male given name; joy, pleasure, delight, amusement		name	ai	
+ବହନ	bearing, carrying (a cost, load)	bearing, carrying (a cost, a load); bahana kariba = to bear, carry		sanskrit	ai	
+ବଞ୍ଚିତ	deprived (of), denied	deprived (of), denied, left out; old: cheated, deceived		sanskrit	ai	
+ସମ୍ପଦ	wealth, resources, assets	wealth, resources, assets (jala sampada = water resources); Sampad (given name)		sanskrit	ai	
+ଅମର	immortal, undying; Amar (given name)	immortal, undying (amar atma = the departed soul); Amar, a male given name		sanskrit	ai	
+ଏତଲା	FIR, police complaint	FIR, first information report, police complaint (etala dayer = file an FIR)		arabic	ai	From Arabic ittila (information), through Persian or Urdu.
+ବୟନ	weaving	weaving, handloom weaving		sanskrit	ai	
+ଅନୁ	Anu (given name); after (prefix anu-)	Anu, a given name; after, following, along (Sanskrit prefix anu-)		name	ai	
+ପୁଟ	tinge, touch; coat, layer	tinge, touch, colour (a political tinge); coat, coating, layer (of paint, polish); fold, cover (old)			ai	In land notices in ePaper OCR often a misread of ପ୍ଲଟ (plot): ପ୍ଲଟ ନମ୍ବର.
+ଗଣତି	counting (of votes etc.); count	counting, the count (of votes, ballots, animals); number, reckoning	ଗଣ (count) + ଅତି (noun)	native	ai	ଭୋଟ ଗଣତି: vote counting.
+ରାଜେନ୍ଦ୍ର	Rajendra (given name)	Rajendra (given name; also in names of institutions); king of kings, great king (literary)	ରାଜ (king) + ଇନ୍ଦ୍ର (lord, chief)	name	ai	
+ସୁମନ	Suman (given name)	Suman (given name); flower (literary); good-hearted (literary)	ସୁ (good) + ମନ (mind)	name	ai	
+ପ୍ରମାଣିତ	proved, proven; certified	proved, proven, established; certified, attested	ପ୍ରମାଣ (proof) + ଇତ (-ed)	sanskrit	ai	ପ୍ରମାଣିତ କରିବା: to prove; ଦୋଷୀ ପ୍ରମାଣିତ: proved guilty.
+ଲାଇନ୍	line (pipeline, power line); queue	line (pipeline, power line, railway line); queue, row; line of text		english	ai	
+ଠାବ	found, traced, located	found, traced, located (thaaba karibaa: to trace; thaaba hebaa: to be found); whereabouts, place (old)		native	ai	Not 'place' in news: something lost or hidden was found. ଠାବ କରିବା: to trace.
+ପୁନଃ	again; re-	again, once more; re- (before a noun: re-inspection, recharge)		sanskrit	ai	ପୁନଃନିର୍ମାଣ: reconstruction.
+ପଡ଼ିଆ	open ground, field; playground	open ground, field, playground (ground for events); fallow or open land		native	ai	Often part of place names.
+ସୌରଭ	Saurav (given name); fragrance	Saurav, Sourav (given name); fragrance, sweet smell (literary)		name	ai	
+ସ୍ବାଭାବିକ	normal; natural	normal, back to normal; natural; innate, inborn	ସ୍ବଭାବ (nature) + ଇକ (-al)	sanskrit	ai	ସ୍ବାଭାବିକ ଅବସ୍ଥା: normal condition. Also spelt ସ୍ୱାଭାବିକ (with wa).
+ଭରତପୁର	Bharatpur, a place name	Bharatpur, a place name (e.g. a police station area; also a city in Rajasthan)	ଭରତ (Bharat) + ପୁର (town)	name	ai	
+ଅଭାବନୀୟ	unthinkable, unimaginable	unthinkable, unimaginable, unexpected, shocking	ଅ (un-) + ଭାବନୀୟ (thinkable)	sanskrit	ai	
+ସାମଲ	Samal (surname)	Samal (surname)		name	ai	
+ମଧ୍ଯ	also, too; even (if, though)	also, too, as well; even (after a verb: even if, even though)		sanskrit	ai	Also spelt ମଧ୍ୟ (with ୟ). After a verb in -ଲେ: even if, even though.
+ମଧ୍ଯରେ	between, among; within	between, among; within (a period); in the middle of	ମଧ୍ଯ (middle) + ରେ (in)	sanskrit	ai	Also spelt ମଧ୍ୟରେ (with ୟ).
+ସଂସଦ	parliament; (student) union	parliament; council, union (chhatra sansad: student union)		sanskrit	ai	Also used for a student union or council.
+ଦ୍ବାରା	by, by means of	by (the doer, in passive sentences); by means of, through		sanskrit	ai	X ଙ୍କ ଦ୍ବାରା: by X. Also spelt ଦ୍ୱାରା (with wa).
+ସୁରକ୍ଷିତ	safe, secure; protected	safe, secure; protected, kept safe; reserved	ସୁ (well) + ରକ୍ଷିତ (protected)	sanskrit	ai	ସୁରକ୍ଷିତ ରଖିବା: to keep safe.
+ପ୍ରଫେସର	professor	professor		english	ai	
+ଅକ୍ଟୋବର	October	October		english	ai	
+ମିଳିତ	joint, combined; united	joint, combined, united; jointly (milita bhaabare)	ମିଳ (meet) + ଇତ (-ed)	sanskrit	ai	ମିଳିତ ଭାବରେ: jointly.
+ଶାସନ	rule, governance; administration	rule, governance, administration; (in titles) secretary (shaasana sachiba); a Brahmin village (old)		sanskrit	ai	ଶାସନ ସଚିବ: secretary of a government department (mukhya shasana sachiba = Chief Secretary).
+ଦାଖଲ	filing, submission (of a report)	filing, submission (of a report, petition, case); entry, admission		arabic	ai	Came into Odia through Persian or Urdu. ଦାଖଲ କରିବା: to file, submit.
+ରେଳ	railway, rail	railway, rail; train (spoken)		english	ai	From English 'rail'.
+ସ୍ବତନ୍ତ୍ର	special; separate, independent	special, distinct; separate, independent	ସ୍ବ (own) + ତନ୍ତ୍ର (system)	sanskrit	ai	ସ୍ବତନ୍ତ୍ର ଶ୍ରେଣୀ: special category. Also spelt ସ୍ୱତନ୍ତ୍ର (with wa).
+ଅନୁମୋଦନ	approval, sanction	approval, sanction, endorsement; consent	ଅନୁ (after, along) + ମୋଦନ (pleasing)	sanskrit	ai	ଅନୁମୋଦନ ଦେବା: to approve.
+କଲେଜ	college	college		english	ai	
+ଖାଲି	empty; vacant; only, just	empty; vacant (post, house); only, just, merely; free, unoccupied		arabic	ai	Came into Odia through Persian or Urdu. ଖାଲି ହାତ: empty-handed.
+ପୁରୁଣା	old (of things, places)	old, not new (of things, buildings, places); former, earlier		native	ai	Used for things and places, not for a person's age.
+ଯାଞ୍ଚ	check, inspection, verification	check, inspection, verification, examination (yaancha karibaa: to check)			ai	
+ଦକ୍ଷତା	skill; efficiency, competence	skill; efficiency, competence, ability	ଦକ୍ଷ (skilled) + ତା (-ness)	sanskrit	ai	ଦକ୍ଷତାର ସହ: efficiently.
+ଯୋଗାଣ	supply	supply, provision (of goods, gas, food grains)	ଯୋଗା (supply) + ଅଣ (noun)	native	ai	ଯୋଗାଣ ଅଧିକାରୀ: supply officer.
+ଶୁଣାଣି	hearing (of a court case)	hearing (of a court case or a complaint)	ଶୁଣ (hear) + ଆଣି (noun)	native	ai	
+ଧାରା	section (of a law); clause; stream	section (of a law or act), clause; stream, flow, current; trend, line (of thought)		sanskrit	ai	ଧାରା ୧୪୪: Section 144; ଉପଧାରା: sub-section.
+ଅଂଶ	part, share, portion	part, share, portion; section, piece		sanskrit	ai	ଅଂଶୀଦାର: partner, shareholder.
+ବେଆଇନ	illegal, unlawful	illegal, unlawful, unauthorised	ବେ (without) + ଆଇନ (law)	persian	ai	
+ନିୟନ୍ତ୍ରଣ	control, regulation	control, regulation, restraint; check	ନି (in, down) + ଯନ୍ତ୍ରଣ (restraining)	sanskrit	ai	ନିୟନ୍ତ୍ରଣ କରିବା: to control.
+ଯେପରି	so that; as, like; the way	so that, in order that; as, like, the way (that); such that	ଯେ (which) + ପରି (like)	native	ai	ଯେପରି ... ସେପରି: as ... so.
+ଜନତା	the public, people; Janata (parties)	the public, the people, the masses; Janata (in party names: Biju Janata Dal)	ଜନ (people) + ତା (collective)	sanskrit	ai	
+ଅପରାଧ	crime, offence	crime, offence; guilt, fault		sanskrit	ai	ଅପରାଧୀ: criminal, offender.
+ବିବରଣୀ	details, particulars; statement	details, particulars; statement, account, description; report		sanskrit	ai	
+ଅଭିଯାନ	campaign, drive; expedition	campaign, drive (e.g. a raid, an awareness drive); expedition, march	ଅଭି (towards) + ଯାନ (going)	sanskrit	ai	
+ସ୍ଥାପନ	setting up, installation	setting up, installation, establishment; placing, founding		sanskrit	ai	ସ୍ଥାପନ କରିବା: to set up, install.
+ନୀତି	policy; principle; ethics	policy; principle, rule; ethics, morality		sanskrit	ai	
+ଖେଳ	sport, game; play	sport, game; play; trick, game (figurative); play (stem of khelibaa)		native	ai	ଖେଳାଳି: player.
+ଦରମା	salary, pay	salary, pay, wages (monthly)		persian	ai	From Persian (monthly pay).
+ବିନା	without	without (before a noun: binaa anumatire = without permission)		sanskrit	ai	
+ପରିଚୟ	identity; introduction	identity; introduction; acquaintance, familiarity	ପରି (around) + ଚୟ (gathering)	sanskrit	ai	ପରିଚୟ ପତ୍ର: identity card.
+ସଂଗଠନ	organisation; party organisation	organisation, association; (a party's) organisation, set-up; organising	ସଂ (together) + ଗଠନ (forming)	sanskrit	ai	
+ସମ୍ପୃକ୍ତ	concerned, involved; related	concerned, the ... concerned; involved (in), connected (with), related		sanskrit	ai	Often 'the ... concerned' in official style.
+ଯୁଦ୍ଧ	war, battle; fighter (plane)	war, battle, fight; fighter (yuddha bimaana: fighter plane)		sanskrit	ai	
+ବାଣିଜ୍ୟ	trade, commerce	trade, commerce, business		sanskrit	ai	ବାଣିଜ୍ୟ ମନ୍ତ୍ରୀ: commerce minister.
+ଆଜିର	today's; of today	today's, of today, of the present day	ଆଜି (today) + ର (of)	native	ai	ଆଜିର ଦିନ: this day.
+ରକ୍ଷା	protection; saving (a life); safety	protection, saving (of a life), rescue; safety, defence; keeping up, maintaining (coordination)		sanskrit	ai	ରକ୍ଷା କରିବା: to protect, save.
+ବିଜ୍ଞାନ	science	science; knowledge (literary)	ବି (special) + ଜ୍ଞାନ (knowledge)	sanskrit	ai	ବିଜ୍ଞାନୀ: scientist.
+ଆବେଦନ	application; appeal, request	application (for a post or a scheme); appeal, request, petition	ଆ + ବେଦନ (making known)	sanskrit	ai	ଆବେଦନ ଆମନ୍ତ୍ରଣ: applications invited.
+ଶାନ୍ତି	peace; calm	peace; calm, quiet; relief, rest		sanskrit	ai	ଶାନ୍ତି ଶୃଙ୍ଖଳା: law and order.
+ତାହାର	its, of that; his, her (familiar)	its, of that, of it; his, her (familiar, not respectful)	ତାହା (that) + ର (of)	native	ai	
+ସମାନ	same, equal, similar	same, equal, similar, alike		sanskrit	ai	X ସହ ସମାନ: same as X.
+ସୁନା	gold	gold; golden (of gold)		native	ai	
+ବିକଶିତ	developed	developed, grown (talent, country); blossomed, unfolded (literary)		sanskrit	ai	ବିକଶିତ ଭାରତ: developed India.
+ନିଆଁ	fire	fire, flames		native	ai	ନିଆଁ ଲାଗିବା: (a fire) to break out.
+ଶିଳ୍ପ	industry; craft, art	industry; craft, handicraft, art		sanskrit	ai	ଶିଳ୍ପପତି: industrialist.
+ଗରିବ	poor	poor, needy; humble (literary)		arabic	ai	Came into Odia through Persian or Urdu.
+ସମ୍ପାଦକ	secretary (party, body); editor	secretary (of a party or association: saadhaarana sampaadaka = general secretary); editor (of a newspaper or book)	ସମ୍ପାଦ (accomplish) + ଅକ (doer)	sanskrit	ai	ସାଧାରଣ ସମ୍ପାଦକ: general secretary.
+ନିଶ୍ଚିତ	certain, sure; definite	certain, sure, definite; assured, ensured		sanskrit	ai	ନିଶ୍ଚିତ କରିବା: to ensure.
+ଜରୁରୀ	urgent; necessary, essential	urgent; necessary, essential; emergency (jaruri sebaa: emergency services)		arabic	ai	Came into Odia through Persian or Urdu.
+ଧାରଣା	sit-in protest (dharna); idea	sit-in protest, dharna (dhaaranaa debaa: to stage a sit-in); idea, notion, concept, impression		sanskrit	ai	
+ଯୋଗ୍ୟ	eligible, qualified; worthy; -able	eligible, qualified; fit, worthy, deserving; -able (prakaasha yogya: publishable)		sanskrit	ai	
+ପାତ୍ର	Patra (surname); vessel; groom	Patra (surname); vessel, pot, container; bridegroom; character (in a story or play); deserving person		name	ai	
+ସମ୍ବନ୍ଧୀୟ	related, relating to, about	related, relating to, concerning, about	ସମ୍ବନ୍ଧ (relation) + ଈୟ (-al)	sanskrit	ai	X ସମ୍ବନ୍ଧୀୟ: about X, relating to X.
+ଦେୟ	fee, charge, dues; payable	fee, charge, dues, payment; payable, to be given		sanskrit	ai	
+କଲ୍	call (phone call)	call (phone call, video call)		english	ai	
+ଉନ୍ନତି	improvement; progress	improvement; progress, development, advancement; rise		sanskrit	ai	
+ରାୟ	verdict, judgment; Ray, Roy (surname)	verdict, judgment (of a court); opinion (old); Ray, Roy (surname)			ai	Verdict sense from Perso-Arabic; the surname is a different word.
+ଆବଶ୍ୟକତା	need, necessity, requirement	need, necessity, requirement	ଆବଶ୍ୟକ (necessary) + ତା (-ness)	sanskrit	ai	
+କଲେଜରେ	in college, at the college	in college, at the college	କଲେଜ (college) + ରେ (in, at)	english	ai	
+ଉଦ୍ଘାଟନ	inauguration, opening; unveiling	inauguration, opening; unveiling, disclosure		sanskrit	ai	ଉଦ୍ଘାଟନ କରିବା: to inaugurate.
+ବିଚାର	consideration; trial (in court); view	consideration, thought; trial, hearing (of a case); judgment, decision; opinion, view		sanskrit	ai	ବିଚାର କରିବା: to consider; ବିଚାରପତି: judge.
+ଆତଙ୍କ	terror, panic, fear	terror, panic, fear, dread		sanskrit	ai	ଆତଙ୍କ ଖେଳାଇବା: to spread terror.
+ପଣ୍ଡା	Panda (surname); temple priest	Panda (surname); priest, temple servant (at Puri and other shrines)		name	ai	
+ନିମ୍ନ	lower, low; under-	lower, low; below, under-; the following (nimna likhita); undersigned (nimna swaakshharakaari)		sanskrit	ai	ନିମ୍ନ ଅଦାଲତ: lower court.
+ସୀମିତ	limited, restricted	limited, restricted, confined	ସୀମା (limit) + ଇତ (-ed)	sanskrit	ai	
+ପ୍ରତିବାଦ	protest; objection	protest; objection, opposition; contradiction, refutation	ପ୍ରତି (against) + ବାଦ (speech)	sanskrit	ai	
+ବାରମ୍ବାର	again and again, repeatedly	again and again, repeatedly, time and again	ବାର (time) + ବାର (time), repeated	sanskrit	ai	
+ନିବେଦନ	request, appeal, plea	request, appeal, plea, petition (humble or formal)		sanskrit	ai	ନିବେଦନ କରିବା: to request, plead.
+ଚାଳକ	driver (of a vehicle); operator	driver (of a vehicle); operator, conductor (of a machine)	ଚାଳ (drive, run) + ଅକ (doer)	sanskrit	ai	Spoken Odia often uses ଡ୍ରାଇଭର (driver).
+ବିଦ୍ୟୁତ୍	electricity, power; lightning	electricity, power; electric; lightning (literary)		sanskrit	ai	
+ବାବୁ	Babu (given name); sir, gentleman	Babu (given name, nickname); sir, gentleman, official (polisa baabu: policeman); dear (to a child)		name	ai	
+ନିୟମିତ	regular; regularised	regular; regularised (job, post); disciplined, orderly	ନିୟମ (rule) + ଇତ (-ed)	sanskrit	ai	
+ଫୋନ୍	phone	phone, telephone; phone call		english	ai	
+ନିଲାମ	auction	auction, public sale		portuguese	ai	From Portuguese leilao.
+ବସ୍	bus	bus		english	ai	
+ଥାଇ	being; while having; despite	being, staying (having been); while there is, while having; despite having (with na: na thaai = without having); Thai (of Thailand)	ଥା (be) + ଇ (having)	native	ai	ନ ଥାଇ: without having, though not having.
+ଆଦେଶ	order, directive, command	order, directive, command, instruction; Adesh (given name)		sanskrit	ai	
+କାର୍	car	car		english	ai	
+ମନୋନୀତ	selected, chosen; nominated	selected, chosen (for a post, scheme or place); nominated (for an award, election)		sanskrit	ai	ମନୋନୀତ ହେବା: be selected.
+ଯୋଗାଯୋଗ	contact; communication	contact, getting in touch; communication; connectivity (roads, transport)		sanskrit	ai	ଯୋଗାଯୋଗ କରନ୍ତୁ: please contact; ଯୋଗାଯୋଗ ନଂ: contact number.
+ପ୍ରତିଷ୍ଠା	setting up, establishment; prestige	setting up, establishment, founding (of a factory, institution); prestige, reputation; installation, consecration (of a deity)	ପ୍ରତି + ସ୍ଥା (stand)	sanskrit	ai	ପ୍ରତିଷ୍ଠା କରିବା: to set up, found.
+ଆଭିମୁଖ୍ୟ	theme, aim; approach, orientation	theme, motto (of a day or programme); aim, approach, orientation; outlook	ଅଭିମୁଖ (facing towards) + ୟ (-ness)	sanskrit	ai	Formal word; in news often the official theme of a Day, or a candidate's vision.
+ମାନକ	standard (of quality, measure)	standard, norm (of quality or measure); standardisation (in World Standards Day)		sanskrit	ai	ବିଶ୍ୱ ମାନକ ଦିବସ: World Standards Day.
+ମତଦାନ	voting, polling	voting, polling, casting of votes (in an election)	ମତ (opinion, vote) + ଦାନ (giving)	sanskrit	ai	ମତଦାନ ହେବ: polling will be held.
+ଅଲଗା	separate, apart	separate, apart, different; separately; to separate (with do)			ai	ଅଲଗା କରିବା: to separate (e.g. conjoined twins).
+ସେପ୍ଟେମ୍ବର	September	September (the month)		english	ai	
+ଠିକଣା	address	address (of a person or office); whereabouts			ai	
+କ୍ଷତି	loss, damage; harm	loss, damage, harm; injury; financial loss		sanskrit	ai	କ୍ଷତି ହେବା: suffer a loss, be damaged; କ୍ଷତିପୂରଣ: compensation.
+ପ୍ରଶାନ୍ତ	Prashant (given name); calm, peaceful	Prashant, Prasanta (given name); calm, tranquil, peaceful; the Pacific (Ocean, with mahasagara)	ପ୍ର (very) + ଶାନ୍ତ (calm)	name	ai	In both contexts a given name.
+ଯଥା	as, like; namely, for example	as, like, in the way of (yatha sambhava: as far as possible); namely, for example, such as (before a list)		sanskrit	ai	ଯଥା ସମ୍ଭବ: as far as possible; ଯଥା ସମୟରେ: in due time.
+ପ୍ରଦୀପ	Pradeep (given name); lamp	Pradeep, Pradip (given name, common); lamp, oil lamp (literary)		name	ai	In the contexts a given name.
+କଳା	art, the arts; black	art, the arts, craft; skill; black, dark (colour, a different word); phase of the moon (literary)			ai	ଓଡ଼ିଶାର କଳା ଓ ସଂସ୍କୃତି: Odisha's art and culture. As 'black' it is native (କଳା ଟଙ୍କା: black money).
+ସମୀକ୍ଷା	review	review, assessment, examination (of a scheme, of progress); critique (of a book, film)	ସମ୍ (fully) + ଈକ୍ଷା (looking)	sanskrit	ai	ସମୀକ୍ଷା କରିବା: to review; ସମୀକ୍ଷା ବୈଠକ: review meeting.
+ଖାରଜ	dismissed, rejected (a plea)	dismissed, rejected (a petition, case or claim); cancelled, struck off		arabic	ai	ଖାରଜ କରିବା: to dismiss (of a court). Came into Odia through Persian or Urdu.
+ରେଳପଥ	railway	railway, railways (as in East Coast Railway); railway line, rail track	ରେଳ (rail) + ପଥ (way)	mixed	ai	Used in the name of the East Coast Railway zone.
+ପ୍ରୟୋଗ	use, application (of force etc.)	use, application (of force, a law, a method); applying; usage (of a word); experiment (literary)	ପ୍ର + ଯୋଗ (joining, use)	sanskrit	ai	ବଳ ପ୍ରୟୋଗ: use of force.
+ନିରପେକ୍ଷ	impartial, neutral	impartial, neutral, unbiased, fair (an inquiry, a review); non-aligned	ନିର୍ (without) + ଅପେକ୍ଷା (regard, dependence)	sanskrit	ai	ନିରପେକ୍ଷ ତଦନ୍ତ: an impartial inquiry.
+ଆଧୁନିକ	modern	modern, up-to-date, latest; of the present age	ଅଧୁନା (now) + ଇକ (-al)	sanskrit	ai	
+ସଚେତନ	aware, alert; conscious	aware, alert, vigilant (of citizens, about an issue); conscious	ସ (with) + ଚେତନ (consciousness)	sanskrit	ai	ସଚେତନ ନାଗରିକ: aware citizen; ସଚେତନତା: awareness.
+ଡାକ	call, shout; post, mail	call, shout, summons; post, mail, the postal service (dak); invitation		native	ai	ଡାକ ବିଭାଗ: postal department; ଡାକ ପକାଇବା: to shout, call out.
+ମାଗଣା	free, free of cost	free, free of cost, without payment; for nothing		native	ai	ମାଗଣା ବିଜୁଳି: free electricity.
+ଉନ୍ନତ	better, improved; developed	better, improved; developed, advanced; high, raised, elevated (literary)	ଉତ୍ (up) + ନତ (bent)	sanskrit	ai	ଉନ୍ନତ ଭବିଷ୍ୟତ: a better future.
+ସମ୍ମାନ	honour, award; respect	honour, award, recognition; respect, dignity; an honour given (with festival: award festival)		sanskrit	ai	ସମ୍ମାନର ସହ: with dignity.
+ସହକାରୀ	assistant, deputy	assistant, deputy (in titles: assistant director, assistant fire officer); helper, co-worker; cooperative	ସହକାର (help) + ଈ (-er)	sanskrit	ai	ସହକାରୀ ମହାନିର୍ଦ୍ଦେଶକ: Assistant Director General.
+ଉପଯୁକ୍ତ	proper, suitable, appropriate	proper, suitable, appropriate, fitting; adequate (a hearing, a house)	ଉପ + ଯୁକ୍ତ (joined, fit)	sanskrit	ai	ଉପଯୁକ୍ତ ଭାବେ: properly.
+ବିଫଳ	failed, unsuccessful	failed, unsuccessful, in vain; fruitless	ବି (without) + ଫଳ (fruit, result)	sanskrit	ai	ବିଫଳ ହେବା: to fail.
+ଉତ୍ତେଜନା	tension; excitement; agitation	tension, unrest (at a place); excitement, agitation; provocation, stimulus		sanskrit	ai	ଅଞ୍ଚଳରେ ଉତ୍ତେଜନା: tension in the area.
+ଶ୍ରେଷ୍ଠ	best, finest; top	best, finest, top, excellent; superior, eminent		sanskrit	ai	ବିଶ୍ୱର ଶ୍ରେଷ୍ଠ: the world's best.
+ପ୍ରତିକ୍ରିୟା	reaction, response	reaction, response (to an event, a remark); response (emergency response)	ପ୍ରତି (back, against) + କ୍ରିୟା (action)	sanskrit	ai	ପ୍ରତିକ୍ରିୟା ଦେବା: to react, comment.
+ଶେଷରେ	finally, in the end, at last	finally, in the end, at last, eventually	ଶେଷ (end) + ରେ (at)	sanskrit	ai	
+ବାୟୁ	air; wind (monsoon wind)	air, wind; atmosphere (in air pollution); breath, vital air (literary)		sanskrit	ai	ମୌସୁମୀ ବାୟୁ: monsoon; ବାୟୁ ପ୍ରଦୂଷଣ: air pollution.
+ସଂଶୋଧନ	revision, correction; amendment	revision, correction (of a voter list); amendment (of a law); reform, rectification	ସମ୍ + ଶୋଧନ (cleansing)	sanskrit	ai	ସଘନ ସଂଶୋଧନ: intensive revision (SIR of voter rolls); ସଂଶୋଧନ ବିଲ୍: amendment bill.
+ଉଲ୍ଲେଖ	mention, reference	mention, reference; citing, stating (with do: to mention, state)		sanskrit	ai	ଉଲ୍ଲେଖ କରିବା: to mention; ଉଲ୍ଲେଖନୀୟ: notable.
+ପଛରେ	behind; at the back; (the reason) behind	behind, at the back; the motive or reason behind (something); later, after	ପଛ (back) + ରେ (at)	native	ai	ଏହା ପଛରେ: behind this; ପଛରେ ପଡ଼ିବା: to lag behind.
+ପତ୍ର	letter (written); leaf; paper	letter (written message, official letter); leaf (of a plant); paper, document; journal (in sambada patra, newspaper)		sanskrit	ai	ପତ୍ର ଲେଖିବା: to write a letter.
+ଅନୁରୋଧ	request, appeal	request, appeal, entreaty		sanskrit	ai	ଅନୁରୋଧ କରିବା: to request; ଅନୁରୋଧ କରାଯାଇଛି: it is requested.
+ସେଥିରେ	in that, in it; with that	in that, in it; with that, by that (means); in those	ସେଥି (that, oblique) + ରେ (in)	native	ai	
+ଖଣି	mine (for minerals); mining	mine, quarry (for minerals); mining (in mining department, mining scam)		sanskrit	ai	ଖଣି ବିଭାଗ: mining department; ଖଣି ଦୁର୍ନୀତି: mining scam.
+ପ୍ରସ୍ତାବ	proposal	proposal, suggestion; motion (in a meeting or house); resolution		sanskrit	ai	ପ୍ରସ୍ତାବ ଦେବା: to propose.
+ସଂଯୋଗ	connection, link; connectivity	connection, link, connectivity (power, internet, road); joining, union	ସମ୍ + ଯୋଗ (joining)	sanskrit	ai	ସଂଯୋଗ ପୁନଃସ୍ଥାପନ: restoring the connection.
+ପଶ୍ଚିମ	west; western	west; western (as in Paschim Odisha, western Odisha); last, later (literary)		sanskrit	ai	ପଶ୍ଚିମ ଓଡ଼ିଶା: western Odisha.
+ଭୋଟ୍	vote; voting, election	vote; voting, polling; election (colloquial)		english	ai	ଭୋଟ୍ ଚୋରି: vote theft; ଭୋଟ୍ ଦେବା: to vote.
+ଶାଖା	branch (of an office, party, tree)	branch (of a bank, office, party or organisation); wing (youth wing); branch of a tree; branch of a subject		sanskrit	ai	ଯୁବ ଶାଖା: youth wing.
+ବୀମା	insurance	insurance; insurance policy, cover		persian	ai	ଜୀବନ ବୀମା: life insurance; ଶସ୍ୟ ବୀମା: crop insurance. Came into Odia through Persian or Urdu.
+ମରାମତି	repair, repairs; maintenance	repair, repairs, mending; maintenance (of roads, boats, buildings)		arabic	ai	ମରାମତି କରିବା: to repair. Came into Odia through Persian or Urdu.
+ଧକ୍କା	collision, hit; push, jolt	collision, hit (by a vehicle); push, shove, jolt; setback, blow (figurative)		hindi	ai	ଧକ୍କା ଦେବା: to hit, ram; ଗାଡ଼ି ଧକ୍କା: hit by a vehicle.
+ପରିବେଶ	environment	environment, surroundings; atmosphere, setting (of a place or event)	ପରି (around) + ବେଶ (dress, setting)	sanskrit	ai	ପରିବେଶ ସୁରକ୍ଷା: environmental protection.
+ପ୍ରଚଳିତ	current, in force; prevalent, common	current, in force, in use (rules, practice); prevalent, common, popular; customary	ପ୍ର + ଚଳିତ (moving, current)	sanskrit	ai	ପ୍ରଚଳିତ ନିୟମ: rules in force.
+ପ୍ରକୃତ	real, actual, true	real, actual, true, genuine; natural, original (literary)		sanskrit	ai	ପ୍ରକୃତ କାରଣ: the real cause; ପ୍ରକୃତରେ: in fact, really.
+ପ୍ରତିଦିନ	every day, daily	every day, daily; each day	ପ୍ରତି (every) + ଦିନ (day)	sanskrit	ai	
+ବୈଜ୍ଞାନିକ	scientist; scientific	scientist; scientific (a method, a net, research)	ବିଜ୍ଞାନ (science) + ଇକ (-ic)	sanskrit	ai	Plural ବୈଜ୍ଞାନିକମାନେ: scientists.
+ଶେଖର	Sekhar, Shekhar (given name part)	Sekhar, Shekhar (part of given names: Himanshu Sekhar, Chandra Sekhar); crest, crown, top (literary)		name	ai	Usually the second part of a compound name.
+ମଧ୍ଯରୁ	from among, out of; of (them)	from among, out of, of (the group); from within	ମଧ୍ୟ (middle, among) + ରୁ (from)	sanskrit	ai	Spelt with ଯ for ୟ; standard spelling ମଧ୍ୟରୁ.
+ପ୍ରମାଣ	proof, evidence	proof, evidence; testimony; measure, standard (literary)		sanskrit	ai	ପ୍ରମାଣ ନଷ୍ଟ: destruction of evidence; ପ୍ରମାଣପତ୍ର: certificate.
+ଫଳାଫଳ	result, results; outcome	result, results (of an exam, an election); outcome, consequence	ଫଳ (result) + ଅଫଳ (no result)	sanskrit	ai	ଫଳାଫଳ ପ୍ରକାଶ: results declared.
+ଅର୍ଜନ	acquisition; earning, gaining	acquisition (land acquisition); earning, gaining, acquiring (skill, fame, money)		sanskrit	ai	ଭୂ ଅର୍ଜନ: land acquisition; ଅର୍ଜନ କରିବା: to earn, acquire.
+ଦୁର୍ବଳ	weak, feeble	weak, feeble, frail; poor (economically weaker); to weaken (with do)	ଦୁର୍ (bad) + ବଳ (strength)	sanskrit	ai	ଦୁର୍ବଳ ବର୍ଗ: weaker sections.
+ପ୍ରେସ୍	press (media; press meet)	press, the news media (press meet, press conference, Press Council); printing press		english	ai	ପ୍ରେସ୍ ମିଟ୍: press meet.
+ଦ୍ଵାରା	by, by means of, through	by, by means of, through (marks the doer or the means)		sanskrit	ai	X ଦ୍ୱାରା: by X. Spelt with ଵ; also spelt ଦ୍ୱାରା.
+ଧନ୍ୟବାଦ	thanks, thank you	thanks, thank you; gratitude (with offer: to thank)	ଧନ୍ୟ (blessed) + ବାଦ (saying)	sanskrit	ai	ଧନ୍ୟବାଦ ଅର୍ପଣ: vote of thanks, offering thanks.
+ବାଧ୍ଯ	forced, compelled; obliged	forced, compelled, obliged; bound (to do); to force (with do)		sanskrit	ai	ବାଧ୍ୟ କରିବା: to force. Spelt with ଯ for ୟ; standard spelling ବାଧ୍ୟ.
+ବିଭାଗୀୟ	departmental	departmental, of a department (departmental inquiry, departmental officers); divisional	ବିଭାଗ (department) + ଈୟ (-al)	sanskrit	ai	ବିଭାଗୀୟ କାର୍ଯ୍ୟାନୁଷ୍ଠାନ: departmental action.
+ଭୟଭୀତ	frightened, scared, terrified	frightened, scared, terrified, in fear	ଭୟ (fear) + ଭୀତ (afraid)	sanskrit	ai	ଭୟଭୀତ ହେବା: to be frightened.
+ଗଠିତ	formed, constituted, set up	formed, constituted, set up (a team, committee, bench); built, made of	ଗଠ (form) + ଇତ (-ed)	sanskrit	ai	ଗଠିତ ଖଣ୍ଡପୀଠ: the bench constituted.
+ଇସ୍ତଫା	resignation	resignation (from a post)		arabic	ai	ଇସ୍ତଫା ଦେବା: to resign. Came into Odia through Persian or Urdu.
+ଗଣମାଧ୍ଯମ	media, mass media	media, mass media, the press	ଗଣ (mass, people) + ମାଧ୍ୟମ (medium)	sanskrit	ai	Spelt with ଯ for ୟ; standard spelling ଗଣମାଧ୍ୟମ. ସାମାଜିକ ଗଣମାଧ୍ୟମ: social media.
+ଉପକୂଳ	coast, coastal	coast, coastline, seashore; coastal (coastal security, coastal belt)	ଉପ (near) + କୂଳ (shore)	sanskrit	ai	ଉପକୂଳ ଅଞ୍ଚଳ: coastal area.
+ପ୍ରଚାର	campaign, campaigning; publicity	campaigning, election campaign; publicity, promotion, awareness drive; propaganda; spreading (of an idea)		sanskrit	ai	ପ୍ରଚାର କରିବା: to campaign, publicise; ପ୍ରଚାର ଶେଷ: campaigning ends.
+ମୂଳ	main, basic; root; original	main, basic, core (posts, issue); root (of a plant); original; source, origin; capital, principal (money)		sanskrit	ai	ମୂଳ ପଦବୀ: sanctioned (core) posts; ମୂଳରୁ: from the root, from the start.
+ଭାଗ୍ୟ	fate, luck, fortune	fate, luck, fortune, destiny		sanskrit	ai	ଭାଗ୍ୟ ପରୀକ୍ଷା: test of fate (candidates face the vote).
+ବିପଦ	danger, risk; trouble, crisis	danger, risk, threat; trouble, crisis, misfortune; hazard		sanskrit	ai	ବିପଦରେ: in danger; ବିପଦ ସଙ୍କେତ: danger signal.
+ବିତରଣ	distribution; handing out	distribution, handing out, giving away (aid, cheques); supply (of power, distribution company)		sanskrit	ai	ବିତରଣ କରିବା: to distribute.
+ଦଣ୍ଡ	punishment, penalty; sentence	punishment, penalty, fine; sentence (by a court); stick, staff, rod (literary)		sanskrit	ai	ଦଣ୍ଡ ଘୋଷଣା: sentencing.
+ଭୂମିକା	role, part	role, part (played by someone); introduction, preface (of a book)		sanskrit	ai	ପ୍ରମୁଖ ଭୂମିକା: a key role; ଭୂମିକା ନିର୍ବାହ: to play a role.
+ନିଯମିତ	regular; regularly	regular, routine; regularly, at regular intervals; regularised (of jobs)	ନିୟମ (rule) + ଇତ (-ed)	sanskrit	ai	Spelt with ଯ for ୟ; standard spelling ନିୟମିତ.
+ସାହସ	courage, daring	courage, daring, boldness, nerve		sanskrit	ai	ସାହସ କରିବା: to dare; ସାହସୀ: brave.
+ଏପର୍ଯ୍ୟନ୍ତ	so far, until now, yet	so far, till now, up to this point; (not) yet, with a negative	ଏ (this) + ପର୍ଯ୍ୟନ୍ତ (until)	mixed	ai	With a negative verb: not ... yet.
+ଚାହିଦା	demand	demand (market demand, demand for a product); requirement, need			ai	ଚାହିଦା ବୃଦ୍ଧି: rise in demand. From the verb chahiba (to want).
+ପିପିଲି	Pipili, a town in Puri district	Pipili, a town in Puri district of Odisha, known for its appliqué work (chandua canopies)		name	ai	ପିପିଲି ଚାନ୍ଦୁଆ: Pipili appliqué canopy.
+ପଦାର୍ଥ	substance, material; matter	substance, material, matter; item, thing (food items); physics (with science)	ପଦ (word) + ଅର୍ଥ (meaning)	sanskrit	ai	ପଦାର୍ଥ ବିଜ୍ଞାନ: physics; ରାସାୟନିକ ପଦାର୍ଥ: chemical.
+ଅନୁକୂଳ	favourable; friendly (to), suitable	favourable, suitable, conducive; friendly to (woman-friendly, eco-friendly); in favour	ଅନୁ (along) + କୂଳ (bank, shore)	sanskrit	ai	ମହିଳା ଅନୁକୂଳ: women-friendly. Opposite ପ୍ରତିକୂଳ.
+ଉଦ୍ଦେଶ୍ୟରେ	with the aim of, in order to	with the aim of, for the purpose of, in order to (after a verbal noun)	ଉଦ୍ଦେଶ୍ୟ (aim, purpose) + ରେ (in)	sanskrit	ai	X କରିବା ଉଦ୍ଦେଶ୍ୟରେ: with the aim of doing X.
+ଷ୍ଟେସନ	station (railway, police etc.)	station (railway station, police station, power station)		english	ai	ରେଳ ଷ୍ଟେସନ: railway station.
+ଗୋଷ୍ଠୀ	group; faction; community	group, faction (in a clash); community, tribe, clan; group-based (community programme)		sanskrit	ai	ସ୍ୱୟଂ ସହାୟକ ଗୋଷ୍ଠୀ: self-help group.
+ଗୁରୁତ୍ବ	importance, emphasis	importance, significance; emphasis, priority (with give: to give importance)	ଗୁରୁ (heavy) + ତ୍ୱ (-ness)	sanskrit	ai	ଗୁରୁତ୍ୱ ଦେବା: to give importance. Common spelling with ବ; also spelt ଗୁରୁତ୍ୱ.
+ଆଦାୟ	collection, recovery (of dues, fines)	collection, recovery, realisation (of dues, fines, tax, loans); levy, extortion (illegal)		arabic	ai	ଜରିମାନା ଆଦାୟ: fine collected. Came into Odia through Persian or Urdu.
+ସିଟ୍	seat (in college, hostel, house)	seat (in a college, hostel, vehicle, legislature); sheet (less common)		english	ai	ସିଟ୍ ସଂଖ୍ୟା: number of seats.
+ଯେଉଁଠି	where (relative); wherever	where (relative: the place where), in which; wherever	ଯେଉଁ (which) + ଠି (place)	native	ai	Pairs with ସେଠି (there).
+ପ୍ରୟାସ	effort, attempt	effort, attempt, endeavour, initiative		sanskrit	ai	ପ୍ରୟାସ କରିବା: to try.
+ପରିଣାମ	result, outcome; consequence	result, outcome (an election result); consequence, effect		sanskrit	ai	ପରିଣାମସ୍ୱରୂପ: as a result.
+ଗଭୀର	deep; serious, profound	deep (sea, water); serious, profound (impact, concern, grief); intense		sanskrit	ai	ଗଭୀର ସମୁଦ୍ର: deep sea; ଗଭୀର ଚିନ୍ତା: deep concern.
+ସଂଘର୍ଷ	clash, conflict; struggle	clash, conflict, fight; struggle, effort against odds; friction	ସମ୍ + ଘର୍ଷ (rubbing)	sanskrit	ai	ହିଂସାତ୍ମକ ସଂଘର୍ଷ: violent clash.
+ମାନସ	Manas (given name); mind	Manas (given name, common); mind, heart (literary); mental (in compounds)		name	ai	In the contexts a given name.
+ଅସନ୍ତୋଷ	discontent, displeasure, resentment	discontent, displeasure, dissatisfaction, resentment	ଅ (not) + ସନ୍ତୋଷ (satisfaction)	sanskrit	ai	ଅସନ୍ତୋଷ ପ୍ରକାଶ କରିବା: to express displeasure.
+ନିଗମ	corporation	corporation (municipal corporation, state corporation); Nigam (in names); Vedas, scripture (literary)		sanskrit	ai	ମହାନଗର ନିଗମ: municipal corporation.
+ଅନୁସରଣ	following; follow-up (of a process)	following, adhering to (a rule, a view, a process); imitation; follow-up	ଅନୁ (after) + ସରଣ (going)	sanskrit	ai	ଅନୁସରଣ କରିବା: to follow.
+ପାନୀୟ	drinking (water); drink, beverage	drinking, drinkable (drinking water); drink, beverage	ପାନ (drinking) + ଈୟ (fit for)	sanskrit	ai	ପାନୀୟ ଜଳ: drinking water; ଶୀତଳ ପାନୀୟ: soft drink.
+ସାଧାରଣତଃ	usually, generally	usually, generally, normally, as a rule	ସାଧାରଣ (common) + ତଃ (-ly)	sanskrit	ai	
