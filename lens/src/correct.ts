@@ -144,12 +144,16 @@ export function parseWordList(tsv: string): WordList {
 /**
  * OCR words made ready for lookup: a run of digits stuck to a word becomes its
  * own word (\u0b6b\u0b2c\u0b3e\u0b07\u0b15\u0b4d\u200c\u0b15\u0b41: 5 + bike-ku), and a run-together word the list can split
- * becomes its words. Each new word gets a share of the box by its length.
+ * becomes its words, but only when nothing can explain it as a whole
+ * (`explainable`: the dictionaries know it, or know its stem): a long compound
+ * must not be cut into common pieces with other meanings. Each new word gets a
+ * share of the box by its length and keeps the token as read in `whole`.
  */
-export function separate<T extends { text: string; box: { x0: number; y0: number; x1: number; y1: number } }>(
+export function separate<T extends { text: string; whole?: string; box: { x0: number; y0: number; x1: number; y1: number } }>(
   words: readonly T[],
   list: WordList,
   clean: (text: string) => string,
+  explainable: (text: string) => boolean = () => false,
 ): T[] {
   const out: T[] = [];
   const share = (w: T, parts: string[]): void => {
@@ -157,7 +161,7 @@ export function separate<T extends { text: string; box: { x0: number; y0: number
     let x = w.box.x0;
     for (const part of parts) {
       const width = ((w.box.x1 - w.box.x0) * part.length) / total;
-      out.push({ ...w, text: part, box: { ...w.box, x0: x, x1: x + width } });
+      out.push({ ...w, text: part, whole: w.whole ?? w.text, box: { ...w.box, x0: x, x1: x + width } });
       x += width;
     }
   };
@@ -179,7 +183,7 @@ export function separate<T extends { text: string; box: { x0: number; y0: number
       continue;
     }
     const known = list.correct(text);
-    const parts = known.distance === 0 || (known.distance ?? 9) <= 1 ? null : list.split(text);
+    const parts = known.distance === 0 || (known.distance ?? 9) <= 1 || explainable(text) ? null : list.split(text);
     if (parts) share(w, parts);
     else out.push(w);
   }

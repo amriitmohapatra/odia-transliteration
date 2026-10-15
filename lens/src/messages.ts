@@ -31,6 +31,8 @@ export interface Reading {
   corrected: string | null;
   /** OCR confidence, 0–100. */
   conf: number;
+  /** The longer token as read, when this word is a piece the lens split off it. */
+  partOf: string | null;
 }
 
 export interface PictureRequest {
@@ -61,6 +63,7 @@ export interface ReadWordRequest {
   type: typeof READ_WORD;
   text: string;
   conf: number;
+  whole?: string;
 }
 
 export type ReadWordResponse = { ok: true; card: LensCard | null; reading: Reading } | { ok: false; error: string };

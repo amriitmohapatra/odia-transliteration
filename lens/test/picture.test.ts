@@ -52,6 +52,14 @@ describe('correcting OCR words with the IndicCorp word list', () => {
     expect(parts[0]?.box.x1).toBeCloseTo(10); // one letter of six
     const marked = separate([word(`${SARAKARA}'${RAJYA}`, 0, 110)], list, (t) => t);
     expect(marked.map((p) => p.text)).toEqual([SARAKARA, RAJYA]);
+    expect(marked[1]?.whole).toBe(`${SARAKARA}'${RAJYA}`); // the card can say what the piece came from
+  });
+
+  it('does not split a run-together word that the dictionaries explain as a whole', () => {
+    const joined = SARAKARA + PARIBARA;
+    const whole = separate([word(joined, 0, 120)], list, (t) => t, (t) => t === joined);
+    expect(whole.map((p) => p.text)).toEqual([joined]);
+    expect(whole[0]?.whole).toBeUndefined();
   });
 });
 

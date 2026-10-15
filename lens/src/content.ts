@@ -249,6 +249,12 @@ function start(): Lens {
     } else {
       el.append('Read from the picture');
     }
+    if (reading.partOf) {
+      const whole = document.createElement('span');
+      whole.lang = 'or';
+      whole.textContent = reading.partOf;
+      el.append('; part of a longer word read as ', whole);
+    }
     if (reading.conf < UNCLEAR_BELOW) {
       const unclear = document.createElement('span');
       unclear.className = 'unclear';
@@ -323,7 +329,7 @@ function start(): Lens {
     const word = cache.words[index] as OcrWord;
     const known = cache.found.get(index);
     if (known) return render(known.reading.corrected ?? known.reading.readAs, known.card, rectOf(word), known.reading);
-    const request: ReadWordRequest = { type: READ_WORD, text: word.text, conf: word.conf };
+    const request: ReadWordRequest = { type: READ_WORD, text: word.text, conf: word.conf, ...(word.whole ? { whole: word.whole } : {}) };
     chrome.runtime.sendMessage(request, (response: ReadWordResponse | undefined) => {
       if (chrome.runtime.lastError || !response?.ok || picture !== cache || pictureIndex !== index || !active) return;
       cache.found.set(index, { card: response.card, reading: response.reading });

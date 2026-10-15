@@ -136,7 +136,7 @@ let words: Promise<WordList> | undefined;
 const loadWords = (): Promise<WordList> => (words ??= text('dict/words.bin').then(parseWordList));
 
 /** A word read by OCR: canonical, corrected to a known word when it is not one, then the usual card. */
-async function readWord(raw: string, conf: number): Promise<{ card: LensCard | null; reading: Reading } | null> {
+async function readWord(raw: string, conf: number, whole?: string): Promise<{ card: LensCard | null; reading: Reading } | null> {
   const odia = canonical(cleanRead(raw));
   if (odia.length === 0) return null;
   const [{ keys: k }, data, list] = await Promise.all([loadKeys(), loadExtras(), loadWords()]);
@@ -154,7 +154,19 @@ async function readWord(raw: string, conf: number): Promise<{ card: LensCard | n
     (entry?.how === 'stem' && conf >= 50);
   const corrected = fromList.distance === 0 ? fromList.word : known ? odia : fromList.word;
   const card = await lookup(corrected, '');
-  return { card, reading: { readAs: odia, corrected: corrected === odia ? null : corrected, conf } };
+  const partOf = whole ? canonical(cleanRead(whole)) : '';
+  return { card, reading: { readAs: odia, corrected: corrected === odia ? null : corrected, conf, partOf: partOf && partOf !== odia ? partOf : null } };
+}
+
+/** Explainable as a whole word: the list, the owner, the AI layer, or Praharaj (headword or stem) knows it. */
+async function explainer(): Promise<(text: string) => boolean> {
+  const [{ keys: k }, data, list] = await Promise.all([loadKeys(), loadExtras(), loadWords()]);
+  return (text) => {
+    const odia = canonical(cleanRead(text));
+    if (odia.length === 0) return false;
+    const how = findEntry(k, foldKey(odia))?.how;
+    return list.has(odia) || data.owner.get(odia) !== undefined || data.ai?.word(odia) !== undefined || how === 'exact' || how === 'stem';
+  };
 }
 
 /* Chrome allows about two screenshots a second per extension. */
@@ -220,14 +232,16 @@ async function readPicture(request: PictureRequest, windowId: number | undefined
     y: request.y * ratio - region.y0,
   });
   if (!answer.ok) return answer;
-  const list = await loadWords();
+  const [list, explainable] = await Promise.all([loadWords(), explainer()]);
   const line = separate(
     (answer.line?.words ?? []).map((w) => ({ ...w, box: mapBox(w.box, 1 / ratio, region.x0, region.y0) })),
     list,
     (t) => canonical(cleanRead(t)),
+    explainable,
   );
   const index = pickWord(line, request.x, request.y);
-  const found = index >= 0 ? await readWord((line[index] as { text: string }).text, (line[index] as { conf: number }).conf) : null;
+  const hit = index >= 0 ? line[index] : undefined;
+  const found = hit ? await readWord(hit.text, hit.conf, hit.whole) : null;
   return { ok: true, words: line, index, card: found?.card ?? null, reading: found?.reading ?? null, ms: Date.now() - t0, timing: answer.timing };
 }
 
@@ -245,7 +259,7 @@ chrome.runtime.onMessage.addListener((message: Request, sender, sendResponse: (r
     return true;
   }
   if (message?.type === READ_WORD) {
-    readWord(message.text, message.conf).then(
+    readWord(message.text, message.conf, message.whole).then(
       (found) => sendResponse(found ? { ok: true, ...found } : { ok: false, error: 'not an Odia word' }),
       fail,
     );

@@ -20,6 +20,8 @@ export interface OcrWord {
   /** Tesseract's confidence, 0–100. */
   conf: number;
   box: Box;
+  /** When this word is a piece of a longer token as read (split by correct.ts separate), that token. */
+  whole?: string;
 }
 
 export interface OcrLine {
