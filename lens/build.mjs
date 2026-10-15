@@ -2,9 +2,9 @@
  * Build the Odia Lens extension into lens/dist (load it unpacked, or zip it).
  *
  *   node lens/build.mjs            lens/dist, and lens/odia-lens.zip with --zip
- *   node lens/build.mjs --test     lens/dist-test: the same, plus host access to
- *                                  http://127.0.0.1/* so lens/eval/lens-check.mjs
- *                                  can turn it on without a toolbar click
+ *   node lens/build.mjs --test     lens/dist-test: the same, plus host access to all
+ *                                  sites, so lens/eval/lens-check.mjs can turn it on
+ *                                  and take screenshots without a toolbar click
  *
  * It bundles background.ts and content.ts (classic scripts: executeScript
  * injects a classic script) and packs the dictionary the app already ships
@@ -17,6 +17,14 @@
  *                            [NNN*chunk, (NNN+1)*chunk)
  *   dict/index.json          { count, chunk, files }
  *   dict/modern.bin, dict/origin.bin   copied as they are (small)
+ *   dict/words.bin           gzip, core/data/indiccorp-words.tsv (OCR correction)
+ *
+ * Picture mode (V4.2) adds the OCR engine, all local (no remote code):
+ *
+ *   offscreen.html/.js       the OCR page (tesseract.js bundled)
+ *   ocr/worker.min.js        tesseract.js worker            (node_modules/tesseract.js, Apache-2.0)
+ *   ocr/tesseract-core-simd-lstm.wasm.js  Tesseract in WebAssembly (tesseract.js-core, Apache-2.0)
+ *   ocr/ori.traineddata      Odia model, tessdata_fast      (lens/vendor, Apache-2.0; lens/PROVENANCE.md)
  *
  * No Desh data goes into the extension.
  */
@@ -40,6 +48,7 @@ const SEP = '\u0002';
 rmSync(OUT, { recursive: true, force: true });
 mkdirSync(resolve(OUT, 'dict'), { recursive: true });
 mkdirSync(resolve(OUT, 'icons'), { recursive: true });
+mkdirSync(resolve(OUT, 'ocr'), { recursive: true });
 
 // @odia/core and its subpaths, as Appv2/vite.config.ts maps them.
 const coreAlias = {
@@ -53,7 +62,11 @@ const coreAlias = {
 };
 
 await build({
-  entryPoints: { background: resolve(LENS, 'src/background.ts'), content: resolve(LENS, 'src/content.ts') },
+  entryPoints: {
+    background: resolve(LENS, 'src/background.ts'),
+    content: resolve(LENS, 'src/content.ts'),
+    offscreen: resolve(LENS, 'src/offscreen.ts'),
+  },
   outdir: OUT,
   bundle: true,
   format: 'iife',
@@ -92,9 +105,20 @@ for (const name of ['modern.bin', 'origin.bin']) {
   copyFileSync(resolve(ROOT, 'Appv2/src/dictionary', name), resolve(OUT, 'dict', name));
 }
 
+writeFileSync(resolve(OUT, 'dict/words.bin'), gzipSync(readFileSync(resolve(ROOT, 'core/data/indiccorp-words.tsv')), { level: 9, mtime: 0 }));
+
+// The OCR engine and the Odia model.
+const NM = resolve(ROOT, 'node_modules');
+copyFileSync(resolve(NM, 'tesseract.js/dist/worker.min.js'), resolve(OUT, 'ocr/worker.min.js'));
+copyFileSync(resolve(NM, 'tesseract.js-core/tesseract-core-simd-lstm.wasm.js'), resolve(OUT, 'ocr/tesseract-core-simd-lstm.wasm.js'));
+copyFileSync(resolve(LENS, 'vendor/ori.traineddata'), resolve(OUT, 'ocr/ori.traineddata'));
+copyFileSync(resolve(NM, 'tesseract.js/LICENSE.md'), resolve(OUT, 'ocr/LICENSE-tesseract.js.md'));
+copyFileSync(resolve(NM, 'tesseract.js-core/LICENSE'), resolve(OUT, 'ocr/LICENSE-tesseract.js-core.txt'));
+copyFileSync(resolve(LENS, 'static/offscreen.html'), resolve(OUT, 'offscreen.html'));
+
 copyFileSync(resolve(ROOT, 'Appv2/public/icons/icon-192.png'), resolve(OUT, 'icons/icon.png'));
 const manifest = JSON.parse(readFileSync(resolve(LENS, 'static/manifest.json'), 'utf8'));
-if (test) manifest.host_permissions = ['http://127.0.0.1/*'];
+if (test) manifest.host_permissions = ['<all_urls>'];
 writeFileSync(resolve(OUT, 'manifest.json'), `${JSON.stringify(manifest, null, 2)}\n`);
 
 console.log(`odia lens ${manifest.version}${test ? ' (test build)' : ''}: ${OUT}`);

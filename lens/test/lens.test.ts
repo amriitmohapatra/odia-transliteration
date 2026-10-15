@@ -107,7 +107,12 @@ describe('the shipped manifest', () => {
     expect(manifest.host_permissions).toBeUndefined();
     expect(manifest.optional_host_permissions).toBeUndefined();
     expect(manifest.content_scripts).toBeUndefined();
-    expect([...manifest.permissions].sort()).toEqual(['activeTab', 'scripting']);
+    // offscreen: the OCR page of picture mode (V4.2); not a host permission.
+    expect([...manifest.permissions].sort()).toEqual(['activeTab', 'offscreen', 'scripting']);
+  });
+
+  it('allows WebAssembly for the OCR engine, and no script from outside the extension', () => {
+    expect(manifest.content_security_policy.extension_pages).toBe("script-src 'self' 'wasm-unsafe-eval'; object-src 'self'");
   });
 });
 

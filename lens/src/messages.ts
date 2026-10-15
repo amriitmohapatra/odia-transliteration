@@ -1,8 +1,15 @@
-/** Messages between the content script and the background worker. */
+/** Messages between the content script, the background worker and the OCR page. */
 
 import type { LensCard } from './describe.js';
+import type { OcrLine, OcrWord } from './picture.js';
 
 export const LOOKUP = 'odia-lens/lookup';
+/** Content → background: read the picture at a point (picture mode, V4.2). */
+export const PICTURE = 'odia-lens/picture';
+/** Content → background: look up a word already read from a picture (a cached line). */
+export const READ_WORD = 'odia-lens/read-word';
+/** Background → offscreen document: OCR a screen region. */
+export const OCR = 'odia-lens/ocr';
 
 /** The manifest's command name for the keyboard shortcut. */
 export const TOGGLE_COMMAND = 'toggle-lens';
@@ -15,3 +22,57 @@ export interface LookupRequest {
 }
 
 export type LookupResponse = { ok: true; card: LensCard | null } | { ok: false; error: string };
+
+/** How the lens read a word from a picture. */
+export interface Reading {
+  /** The word as OCR read it (canonical). */
+  readAs: string;
+  /** The dictionary word it was corrected to, when different. */
+  corrected: string | null;
+  /** OCR confidence, 0–100. */
+  conf: number;
+}
+
+export interface PictureRequest {
+  type: typeof PICTURE;
+  /** Pointer, CSS pixels in the viewport. */
+  x: number;
+  y: number;
+  /** window.innerWidth: the screenshot's width over this is the device pixel ratio. */
+  viewportWidth: number;
+}
+
+export type PictureResponse =
+  | {
+      ok: true;
+      /** The words of the line under the pointer, boxes in CSS pixels of the viewport. */
+      words: OcrWord[];
+      /** The word under the pointer, or -1. */
+      index: number;
+      card: LensCard | null;
+      reading: Reading | null;
+      ms: number;
+      /** OCR steps in milliseconds (line finding, region read, line read), for the browser check. */
+      timing?: Record<string, number>;
+    }
+  | { ok: false; error: string };
+
+export interface ReadWordRequest {
+  type: typeof READ_WORD;
+  text: string;
+  conf: number;
+}
+
+export type ReadWordResponse = { ok: true; card: LensCard | null; reading: Reading } | { ok: false; error: string };
+
+export interface OcrRequest {
+  type: typeof OCR;
+  target: 'offscreen';
+  /** PNG data URL of the region around the pointer. */
+  image: string;
+  /** The pointer inside the region, region pixels. */
+  x: number;
+  y: number;
+}
+
+export type OcrResponse = { ok: true; line: OcrLine | null; timing?: Record<string, number> } | { ok: false; error: string };

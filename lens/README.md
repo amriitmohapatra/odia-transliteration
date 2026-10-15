@@ -1,4 +1,4 @@
-# Odia Lens (browser extension, v1)
+# Odia Lens (browser extension)
 
 Point at an Odia word on any web page. A small card shows:
 
@@ -13,6 +13,15 @@ Point at an Odia word on any web page. A small card shows:
 - "Approximate" when only the stem or the start of the word is in the dictionary;
 - "English loan word: …" and the word's origin ("from Persian") when known;
 - **Say it**, when the computer has an Odia voice.
+
+**Picture mode (0.2.0):** Odia inside a picture is read too: ePaper pages (Sambad,
+Dharitri, Samaja), images, canvases, a paused YouTube video. Rest the pointer on a word
+for a moment; the lens reads that line from a screenshot of the tab, offline (Tesseract
+OCR inside the extension), and the card says **"Read from the picture"**. When the print
+was unclear and the lens changed the reading to a dictionary word, the card shows what it
+read; "unclear print" means: check the word. Headlines read well; very small body text on
+a whole-page ePaper image often does not (a better Odia model is next, V4.3). Zoom the
+ePaper viewer in before pointing: larger letters read better.
 
 It is the same dictionary and the same lookup as the Meanings panel of the web
 app (`Appv2/src/dictionary/lookup.ts`).
@@ -38,8 +47,9 @@ app (`Appv2/src/dictionary/lookup.ts`).
 
 - The lens reads a page only after you click its icon on that page
   (`activeTab`). It asks for no access to any site in advance.
-- Everything is offline: the dictionary is inside the extension, and nothing is
-  sent anywhere. The browser check (`lens/eval/lens-check.mjs`) fails if any
+- Everything is offline: the dictionary and the OCR engine are inside the extension,
+  and nothing is sent anywhere. Picture mode takes a screenshot of the tab only while the
+  lens is on and the pointer rests on a picture; the screenshot stays in the browser. The browser check (`lens/eval/lens-check.mjs`) fails if any
   request leaves the computer.
 - No Desh keyboard data is in the extension.
 
@@ -47,7 +57,9 @@ app (`Appv2/src/dictionary/lookup.ts`).
 
 - The page itself only (not text inside frames), and text that is real text
   (not images or canvas drawings; that needs OCR, lens v2).
-- One word at a time; no sentence translation yet (`/api/translate`, V3).
+- One word at a time; no sentence translation yet (V4.5).
+- Picture mode reads one line at a time, in the visible part of the page; OCR makes
+  mistakes on small or decorated print.
 - Chrome and Edge. Firefox and Safari later.
 
 ## For developers
@@ -59,9 +71,10 @@ node lens/build.mjs --test && node lens/eval/lens-check.mjs   # browser check (N
 npx tsc -p lens/tsconfig.json                              # typecheck
 ```
 
-The test build adds host access to `http://127.0.0.1/*` only, so the check can turn
-the lens on without a toolbar click. A unit test keeps the shipped manifest free of
-host permissions.
+The test build adds host access to all sites, so the check can turn the lens on and take
+screenshots without a toolbar click. A unit test keeps the shipped manifest free of host
+permissions. Third-party parts (Tesseract, the Odia model) and their licences:
+`lens/PROVENANCE.md`.
 
 Data: `Appv2/src/dictionary/praharaj.bin`, `modern.bin`, `origin.bin`, `loans.tsv`
 and `core/data/glosses.tsv`; sources and checksums in

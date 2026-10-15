@@ -5,8 +5,10 @@
 //
 // NODE_PATH must resolve Playwright (CI installs it; in the Claude Code cloud
 // environment it is /opt/node-tools/node_modules). The test build differs from
-// the shipped one only by host access to http://127.0.0.1/*, so the check can
-// turn the lens on without a toolbar click (it calls the worker's toggle).
+// the shipped one only by host access to all sites, so the check can turn the
+// lens on and take screenshots without a toolbar click (it calls the worker's
+// toggle). Picture mode is checked on an image of Odia words drawn with the
+// app's Noto Sans Oriya.
 // Odia is written as \u escapes and HTML character references.
 import assert from 'node:assert/strict';
 import { createServer } from 'node:http';
@@ -28,6 +30,14 @@ const ODISHA_PRECOMPOSED = '\u0B13\u0B5C\u0B3F\u0B36\u0B3E'; // as some web page
 const [loanEnglish, loanOdia] = readFileSync(new URL('../../Appv2/src/dictionary/loans.tsv', import.meta.url), 'utf8')
   .split('\n').filter((l) => l && !l.startsWith('#')).map((l) => l.split('\t')).find((c) => c[2] === 'en');
 
+// Picture mode: three common words, drawn into an image (OCR must read them).
+const PICTURE_WORDS = [
+  '\u0B38\u0B30\u0B15\u0B3E\u0B30', // government
+  '\u0B30\u0B3E\u0B1C\u0B4D\u0B5F', // state
+  '\u0B26\u0B3F\u0B28\u0B30\u0B47', // in the day
+];
+const FONT = readFileSync(new URL('../../web/src/fonts/noto-sans-oriya-oriya-400-normal.woff2', import.meta.url));
+
 const ref = (s) => [...s].map((ch) => `&#x${ch.codePointAt(0).toString(16)};`).join('');
 const PAGES = {
   '/odia.html': `<!doctype html><meta charset="utf-8"><title>Odia</title>
@@ -37,9 +47,32 @@ const PAGES = {
     <p>Loan: <span id="loan">${ref(loanOdia)}</span></p>
     <p>Phrase: <span id="phrase">${ref(PRABESHAKU)} ${ref(NEI)}</span></p>
     <p id="latin">Only English words here.</p>`,
+  '/picture.html': `<!doctype html><meta charset="utf-8"><title>Picture</title>
+    <style>@font-face{font-family:Pic;src:url(/noto.woff2)} body{margin:40px}</style>
+    <p id="label" style="font:16px sans-serif">An image with Odia words:</p>
+    <img id="pic" alt="">
+    <script type="module">
+      const words = ${JSON.stringify(PICTURE_WORDS)};
+      await document.fonts.load('40px Pic', words.join(' '));
+      const c = document.createElement('canvas');
+      c.width = 760; c.height = 90;
+      const g = c.getContext('2d');
+      g.fillStyle = '#fff'; g.fillRect(0, 0, c.width, c.height);
+      g.fillStyle = '#111'; g.font = '40px Pic'; g.textBaseline = 'middle';
+      let x = 20; const boxes = [];
+      for (const w of words) { const m = g.measureText(w).width; g.fillText(w, x, 45); boxes.push([x, m]); x += m + 30; }
+      const img = document.getElementById('pic');
+      img.src = c.toDataURL('image/png');
+      await img.decode();
+      window.__boxes = boxes;
+    </script>`,
   '/latin.html': `<!doctype html><meta charset="utf-8"><title>Latin</title><p id="latin" style="font:22px sans-serif">No Odia on this page at all.</p>`,
 };
 const server = createServer((req, res) => {
+  if (req.url === '/noto.woff2') {
+    res.writeHead(200, { 'content-type': 'font/woff2' });
+    return res.end(FONT);
+  }
   const body = PAGES[req.url];
   res.writeHead(body ? 200 : 404, { 'content-type': 'text/html; charset=utf-8' });
   res.end(body ?? 'not found');
@@ -153,6 +186,45 @@ await check('Latin text shows no card; Escape closes a card', async () => {
   assert.equal(await card.isVisible(), false);
 });
 
+let pictureMs = 0;
+await check('picture mode: a word in an image is read by OCR and explained ("read from the picture")', async () => {
+  await page.goto(`${origin}/picture.html`);
+  await page.waitForFunction(() => Array.isArray(window.__boxes));
+  assert.equal(await toggle(), 'ON');
+  const img = await page.locator('#pic').boundingBox();
+  const boxes = await page.evaluate(() => window.__boxes);
+  const at = (i) => ({ x: img.x + boxes[i][0] + boxes[i][1] / 2, y: img.y + 45 });
+  await page.mouse.move(5, 5);
+  const t0 = Date.now();
+  await page.mouse.move(at(0).x, at(0).y, { steps: 3 });
+  await page.waitForFunction(
+    (w) => document.querySelector('odia-lens')?.shadowRoot?.querySelector('.word')?.textContent === w,
+    PICTURE_WORDS[0],
+    { timeout: 30000 },
+  );
+  pictureMs = Date.now() - t0;
+  const text = await cardText();
+  assert.ok(text.includes('Read from the picture'), text);
+  assert.ok(/government/i.test(text), text);
+});
+
+await check('picture mode: the next word on the same line comes from the cached reading (no new screenshot)', async () => {
+  const img = await page.locator('#pic').boundingBox();
+  const boxes = await page.evaluate(() => window.__boxes);
+  await page.mouse.move(img.x + boxes[1][0] + boxes[1][1] / 2, img.y + 45, { steps: 3 });
+  await page.waitForFunction(
+    (w) => document.querySelector('odia-lens')?.shadowRoot?.querySelector('.word')?.textContent === w,
+    PICTURE_WORDS[1],
+    { timeout: 3000 },
+  ).catch(async (error) => {
+    throw new Error(`${error.message}; card: ${await card.innerText().catch(() => '(none)')}`);
+  });
+  assert.ok(/state/i.test(await cardText()));
+  assert.equal(await toggle(), '');
+  await page.goto(`${origin}/odia.html`);
+  assert.equal(await toggle(), 'ON');
+});
+
 await check('turning it off removes the lens from the page', async () => {
   assert.equal(await toggle(), '');
   await hover('dina');
@@ -174,6 +246,7 @@ await check('no request leaves the computer', async () => {
 });
 
 console.log(`\nfirst card after the worker started: ${firstMs} ms`);
+console.log(`first picture word (screenshot, OCR engine start, two passes): ${pictureMs} ms`);
 await context.close();
 server.close();
 const failed = results.filter((r) => !r.pass);

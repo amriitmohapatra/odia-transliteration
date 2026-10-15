@@ -26,8 +26,25 @@ import meaningsTsv from '../../core/data/meanings.tsv';
 import verbEndingsTsv from '../../core/data/verb-endings.tsv';
 import loansTsv from '../../Appv2/src/dictionary/loans.tsv';
 
+import { parseWordList, separate, type WordList } from './correct.js';
 import { describeWord, type LensCard, type LensData } from './describe.js';
-import { LOOKUP, TOGGLE_COMMAND, type LookupRequest, type LookupResponse } from './messages.js';
+import {
+  LOOKUP,
+  OCR,
+  PICTURE,
+  READ_WORD,
+  TOGGLE_COMMAND,
+  type LookupRequest,
+  type LookupResponse,
+  type OcrRequest,
+  type OcrResponse,
+  type PictureRequest,
+  type PictureResponse,
+  type Reading,
+  type ReadWordRequest,
+  type ReadWordResponse,
+} from './messages.js';
+import { cleanRead, mapBox, pickWord, regionAround } from './picture.js';
 
 interface ChunkIndex {
   count: number;
@@ -111,13 +128,130 @@ async function lookup(word: string, previous: string): Promise<LensCard | null> 
   return describeWord(odia, key, entry, def, data, previous);
 }
 
-chrome.runtime.onMessage.addListener((message: LookupRequest, sender, sendResponse: (r: LookupResponse) => void) => {
-  if (message?.type !== LOOKUP || sender.id !== chrome.runtime.id) return false;
-  lookup(message.word, message.previous ?? '').then(
-    (card) => sendResponse({ ok: true, card }),
-    (error: unknown) => sendResponse({ ok: false, error: String(error) }),
+/* ------------------------------------------------------------ *
+ * Picture mode (V4.2): Odia in images, read by OCR
+ * ------------------------------------------------------------ */
+
+let words: Promise<WordList> | undefined;
+const loadWords = (): Promise<WordList> => (words ??= text('dict/words.bin').then(parseWordList));
+
+/** A word read by OCR: canonical, corrected to a known word when it is not one, then the usual card. */
+async function readWord(raw: string, conf: number): Promise<{ card: LensCard | null; reading: Reading } | null> {
+  const odia = canonical(cleanRead(raw));
+  if (odia.length === 0) return null;
+  const [{ keys: k }, data, list] = await Promise.all([loadKeys(), loadExtras(), loadWords()]);
+  // A word the list knows takes the list's spelling (OCR mixes up ya and yya);
+  // a word the dictionaries know stays; any other word is corrected.
+  const fromList = /[\u0b66-\u0b6f]/.test(odia) ? { word: odia, distance: 0 } : list.correct(odia);
+  // A word the dictionary can already explain stays as read (barana-ru, "from
+  // the ban", is right; the list's karana-ru is only more common).
+  const entry = findEntry(k, foldKey(odia));
+  const known =
+    fromList.distance === 0 ||
+    data.owner.get(odia) !== undefined ||
+    data.ai?.word(odia) !== undefined ||
+    entry?.how === 'exact' ||
+    (entry?.how === 'stem' && conf >= 50);
+  const corrected = fromList.distance === 0 ? fromList.word : known ? odia : fromList.word;
+  const card = await lookup(corrected, '');
+  return { card, reading: { readAs: odia, corrected: corrected === odia ? null : corrected, conf } };
+}
+
+/* Chrome allows about two screenshots a second per extension. */
+let lastCapture = 0;
+async function capture(windowId: number | undefined): Promise<string> {
+  const wait = lastCapture + 550 - Date.now();
+  if (wait > 0) await new Promise((r) => setTimeout(r, wait));
+  lastCapture = Date.now();
+  return chrome.tabs.captureVisibleTab(windowId, { format: 'png' });
+}
+
+let offscreen: Promise<void> | undefined;
+function ensureOffscreen(): Promise<void> {
+  offscreen ??= chrome.offscreen
+    .createDocument({
+      url: 'offscreen.html',
+      reasons: ['WORKERS'],
+      justification: 'Reads Odia text in pictures with the OCR engine packed in the extension.',
+    })
+    .catch((error: unknown) => {
+      if (/single offscreen/i.test(String(error))) return; // already open
+      offscreen = undefined;
+      throw error;
+    });
+  return offscreen;
+}
+
+async function ocr(request: OcrRequest): Promise<OcrResponse> {
+  for (let attempt = 0; ; attempt++) {
+    await ensureOffscreen();
+    try {
+      const answer = await new Promise<OcrResponse | undefined>((resolve) => chrome.runtime.sendMessage(request, resolve));
+      if (answer) return answer;
+      throw new Error(chrome.runtime.lastError?.message ?? 'no answer from the OCR page');
+    } catch (error) {
+      // The browser may have closed the OCR page: open it again once.
+      offscreen = undefined;
+      if (attempt > 0) throw error;
+    }
+  }
+}
+
+function dataUrl(bytes: ArrayBuffer): string {
+  const view = new Uint8Array(bytes);
+  let binary = '';
+  for (let i = 0; i < view.length; i += 0x8000) binary += String.fromCharCode(...view.subarray(i, i + 0x8000));
+  return `data:image/png;base64,${btoa(binary)}`;
+}
+
+async function readPicture(request: PictureRequest, windowId: number | undefined): Promise<PictureResponse> {
+  const t0 = Date.now();
+  const shot = await createImageBitmap(await (await fetch(await capture(windowId))).blob());
+  const ratio = shot.width / Math.max(1, request.viewportWidth);
+  const region = regionAround(request.x, request.y, ratio, shot.width, shot.height);
+  const canvas = new OffscreenCanvas(region.x1 - region.x0, region.y1 - region.y0);
+  (canvas.getContext('2d') as OffscreenCanvasRenderingContext2D).drawImage(shot, -region.x0, -region.y0);
+  const png = await canvas.convertToBlob({ type: 'image/png' });
+  const answer = await ocr({
+    type: OCR,
+    target: 'offscreen',
+    image: dataUrl(await png.arrayBuffer()),
+    x: request.x * ratio - region.x0,
+    y: request.y * ratio - region.y0,
+  });
+  if (!answer.ok) return answer;
+  const list = await loadWords();
+  const line = separate(
+    (answer.line?.words ?? []).map((w) => ({ ...w, box: mapBox(w.box, 1 / ratio, region.x0, region.y0) })),
+    list,
+    (t) => canonical(cleanRead(t)),
   );
-  return true; // the answer comes asynchronously
+  const index = pickWord(line, request.x, request.y);
+  const found = index >= 0 ? await readWord((line[index] as { text: string }).text, (line[index] as { conf: number }).conf) : null;
+  return { ok: true, words: line, index, card: found?.card ?? null, reading: found?.reading ?? null, ms: Date.now() - t0, timing: answer.timing };
+}
+
+type Request = LookupRequest | PictureRequest | ReadWordRequest;
+
+chrome.runtime.onMessage.addListener((message: Request, sender, sendResponse: (r: LookupResponse | PictureResponse | ReadWordResponse) => void) => {
+  if (sender.id !== chrome.runtime.id) return false;
+  const fail = (error: unknown): void => sendResponse({ ok: false, error: String(error) });
+  if (message?.type === LOOKUP) {
+    lookup(message.word, message.previous ?? '').then((card) => sendResponse({ ok: true, card }), fail);
+    return true; // the answer comes asynchronously
+  }
+  if (message?.type === PICTURE) {
+    readPicture(message, sender.tab?.windowId).then(sendResponse, fail);
+    return true;
+  }
+  if (message?.type === READ_WORD) {
+    readWord(message.text, message.conf).then(
+      (found) => sendResponse(found ? { ok: true, ...found } : { ok: false, error: 'not an Odia word' }),
+      fail,
+    );
+    return true;
+  }
+  return false;
 });
 
 /** Turn the lens on or off in a tab; the badge says which. */
@@ -149,5 +283,7 @@ chrome.tabs.onUpdated.addListener((tabId, change) => {
   if (change.status === 'loading') void chrome.action.setBadgeText({ tabId, text: '' }).catch(() => undefined);
 });
 
-// For the browser check (lens/eval/lens-check.mjs): toggle a tab without a click.
-(self as unknown as { odiaLensToggle: typeof toggle }).odiaLensToggle = toggle;
+// For the browser check (lens/eval/lens-check.mjs): toggle a tab without a click,
+// and read a picture point directly.
+(self as unknown as { odiaLensToggle: typeof toggle; odiaLensReadPicture: typeof readPicture }).odiaLensToggle = toggle;
+(self as unknown as { odiaLensReadPicture: typeof readPicture }).odiaLensReadPicture = readPicture;

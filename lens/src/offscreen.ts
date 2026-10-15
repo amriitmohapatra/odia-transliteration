@@ -1,0 +1,163 @@
+/**
+ * The OCR page (picture mode, V4.2): an offscreen document that runs Tesseract
+ * (tesseract.js, WebAssembly, Odia model `ori` from tessdata_fast; Apache-2.0).
+ * Everything it needs is inside the extension (lens/build.mjs copies it to
+ * ocr/): nothing is fetched from the network.
+ *
+ * It gets a PNG of the screen around the pointer and answers with the text line
+ * under the pointer. The line is found from the pixels (picture.ts findLine, a
+ * few milliseconds), then read alone, enlarged to a steady letter size, as one
+ * line, which is clearly more accurate on newspaper headlines than reading the
+ * whole region (plan/research/lens-v2-ocr.md). When the pixels give no clear
+ * line, the region is read first to find it (about a second more).
+ */
+
+import { createWorker, type Worker } from 'tesseract.js';
+
+import { OCR, type OcrRequest, type OcrResponse } from './messages.js';
+import { HAS_ODIA, findLine, lineScale, pickLine, type Box, type OcrLine, type OcrWord } from './picture.js';
+
+let worker: Promise<Worker> | undefined;
+/** Pass 1 only finds the line under the pointer: 1.5× is enough for ePaper body text. */
+const FIRST_SCALE = 1.5;
+
+function ocrWorker(): Promise<Worker> {
+  worker ??= createWorker('ori', 1, {
+    workerPath: chrome.runtime.getURL('ocr/worker.min.js'),
+    corePath: chrome.runtime.getURL('ocr/tesseract-core-simd-lstm.wasm.js'),
+    langPath: chrome.runtime.getURL('ocr/'),
+    gzip: false,
+    workerBlobURL: false,
+    cacheMethod: 'none',
+  });
+  return worker;
+}
+
+/** A grey copy of part of the image, enlarged; white on dark (a coloured headline bar) is turned to dark on white. */
+/* In this hidden page Chrome delays PNG encoding (canvas toBlob, convertToBlob)
+ * by about a second. So the image goes to Tesseract as an uncompressed grey
+ * PGM (Netpbm), built here from the pixels: no encoding, no delay. */
+function pgm(canvas: OffscreenCanvas): Uint8Array {
+  const { width, height } = canvas;
+  const rgba = (canvas.getContext('2d') as OffscreenCanvasRenderingContext2D).getImageData(0, 0, width, height).data;
+  const header = new TextEncoder().encode(`P5\n${width} ${height}\n255\n`);
+  const out = new Uint8Array(header.length + width * height);
+  out.set(header);
+  for (let i = 0, j = header.length; i < rgba.length; i += 4, j++) out[j] = rgba[i] as number; // already grey
+  return out;
+}
+
+function prepare(image: ImageBitmap, box: Box, scale: number): OffscreenCanvas {
+  const w = Math.max(1, Math.round((box.x1 - box.x0) * scale));
+  const h = Math.max(1, Math.round((box.y1 - box.y0) * scale));
+  const canvas = new OffscreenCanvas(w, h);
+  const ctx = canvas.getContext('2d', { willReadFrequently: true }) as OffscreenCanvasRenderingContext2D;
+  ctx.imageSmoothingQuality = 'high';
+  ctx.filter = 'grayscale(1)';
+  ctx.drawImage(image, box.x0, box.y0, box.x1 - box.x0, box.y1 - box.y0, 0, 0, w, h);
+  const data = ctx.getImageData(0, 0, w, h).data;
+  let sum = 0;
+  for (let i = 0; i < data.length; i += 4) sum += data[i] as number;
+  if (sum / (data.length / 4) < 115) {
+    ctx.filter = 'grayscale(1) invert(1)';
+    ctx.drawImage(image, box.x0, box.y0, box.x1 - box.x0, box.y1 - box.y0, 0, 0, w, h);
+  }
+  return canvas;
+}
+
+interface TesseractLine {
+  bbox: Box;
+  words: { text: string; confidence: number; bbox: Box }[];
+}
+
+/** Lines of a Tesseract result, boxes scaled back by `scale` and shifted by (dx, dy). */
+function linesOf(data: { blocks: { paragraphs: { lines: TesseractLine[] }[] }[] | null }, scale: number, dx: number, dy: number): OcrLine[] {
+  const back = (b: Box): Box => ({ x0: b.x0 / scale + dx, y0: b.y0 / scale + dy, x1: b.x1 / scale + dx, y1: b.y1 / scale + dy });
+  const out: OcrLine[] = [];
+  for (const block of data.blocks ?? []) {
+    for (const paragraph of block.paragraphs) {
+      for (const line of paragraph.lines) {
+        const words: OcrWord[] = line.words.map((w) => ({ text: w.text, conf: Math.round(w.confidence), box: back(w.bbox) }));
+        out.push({ box: back(line.bbox), words });
+      }
+    }
+  }
+  return out;
+}
+
+export const timing = { find: 0, pass1: 0, pass2: 0 };
+
+/** Mean confidence of the Odia words read (0 when there are none). */
+function meanConf(words: readonly OcrWord[]): number {
+  const odia = words.filter((w) => HAS_ODIA.test(w.text));
+  return odia.length === 0 ? 0 : odia.reduce((n, w) => n + w.conf, 0) / odia.length;
+}
+
+/** The image as grey bytes, one per pixel. */
+function greyBytes(image: ImageBitmap): Uint8Array {
+  const canvas = new OffscreenCanvas(image.width, image.height);
+  const ctx = canvas.getContext('2d', { willReadFrequently: true }) as OffscreenCanvasRenderingContext2D;
+  ctx.drawImage(image, 0, 0);
+  const rgba = ctx.getImageData(0, 0, image.width, image.height).data;
+  const grey = new Uint8Array(image.width * image.height);
+  for (let i = 0, j = 0; j < grey.length; i += 4, j++) {
+    grey[j] = ((rgba[i] as number) * 299 + (rgba[i + 1] as number) * 587 + (rgba[i + 2] as number) * 114) / 1000;
+  }
+  return grey;
+}
+
+/** Read one line box as a single line, padded and enlarged; words in region pixels. */
+async function readLine(ocr: Worker, image: ImageBitmap, line: Box): Promise<OcrWord[]> {
+  const h = line.y1 - line.y0;
+  const pad = Math.round(h * 0.35);
+  const box: Box = {
+    x0: Math.max(0, line.x0 - pad),
+    y0: Math.max(0, line.y0 - pad),
+    x1: Math.min(image.width, line.x1 + pad),
+    y1: Math.min(image.height, line.y1 + pad),
+  };
+  const scale = lineScale(h);
+  await ocr.setParameters({ tessedit_pageseg_mode: '7' as never });
+  const canvas = prepare(image, box, scale);
+  const t = performance.now();
+  const result = await ocr.recognize(pgm(canvas) as never, {}, { blocks: true, text: false });
+  timing.pass2 = Math.round(performance.now() - t);
+  return linesOf(result.data as never, scale, box.x0, box.y0).flatMap((l) => l.words);
+}
+
+async function read(request: OcrRequest): Promise<OcrLine | null> {
+  const image = await createImageBitmap(await (await fetch(request.image)).blob());
+  const ocr = await ocrWorker();
+  timing.find = timing.pass1 = timing.pass2 = 0;
+  let t = performance.now();
+  const found = findLine(greyBytes(image), image.width, image.height, request.x, request.y);
+  timing.find = Math.round(performance.now() - t);
+  let fromPixels: OcrLine | null = null;
+  if (found) {
+    const words = await readLine(ocr, image, found);
+    fromPixels = { box: found, words };
+    if (meanConf(words) >= 60) return fromPixels;
+  }
+  // No clear line from the pixels (or an unclear reading, often two lines of
+  // small print taken as one): read the region to find the line.
+  const whole: Box = { x0: 0, y0: 0, x1: image.width, y1: image.height };
+  // Pass 1: the region as a block of text, at twice the size (small print).
+  await ocr.setParameters({ tessedit_pageseg_mode: '6' as never });
+  t = performance.now();
+  const first = await ocr.recognize(pgm(prepare(image, whole, FIRST_SCALE)) as never, {}, { blocks: true, text: false });
+  timing.pass1 = Math.round(performance.now() - t);
+  const line = pickLine(linesOf(first.data as never, FIRST_SCALE, 0, 0), request.x, request.y);
+  if (!line) return fromPixels;
+  const words = await readLine(ocr, image, line.box);
+  const fromRegion = words.length > 0 ? { box: line.box, words } : line;
+  return fromPixels && meanConf(fromPixels.words) > meanConf(fromRegion.words) ? fromPixels : fromRegion;
+}
+
+chrome.runtime.onMessage.addListener((message: OcrRequest, _sender, sendResponse: (r: OcrResponse) => void) => {
+  if (message?.type !== OCR || message.target !== 'offscreen') return false;
+  read(message).then(
+    (line) => sendResponse({ ok: true, line, timing: { ...timing } }),
+    (error: unknown) => sendResponse({ ok: false, error: String(error) }),
+  );
+  return true;
+});

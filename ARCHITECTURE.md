@@ -329,14 +329,31 @@ Manifest V3. Details and install steps: `lens/README.md`.
 | `lens/src/content.ts` | Word under the pointer (`caretRangeFromPoint`, `word.ts`), card in a shadow root (constructed style sheet, so page CSP cannot block it), Esc, scroll hides. |
 | `lens/src/describe.ts` | Word + entry → card: `romanize()` (the app's read-back), owner meaning, modern layer, Praharaj gloss, loan note, origin. |
 | `Appv2/src/dictionary/lookup.ts` | The lookup the app's Meanings panel uses too (fold, exact / stem / prefix, short gloss). |
-| `lens/build.mjs` | esbuild bundles (classic scripts); splits `praharaj.bin` into a keys file and 78 gzip chunks of 500 definitions, so a restarted worker answers in ~0.3 s instead of unpacking 24 MB. |
+| `lens/build.mjs` | esbuild bundles (classic scripts); splits `praharaj.bin` into a keys file and 78 gzip chunks of 500 definitions, so a restarted worker answers in ~0.3 s instead of unpacking 24 MB. Copies the OCR engine and model (`ocr/`) and the word list (`dict/words.bin`). |
 
-**Privacy:** permissions `activeTab` and `scripting` only, no host permissions (a unit test
-checks the shipped manifest); nothing leaves the computer (the browser check fails on any
-outside request). **No Desh data** in the extension. Package: 6.3 MB zip.
+**Picture mode (V4.2, 2026-10-15):** Odia in images, canvases and paused videos (ePapers,
+YouTube frames). When the pointer rests on a picture, `content.ts` hides the card and asks
+the background; the background takes a screenshot (`captureVisibleTab`, allowed by
+`activeTab`) and crops 640 × 140 CSS px around the pointer; the OCR page
+(`lens/src/offscreen.ts`, an offscreen document) finds the text line from the pixels
+(`picture.ts findLine`, a few ms), reads that line alone with Tesseract `ori` (tesseract.js,
+WebAssembly, single-line mode, letters enlarged to ~64 px; the image goes in as raw grey
+PGM, because Chrome delays PNG encoding in hidden pages by ~1 s), and falls back to reading
+the region when the line is unclear. The background splits run-together words and digits
+(`correct.ts separate`), corrects each word with the IndicCorp list (`correct.ts`: known
+word, rare misprint of a 300× more common word, nearest word within 1–2 edits), and builds
+the same card, which says "Read from the picture" (and what OCR saw when it was
+corrected, or "unclear print"). The line's words stay cached until scroll or a playing
+video changes the screen. About 0.4–0.7 s per new line; 1.3 s for the first (engine start).
 
-**Limits of v1:** top frame, real text only (no OCR: lens v2), one word at a time, no
-sentence translation (`/api/translate`, V3), Chrome and Edge only.
+**Privacy:** permissions `activeTab`, `scripting` and `offscreen`, no host permissions (a
+unit test checks the shipped manifest); CSP allows WebAssembly only from the extension;
+nothing leaves the computer (the browser check fails on any outside request). **No Desh
+data** in the extension. Package: about 10 MB zip.
+
+**Limits:** top frame; OCR quality is the stock Tesseract model's (good on clean print and
+most headlines, weak on 5 px ePaper body text: own model V4.3); one word at a time; no
+sentence translation (V4.5); Chrome and Edge only.
 
 ## 8. Testing and measurement
 

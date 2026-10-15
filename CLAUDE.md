@@ -193,7 +193,8 @@ Rows marked unknown or unverified below are open items, not exceptions:
 | wordfreq, CMUdict | Unverified (see provenance file) | Build time: loanword detection |
 | CMU Pronouncing Dictionary (data file) | BSD-2-Clause | Build time: English words and sounds for `loans.tsv` |
 | SCOWL `american-english-small` | Permissive / public domain | Build time: common English words for `loans.tsv` |
-| IndicCorp v2 Odia `or.txt` (word counts) | CC0 | Build time: attestation for `loans.tsv` (`tools/build-data/count_indiccorp.py`) |
+| IndicCorp v2 Odia `or.txt` (word counts) | CC0 | Build time: attestation for `loans.tsv` (`tools/build-data/count_indiccorp.py`); shipped in the Odia Lens as the OCR word list `core/data/indiccorp-words.tsv` |
+| Tesseract (`tesseract.js` 5.1.1, `tesseract.js-core` 5.1.1, `tessdata_fast/ori.traineddata`) | Apache-2.0 | Odia Lens picture mode (V4.2): OCR in the extension; `lens/PROVENANCE.md` |
 | pako inflate | MIT | Unpacks the dictionary payloads |
 
 The dictionary sources and their checksums are in `Odia_Sanskrit_Appv2/PROVENANCE.md`.

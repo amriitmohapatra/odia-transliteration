@@ -358,6 +358,18 @@ Pruned from Desh's Odia n-gram model (chat text, 30.08 M tokens).
 | Labels | one row predicts a word labelled offensive in `labels.tsv`; the engine never predicts it (content filter) |
 | Not in | the kids edition; the sloka profile |
 
+## OCR word list (`indiccorp-words.tsv`, 2026-10-15)
+
+The 100,000 most frequent Odia words (letters and signs only) in IndicCorp v2 `or.txt`
+(CC0), with their counts, for the Odia Lens to correct what OCR reads (V4.2). Built by
+`tools/build-data/indiccorp_words.py` from the `count_indiccorp.py` counts (input
+`or.txt` sha256 `42c97403c4a547c6093e38b0cba952be02428070a6ab7986fc509436d4d78fc6`;
+counts file sha256 `6a276baa26bab6383049b56bdadaaf366d4e373ce0d792d9aa89fc4f1fb97d16`).
+
+| File | Rows | Bytes | SHA-256 |
+|---|---|---|---|
+| `core/data/indiccorp-words.tsv` | 100,000 | 2,702,803 | `abe6815b691b311b5c561a97205366f9bb9c608b686d87c87a01051913e5e3aa` |
+
 ## AI-written meanings (`meanings.tsv`, 2026-10-14)
 
 Written by Claude (Anthropic) in sessions for this project, from its own knowledge of

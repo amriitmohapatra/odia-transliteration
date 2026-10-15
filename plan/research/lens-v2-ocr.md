@@ -98,6 +98,40 @@ into another real word (ସମାନ "equal" for ସମ୍ମାନ "honour"). T
   same `describeWord` card as v1, with "read as: …".
 - Privacy stays as in v1: nothing leaves the computer.
 
+## 4b. Built (V4.2, lens 0.2.0, 2026-10-15)
+
+What changed from the spike design, by measurement:
+
+- **The line is found from the pixels**, not by a first OCR pass (`picture.ts findLine`:
+  Otsu threshold around the pointer, ink rows in a narrow strip, gaps bridged, followed
+  sideways across word spaces): 2–20 ms instead of 1–2 s. The region OCR stays as the
+  fallback when the line read is unclear (mean confidence under 60).
+- **Images go to Tesseract as raw grey PGM.** In the offscreen document Chrome delays PNG
+  encoding (`toBlob`, `convertToBlob`) by about 1 s; a PGM built from `getImageData` has no
+  delay. A line read: 50–300 ms.
+- **Word repairs before lookup:** digits stuck to a word are split off (୫ବାଇକ୍‌କୁ); stray
+  marks inside a word split it; a run-together word the list can split is split.
+- **Correction keeps words the dictionary can explain** (ବାରଣରୁ, "from the ban", is right;
+  the list's more common କାରଣରୁ is not) and **treats a rare list word as a misprint of a word
+  one edit away that is 300× more common** (ପରବାର 63 times → ପରିବାର 99,326 times; the list is
+  real text and holds misprints). Two real words stay apart (ସମାନ / ସମ୍ମାନ).
+
+Real ePaper pages, pointer on a word, viewer at 100%:
+
+| Page | Point | Read | Card |
+|---|---|---|---|
+| Samaja p3 | headline | ଶିକ୍ଷକଙ୍କୁ [ସରକାରଙ୍କ] ପୂଜା ଭେଟି | government + of (respectful) |
+| Samaja p3 | headline | ୫ ବାଇକ୍କୃଧକା ଜଣେମ୍ତ ୫ [ଗୂରୂତର] → ଗୁରୁତର | critical |
+| Samaja p3 | body | [ରହିପାରିବେ।] ଶ୍ରମିକମାନେ ସୁଲଭ ଆଦାସ | stay, remain + can … (they, or respectful) |
+| Samaja p3 | headline | ଗରିବଙ [ସମାନ] ବୃଵି ଆମର ସଂକଳୁ | same (wrong: ସମ୍ମାନ, honour; marked unclear) |
+| Sambad p5 | headline | ରାଜ୍ୟବ୍ୟାପୀ [ଅନାଇ] ରହିଛି ବିପଦ | exact line |
+| Sambad p5 | headline | ତଞ୍ଚକତା କରି [ଦିଆଯାଇଛି] ୭୩ ଏକର ଜମି | has been given |
+| Sambad p5 | body (5 px) | unreadable | — |
+
+Time per new line 0.4–0.7 s (screenshot, crop, line, OCR, correction, card); the first
+word 1.3 s (engine start). Package 9.9 MB zip (engine 3.9 MB, model 1.5 MB, word list
+0.65 MB).
+
 ## 5. Stages
 
 | Stage | What | Depends on |

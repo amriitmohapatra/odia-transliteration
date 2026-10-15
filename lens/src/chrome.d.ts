@@ -24,7 +24,9 @@ declare namespace chrome {
     interface Tab {
       id?: number;
       url?: string;
+      windowId?: number;
     }
+    function captureVisibleTab(windowId: number | undefined, options: { format: 'png' | 'jpeg'; quality?: number }): Promise<string>;
     function query(info: { active?: boolean; lastFocusedWindow?: boolean; currentWindow?: boolean }): Promise<Tab[]>;
     const onUpdated: {
       addListener(listener: (tabId: number, change: { status?: string }, tab: Tab) => void): void;
@@ -44,6 +46,9 @@ declare namespace chrome {
     function setBadgeText(details: { tabId?: number; text: string }): Promise<void>;
     function getBadgeText(details: { tabId?: number }): Promise<string>;
     const onClicked: { addListener(listener: (tab: tabs.Tab) => void): void };
+  }
+  namespace offscreen {
+    function createDocument(parameters: { url: string; reasons: string[]; justification: string }): Promise<void>;
   }
   namespace commands {
     const onCommand: { addListener(listener: (command: string, tab?: tabs.Tab) => void): void };
