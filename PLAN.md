@@ -41,6 +41,29 @@ whenever a task changes status. Last updated: 2026-10-12 (editor reliability and
 | P Public repository | When the owner says "project finished": a fresh public repository without the scraped corpus, the derived-counts decision, the licence-table check (`plan/06-owner-followups.md`, section D), and Desh's terms for any Desh-derived data (L-1). **Owner 2026-10-14: the public version ships no Desh data** (typed pairs, converter, next words); **Owner 2026-10-15: as the final step, build that data from publicly available chat text** (romanized Odia as people type it: typed-spelling pairs, the spelling converter, next words) and present it as the app's own data, not as a stand-in. Only text whose licence allows the use (open licence or public domain, recorded with checksums in `core/data/PROVENANCE.md`); derived tables only, never the raw text in the repository; Claude collects and measures it against the Desh-built version before the switch. Probably a fresh public repository, filled by copying selected files from this one | Waiting for "project finished" |
 | G Guide video | A brag and user-guide video: how to use the transliteration app and the Odia Lens (owner, 2026-10-15: "Once both the transliteration and lens apps are ready and updated, we'll work on creating a brag+user guide video"). The owner gives the requirements then | **Saved for later.** Trigger: both apps ready and updated. Remind the owner then (`plan/06-owner-followups.md`, section D) |
 
+## 2b. Autonomous queue (owner, 2026-10-15)
+
+Owner, 2026-10-15: "For step 2, i.e. work you can do yourself, line them up in plan and
+proceed autonomously for now." This is the owner's approval for each stage below (the
+§13 rule "the owner approves each stage" is met); do not ask again per stage. Work goes to
+the branch; no PR until the owner asks. Meaning batches (V2.17) continue between stages.
+
+| Order | Item | Done when | Blocker / note |
+|---|---|---|---|
+| 1 | V2.17 batch 10 (words from the owner's two news18 articles and live news) | Reviewed, merged, coverage measured, owner sample in `plan/review/` | — |
+| 2 | V4.3 decision: the clean-licence OCR model | Compared with `ori-lens` and the stock model; shipped if as good; D-14 updated | Training still running |
+| 3 | V2.6 IndicXlit lexicon fill (OOV top-1 6.9%) | New candidates built offline at build time, OOV top-1 measured against `tools/eval/baseline.json` | HuggingFace is reachable from the cloud server since 2026-10-15 (it was not before) |
+| 4 | V2.3 colloquial remainder | The engine side (`dada`: the beam) fixed and measured; the spoken ଚ/ଛ rows stay with the owner (C-3) | — |
+| 5 | V2.7 new modern meanings layer (D-5) | Glosses aligned from Samanantar / BPCC plus Wikidata labels, licences and checksums in `PROVENANCE.md`, compared with the old layer on a sample | Licences checked first |
+| 6 | V3 `/api/speak` (read-aloud), then `/api/listen` (voice input) | Built behind switches like `/api/translate`: origin allowlist, size cap, off until turned on, tested against a local stand-in; the browser's own Odia voice used where it exists | Provider Sarvam (D-3); request format checked from Sarvam's docs; owner key on Vercel (new follow-up) |
+| 7 | V5 macOS input method with the real engine | `core` bundle that runs in JavaScriptCore with data handed over by Swift; logic in TypeScript under unit tests; Swift parse-checked | First run and the ad-hoc signing question need the owner's Mac |
+| 8 | E-1 word-origin tagger, then Laya only if the tagger is not good enough | A small character-pattern tagger for words outside Praharaj, measured on held-out Praharaj tags | D-9 |
+
+Not in the queue: V2.8 (offensive phrases made of innocent words: an agent does not
+write abuse into the repository; the owner curates), V5 Android and iOS (the plan says
+"install the mobile skills first"; none are installed), stage P and stage G (owner
+triggers).
+
 ## 3. V1 — work by area
 
 ### 3.1 Engine and data (`core/`)
@@ -115,8 +138,8 @@ need them wait for a run on the owner's Mac or a later environment.
 | V2.3 | Colloquial work list (`jauchi`, `aasuchu`, `janichi`, `kain`, `chala`, `dada`, `sanga`) | in repo | **Partly** — `jauchi` fixed (V2.1); long-a weight 0.35 → 0.45 (held-out overall top-1 25.0 → 25.3); the other six need owner validation (spoken ଚ vs written ଛ) or an engine change (`dada`: the beam) |
 | V2.4 | Word origin in the dictionary: "from Hindi / Persian / Arabic / English" | Praharaj origin tags (public domain, in hand) | **Done** — 35,396 of 38,776 dictionary words get an origin (`origin.bin`, 13 KB); panel pill on all sizes, chip suffix on desktop. Owner: review a sample (follow-up C-8) |
 | V2.5 | Owner phrase table: greetings, festival wishes, the three levels of "you" | the owner writes it | **Mechanism done** 2026-10-12: `core/data/phrases.tsv` (27 seed rows awaiting the owner's review, C-9), strict parser, Meanings panel direction "Phrases" (browse by group, search by meaning / typed spelling / group / Odia, Insert, Copy); kids filter per word. Not in the typing strip yet (one roman word → several Odia words needs a separate design). |
-| V2.6 | IndicXlit lexicon fill for unknown words (OOV top-1 7.3%) | HuggingFace | **Blocked here** |
-| V2.7 | Replace the MODERN meanings layer (D-5) | Samanantar / BPCC (HuggingFace), Wikidata | **Blocked here** |
+| V2.6 | IndicXlit lexicon fill for unknown words (OOV top-1 7.3%) | HuggingFace | **Queued** (§2b, 3): HuggingFace reachable since 2026-10-15 |
+| V2.7 | Replace the MODERN meanings layer (D-5) | Samanantar / BPCC (HuggingFace), Wikidata | **Queued** (§2b, 5) |
 | V2.8 | Phrases with offensive meaning made of innocent words | needs V2.2 | Later |
 | V2.9 | Inflected forms of offensive words | owner review (C-2) | Waiting for the owner |
 | V2.10 | Explicit offline English → Odia lookup, separate translations/loan spellings | original seed + existing owner glosses | **First version** 2026-10-12: 70 entries / 62 terms, Copy and undoable Insert Odia at the last editor selection, offline/degraded-load checks. 64 proposed entries await native review; typing aliases are separate follow-up work. |
@@ -237,6 +260,7 @@ Agents do not commit; the lead reviews, measures and commits.
 
 | Date | Change |
 |---|---|
+| 2026-10-15 | Owner: work the self-doable items autonomously. Queue in §2b (batch 10, V4.3 decision, V2.6, V2.3, V2.7, V3 speak/listen, V5 macOS input method, E-1). V2.6 and V2.7 are no longer blocked: HuggingFace is reachable from the cloud server. |
 | 2026-10-15 | V4.10: Odia digits under the pointer; words explained from their parts. ର is the possessive "of" (owner), and calendar abbreviations left the modern dictionary layer. |
 | 2026-10-15 | V4.3 measured: raw-line reread shipped; fine-tuned model better on every regime but held for the licence decision (D-14); clean retrain under way. |
 | 2026-10-15 | V4.9 built: Odia Lens for Windows (`win-lens/`, compile-checked, owner testing). |
