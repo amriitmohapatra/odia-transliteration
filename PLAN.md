@@ -38,7 +38,7 @@ whenever a task changes status. Last updated: 2026-10-12 (editor reliability and
 | V4 Lens | Browser extension, then camera/screenshot input | **V4.1 (browser extension) built** 2026-10-14. **V4.2 picture mode** (ePapers, YouTube frames; Odia OCR in the extension) started 2026-10-15: OCR spike done (`plan/research/lens-v2-ocr.md`). Native (v3) not started |
 | V5 Native | macOS input method with the real engine; Android, iOS (skills first) | Not started |
 | E-1 Experiment | Laya against a simple word-origin tagger | Not started |
-| P Public repository | When the owner says "project finished": a fresh public repository without the scraped corpus, the derived-counts decision, the licence-table check (`plan/06-owner-followups.md`, section D), and Desh's terms for any Desh-derived data (L-1). **Owner 2026-10-14: the public version ships no Desh data** (typed pairs, converter, next words); a placeholder or a public chat dataset replaces it, chosen then. Probably a fresh public repository, filled by copying selected files from this one | Waiting for "project finished" |
+| P Public repository | When the owner says "project finished": a fresh public repository without the scraped corpus, the derived-counts decision, the licence-table check (`plan/06-owner-followups.md`, section D), and Desh's terms for any Desh-derived data (L-1). **Owner 2026-10-14: the public version ships no Desh data** (typed pairs, converter, next words); **Owner 2026-10-15: as the final step, build that data from publicly available chat text** (romanized Odia as people type it: typed-spelling pairs, the spelling converter, next words) and present it as the app's own data, not as a stand-in. Only text whose licence allows the use (open licence or public domain, recorded with checksums in `core/data/PROVENANCE.md`); derived tables only, never the raw text in the repository; Claude collects and measures it against the Desh-built version before the switch. Probably a fresh public repository, filled by copying selected files from this one | Waiting for "project finished" |
 
 ## 3. V1 — work by area
 
@@ -231,6 +231,7 @@ Agents do not commit; the lead reviews, measures and commits.
 
 | Date | Change |
 |---|---|
+| 2026-10-15 | Owner: at stage P, replace the Desh data with data built from openly licensed public chat text (recorded in stage P). |
 | 2026-10-15 | Lens frame UI: resize from every edge and corner, Puri/Konark theme (browser and Mac), card under its line, panel on the roomier side, Copy text. |
 | 2026-10-15 | V4.2m Odia Lens for Mac (`mac-lens/`, owner testing only): see-through frame, ScreenCaptureKit, tesseract, the lens's page code. |
 | 2026-10-15 | Lens 0.3.0: the frame (move, resize, read everything inside together); engine and OCR code made platform-neutral (`engine.ts`, `ocr.ts`) for the Mac lens. |
