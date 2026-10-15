@@ -202,6 +202,7 @@ export const MODERN_LABEL: Record<string, string> = {
   loan: 'English loan (auto-detected)',
   mt: 'modern usage — community translation data, approximate',
   cldr: 'standard modern name (CLDR)',
+  wd: 'name of a place, organisation or festival (Wikidata)',
 };
 
 

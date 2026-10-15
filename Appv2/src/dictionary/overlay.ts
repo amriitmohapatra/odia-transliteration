@@ -695,7 +695,7 @@ function entryBlock(word: string, num: number | null, entry: Entry | null, moder
       row.className = 'dict-modern-row';
       const lab = document.createElement('span');
       lab.className = 'dict-modern-tag dict-modern-tag-' + line.tag;
-      lab.textContent = line.tag === 'loan' ? 'English word?' : line.tag === 'cldr' ? 'name' : 'today';
+      lab.textContent = line.tag === 'loan' ? 'English word?' : line.tag === 'cldr' || line.tag === 'wd' ? 'name' : 'today';
       lab.title = MODERN_LABEL[line.tag] || line.tag;
       const val = document.createElement('span');
       val.className = 'dict-modern-gloss';

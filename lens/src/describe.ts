@@ -192,7 +192,7 @@ export function describeWord(
     const found = findModern(data.modern.keys, key);
     if (found) {
       const line = modernLines(defAt(data.modern, found.index)).find((l) => l.tag !== 'loan');
-      if (line) add(tidyGloss(line.gloss, found.how !== 'exact'), line.tag === 'cldr' ? 'standard modern name' : 'modern usage');
+      if (line) add(tidyGloss(line.gloss, found.how !== 'exact'), line.tag === 'cldr' ? 'standard modern name' : line.tag === 'wd' ? 'name (Wikidata)' : 'modern usage');
     }
   }
 
