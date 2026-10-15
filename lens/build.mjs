@@ -27,7 +27,7 @@
  *   offscreen.html/.js       the OCR page (tesseract.js bundled)
  *   ocr/worker.min.js        tesseract.js worker            (node_modules/tesseract.js, Apache-2.0)
  *   ocr/tesseract-core-simd-lstm.wasm.js  Tesseract in WebAssembly (tesseract.js-core, Apache-2.0)
- *   ocr/ori.traineddata      Odia model, tessdata_fast      (lens/vendor, Apache-2.0; lens/PROVENANCE.md)
+ *   ocr/ori.traineddata      Odia model, own fine-tune (V4.3) (lens/vendor, Apache-2.0; lens/PROVENANCE.md)
  *
  * No Desh data goes into the extension.
  */

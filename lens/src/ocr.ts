@@ -127,19 +127,17 @@ async function readLine(ocr: Worker, image: ImageBitmap, line: Box): Promise<Ocr
     return linesOf(result.data as never, scale, box.x0, box.y0).flatMap((l) => l.words);
   };
   const t = performance.now();
-  let words = await read('7');
-  // Single-line mode returns nothing for about one ePaper body line in ten; the
-  // raw-line mode (13) reads those (plan/research/lens-v2-ocr.md, V4.3 measurements).
-  if (meanConf(words) < RAW_LINE_BELOW) {
-    const raw = await read('13');
-    if (meanConf(raw) > meanConf(words)) words = raw;
-  }
+  // Raw-line mode (13) first: with this model it reads ePaper body lines and
+  // headlines best (letter errors 4.8% and 8.5%, against 13.7% and 17.9% in
+  // single-line mode, which also returns nothing for about one body line in
+  // ten). Single-line mode only when raw-line mode finds nothing
+  // (plan/research/v43-ocr-model/clean-results.md).
+  let words = await read('13');
+  if (words.length === 0) words = await read('7');
   timing.pass2 = Math.round(performance.now() - t);
   return words;
 }
 
-/** A line read with less mean confidence than this (or with no Odia at all) is read again in raw-line mode. */
-export const RAW_LINE_BELOW = 60;
 
 /** The text line under (x, y) in an image (region pixels): words with boxes, or null. */
 export async function readAt(image: ImageBitmap, x: number, y: number): Promise<OcrLine | null> {

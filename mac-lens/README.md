@@ -65,7 +65,7 @@ cd mac-lens
 |---|---|
 | `Sources/FrameWindow.swift` | The frame: a borderless, see-through floating panel in the Puri/Konark theme; bar to drag (with buttons), every edge and corner resizes; tells the app when it stops moving. |
 | `Sources/Capture.swift` | The pixels under the frame (ScreenCaptureKit `SCScreenshotManager`, macOS 14+), without the lens's own windows. |
-| `Sources/OCR.swift` | Runs `tesseract` (Homebrew) with the Odia model packed in the app (`ori.traineddata`, tessdata_fast, Apache-2.0); reads its TSV: words, boxes, confidence. Small captures are doubled first. |
+| `Sources/OCR.swift` | Runs `tesseract` (Homebrew) with the Odia model packed in the app (`ori.traineddata`, this project's fine-tune of tessdata_best, Apache-2.0; `lens/PROVENANCE.md`); reads its TSV: words, boxes, confidence. Small captures are doubled first. |
 | `Sources/ResultsPanel.swift` | A web view with the results page; serves the page and its dictionary files from the app (`odialens://app/`). |
 | `Sources/PointReader.swift` | Point mode: the text around the pointer through the Accessibility interface (`AXUIElementCopyElementAtPosition`, then the range for the position, the string for ±60 characters, and the character's bounds). Its own windows are skipped. |
 | `Sources/CardPanel.swift` | The card beside the pointer: the same page loaded as `index.html#card`; it finds the word and the word before it (`word.ts`) and shows the card. |

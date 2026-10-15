@@ -50,7 +50,7 @@ public static class Ocr
         string tessdata = Path.Combine(AppContext.BaseDirectory, "tessdata");
         var info = new ProcessStartInfo(exe)
         {
-            ArgumentList = { png, outBase, "--tessdata-dir", tessdata, "-l", "ori", "--psm", oneLine ? "7" : "6", "tsv" },
+            ArgumentList = { png, outBase, "--tessdata-dir", tessdata, "-l", "ori", "--psm", oneLine ? "13" : "6", "tsv" },
             UseShellExecute = false,
             CreateNoWindow = true,
             RedirectStandardError = true,

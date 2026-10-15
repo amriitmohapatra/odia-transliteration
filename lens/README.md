@@ -50,7 +50,13 @@ any word shows its card in the side panel; click to keep it. **Text of this page
 every line and word, **Copy text** copies the page, **Translate page** (online, opt-in)
 translates it. The file stays on this computer. Clean scans (300 dots per inch) and typed
 PDFs, even in old non-Unicode fonts, read well; old low-resolution scans (96 dots per inch)
-only in part, until the lens's own OCR model (V4.3).
+only in part.
+
+**Own Odia OCR model and better cards (0.7.0):** the lens reads print with its own
+model, trained for newsprint and old scans on open-licence text only: about half the
+letter errors of the stock model on ePapers. A number in Odia digits (୫୩) gets a card
+("53"). A long word that no dictionary has, made of two known words, is explained from
+its parts ("nation + minister"), marked "guessed from its parts".
 
 **Typed PDFs (0.6.0):** when a PDF carries its own Odia text in Unicode (made from Word,
 Google Docs, LibreOffice), the reader uses that text: exact and instant, and the card says

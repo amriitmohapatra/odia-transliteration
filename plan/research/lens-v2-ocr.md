@@ -165,6 +165,17 @@ mode (psm 13) reads them (stock body 17.6 → 11.2), now used as a second read f
 Larger enlargement, sharpening and binarisation do not help; `ori_best` is no better than
 `ori_fast`. The fine-tune fixes ଥି read as ଥୁ (8/28 → 0/28) and most lost ya-phalas.
 
+**Shipped: the open-licence model** (`clean-results.md`, `clean-PROVENANCE.md`). `ori-lens`
+used rendered news text and real line crops, so it was held (D-14). A second fine-tune from
+`ori_best` used only CC0/CC-BY word lists rendered in OFL fonts, with the same newsprint and
+96 dpi damage and the lens's own crop and scaling. It matches `ori-lens`: ePaper body 4.8,
+headlines 8.5, 300 dpi book 7.9 (best rule each), and became `lens/vendor/ori.traineddata`.
+What made `ori-lens` good was the damage and the lens-matched crop, not the news text.
+Rule change: raw-line mode (psm 13) is best for ePaper lines with every model, and the old
+"psm 7, then psm 13 below confidence 60" rule makes headlines worse (8.5 → 13.5), because
+psm 7 misreads many headlines with high confidence. Lines are now read with psm 13, and
+with psm 7 only when psm 13 finds nothing. Books in the reader keep the page mode (psm 3).
+
 ## 5. Stages
 
 | Stage | What | Depends on |

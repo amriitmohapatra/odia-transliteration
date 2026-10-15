@@ -65,7 +65,7 @@ enum OCR {
         guard let data = rep.representation(using: .png, properties: [:]) else { throw OCRError.failed("could not make a PNG") }
         try data.write(to: png)
         // Output goes to a file, not a pipe: a long result cannot block the program.
-        _ = try await run(exe, [png.path, base.path, "--tessdata-dir", tessdata.path, "-l", "ori", "--psm", oneLine ? "7" : "6", "tsv"])
+        _ = try await run(exe, [png.path, base.path, "--tessdata-dir", tessdata.path, "-l", "ori", "--psm", oneLine ? "13" : "6", "tsv"])
         let text = try String(contentsOf: tsv, encoding: .utf8)
         if versionText == nil {
             let v = (try? await run(exe, ["--version"])) ?? ""
