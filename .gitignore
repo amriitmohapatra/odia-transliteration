@@ -19,3 +19,4 @@ tools/build-data/webcorpus/raw-archive-books.jsonl
 # Odia Lens builds (node lens/build.mjs): the test build and the zip for loading unpacked.
 lens/dist-test/
 lens/odia-lens.zip
+mac-lens/build/

@@ -365,6 +365,18 @@ data** in the extension. Package: about 10 MB zip.
 most headlines, weak on 5 px ePaper body text: own model V4.3); one word at a time; no
 sentence translation (V4.5); Chrome and Edge only.
 
+## 7c. Odia Lens for Mac (`mac-lens/`, owner testing, 2026-10-15)
+
+A see-through frame over any app (the "v3 native" lens, first spike). Swift, built like
+`ime-macos/` (xcrun swiftc, no Xcode project, ad-hoc signed; macOS 14+). The frame window
+(borderless floating panel: bar to drag, corner to resize) reads when it stops moving:
+ScreenCaptureKit captures the pixels under it without the lens's own windows; the
+`tesseract` program (Homebrew) reads them with the packed `ori.traineddata`; a WKWebView
+page built from `lens/src/mac.ts` (served from the app through the `odialens:` scheme)
+corrects, splits and looks up the words with the browser lens's own code and draws the
+list. Not shared beyond the owner: no notarization, Screen Recording permission asked again
+after every rebuild. Details: `mac-lens/README.md`.
+
 ## 8. Testing and measurement
 
 | Check | Command | Measures |

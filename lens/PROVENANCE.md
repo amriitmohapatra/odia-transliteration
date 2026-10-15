@@ -19,3 +19,7 @@ Checksums (SHA-256):
 | `node_modules/tesseract.js/dist/worker.min.js` (5.1.1) | 123,724 | see `package-lock.json` integrity |
 
 No Desh data is in the extension. Nothing is fetched from the network at run time.
+
+**Odia Lens for Mac** (`mac-lens/`, owner testing): the same `ori.traineddata` and the
+same dictionary files (built by `node lens/build.mjs --mac`); the OCR engine is the
+`tesseract` program the owner installs with Homebrew (Apache-2.0), not packed in the app.

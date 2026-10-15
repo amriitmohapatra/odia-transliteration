@@ -5,6 +5,9 @@
  *   node lens/build.mjs --test     lens/dist-test: the same, plus host access to all
  *                                  sites, so lens/eval/lens-check.mjs can turn it on
  *                                  and take screenshots without a toolbar click
+ *   node lens/build.mjs --mac      mac-lens/build/web: the Mac lens's results page
+ *                                  (mac.js, index.html and dict/; no OCR files: the
+ *                                  Mac app runs the tesseract program itself)
  *
  * It bundles background.ts and content.ts (classic scripts: executeScript
  * injects a classic script) and packs the dictionary the app already ships
@@ -40,15 +43,18 @@ const LENS = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(LENS, '..');
 const test = process.argv.includes('--test');
 const zip = process.argv.includes('--zip');
-const OUT = resolve(LENS, test ? 'dist-test' : 'dist');
+const mac = process.argv.includes('--mac');
+const OUT = mac ? resolve(LENS, '../mac-lens/build/web') : resolve(LENS, test ? 'dist-test' : 'dist');
 /** Definitions per chunk: about 300 KB of text, 80 KB gzipped. */
 const CHUNK = 500;
 const SEP = '\u0002';
 
 rmSync(OUT, { recursive: true, force: true });
 mkdirSync(resolve(OUT, 'dict'), { recursive: true });
-mkdirSync(resolve(OUT, 'icons'), { recursive: true });
-mkdirSync(resolve(OUT, 'ocr'), { recursive: true });
+if (!mac) {
+  mkdirSync(resolve(OUT, 'icons'), { recursive: true });
+  mkdirSync(resolve(OUT, 'ocr'), { recursive: true });
+}
 
 // @odia/core and its subpaths, as Appv2/vite.config.ts maps them.
 const coreAlias = {
@@ -62,11 +68,13 @@ const coreAlias = {
 };
 
 await build({
-  entryPoints: {
-    background: resolve(LENS, 'src/background.ts'),
-    content: resolve(LENS, 'src/content.ts'),
-    offscreen: resolve(LENS, 'src/offscreen.ts'),
-  },
+  entryPoints: mac
+    ? { mac: resolve(LENS, 'src/mac.ts') }
+    : {
+        background: resolve(LENS, 'src/background.ts'),
+        content: resolve(LENS, 'src/content.ts'),
+        offscreen: resolve(LENS, 'src/offscreen.ts'),
+      },
   outdir: OUT,
   bundle: true,
   format: 'iife',
@@ -106,6 +114,16 @@ for (const name of ['modern.bin', 'origin.bin']) {
 }
 
 writeFileSync(resolve(OUT, 'dict/words.bin'), gzipSync(readFileSync(resolve(ROOT, 'core/data/indiccorp-words.tsv')), { level: 9, mtime: 0 }));
+
+if (mac) {
+  writeFileSync(
+    resolve(OUT, 'index.html'),
+    '<!doctype html>\n<meta charset="utf-8">\n<meta name="viewport" content="width=device-width">\n<title>Odia Lens</title>\n<body>\n<script src="mac.js"></script>\n',
+  );
+  console.log(`odia lens (Mac page): ${OUT}`);
+  console.log(`  praharaj: ${count} keys in ${files} chunks of ${CHUNK}`);
+  process.exit(0);
+}
 
 // The OCR engine and the Odia model.
 const NM = resolve(ROOT, 'node_modules');
