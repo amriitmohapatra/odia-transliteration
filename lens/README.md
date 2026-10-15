@@ -41,6 +41,17 @@ see-through layers and reads the frame on the screen at that moment. Odia captio
 (subtitles) are page text: point at a caption word for its card at once. In full screen
 the card still shows. The frame works over videos too; press **↻** to read a new frame.
 
+**PDF books and newspapers (0.5.0, the reader):** Chrome's own PDF viewer does not let
+extensions in, so the lens has its own reader. Open it with **Alt+Shift+R**, from the lens
+settings, or by clicking the lens icon on a PDF (it then says how to bring that PDF in:
+download it, then choose the file). Choose or drop a PDF: each page is drawn, then read
+once (about 10–40 s a page; the wheel turns and a light sweeps the page), and pointing at
+any word shows its card in the side panel; click to keep it. **Text of this page** lists
+every line and word, **Copy text** copies the page, **Translate page** (online, opt-in)
+translates it. The file stays on this computer. Clean scans (300 dots per inch) and typed
+PDFs, even in old non-Unicode fonts, read well; old low-resolution scans (96 dots per inch)
+only in part, until the lens's own OCR model (V4.3).
+
 **Translate (0.4.0, online, off until you turn it on):** the frame's panel has a
 **Translate** button: the lines read inside the frame are translated into English and
 shown above them, marked as a machine translation. See Privacy for what is sent where.

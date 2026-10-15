@@ -35,6 +35,8 @@ export interface OpenSettingsRequest {
 
 /** The manifest's command name for the keyboard shortcut. */
 export const TOGGLE_COMMAND = 'toggle-lens';
+/** The manifest's command name for opening the PDF reader. */
+export const READER_COMMAND = 'open-reader';
 /** The manifest's command name for opening or closing the frame. */
 export const FRAME_COMMAND = 'toggle-frame';
 

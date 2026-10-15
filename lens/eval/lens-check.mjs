@@ -439,6 +439,31 @@ await check('translate (V4.5, online, opt-in): the frame sends the lines read to
   assert.equal(await toggle(), 'ON');
 });
 
+await check('PDF reader (V4.6): a PDF of a picture of Odia words is read page by page; a word shows its card', async () => {
+  // A PDF made here from the test picture (no book is stored with the check).
+  await page.goto(`${origin}/picture.html`);
+  await page.waitForFunction(() => Array.isArray(window.__boxes));
+  const pdf = await page.pdf({ width: '900px', height: '260px', printBackground: true });
+  const reader = await context.newPage();
+  reader.on('pageerror', (e) => errors.push(`reader: ${e}`));
+  await reader.goto(worker.url().replace('background.js', 'reader.html'));
+  await reader.setInputFiles('#file', { name: 'words.pdf', mimeType: 'application/pdf', buffer: pdf });
+  await reader.waitForFunction(() => window.odiaReader?.pages()[0]?.read, null, { timeout: 60000 });
+  const words = await reader.evaluate(() => window.odiaReader.pages()[0].words);
+  const fold = (t) => t.replaceAll('\u0B5F', '\u0B2F');
+  for (const w of PICTURE_WORDS) assert.ok(words.map(fold).includes(fold(w)), `words: ${words.join(' ')}`);
+  // The page's text in the side panel; a word chosen there shows its card.
+  await reader.click('#showText');
+  await reader.locator('#text .chip', { hasText: PICTURE_WORDS[0] }).first().click();
+  await reader.waitForFunction(() => document.querySelector('#word .detail-word')?.textContent.length > 0);
+  const card = await reader.evaluate(() => document.getElementById('word').textContent);
+  assert.match(card, /government/i, card);
+  assert.equal(await reader.locator('.page .hl:not([hidden])').count(), 1);
+  await reader.close();
+  await page.goto(`${origin}/odia.html`);
+  assert.equal(await toggle(), 'ON');
+});
+
 await check('turning it off removes the lens from the page', async () => {
   assert.equal(await toggle(), '');
   await hover('dina');

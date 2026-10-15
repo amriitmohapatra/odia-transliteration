@@ -363,6 +363,17 @@ unit test checks the shipped manifest); CSP allows WebAssembly only from the ext
 nothing leaves the computer (the browser check fails on any outside request), except
 translation (V4.5) when the reader turns it on. **No Desh data** in the extension.
 
+**PDF reader (lens 0.5.0, V4.6):** `reader.html` + `reader.ts`, an extension page (Chrome's
+PDF viewer refuses content scripts). pdf.js (legacy build: the modern one needs
+`Map.getOrInsertComputed`) draws pages lazily (IntersectionObserver; far pages are
+released). Each page is read once, from its own pixels at about 300 dpi (at most 3,000 px
+wide): `ocr.ts readPage` (Tesseract page layout, psm 3; lines under 70 confidence read again
+alone; lines under 40 dropped as another script or noise), then `engine.ts explainLines`
+(shared with the frame and the Mac lens). Words keep their boxes, so pointing is instant
+after the read; the page in view is read first. The PDF comes from the file picker or drag
+and drop: no permission. The action icon on a `.pdf` tab opens the reader with the address
+and download instructions instead of injecting. Command `open-reader` (Alt+Shift+R).
+
 **Translation (lens 0.4.0, V4.5):** the only online feature, through the assist layer.
 The settings page (`options.ts`) is the switch: turning it on requests the one optional
 host permission, `https://odia-transliteration-web.vercel.app/*` (a unit test pins it);

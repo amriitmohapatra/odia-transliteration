@@ -7,6 +7,9 @@ The extension's own code is this project's (MIT). It packs these parts:
 | Tesseract OCR engine in WebAssembly | `tesseract.js-core` 5.1.1 (npm), file `tesseract-core-simd-lstm.wasm.js` | Apache-2.0 (`ocr/LICENSE-tesseract.js-core.txt`) | `ocr/` |
 | tesseract.js worker and API | `tesseract.js` 5.1.1 (npm): `dist/worker.min.js`, and the API bundled into `offscreen.js` | Apache-2.0 (`ocr/LICENSE-tesseract.js.md`) | `ocr/`, `offscreen.js` |
 | Odia OCR model | `tesseract-ocr/tessdata_fast`, `ori.traineddata`, kept at `lens/vendor/ori.traineddata` | Apache-2.0 | `ocr/ori.traineddata` |
+| PDF reader (V4.6): pdf.js | `pdfjs-dist` 6.3.289 (npm), legacy build: `legacy/build/pdf.mjs` (bundled into `reader.js`, sha256 `91e29f81…cfbd8d`) and `legacy/build/pdf.worker.min.mjs` (sha256 `a33cfe72…49b84e`) | Apache-2.0 (`pdf/LICENSE-pdf.js.txt`) | `reader.js`, `pdf/` |
+| pdf.js image decoders | `pdfjs-dist` 6.3.289 `wasm/`: `jbig2.wasm` (sha256 `e6bee677…7cfdc`; PDFium, BSD-3-Clause, and Apache-2.0), `openjpeg.wasm` (`004a0e62…8ba`; OpenJPEG, BSD-2-Clause), `qcms_bg.wasm` (`663d8612…800e`; qcms, MIT) | licence files in `pdf/wasm/` | `pdf/wasm/` |
+| pdf.js standard fonts | `pdfjs-dist` 6.3.289 `standard_fonts/`: the Foxit `.pfb` fonts only (the Liberation fonts are left out: their licence is GPL with a font exception) | BSD-3-Clause, PDFium (`pdf/standard_fonts/LICENSE_FOXIT`) | `pdf/standard_fonts/` |
 | Word list for OCR correction | `core/data/indiccorp-words.tsv` (IndicCorp v2 word counts) | CC0 | `dict/words.bin` |
 | Dictionaries | the app's `Appv2/src/dictionary/*.bin`, `loans.tsv`; `core/data/glosses.tsv`, `meanings.tsv`, `verb-endings.tsv` | see `Odia_Sanskrit_Appv2/PROVENANCE.md`, `Appv2/src/dictionary/PROVENANCE.md`, `core/data/PROVENANCE.md` | `dict/`, `background.js` |
 

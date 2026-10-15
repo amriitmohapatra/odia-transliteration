@@ -28,6 +28,7 @@ declare namespace chrome {
       windowId?: number;
     }
     function captureVisibleTab(windowId: number | undefined, options: { format: 'png' | 'jpeg'; quality?: number }): Promise<string>;
+    function create(properties: { url: string; index?: number; openerTabId?: number }): Promise<Tab>;
     function query(info: { active?: boolean; lastFocusedWindow?: boolean; currentWindow?: boolean }): Promise<Tab[]>;
     const onUpdated: {
       addListener(listener: (tabId: number, change: { status?: string }, tab: Tab) => void): void;

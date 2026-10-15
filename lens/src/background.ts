@@ -12,7 +12,7 @@
 import { canonical } from '@odia/core/normalize';
 
 import { separate } from './correct.js';
-import { explainer, fetchLoader, loadWords, lookup, readWord, setLoader } from './engine.js';
+import { explainLines, explainer, fetchLoader, loadWords, lookup, readWord, setLoader } from './engine.js';
 import {
   FRAME,
   LOOKUP,
@@ -22,11 +22,10 @@ import {
   TOGGLE_COMMAND,
   FRAME_COMMAND,
   OPEN_SETTINGS,
+  READER_COMMAND,
   TRANSLATE,
-  type FrameLine,
   type FrameRequest,
   type FrameResponse,
-  type FrameWord,
   type LookupRequest,
   type LookupResponse,
   type OcrRequest,
@@ -39,7 +38,7 @@ import {
   type TranslateResponse,
 } from './messages.js';
 import { ASSIST_ORIGIN, ASSIST_PERMISSION } from './assist.js';
-import { HAS_ODIA, cleanRead, lineText, mapBox, pickWord, regionAround } from './picture.js';
+import { cleanRead, mapBox, pickWord, regionAround } from './picture.js';
 
 setLoader(fetchLoader((path) => chrome.runtime.getURL(path)));
 
@@ -137,26 +136,9 @@ async function readFrame(request: FrameRequest, windowId: number | undefined): P
   const png = await canvas.convertToBlob({ type: 'image/png' });
   const answer = await ocr({ type: OCR, target: 'offscreen', image: dataUrl(await png.arrayBuffer()), mode: 'block', x: 0, y: 0 });
   if (!answer.ok) return answer;
-  const [list, explainable] = await Promise.all([loadWords(), explainer()]);
-  const lines: FrameLine[] = [];
-  for (const line of answer.lines ?? []) {
-    const pieces = separate(
-      line.words.map((w) => ({ ...w, box: mapBox(w.box, 1 / ratio, box.x0, box.y0) })),
-      list,
-      (t) => canonical(cleanRead(t)),
-      explainable,
-    );
-    const words: FrameWord[] = [];
-    let previous = '';
-    for (const w of pieces) {
-      if (!HAS_ODIA.test(w.text)) continue;
-      const found = await readWord(w.text, w.conf, w.whole, previous);
-      if (!found) continue;
-      words.push({ text: w.text, conf: w.conf, box: w.box, card: found.card, reading: found.reading });
-      previous = found.reading.corrected ?? found.reading.readAs;
-    }
-    lines.push({ read: canonical(lineText(line.words.map((w) => w.text))), words });
-  }
+  const lines = await explainLines(
+    (answer.lines ?? []).map((line) => ({ words: line.words.map((w) => ({ ...w, box: mapBox(w.box, 1 / ratio, box.x0, box.y0) })) })),
+  );
   return { ok: true, lines, ms: Date.now() - t0 };
 }
 
@@ -240,11 +222,22 @@ async function toggle(tabId: number, what: 'lens' | 'frame' = 'lens'): Promise<v
   }
 }
 
+/** A PDF in Chrome's own viewer: extensions cannot read inside it. */
+const isPdf = (url: string | undefined): boolean => !!url && /^(https?|file):[^#?]*\.pdf([?#]|$)/i.test(url);
+
+/** The lens's PDF reader (V4.6) in a new tab; with the address of a PDF the reader says how to bring it there. */
+function openReader(from?: chrome.tabs.Tab): void {
+  const url = chrome.runtime.getURL('reader.html') + (from && isPdf(from.url) ? `#url=${encodeURIComponent(from.url as string)}` : '');
+  void chrome.tabs.create({ url, ...(from?.id !== undefined ? { openerTabId: from.id } : {}) });
+}
+
 chrome.action.onClicked.addListener((tab) => {
-  if (tab.id !== undefined) void toggle(tab.id);
+  if (isPdf(tab.url)) openReader(tab);
+  else if (tab.id !== undefined) void toggle(tab.id);
 });
 
 chrome.commands.onCommand.addListener((command, tab) => {
+  if (command === READER_COMMAND) return openReader(tab);
   if (tab?.id === undefined) return;
   if (command === TOGGLE_COMMAND) void toggle(tab.id);
   if (command === FRAME_COMMAND) void toggle(tab.id, 'frame');

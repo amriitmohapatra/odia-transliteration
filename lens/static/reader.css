@@ -1,0 +1,93 @@
+/* The Odia Lens reader (V4.6): the same Puri/Konark palette as the frame (frame.ts). */
+:root {
+  color-scheme: light dark;
+  --nila: #1e2f5c; --nila-deep: #15213f; --hingula: #b7321e; --haritala: #e8b23a;
+  --shankha: #fbf6ea; --kajal: #1c1712; --stone: #6f6253; --line: #e3d6bb; --desk: #ece3cf;
+}
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body { margin: 0; display: flex; flex-direction: column; background: var(--desk); color: var(--kajal);
+  font: 14px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif; }
+.visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+button { font: inherit; cursor: pointer; }
+button:focus-visible, input:focus-visible { outline: 2px solid var(--haritala); outline-offset: 1px; }
+
+/* The bar: Nilachakra indigo, the Konark wheel, open, pages, zoom. */
+.bar { flex: none; display: flex; align-items: center; gap: 10px; padding: 7px 12px; background: var(--nila);
+  color: var(--shankha); border-bottom: 3px solid var(--haritala); box-shadow: 0 2px 0 var(--hingula); }
+.grip { display: flex; align-items: center; gap: 8px; }
+.wheel { width: 26px; height: 26px; color: var(--haritala); flex: none; }
+.wheel.reading { animation: odia-turn 1.6s linear infinite; }
+@keyframes odia-turn { to { transform: rotate(360deg); } }
+.brand { font: italic 600 17px/1 "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif; }
+.sub { font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--haritala); }
+.bar button { border: 0; border-radius: 7px; padding: 5px 10px; background: rgba(0, 0, 0, 0.22); color: inherit; }
+.bar button:hover { background: rgba(232, 178, 58, 0.25); }
+.bar button.primary { background: var(--haritala); color: var(--kajal); font-weight: 600; }
+.name { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; opacity: 0.85; }
+.pager, .zoom { display: flex; align-items: center; gap: 6px; }
+.pager input { width: 3.5em; text-align: center; border: 0; border-radius: 6px; padding: 4px; background: var(--shankha); color: var(--kajal); }
+.pager[hidden], .zoom[hidden] { display: none; }
+
+main { flex: 1; min-height: 0; display: flex; }
+#pages { flex: 1; overflow: auto; padding: 24px 16px 48px; position: relative; }
+#pages.dragging { outline: 3px dashed var(--hingula); outline-offset: -10px; }
+.page { position: relative; margin: 0 auto 22px; background: #fff; box-shadow: 0 1px 0 var(--line), 0 6px 18px rgba(28, 23, 18, 0.16); }
+.page canvas { display: block; width: 100%; height: 100%; }
+.page .num { position: absolute; left: -2px; top: -18px; font-size: 11px; color: var(--stone); }
+.page.reading::after { content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(90deg, transparent, rgba(232, 178, 58, 0.18), transparent) 0 0 / 40% 100% no-repeat;
+  animation: odia-sweep 1.4s ease-in-out infinite; }
+@keyframes odia-sweep { from { background-position: -40% 0; } to { background-position: 140% 0; } }
+.hl { position: absolute; pointer-events: none; border: 2px solid var(--hingula); border-radius: 3px;
+  background: rgba(232, 178, 58, 0.22); box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.7); }
+.hl[hidden] { display: none; }
+
+.empty { max-width: 560px; margin: 8vh auto 0; padding: 28px 28px 24px; background: var(--shankha); border: 1px solid var(--line);
+  border-radius: 14px; box-shadow: 0 10px 30px rgba(28, 23, 18, 0.12); position: relative; overflow: hidden; }
+.empty::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 8px;
+  background: linear-gradient(135deg, var(--hingula) 25%, transparent 25%) 0 0 / 16px 8px repeat-x,
+    linear-gradient(225deg, var(--hingula) 25%, transparent 25%) 0 0 / 16px 8px repeat-x, var(--haritala); }
+.empty h1 { margin: 6px 0 10px; font: italic 600 24px/1.25 "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif; color: var(--nila); }
+.empty .hint { font-size: 12.5px; color: var(--stone); }
+.empty .big { margin: 6px 0 12px; border: 0; border-radius: 9px; padding: 10px 18px; background: var(--nila); color: var(--shankha); font-weight: 600; }
+.empty .big:hover { background: var(--hingula); }
+#fromViewer { padding: 10px 12px; border-radius: 9px; background: #fff; border-left: 4px solid var(--hingula); }
+
+/* The side panel: the word under the pointer, the page's text, copy, translate. */
+#side { flex: none; width: 380px; max-width: 42vw; overflow: auto; background: var(--shankha); border-left: 1px solid var(--line);
+  display: flex; flex-direction: column; }
+#side::before { content: ""; flex: none; height: 7px;
+  background: linear-gradient(135deg, var(--hingula) 25%, transparent 25%) 0 0 / 14px 7px repeat-x,
+    linear-gradient(225deg, var(--hingula) 25%, transparent 25%) 0 0 / 14px 7px repeat-x, var(--haritala); }
+.side-head { padding: 9px 14px; border-bottom: 1px solid var(--line); font-size: 12.5px; color: var(--stone); }
+.word { padding: 12px 14px 4px; }
+.word .detail { margin-top: 0; }
+.word .line-of { margin-top: 8px; font: 15px/1.5 "Noto Sans Oriya", "Oriya Sangam MN", "Kalinga", "Odia MN", sans-serif; color: var(--stone); }
+.muted { color: var(--stone); margin: 0; }
+.tools { display: flex; flex-wrap: wrap; gap: 6px; padding: 8px 14px; }
+.tools[hidden] { display: none; }
+.tools button { border: 1px solid var(--line); border-radius: 7px; padding: 4px 10px; background: #fff; color: var(--kajal); }
+.tools button:hover { border-color: var(--hingula); color: var(--hingula); }
+.tools button.primary { background: var(--nila); border-color: var(--nila); color: var(--shankha); font-weight: 600; }
+.tools button.primary:hover { background: var(--hingula); border-color: var(--hingula); color: #fff; }
+.tools button[aria-pressed="true"] { border-color: var(--hingula); box-shadow: inset 0 0 0 1px var(--hingula); }
+#translation { padding: 0 14px; }
+#text { padding: 4px 14px 24px; }
+#text[hidden] { display: none; }
+.translation { margin: 4px 0 12px; padding: 10px 12px; border-radius: 10px; background: var(--nila); color: var(--shankha); }
+.translation-label { display: block; margin-bottom: 4px; font-size: 10.5px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--haritala); }
+.translation p { margin: 0; white-space: pre-wrap; }
+.translation button { margin-top: 8px; border: 0; border-radius: 7px; padding: 5px 11px; background: var(--haritala); color: var(--kajal); font-weight: 600; }
+
+@media (prefers-color-scheme: dark) {
+  :root { --shankha: #17150f; --kajal: #f3ead6; --stone: #c9bb9d; --line: #3a3326; --desk: #0f0d09; }
+  .page { background: #fff; }
+  .tools button { background: #231f17; color: #f3ead6; }
+  .empty, #fromViewer { background: #1d1a13; }
+  .empty h1 { color: #9fb3e8; }
+  .translation { background: #22325f; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .wheel.reading, .page.reading::after { animation: none; }
+}

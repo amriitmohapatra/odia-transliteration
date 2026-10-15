@@ -23,10 +23,10 @@ import meaningsTsv from '../../core/data/meanings.tsv';
 import verbEndingsTsv from '../../core/data/verb-endings.tsv';
 import loansTsv from '../../Appv2/src/dictionary/loans.tsv';
 
-import { parseWordList, type WordList } from './correct.js';
+import { parseWordList, separate, type WordList } from './correct.js';
 import { describeWord, type LensCard, type LensData } from './describe.js';
-import type { Reading } from './messages.js';
-import { cleanRead } from './picture.js';
+import type { FrameLine, FrameWord, Reading } from './messages.js';
+import { HAS_ODIA, cleanRead, lineText, type OcrWord } from './picture.js';
 
 interface ChunkIndex {
   count: number;
@@ -165,4 +165,28 @@ export async function explainer(): Promise<(text: string) => boolean> {
     const how = findEntry(k, foldKey(odia))?.how;
     return list.has(odia) || data.owner.get(odia) !== undefined || data.ai?.word(odia) !== undefined || how === 'exact' || how === 'stem';
   };
+}
+
+/**
+ * Lines read by OCR as the lens shows them (the frame, the Mac lens, the PDF
+ * reader): each line as read, then its Odia words, split and corrected
+ * (correct.ts), each with its card, looked up with the word before it.
+ */
+export async function explainLines(lines: readonly { words: readonly OcrWord[] }[]): Promise<FrameLine[]> {
+  const [list, explainable] = await Promise.all([loadWords(), explainer()]);
+  const out: FrameLine[] = [];
+  for (const line of lines) {
+    const pieces = separate([...line.words], list, (t) => canonical(cleanRead(t)), explainable);
+    const words: FrameWord[] = [];
+    let previous = '';
+    for (const w of pieces) {
+      if (!HAS_ODIA.test(w.text)) continue;
+      const found = await readWord(w.text, w.conf, w.whole, previous);
+      if (!found) continue;
+      words.push({ text: w.text, conf: w.conf, box: w.box, card: found.card, reading: found.reading });
+      previous = found.reading.corrected ?? found.reading.readAs;
+    }
+    out.push({ read: canonical(lineText(line.words.map((w) => w.text))), words });
+  }
+  return out;
 }

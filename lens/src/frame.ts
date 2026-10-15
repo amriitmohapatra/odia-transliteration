@@ -145,7 +145,7 @@ export const FRAME_CSS = `
  * The Konark wheel (the sun temple's chariot wheel, also a sundial): rim, hub,
  * eight broad spokes and eight thin ones. currentColor, so the bar sets it.
  */
-const KONARK_WHEEL = `<svg class="wheel" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor">
+export const KONARK_WHEEL = `<svg class="wheel" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor">
 <circle cx="12" cy="12" r="10.2" stroke-width="2"/><circle cx="12" cy="12" r="7.6" stroke-width="0.8"/>
 <g stroke-width="1.7" stroke-linecap="round"><path d="M12 4.4V9.6M12 14.4V19.6M4.4 12H9.6M14.4 12H19.6M6.6 6.6L10.3 10.3M13.7 13.7L17.4 17.4M17.4 6.6L13.7 10.3M10.3 13.7L6.6 17.4"/></g>
 <g stroke-width="0.7"><path d="M14.9 5L13 9.7M9.1 19L11 14.3M5 9.1L9.7 11M19 14.9L14.3 13M9.1 5L11 9.7M14.9 19L13 14.3M5 14.9L9.7 13M19 9.1L14.3 11"/></g>

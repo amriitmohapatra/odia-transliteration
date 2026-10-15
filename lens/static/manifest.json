@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "Odia Lens",
-  "version": "0.4.0",
-  "description": "Point at Odia words on any web page, in ePaper images and videos: meaning, pronunciation and word origin. Offline; reads only the pages you turn it on for. Optional online translation, off until you turn it on.",
+  "version": "0.5.0",
+  "description": "Point at Odia words on any web page, in ePaper images, videos and PDF books: meaning, pronunciation and word origin. Offline; reads only the pages you turn it on for. Optional online translation, off until you turn it on.",
   "minimum_chrome_version": "110",
   "action": {
     "default_title": "Odia Lens: click to read Odia on this page (Alt+Shift+O)",
@@ -48,6 +48,12 @@
         "default": "Alt+Shift+F"
       },
       "description": "Open or close the Odia Lens frame: a box you move and resize over Odia in a picture"
+    },
+    "open-reader": {
+      "suggested_key": {
+        "default": "Alt+Shift+R"
+      },
+      "description": "Open the Odia Lens reader for PDF books and newspapers"
     }
   }
 }

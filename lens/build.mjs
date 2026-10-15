@@ -34,7 +34,7 @@
 
 import { build } from 'esbuild';
 import { execFileSync } from 'node:child_process';
-import { copyFileSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { copyFileSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { gunzipSync, gzipSync } from 'node:zlib';
@@ -87,6 +87,22 @@ await build({
   logLevel: 'warning',
 });
 
+// The PDF reader (V4.6) imports pdf.js, an ES module: its own module bundle.
+if (!mac) {
+  await build({
+    entryPoints: { reader: resolve(LENS, 'src/reader.ts') },
+    outdir: OUT,
+    bundle: true,
+    format: 'esm',
+    target: 'chrome110',
+    loader: { '.tsv': 'text' },
+    define: { __LENS_TEST__: String(test) },
+    plugins: [coreAlias],
+    legalComments: 'inline',
+    logLevel: 'warning',
+  });
+}
+
 // The Praharaj payload: N SEP keys SEP lens SEP defs (Appv2/src/dictionary/lookup.ts).
 const text = gunzipSync(readFileSync(resolve(ROOT, 'Appv2/src/dictionary/praharaj.bin'))).toString('utf8');
 const a = text.indexOf(SEP);
@@ -137,6 +153,23 @@ copyFileSync(resolve(NM, 'tesseract.js-core/LICENSE'), resolve(OUT, 'ocr/LICENSE
 copyFileSync(resolve(LENS, 'static/offscreen.html'), resolve(OUT, 'offscreen.html'));
 copyFileSync(resolve(LENS, 'static/options.html'), resolve(OUT, 'options.html'));
 copyFileSync(resolve(LENS, 'static/options.css'), resolve(OUT, 'options.css'));
+copyFileSync(resolve(LENS, 'static/reader.html'), resolve(OUT, 'reader.html'));
+copyFileSync(resolve(LENS, 'static/reader.css'), resolve(OUT, 'reader.css'));
+// pdf.js (Apache-2.0): its worker, the image decoders (JBIG2, JPEG 2000, colour profiles) and
+// the standard fonts; not the CJK character maps or its JavaScript engine (the reader runs no PDF scripts).
+const PDFJS = resolve(NM, 'pdfjs-dist');
+mkdirSync(resolve(OUT, 'pdf/wasm'), { recursive: true });
+mkdirSync(resolve(OUT, 'pdf/standard_fonts'), { recursive: true });
+copyFileSync(resolve(PDFJS, 'legacy/build/pdf.worker.min.mjs'), resolve(OUT, 'pdf/pdf.worker.min.mjs'));
+copyFileSync(resolve(PDFJS, 'LICENSE'), resolve(OUT, 'pdf/LICENSE-pdf.js.txt'));
+for (const f of readdirSync(resolve(PDFJS, 'wasm'))) {
+  if (/^(jbig2|openjpeg|qcms_bg)\.wasm$|^LICENSE/.test(f)) copyFileSync(resolve(PDFJS, 'wasm', f), resolve(OUT, 'pdf/wasm', f));
+}
+// The Foxit standard fonts (BSD, PDFium) only: the Liberation fonts' licence (GPL with a
+// font exception) is not one this project ships (CLAUDE.md, Licensing).
+for (const f of readdirSync(resolve(PDFJS, 'standard_fonts'))) {
+  if (/^Foxit.*\.pfb$|^LICENSE_FOXIT$/.test(f)) copyFileSync(resolve(PDFJS, 'standard_fonts', f), resolve(OUT, 'pdf/standard_fonts', f));
+}
 
 copyFileSync(resolve(ROOT, 'Appv2/public/icons/icon-192.png'), resolve(OUT, 'icons/icon.png'));
 const manifest = JSON.parse(readFileSync(resolve(LENS, 'static/manifest.json'), 'utf8'));

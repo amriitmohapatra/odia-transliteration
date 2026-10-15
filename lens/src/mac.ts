@@ -14,13 +14,9 @@
  * report from the owner tells which step failed.
  */
 
-import { canonical } from '@odia/core/normalize';
-
-import { separate } from './correct.js';
-import { explainer, fetchLoader, loadWords, readWord, setLoader } from './engine.js';
+import { explainLines, explainer, fetchLoader, loadWords, setLoader } from './engine.js';
 import { FRAME_VIEW_CSS, renderDetail, renderLines } from './frameview.js';
-import type { FrameLine, FrameWord } from './messages.js';
-import { HAS_ODIA, cleanRead, lineText, type Box } from './picture.js';
+import type { Box } from './picture.js';
 
 /** A line as the Swift side read it (boxes in screen points inside the frame). */
 interface NativeLine {
@@ -104,21 +100,7 @@ async function show(lines: NativeLine[], info: NativeInfo = {}): Promise<number>
   }
   if (info.engine) steps.ocr = info.engine;
   const t0 = performance.now();
-  const [list, explainable] = await Promise.all([loadWords(), explainer()]);
-  const out: FrameLine[] = [];
-  for (const line of lines) {
-    const pieces = separate(line.words, list, (t) => canonical(cleanRead(t)), explainable);
-    const words: FrameWord[] = [];
-    let previous = '';
-    for (const w of pieces) {
-      if (!HAS_ODIA.test(w.text)) continue;
-      const found = await readWord(w.text, w.conf, w.whole, previous);
-      if (!found) continue;
-      words.push({ text: w.text, conf: w.conf, box: w.box, card: found.card, reading: found.reading });
-      previous = found.reading.corrected ?? found.reading.readAs;
-    }
-    out.push({ read: canonical(lineText(line.words.map((w) => w.text))), words });
-  }
+  const out = await explainLines(lines);
   const lookupMs = Math.round(performance.now() - t0);
   steps.last = `${out.length} line${out.length === 1 ? '' : 's'}${info.ms !== undefined ? ` · read ${info.ms} ms` : ''} · meanings ${lookupMs} ms`;
   showStatus();

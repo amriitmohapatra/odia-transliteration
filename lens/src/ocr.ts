@@ -188,3 +188,37 @@ export async function readBlock(image: ImageBitmap): Promise<OcrLine[]> {
   return out.sort((a, b) => a.box.y0 - b.box.y0);
 }
 
+
+/** Page reading (PDF reader): at most this many unclear lines are read again on their own. */
+export const MAX_PAGE_REREADS = 40;
+
+/**
+ * A whole page of a book or newspaper (the PDF reader, V4.6): every Odia line,
+ * in reading order (Tesseract's page layout finds columns). Lines read unclearly
+ * in the page pass are read again alone, enlarged to a steady letter size.
+ * `onProgress` hears (lines re-read, lines to re-read).
+ */
+export async function readPage(image: ImageBitmap, onProgress?: (done: number, total: number) => void): Promise<OcrLine[]> {
+  const ocr = await ocrWorker();
+  timing.find = timing.pass1 = timing.pass2 = 0;
+  const whole: Box = { x0: 0, y0: 0, x1: image.width, y1: image.height };
+  await ocr.setParameters({ tessedit_pageseg_mode: '3' as never });
+  const t = performance.now();
+  const result = await ocr.recognize(pgm(prepare(image, whole, 1)) as never, {}, { blocks: true, text: false });
+  timing.pass1 = Math.round(performance.now() - t);
+  const lines = linesOf(result.data as never, 1, 0, 0).filter((l) => l.words.some((w) => HAS_ODIA.test(w.text)));
+  const unclear = lines.filter((l) => meanConf(l.words) < 70).slice(0, MAX_PAGE_REREADS);
+  let done = 0;
+  onProgress?.(0, unclear.length);
+  for (const line of unclear) {
+    const words = await readLine(ocr, image, line.box);
+    if (meanConf(words) > meanConf(line.words)) line.words = words;
+    onProgress?.(++done, unclear.length);
+  }
+  // Print in another script (an English quotation) comes out of the Odia model as
+  // a line of nonsense Odia at very low confidence: leave such lines out.
+  return lines.filter((l) => meanConf(l.words) >= PAGE_MIN_CONF);
+}
+
+/** Lines of a page read with less mean confidence than this are not Odia text (picture noise, another script). */
+export const PAGE_MIN_CONF = 40;
