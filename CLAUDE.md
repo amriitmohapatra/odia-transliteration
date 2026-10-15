@@ -258,6 +258,10 @@ that the MIT `LICENSE` does not cover.
 
 If the user says they want to make the repo public, remind them of this first.
 
+**Saved for later (owner, 2026-10-15): guide video.** Once both the transliteration app and
+the Odia Lens are ready and updated, remind the owner about the brag and user-guide video
+(`PLAN.md` stage G); the owner gives the requirements then.
+
 **Saved for later (owner, 2026-10-04):** the website is public, the repository stays private
 for now. When the owner says the project is finished, remind them to plan the public
 repository: the steps are in `plan/06-owner-followups.md` (section D) and `PLAN.md` (stage P).
