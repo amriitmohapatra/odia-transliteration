@@ -258,10 +258,11 @@ function start(): Lens {
     return el;
   }
 
-  function reading(rect: DOMRect): void {
+  /** A one-line card: "Reading the picture…", or why a picture could not be read. */
+  function notice(text: string, rect: DOMRect): void {
     card.textContent = '';
     const line = document.createElement('div');
-    line.textContent = 'Reading the picture…';
+    line.textContent = text;
     card.append(line);
     card.hidden = false;
     place(rect);
@@ -300,6 +301,16 @@ function start(): Lens {
     return picture;
   }
 
+  /** The point is within the band of the cached line (between its words, say). */
+  function onLine(cache: PictureCache, x: number, y: number): boolean {
+    if (cache.words.length === 0) return false;
+    const x0 = Math.min(...cache.words.map((w) => w.box.x0));
+    const x1 = Math.max(...cache.words.map((w) => w.box.x1));
+    const y0 = Math.min(...cache.words.map((w) => w.box.y0));
+    const y1 = Math.max(...cache.words.map((w) => w.box.y1));
+    return x >= x0 && x <= x1 && y >= y0 && y <= y1;
+  }
+
   const rectOf = (w: OcrWord): DOMRect => new DOMRect(w.box.x0, w.box.y0, w.box.x1 - w.box.x0, w.box.y1 - w.box.y0);
 
   function showPictureWord(cache: PictureCache, index: number): void {
@@ -335,12 +346,15 @@ function start(): Lens {
       const at = { scrollX: window.scrollX, scrollY: window.scrollY, width: window.innerWidth, height: window.innerHeight };
       window.clearTimeout(slowTimer);
       slowTimer = window.setTimeout(() => {
-        if (ticket === reads && active) reading(new DOMRect(x, y, 1, 18));
+        if (ticket === reads && active) notice('Reading the picture\u2026', new DOMRect(x, y, 1, 18));
       }, SLOW_MS);
       chrome.runtime.sendMessage(request, (response: PictureResponse | undefined) => {
         window.clearTimeout(slowTimer);
         if (chrome.runtime.lastError || !response?.ok || !active) {
-          if (ticket === reads) hide();
+          if (ticket !== reads || !active) return;
+          // Say why, so a report can name it (for example a page the browser does not let extensions capture).
+          const why = chrome.runtime.lastError?.message ?? (response && !response.ok ? response.error : 'no answer');
+          notice(`Could not read the picture: ${why}`, new DOMRect(x, y, 1, 18));
           return;
         }
         const cache: PictureCache = {
@@ -402,6 +416,8 @@ function start(): Lens {
       const index = cache ? pickWord(cache.words, lastX, lastY, 2) : -1;
       if (cache && index >= 0) return showPictureWord(cache, index);
       hideSoon();
+      // Between two words of the line already read: nothing new to read.
+      if (cache && onLine(cache, lastX, lastY)) return;
       restTimer = window.setTimeout(() => readPicture(target), REST_MS);
       return;
     }

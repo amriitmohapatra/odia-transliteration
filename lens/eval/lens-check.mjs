@@ -84,6 +84,8 @@ const context = await chromium.launchPersistentContext('', {
   channel: 'chromium',
   headless: true,
   viewport: { width: 1200, height: 900 },
+  // The owner's Mac: two device pixels per CSS pixel (picture mode maps between them).
+  deviceScaleFactor: 2,
   args: [`--disable-extensions-except=${EXT}`, `--load-extension=${EXT}`],
 });
 const outside = [];
@@ -246,7 +248,7 @@ await check('no request leaves the computer', async () => {
 });
 
 console.log(`\nfirst card after the worker started: ${firstMs} ms`);
-console.log(`first picture word (screenshot, OCR engine start, two passes): ${pictureMs} ms`);
+console.log(`first picture word (screenshot, OCR engine start, line read): ${pictureMs} ms`);
 await context.close();
 server.close();
 const failed = results.filter((r) => !r.pass);
