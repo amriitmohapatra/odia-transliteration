@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Odia Lens",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Point at Odia words on any web page, in ePaper images and paused videos: meaning, pronunciation and word origin. Offline; reads only the pages you turn it on for.",
   "minimum_chrome_version": "110",
   "action": {
@@ -35,6 +35,12 @@
         "default": "Alt+Shift+O"
       },
       "description": "Turn the Odia Lens on or off on this page"
+    },
+    "toggle-frame": {
+      "suggested_key": {
+        "default": "Alt+Shift+F"
+      },
+      "description": "Open or close the Odia Lens frame: a box you move and resize over Odia in a picture"
     }
   }
 }

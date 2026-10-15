@@ -1,0 +1,168 @@
+/**
+ * The Odia Lens engine, without any browser-extension API: loading the packed
+ * dictionary, the lookup that builds a card, and the handling of words read
+ * by OCR (correction, splitting). Used by the extension's background worker and
+ * by the Mac lens's page (mac-lens/), each with its own file loader.
+ *
+ * The dictionary is split at build time (lens/build.mjs): the Praharaj keys in
+ * one file, the definitions in chunks of `chunk` entries, so a worker that the
+ * browser stopped after 30 s idle restarts in milliseconds, not the second it
+ * takes to unpack the whole 24 MB text.
+ */
+
+import { parseGlosses, parseMeanings, parseVerbEndings } from '@odia/core';
+import { canonical } from '@odia/core/normalize';
+
+import { findEntry, foldKey, meaningFinder, parsePayload, type Dict } from '../../Appv2/src/dictionary/lookup.js';
+import { cleanDefinition } from '../../Appv2/src/dictionary/clean.js';
+import { parseOrigin } from '../../Appv2/src/dictionary/origin.js';
+import { parseLoans } from '../../Appv2/src/dictionary/loans.js';
+import { inflate } from '../../Appv2/src/dictionary/pako-inflate.js';
+import glossesTsv from '../../core/data/glosses.tsv';
+import meaningsTsv from '../../core/data/meanings.tsv';
+import verbEndingsTsv from '../../core/data/verb-endings.tsv';
+import loansTsv from '../../Appv2/src/dictionary/loans.tsv';
+
+import { parseWordList, type WordList } from './correct.js';
+import { describeWord, type LensCard, type LensData } from './describe.js';
+import type { Reading } from './messages.js';
+import { cleanRead } from './picture.js';
+
+interface ChunkIndex {
+  count: number;
+  chunk: number;
+  files: number;
+}
+
+let keys: Promise<{ keys: string[]; index: ChunkIndex }> | undefined;
+let extras: Promise<LensData> | undefined;
+/** Recently used definition chunks; a few are enough for one page. */
+const chunks = new Map<number, Promise<string[]>>();
+const CHUNKS_KEPT = 12;
+
+/** Reads a packed file by its path inside the package (dict/..., ocr/...). Set once by the host. */
+let bytes: (path: string) => Promise<Uint8Array> = () => Promise.reject(new Error('odia lens engine: no file loader set'));
+
+export function setLoader(loader: (path: string) => Promise<Uint8Array>): void {
+  bytes = loader;
+}
+
+/** The usual loader: fetch a URL made from the path. */
+export const fetchLoader = (url: (path: string) => string) => async (path: string): Promise<Uint8Array> => {
+  const response = await fetch(url(path));
+  if (!response.ok) throw new Error(`${path}: ${response.status}`);
+  return new Uint8Array(await response.arrayBuffer());
+};
+
+const text = async (path: string): Promise<string> => new TextDecoder('utf-8').decode(inflate(await bytes(path)));
+
+export function loadKeys(): Promise<{ keys: string[]; index: ChunkIndex }> {
+  keys ??= Promise.all([text('dict/praharaj-keys.bin'), bytes('dict/index.json')]).then(([k, i]) => ({
+    keys: k.split('\n'),
+    index: JSON.parse(new TextDecoder('utf-8').decode(i)) as ChunkIndex,
+  }));
+  return keys;
+}
+
+export function loadExtras(): Promise<LensData> {
+  extras ??= (async (): Promise<LensData> => {
+    const { keys: k } = await loadKeys();
+    let modern: Dict | null = null;
+    try {
+      modern = parsePayload(await bytes('dict/modern.bin'));
+    } catch {
+      modern = null; // optional, as in the app
+    }
+    let origin: string[] | null = null;
+    try {
+      origin = parseOrigin(await text('dict/origin.bin'), k);
+    } catch {
+      origin = null;
+    }
+    let ai: LensData['ai'] = null;
+    try {
+      ai = meaningFinder(parseMeanings(meaningsTsv, 'core/data/meanings.tsv'));
+    } catch {
+      ai = null; // a broken file must not take the lens down; the unit tests catch it
+    }
+    let verbs: LensData['verbs'] = null;
+    try {
+      verbs = parseVerbEndings(verbEndingsTsv, 'core/data/verb-endings.tsv');
+    } catch {
+      verbs = null;
+    }
+    return { modern, origin, owner: parseGlosses(glossesTsv, 'core/data/glosses.tsv'), loans: parseLoans(loansTsv), ai, verbs };
+  })();
+  return extras;
+}
+
+async function definition(i: number): Promise<string> {
+  const { index } = await loadKeys();
+  const n = Math.floor(i / index.chunk);
+  let chunk = chunks.get(n);
+  if (chunk === undefined) {
+    chunk = text(`dict/praharaj-${String(n).padStart(3, '0')}.bin`).then((t) => JSON.parse(t) as string[]);
+    chunks.set(n, chunk);
+    if (chunks.size > CHUNKS_KEPT) chunks.delete(chunks.keys().next().value as number);
+  }
+  return cleanDefinition((await chunk)[i - n * index.chunk] ?? '');
+}
+
+export async function lookup(word: string, previous: string): Promise<LensCard | null> {
+  const odia = canonical(word);
+  const key = foldKey(odia);
+  if (key.length === 0) return null;
+  const [{ keys: k }, data] = await Promise.all([loadKeys(), loadExtras()]);
+  const entry = findEntry(k, key);
+  const def = entry ? await definition(entry.index) : null;
+  return describeWord(odia, key, entry, def, data, previous);
+}
+
+/* ------------------------------------------------------------ *
+ * Words read by OCR (picture mode, frame, Mac lens)
+ * ------------------------------------------------------------ */
+
+let words: Promise<WordList> | undefined;
+export const loadWords = (): Promise<WordList> => (words ??= text('dict/words.bin').then(parseWordList));
+
+/** A word read by OCR: canonical, corrected to a known word when it is not one, then the usual card. */
+export async function readWord(
+  raw: string,
+  conf: number,
+  whole?: string,
+  /** The word before it on the same line (already corrected), for constructions ("-ku nei"). */
+  previous = '',
+): Promise<{ card: LensCard | null; reading: Reading } | null> {
+  const odia = canonical(cleanRead(raw));
+  if (odia.length === 0) return null;
+  const [{ keys: k }, data, list] = await Promise.all([loadKeys(), loadExtras(), loadWords()]);
+  // A word the list knows takes the list's spelling (OCR mixes up ya and yya);
+  // a word the dictionaries know stays; any other word is corrected.
+  const fromList = /[\u0b66-\u0b6f]/.test(odia) ? { word: odia, distance: 0 } : list.correct(odia);
+  // A word the dictionary can already explain stays as read (barana-ru, "from
+  // the ban", is right; the list's karana-ru is only more common).
+  const entry = findEntry(k, foldKey(odia));
+  const known =
+    fromList.distance === 0 ||
+    data.owner.get(odia) !== undefined ||
+    data.ai?.word(odia) !== undefined ||
+    entry?.how === 'exact' ||
+    (entry?.how === 'stem' && conf >= 50);
+  const corrected = fromList.distance === 0 ? fromList.word : known ? odia : fromList.word;
+  const card = await lookup(corrected, previous);
+  const partOf = whole ? canonical(cleanRead(whole)) : '';
+  // Only a spelling the fold treats as the same word (ya / yya) is not a correction.
+  const changed = foldKey(corrected) !== foldKey(odia);
+  return { card, reading: { readAs: odia, corrected: changed ? corrected : null, conf, partOf: partOf && partOf !== odia ? partOf : null } };
+}
+
+/** Explainable as a whole word: the list, the owner, the AI layer, or Praharaj (headword or stem) knows it. */
+export async function explainer(): Promise<(text: string) => boolean> {
+  const [{ keys: k }, data, list] = await Promise.all([loadKeys(), loadExtras(), loadWords()]);
+  return (text) => {
+    const odia = canonical(cleanRead(text));
+    if (odia.length === 0) return false;
+    const how = findEntry(k, foldKey(odia))?.how;
+    return list.has(odia) || data.owner.get(odia) !== undefined || data.ai?.word(odia) !== undefined || how === 'exact' || how === 'stem';
+  };
+}

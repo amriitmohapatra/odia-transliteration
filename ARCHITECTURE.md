@@ -346,6 +346,16 @@ the same card, which says "Read from the picture" (and what OCR saw when it was
 corrected, or "unclear print"). The line's words stay cached until scroll or a playing
 video changes the screen. About 0.4–0.7 s per new line; 1.3 s for the first (engine start).
 
+**Frame (lens 0.3.0, Alt+Shift+F):** a see-through box the reader moves and resizes. On
+release (and when the page scrolls under it) `content.ts` hides its panel, the background
+captures the inside of the frame, and the OCR page reads it as a block (`ocr.ts readBlock`:
+lines found with Tesseract's block mode, then each line read again alone, up to 12). Each
+line comes back as read, plus its words, each corrected and looked up with the word before
+it (constructions such as "-ku nei"). `frameview.ts` draws the list (shared with the Mac
+lens). The lookup and OCR code is platform-neutral: `engine.ts` (dictionary loading,
+lookup, OCR word handling; a file loader is set by the host) and `ocr.ts` (Tesseract; the
+host sets the file paths).
+
 **Privacy:** permissions `activeTab`, `scripting` and `offscreen`, no host permissions (a
 unit test checks the shipped manifest); CSP allows WebAssembly only from the extension;
 nothing leaves the computer (the browser check fails on any outside request). **No Desh

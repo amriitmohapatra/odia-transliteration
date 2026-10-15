@@ -10,9 +10,13 @@ export const PICTURE = 'odia-lens/picture';
 export const READ_WORD = 'odia-lens/read-word';
 /** Background → offscreen document: OCR a screen region. */
 export const OCR = 'odia-lens/ocr';
+/** Content → background: read everything inside the lens frame. */
+export const FRAME = 'odia-lens/frame';
 
 /** The manifest's command name for the keyboard shortcut. */
 export const TOGGLE_COMMAND = 'toggle-lens';
+/** The manifest's command name for opening or closing the frame. */
+export const FRAME_COMMAND = 'toggle-frame';
 
 export interface LookupRequest {
   type: typeof LOOKUP;
@@ -71,11 +75,38 @@ export type ReadWordResponse = { ok: true; card: LensCard | null; reading: Readi
 export interface OcrRequest {
   type: typeof OCR;
   target: 'offscreen';
-  /** PNG data URL of the region around the pointer. */
+  /** PNG data URL of the region around the pointer, or of the frame. */
   image: string;
-  /** The pointer inside the region, region pixels. */
+  /** 'at': the line under the pointer (x, y, region pixels); 'block': every line (the frame). */
+  mode: 'at' | 'block';
   x: number;
   y: number;
 }
 
-export type OcrResponse = { ok: true; line: OcrLine | null; timing?: Record<string, number> } | { ok: false; error: string };
+export type OcrResponse =
+  | { ok: true; line: OcrLine | null; lines?: OcrLine[]; timing?: Record<string, number> }
+  | { ok: false; error: string };
+
+export interface FrameRequest {
+  type: typeof FRAME;
+  /** The inside of the frame, CSS pixels in the viewport. */
+  box: { x0: number; y0: number; x1: number; y1: number };
+  viewportWidth: number;
+}
+
+/** A word read in the frame, with its card. */
+export interface FrameWord {
+  text: string;
+  conf: number;
+  box: { x0: number; y0: number; x1: number; y1: number };
+  card: LensCard | null;
+  reading: Reading | null;
+}
+
+/** A line read in the frame: the text exactly as OCR read it, then its words. */
+export interface FrameLine {
+  read: string;
+  words: FrameWord[];
+}
+
+export type FrameResponse = { ok: true; lines: FrameLine[]; ms: number } | { ok: false; error: string };

@@ -29,8 +29,9 @@ export interface WordList {
   has(word: string): boolean;
   correct(word: string): Correction;
   /**
-   * Split a run-together word (large type often loses the spaces) into two to
-   * four known words, the likeliest split by word frequency; null if none.
+   * Split a run-together word (large type often loses the spaces) into two or
+   * three known words of at least three code points, the likeliest split by
+   * word frequency; null if none.
    */
   split(word: string): string[] | null;
 }
@@ -123,7 +124,8 @@ export function parseWordList(tsv: string): WordList {
       const next = new Array<number>(key.length + 1).fill(-1);
       cost[key.length] = 0;
       for (let i = key.length - 1; i >= 0; i--) {
-        for (let j = i + 2; j <= Math.min(key.length, i + 24); j++) {
+        // Pieces of at least three code points: shorter ones are too often misread letters.
+        for (let j = i + 3; j <= Math.min(key.length, i + 24); j++) {
           const piece = known.get(key.slice(i, j));
           if (!piece || cost[j] === Infinity) continue;
           const c = -Math.log(piece.count) + PIECE + (cost[j] as number);
@@ -136,7 +138,7 @@ export function parseWordList(tsv: string): WordList {
       if (cost[0] === Infinity) return null;
       const parts: string[] = [];
       for (let i = 0; i < key.length; i = next[i] as number) parts.push((known.get(key.slice(i, next[i] as number)) as Known).word);
-      return parts.length >= 2 && parts.length <= 4 ? parts : null;
+      return parts.length >= 2 && parts.length <= 3 ? parts : null;
     },
   };
 }

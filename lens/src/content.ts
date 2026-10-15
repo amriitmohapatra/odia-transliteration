@@ -22,10 +22,14 @@
 
 import type { LensCard } from './describe.js';
 import { wordAt, wordBefore } from './word.js';
+import { FRAME_VIEW_CSS, renderLines, shownWord } from './frameview.js';
 import {
+  FRAME,
   LOOKUP,
   PICTURE,
   READ_WORD,
+  type FrameRequest,
+  type FrameResponse,
   type LookupRequest,
   type LookupResponse,
   type PictureRequest,
@@ -38,6 +42,8 @@ import { pickWord, type OcrWord } from './picture.js';
 
 interface Lens {
   toggle(): boolean;
+  /** Open or close the frame (turns the lens on first); true when the frame is open. */
+  frame(): boolean;
 }
 
 declare global {
@@ -78,6 +84,48 @@ const CSS = `
 }
 `;
 
+/* The frame: a see-through box the reader moves and resizes over Odia in a
+ * picture; everything inside it is read together, line by line (frame mode). */
+const FRAME_CSS = `
+.frame {
+  position: fixed; z-index: 2147483646; box-sizing: border-box; pointer-events: none;
+  border: 2px solid #c2410c; border-radius: 4px;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.85), 0 2px 10px rgba(0, 0, 0, 0.15);
+}
+.frame[hidden], .panel[hidden] { display: none; }
+.frame-bar {
+  position: absolute; left: -2px; bottom: 100%; display: flex; gap: 4px; align-items: center;
+  padding: 2px 4px; border-radius: 5px 5px 0 0; background: #c2410c; color: #fff;
+  font: 12px/1.4 system-ui, -apple-system, "Segoe UI", sans-serif;
+  pointer-events: auto; cursor: move; user-select: none; white-space: nowrap; touch-action: none;
+}
+.frame-bar button {
+  cursor: pointer; border: 0; border-radius: 3px; padding: 1px 6px;
+  background: rgba(255, 255, 255, 0.2); color: #fff; font: inherit;
+}
+.frame-bar button:hover, .frame-bar button:focus-visible { background: rgba(255, 255, 255, 0.4); outline: none; }
+.frame-resize {
+  position: absolute; right: -9px; bottom: -9px; width: 14px; height: 14px; box-sizing: border-box;
+  background: #c2410c; border: 2px solid #fff; border-radius: 3px;
+  pointer-events: auto; cursor: nwse-resize; touch-action: none;
+}
+.panel {
+  position: fixed; z-index: 2147483646; box-sizing: border-box; max-height: 42vh; overflow: auto;
+  padding: 10px 12px; border-radius: 10px; background: #fffdf8; color: #1d1b16; border: 1px solid #d9d2c3;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.18); font: 14px/1.4 system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+.panel-status { font-size: 11.5px; color: #6b6455; margin-bottom: 6px; }
+@media (prefers-color-scheme: dark) {
+  .panel { background: #24221d; color: #f1ece0; border-color: #4a4538; }
+  .panel-status { color: #c3bba8; }
+}
+`;
+
+/** Frame sizes (CSS pixels): one word, one line, a paragraph. */
+const FRAME_SIZES = { Word: [190, 56], Line: [560, 64], Para: [560, 240] } as const;
+/** Smallest frame. */
+const FRAME_MIN = { w: 60, h: 24 };
+
 /** Hide the card this long after the pointer leaves the word (it may be going to the card). */
 const HIDE_DELAY_MS = 250;
 /** Read a picture only after the pointer rests this long on it. */
@@ -107,13 +155,45 @@ function start(): Lens {
   const root = host.attachShadow({ mode: 'open' });
   const sheet = new CSSStyleSheet();
   sheet.replaceSync(CSS);
-  root.adoptedStyleSheets = [sheet];
+  const frameSheet = new CSSStyleSheet();
+  frameSheet.replaceSync(FRAME_CSS + FRAME_VIEW_CSS);
+  root.adoptedStyleSheets = [sheet, frameSheet];
   const card = document.createElement('div');
   card.className = 'card';
   card.hidden = true;
   card.setAttribute('role', 'tooltip');
   card.lang = 'en';
   root.append(card);
+
+  // The frame and its result panel (frame mode).
+  const frameEl = document.createElement('div');
+  frameEl.className = 'frame';
+  frameEl.hidden = true;
+  const bar = document.createElement('div');
+  bar.className = 'frame-bar';
+  bar.title = 'Drag to move. Odia inside the frame is read when you let go.';
+  bar.append('Odia Lens');
+  const barButton = (label: string, title: string, onClick: () => void): void => {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.textContent = label;
+    b.title = title;
+    b.addEventListener('click', (event) => {
+      event.stopPropagation();
+      onClick();
+    });
+    b.addEventListener('pointerdown', (event) => event.stopPropagation());
+    bar.append(b);
+  };
+  const resizer = document.createElement('div');
+  resizer.className = 'frame-resize';
+  resizer.title = 'Drag to resize';
+  frameEl.append(bar, resizer);
+  const panel = document.createElement('div');
+  panel.className = 'panel';
+  panel.hidden = true;
+  panel.lang = 'en';
+  root.append(frameEl, panel);
 
   let active = false;
   let current = '';
@@ -130,6 +210,12 @@ function start(): Lens {
   let restTimer: number | undefined;
   let slowTimer: number | undefined;
   let reads = 0;
+  let frameOn = false;
+  const frameBox: { x: number; y: number; w: number; h: number } = { x: 0, y: 0, w: FRAME_SIZES.Line[0], h: FRAME_SIZES.Line[1] };
+  let frameTimer: number | undefined;
+  let frameSlow: number | undefined;
+  let frameReads = 0;
+  let moved = false;
 
   const odiaVoice = (): SpeechSynthesisVoice | undefined =>
     typeof speechSynthesis === 'undefined' ? undefined : speechSynthesis.getVoices().find((v) => v.lang.toLowerCase().startsWith('or'));
@@ -274,6 +360,149 @@ function start(): Lens {
     place(rect);
   }
 
+  /* ------------------------------------------------------------ *
+   * The frame
+   * ------------------------------------------------------------ */
+
+  function layoutFrame(): void {
+    const vw = window.innerWidth;
+    const vh = window.innerHeight;
+    frameBox.w = Math.max(FRAME_MIN.w, Math.min(frameBox.w, vw - 16));
+    frameBox.h = Math.max(FRAME_MIN.h, Math.min(frameBox.h, vh - 60));
+    frameBox.x = Math.min(Math.max(8, frameBox.x), vw - frameBox.w - 8);
+    frameBox.y = Math.min(Math.max(30, frameBox.y), vh - frameBox.h - 8);
+    Object.assign(frameEl.style, {
+      left: `${Math.round(frameBox.x)}px`,
+      top: `${Math.round(frameBox.y)}px`,
+      width: `${Math.round(frameBox.w)}px`,
+      height: `${Math.round(frameBox.h)}px`,
+    });
+    const width = Math.max(frameBox.w, 320);
+    panel.style.width = `${Math.round(Math.min(width, vw - 16))}px`;
+    panel.style.left = `${Math.round(Math.min(Math.max(8, frameBox.x), vw - Math.min(width, vw - 16) - 8))}px`;
+    const below = frameBox.y + frameBox.h + 12;
+    if (below + 120 < vh) {
+      panel.style.top = `${Math.round(below)}px`;
+      panel.style.bottom = '';
+    } else {
+      panel.style.top = '';
+      panel.style.bottom = `${Math.round(vh - frameBox.y + 30)}px`;
+    }
+  }
+
+  function scheduleFrameRead(delay = 300): void {
+    window.clearTimeout(frameTimer);
+    frameTimer = window.setTimeout(readFrame, delay);
+  }
+
+  function panelStatus(text: string): void {
+    panel.textContent = '';
+    const status = document.createElement('div');
+    status.className = 'panel-status';
+    status.textContent = text;
+    panel.append(status);
+    panel.hidden = false;
+  }
+
+  /** Read everything inside the frame: hide the panel and the card (they must not be in the screenshot), then ask. */
+  function readFrame(): void {
+    frameTimer = undefined;
+    if (!frameOn || !active) return;
+    const ticket = ++frameReads;
+    panel.hidden = true;
+    hide();
+    window.requestAnimationFrame(() => window.requestAnimationFrame(() => {
+      const border = 2;
+      const request: FrameRequest = {
+        type: FRAME,
+        box: { x0: frameBox.x + border, y0: frameBox.y + border, x1: frameBox.x + frameBox.w - border, y1: frameBox.y + frameBox.h - border },
+        viewportWidth: window.innerWidth,
+      };
+      window.clearTimeout(frameSlow);
+      frameSlow = window.setTimeout(() => {
+        if (ticket === frameReads && frameOn) panelStatus('Reading the frame\u2026');
+      }, SLOW_MS);
+      chrome.runtime.sendMessage(request, (response: FrameResponse | undefined) => {
+        window.clearTimeout(frameSlow);
+        if (ticket !== frameReads || !frameOn || !active) return;
+        if (chrome.runtime.lastError || !response?.ok) {
+          const why = chrome.runtime.lastError?.message ?? (response && !response.ok ? response.error : 'no answer');
+          return panelStatus(`Could not read the frame: ${why}`);
+        }
+        const count = response.lines.length;
+        panelStatus(`${count} line${count === 1 ? '' : 's'} read from the picture \u00b7 ${(response.ms / 1000).toFixed(1)} s \u00b7 click a word for its card`);
+        panel.append(
+          renderLines(document, response.lines, (w, chip) => {
+            if (w.card || w.reading) render(shownWord(w), w.card, chip.getBoundingClientRect(), w.reading);
+          }),
+        );
+        layoutFrame();
+      });
+    }));
+  }
+
+  /** Drag the frame by its bar, or resize it by its corner; read when the pointer is let go. */
+  function dragging(handle: HTMLElement, onMove: (dx: number, dy: number, start: typeof frameBox) => void): void {
+    handle.addEventListener('pointerdown', (event) => {
+      if (event.button !== 0) return;
+      event.preventDefault();
+      handle.setPointerCapture(event.pointerId);
+      const start = { ...frameBox };
+      const x0 = event.clientX;
+      const y0 = event.clientY;
+      panel.hidden = true;
+      hide();
+      const move = (e: PointerEvent): void => {
+        onMove(e.clientX - x0, e.clientY - y0, start);
+        layoutFrame();
+      };
+      const up = (): void => {
+        handle.removeEventListener('pointermove', move);
+        handle.removeEventListener('pointerup', up);
+        handle.removeEventListener('pointercancel', up);
+        scheduleFrameRead();
+      };
+      handle.addEventListener('pointermove', move);
+      handle.addEventListener('pointerup', up);
+      handle.addEventListener('pointercancel', up);
+    });
+  }
+  dragging(bar, (dx, dy, start) => {
+    frameBox.x = start.x + dx;
+    frameBox.y = start.y + dy;
+  });
+  dragging(resizer, (dx, dy, start) => {
+    frameBox.w = Math.max(FRAME_MIN.w, start.w + dx);
+    frameBox.h = Math.max(FRAME_MIN.h, start.h + dy);
+  });
+  for (const [label, [w, h]] of Object.entries(FRAME_SIZES)) {
+    barButton(label, `Frame size: one ${label.toLowerCase() === 'para' ? 'paragraph' : label.toLowerCase()}`, () => {
+      frameBox.w = w;
+      frameBox.h = h;
+      layoutFrame();
+      scheduleFrameRead(0);
+    });
+  }
+  barButton('\u21bb', 'Read again', () => scheduleFrameRead(0));
+  barButton('\u2715', 'Close the frame (Alt+Shift+F)', () => setFrame(false));
+
+  function setFrame(on: boolean): void {
+    frameOn = on;
+    window.clearTimeout(frameTimer);
+    frameReads++;
+    if (on) {
+      // Around the pointer when it has been on the page; else in the middle.
+      frameBox.x = moved ? lastX - frameBox.w / 2 : (window.innerWidth - frameBox.w) / 2;
+      frameBox.y = moved ? lastY - frameBox.h / 2 : (window.innerHeight - frameBox.h) / 2;
+      frameEl.hidden = false;
+      layoutFrame();
+      scheduleFrameRead(150);
+    } else {
+      frameEl.hidden = true;
+      panel.hidden = true;
+    }
+  }
+
   /** A picture (image, canvas, video, frame) under the point, unless page text is there. */
   function pictureUnder(x: number, y: number): Element | null {
     if (textUnder(x, y)) return null;
@@ -416,7 +645,8 @@ function start(): Lens {
     if (!hit) {
       window.clearTimeout(restTimer);
       restTimer = undefined;
-      const target = pictureUnder(lastX, lastY);
+      // With the frame open, pictures are read through the frame only.
+      const target = frameOn ? null : pictureUnder(lastX, lastY);
       if (!target) return hideSoon();
       const cache = cacheValid();
       const index = cache ? pickWord(cache.words, lastX, lastY, 2) : -1;
@@ -449,15 +679,24 @@ function start(): Lens {
     if (event.composedPath().includes(host)) return;
     lastX = event.clientX;
     lastY = event.clientY;
+    moved = true;
     if (frame === 0) frame = window.requestAnimationFrame(onFrame);
   };
   const onKey = (event: KeyboardEvent): void => {
-    if (event.key === 'Escape' && !card.hidden) hide();
+    if (event.key !== 'Escape') return;
+    if (!card.hidden) hide();
+    else if (frameOn) setFrame(false);
   };
   const onScroll = (): void => {
     picture = null;
     window.clearTimeout(restTimer);
     hide();
+    if (frameOn) {
+      // The page moved under the frame: read again when it stops.
+      panel.hidden = true;
+      layoutFrame();
+      scheduleFrameRead(450);
+    }
   };
   card.addEventListener('pointerenter', () => {
     overCard = true;
@@ -486,9 +725,15 @@ function start(): Lens {
         window.removeEventListener('resize', onScroll);
         window.clearTimeout(restTimer);
         picture = null;
+        setFrame(false);
         host.remove();
       }
       return active;
+    },
+    frame(): boolean {
+      if (!active) this.toggle();
+      setFrame(!frameOn);
+      return frameOn;
     },
   };
 }

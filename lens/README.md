@@ -23,6 +23,15 @@ read; "unclear print" means: check the word. Headlines read well; very small bod
 a whole-page ePaper image often does not (a better Odia model is next, V4.3). Zoom the
 ePaper viewer in before pointing: larger letters read better.
 
+**The frame (0.3.0, Alt+Shift+F):** a see-through box you move (drag its orange bar) and
+resize (drag its corner) over Odia in a picture. Everything inside it is read together,
+line by line, when you let go: the panel under it shows each line exactly as it was read,
+then each word with its first meaning (words read with the word before them, so phrases
+like "-କୁ ନେଇ" get their phrase meaning). Click a word for its full card. Sizes: **Word**,
+**Line**, **Para**; **↻** reads again; **✕** or Esc closes it. It reads again when the page
+scrolls under it. With the frame open, pointing at pictures does nothing else, so the
+frame decides what is read.
+
 It is the same dictionary and the same lookup as the Meanings panel of the web
 app (`Appv2/src/dictionary/lookup.ts`).
 

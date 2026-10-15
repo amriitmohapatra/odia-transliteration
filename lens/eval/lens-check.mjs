@@ -93,8 +93,15 @@ context.on('request', (r) => {
   const u = r.url();
   if (!u.startsWith(origin) && !u.startsWith('chrome-extension://') && !u.startsWith('data:')) outside.push(u);
 });
-let [worker] = context.serviceWorkers();
-worker ??= await context.waitForEvent('serviceworker', { timeout: 15000 });
+// The extension's own worker (background.js), not any other worker the browser starts.
+const isLens = (w) => w.url().endsWith('/background.js');
+let worker = context.serviceWorkers().find(isLens);
+worker ??= await context.waitForEvent('serviceworker', { predicate: isLens, timeout: 15000 });
+// Wait until the worker's extension APIs are there (a just-started worker can answer before).
+for (let i = 0; i < 50 && !(await worker.evaluate(() => typeof chrome?.tabs?.query === 'function').catch(() => false)); i++) {
+  await new Promise((r) => setTimeout(r, 100));
+  worker = context.serviceWorkers().find(isLens) ?? worker;
+}
 
 const results = [];
 async function check(name, fn) {
@@ -227,6 +234,53 @@ await check('picture mode: the next word on the same line comes from the cached 
   assert.equal(await toggle(), 'ON');
 });
 
+let frameMs = 0;
+await check('frame (Alt+Shift+F): every word inside it is read together, in order, with meanings', async () => {
+  await page.goto(`${origin}/picture.html`);
+  await page.waitForFunction(() => Array.isArray(window.__boxes));
+  const img = await page.locator('#pic').boundingBox();
+  // Lens on, pointer over the picture: the frame opens around the pointer.
+  assert.equal(await toggle(), 'ON');
+  await page.mouse.move(img.x + 300, img.y + 120, { steps: 2 });
+  await page.mouse.move(img.x + 300, img.y + 45, { steps: 2 });
+  const t0 = Date.now();
+  const badge = await worker.evaluate(async () => {
+    const [tab] = await chrome.tabs.query({ active: true, lastFocusedWindow: true });
+    await self.odiaLensToggle(tab.id, 'frame');
+    return chrome.action.getBadgeText({ tabId: tab.id });
+  });
+  assert.equal(badge, 'ON');
+  const panel = page.locator('odia-lens .panel');
+  await page.waitForFunction(
+    () => (document.querySelector('odia-lens')?.shadowRoot?.querySelectorAll('.chip') ?? []).length >= 3,
+    null,
+    { timeout: 30000 },
+  ).catch(async (error) => {
+    const shown = await page.evaluate(() => {
+      const r = document.querySelector('odia-lens')?.shadowRoot;
+      return `frame hidden=${r?.querySelector('.frame')?.hidden} panel=${r?.querySelector('.panel')?.textContent}`;
+    });
+    throw new Error(`${error.message}; ${shown}`);
+  });
+  frameMs = Date.now() - t0;
+  const words = await page.evaluate(() =>
+    [...document.querySelector('odia-lens').shadowRoot.querySelectorAll('.chip-word')].map((e) => e.textContent));
+  assert.deepEqual(words, PICTURE_WORDS, `words: ${words.join(' ')}`);
+  const text = await page.evaluate(() => document.querySelector('odia-lens').shadowRoot.querySelector('.panel').textContent);
+  assert.ok(/government/i.test(text) && /state/i.test(text), text);
+  assert.ok(await page.evaluate(() => document.querySelector('odia-lens').shadowRoot.querySelector('.line-read')?.textContent.length > 0));
+  // A word's chip opens its full card.
+  await page.locator('odia-lens .chip').first().click();
+  await page.waitForFunction(() => document.querySelector('odia-lens')?.shadowRoot?.querySelector('.card:not([hidden]) .read'));
+  // Escape closes the card, then the frame.
+  await page.keyboard.press('Escape');
+  await page.keyboard.press('Escape');
+  await page.locator('odia-lens .frame').waitFor({ state: 'hidden', timeout: 2000 });
+  assert.equal(await toggle(), '');
+  await page.goto(`${origin}/odia.html`);
+  assert.equal(await toggle(), 'ON');
+});
+
 await check('turning it off removes the lens from the page', async () => {
   assert.equal(await toggle(), '');
   await hover('dina');
@@ -249,6 +303,7 @@ await check('no request leaves the computer', async () => {
 
 console.log(`\nfirst card after the worker started: ${firstMs} ms`);
 console.log(`first picture word (screenshot, OCR engine start, line read): ${pictureMs} ms`);
+console.log(`frame read (three words, with cards): ${frameMs} ms`);
 await context.close();
 server.close();
 const failed = results.filter((r) => !r.pass);

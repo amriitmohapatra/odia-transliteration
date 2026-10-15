@@ -132,6 +132,20 @@ Time per new line 0.4–0.7 s (screenshot, crop, line, OCR, correction, card); t
 word 1.3 s (engine start). Package 9.9 MB zip (engine 3.9 MB, model 1.5 MB, word list
 0.65 MB).
 
+## 4c. The frame (lens 0.3.0, 2026-10-15)
+
+Frame over real pages (`readBlock`: block mode to find lines, then each line alone):
+
+| Page, frame | Read | Words (first meaning) |
+|---|---|---|
+| Samaja p3, a headline (100%) | ଶିକ୍ଷକଙ୍କୁ ସରକାରଙ୍କ ପୂଜା ଭେଟି | teacher + to (respectful) · government + of (respectful) · worship · (ଭେଟି: a weak modern-layer meaning) |
+| Samaja p3, body, viewer at 200% | 6 lines in 3.9 s, e.g. ଯେଉଁଠି ଗରିବ ପରିବାର ସମ୍ମାନର ସହ / ରହିପାରିବେ। ଶ୍ରମିକମାନେ ସୁଲଭ ଆବାସ | whichever · poor · family · respect · with / stay, remain + can … · worker + the …s · afford · accommodation |
+| Samaja p3, headline with display font | ଗରିବଙ୍କ ସମାନ ବୃଵି ଆମର ସଂକଳୁ | the display font's conjuncts misread (V4.3) |
+
+Split rule after the owner's report ("translates some letters in the word together"):
+a run-together word is split only when nothing explains it whole, into 2–3 pieces of at
+least three code points; a piece's card says what it was part of.
+
 ## 5. Stages
 
 | Stage | What | Depends on |
