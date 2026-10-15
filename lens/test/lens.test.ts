@@ -91,8 +91,10 @@ describe('describeWord: the lens card', () => {
   });
 
   it('marks a stem match as approximate when the stem has no modern meaning', () => {
-    const CROCODILE_IN = '\u0B15\u0B41\u0B2E\u0B4D\u0B2D\u0B40\u0B30\u0B30\u0B47'; // kumbhira + re: Praharaj only
-    const c = card(CROCODILE_IN);
+    // kansaai (Praharaj: "Butcher") + re: Praharaj only (kumbhira, the earlier example,
+    // got an AI meaning in batch 11).
+    const KANSAAI_RE = '\u0B15\u0B02\u0B38\u0B3E\u0B07\u0B30\u0B47';
+    const c = card(KANSAAI_RE);
     expect(c.approximateHead).not.toBeNull();
     expect(c.meanings.some((m) => m.text.startsWith('maybe: '))).toBe(true);
   });

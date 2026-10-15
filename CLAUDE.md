@@ -189,7 +189,8 @@ Rows marked unknown or unverified below are open items, not exceptions:
 | AI4Bharat IndicCorp v2 (`ory_Orya`) | CC0 | Word frequencies |
 | Noto Sans Oriya | OFL 1.1 | Bundled font, weights 400 and 700, in `web/src/fonts/` (used by `web/` and `Appv2/`) |
 | Praharaj, *Purnnachandra Odia Bhashakosha* (1931–40), via indic-dict | Public domain (text). indic-dict packaging has no licence file. | Classical dictionary layer |
-| OdiaNLP `dictionary` `cleaned_pairs.json` | Repo MIT. **Origin of the text unknown.** To be replaced (D-5). | MODERN dictionary layer, `[mt]` rows |
+| OdiaNLP `dictionary` `cleaned_pairs.json` | Repo MIT. Origin of the text unknown. | **No longer shipped** (removed 2026-10-15, V2.7, D-5); was the MODERN layer's `[mt]` rows |
+| Wikidata labels | CC0 | MODERN dictionary layer, `[wd]` rows: names of places, parties, institutions, festivals (`Odia_Sanskrit_Appv2/build/wikidata-names.tsv`) |
 | Unicode CLDR `or.xml` | Unicode License v3 | MODERN dictionary layer, `[cldr]` rows |
 | wordfreq, CMUdict | Unverified (see provenance file) | Build time: loanword detection |
 | CMU Pronouncing Dictionary (data file) | BSD-2-Clause | Build time: English words and sounds for `loans.tsv` |

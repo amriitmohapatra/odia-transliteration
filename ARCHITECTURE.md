@@ -118,7 +118,8 @@ mode is not filtered.
 | Rules (natural mode) | `core/rules/symbols.toml` | Owner + Claude | Yes, with eval delta |
 | Rules (strict ITRANS) | `core/rules/itrans.toml` | From MIT `oriya.toml` | Rarely |
 | Sanskrit profiles | `Appv2/rules/*.delta.toml` → `sanskrit.toml`, `unified.toml` | `Appv2/scripts/gen-rules.ts` | Only the `.delta` files |
-| Lexicon, unigrams | `core/data/lexicon*.tsv`, `unigrams*.tsv` | `tools/build-data/` (reproducible since PR #1; `j`-keys for ଯ-words since V2.1) | No |
+| Lexicon, unigrams | `core/data/lexicon*.tsv`, `unigrams*.tsv` | `tools/build-data/` (reproducible since PR #1; `j`-keys for ଯ-words since V2.1; IndicXlit spellings `lexicon-xlit*.tsv` merged in since V2.6, `build_xlit_fill.py`) | No |
+| MODERN meanings layer | `Appv2/src/dictionary/modern.bin` (= `Odia_Sanskrit_Appv2/build/modern_payload.b64`): `[loan]` auto-detected English loans, `[cldr]` standard names, `[wd]` Wikidata names. The machine-translation `[mt]` rows were removed in V2.7 (D-5) | `Odia_Sanskrit_Appv2/build/build_modern_layer.py`; `tools/build-data/replace_mt_layer.py` | No |
 | Word pairs | `core/data/bigrams.tsv` (full, evals), `bigrams-web.tsv` (≤1.5 MB, browser) | `tools/build-data/build_bigrams.py` | No |
 | Typed spellings (Desh) | `core/data/typed.tsv` (1.56 MB, 412 KB gzipped; adult web app, not kids) | `tools/build-data/build_typed.py` (raw file outside the repo) | No |
 | Spelling converter (Desh) | `core/data/converter.bin` (gzip, 843 KB; adult and kids, not sloka) | `tools/build-data/build_converter.py` (raw file outside the repo) | No |
