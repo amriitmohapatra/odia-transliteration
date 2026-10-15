@@ -35,9 +35,11 @@ cd mac-lens
 
 ## Use
 
-- The orange bar: drag to move the frame. The orange corner (bottom right): drag to
-  resize. Let go: it reads after a third of a second.
-- The menu bar item **ଓ**: show or hide the lens, frame sizes (Word, Line, Paragraph,
+- The indigo bar with the Konark wheel: drag to move the frame. Its buttons: **Word**,
+  **Line**, **Para** (sizes), **↻** read again, **✕** hide (show again from the menu bar).
+- Any edge or corner of the red-and-yellow border: drag to resize. Let go: it reads after
+  a third of a second. The wheel turns while it reads.
+- The menu bar item **ଓ**: show or hide the lens, frame sizes (Word, Line, Para,
   also ⌘1–⌘3 while the menu is open), Read again, Quit.
 - In the panel: each line as it was read ("Read: …"), then each word with its first
   meaning. Click a word for its full card. Words read with the word before them, so phrases
@@ -50,7 +52,7 @@ cd mac-lens
 
 | Part | Does |
 |---|---|
-| `Sources/FrameWindow.swift` | The frame: a borderless, see-through floating panel; bar to drag, corner to resize; tells the app when it stops moving. |
+| `Sources/FrameWindow.swift` | The frame: a borderless, see-through floating panel in the Puri/Konark theme; bar to drag (with buttons), every edge and corner resizes; tells the app when it stops moving. |
 | `Sources/Capture.swift` | The pixels under the frame (ScreenCaptureKit `SCScreenshotManager`, macOS 14+), without the lens's own windows. |
 | `Sources/OCR.swift` | Runs `tesseract` (Homebrew) with the Odia model packed in the app (`ori.traineddata`, tessdata_fast, Apache-2.0); reads its TSV: words, boxes, confidence. Small captures are doubled first. |
 | `Sources/ResultsPanel.swift` | A web view with the results page; serves the page and its dictionary files from the app (`odialens://app/`). |

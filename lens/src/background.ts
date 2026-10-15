@@ -34,7 +34,7 @@ import {
   type ReadWordRequest,
   type ReadWordResponse,
 } from './messages.js';
-import { HAS_ODIA, cleanRead, mapBox, pickWord, regionAround } from './picture.js';
+import { HAS_ODIA, cleanRead, lineText, mapBox, pickWord, regionAround } from './picture.js';
 
 setLoader(fetchLoader((path) => chrome.runtime.getURL(path)));
 
@@ -150,7 +150,7 @@ async function readFrame(request: FrameRequest, windowId: number | undefined): P
       words.push({ text: w.text, conf: w.conf, box: w.box, card: found.card, reading: found.reading });
       previous = found.reading.corrected ?? found.reading.readAs;
     }
-    lines.push({ read: canonical(line.words.map((w) => w.text).join(' ')).trim(), words });
+    lines.push({ read: canonical(lineText(line.words.map((w) => w.text))), words });
   }
   return { ok: true, lines, ms: Date.now() - t0 };
 }

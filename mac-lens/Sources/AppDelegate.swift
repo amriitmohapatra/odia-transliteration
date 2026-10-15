@@ -81,17 +81,26 @@ final class AppDelegate: NSObject, NSApplicationDelegate, FrameWindowDelegate {
         read()
     }
 
+    func frameWantsRead(_ frame: FrameWindow) {
+        read()
+    }
+
+    func frameWantsClose(_ frame: FrameWindow) {
+        toggleLens()
+    }
+
     // MARK: Reading
 
     /// The results panel sits under the frame (above it near the bottom of the screen).
     private func placeResults() {
-        let f = frameWindow.frame
+        let f = frameWindow.inside
         var r = results.frame
         r.size.width = max(f.width, 380)
         r.origin.x = f.minX
-        r.origin.y = f.minY - r.height - 8
+        r.origin.y = f.minY - r.height - 12
         if let screen = frameWindow.screen, r.minY < screen.visibleFrame.minY {
-            r.origin.y = f.maxY + 8
+            // No room below: above the frame and its bar.
+            r.origin.y = f.maxY + FrameWindow.barGap + FrameWindow.barHeight + 8
         }
         results.setFrame(r, display: true)
     }
@@ -108,6 +117,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, FrameWindowDelegate {
             return
         }
         reading = true
+        frameWindow.isReading = true
         let own = [CGWindowID(frameWindow.windowNumber), CGWindowID(results.windowNumber)]
         let started = Date()
         Task { @MainActor in
@@ -120,6 +130,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, FrameWindowDelegate {
                 self.results.show(error: error.localizedDescription)
             }
             self.reading = false
+            self.frameWindow.isReading = false
             if self.readAgain {
                 self.readAgain = false
                 self.read()

@@ -17,11 +17,10 @@
 import { canonical } from '@odia/core/normalize';
 
 import { separate } from './correct.js';
-import type { LensCard } from './describe.js';
 import { explainer, fetchLoader, loadWords, readWord, setLoader } from './engine.js';
-import { FRAME_VIEW_CSS, renderLines, shownWord } from './frameview.js';
-import type { FrameLine, FrameWord, Reading } from './messages.js';
-import { HAS_ODIA, cleanRead, type Box } from './picture.js';
+import { FRAME_VIEW_CSS, renderDetail, renderLines } from './frameview.js';
+import type { FrameLine, FrameWord } from './messages.js';
+import { HAS_ODIA, cleanRead, lineText, type Box } from './picture.js';
 
 /** A line as the Swift side read it (boxes in screen points inside the frame). */
 interface NativeLine {
@@ -51,21 +50,24 @@ declare global {
 setLoader(fetchLoader((path) => path));
 
 const CSS = `
-:root { color-scheme: light dark; }
-body { margin: 0; padding: 10px 12px; background: #fffdf8; color: #1d1b16;
+:root {
+  color-scheme: light dark;
+  --nila: #1e2f5c; --hingula: #b7321e; --haritala: #e8b23a;
+  --shankha: #fbf6ea; --kajal: #1c1712; --stone: #6f6253; --line: #e3d6bb;
+}
+body { margin: 0; padding: 0 12px 12px; background: var(--shankha); color: var(--kajal);
   font: 14px/1.4 -apple-system, system-ui, sans-serif; }
-.status { font-size: 11.5px; color: #6b6455; margin-bottom: 8px; }
-.status .bad { color: #a33a1c; }
-.card { margin-top: 10px; padding: 8px 10px; border: 1px solid #d9d2c3; border-radius: 8px; }
-.card .word { font: 600 22px/1.3 "Noto Sans Oriya", "Oriya Sangam MN", "Kalinga", sans-serif; }
-.card .roman { font-style: italic; color: #5a5446; }
-.card ul { margin: 6px 0 0; padding: 0; list-style: none; }
-.card li { margin-top: 4px; }
-.card .source, .card .note { display: block; font-size: 11.5px; color: #6b6455; }
+body::before {
+  content: ""; display: block; height: 7px; margin: 0 -12px 8px;
+  background:
+    linear-gradient(135deg, var(--hingula) 25%, transparent 25%) 0 0 / 14px 7px repeat-x,
+    linear-gradient(225deg, var(--hingula) 25%, transparent 25%) 0 0 / 14px 7px repeat-x,
+    var(--haritala);
+}
+.status { font-size: 11.5px; color: var(--stone); margin-bottom: 8px; }
+.status .bad { color: var(--hingula); }
 @media (prefers-color-scheme: dark) {
-  body { background: #24221d; color: #f1ece0; }
-  .status, .card .source, .card .note, .card .roman { color: #c3bba8; }
-  .card { border-color: #4a4538; }
+  :root { --shankha: #17150f; --kajal: #f3ead6; --stone: #c9bb9d; --line: #3a3326; }
 }
 ` + FRAME_VIEW_CSS;
 
@@ -91,59 +93,6 @@ showStatus();
 
 const post = (message: unknown): void => window.webkit?.messageHandlers?.lens?.postMessage(message);
 
-/** The full card for one word, under the list. */
-function showCard(card: LensCard | null, reading: Reading | null, fallback: string): void {
-  cardEl.textContent = '';
-  const box = document.createElement('div');
-  box.className = 'card';
-  const word = document.createElement('div');
-  word.className = 'word';
-  word.lang = 'or';
-  word.textContent = card?.word ?? fallback;
-  box.append(word);
-  if (card) {
-    const roman = document.createElement('div');
-    roman.className = 'roman';
-    roman.textContent = card.roman;
-    box.append(roman);
-    const list = document.createElement('ul');
-    for (const m of card.meanings) {
-      const li = document.createElement('li');
-      li.textContent = m.text;
-      const src = document.createElement('span');
-      src.className = 'source';
-      src.textContent = m.source;
-      li.append(src);
-      list.append(li);
-    }
-    if (card.meanings.length === 0) {
-      const li = document.createElement('li');
-      li.textContent = 'No meaning in the dictionaries.';
-      list.append(li);
-    }
-    box.append(list);
-  }
-  const notes = [
-    reading?.corrected ? `Read as ${reading.readAs}, corrected to a dictionary word` : 'Read from the screen',
-    reading?.partOf ? `Part of a longer word read as ${reading.partOf}` : null,
-    reading && reading.conf < 60 ? 'Unclear print: check the word' : null,
-    card?.approximateHead ? `Approximate: the dictionary word is ${card.approximateHead}` : null,
-    card?.more ?? null,
-    card?.formation ?? null,
-    card?.loan ?? null,
-    card?.origin ?? null,
-  ];
-  for (const text of notes) {
-    if (!text) continue;
-    const note = document.createElement('span');
-    note.className = 'note';
-    if (HAS_ODIA.test(text)) note.lang = 'or';
-    note.textContent = text;
-    box.append(note);
-  }
-  cardEl.append(box);
-}
-
 async function show(lines: NativeLine[], info: NativeInfo = {}): Promise<number> {
   cardEl.textContent = '';
   if (info.error) {
@@ -168,13 +117,23 @@ async function show(lines: NativeLine[], info: NativeInfo = {}): Promise<number>
       words.push({ text: w.text, conf: w.conf, box: w.box, card: found.card, reading: found.reading });
       previous = found.reading.corrected ?? found.reading.readAs;
     }
-    out.push({ read: canonical(line.words.map((w) => w.text).join(' ')).trim(), words });
+    out.push({ read: canonical(lineText(line.words.map((w) => w.text))), words });
   }
   const lookupMs = Math.round(performance.now() - t0);
   steps.last = `${out.length} line${out.length === 1 ? '' : 's'}${info.ms !== undefined ? ` · read ${info.ms} ms` : ''} · meanings ${lookupMs} ms`;
   showStatus();
   listEl.textContent = '';
-  listEl.append(renderLines(document, out, (w) => showCard(w.card, w.reading, shownWord(w))));
+  listEl.append(
+    renderLines(document, out, (w, chip) => {
+      for (const c of Array.from(listEl.querySelectorAll('.chip[aria-pressed="true"]'))) c.setAttribute('aria-pressed', 'false');
+      chip.setAttribute('aria-pressed', 'true');
+      cardEl.textContent = '';
+      cardEl.append(renderDetail(document, w));
+      // Under the word's own line, so the reader keeps their place.
+      (chip.closest('.line') ?? document.body).append(cardEl);
+      cardEl.scrollIntoView({ block: 'nearest' });
+    }),
+  );
   post({ type: 'shown', lines: out.length, height: document.documentElement.scrollHeight });
   return out.length;
 }

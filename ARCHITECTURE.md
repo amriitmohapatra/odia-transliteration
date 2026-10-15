@@ -346,8 +346,10 @@ the same card, which says "Read from the picture" (and what OCR saw when it was
 corrected, or "unclear print"). The line's words stay cached until scroll or a playing
 video changes the screen. About 0.4–0.7 s per new line; 1.3 s for the first (engine start).
 
-**Frame (lens 0.3.0, Alt+Shift+F):** a see-through box the reader moves and resizes. On
-release (and when the page scrolls under it) `content.ts` hides its panel, the background
+**Frame (lens 0.3.0, Alt+Shift+F):** a see-through box the reader moves (bar) and resizes
+(any edge or corner). `frame.ts` owns its DOM, layout, pointer handling and the Puri/Konark
+theme (inline CSS and SVG only); `content.ts` gives it the shadow root and the messaging. On
+release (and when the page scrolls under it) the panel dims (it stays in place), the background
 captures the inside of the frame, and the OCR page reads it as a block (`ocr.ts readBlock`:
 lines found with Tesseract's block mode, then each line read again alone, up to 12). Each
 line comes back as read, plus its words, each corrected and looked up with the word before
@@ -369,7 +371,8 @@ sentence translation (V4.5); Chrome and Edge only.
 
 A see-through frame over any app (the "v3 native" lens, first spike). Swift, built like
 `ime-macos/` (xcrun swiftc, no Xcode project, ad-hoc signed; macOS 14+). The frame window
-(borderless floating panel: bar to drag, corner to resize) reads when it stops moving:
+(borderless floating panel, same theme as the browser frame: bar to drag with size, read
+again and close buttons; every edge and corner resizes) reads when it stops moving:
 ScreenCaptureKit captures the pixels under it without the lens's own windows; the
 `tesseract` program (Homebrew) reads them with the packed `ori.traineddata`; a WKWebView
 page built from `lens/src/mac.ts` (served from the app through the `odialens:` scheme)

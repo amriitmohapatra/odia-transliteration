@@ -269,11 +269,37 @@ await check('frame (Alt+Shift+F): every word inside it is read together, in orde
   const text = await page.evaluate(() => document.querySelector('odia-lens').shadowRoot.querySelector('.panel').textContent);
   assert.ok(/government/i.test(text) && /state/i.test(text), text);
   assert.ok(await page.evaluate(() => document.querySelector('odia-lens').shadowRoot.querySelector('.line-read')?.textContent.length > 0));
-  // A word's chip opens its full card.
+  // A word's chip opens its full card inside the panel.
   await page.locator('odia-lens .chip').first().click();
-  await page.waitForFunction(() => document.querySelector('odia-lens')?.shadowRoot?.querySelector('.card:not([hidden]) .read'));
-  // Escape closes the card, then the frame.
-  await page.keyboard.press('Escape');
+  await page.waitForFunction(() => {
+    const r = document.querySelector('odia-lens')?.shadowRoot;
+    return r?.querySelector('.panel .detail .detail-word') && r.querySelector('.chip[aria-pressed="true"]');
+  });
+  // Any edge resizes: drag the right edge 80 px out, the left edge 40 px in.
+  const frameBox = () => page.evaluate(() => {
+    const r = document.querySelector('odia-lens').shadowRoot.querySelector('.frame').getBoundingClientRect();
+    return { x: r.x, w: r.width, y: r.y, h: r.height };
+  });
+  const dragEdge = async (edge, dx, dy) => {
+    const b = await page.locator(`odia-lens .${edge}`).boundingBox();
+    const x = b.x + b.width / 2;
+    const y = b.y + b.height / 2;
+    await page.mouse.move(x, y);
+    await page.mouse.down();
+    await page.mouse.move(x + dx, y + dy, { steps: 4 });
+    await page.mouse.up();
+  };
+  const before = await frameBox();
+  await dragEdge('edge.e', 80, 0);
+  const wider = await frameBox();
+  assert.ok(Math.abs(wider.w - before.w - 80) <= 2 && Math.abs(wider.x - before.x) <= 1, `east: ${JSON.stringify([before, wider])}`);
+  await dragEdge('edge.w', 40, 0);
+  const narrower = await frameBox();
+  assert.ok(Math.abs(narrower.w - wider.w + 40) <= 2 && Math.abs(narrower.x - wider.x - 40) <= 2, `west: ${JSON.stringify([wider, narrower])}`);
+  await dragEdge('edge.s', 0, 30);
+  const taller = await frameBox();
+  assert.ok(Math.abs(taller.h - narrower.h - 30) <= 2, `south: ${JSON.stringify([narrower, taller])}`);
+  // Escape closes the frame.
   await page.keyboard.press('Escape');
   await page.locator('odia-lens .frame').waitFor({ state: 'hidden', timeout: 2000 });
   assert.equal(await toggle(), '');

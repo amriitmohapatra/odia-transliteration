@@ -2,7 +2,7 @@ import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 
 import { boundedDistance, parseWordList, separate } from '../src/correct.js';
-import { cleanRead, findLine, lineScale, mapBox, pickLine, pickWord, regionAround, type OcrWord } from '../src/picture.js';
+import { cleanRead, findLine, lineScale, lineText, mapBox, pickLine, pickWord, regionAround, type OcrWord } from '../src/picture.js';
 
 /* Picture mode (V4.2): the pure parts. Odia as \u escapes. */
 
@@ -126,5 +126,13 @@ describe('findLine: the text line under a point, from the pixels', () => {
   it('reads light print on a dark bar the same way', () => {
     const inverted = img.map((v) => 255 - v);
     expect(findLine(inverted, W, H, 30, 15)).toEqual({ x0: 10, y0: 10, x1: 120, y1: 20 });
+  });
+});
+
+describe('lineText: a line as read, for display', () => {
+  it('drops marks with no letter or digit at the ends, keeps them inside', () => {
+    expect(lineText(['`', '\u0b39\u0b47\u0b32\u0b3e', '-', '\u0b2c\u0b4d\u0b5f\u0b3e', '|'])).toBe('\u0b39\u0b47\u0b32\u0b3e - \u0b2c\u0b4d\u0b5f\u0b3e');
+    expect(lineText(['\u0b67\u0b6b', '\u0964'])).toBe('\u0b67\u0b6b');
+    expect(lineText(['|', '`'])).toBe('');
   });
 });

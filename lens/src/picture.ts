@@ -111,6 +111,21 @@ export function cleanRead(text: string): string {
 }
 
 /**
+ * A line's text as read, for display: the words joined by spaces, without the
+ * marks at its ends that hold no letter or digit (a frame edge or a column rule
+ * often reads as "`" or "|").
+ */
+export function lineText(texts: readonly string[]): string {
+  const words = texts.map((t) => t.trim()).filter(Boolean);
+  const real = (t: string): boolean => /[\p{L}\p{N}]/u.test(t);
+  let a = 0;
+  let b = words.length;
+  while (a < b && !real(words[a] as string)) a++;
+  while (b > a && !real(words[b - 1] as string)) b--;
+  return words.slice(a, b).join(' ');
+}
+
+/**
  * The text line under a point, found from the pixels alone (no OCR): a few
  * milliseconds instead of a second for a first OCR pass over the region.
  *
