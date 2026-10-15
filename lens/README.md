@@ -52,6 +52,12 @@ translates it. The file stays on this computer. Clean scans (300 dots per inch) 
 PDFs, even in old non-Unicode fonts, read well; old low-resolution scans (96 dots per inch)
 only in part, until the lens's own OCR model (V4.3).
 
+**Typed PDFs (0.6.0):** when a PDF carries its own Odia text in Unicode (made from Word,
+Google Docs, LibreOffice), the reader uses that text: exact and instant, and the card says
+"Typed text of the PDF". Many PDFs store Odia text badly (letters of conjuncts missing,
+vowel signs in drawing order); the reader repairs the order and checks each page, and a
+page whose text is not trustworthy is read from its picture instead, as before.
+
 **Translate (0.4.0, online, off until you turn it on):** the frame's panel has a
 **Translate** button: the lines read inside the frame are translated into English and
 shown above them, marked as a machine translation. See Privacy for what is sent where.

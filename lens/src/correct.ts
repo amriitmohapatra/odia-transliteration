@@ -27,6 +27,8 @@ export interface Correction {
 export interface WordList {
   readonly size: number;
   has(word: string): boolean;
+  /** How often the word occurs in the list's corpus (0 when it is not in the list). */
+  count(word: string): number;
   correct(word: string): Correction;
   /**
    * Split a run-together word (large type often loses the spaces) into two or
@@ -86,6 +88,7 @@ export function parseWordList(tsv: string): WordList {
   return {
     size: known.size,
     has: (word) => known.has(foldKey(word)),
+    count: (word) => known.get(foldKey(word))?.count ?? 0,
     correct(word) {
       const key = foldKey(word);
       const exact = known.get(key);

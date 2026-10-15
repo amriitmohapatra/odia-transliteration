@@ -115,7 +115,12 @@ export function renderLines(doc: Document, lines: readonly FrameLine[], onWord: 
 }
 
 /** A word's full card: the word, how to say it, every meaning with its source, and the notes. */
-export function renderDetail(doc: Document, w: FrameWord): HTMLElement {
+export function renderDetail(
+  doc: Document,
+  w: FrameWord,
+  /** Where the word came from, the card's first note: a picture (OCR) or a PDF's typed text. */
+  source = 'Read from the picture',
+): HTMLElement {
   const box = doc.createElement('div');
   box.className = 'detail';
   const card = w.card;
@@ -148,7 +153,7 @@ export function renderDetail(doc: Document, w: FrameWord): HTMLElement {
   }
   box.append(list);
   const notes: [string | null, boolean][] = [
-    [reading?.corrected ? `Read from the picture as ${reading.readAs}, corrected to a dictionary word` : 'Read from the picture', false],
+    [reading?.corrected ? `${source} as ${reading.readAs}, corrected to a dictionary word` : source, false],
     [reading?.partOf ? `Part of a longer word read as ${reading.partOf}` : null, false],
     [reading && reading.conf < 60 ? 'Unclear print: check the word' : null, true],
     [card?.approximateHead ? `Approximate: the dictionary word is ${card.approximateHead}` : null, false],

@@ -172,10 +172,27 @@ export async function explainer(): Promise<(text: string) => boolean> {
  * reader): each line as read, then its Odia words, split and corrected
  * (correct.ts), each with its card, looked up with the word before it.
  */
-export async function explainLines(lines: readonly { words: readonly OcrWord[] }[]): Promise<FrameLine[]> {
+export async function explainLines(
+  lines: readonly { words: readonly OcrWord[] }[],
+  /** Typed text (a PDF's own text, V4.7): the words are exact, so no splitting and no correction. */
+  { exact = false }: { exact?: boolean } = {},
+): Promise<FrameLine[]> {
   const [list, explainable] = await Promise.all([loadWords(), explainer()]);
   const out: FrameLine[] = [];
   for (const line of lines) {
+    if (exact) {
+      const words: FrameWord[] = [];
+      let previous = '';
+      for (const w of line.words) {
+        const word = canonical(cleanRead(w.text));
+        if (!HAS_ODIA.test(word)) continue;
+        const card = await lookup(word, previous);
+        words.push({ text: word, conf: 100, box: w.box, card, reading: { readAs: word, corrected: null, conf: 100, partOf: null } });
+        previous = word;
+      }
+      out.push({ read: canonical(lineText(line.words.map((w) => w.text))), words });
+      continue;
+    }
     const pieces = separate([...line.words], list, (t) => canonical(cleanRead(t)), explainable);
     const words: FrameWord[] = [];
     let previous = '';

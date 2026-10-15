@@ -374,6 +374,18 @@ after the read; the page in view is read first. The PDF comes from the file pick
 and drop: no permission. The action icon on a `.pdf` tab opens the reader with the address
 and download instructions instead of injecting. Command `open-reader` (Alt+Shift+R).
 
+**Typed text in PDFs (lens 0.6.0, V4.7):** before OCR, `reader.ts typedLines` takes the
+page's text layer (`getTextContent({ disableNormalization: true })`, runs mapped into the
+OCR pixels). `textlayer.ts` (pure, unit-tested): `textLines` builds lines and words with
+boxes (stored spaces are the breaks; widths split by letter weight); `spokenWords` joins a
+word split where a pre-base vowel sign is drawn (when the joined word is more frequent than
+the second part alone) and puts e/ai after their consonant cluster when that form is more
+frequent (`fixOrder`, counts from the IndicCorp list); `trustText` uses the page only with
+at least 20 Odia words of which 85% are exact list words (a broken character counts as
+unknown). Measured: Chromium's own print-to-PDF stores broken Odia text (conjunct letters
+and nukta letters lost), so such pages go to OCR. Exact pages skip correction
+(`explainLines(..., { exact: true })`). Fixture: `lens/test/fixtures/typed-odia.pdf`.
+
 **Translation (lens 0.4.0, V4.5):** the only online feature, through the assist layer.
 The settings page (`options.ts`) is the switch: turning it on requests the one optional
 host permission, `https://odia-transliteration-web.vercel.app/*` (a unit test pins it);

@@ -26,7 +26,9 @@ import { KONARK_WHEEL } from './frame.js';
 import { FRAME_VIEW_CSS, renderDetail, renderLines } from './frameview.js';
 import { OPEN_SETTINGS, TRANSLATE, type FrameLine, type FrameWord, type TranslateRequest, type TranslateResponse } from './messages.js';
 import { readPage, setOcrPaths } from './ocr.js';
-import { pickWord } from './picture.js';
+import { pickWord, type OcrLine } from './picture.js';
+import { canonical } from '@odia/core/normalize';
+import { spokenWords, textLines, trustText, type TextRun } from './textlayer.js';
 
 setLoader(fetchLoader((path) => chrome.runtime.getURL(path)));
 setOcrPaths({
@@ -72,6 +74,8 @@ interface Page {
   /** The OCR picture's width in pixels (boxes are in its pixels). */
   ocrWidth: number;
   lines: FrameLine[] | null;
+  /** How the page was read: its own typed text (exact) or OCR of its picture. */
+  mode: 'text' | 'ocr' | null;
   words: FrameWord[];
   /** The line each word is on (same order as words). */
   lineOf: number[];
@@ -143,7 +147,7 @@ async function openData(data: Uint8Array): Promise<void> {
     hl.hidden = true;
     el.append(num, canvas, hl);
     pagesEl.append(el);
-    pages.push({ n, el, canvas, hl, width: v.width, height: v.height, drawn: 0, ocrWidth: 0, lines: null, words: [], lineOf: [] });
+    pages.push({ n, el, canvas, hl, width: v.width, height: v.height, drawn: 0, ocrWidth: 0, lines: null, mode: null, words: [], lineOf: [] });
   }
   layout();
   pagesEl.scrollTop = 0;
@@ -250,6 +254,26 @@ function near(p: Page): boolean {
   return r.bottom > view.top - 2 * view.height && r.top < view.bottom + 2 * view.height;
 }
 
+/**
+ * The page's own text, when it is real Unicode Odia (a typed PDF): lines and
+ * words in the pixels of viewport `v`, or null (a scan, an old non-Unicode font,
+ * broken text): then the page is read by OCR.
+ */
+async function typedLines(page: PDFPageProxy, v: ReturnType<PDFPageProxy['getViewport']>): Promise<OcrLine[] | null> {
+  const content = await page.getTextContent({ disableNormalization: true });
+  const runs: TextRun[] = [];
+  for (const item of content.items) {
+    if (!('str' in item)) continue;
+    const t = pdfjs.Util.transform(v.transform, item.transform) as number[];
+    runs.push({ str: item.str, x: t[4] as number, y: t[5] as number, width: item.width * v.scale, height: Math.hypot(t[2] as number, t[3] as number), eol: item.hasEOL });
+  }
+  if (runs.length === 0) return null;
+  const lines = textLines(runs);
+  const list = await loadWords();
+  for (const line of lines) line.words = spokenWords(line.words, (x) => list.count(x), canonical);
+  return trustText(lines, (w) => list.has(canonical(w))).use ? lines : null;
+}
+
 async function readOne(p: Page): Promise<void> {
   if (!doc) return;
   const t0 = performance.now();
@@ -258,6 +282,17 @@ async function readOne(p: Page): Promise<void> {
   const page: PDFPageProxy = await doc.getPage(p.n);
   const scale = Math.min(OCR_DPI / 72, OCR_MAX_WIDTH / p.width);
   const v = page.getViewport({ scale });
+  const typed = await typedLines(page, v).catch(() => null);
+  if (typed) {
+    p.mode = 'text';
+    p.ocrWidth = v.width;
+    keep(p, await explainLines(typed, { exact: true }));
+    p.el.classList.remove('reading');
+    setStatus(`Page ${p.n}: typed text, used exactly as it is (${p.lines?.length ?? 0} lines, ${p.words.length} words).`);
+    if (currentPage() === p && !textEl.hidden) showText(p);
+    return;
+  }
+  p.mode = 'ocr';
   const canvas = document.createElement('canvas');
   canvas.width = Math.round(v.width);
   canvas.height = Math.round(v.height);
@@ -272,19 +307,24 @@ async function readOne(p: Page): Promise<void> {
   });
   p.ocrWidth = bitmap.width;
   bitmap.close();
-  p.lines = await explainLines(lines);
+  keep(p, await explainLines(lines));
+  p.el.classList.remove('reading');
+  const s = ((performance.now() - t0) / 1000).toFixed(1);
+  setStatus(`Page ${p.n} read from its picture: ${p.lines?.length ?? 0} lines, ${p.words.length} words (${s} s).`);
+  if (currentPage() === p && !textEl.hidden) showText(p);
+}
+
+/** Keep a page's lines, and its words in reading order with the line each is on. */
+function keep(p: Page, lines: FrameLine[]): void {
+  p.lines = lines;
   p.words = [];
   p.lineOf = [];
-  p.lines.forEach((line, i) => {
+  lines.forEach((line, i) => {
     for (const w of line.words) {
       p.words.push(w);
       p.lineOf.push(i);
     }
   });
-  p.el.classList.remove('reading');
-  const s = ((performance.now() - t0) / 1000).toFixed(1);
-  setStatus(`Page ${p.n} read: ${p.lines.length} lines, ${p.words.length} words (${s} s).`);
-  if (currentPage() === p && !textEl.hidden) showText(p);
 }
 
 /* ------------------------------ pointing ------------------------------ */
@@ -317,7 +357,7 @@ function showWord(p: Page, index: number): void {
   for (const q of pages) q.hl.hidden = q !== p;
   p.hl.hidden = false;
   wordEl.textContent = '';
-  wordEl.append(renderDetail(document, w));
+  wordEl.append(renderDetail(document, w, p.mode === 'text' ? 'Typed text of the PDF' : 'Read from the page picture'));
   const line = p.lines?.[p.lineOf[index] ?? -1];
   if (line) {
     const of = document.createElement('div');
@@ -536,5 +576,5 @@ if (fromUrl) {
     fileName = name;
     return openData(new Uint8Array(bytes));
   },
-  pages: () => pages.map((p) => ({ n: p.n, read: !!p.lines, words: p.words.map((w) => w.card?.word ?? w.text) })),
+  pages: () => pages.map((p) => ({ n: p.n, read: !!p.lines, mode: p.mode, words: p.words.map((w) => w.card?.word ?? w.text) })),
 };

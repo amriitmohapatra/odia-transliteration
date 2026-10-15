@@ -464,6 +464,29 @@ await check('PDF reader (V4.6): a PDF of a picture of Odia words is read page by
   assert.equal(await toggle(), 'ON');
 });
 
+await check('PDF reader, typed text (V4.7): a typed Odia PDF is used exactly as it is, in spoken order, without OCR', async () => {
+  // lens/test/fixtures/typed-odia.pdf: eight words, four times; its text layer is in drawing order.
+  const typed = readFileSync(new URL('../test/fixtures/typed-odia.pdf', import.meta.url));
+  const want = [
+    '\u0B38\u0B30\u0B15\u0B3E\u0B30', '\u0B30\u0B3E\u0B1C\u0B4D\u0B5F', '\u0B26\u0B3F\u0B28\u0B30\u0B47', ODISHA_CANONICAL,
+    PRABESHAKU, NEI, '\u0B32\u0B4B\u0B15', '\u0B2A\u0B3E\u0B07\u0B01',
+  ];
+  const reader = await context.newPage();
+  reader.on('pageerror', (e) => errors.push(`reader: ${e}`));
+  await reader.goto(worker.url().replace('background.js', 'reader.html'));
+  await reader.setInputFiles('#file', { name: 'typed.pdf', mimeType: 'application/pdf', buffer: typed });
+  await reader.waitForFunction(() => window.odiaReader?.pages()[0]?.read, null, { timeout: 60000 });
+  const p = await reader.evaluate(() => window.odiaReader.pages()[0]);
+  assert.equal(p.mode, 'text', await reader.locator('#status').textContent());
+  assert.deepEqual(p.words.slice(0, 8), want, p.words.slice(0, 8).join(' '));
+  assert.match(await reader.locator('#status').textContent(), /typed text/);
+  await reader.click('#showText');
+  await reader.locator('#text .chip', { hasText: want[2] }).first().click();
+  const card = await reader.evaluate(() => document.getElementById('word').textContent);
+  assert.match(card, /Typed text of the PDF/, card);
+  await reader.close();
+});
+
 await check('turning it off removes the lens from the page', async () => {
   assert.equal(await toggle(), '');
   await hover('dina');
