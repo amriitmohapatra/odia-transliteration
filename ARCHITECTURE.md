@@ -424,6 +424,15 @@ corrects, splits and looks up the words with the browser lens's own code and dra
 list. Not shared beyond the owner: no notarization, Screen Recording permission asked again
 after every rebuild. Details: `mac-lens/README.md`.
 
+**Point mode (V4.8):** with Accessibility permission, a global mouse-moved monitor waits for
+a 350 ms rest, then `PointReader` asks macOS for the element under the pointer, the
+character range at the point (`kAXRangeForPositionParameterizedAttribute`), the text ±60
+characters around it and the character's bounds. The text and the UTF-16 offset go to the
+page in card mode (`index.html#card`, `mac.ts word()`), which finds the word and the one
+before it with `word.ts` (as the browser lens does for page text) and shows the card in a
+small non-activating panel. Exact text: no OCR. Apps without text access, and pictures,
+give no card (the frame reads those).
+
 ## 8. Testing and measurement
 
 | Check | Command | Measures |

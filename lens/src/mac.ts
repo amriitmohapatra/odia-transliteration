@@ -14,8 +14,10 @@
  * report from the owner tells which step failed.
  */
 
-import { explainLines, explainer, fetchLoader, loadWords, setLoader } from './engine.js';
+import { explainLines, explainer, fetchLoader, loadWords, lookup, setLoader } from './engine.js';
+import { wordAt, wordBefore } from './word.js';
 import { FRAME_VIEW_CSS, renderDetail, renderLines } from './frameview.js';
+import type { FrameWord } from './messages.js';
 import type { Box } from './picture.js';
 
 /** A line as the Swift side read it (boxes in screen points inside the frame). */
@@ -38,6 +40,8 @@ declare global {
     odiaMac: {
       show(lines: NativeLine[], info?: NativeInfo): Promise<number>;
       status(text: string): void;
+      /** Card mode (V4.8): the word at `offset` (UTF-16) in `text`, the text an app shows around the pointer. */
+      word(text: string, offset: number): Promise<boolean>;
     };
     webkit?: { messageHandlers?: { lens?: { postMessage(message: unknown): void } } };
   }
@@ -62,6 +66,9 @@ body::before {
 }
 .status { font-size: 11.5px; color: var(--stone); margin-bottom: 8px; }
 .status .bad { color: var(--hingula); }
+body.card-mode { padding: 0 10px 10px; }
+body.card-mode::before { margin: 0 -10px 8px; }
+body.card-mode .detail { margin-top: 0; border: 0; padding: 4px 2px; background: transparent; }
 @media (prefers-color-scheme: dark) {
   :root { --shankha: #17150f; --kajal: #f3ead6; --stone: #c9bb9d; --line: #3a3326; }
 }
@@ -120,12 +127,48 @@ async function show(lines: NativeLine[], info: NativeInfo = {}): Promise<number>
   return out.length;
 }
 
+/**
+ * Card mode (V4.8, the page loaded as index.html#card in the Mac lens's small
+ * card panel): the exact word under the pointer in any app, read through macOS
+ * Accessibility by the Swift side, which sends the text around the pointer.
+ */
+const cardMode = location.hash === '#card';
+if (cardMode) {
+  statusEl.hidden = true;
+  document.body.classList.add('card-mode');
+}
+
+async function word(text: string, offset: number): Promise<boolean> {
+  const found = wordAt(text, offset);
+  if (!found) {
+    post({ type: 'card', found: false });
+    return false;
+  }
+  const previous = wordBefore(text, found.start);
+  const card = await lookup(found.word, previous);
+  const w: FrameWord = {
+    text: found.word,
+    conf: 100,
+    box: { x0: 0, y0: 0, x1: 0, y1: 0 },
+    card,
+    reading: { readAs: found.word, corrected: null, conf: 100, partOf: null },
+  };
+  listEl.textContent = '';
+  cardEl.textContent = '';
+  cardEl.append(renderDetail(document, w, 'Text under the pointer'));
+  document.body.append(cardEl);
+  // The card's own height (the document is at least as tall as the panel).
+  post({ type: 'card', found: true, height: Math.ceil(cardEl.getBoundingClientRect().bottom + 10) });
+  return true;
+}
+
 window.odiaMac = {
   show,
   status(text: string) {
     steps.last = text;
     showStatus();
   },
+  word,
 };
 
 // Load the dictionary now, so the first reading is quick; say when it is ready.

@@ -120,13 +120,26 @@ async function readLine(ocr: Worker, image: ImageBitmap, line: Box): Promise<Ocr
     y1: Math.min(image.height, line.y1 + pad),
   };
   const scale = lineScale(h);
-  await ocr.setParameters({ tessedit_pageseg_mode: '7' as never });
-  const canvas = prepare(image, box, scale);
+  const image8 = pgm(prepare(image, box, scale));
+  const read = async (psm: '7' | '13'): Promise<OcrWord[]> => {
+    await ocr.setParameters({ tessedit_pageseg_mode: psm as never });
+    const result = await ocr.recognize(image8 as never, {}, { blocks: true, text: false });
+    return linesOf(result.data as never, scale, box.x0, box.y0).flatMap((l) => l.words);
+  };
   const t = performance.now();
-  const result = await ocr.recognize(pgm(canvas) as never, {}, { blocks: true, text: false });
+  let words = await read('7');
+  // Single-line mode returns nothing for about one ePaper body line in ten; the
+  // raw-line mode (13) reads those (plan/research/lens-v2-ocr.md, V4.3 measurements).
+  if (meanConf(words) < RAW_LINE_BELOW) {
+    const raw = await read('13');
+    if (meanConf(raw) > meanConf(words)) words = raw;
+  }
   timing.pass2 = Math.round(performance.now() - t);
-  return linesOf(result.data as never, scale, box.x0, box.y0).flatMap((l) => l.words);
+  return words;
 }
+
+/** A line read with less mean confidence than this (or with no Odia at all) is read again in raw-line mode. */
+export const RAW_LINE_BELOW = 60;
 
 /** The text line under (x, y) in an image (region pixels): words with boxes, or null. */
 export async function readAt(image: ImageBitmap, x: number, y: number): Promise<OcrLine | null> {

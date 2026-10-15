@@ -32,6 +32,9 @@ cd mac-lens
 2. **After every rebuild macOS asks again**: an ad-hoc signature changes with each build,
    and macOS treats it as a new app. Remove the old entry in that settings list and allow
    the new one.
+3. **Point mode** (below) needs **Accessibility** permission too (System Settings > Privacy
+   & Security > Accessibility). macOS asks the first time you turn point mode on; the same
+   rule applies: after a rebuild, remove the old entry and allow the new one.
 
 ## Use
 
@@ -44,6 +47,11 @@ cd mac-lens
   `FrameWindow.swift`, now 0.02, goes up. The corner diamonds are solid and always grab.)
 - The menu bar item **ଓ**: show or hide the lens, frame sizes (Word, Line, Para,
   also ⌘1–⌘3 while the menu is open), Read again, Quit.
+- **Point at words in any app** (menu bar **ଓ**, ⌘P while the menu is open): rest the
+  pointer on an Odia word in Notes, Pages, TextEdit, Mail, Word, PowerPoint, Preview, Safari
+  or Chrome, and a card opens beside it. This reads the app's own text (the way macOS's
+  Look Up does), so the word is exact: no OCR. Apps that do not tell macOS their text, and
+  pictures, show no card: use the frame for those. Choose the item again to stop.
 - In the panel: each line as it was read ("Read: …"), then each word with its first
   meaning. Click a word for its full card. Words read with the word before them, so phrases
   like "-କୁ ନେଇ" get their phrase meaning.
@@ -59,6 +67,8 @@ cd mac-lens
 | `Sources/Capture.swift` | The pixels under the frame (ScreenCaptureKit `SCScreenshotManager`, macOS 14+), without the lens's own windows. |
 | `Sources/OCR.swift` | Runs `tesseract` (Homebrew) with the Odia model packed in the app (`ori.traineddata`, tessdata_fast, Apache-2.0); reads its TSV: words, boxes, confidence. Small captures are doubled first. |
 | `Sources/ResultsPanel.swift` | A web view with the results page; serves the page and its dictionary files from the app (`odialens://app/`). |
+| `Sources/PointReader.swift` | Point mode: the text around the pointer through the Accessibility interface (`AXUIElementCopyElementAtPosition`, then the range for the position, the string for ±60 characters, and the character's bounds). Its own windows are skipped. |
+| `Sources/CardPanel.swift` | The card beside the pointer: the same page loaded as `index.html#card`; it finds the word and the word before it (`word.ts`) and shows the card. |
 | `lens/src/mac.ts` | The results page: the browser lens's own correction, splitting, lookup and list (`correct.ts`, `engine.ts`, `frameview.ts`). |
 
 Nothing goes over the network. No Desh data is in the app.

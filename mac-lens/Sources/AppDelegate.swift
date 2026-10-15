@@ -9,9 +9,16 @@ final class AppDelegate: NSObject, NSApplicationDelegate, FrameWindowDelegate {
     private var results: ResultsPanel!
     private var reading = false
     private var readAgain = false
+    /// Point mode (V4.8): the word under the pointer in any app, read through Accessibility.
+    private var card: CardPanel!
+    private var pointMode = false
+    private var pointItem: NSMenuItem?
+    private var monitor: Any?
+    private var lastPoint = CGPoint(x: -1, y: -1)
 
     func applicationDidFinishLaunching(_ notification: Notification) {
         results = ResultsPanel()
+        card = CardPanel()
         frameWindow = FrameWindow(size: FrameWindow.sizes[1].size)
         frameWindow.lensDelegate = self
         frameWindow.center()
@@ -37,6 +44,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate, FrameWindowDelegate {
             entry.tag = index
         }
         add(menu, "Read again", #selector(readNow), "r")
+        menu.addItem(.separator())
+        pointItem = add(menu, "Point at words in any app", #selector(togglePointMode), "p")
         menu.addItem(.separator())
         let quit = NSMenuItem(title: "Quit Odia Lens", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q")
         menu.addItem(quit)
@@ -69,6 +78,53 @@ final class AppDelegate: NSObject, NSApplicationDelegate, FrameWindowDelegate {
 
     @objc private func readNow() {
         read()
+    }
+
+    // MARK: Point mode (V4.8)
+
+    @objc private func togglePointMode() {
+        if pointMode {
+            stopPointMode()
+            return
+        }
+        // macOS asks the owner once (System Settings > Privacy & Security > Accessibility).
+        guard PointReader.trusted(prompt: true) else {
+            results.orderFrontRegardless()
+            results.show(error: "Point mode needs Accessibility: allow Odia Lens in System Settings > Privacy & Security > Accessibility, then choose \u{201C}Point at words in any app\u{201D} again.")
+            return
+        }
+        pointMode = true
+        pointItem?.state = .on
+        monitor = NSEvent.addGlobalMonitorForEvents(matching: [.mouseMoved]) { [weak self] _ in
+            DispatchQueue.main.async { self?.pointerMoved() }
+        }
+    }
+
+    private func stopPointMode() {
+        pointMode = false
+        pointItem?.state = .off
+        if let m = monitor { NSEvent.removeMonitor(m) }
+        monitor = nil
+        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(pointerRested), object: nil)
+        card.orderOut(nil)
+    }
+
+    /// Read the word when the pointer rests for a moment (as the browser lens does).
+    private func pointerMoved() {
+        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(pointerRested), object: nil)
+        perform(#selector(pointerRested), with: nil, afterDelay: 0.35)
+    }
+
+    @objc private func pointerRested() {
+        guard pointMode else { return }
+        let point = PointReader.pointerPoint()
+        if abs(point.x - lastPoint.x) < 1 && abs(point.y - lastPoint.y) < 1 && card.isVisible { return }
+        lastPoint = point
+        guard let hit = PointReader.textAt(point), hit.text.unicodeScalars.contains(where: { (0x0B00...0x0B7F).contains($0.value) }) else {
+            card.orderOut(nil)
+            return
+        }
+        card.show(text: hit.text, offset: hit.offset, near: NSEvent.mouseLocation)
     }
 
     // MARK: FrameWindowDelegate
