@@ -36,7 +36,7 @@ file used here is the OdiaNLP one. See `plan/research/2026-10-04/02-dictionary-s
 | `praharaj.babylon` (indic-dict `or-head/praharaj/`) | `b60c01043c26598c26cb8085c130ef89ab92bb404367302a4257c6c35e0003eb` | Copy fetched 2026-10-04, 67,584,041 bytes. Not confirmed identical to the copy the payload was built from. |
 | `cleaned_pairs.json` (OdiaNLP `dictionary` at commit `8bc4ca8d`, 2021-10-09) | `b34a7ac9339cdd807d3471d872c647294c8c4ce768a1df5e00ff22ac21da80c8` | Same caveat. |
 | `build/dict_payload_v2.b64` | `b3f7edb86a6638ef0631eb8f3f0308212cbbaa2a779bfab705496e1903586da3` | Committed payload, Praharaj subset |
-| `build/modern_payload.b64` | `fde76f2a4030a61e18cf013aef3b126d92d37fdf279fe306f7aa1db5c14858da` | Committed payload, MODERN layer |
+| `build/modern_payload.b64` | `82e0e523775824d89e75fb59e7046be65661854bed6fce6251683a024cabc4d4` | Committed payload, MODERN layer. 2026-10-15: CLDR calendar abbreviations and Indian-calendar months removed (`tools/build-data/filter_cldr_short.py`; was `fde76f2a…858da`) |
 | `build/pako-inflate.min.js` | `bca5529190cd4c572482197baa533963e1588bc510c90379c4c634e66a262bfc` | |
 
 ## V1: the same data as app assets (2026-10-04)
@@ -48,7 +48,7 @@ payloads are the committed `.b64` files above, base64-decoded without any other 
 | File | sha256 | Note |
 |---|---|---|
 | `Appv2/src/dictionary/praharaj.bin` | `ca8401ebc6a3f26546628833f9ef90afd126737de2dbb7afe24c9b8c681423ed` | = `dict_payload_v2.b64` decoded. gzip; 38,776 entries |
-| `Appv2/src/dictionary/modern.bin` | `fb2447b201335151d7c4425b0c4e8a6018ba1bcab7b2ad6cd97c2fdbc251b031` | = `modern_payload.b64` decoded. gzip; 40,589 entries |
+| `Appv2/src/dictionary/modern.bin` | `3140a65b62d9ca557acf0e6c1dd79312c73e54b9d235f88c37b06723d059e13f` | = `modern_payload.b64` decoded. gzip; 40,561 entries (40,589 before the 2026-10-15 CLDR filter: 36 lines, 28 keys) |
 | `Appv2/src/dictionary/pako-inflate.js` | (vendored) | The trimmed pako build above, with its `window.__dictInflate` wrapper replaced by an ES `export`. MIT. |
 
 ## V2.4: word origin (2026-10-04)

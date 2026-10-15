@@ -304,8 +304,12 @@ def cldr_names(or_xml: Path) -> dict:
         ('.//languages/language', 'language'),
         ('.//scripts/script', 'script'),
         ('.//territories/territory', 'country/region'),
-        ('.//months//month', 'month'),
-        ('.//days//day', 'weekday'),
+        # The Gregorian calendar's full (wide) names only: the abbreviated and
+        # one-letter forms are everyday words (RA "of", NA "not", GURU "teacher"),
+        # and the Indian calendar's months do not match Gregorian numbers
+        # (owner report 2026-10-15; tools/build-data/filter_cldr_short.py).
+        (".//calendar[@type='gregorian']/months/monthContext[@type='format']/monthWidth[@type='wide']/month", 'month'),
+        (".//calendar[@type='gregorian']/days/dayContext[@type='format']/dayWidth[@type='wide']/day", 'weekday'),
     ]:
         for el in root.findall(path):
             od = (el.text or '').strip()
@@ -313,6 +317,9 @@ def cldr_names(or_xml: Path) -> dict:
             if not od or not ODIA_ONLY.match(od.replace(' ', '')):
                 continue
             if el.get('alt'):
+                continue
+            # Two-letter language and script codes are everyday syllables (GA, YI).
+            if kind in ('language', 'script', 'country/region') and len(fold(canonical(od))) <= 2:
                 continue
             out.setdefault(fold(canonical(od)), (code, kind))
     return out

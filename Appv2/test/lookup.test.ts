@@ -125,3 +125,21 @@ describe('explainVerb: verb forms by their ending', () => {
   });
 });
 
+
+describe('modern layer: no calendar abbreviations (owner report, 2026-10-15)', () => {
+  const lines = (i: number): string[] => M.defs.slice(M.offsets[i], (M.offsets[i] as number) + (M.lens[i] as number)).split('\n');
+  it('CLDR month and weekday names only on the full Gregorian names', () => {
+    for (let i = 0; i < M.keys.length; i++) {
+      for (const line of lines(i)) {
+        if (/^cldr\t.*\((month|weekday)\)$/.test(line)) expect((M.keys[i] as string).length, `${M.keys[i]}: ${line}`).toBeGreaterThan(1);
+        if (/^cldr\t.*\(weekday\)$/.test(line)) expect(M.keys[i]).toMatch(/\u0b2c\u0b3e\u0b30$/);
+      }
+    }
+  });
+  it('the possessive particle RA is not "Sunday", the negation NA not "November"', () => {
+    for (const key of ['\u0b30', '\u0b28', '\u0b2e', '\u0b05', '\u0b17\u0b41\u0b30\u0b41', '\u0b1a\u0b48\u0b24\u0b4d\u0b30']) {
+      const i = M.keys.indexOf(key);
+      if (i >= 0) expect(lines(i).some((l) => l.startsWith('cldr\t'))).toBe(false);
+    }
+  });
+});
