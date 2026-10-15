@@ -32,6 +32,7 @@ import { badgeFor } from './badges.js';
 import { buildSlots, hasWords, readbackText, type Slot } from './readback.js';
 import { casual } from './romanize.js';
 import { Editor } from './editor.js';
+import { hasDeviceVoice, record, speak, speakRoute, speakable, stopSpeaking, type Recording } from './speech.js';
 import { canonical } from '@odia/core/normalize';
 import {
   DEFAULT_PROFILE,
@@ -87,6 +88,12 @@ const helpIntroEl = must<HTMLButtonElement>('help-intro');
 const introEl = must<HTMLElement>('intro');
 const introTryEl = must<HTMLButtonElement>('intro-try');
 const introDismissEl = must<HTMLButtonElement>('intro-dismiss');
+const speakEl = must<HTMLButtonElement>('speak');
+const voiceEl = must<HTMLButtonElement>('voice');
+const voiceLabelEl = must<HTMLSpanElement>('voice-label');
+const speakOnlineEl = must<HTMLInputElement>('toggle-speak-online');
+const listenOnlineEl = must<HTMLInputElement>('toggle-listen-online');
+const privacyNoteEl = must<HTMLParagraphElement>('privacy-note');
 
 function must<T extends HTMLElement>(id: string): T {
   const element = document.getElementById(id);
@@ -103,6 +110,9 @@ const PREF_STRICT = 'odia.pref.strict';
 /** Number keys 1-9 take a suggestion (Microsoft IME style). Missing = on. */
 const PREF_NUMBER_PICK = 'odia.pref.numberPick';
 const PREF_NEXT_WORD = 'odia.pref.nextWord';
+/** Settings > Read aloud online / Voice typing (V3). OFF by default: a missing key reads as off (D-2). */
+const PREF_SPEAK_ONLINE = 'odia.pref.speakOnline';
+const PREF_LISTEN_ONLINE = 'odia.pref.listenOnline';
 /** "Hide rude words". ON by default: a missing key reads as on. */
 const PREF_FAMILY_SAFE = 'odia.pref.familySafe';
 /**
@@ -207,6 +217,10 @@ async function boot(): Promise<void> {
   strictEl.checked = readPref(PREF_STRICT);
   numberPickEl.checked = readPref(PREF_NUMBER_PICK, true);
   nextWordEl.checked = readPref(PREF_NEXT_WORD, true);
+  speakOnlineEl.checked = readPref(PREF_SPEAK_ONLINE);
+  listenOnlineEl.checked = readPref(PREF_LISTEN_ONLINE);
+  voiceEl.hidden = !listenOnlineEl.checked;
+  updatePrivacyNote();
   // Kids edition: no next-word data (adults' chat), so no switch for it.
   if (KIDS) {
     const row = nextWordEl.closest<HTMLElement>('.setting');
@@ -687,6 +701,76 @@ function paletteButton(entry: PaletteEntry): HTMLButtonElement {
  * and Engine.transliterate copies punctuation through verbatim — the same
  * property preprocess.ts relies on.
  */
+/* ------------------------------------------------------------------ *
+ * Read-aloud and voice typing (V3, speech.ts)
+ * ------------------------------------------------------------------ */
+
+/** Listen: the selected text, else the whole text box, read by the device's Odia voice or, if switched on, online. */
+function onSpeak(): void {
+  const start = romanEl.selectionStart ?? 0;
+  const end = romanEl.selectionEnd ?? start;
+  const chosen = end > start ? romanEl.value.slice(start, end) : romanEl.value;
+  const { text, cut } = speakable(chosen);
+  if (!/[\u0B01-\u0B77]/.test(text)) {
+    setStatus('Nothing in Odia to read yet.', false);
+    return;
+  }
+  const route = speakRoute(hasDeviceVoice(), speakOnlineEl.checked);
+  if (route === 'none') {
+    setStatus('This device has no Odia voice. To hear the text, turn on \u201cRead aloud online\u201d in Settings.', false);
+    return;
+  }
+  setStatus(cut ? 'Reading the first part (500 letters).' : '', false);
+  speak(text, route).catch((error: unknown) => setStatus(error instanceof Error ? error.message : String(error), true));
+}
+
+/** The promise under the page stays true: it names what goes online once a switch is on. */
+function updatePrivacyNote(): void {
+  const parts: string[] = [];
+  if (speakOnlineEl.checked) parts.push('Listen sends the text when this device has no Odia voice.');
+  if (listenOnlineEl.checked) parts.push('Speak sends your recording.');
+  privacyNoteEl.textContent = parts.length === 0
+    ? 'Everything runs on this device. Nothing you type is sent anywhere.'
+    : `Typing runs on this device. Online (Sarvam AI, India), only when you press the button: ${parts.join(' ')} Turn this off in Settings.`;
+}
+
+let recording: Recording | null = null;
+
+function setVoiceState(state: 'idle' | 'recording' | 'sending'): void {
+  voiceEl.setAttribute('aria-pressed', String(state === 'recording'));
+  voiceEl.disabled = state === 'sending';
+  voiceLabelEl.textContent = state === 'recording' ? 'Stop and type' : state === 'sending' ? 'Typing\u2026' : 'Speak';
+}
+
+/** Speak: first press records, second press sends and types the Odia at the caret. */
+async function onVoice(): Promise<void> {
+  if (!recording) {
+    stopSpeaking();
+    try {
+      recording = await record(() => void onVoice());
+    } catch (error) {
+      setStatus(error instanceof Error ? error.message : String(error), true);
+      return;
+    }
+    setVoiceState('recording');
+    setStatus('Listening\u2026 speak in Odia, then press Stop and type.', false);
+    return;
+  }
+  const current = recording;
+  recording = null;
+  setVoiceState('sending');
+  try {
+    const text = await current.finish();
+    const before = romanEl.value.slice(0, romanEl.selectionStart ?? romanEl.value.length);
+    insertAtCaret(`${before && !/\s$/.test(before) ? ' ' : ''}${canonical(text)} `);
+    setStatus('', false);
+  } catch (error) {
+    setStatus(error instanceof Error ? error.message : String(error), true);
+  } finally {
+    setVoiceState('idle');
+  }
+}
+
 function insertAtCaret(text: string): void {
   const start = romanEl.selectionStart ?? romanEl.value.length;
   const end = romanEl.selectionEnd ?? start;
@@ -1472,6 +1556,18 @@ function bindEvents(): void {
   clearEl.addEventListener('click', onClear);
   numberPickEl.addEventListener('change', () => writePref(PREF_NUMBER_PICK, numberPickEl.checked));
   nextWordEl.addEventListener('change', () => writePref(PREF_NEXT_WORD, nextWordEl.checked));
+  speakOnlineEl.addEventListener('change', () => {
+    writePref(PREF_SPEAK_ONLINE, speakOnlineEl.checked);
+    updatePrivacyNote();
+  });
+  listenOnlineEl.addEventListener('change', () => {
+    writePref(PREF_LISTEN_ONLINE, listenOnlineEl.checked);
+    if (!listenOnlineEl.checked) recording?.cancel();
+    voiceEl.hidden = !listenOnlineEl.checked;
+    updatePrivacyNote();
+  });
+  speakEl.addEventListener('click', onSpeak);
+  voiceEl.addEventListener('click', () => void onVoice());
 
   digitsEl.addEventListener('change', () => {
     writePref(PREF_DIGITS, digitsEl.checked);

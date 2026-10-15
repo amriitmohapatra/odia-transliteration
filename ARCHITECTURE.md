@@ -307,17 +307,32 @@ and `dictionary/overlay.css` together.
   location. **V3 and V4 must relax that policy** (`microphone=(self)` for speak-to-write,
   `camera=(self)` for the lens) in the same commit that adds the feature.
 
-## 7. The assist layer (V3, planned)
+## 7. The assist layer (V3)
 
-| Route | Does | Provider (D-3) |
-|---|---|---|
-| `/api/speak` | Odia text → audio | Sarvam Bulbul (browser voice first where present) |
-| `/api/listen` | audio → Odia text | Sarvam Saarika |
-| `/api/translate` | sentence → English | Google or Claude Haiku (100-sentence test decides) |
+| Route | Does | Provider (D-3) | Built |
+|---|---|---|---|
+| `/api/speak` | Odia text → MP3 speech | Sarvam Bulbul (`bulbul:v3`, `od-IN`); the device's own Odia voice first | 2026-10-15: web app "Listen" |
+| `/api/listen` | recording (WebM/Ogg/MP4, ≤ 30 s, ≤ 1 MB) → Odia text | Sarvam Saaras (`saaras:v4`, `od-IN`) | 2026-10-15: web app "Speak" |
+| `/api/translate` | Odia text → English | Claude Haiku or Google (100-sentence test decides) | 2026-10-15: lens "Translate" |
 
-Rules: keys only in Vercel environment variables; `.env*` never committed; rate limit per
-visitor; provider spending limit; hard cap US$20/month (D-4); logs never hold user text;
-every result passes `canonical()`; cache by canonical text.
+Each route is a Vercel function in `api/` with Web-standard `POST`/`OPTIONS` handlers;
+the logic is in `api/_lib/` (`speech.ts`, `translate.ts`) and is unit-tested with a fake
+provider (`tools/assist/`). Only the app's own site and the lens may call (origin check).
+
+In the web app (`Appv2/src/speech.ts`): **Listen** on the "Reads as" line reads the
+selected text, else the whole box (500 characters at most). It uses the device's Odia
+voice (`speechSynthesis`, language `or`/`od`) when there is one, with no network; else
+`/api/speak`, only when Settings > "Read aloud online" is on. **Speak** (shown only when
+Settings > "Voice typing" is on) records with `MediaRecorder` and types the answer of
+`/api/listen` at the caret. Both switches are off by default; the line under the page
+says what goes online while one is on. `vercel.json` allows the microphone for the site
+itself only. Browser check: `Appv2/eval/browser/speech-check.mjs` (stand-in routes, fake
+microphone).
+
+Rules: keys only in Vercel environment variables (`SARVAM_API_KEY`, `ANTHROPIC_API_KEY`);
+`.env*` never committed; provider spending limit; hard cap US$20/month (D-4); logs never
+hold user text; every result passes `canonical()`; read-aloud and translation cached by
+canonical text (in the function's memory).
 
 ## 7b. Odia Lens, the browser extension (`lens/`, V4.1)
 

@@ -453,6 +453,26 @@ textarea:focus {
   font-size: var(--fs-sm);
 }
 
+/* Listen (V3, speech.ts): at the end of the "Reads as" head. */
+.readback-head .readback-speak {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  align-self: center;
+}
+/* With a mouse the row stays one line high; touch keeps the 44px target. */
+@media (pointer: fine) {
+  .readback-head .readback-speak { min-height: 30px; padding: 0 0.7rem; font-size: var(--fs-sm); }
+}
+
+/* Speak (voice typing) while recording: the button says so in colour as well as words. */
+#voice svg { vertical-align: -3px; }
+#voice[aria-pressed="true"] {
+  color: var(--danger, #b3261e);
+  border-color: currentColor;
+}
+
 .readback-words {
   font-size: var(--fs-input);
   line-height: 1.5;

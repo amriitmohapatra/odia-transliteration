@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta
       name="description"
-      content="Type Odia and Sanskrit-in-Odia-script phonetically. Offline, private, no network."
+      content="Type Odia and Sanskrit-in-Odia-script phonetically. Works offline and privately; read-aloud and voice typing online only if you turn them on."
     />
 
     <title>Odia Phonetic — Sanskrit</title>
@@ -155,6 +155,12 @@
             <div class="readback-head">
               <span class="readback-label" id="readback-label">Reads as</span>
               <span class="readback-hint">tap a word to change it</span>
+              <!-- Read-aloud (V3, src/speech.ts): the device's Odia voice, else
+                   /api/speak only when Settings > Read aloud online is on. -->
+              <button type="button" id="speak" class="btn btn-small readback-speak" aria-label="Listen: read the Odia aloud">
+                <svg aria-hidden="true" viewBox="0 0 24 24" width="16" height="16"><path fill="currentColor" d="M3 9v6h4l5 4V5L7 9H3zm13.5 3a4.5 4.5 0 0 0-2.5-4v8a4.5 4.5 0 0 0 2.5-4zM14 3.2v2.1a7 7 0 0 1 0 13.4v2.1a9 9 0 0 0 0-17.6z"/></svg>
+                Listen
+              </button>
             </div>
             <div
               id="readback"
@@ -196,6 +202,12 @@
             title="Copy Odia (Ctrl+Enter)"
           >Copy Odia</button>
           <button type="button" id="clear" class="btn btn-quiet">Clear</button>
+          <!-- Voice typing (V3, src/speech.ts): shown only when Settings >
+               Voice typing is on; the recording goes to /api/listen. -->
+          <button type="button" id="voice" class="btn btn-quiet" aria-pressed="false" hidden>
+            <svg aria-hidden="true" viewBox="0 0 24 24" width="16" height="16"><path fill="currentColor" d="M12 14a3 3 0 0 0 3-3V5a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3zm5-3a5 5 0 0 1-10 0H5a7 7 0 0 0 6 6.9V21h2v-3.1a7 7 0 0 0 6-6.9h-2z"/></svg>
+            <span id="voice-label">Speak</span>
+          </button>
           <!-- Meanings (below 1100px; wider screens show the column). DOM
                contract: aria-controls="dict-panel", see dictionary/overlay.ts. -->
           <button
@@ -213,7 +225,7 @@
       </main>
 
       <footer class="colophon">
-        <p>Everything runs on this device. Nothing you type is sent anywhere.</p>
+        <p id="privacy-note">Everything runs on this device. Nothing you type is sent anywhere.</p>
       </footer>
     </div>
 
@@ -301,6 +313,28 @@
               <span class="odia" lang="or">କେମିତି ଅଛ</span> &mdash; how are you?
             </p>
           </div>
+
+          <h3 class="settings-section">Online (off until you turn them on)</h3>
+          <label class="setting">
+            <input type="checkbox" id="toggle-speak-online" role="switch" />
+            <span class="setting-text">
+              <span class="setting-label">Read aloud online</span>
+              <span class="setting-help">
+                When this device has no Odia voice, Listen sends the Odia text to Sarvam AI
+                (India) to make the speech. Nothing is sent while this is off.
+              </span>
+            </span>
+          </label>
+          <label class="setting">
+            <input type="checkbox" id="toggle-listen-online" role="switch" />
+            <span class="setting-text">
+              <span class="setting-label">Voice typing</span>
+              <span class="setting-help">
+                Shows a Speak button: say something in Odia and it is typed for you. The recording
+                (30 seconds at most) is sent to Sarvam AI (India). Nothing is sent while this is off.
+              </span>
+            </span>
+          </label>
 
           <h3 class="settings-section">Advanced</h3>
           <label class="setting">

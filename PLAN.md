@@ -34,7 +34,7 @@ whenever a task changes status. Last updated: 2026-10-12 (editor reliability and
 | V0 Clean-up | Cache scoping, English word in the bar, `rank()` learning bug, bundled font, dictionary provenance, `j` → ଯ | **Done** 2026-10-04 (D-10 open) |
 | **V1 Web app on Vercel** | One merged app; dictionary as a module; owner preferences; family-safe filter; romanised read-back; colloquial tests; UI/UX pass; PWA + `vercel.json`; CI | **Live** 2026-10-04: adult `https://odia-transliteration-web.vercel.app/`, kids `https://odia-phonetic-kids.vercel.app/` (two Vercel projects, root directory = repository root). Acceptance: A-1–A-10, A-12 pass in Chromium; A-11 (Safari) and phones are owner tests (`plan/06`) |
 | V2 Better words | See §3b. Owner gloss file pulled forward into V1 (done) | **Started** 2026-10-04 |
-| V3 Assist layer | `/api/speak`, `/api/listen`, `/api/translate` behind switches | `/api/translate` **built** 2026-10-15 for the lens (V4.5); needs the owner's key on Vercel (A-9). `/api/speak`, `/api/listen` not started |
+| V3 Assist layer | `/api/speak`, `/api/listen`, `/api/translate` behind switches | **All three built** 2026-10-15: `/api/translate` for the lens (V4.5); `/api/speak` (Listen: the device's Odia voice first, Sarvam Bulbul only when "Read aloud online" is on) and `/api/listen` (Speak: voice typing through Sarvam Saaras, only when "Voice typing" is on) in the web app. Need the owner's keys on Vercel (A-9, A-11) |
 | V4 Lens | Browser extension, then camera/screenshot input | **V4.1 (browser extension) built** 2026-10-14. **V4.2 picture mode** (ePapers, YouTube frames; Odia OCR in the extension) started 2026-10-15: OCR spike done (`plan/research/lens-v2-ocr.md`). Native (v3) not started |
 | V5 Native | macOS input method with the real engine; Android, iOS (skills first) | Not started |
 | E-1 Experiment | Laya against a simple word-origin tagger | Not started |
@@ -55,7 +55,7 @@ the branch; no PR until the owner asks. Meaning batches (V2.17) continue between
 | 3 | V2.6 IndicXlit lexicon fill (OOV top-1 6.9%) | New candidates built offline at build time, OOV top-1 measured against `tools/eval/baseline.json` | HuggingFace is reachable from the cloud server since 2026-10-15 (it was not before) |
 | 4 | V2.3 colloquial remainder | **Done** 2026-10-15: nothing left on the engine side; the spoken ଚ/ଛ order stays with the owner (C-3) | — |
 | 5 | V2.7 new modern meanings layer (D-5) | Glosses aligned from Samanantar / BPCC plus Wikidata labels, licences and checksums in `PROVENANCE.md`, compared with the old layer on a sample | Licences checked first |
-| 6 | V3 `/api/speak` (read-aloud), then `/api/listen` (voice input) | Built behind switches like `/api/translate`: origin allowlist, size cap, off until turned on, tested against a local stand-in; the browser's own Odia voice used where it exists | Provider Sarvam (D-3); request format checked from Sarvam's docs; owner key on Vercel (new follow-up) |
+| 6 | V3 `/api/speak` (read-aloud), then `/api/listen` (voice input) | **Done** 2026-10-15: both routes and the web app's Listen and Speak; request formats from Sarvam's API reference; 15 unit tests, 17 browser checks against a stand-in | Owner key on Vercel (A-11) |
 | 7 | V5 macOS input method with the real engine | `core` bundle that runs in JavaScriptCore with data handed over by Swift; logic in TypeScript under unit tests; Swift parse-checked | First run and the ad-hoc signing question need the owner's Mac |
 | 8 | E-1 word-origin tagger, then Laya only if the tagger is not good enough | A small character-pattern tagger for words outside Praharaj, measured on held-out Praharaj tags | D-9 |
 
@@ -260,6 +260,7 @@ Agents do not commit; the lead reviews, measures and commits.
 
 | Date | Change |
 |---|---|
+| 2026-10-15 | V3 built: Listen (read-aloud; device voice first, Sarvam when switched on) and Speak (voice typing through Sarvam), both off by default. |
 | 2026-10-15 | V2.17 batch 10 (689 rows from the owner's News18 articles, reviewed): together 92.5%. V2.3 found done on the engine side. |
 | 2026-10-15 | Owner: work the self-doable items autonomously. Queue in §2b (batch 10, V4.3 decision, V2.6, V2.3, V2.7, V3 speak/listen, V5 macOS input method, E-1). V2.6 and V2.7 are no longer blocked: HuggingFace is reachable from the cloud server. |
 | 2026-10-15 | V4.10: Odia digits under the pointer; words explained from their parts. ର is the possessive "of" (owner), and calendar abbreviations left the modern dictionary layer. |
