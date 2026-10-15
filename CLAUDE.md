@@ -196,6 +196,7 @@ Rows marked unknown or unverified below are open items, not exceptions:
 | SCOWL `american-english-small` | Permissive / public domain | Build time: common English words for `loans.tsv` |
 | IndicCorp v2 Odia `or.txt` (word counts) | CC0 | Build time: attestation for `loans.tsv` (`tools/build-data/count_indiccorp.py`); shipped in the Odia Lens as the OCR word list `core/data/indiccorp-words.tsv` |
 | Tesseract (`tesseract.js` 5.1.1, `tesseract.js-core` 5.1.1) and the Odia model `lens/vendor/ori.traineddata` (own fine-tune of `tessdata_best/ori`, V4.3, trained only on CC0/CC-BY word lists rendered in OFL fonts) | Apache-2.0 (model: modified) | Odia Lens OCR (V4.2, V4.3); `lens/PROVENANCE.md`, `plan/research/v43-ocr-model/clean-PROVENANCE.md` |
+| AI4Bharat IndicXlit (`ai4bharat/IndicXlit`, Odia → Latin model) | MIT | Build time only: Latin spellings for common words in no word list, `core/data/lexicon-xlit*.tsv` (V2.6) |
 | pako inflate | MIT | Unpacks the dictionary payloads |
 | WebView2 SDK (`Microsoft.Web.WebView2` 1.0.4258.31) | BSD-3-Clause | Odia Lens for Windows (`win-lens/`, owner testing); `win-lens/PROVENANCE.md` |
 | pdf.js (`pdfjs-dist` 6.3.289, legacy build; image decoders; Foxit standard fonts only) | Apache-2.0; decoders BSD-3/BSD-2/MIT; Foxit fonts BSD-3 | Odia Lens PDF reader (V4.6); `lens/PROVENANCE.md`. Liberation fonts left out (GPL with font exception) |
