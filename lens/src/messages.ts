@@ -13,6 +13,26 @@ export const OCR = 'odia-lens/ocr';
 /** Content → background: read everything inside the lens frame. */
 export const FRAME = 'odia-lens/frame';
 
+/** Content → background: translate the text read in the frame (online, only when the reader turned it on). */
+export const TRANSLATE = 'odia-lens/translate';
+/** Content → background: open the lens's settings page. */
+export const OPEN_SETTINGS = 'odia-lens/open-settings';
+
+export interface TranslateRequest {
+  type: typeof TRANSLATE;
+  /** Odia lines as read, one per line. */
+  text: string;
+}
+
+export type TranslateResponse =
+  | { ok: true; translation: string; provider: string; model: string }
+  /** `off`: the reader has not turned translation on (nothing was sent). */
+  | { ok: false; off?: boolean; error: string };
+
+export interface OpenSettingsRequest {
+  type: typeof OPEN_SETTINGS;
+}
+
 /** The manifest's command name for the keyboard shortcut. */
 export const TOGGLE_COMMAND = 'toggle-lens';
 /** The manifest's command name for opening or closing the frame. */

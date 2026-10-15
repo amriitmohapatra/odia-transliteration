@@ -41,6 +41,10 @@ see-through layers and reads the frame on the screen at that moment. Odia captio
 (subtitles) are page text: point at a caption word for its card at once. In full screen
 the card still shows. The frame works over videos too; press **↻** to read a new frame.
 
+**Translate (0.4.0, online, off until you turn it on):** the frame's panel has a
+**Translate** button: the lines read inside the frame are translated into English and
+shown above them, marked as a machine translation. See Privacy for what is sent where.
+
 It is the same dictionary and the same lookup as the Meanings panel of the web
 app (`Appv2/src/dictionary/lookup.ts`).
 
@@ -66,16 +70,23 @@ app (`Appv2/src/dictionary/lookup.ts`).
 - The lens reads a page only after you click its icon on that page
   (`activeTab`). It asks for no access to any site in advance.
 - Everything is offline: the dictionary and the OCR engine are inside the extension,
-  and nothing is sent anywhere. Picture mode takes a screenshot of the tab only while the
+  and nothing is sent anywhere, unless you turn on translation (below). Picture mode takes a screenshot of the tab only while the
   lens is on and the pointer rests on a picture; the screenshot stays in the browser. The browser check (`lens/eval/lens-check.mjs`) fails if any
   request leaves the computer.
+- **Translation is the one online feature, and it is off.** Turning it on (lens settings:
+  right-click the lens icon > Options) asks the browser for access to one site only, the
+  Odia app's server `odia-transliteration-web.vercel.app`. Then the **Translate** button in
+  the frame's panel sends the Odia lines read inside the frame there, and the server asks a
+  translation service (now Anthropic's Claude) for English. Nothing is sent before you
+  press Translate. Turning it off gives the access back.
 - No Desh keyboard data is in the extension.
 
 ## Limits of v1
 
 - The page itself only (not text inside embedded frames, such as a YouTube video embedded
   in a news page; open the video on YouTube itself).
-- One word at a time; no sentence translation yet (V4.5).
+- Translation needs the internet and the server's translation key; it translates the lines
+  as OCR read them, so misread letters can change the translation.
 - Picture mode reads one line at a time, in the visible part of the page; OCR makes
   mistakes on small or decorated print.
 - Chrome and Edge. Firefox and Safari later.

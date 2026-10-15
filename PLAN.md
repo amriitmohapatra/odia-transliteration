@@ -34,7 +34,7 @@ whenever a task changes status. Last updated: 2026-10-12 (editor reliability and
 | V0 Clean-up | Cache scoping, English word in the bar, `rank()` learning bug, bundled font, dictionary provenance, `j` → ଯ | **Done** 2026-10-04 (D-10 open) |
 | **V1 Web app on Vercel** | One merged app; dictionary as a module; owner preferences; family-safe filter; romanised read-back; colloquial tests; UI/UX pass; PWA + `vercel.json`; CI | **Live** 2026-10-04: adult `https://odia-transliteration-web.vercel.app/`, kids `https://odia-phonetic-kids.vercel.app/` (two Vercel projects, root directory = repository root). Acceptance: A-1–A-10, A-12 pass in Chromium; A-11 (Safari) and phones are owner tests (`plan/06`) |
 | V2 Better words | See §3b. Owner gloss file pulled forward into V1 (done) | **Started** 2026-10-04 |
-| V3 Assist layer | `/api/speak`, `/api/listen`, `/api/translate` behind switches | Not started |
+| V3 Assist layer | `/api/speak`, `/api/listen`, `/api/translate` behind switches | `/api/translate` **built** 2026-10-15 for the lens (V4.5); needs the owner's key on Vercel (A-9). `/api/speak`, `/api/listen` not started |
 | V4 Lens | Browser extension, then camera/screenshot input | **V4.1 (browser extension) built** 2026-10-14. **V4.2 picture mode** (ePapers, YouTube frames; Odia OCR in the extension) started 2026-10-15: OCR spike done (`plan/research/lens-v2-ocr.md`). Native (v3) not started |
 | V5 Native | macOS input method with the real engine; Android, iOS (skills first) | Not started |
 | E-1 Experiment | Laya against a simple word-origin tagger | Not started |
@@ -132,7 +132,7 @@ need them wait for a run on the owner's Mac or a later environment.
 | V4.2m | Odia Lens for Mac: a see-through frame over any app, reading Odia under it (owner, 2026-10-15: "translation lens was a macOS app. Let's try build that too … just for my testing") | Tesseract (Homebrew, Apache-2.0) + the lens's `ori.traineddata`; the lens's page code | **Built** 2026-10-15 (`mac-lens/`): Swift frame, ScreenCaptureKit capture, `tesseract` TSV, WKWebView results page (`lens/src/mac.ts`). Syntax-checked with Swift 6.0.3 on Linux; the TSV parser compiled and run on real Tesseract output; the page tested in Chromium (6 lines, words and cards). First real compile on the owner's Mac (A-8) |
 | V4.3 | Own Odia print OCR model: fine-tune Tesseract on newspaper-like Odia fonts with rendered corpus text and newsprint damage | open-licence Odia fonts; corpus text (read only) | Planned. Target ≥85% words on real headlines, ≥70% body |
 | V4.4 | YouTube: headlines in the video frame; Odia captions | V4.2 | **Built** 2026-10-15 (lens 0.4.0): the video is found under the player's see-through layers and read as shown; captions use the text path; the card shows in full screen (the lens moves into the full-screen element). Browser check 15/15, with a YouTube-like player (a streamed video of Odia words under nine layers, an Odia caption, full screen). Not yet tried on youtube.com itself: owner test. Videos in embedded frames (a YouTube player inside a news page) are not read |
-| V4.5 | Translate what the lens reads (headline, sentence): online, opt-in, assist layer | V3 `/api/translate` | Planned |
+| V4.5 | Translate what the lens reads (headline, sentence): online, opt-in, assist layer | V3 `/api/translate` | **Built** 2026-10-15 (lens 0.4.0): Translate button in the frame panel; off until turned on in the lens settings (one optional host permission, the app's site); `api/translate.ts` (Claude Haiku default, Google switch; keys on Vercel; 2,000-character limit; cache). Tests: 7 unit (fake provider), browser check 16/16 (local stand-in server). Live only after merge plus the key (A-9). C-4 (Claude vs Google test) still decides the provider |
 
 The measured 12 October interface/data audit and recommended next work are in
 [`codex_review_12Oct2026.md`](codex_review_12Oct2026.md). It prioritizes literal-text
@@ -231,6 +231,7 @@ Agents do not commit; the lead reviews, measures and commits.
 
 | Date | Change |
 |---|---|
+| 2026-10-15 | V4.5 built: opt-in translation in the lens frame; `/api/translate`, the assist layer's first function. |
 | 2026-10-15 | V4.4 YouTube built (lens 0.4.0): videos under player layers, captions, full screen. |
 | 2026-10-15 | Owner: at stage P, replace the Desh data with data built from openly licensed public chat text (recorded in stage P). |
 | 2026-10-15 | Lens frame UI: resize from every edge and corner, Puri/Konark theme (browser and Mac), card under its line, panel on the roomier side, Copy text. |

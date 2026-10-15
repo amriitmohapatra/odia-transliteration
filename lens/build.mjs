@@ -74,12 +74,14 @@ await build({
         background: resolve(LENS, 'src/background.ts'),
         content: resolve(LENS, 'src/content.ts'),
         offscreen: resolve(LENS, 'src/offscreen.ts'),
+        options: resolve(LENS, 'src/options.ts'),
       },
   outdir: OUT,
   bundle: true,
   format: 'iife',
   target: 'chrome110',
   loader: { '.tsv': 'text' },
+  define: { __LENS_TEST__: String(test) },
   plugins: [coreAlias],
   legalComments: 'inline',
   logLevel: 'warning',
@@ -133,6 +135,8 @@ copyFileSync(resolve(LENS, 'vendor/ori.traineddata'), resolve(OUT, 'ocr/ori.trai
 copyFileSync(resolve(NM, 'tesseract.js/LICENSE.md'), resolve(OUT, 'ocr/LICENSE-tesseract.js.md'));
 copyFileSync(resolve(NM, 'tesseract.js-core/LICENSE'), resolve(OUT, 'ocr/LICENSE-tesseract.js-core.txt'));
 copyFileSync(resolve(LENS, 'static/offscreen.html'), resolve(OUT, 'offscreen.html'));
+copyFileSync(resolve(LENS, 'static/options.html'), resolve(OUT, 'options.html'));
+copyFileSync(resolve(LENS, 'static/options.css'), resolve(OUT, 'options.css'));
 
 copyFileSync(resolve(ROOT, 'Appv2/public/icons/icon-192.png'), resolve(OUT, 'icons/icon.png'));
 const manifest = JSON.parse(readFileSync(resolve(LENS, 'static/manifest.json'), 'utf8'));

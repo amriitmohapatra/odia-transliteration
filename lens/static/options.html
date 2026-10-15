@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Odia Lens settings</title>
+<link rel="stylesheet" href="options.css">
+<body>
+  <main>
+    <header>
+      <span class="mark" aria-hidden="true"></span>
+      <h1>Odia Lens settings</h1>
+    </header>
+    <section>
+      <h2>Translation (online)</h2>
+      <p id="notice"></p>
+      <label class="switch">
+        <input type="checkbox" id="translate">
+        <span>Translate what the lens reads, through the Odia app&rsquo;s server</span>
+      </label>
+      <p class="state" id="state" aria-live="polite"></p>
+    </section>
+    <section>
+      <h2>Everything else is offline</h2>
+      <p>Meanings, pronunciation, word origins and the reading of pictures happen on this computer.
+        The lens reads only the pages you turn it on for.</p>
+    </section>
+  </main>
+  <script src="options.js"></script>
+</body>
+</html>

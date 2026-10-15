@@ -18,8 +18,9 @@
  * module owns the frame's DOM, layout and pointer handling.
  */
 
+import { TRANSLATE_NOTICE } from './assist.js';
 import { FRAME_VIEW_CSS, renderDetail, renderLines } from './frameview.js';
-import type { FrameLine, FrameResponse } from './messages.js';
+import type { FrameLine, FrameResponse, TranslateResponse } from './messages.js';
 
 export const FRAME_CSS = `
 /* Theme: a Pattachitra painting's border around the frame (hingula red, haritala
@@ -105,11 +106,31 @@ export const FRAME_CSS = `
 }
 .panel-head button:hover { border-color: var(--hingula); color: var(--hingula); }
 .panel-head button:focus-visible { outline: 2px solid var(--nila); outline-offset: 1px; }
+.panel-head button.primary { background: var(--nila); border-color: var(--nila); color: var(--shankha); font-weight: 600; }
+.panel-head button.primary:hover { background: var(--hingula); border-color: var(--hingula); color: #fff; }
 .panel-body { overflow: auto; padding: 10px 12px 12px; transition: opacity 0.15s; }
 .panel.stale .panel-body { opacity: 0.45; }
 .panel.folded .panel-body { display: none; }
 .panel.folded .panel-head { border-bottom: 0; }
+/* The English translation (V4.5): an indigo block above the lines. */
+.translation {
+  margin: 0 0 12px; padding: 10px 12px; border-radius: 10px; background: var(--nila); color: var(--shankha);
+  font-size: 14.5px; line-height: 1.5;
+}
+.translation-label {
+  display: block; margin-bottom: 4px; font-size: 10.5px; font-weight: 600; letter-spacing: 0.06em;
+  text-transform: uppercase; color: var(--haritala);
+}
+.translation.pending { opacity: 0.75; }
+.translation p { margin: 0; white-space: pre-wrap; }
+.translation .off { font-size: 13px; }
+.translation button {
+  margin-top: 8px; cursor: pointer; border: 0; border-radius: 7px; padding: 5px 11px;
+  background: var(--haritala); color: var(--kajal); font: 600 12.5px system-ui, sans-serif;
+}
+.translation button:focus-visible { outline: 2px solid var(--shankha); outline-offset: 2px; }
 @media (prefers-color-scheme: dark) {
+  .translation { background: #22325f; }
   .panel { background: #17150f; color: #f3ead6; border-color: #3a3326; }
   .panel-head { color: #c9bb9d; border-bottom-color: #3a3326; }
   .panel-head button { background: #231f17; border-color: #3a3326; color: #f3ead6; }
@@ -149,6 +170,10 @@ export interface FrameHost {
   read(box: { x0: number; y0: number; x1: number; y1: number }, done: (response: FrameResponse | undefined, error?: string) => void): void;
   /** After this long, say "Reading…". */
   slowMs: number;
+  /** Translate the lines read (online, only when the reader turned it on). */
+  translate(text: string, done: (response: TranslateResponse | undefined, error?: string) => void): void;
+  /** Open the lens's settings (where translation is turned on or off). */
+  openSettings(): void;
 }
 
 export interface Frame {
@@ -233,6 +258,11 @@ export function createFrame(host: FrameHost): Frame {
     const text = lines.map((l) => l.read).join('\n');
     if (text) void navigator.clipboard?.writeText(text).then(() => flash(copy, 'Copied'), () => flash(copy, 'Not allowed here'));
   });
+  const translateButton = button(head, 'Translate', 'Translate the text read into English (online: turn it on in the lens settings)', () => translateNow());
+  translateButton.className = 'primary';
+  head.insertBefore(translateButton, copy);
+  const english = el('div', 'translation');
+  english.setAttribute('aria-live', 'polite');
   const fold = button(head, '\u25be', 'Fold the panel away', () => {
     panel.classList.toggle('folded');
     const folded = panel.classList.contains('folded');
@@ -335,6 +365,39 @@ export function createFrame(host: FrameHost): Frame {
     });
   }
 
+  /** Translate the lines read, into a block above them. */
+  function translateNow(): void {
+    const text = lines.map((l) => l.read).join('\n');
+    if (!text) return;
+    const mine = ticket;
+    english.className = 'translation pending';
+    english.textContent = 'Translating\u2026';
+    body.prepend(english);
+    host.translate(text, (response, error) => {
+      if (mine !== ticket) return; // a new reading replaced the lines
+      english.className = 'translation';
+      english.textContent = '';
+      const label = el('span', 'translation-label', english);
+      if (response?.ok) {
+        label.textContent = 'English \u00b7 machine translation, can be wrong';
+        el('p', '', english).textContent = response.translation;
+        english.lang = 'en';
+        return;
+      }
+      if (response && !response.ok && response.off) {
+        label.textContent = 'Translation is off';
+        el('p', 'off', english).textContent = TRANSLATE_NOTICE;
+        const on = el('button', '', english) as HTMLButtonElement;
+        on.type = 'button';
+        on.textContent = 'Open settings to turn it on';
+        on.addEventListener('click', () => host.openSettings());
+        return;
+      }
+      label.textContent = 'Could not translate';
+      el('p', '', english).textContent = error ?? (response && !response.ok ? response.error : 'No answer.');
+    });
+  }
+
   function readSoon(delay = 300): void {
     window.clearTimeout(timer);
     timer = window.setTimeout(read, delay);
@@ -381,6 +444,7 @@ export function createFrame(host: FrameHost): Frame {
             n === 0 ? 'idle' : 'done',
           );
           copy.hidden = n === 0;
+          translateButton.hidden = n === 0;
           body.textContent = '';
           const detail = el('div', 'detail-slot');
           body.append(

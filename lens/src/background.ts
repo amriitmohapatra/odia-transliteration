@@ -21,6 +21,8 @@ import {
   READ_WORD,
   TOGGLE_COMMAND,
   FRAME_COMMAND,
+  OPEN_SETTINGS,
+  TRANSLATE,
   type FrameLine,
   type FrameRequest,
   type FrameResponse,
@@ -33,7 +35,10 @@ import {
   type PictureResponse,
   type ReadWordRequest,
   type ReadWordResponse,
+  type TranslateRequest,
+  type TranslateResponse,
 } from './messages.js';
+import { ASSIST_ORIGIN, ASSIST_PERMISSION } from './assist.js';
 import { HAS_ODIA, cleanRead, lineText, mapBox, pickWord, regionAround } from './picture.js';
 
 setLoader(fetchLoader((path) => chrome.runtime.getURL(path)));
@@ -155,9 +160,33 @@ async function readFrame(request: FrameRequest, windowId: number | undefined): P
   return { ok: true, lines, ms: Date.now() - t0 };
 }
 
-type Request = LookupRequest | PictureRequest | ReadWordRequest | FrameRequest;
+/** The browser check points translation at its own local server (test build only). */
+let assistOrigin = ASSIST_ORIGIN;
 
-chrome.runtime.onMessage.addListener((message: Request, sender, sendResponse: (r: LookupResponse | PictureResponse | ReadWordResponse | FrameResponse) => void) => {
+/**
+ * Translate the frame's text through the Odia app's server. Only when the reader
+ * turned translation on (the optional host permission for that one site); with it
+ * off, nothing is sent and the panel says how to turn it on.
+ */
+async function translateText(request: TranslateRequest): Promise<TranslateResponse> {
+  const on = await chrome.permissions.contains(assistOrigin === ASSIST_ORIGIN ? ASSIST_PERMISSION : { origins: [`${assistOrigin}/*`] });
+  if (!on) return { ok: false, off: true, error: 'Translation is off.' };
+  const text = canonical(request.text).trim();
+  if (!text) return { ok: false, error: 'Nothing to translate.' };
+  const response = await fetch(`${assistOrigin}/api/translate`, {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({ text }),
+    credentials: 'omit',
+  });
+  const data = (await response.json().catch(() => null)) as TranslateResponse | null;
+  if (!data) return { ok: false, error: `The server answered ${response.status}.` };
+  return data;
+}
+
+type Request = LookupRequest | PictureRequest | ReadWordRequest | FrameRequest | TranslateRequest | { type: typeof OPEN_SETTINGS };
+
+chrome.runtime.onMessage.addListener((message: Request, sender, sendResponse: (r: LookupResponse | PictureResponse | ReadWordResponse | FrameResponse | TranslateResponse) => void) => {
   if (sender.id !== chrome.runtime.id) return false;
   const fail = (error: unknown): void => sendResponse({ ok: false, error: String(error) });
   if (message?.type === LOOKUP) {
@@ -171,6 +200,14 @@ chrome.runtime.onMessage.addListener((message: Request, sender, sendResponse: (r
   if (message?.type === FRAME) {
     readFrame(message, sender.tab?.windowId).then(sendResponse, fail);
     return true;
+  }
+  if (message?.type === TRANSLATE) {
+    translateText(message).then(sendResponse, fail);
+    return true;
+  }
+  if (message?.type === OPEN_SETTINGS) {
+    void chrome.runtime.openOptionsPage();
+    return false;
   }
   if (message?.type === READ_WORD) {
     readWord(message.text, message.conf, message.whole).then(
@@ -223,3 +260,8 @@ chrome.tabs.onUpdated.addListener((tabId, change) => {
 (self as unknown as { odiaLensToggle: typeof toggle; odiaLensReadPicture: typeof readPicture }).odiaLensToggle = toggle;
 (self as unknown as { odiaLensReadPicture: typeof readPicture }).odiaLensReadPicture = readPicture;
 (self as unknown as { odiaLensReadFrame: typeof readFrame }).odiaLensReadFrame = readFrame;
+if (typeof __LENS_TEST__ !== 'undefined' && __LENS_TEST__) {
+  (self as unknown as { odiaLensSetAssist(origin: string): void }).odiaLensSetAssist = (origin) => {
+    assistOrigin = origin;
+  };
+}

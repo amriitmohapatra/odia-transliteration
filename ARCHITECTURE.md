@@ -360,8 +360,22 @@ host sets the file paths).
 
 **Privacy:** permissions `activeTab`, `scripting` and `offscreen`, no host permissions (a
 unit test checks the shipped manifest); CSP allows WebAssembly only from the extension;
-nothing leaves the computer (the browser check fails on any outside request). **No Desh
-data** in the extension. Package: about 10 MB zip.
+nothing leaves the computer (the browser check fails on any outside request), except
+translation (V4.5) when the reader turns it on. **No Desh data** in the extension.
+
+**Translation (lens 0.4.0, V4.5):** the only online feature, through the assist layer.
+The settings page (`options.ts`) is the switch: turning it on requests the one optional
+host permission, `https://odia-transliteration-web.vercel.app/*` (a unit test pins it);
+turning it off removes it; there is no other stored setting. The frame's **Translate**
+sends the lines as read (`TRANSLATE` message → background → `POST /api/translate`); with
+the permission missing the background sends nothing and the panel explains how to turn it
+on. `api/translate.ts` (Vercel function, the assist layer's first route) takes
+`{"text"}` (Odia, at most 2,000 characters, made canonical), allows only extension
+origins and the site, and calls Claude Haiku (`TRANSLATE_PROVIDER=claude`, default,
+`ANTHROPIC_API_KEY`) or Google (`google`, `GOOGLE_TRANSLATE_KEY`); answers are cached
+in memory by canonical text. Keys live only in Vercel's environment. Tests:
+`tools/assist/translate.test.ts` (fake fetch, no network) and the browser check (a local
+stand-in server). Package: about 10 MB zip.
 
 **Videos (lens 0.4.0, V4.4):** `pictureUnder` looks through the whole element stack for a
 `<video>` (YouTube's player puts about a dozen see-through layers over it); the capture is

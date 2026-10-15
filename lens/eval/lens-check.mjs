@@ -106,7 +106,19 @@ const PAGES = {
     </script>`,
   '/latin.html': `<!doctype html><meta charset="utf-8"><title>Latin</title><p id="latin" style="font:22px sans-serif">No Odia on this page at all.</p>`,
 };
+// A stand-in for the Odia app's /api/translate (V4.5), so the check sends nothing outside.
+const translateCalls = [];
 const server = createServer((req, res) => {
+  if (req.url === '/api/translate' && req.method === 'POST') {
+    let body = '';
+    req.on('data', (c) => (body += c));
+    req.on('end', () => {
+      translateCalls.push({ body: JSON.parse(body), origin: req.headers.origin });
+      res.writeHead(200, { 'content-type': 'application/json' });
+      res.end(JSON.stringify({ ok: true, translation: 'Government, state, in the day.', provider: 'test', model: 'test' }));
+    });
+    return;
+  }
   if (req.url === '/noto.woff2') {
     res.writeHead(200, { 'content-type': 'font/woff2' });
     return res.end(FONT);
@@ -389,6 +401,40 @@ await check('frame (Alt+Shift+F): every word inside it is read together, in orde
   await page.keyboard.press('Escape');
   await page.locator('odia-lens .frame').waitFor({ state: 'hidden', timeout: 2000 });
   assert.equal(await toggle(), '');
+  await page.goto(`${origin}/odia.html`);
+  assert.equal(await toggle(), 'ON');
+});
+
+await check('translate (V4.5, online, opt-in): the frame sends the lines read to the app server and shows the English', async () => {
+  await worker.evaluate((o) => self.odiaLensSetAssist(o), origin);
+  await page.goto(`${origin}/picture.html`);
+  await page.waitForFunction(() => Array.isArray(window.__boxes));
+  const img = await page.locator('#pic').boundingBox();
+  assert.equal(await toggle(), 'ON');
+  await page.mouse.move(img.x + 300, img.y + 120, { steps: 2 });
+  await page.mouse.move(img.x + 300, img.y + 45, { steps: 2 });
+  await worker.evaluate(async () => {
+    const [tab] = await chrome.tabs.query({ active: true, lastFocusedWindow: true });
+    await self.odiaLensToggle(tab.id, 'frame');
+  });
+  await page.waitForFunction(() => (document.querySelector('odia-lens')?.shadowRoot?.querySelectorAll('.chip') ?? []).length >= 3, null, { timeout: 30000 });
+  await page.locator('odia-lens .panel-head button', { hasText: 'Translate' }).click();
+  await page.waitForFunction(() => document.querySelector('odia-lens')?.shadowRoot?.querySelector('.translation p')?.textContent === 'Government, state, in the day.', null, { timeout: 5000 });
+  assert.equal(translateCalls.length, 1);
+  // The lines as OCR read them (ya and yya may differ from the dictionary spelling).
+  const fold = (t) => t.replaceAll('\u0B5F', '\u0B2F');
+  for (const w of PICTURE_WORDS) assert.ok(fold(translateCalls[0].body.text).includes(fold(w)), translateCalls[0].body.text);
+  assert.match(translateCalls[0].origin ?? '', /^chrome-extension:\/\//);
+  const label = await page.evaluate(() => document.querySelector('odia-lens').shadowRoot.querySelector('.translation-label').textContent);
+  assert.match(label, /machine translation/);
+  await page.keyboard.press('Escape');
+  assert.equal(await toggle(), '');
+  // The settings page explains it, and has the one switch.
+  const settings = await context.newPage();
+  await settings.goto(worker.url().replace('background.js', 'options.html'));
+  await settings.waitForFunction(() => document.getElementById('notice')?.textContent.includes('Nothing is sent before you press Translate'));
+  assert.equal(await settings.locator('#translate').count(), 1);
+  await settings.close();
   await page.goto(`${origin}/odia.html`);
   assert.equal(await toggle(), 'ON');
 });

@@ -27,7 +27,9 @@ import {
   FRAME,
   LOOKUP,
   PICTURE,
+  OPEN_SETTINGS,
   READ_WORD,
+  TRANSLATE,
   type FrameRequest,
   type FrameResponse,
   type LookupRequest,
@@ -37,6 +39,8 @@ import {
   type Reading,
   type ReadWordRequest,
   type ReadWordResponse,
+  type TranslateRequest,
+  type TranslateResponse,
 } from './messages.js';
 import { pickWord, type OcrWord } from './picture.js';
 
@@ -311,6 +315,15 @@ function start(): Lens {
       chrome.runtime.sendMessage(request, (response: FrameResponse | undefined) => {
         done(response, chrome.runtime.lastError?.message);
       });
+    },
+    translate(text, done) {
+      const request: TranslateRequest = { type: TRANSLATE, text };
+      chrome.runtime.sendMessage(request, (response: TranslateResponse | undefined) => {
+        done(response, chrome.runtime.lastError?.message);
+      });
+    },
+    openSettings() {
+      chrome.runtime.sendMessage({ type: OPEN_SETTINGS }, () => void chrome.runtime.lastError);
     },
   });
 

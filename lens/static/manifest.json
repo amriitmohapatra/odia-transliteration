@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Odia Lens",
   "version": "0.4.0",
-  "description": "Point at Odia words on any web page, in ePaper images and paused videos: meaning, pronunciation and word origin. Offline; reads only the pages you turn it on for.",
+  "description": "Point at Odia words on any web page, in ePaper images and videos: meaning, pronunciation and word origin. Offline; reads only the pages you turn it on for. Optional online translation, off until you turn it on.",
   "minimum_chrome_version": "110",
   "action": {
     "default_title": "Odia Lens: click to read Odia on this page (Alt+Shift+O)",
@@ -21,10 +21,17 @@
   "background": {
     "service_worker": "background.js"
   },
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
+  },
   "permissions": [
     "activeTab",
     "scripting",
     "offscreen"
+  ],
+  "optional_host_permissions": [
+    "https://odia-transliteration-web.vercel.app/*"
   ],
   "content_security_policy": {
     "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self'"

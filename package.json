@@ -15,7 +15,7 @@
     "web"
   ],
   "scripts": {
-    "test": "npm run test --workspace @odia/core && vitest run --root Appv2 && vitest run --root lens && node docs/odia-simple.test.mjs",
+    "test": "npm run test --workspace @odia/core && vitest run --root Appv2 && vitest run --root lens && vitest run --root tools/assist && node docs/odia-simple.test.mjs",
     "build": "npm run build --workspaces --if-present",
     "eval": "tsx tools/eval/run_eval.ts",
     "dev:web": "npm run dev --workspace @odia/web",

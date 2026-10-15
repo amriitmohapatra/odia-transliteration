@@ -9,6 +9,7 @@ import { parseOrigin } from '../../Appv2/src/dictionary/origin.js';
 import { parseLoans } from '../../Appv2/src/dictionary/loans.js';
 import { describeWord, type LensData } from '../src/describe.js';
 import { wordAt, wordBefore } from '../src/word.js';
+import { ASSIST_ORIGIN, ASSIST_PERMISSION } from '../src/assist.js';
 
 /* Odia as \u escapes (repo convention). */
 const DINA = '\u0B26\u0B3F\u0B28'; // day
@@ -105,7 +106,10 @@ describe('the shipped manifest', () => {
 
   it('asks for no host permissions: the lens reads only a tab the user turned it on for', () => {
     expect(manifest.host_permissions).toBeUndefined();
-    expect(manifest.optional_host_permissions).toBeUndefined();
+    // V4.5: one optional host, the Odia app's own site, granted only when the reader
+    // turns translation on in the settings page (lens/src/options.ts).
+    expect(manifest.optional_host_permissions).toEqual([`${ASSIST_ORIGIN}/*`]);
+    expect(ASSIST_PERMISSION.origins).toEqual(manifest.optional_host_permissions);
     expect(manifest.content_scripts).toBeUndefined();
     // offscreen: the OCR page of picture mode (V4.2); not a host permission.
     expect([...manifest.permissions].sort()).toEqual(['activeTab', 'offscreen', 'scripting']);
