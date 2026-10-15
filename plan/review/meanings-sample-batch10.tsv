@@ -1,0 +1,55 @@
+# C-13 sample, batch 10: 50 AI-written meanings picked at random from the batch 10 rows of core/data/meanings.tsv
+# (words in the two News18 articles you sent: health and research, the student union election, colleges, places;
+# also the short weekday names and the Odia months). Check the first line most.
+# For each row, fill "verdict": ok, wrong, or fix. For "fix", write the better meaning in "correction".
+odia	meaning	senses	origin	verdict	correction
+ତପସ୍ୱିନୀ	Tapaswini (given name); female ascetic	Tapaswini, a woman's given name; a female ascetic; Tapaswini, a long Odia poem by Gangadhar Meher	name		
+ପରମାଣୁ	atom; nuclear (in compounds)	atom; nuclear, atomic (in compounds: nuclear power, nuclear bomb)	sanskrit		
+ବାଜା	band music; musical instruments	band music, the playing of drums and trumpets; a musical instrument	native		
+ଅଭିମନ୍ୟୁ	Abhimanyu (given name)	Abhimanyu, a male given name; Abhimanyu, Arjuna's son in the Mahabharata	name		
+ଫିରଦୌସ	Firdaus (given name); paradise	Firdaus, a given name; paradise, the highest garden of heaven	name		
+କାର୍ତ୍ତିକ	Kartika, Odia month (mid-October to mid-November)	Kartika, the holy month of the Odia calendar (mid-October to mid-November), ending at Kartika Purnima (Boita Bandana, Bali Jatra); Kartikeya, the war god, son of Shiva; Kartik (given name)	sanskrit		
+ନୀଳକଣ୍ଠେଶ୍ୱର	Nilakantheswar, a name of Shiva (also a college)	Nilakantheswar, Shiva as the blue-throated lord; name of temples and of a college	name		
+ଆର୍ଟସ	arts (faculty)	arts (the arts faculty or stream of a college)	english		
+ବିପ୍ଳବ	revolution; Biplab (given name)	revolution, uprising; Biplab, a male given name	sanskrit		
+ଯଶୋବନ୍ତ	Jashobant (given name)	Jashobant, Jasobanta, a male given name	name		
+ସବୁବେଳେ	always, all the time	always, all the time, at all times	native		
+ଅପ୍ଡେଟ୍	update	update (news update, software update)	english		
+ଜଳବାୟୁ	climate	climate	sanskrit		
+ଗୀତାଂଜଳୀ	Gitanjali (female given name)	Gitanjali, a female given name; (literally) an offering of songs	name		
+ନିର୍ଦ୍ୱନ୍ଦ୍ୱରେ	unopposed, without a contest	unopposed, without a contest; freely, without worry or hesitation	sanskrit		
+ବାୟୋଲୋଜିକାଲ୍	biological	biological	english		
+ତମାଖୁ	tobacco	tobacco; chewing tobacco	portuguese		
+ଭୋଟଗଣତି	vote counting	counting of votes	mixed		
+ଡିଏଭି	DAV (Dayanand Anglo-Vedic) school or college	DAV, Dayanand Anglo-Vedic, a chain of schools and colleges	english		
+ଅସମାନତା	inequality	inequality, disparity; unevenness	sanskrit		
+ଫାଟକ	gate	gate (of a campus, a level crossing); main entrance			
+ସୋସାଇଟି	society (club, association)	society, a club or association (drama society, science society); housing society	english		
+ଆର୍ଯ୍ୟନ	Aryan (given name)	Aryan, a man's given name	name		
+ନାଚଗୀତ	dancing and singing	dancing and singing, song and dance (celebration)	native		
+ଅଳି	insistent demand, tantrum; bee (poetic)	insistent demand, tantrum (of a child: ali kariba); bee (poetic); Ali, a given name	native		
+ଅଭୂତପୂର୍ବ	unprecedented	unprecedented, never seen before	sanskrit		
+ସୂର୍ୟମ	Suryam (given name)	Suryam, a male given name (often Telugu)	name		
+ପ୍ରିୟଦର୍ଶନୀ	Priyadarshini (given name)	Priyadarshini, a female given name; pleasing to look at (literal)	name		
+ସମର୍ଥ	able, capable; Samarth (given name)	able, capable, competent; Samarth, a male given name	sanskrit		
+ମଡେଲ୍	model	model (a design or pattern to follow; a fashion model; a version of a product)	english		
+ରେଭେନ୍ସାରେ	at Ravenshaw (University, Cuttack)	at Ravenshaw, at Ravenshaw University, Cuttack	name		
+ଫର୍	for (English)	for (the English word, in a title)	english		
+ଡାଏ	die, in 'sine die' (adjourned indefinitely)	die, in 'sine die' (closed or adjourned indefinitely)	english		
+କ୍ୟାମ୍ପସ୍ରେ	on the campus, in the campus	on the campus, in the campus	english		
+ରଣକ୍ଷେତ୍ରକୁ	into the battlefield; into the (election) fray	into the battlefield; into the fray, into the contest (figurative, of elections)	sanskrit		
+କମନରୁମ୍	common room	common room (of a college)	english		
+ମନାଇଛନ୍ତି	have celebrated (they; or respectful)	have celebrated, have observed (they; or he/she, respectful); have coaxed, talked round	native		
+ଚାଲିଥିବାବେଳେ	while (it) was going on	while (it) was going on, while (it) was in progress	native		
+ଗଂଜାମ	Ganjam, a district of Odisha	Ganjam, a coastal district in southern Odisha	name		
+ଶନି	Saturn; Saturday (short)	(astrology) Saturn, the planet and its deity, thought to bring hardship; Saturday (short for Sanibar); Shani, the deity worshipped on Saturdays	sanskrit		
+ବାଲଟ୍	ballot	ballot (balat pepara = ballot paper)	english		
+ପଦବିରେ	in the post (of), to the post	in the post (of), to the post, for the position	sanskrit		
+ପ୍ରତିଦ୍ୱନ୍ଦ୍ବିତା	contest, competition, rivalry	contest, competition (in an election); rivalry	sanskrit		
+ବଡ଼ଚଣା	Badachana, a place in Jajpur district	Badachana, a place and block in Jajpur district	name		
+ସମୀକରଣ	equation; (political) arithmetic	equation (in maths); political arithmetic, the balance of votes (bhota samikarana)	sanskrit		
+ଦେଖାଦେଉଛି	is appearing, is being seen (a disease)	is appearing, is showing up, is being seen (of a disease or a problem)	native		
+ଶିକ୍ଷାନୁଷ୍ଠାନରୁ	from (the) educational institutions	from the educational institution(s)	sanskrit		
+ଟକ୍କର	tough contest, clash; collision	tough contest, close fight (in elections, sport); clash, collision, bump			
+ଶିବମ	Shivam (given name)	Shivam, a male given name	name		
+ମଧୁସ୍ମିତା	Madhusmita (female given name)	Madhusmita, a female given name; (literally) sweetly smiling	name		

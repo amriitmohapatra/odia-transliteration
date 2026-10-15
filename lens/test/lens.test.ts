@@ -206,7 +206,8 @@ describe('a word explained from its parts', () => {
   it('shows the parts on the card, with how the word is made', () => {
     const key = foldKey(word);
     const entry = findEntry(P.keys, key);
-    const c = describeWord(word, key, entry, entry ? defAt(P, entry.index) : null, data, '', [
+    // Without the AI layer, which now has this word itself (batch 10).
+    const c = describeWord(word, key, entry, entry ? defAt(P, entry.index) : null, { ...data, ai: null }, '', [
       { word: JIBANA, gloss: 'life' },
       { word: SHAILI, gloss: 'style' },
     ]);
