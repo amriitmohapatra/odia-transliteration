@@ -317,15 +317,36 @@ function start(): Lens {
   /** A picture (image, canvas, video, frame) under the point, unless page text is there. */
   function pictureUnder(x: number, y: number): Element | null {
     if (textUnder(x, y)) return null;
-    for (const el of document.elementsFromPoint(x, y).slice(0, 8)) {
+    const stack = document.elementsFromPoint(x, y);
+    for (const el of stack.slice(0, 8)) {
       if (el === host) continue;
       if (PICTURES.has(el.tagName)) return el;
       if (el.tagName === 'svg' || el.tagName === 'image') return el;
       // A background picture of an element (not of the whole page: reading blank paper costs CPU).
       if (el !== document.body && el !== document.documentElement && /url\(/.test(getComputedStyle(el).backgroundImage)) return el;
     }
-    return null;
+    // A video under a video player's see-through layers (YouTube has a dozen: controls,
+    // gradients, cards, captions).
+    return stack.find((el) => el.tagName === 'VIDEO') ?? null;
   }
+
+  /**
+   * In full screen only the full-screen element is drawn: the lens goes inside it
+   * (a video player's box), and back to the page after. A bare full-screen video
+   * cannot hold it; the lens then waits for the page.
+   */
+  function placeHost(): void {
+    if (!active) return;
+    const full = document.fullscreenElement;
+    const parent = full && full.tagName !== 'VIDEO' ? full : document.documentElement;
+    if (host.parentNode !== parent) parent.append(host);
+  }
+  const onFullscreen = (): void => {
+    hide();
+    picture = null;
+    placeHost();
+    lensFrame.moved();
+  };
 
   /** Page text (any script) right under the point: picture mode leaves it to the text path. */
   function textUnder(x: number, y: number): boolean {
@@ -517,7 +538,8 @@ function start(): Lens {
     toggle(): boolean {
       active = !active;
       if (active) {
-        document.documentElement.append(host);
+        placeHost();
+        document.addEventListener('fullscreenchange', onFullscreen);
         document.addEventListener('mousemove', onMove, { passive: true, capture: true });
         document.addEventListener('keydown', onKey, true);
         window.addEventListener('scroll', onScroll, { passive: true, capture: true });
@@ -526,6 +548,7 @@ function start(): Lens {
         if (typeof speechSynthesis !== 'undefined') speechSynthesis.getVoices();
       } else {
         hide();
+        document.removeEventListener('fullscreenchange', onFullscreen);
         document.removeEventListener('mousemove', onMove, { capture: true });
         document.removeEventListener('keydown', onKey, true);
         window.removeEventListener('scroll', onScroll, { capture: true });

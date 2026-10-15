@@ -38,7 +38,10 @@ cd mac-lens
 - The indigo bar with the Konark wheel: drag to move the frame. Its buttons: **Word**,
   **Line**, **Para** (sizes), **↻** read again, **✕** hide (show again from the menu bar).
 - Any edge or corner of the red-and-yellow border: drag to resize. Let go: it reads after
-  a third of a second. The wheel turns while it reads.
+  a third of a second. The wheel turns while it reads. (The edges catch the mouse through
+  a faint ring drawn around the border: macOS sends clicks on fully clear pixels to the
+  app below. If an edge does not grab, tell Claude: the ring's alpha in
+  `FrameWindow.swift`, now 0.02, goes up. The corner diamonds are solid and always grab.)
 - The menu bar item **ଓ**: show or hide the lens, frame sizes (Word, Line, Para,
   also ⌘1–⌘3 while the menu is open), Read again, Quit.
 - In the panel: each line as it was read ("Read: …"), then each word with its first

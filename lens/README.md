@@ -35,6 +35,12 @@ scrolls under it. Look: Puri/Konark colours (Nilachakra indigo, Pattachitra red 
 border, temple-flag band), light and dark. With the frame open, pointing at pictures does nothing else, so the
 frame decides what is read.
 
+**YouTube and other videos (0.4.0):** point at Odia in a playing or paused video (a news
+headline, a ticker, a title card): the lens finds the video under the player's
+see-through layers and reads the frame on the screen at that moment. Odia captions
+(subtitles) are page text: point at a caption word for its card at once. In full screen
+the card still shows. The frame works over videos too; press **↻** to read a new frame.
+
 It is the same dictionary and the same lookup as the Meanings panel of the web
 app (`Appv2/src/dictionary/lookup.ts`).
 
@@ -67,8 +73,8 @@ app (`Appv2/src/dictionary/lookup.ts`).
 
 ## Limits of v1
 
-- The page itself only (not text inside frames), and text that is real text
-  (not images or canvas drawings; that needs OCR, lens v2).
+- The page itself only (not text inside embedded frames, such as a YouTube video embedded
+  in a news page; open the video on YouTube itself).
 - One word at a time; no sentence translation yet (V4.5).
 - Picture mode reads one line at a time, in the visible part of the page; OCR makes
   mistakes on small or decorated print.

@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Odia Lens",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Point at Odia words on any web page, in ePaper images and paused videos: meaning, pronunciation and word origin. Offline; reads only the pages you turn it on for.",
   "minimum_chrome_version": "110",
   "action": {

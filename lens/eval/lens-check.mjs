@@ -66,6 +66,44 @@ const PAGES = {
       await img.decode();
       window.__boxes = boxes;
     </script>`,
+  // A video player like YouTube's: the <video> (Odia drawn on a canvas, streamed) under
+  // see-through layers, an Odia caption over it, and a full-screen button.
+  '/video.html': `<!doctype html><meta charset="utf-8"><title>Video</title>
+    <style>@font-face{font-family:Pic;src:url(/noto.woff2)} body{margin:40px}
+      #player{position:relative;width:760px;height:200px;background:#000}
+      #player video{position:absolute;left:0;top:0;width:760px;height:90px}
+      .layer{position:absolute;inset:0}
+      #caption{position:absolute;left:20px;bottom:20px;font:28px sans-serif;color:#fff;background:rgba(8,8,8,.75);padding:0 6px}</style>
+    <div id="player"><video id="vid" muted autoplay playsinline></video>
+      <div class="layer"></div><div class="layer"></div><div class="layer"></div>
+      <div class="layer"></div><div class="layer"></div><div class="layer"></div>
+      <div class="layer"></div><div class="layer"></div><div class="layer"></div>
+      <div id="caption"><span id="cap">${ref(DINA)}</span></div></div>
+    <p><button id="full" onclick="document.getElementById('player').requestFullscreen()">Full screen</button></p>
+    <script type="module">
+      const words = ${JSON.stringify(PICTURE_WORDS)};
+      await document.fonts.load('40px Pic', words.join(' '));
+      const c = document.createElement('canvas');
+      c.width = 760; c.height = 90;
+      const g = c.getContext('2d');
+      const boxes = [];
+      let x = 20;
+      g.font = '40px Pic';
+      for (const w of words) { const m = g.measureText(w).width; boxes.push([x, m]); x += m + 30; }
+      let n = 0;
+      const draw = () => {
+        g.fillStyle = '#fff'; g.fillRect(0, 0, c.width, c.height);
+        g.fillStyle = '#111'; g.font = '40px Pic'; g.textBaseline = 'middle';
+        boxes.forEach(([bx], i) => g.fillText(words[i], bx, 45));
+        g.fillStyle = 'rgb(' + (n++ % 2) + ',0,0)'; g.fillRect(0, 0, 1, 1);
+        requestAnimationFrame(draw);
+      };
+      draw();
+      const v = document.getElementById('vid');
+      v.srcObject = c.captureStream(30);
+      await v.play();
+      window.__boxes = boxes;
+    </script>`,
   '/latin.html': `<!doctype html><meta charset="utf-8"><title>Latin</title><p id="latin" style="font:22px sans-serif">No Odia on this page at all.</p>`,
 };
 const server = createServer((req, res) => {
@@ -235,6 +273,54 @@ await check('picture mode: the next word on the same line comes from the cached 
 });
 
 let frameMs = 0;
+await check('video (YouTube-like player): a word in a playing video under see-through layers; an Odia caption', async () => {
+  await page.goto(`${origin}/video.html`);
+  await page.waitForFunction(() => Array.isArray(window.__boxes));
+  assert.equal(await toggle(), 'ON');
+  const vid = await page.locator('#vid').boundingBox();
+  const boxes = await page.evaluate(() => window.__boxes);
+  const shown = (w, timeout) => page.waitForFunction(
+    (x) => document.querySelector('odia-lens')?.shadowRoot?.querySelector('.card:not([hidden]) .word')?.textContent === x,
+    w,
+    { timeout },
+  ).catch(async (error) => {
+    throw new Error(`${error.message}; card: ${await card.innerText().catch(() => '(none)')}`);
+  });
+  await page.mouse.move(5, 5);
+  await page.mouse.move(vid.x + boxes[1][0] + boxes[1][1] / 2, vid.y + 45, { steps: 3 });
+  await shown(PICTURE_WORDS[1], 30000);
+  assert.ok((await cardText()).includes('Read from the picture'));
+  // The caption is page text: the usual card, at once.
+  await hover('cap');
+  await shown(DINA, 5000);
+  assert.ok(/day/i.test(await cardText()));
+});
+
+await check('video in full screen: the lens moves into the player and still shows its card', async () => {
+  await page.mouse.move(5, 5);
+  await page.click('#full');
+  await page.waitForFunction(() => document.fullscreenElement?.id === 'player', null, { timeout: 5000 });
+  await page.waitForFunction(() => document.querySelector('odia-lens')?.parentElement?.id === 'player', null, { timeout: 2000 });
+  await hover('cap');
+  await page.waitForFunction(
+    (x) => document.querySelector('odia-lens')?.shadowRoot?.querySelector('.card:not([hidden]) .word')?.textContent === x,
+    DINA,
+    { timeout: 5000 },
+  );
+  // Only the full-screen element is drawn: the card must be inside it, on the screen.
+  const drawn = await page.evaluate(() => {
+    const host = document.querySelector('odia-lens');
+    const c = host.shadowRoot.querySelector('.card').getBoundingClientRect();
+    return document.fullscreenElement.contains(host) && c.width > 0 && c.height > 0 && c.bottom <= innerHeight && c.right <= innerWidth;
+  });
+  assert.ok(drawn);
+  await page.evaluate(() => document.exitFullscreen());
+  await page.waitForFunction(() => document.querySelector('odia-lens')?.parentElement === document.documentElement, null, { timeout: 3000 });
+  assert.equal(await toggle(), '');
+  await page.goto(`${origin}/odia.html`);
+  assert.equal(await toggle(), 'ON');
+});
+
 await check('frame (Alt+Shift+F): every word inside it is read together, in order, with meanings', async () => {
   await page.goto(`${origin}/picture.html`);
   await page.waitForFunction(() => Array.isArray(window.__boxes));

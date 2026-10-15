@@ -363,6 +363,13 @@ unit test checks the shipped manifest); CSP allows WebAssembly only from the ext
 nothing leaves the computer (the browser check fails on any outside request). **No Desh
 data** in the extension. Package: about 10 MB zip.
 
+**Videos (lens 0.4.0, V4.4):** `pictureUnder` looks through the whole element stack for a
+`<video>` (YouTube's player puts about a dozen see-through layers over it); the capture is
+of the screen, so a playing video is read as shown at that moment, and the cached line is
+dropped when the video time moves. Captions are page text (normal path). In full screen
+only the full-screen element is drawn, so the lens's host element moves into it on
+`fullscreenchange` (not into a bare `<video>`, which cannot hold it) and back after.
+
 **Limits:** top frame; OCR quality is the stock Tesseract model's (good on clean print and
 most headlines, weak on 5 px ePaper body text: own model V4.3); one word at a time; no
 sentence translation (V4.5); Chrome and Edge only.
