@@ -7,7 +7,7 @@ import { canonical } from '@odia/core/normalize';
 import { findEntry, foldKey, defAt, meaningFinder, parsePayload } from '../../Appv2/src/dictionary/lookup.js';
 import { parseOrigin } from '../../Appv2/src/dictionary/origin.js';
 import { parseLoans } from '../../Appv2/src/dictionary/loans.js';
-import { describeWord, type LensData } from '../src/describe.js';
+import { chooseSplits, describeWord, partGloss, splitPoints, type LensData } from '../src/describe.js';
 import { wordAt, wordBefore } from '../src/word.js';
 import { ASSIST_ORIGIN, ASSIST_PERMISSION } from '../src/assist.js';
 
@@ -52,6 +52,12 @@ describe('wordAt: the Odia word at a caret position', () => {
   it('keeps a joiner inside a word, and ignores a lone vowel sign', () => {
     expect(wordAt(`${DINA}${ZWJ}${DINA}`, 1)?.word).toBe(`${DINA}${ZWJ}${DINA}`);
     expect(wordAt(` ${VOWEL_SIGN_I} `, 1)).toBeNull();
+  });
+
+  it('finds a number in Odia digits (53), alone or with an ending', () => {
+    const n53 = '\u0B6B\u0B69';
+    expect(wordAt(`a ${n53} b`, 3)?.word).toBe(n53);
+    expect(wordAt(`a ${n53}\u0B30\u0B47 b`, 2)?.word).toBe(`${n53}\u0B30\u0B47`);
   });
 });
 
@@ -164,6 +170,48 @@ describe('a known word plus a known ending', () => {
     const c = card('\u0B2A\u0B4D\u0B30\u0B2C\u0B47\u0B36\u0B30\u0B47');
     expect(c.meanings[0]).toEqual({ text: 'entry + in, at, on', source: 'explained from its ending' });
     expect(c.formation).toContain('\u0B30\u0B47');
+    expect(c.approximateHead).toBeNull();
+  });
+});
+
+describe('a word explained from its parts', () => {
+  const JIBANA = '\u0B1C\u0B40\u0B2C\u0B28'; // life
+  const SHAILI = '\u0B36\u0B48\u0B33\u0B40'; // style
+  const word = JIBANA + SHAILI;
+
+  it('cuts only between letter clusters, into parts of two letters or more', () => {
+    const cuts = splitPoints(word).map(([a, b]) => `${a}|${b}`);
+    expect(cuts).toContain(`${JIBANA}|${SHAILI}`);
+    // Never before a vowel sign, never after a virama.
+    expect(splitPoints(word).every(([, b]) => !/^[\u0B3E-\u0B57]/.test(b))).toBe(true);
+    const PRAKASHA = '\u0B2A\u0B4D\u0B30\u0B15\u0B3E\u0B36'; // pra-kaa-sha
+    expect(splitPoints(PRAKASHA).every(([a]) => !a.endsWith('\u0B4D'))).toBe(true);
+    // A one-letter tail (re, "in") is an ending, not a word.
+    expect(splitPoints(JIBANA + '\u0B30\u0B47').map(([a]) => a)).not.toContain(JIBANA);
+  });
+
+  it('needs both parts known, and prefers an even cut', () => {
+    const known = (w: string) => [JIBANA, SHAILI, '\u0B1C\u0B40', '\u0B2C\u0B28\u0B36\u0B48\u0B33\u0B40'].includes(w);
+    expect(chooseSplits(word, known)[0]).toEqual([JIBANA, SHAILI]);
+    expect(chooseSplits(word, () => false)).toEqual([]);
+  });
+
+  it('keeps a part meaning short and in lower case', () => {
+    expect(partGloss('Life; lifetime')).toBe('life');
+    expect(partGloss('maybe: Style, manner')).toBe('style');
+    expect(partGloss('AI')).toBe('AI');
+    expect(partGloss('an inflection for the dative case')).toBeNull();
+  });
+
+  it('shows the parts on the card, with how the word is made', () => {
+    const key = foldKey(word);
+    const entry = findEntry(P.keys, key);
+    const c = describeWord(word, key, entry, entry ? defAt(P, entry.index) : null, data, '', [
+      { word: JIBANA, gloss: 'life' },
+      { word: SHAILI, gloss: 'style' },
+    ]);
+    expect(c.meanings[0]).toEqual({ text: 'life + style', source: 'guessed from its parts' });
+    expect(c.formation).toBe(`${JIBANA} (life) + ${SHAILI} (style)`);
     expect(c.approximateHead).toBeNull();
   });
 });

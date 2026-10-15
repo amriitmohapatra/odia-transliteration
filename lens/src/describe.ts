@@ -82,6 +82,61 @@ const ORIGIN_PHRASE: Record<string, string> = {
 /** Meanings shown at most. */
 const MAX_MEANINGS = 3;
 
+/** One part of a word explained from its parts, with its short meaning. */
+export interface WordPart {
+  word: string;
+  gloss: string;
+}
+
+/** Letters (consonants and independent vowels): what makes a part long enough to stand alone. */
+const LETTER = /[\u0b05-\u0b39\u0b5c-\u0b61\u0b71]/g;
+const letters = (w: string): number => w.match(LETTER)?.length ?? 0;
+
+/**
+ * The ways to cut a word into two parts of at least two letters each, without
+ * cutting inside a letter cluster: the second part starts with a letter (not a
+ * vowel sign, virama or nukta), and the first part does not end with a virama
+ * or a joiner. A one-letter part (ra, ku, re) is an ending, not a word.
+ */
+export function splitPoints(word: string): Array<[string, string]> {
+  const out: Array<[string, string]> = [];
+  for (let i = 1; i < word.length; i++) {
+    const a = word.slice(0, i);
+    const b = word.slice(i);
+    if (!/^[\u0b05-\u0b39\u0b5c-\u0b61\u0b71]/.test(b)) continue;
+    if (/[\u0b4d\u200c\u200d]$/.test(a)) continue;
+    if (letters(a) < 2 || letters(b) < 2) continue;
+    out.push([a, b]);
+  }
+  return out;
+}
+
+/**
+ * The best ways to read a word as two known words (jibana + shaili, "life +
+ * style"), best first. `known` says whether a part has a modern, AI or owner
+ * meaning; the old dictionary alone is not enough (its short headwords are
+ * often obscure: patha "carbuncle" in pathaajiba, "will be sent"). Best: the
+ * longer shorter part (an even cut beats a long word with a two-letter tail),
+ * then the longer first part.
+ */
+export function chooseSplits(word: string, known: (part: string) => boolean): Array<[string, string]> {
+  return splitPoints(word)
+    .filter(([a, b]) => known(a) && known(b))
+    .sort(([xa, xb], [ya, yb]) => Math.min(letters(ya), letters(yb)) - Math.min(letters(xa), letters(xb)) || ya.length - xa.length);
+}
+
+/**
+ * A part's meaning, short: its first sense, lower case unless it is a name or
+ * an abbreviation. Null for a grammar note ("an inflection for the dative
+ * case"): such a part is an ending, not a word.
+ */
+export function partGloss(meaning: string): string | null {
+  if (/\b(inflection|affix|suffix|termination)\b/i.test(meaning)) return null;
+  const g = (meaning.split(/[;,(]/)[0] as string).replace(/^maybe:\s*/, '').replace(/\s+/g, ' ').trim().replace(/[\s.:]+$/, '');
+  if (g.length < 2) return null;
+  return /^[A-Z][a-z]/.test(g) ? g.charAt(0).toLowerCase() + g.slice(1) : g;
+}
+
 export function describeWord(
   word: string,
   key: string,
@@ -90,6 +145,8 @@ export function describeWord(
   data: LensData,
   /** The Odia word before this one on the page, for constructions ("...-ku nei"). */
   previous = '',
+  /** The word as two known words, when no dictionary has it (engine.ts, wordParts). */
+  parts: readonly [WordPart, WordPart] | null = null,
 ): LensCard {
   const odia = canonical(word);
   const meanings: LensMeaning[] = [];
@@ -125,7 +182,12 @@ export function describeWord(
   // A number in Odia digits: "24", "6 (things)", "2019 + in, at, on".
   const number = own || first || explained ? null : readNumber(odia, data.ai);
   if (number) add(number.text, 'number in Odia digits');
-  const settled = own !== undefined || first !== undefined || explained !== null || number !== null;
+  // A word no dictionary has, made of two known words: "life + style"
+  // (jibana + shaili), not the first part's meaning as a guess.
+  const compound =
+    own || first || explained || number || !parts || entry?.how === 'exact' || entry?.how === 'stem' ? null : parts;
+  if (compound) add(`${compound[0].gloss} + ${compound[1].gloss}`, 'guessed from its parts');
+  const settled = own !== undefined || first !== undefined || explained !== null || number !== null || compound !== null;
   if (data.modern && !settled) {
     const found = findModern(data.modern.keys, key);
     if (found) {
@@ -154,10 +216,15 @@ export function describeWord(
     roman: romanize(odia),
     meanings,
     // An owner or AI meaning is for this exact word: no "approximate" note then.
-    approximateHead: entry && entry.how !== 'exact' && !own && !first && !explained && !number ? entry.head : null,
+    approximateHead: entry && entry.how !== 'exact' && !own && !first && !explained && !number && !compound ? entry.head : null,
     origin,
     loan,
-    formation: ai?.formation || phrase?.formation || explained?.formation || number?.formation || null,
+    formation:
+      ai?.formation ||
+      phrase?.formation ||
+      explained?.formation ||
+      number?.formation ||
+      (compound ? `${compound[0].word} (${compound[0].gloss}) + ${compound[1].word} (${compound[1].gloss})` : null),
     more: more.length > 0 ? `Also: ${more}` : null,
   };
 }

@@ -13,7 +13,16 @@
 import { parseGlosses, parseMeanings, parseVerbEndings } from '@odia/core';
 import { canonical } from '@odia/core/normalize';
 
-import { findEntry, foldKey, meaningFinder, parsePayload, type Dict } from '../../Appv2/src/dictionary/lookup.js';
+import {
+  defAt,
+  findEntry,
+  findModern,
+  foldKey,
+  meaningFinder,
+  modernLines,
+  parsePayload,
+  type Dict,
+} from '../../Appv2/src/dictionary/lookup.js';
 import { cleanDefinition } from '../../Appv2/src/dictionary/clean.js';
 import { parseOrigin } from '../../Appv2/src/dictionary/origin.js';
 import { parseLoans } from '../../Appv2/src/dictionary/loans.js';
@@ -24,7 +33,7 @@ import verbEndingsTsv from '../../core/data/verb-endings.tsv';
 import loansTsv from '../../Appv2/src/dictionary/loans.tsv';
 
 import { parseWordList, separate, type WordList } from './correct.js';
-import { describeWord, type LensCard, type LensData } from './describe.js';
+import { chooseSplits, describeWord, partGloss, type LensCard, type LensData, type WordPart } from './describe.js';
 import type { FrameLine, FrameWord, Reading } from './messages.js';
 import { HAS_ODIA, cleanRead, lineText, type OcrWord } from './picture.js';
 
@@ -115,7 +124,36 @@ export async function lookup(word: string, previous: string): Promise<LensCard |
   const [{ keys: k }, data] = await Promise.all([loadKeys(), loadExtras()]);
   const entry = findEntry(k, key);
   const def = entry ? await definition(entry.index) : null;
-  return describeWord(odia, key, entry, def, data, previous);
+  const parts = entry === null || entry.how === 'prefix' ? wordParts(odia, key, data) : null;
+  return describeWord(odia, key, entry, def, data, previous, parts);
+}
+
+/**
+ * A word no dictionary has, read as two known words (jibana-shaili: jibana
+ * "life" + shaili "style"), or null. Only for a word without an owner, AI or
+ * modern meaning; each part needs one of those meanings, and a part that is
+ * an ending (re, ru, maane) is not a word.
+ */
+function wordParts(odia: string, key: string, data: LensData): [WordPart, WordPart] | null {
+  if (data.owner.get(odia) || data.ai?.word(odia)) return null;
+  if (/[\u0b66-\u0b6f]/.test(odia)) return null;
+  if (data.modern && findModern(data.modern.keys, key)) return null;
+  const modernGloss = (part: string): string | null => {
+    if (!data.modern) return null;
+    const found = findModern(data.modern.keys, foldKey(part));
+    if (!found || found.how !== 'exact') return null;
+    const line = modernLines(defAt(data.modern, found.index)).find((l) => l.tag !== 'loan');
+    return line ? partGloss(line.gloss) : null;
+  };
+  const known = (part: string): string | null => {
+    const m = data.owner.get(part)?.meaning ?? data.ai?.word(part)?.meaning;
+    return m ? partGloss(m) : modernGloss(part);
+  };
+  const meaning = (part: string): string | null => (data.ai?.ending(part) ? null : known(part));
+  const best = chooseSplits(odia, (part) => meaning(part) !== null)[0];
+  if (!best) return null;
+  const [a, b] = best;
+  return [{ word: a, gloss: meaning(a) as string }, { word: b, gloss: meaning(b) as string }];
 }
 
 /* ------------------------------------------------------------ *

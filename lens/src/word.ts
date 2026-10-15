@@ -17,8 +17,9 @@ export function wordAt(text: string, offset: number): { start: number; end: numb
   while (at(start - 1)) start -= 1;
   while (at(end)) end += 1;
   const word = text.slice(start, end);
-  // A lone sign (a vowel sign or virama with no letter) is not a word.
-  return /[\u0B05-\u0B39\u0B5C-\u0B61\u0B71]/.test(word) ? { start, end, word } : null;
+  // A lone sign (a vowel sign or virama with no letter) is not a word; a run of
+  // Odia digits is (the card reads it as a number).
+  return /[\u0B05-\u0B39\u0B5C-\u0B61\u0B71\u0B66-\u0B6F]/.test(word) ? { start, end, word } : null;
 }
 
 /**
