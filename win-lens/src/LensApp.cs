@@ -81,8 +81,8 @@ public sealed class LensApp
             g.FillEllipse(bg, 0, 0, 31, 31);
             using var fg = new SolidBrush(System.Drawing.Color.FromArgb(0xe8, 0xb2, 0x3a));
             using var font = new Font("Nirmala UI", 15, System.Drawing.FontStyle.Bold, GraphicsUnit.Pixel);
-            var size = g.MeasureString("ଓ", font);
-            g.DrawString("ଓ", font, fg, (32 - size.Width) / 2, (32 - size.Height) / 2);
+            var size = g.MeasureString("\u0B13", font);
+            g.DrawString("\u0B13", font, fg, (32 - size.Width) / 2, (32 - size.Height) / 2);
         }
         IntPtr h = bmp.GetHicon();
         var icon = (Icon)Icon.FromHandle(h).Clone();
@@ -192,7 +192,7 @@ public sealed class LensApp
         // UI Automation calls other apps: never on the window thread.
         var hit = await Task.Run(() => PointReader.TextAt(p.X, p.Y));
         looking = false;
-        if (hit is not { } found || !found.Text.Any(c => c >= '଀' && c <= '୿'))
+        if (hit is not { } found || !found.Text.Any(c => c >= '\u0B00' && c <= '\u0B7F'))
         {
             card.Hide();
             return;
