@@ -433,6 +433,21 @@ before it with `word.ts` (as the browser lens does for page text) and shows the 
 small non-activating panel. Exact text: no OCR. Apps without text access, and pictures,
 give no card (the frame reads those).
 
+## 7d. Odia Lens for Windows (`win-lens/`, owner testing, V4.9, 2026-10-15)
+
+The Mac lens's design on Windows, in C# (.NET 8, WPF + Windows Forms tray), built and
+compile-checked on Linux (`EnableWindowsTargeting`, Microsoft's SDK) and never run there.
+`FrameWindow` (transparent topmost window; themed bar, border, grips with a faint fill
+so Windows gives them the mouse; inside fully clear so clicks pass through) → settles →
+`Capture` (`CopyFromScreen`; the lens's windows use `SetWindowDisplayAffinity`
+`WDA_EXCLUDEFROMCAPTURE`) → `Ocr` (`tesseract.exe`, TSV, the packed `ori.traineddata`) →
+`ResultsPanel` (WebView2, the shared page from `mac-lens/build/web` mapped to
+`https://odialens.app/`, a local folder). Point mode: the pointer polled every 0.1 s; after a
+0.35 s rest `PointReader` asks UI Automation (on a worker thread) for the element under
+the point, its `TextPattern`, the line around `RangeFromPoint` and the pointer's offset; the
+card page (`#card`) finds the word as on the Mac. The page talks to either host
+(`webkit.messageHandlers.lens` or `chrome.webview.postMessage`). Details: `win-lens/README.md`.
+
 ## 8. Testing and measurement
 
 | Check | Command | Measures |

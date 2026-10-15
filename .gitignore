@@ -20,3 +20,8 @@ tools/build-data/webcorpus/raw-archive-books.jsonl
 lens/dist-test/
 lens/odia-lens.zip
 mac-lens/build/
+
+# Odia Lens for Windows builds (dotnet build / publish)
+win-lens/bin/
+win-lens/obj/
+win-lens/publish/

@@ -10,6 +10,9 @@
  * Files come from the app bundle through the app's `odialens:` scheme
  * (relative paths: dict/...). Nothing goes over the network.
  *
+ * The Windows lens (win-lens/, V4.9) loads the same page in WebView2 from a
+ * local folder and drives it the same way.
+ *
  * The status line names each step (dictionary, OCR, last reading), so a first
  * report from the owner tells which step failed.
  */
@@ -44,6 +47,8 @@ declare global {
       word(text: string, offset: number): Promise<boolean>;
     };
     webkit?: { messageHandlers?: { lens?: { postMessage(message: unknown): void } } };
+    /** WebView2 in the Windows lens (win-lens/). */
+    chrome?: { webview?: { postMessage(message: unknown): void } };
   }
 }
 
@@ -94,7 +99,11 @@ function showStatus(bad = false): void {
 }
 showStatus();
 
-const post = (message: unknown): void => window.webkit?.messageHandlers?.lens?.postMessage(message);
+/** To the native app: WebKit on the Mac (mac-lens), WebView2 on Windows (win-lens). */
+const post = (message: unknown): void => {
+  if (window.webkit?.messageHandlers?.lens) window.webkit.messageHandlers.lens.postMessage(message);
+  else window.chrome?.webview?.postMessage(message);
+};
 
 async function show(lines: NativeLine[], info: NativeInfo = {}): Promise<number> {
   cardEl.textContent = '';

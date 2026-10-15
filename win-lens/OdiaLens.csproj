@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!-- Odia Lens for Windows (V4.9, owner testing only). Builds on Windows, and also on
+       Linux and macOS for checking (EnableWindowsTargeting); it runs only on Windows 10/11. -->
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <UseWindowsForms>true</UseWindowsForms>
+    <EnableWindowsTargeting>true</EnableWindowsTargeting>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <AssemblyName>OdiaLens</AssemblyName>
+    <RootNamespace>OdiaLens</RootNamespace>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <!-- WFAC010 is about Windows Forms DPI; this WPF app sets DPI awareness in app.manifest. -->
+    <NoWarn>$(NoWarn);WFAC010</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+    <!-- BSD-3-Clause (win-lens/PROVENANCE.md) -->
+    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.4258.31" />
+  </ItemGroup>
+  <ItemGroup>
+    <!-- The shared page and dictionary (built by: node lens/build.mjs, mac option) and the Odia OCR model. -->
+    <Content Include="..\mac-lens\build\web\**\*" Link="web\%(RecursiveDir)%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="..\lens\vendor\ori.traineddata" Link="tessdata\ori.traineddata" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+</Project>

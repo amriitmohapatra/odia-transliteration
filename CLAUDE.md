@@ -55,7 +55,7 @@ npm run -w cli start -- "odisha" --codepoints    # expect U+0B21 U+0B3C
 
 ## Architecture
 
-One TypeScript engine, six consumers.
+One TypeScript engine, seven consumers.
 
 ```
 core/  ──────────────────────────────┐
@@ -66,6 +66,7 @@ core/  ────────────────────────�
   ├─ Appv2/       Sanskrit web app   │  direct import
   ├─ lens/        browser extension  │  esbuild bundle (V4.1)
   ├─ mac-lens/    Swift lens window  │  WKWebView page from lens/src/mac.ts (owner testing)
+  ├─ win-lens/    C# lens window     │  WebView2, the same page (owner testing)
   └─ ime-macos/   Swift input method │  JavaScriptCore
                                      ┘
 ```
@@ -197,6 +198,7 @@ Rows marked unknown or unverified below are open items, not exceptions:
 | IndicCorp v2 Odia `or.txt` (word counts) | CC0 | Build time: attestation for `loans.tsv` (`tools/build-data/count_indiccorp.py`); shipped in the Odia Lens as the OCR word list `core/data/indiccorp-words.tsv` |
 | Tesseract (`tesseract.js` 5.1.1, `tesseract.js-core` 5.1.1, `tessdata_fast/ori.traineddata`) | Apache-2.0 | Odia Lens picture mode (V4.2): OCR in the extension; `lens/PROVENANCE.md` |
 | pako inflate | MIT | Unpacks the dictionary payloads |
+| WebView2 SDK (`Microsoft.Web.WebView2` 1.0.4258.31) | BSD-3-Clause | Odia Lens for Windows (`win-lens/`, owner testing); `win-lens/PROVENANCE.md` |
 | pdf.js (`pdfjs-dist` 6.3.289, legacy build; image decoders; Foxit standard fonts only) | Apache-2.0; decoders BSD-3/BSD-2/MIT; Foxit fonts BSD-3 | Odia Lens PDF reader (V4.6); `lens/PROVENANCE.md`. Liberation fonts left out (GPL with font exception) |
 
 The dictionary sources and their checksums are in `Odia_Sanskrit_Appv2/PROVENANCE.md`.
