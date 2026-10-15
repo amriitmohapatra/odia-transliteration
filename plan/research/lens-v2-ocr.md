@@ -146,6 +146,25 @@ Split rule after the owner's report ("translates some letters in the word togeth
 a run-together word is split only when nothing explains it whole, into 2–3 pieces of at
 least three code points; a piece's card says what it was part of.
 
+## 4d. V4.3 results (2026-10-15)
+
+Full tables and method: `plan/research/v43-ocr-model/` (`baseline.md`, `results.md`,
+`PROVENANCE.md`). Letter error rate (Odia letters only; ya-phala and wa-phala spellings
+folded), 275 held-out lines:
+
+| regime (lines) | stock `ori_fast` | fine-tuned `ori-lens` |
+|---|---|---|
+| ePaper body (137), raw-line mode | 8.6 | 5.3 |
+| ePaper headlines (60), raw-line mode | 13.9 | 9.0 |
+| 300 dpi book (40), single-line mode | 11.6 | 7.6 |
+| 96 dpi 1-bit book (19) | 50.7 | 45.5 |
+| typed PDF, old Akruti font (19) | 5.8 | 4.5 |
+
+Findings: single-line mode (psm 7) returns nothing for 11 of 137 ePaper body lines; raw-line
+mode (psm 13) reads them (stock body 17.6 → 11.2), now used as a second read for weak lines.
+Larger enlargement, sharpening and binarisation do not help; `ori_best` is no better than
+`ori_fast`. The fine-tune fixes ଥି read as ଥୁ (8/28 → 0/28) and most lost ya-phalas.
+
 ## 5. Stages
 
 | Stage | What | Depends on |
