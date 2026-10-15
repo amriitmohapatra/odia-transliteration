@@ -36,7 +36,7 @@ whenever a task changes status. Last updated: 2026-10-12 (editor reliability and
 | V2 Better words | See §3b. Owner gloss file pulled forward into V1 (done) | **Started** 2026-10-04 |
 | V3 Assist layer | `/api/speak`, `/api/listen`, `/api/translate` behind switches | **All three built** 2026-10-15: `/api/translate` for the lens (V4.5); `/api/speak` (Listen: the device's Odia voice first, Sarvam Bulbul only when "Read aloud online" is on) and `/api/listen` (Speak: voice typing through Sarvam Saaras, only when "Voice typing" is on) in the web app. Need the owner's keys on Vercel (A-9, A-11) |
 | V4 Lens | Browser extension, then camera/screenshot input | **V4.1 (browser extension) built** 2026-10-14. **V4.2 picture mode** (ePapers, YouTube frames; Odia OCR in the extension) started 2026-10-15: OCR spike done (`plan/research/lens-v2-ocr.md`). Native (v3) not started |
-| V5 Native | macOS input method with the real engine; Android, iOS (skills first) | Not started |
+| V5 Native | macOS input method with the real engine; Android, iOS (skills first) | **macOS input method built** 2026-10-15 (`ime-macos/`): the website's engine and data in JavaScriptCore; key handling in TypeScript under 14 tests; Swift not compiled yet (first build and spike S4 on the owner's Mac, A-12). Android, iOS: not started (no mobile skills installed) |
 | E-1 Experiment | Laya against a simple word-origin tagger | Not started |
 | P Public repository | When the owner says "project finished": a fresh public repository without the scraped corpus, the derived-counts decision, the licence-table check (`plan/06-owner-followups.md`, section D), and Desh's terms for any Desh-derived data (L-1). **Owner 2026-10-14: the public version ships no Desh data** (typed pairs, converter, next words); **Owner 2026-10-15: as the final step, build that data from publicly available chat text** (romanized Odia as people type it: typed-spelling pairs, the spelling converter, next words) and present it as the app's own data, not as a stand-in. Only text whose licence allows the use (open licence or public domain, recorded with checksums in `core/data/PROVENANCE.md`); derived tables only, never the raw text in the repository; Claude collects and measures it against the Desh-built version before the switch. Probably a fresh public repository, filled by copying selected files from this one | Waiting for "project finished" |
 | G Guide video | A brag and user-guide video: how to use the transliteration app and the Odia Lens (owner, 2026-10-15: "Once both the transliteration and lens apps are ready and updated, we'll work on creating a brag+user guide video"). The owner gives the requirements then | **Saved for later.** Trigger: both apps ready and updated. Remind the owner then (`plan/06-owner-followups.md`, section D) |
@@ -56,7 +56,7 @@ the branch; no PR until the owner asks. Meaning batches (V2.17) continue between
 | 4 | V2.3 colloquial remainder | **Done** 2026-10-15: nothing left on the engine side; the spoken ଚ/ଛ order stays with the owner (C-3) | — |
 | 5 | V2.7 new modern meanings layer (D-5) | Glosses aligned from Samanantar / BPCC plus Wikidata labels, licences and checksums in `PROVENANCE.md`, compared with the old layer on a sample | Licences checked first |
 | 6 | V3 `/api/speak` (read-aloud), then `/api/listen` (voice input) | **Done** 2026-10-15: both routes and the web app's Listen and Speak; request formats from Sarvam's API reference; 15 unit tests, 17 browser checks against a stand-in | Owner key on Vercel (A-11) |
-| 7 | V5 macOS input method with the real engine | `core` bundle that runs in JavaScriptCore with data handed over by Swift; logic in TypeScript under unit tests; Swift parse-checked | First run and the ad-hoc signing question need the owner's Mac |
+| 7 | V5 macOS input method with the real engine | **Built** 2026-10-15: `engine.js` runs in a bare JavaScript context and types like the website; Swift written but not compiled here (no Swift compiler on Linux) | First build, first run and the ad-hoc signing question (S4) on the owner's Mac (A-12) |
 | 8 | E-1 word-origin tagger, then Laya only if the tagger is not good enough | A small character-pattern tagger for words outside Praharaj, measured on held-out Praharaj tags | D-9 |
 
 Not in the queue: V2.8 (offensive phrases made of innocent words: an agent does not
@@ -260,6 +260,7 @@ Agents do not commit; the lead reviews, measures and commits.
 
 | Date | Change |
 |---|---|
+| 2026-10-15 | V5: the macOS input method runs the real engine (JavaScriptCore, the website's data); key handling in TypeScript under tests; first build on the owner's Mac (A-12). |
 | 2026-10-15 | V4.3 shipped: own Odia OCR model from open-licence text only (letter errors on ePaper body 8.6 → 4.8%); psm 13 first for lines; D-14 closed. |
 | 2026-10-15 | V3 built: Listen (read-aloud; device voice first, Sarvam when switched on) and Speak (voice typing through Sarvam), both off by default. |
 | 2026-10-15 | V2.17 batch 10 (689 rows from the owner's News18 articles, reviewed): together 92.5%. V2.3 found done on the engine side. |

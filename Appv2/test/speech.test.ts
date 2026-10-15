@@ -3,7 +3,7 @@ import { describe, expect, it } from 'vitest';
 
 import { SPEAK_MAX_CHARS, pickOdiaVoice, recordingType, speakRoute, speakable } from '../src/speech.js';
 
-const BHALA = 'ଭଲ'; // good
+const BHALA = '\u0b2d\u0b32'; // good
 
 describe('pickOdiaVoice', () => {
   it('finds an Odia voice by its language tag, any region and case', () => {

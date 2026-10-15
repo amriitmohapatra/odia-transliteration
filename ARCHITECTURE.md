@@ -334,6 +334,19 @@ Rules: keys only in Vercel environment variables (`SARVAM_API_KEY`, `ANTHROPIC_A
 hold user text; every result passes `canonical()`; read-aloud and translation cached by
 canonical text (in the function's memory).
 
+## 7e. macOS input method (`ime-macos/`, V5)
+
+Type Odia inline in any Mac app. An InputMethodKit app (Swift, no Xcode project) hosts a
+`JSContext` running `engine.js`: `ime-macos/js/bridge.ts` and the core engine bundled by
+`ime-macos/build.mjs` into one classic script. The engine is built like the website's
+"Everyday" mode (`unified` rules, core + Sanskrit web lexicons, unigrams, web bigrams,
+typed spellings, next-word table, converter, owner files), so the same word comes first.
+Swift reads `Resources/data/` and passes the files as strings (the gzip converter as
+base64); key handling is `js/composer.ts`, a pure state machine under unit tests, and
+Swift only turns key events into composer keys and applies the answer (commit text,
+underlined word, `IMKCandidates` list). The user's choices are saved in `UserDefaults`
+as JSON. No network. Status and first build: `PLAN.md` V5, follow-up A-12.
+
 ## 7b. Odia Lens, the browser extension (`lens/`, V4.1)
 
 Point at an Odia word on any web page: pronunciation, meaning, origin. Chrome and Edge,

@@ -7,8 +7,8 @@ import assert from 'node:assert/strict';
 import { createRequire } from 'node:module';
 const { chromium } = createRequire(import.meta.url)('playwright');
 const url = new URL(process.env.APP_URL || `http://127.0.0.1:${process.argv[2] || '4810'}/`).href;
-const BHALA = 'ଭଲ'; // good
-const ODISHA = 'ଓଡ଼ିଶା';
+const BHALA = '\u0b2d\u0b32'; // good
+const ODISHA = '\u0b13\u0b21\u0b3c\u0b3f\u0b36\u0b3e';
 
 /** A valid WAV of 0.1 s of silence, so the page can play the stand-in's answer. */
 function silentWav() {

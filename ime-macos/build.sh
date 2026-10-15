@@ -22,18 +22,26 @@ echo "==> Cleaning"
 rm -rf build
 mkdir -p "${BUNDLE}/Contents/MacOS" "${BUNDLE}/Contents/Resources"
 
+echo "==> Bundling the engine (js/bridge.ts) and its data"
+# Needs `npm install` at the repository root (esbuild). Writes build/stage/.
+node build.mjs
+
 echo "==> Compiling Swift"
 xcrun swiftc \
     -O \
     -target arm64-apple-macos13.0 \
     -framework Cocoa \
     -framework InputMethodKit \
+    -framework JavaScriptCore \
     -o "${BUNDLE}/Contents/MacOS/${APP_NAME}" \
     Sources/main.swift \
+    Sources/EngineBridge.swift \
     Sources/OdiaInputController.swift
 
 echo "==> Assembling bundle"
 cp Info.plist "${BUNDLE}/Contents/Info.plist"
+cp build/stage/engine.js "${BUNDLE}/Contents/Resources/"
+cp -R build/stage/data "${BUNDLE}/Contents/Resources/data"
 printf 'APPL????' > "${BUNDLE}/Contents/PkgInfo"
 
 echo "==> Ad-hoc code signing"

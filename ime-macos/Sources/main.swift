@@ -23,6 +23,12 @@ guard let connectionName = bundle.infoDictionary?["InputMethodConnectionName"] a
 // Retained deliberately — see note above.
 let server = IMKServer(name: connectionName, bundleIdentifier: bundleID)
 
+/// The candidate list under the word being typed, shared by every controller (V5).
+var candidatesWindow: IMKCandidates? = IMKCandidates(server: server, panelType: kIMKSingleColumnScrollingCandidatePanel)
+
+// Load the engine now (about a second), not on the first key.
+_ = EngineBridge.shared
+
 NSLog("[OdiaPhonetic] server started: connection=%@ bundle=%@", connectionName, bundleID)
 
 _ = server

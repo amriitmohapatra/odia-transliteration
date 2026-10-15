@@ -4,8 +4,8 @@ import { describe, expect, it } from 'vitest';
 
 import { LISTEN_MAX_BYTES, SPEAK_MAX_CHARS, listen, mediaType, speak } from '../../api/_lib/speech.js';
 
-const ODISHA_PRECOMPOSED = 'ଓଡ଼ିଶା';
-const ODISHA = 'ଓଡ଼ିଶା';
+const ODISHA_PRECOMPOSED = '\u0b13\u0b5c\u0b3f\u0b36\u0b3e';
+const ODISHA = '\u0b13\u0b21\u0b3c\u0b3f\u0b36\u0b3e';
 const MP3 = new Uint8Array([0x49, 0x44, 0x33, 1, 2, 3]);
 const b64 = (u: Uint8Array) => btoa(String.fromCharCode(...u));
 
@@ -53,7 +53,7 @@ describe('speak', () => {
 
   it('reports a provider failure without the provider text', async () => {
     const { f } = fakeFetch({ error: { message: 'quota' } }, 429);
-    expect(await speak('ଭଲ', { SARVAM_API_KEY: 'k' }, f)).toEqual({ ok: false, status: 502, error: 'The speech service answered 429.' });
+    expect(await speak('\u0b2d\u0b32', { SARVAM_API_KEY: 'k' }, f)).toEqual({ ok: false, status: 502, error: 'The speech service answered 429.' });
   });
 });
 

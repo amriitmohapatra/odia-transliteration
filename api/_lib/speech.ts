@@ -1,5 +1,5 @@
 /**
- * The assist layer's speech functions (V3; plan/05-v3-direction.md §7, decisions
+ * The assist layer's speech functions (V3; plan/05-v3-direction.md \u00a77, decisions
  * D-2 and D-3: voice through Sarvam AI):
  *
  *   speak:  Odia text  → MP3 audio  (read-aloud, for a reader who speaks Odia
@@ -67,7 +67,7 @@ export async function speak(raw: unknown, env: SpeechEnv, fetcher: Fetch = fetch
   const text = canonical(raw).replace(/\s+/g, ' ').trim();
   if (text.length === 0) return { ok: false, status: 400, error: 'The text is empty.' };
   if (text.length > SPEAK_MAX_CHARS) return { ok: false, status: 413, error: `The text is longer than ${SPEAK_MAX_CHARS} characters.` };
-  if (!/[ଁ-୷]/.test(text)) return { ok: false, status: 400, error: 'The text has no Odia letters.' };
+  if (!/[\u0b01-\u0b77]/.test(text)) return { ok: false, status: 400, error: 'The text has no Odia letters.' };
   const model = env.SPEAK_MODEL || DEFAULT_SPEAK_MODEL;
   const speaker = env.SPEAK_SPEAKER || '';
   const key = `${model}\u0000${speaker}\u0000${text}`;

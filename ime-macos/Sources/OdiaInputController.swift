@@ -1,12 +1,9 @@
-// Spike S4 input controller.
+// The input controller (V5, Stage C): the real engine through EngineBridge.swift.
 //
-// PURPOSE: prove the OS integration works end to end — that an unsigned (ad-hoc signed)
-// input method built with a free Apple ID can (a) appear in Input Sources, (b) actually
-// receive keystrokes, and (c) commit Odia text into arbitrary apps on macOS 26.
-//
-// It deliberately does NOT contain the real engine. A tiny hardcoded table stands in for
-// it. Once S4 passes, this controller keeps its structure and EngineBridge.swift swaps
-// the table for JavaScriptCore running the real engine.js.
+// This file only translates: an NSEvent becomes a key for js/composer.ts, and the
+// composer's answer (text to commit, the underlined word, the candidate list) is
+// applied to the app. All decisions are in TypeScript, under unit tests
+// (ime-macos/test/). Odia is never typed here: it all comes from the engine.
 
 import Cocoa
 import InputMethodKit
@@ -14,18 +11,8 @@ import InputMethodKit
 @objc(OdiaInputController)
 final class OdiaInputController: IMKInputController {
 
-    /// Roman text typed so far but not yet committed.
-    private var composing = ""
-
-    // Stand-in for the real engine. Note the nukta characters here are DECOMPOSED
-    // (U+0B21 + U+0B3C), never the precomposed U+0B5C — the project-wide invariant.
-    private static let stubTable: [String: String] = [
-        "odia":     "\u{0B13}\u{0B21}\u{0B3C}\u{0B3F}\u{0B06}",       // ଓଡ଼ିଆ
-        "odisha":   "\u{0B13}\u{0B21}\u{0B3C}\u{0B3F}\u{0B36}\u{0B3E}", // ଓଡ଼ିଶା
-        "namaskar": "\u{0B28}\u{0B2E}\u{0B38}\u{0B4D}\u{0B15}\u{0B3E}\u{0B30}", // ନମସ୍କାର
-        "bhala":    "\u{0B2D}\u{0B32}",                                 // ଭଲ
-        "paani":    "\u{0B2A}\u{0B3E}\u{0B23}\u{0B3F}",                 // ପାଣି
-    ]
+    /// The last answer of the composer: what is shown now.
+    private var current = Step.pass
 
     // MARK: - Event handling
 
@@ -33,90 +20,101 @@ final class OdiaInputController: IMKInputController {
         guard let event, event.type == .keyDown else { return false }
         guard let client = sender as? IMKTextInput else { return false }
 
-        // Let the host app handle anything with a command/control modifier.
+        // Shortcuts belong to the app: commit the word first, then let it through.
         if event.modifierFlags.contains(.command) || event.modifierFlags.contains(.control) {
-            commit(into: client)
+            commitPending(into: client)
             return false
         }
 
+        let step: Step
         switch event.keyCode {
-        case 51: // delete
-            guard !composing.isEmpty else { return false }
-            composing.removeLast()
-            updateMarkedText(in: client)
-            return true
-
-        case 53: // escape — abandon the composition, keep the roman text
-            guard !composing.isEmpty else { return false }
-            let raw = composing
-            composing = ""
-            client.insertText(raw, replacementRange: NSRange(location: NSNotFound, length: 0))
-            return true
-
-        case 36, 76: // return / enter — commit whatever is buffered
-            guard !composing.isEmpty else { return false }
-            commit(into: client)
-            return true
-
-        case 49: // space — transliterate, then a space
-            guard !composing.isEmpty else { return false }
-            commit(into: client, trailing: " ")
-            return true
-
+        case 51: step = EngineBridge.shared.key("backspace")
+        case 53: step = EngineBridge.shared.key("escape")
+        case 36, 76: step = EngineBridge.shared.key("enter")
+        case 49: step = EngineBridge.shared.key("space")
+        case 126: step = EngineBridge.shared.key("up")
+        case 125: step = EngineBridge.shared.key("down")
+        case 48: step = EngineBridge.shared.key("tab")
         default:
-            guard let chars = event.characters, !chars.isEmpty else { return false }
-
-            // Only buffer plain ASCII letters; everything else flushes and passes through.
-            if chars.count == 1, let scalar = chars.unicodeScalars.first,
-               CharacterSet.letters.contains(scalar), scalar.isASCII {
-                composing += chars
-                updateMarkedText(in: client)
-                return true
+            guard let chars = event.characters, chars.count == 1 else {
+                commitPending(into: client)
+                return false
             }
+            step = EngineBridge.shared.key("char", chars)
+        }
+        apply(step, to: client)
+        return step.handled
+    }
 
-            commit(into: client)
-            return false
+    // MARK: - Applying the composer's answer
+
+    private func apply(_ step: Step, to client: IMKTextInput) {
+        let none = NSRange(location: NSNotFound, length: 0)
+        if !step.commit.isEmpty {
+            client.insertText(step.commit, replacementRange: none)
+            EngineBridge.shared.saveLearned()
+        }
+        let marked = step.view.marked
+        if !marked.isEmpty || !current.view.marked.isEmpty || !step.commit.isEmpty {
+            client.setMarkedText(
+                NSAttributedString(string: marked, attributes: [.underlineStyle: NSUnderlineStyle.single.rawValue]),
+                selectionRange: NSRange(location: (marked as NSString).length, length: 0),
+                replacementRange: none
+            )
+        }
+        current = step
+        showCandidates()
+    }
+
+    private func showCandidates() {
+        guard let window = candidatesWindow else { return }
+        if current.view.candidates.count > 1 {
+            window.update()
+            window.show(kIMKLocateCandidatesBelowHint)
+            let id = window.candidateIdentifier(atLineNumber: current.view.selected)
+            window.selectCandidate(withIdentifier: id)
+        } else {
+            window.hide()
         }
     }
 
-    // MARK: - Composition
-
-    private func updateMarkedText(in client: IMKTextInput) {
-        let attributed = NSAttributedString(
-            string: composing,
-            attributes: [.underlineStyle: NSUnderlineStyle.single.rawValue]
-        )
-        client.setMarkedText(
-            attributed,
-            selectionRange: NSRange(location: composing.count, length: 0),
-            replacementRange: NSRange(location: NSNotFound, length: 0)
-        )
-    }
-
-    private func commit(into client: IMKTextInput, trailing: String = "") {
-        guard !composing.isEmpty else {
-            if !trailing.isEmpty {
-                client.insertText(trailing, replacementRange: NSRange(location: NSNotFound, length: 0))
-            }
-            return
+    private func commitPending(into client: IMKTextInput) {
+        let text = EngineBridge.shared.flush()
+        if !text.isEmpty {
+            client.insertText(text, replacementRange: NSRange(location: NSNotFound, length: 0))
+            EngineBridge.shared.saveLearned()
         }
-
-        let odia = Self.stubTable[composing.lowercased()] ?? composing
-        composing = ""
-        client.insertText(odia + trailing, replacementRange: NSRange(location: NSNotFound, length: 0))
+        current = .pass
+        candidatesWindow?.hide()
     }
+
+    // MARK: - Candidate window (IMKCandidates)
+
+    override func candidates(_ sender: Any!) -> [Any]! {
+        current.view.candidates
+    }
+
+    /// A click in the candidate window: take that word, as its number key would.
+    override func candidateSelected(_ candidateString: NSAttributedString!) {
+        guard let client = client() as? IMKTextInput,
+              let word = candidateString?.string,
+              let index = current.view.candidates.firstIndex(of: word) else { return }
+        apply(EngineBridge.shared.key("char", String(index + 1)), to: client)
+    }
+
+    // MARK: - Focus changes
 
     override func commitComposition(_ sender: Any!) {
         guard let client = sender as? IMKTextInput else { return }
-        commit(into: client)
+        commitPending(into: client)
     }
 
     override func composedString(_ sender: Any!) -> Any! {
-        composing
+        current.view.marked
     }
 
     override func deactivateServer(_ sender: Any!) {
-        if let client = sender as? IMKTextInput { commit(into: client) }
+        if let client = sender as? IMKTextInput { commitPending(into: client) }
         super.deactivateServer(sender)
     }
 }
