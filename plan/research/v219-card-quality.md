@@ -53,3 +53,45 @@ Main kinds of error the judges named: names of people and places shown with a di
 sense ("Beer" for Birla, "Flag" for Banerjee), English loans with no or a wrong meaning
 (plan, task, concert, notice "a small metal jug"), 1930s senses ("A coachman" for
 saarathi, "Unboiled" for invalid, "Czech" for cheque), and case forms of stems with no row.
+
+**Round 2: after meanings batch 12** (1,756 rows mined from the other 200 articles and the
+owner's ePaper page). The same held set through `card-audit.mjs`; the 205 cards that
+changed were judged again (same rules, 2 judges; `tools/eval/data/card-judge-round2.tsv`);
+every other card keeps its round 0 verdict, an empty card counts as "no meaning". This
+method gives round 1's numbers back exactly.
+
+| whole held set, by occurrences | right | weak | wrong (misleading) | no meaning | OCR |
+|---|---|---|---|---|---|
+| round 0, before | 85.6% | 3.2% | 6.7% | 4.0% | 0.4% |
+| round 1, no prefix guesses | 85.0% | 2.3% | 2.5% | 9.8% | 0.4% |
+| round 2, batch 12 | **88.4%** | 1.5% | **1.9%** | 7.7% | 0.4% |
+
+Of the 205 changed cards, 191 were judged right, 10 weak, 4 wrong. Only 162 batch 12 words
+occur in the held set (the words were mined from other articles), so the gain is what a
+reader of new articles sees. The wrong ones are parts guesses for names (Patnagarh
+"patna + fort", Nicobar, Janpath "people + path") and a set phrase.
+
+Note on round 1's joiner change (commit 797d17a): only the AI-written meanings
+(`meaningFinder`) ignore a zero-width joiner; the owner's meanings still need the exact
+spelling. The commit message says both.
+
+**The ePaper through the lens's own OCR** (2026-10-16: 16 pages, 4 each of Sambad,
+Dharitri, Samaja, Prameya, Bhubaneswar edition; 35,456 words; read with
+`lens/vendor/ori.traineddata` as `readPage()` does; images and text kept outside the
+repository). Card audit, with the lens's word correction:
+
+| | ok | parts | approximate | Praharaj only | no card |
+|---|---|---|---|---|---|
+| raw OCR | 73.1% | 1.4% | 1.1% | 5.4% | 19.0% |
+| corrected | 80.7% | 1.4% | 0.9% | 5.8% | 11.2% |
+
+Of the 11.2% with no card, 7.8 points are words common in IndicCorp (≥ 50 times) and 3.4
+are OCR noise. Many of the common ones are print spellings that drop a doubled or joined
+letter (khaRca for khaRcca, parabaRtii for parabaRttii, byabasthaa printed with ta) and
+names of local places (Hatipala, Chandaka). Sambad and Samaja images are only about
+1,000 px wide, so their OCR is weaker (mean confidence 71-75 against 82-90).
+
+**Next round (planned):** batch 13 from the ePaper words with no card (about 2,000
+common words); a lookup step that tries the doubled-letter spelling (ta → tta, ca → cca)
+when a word has no entry, measured on the same pages before it ships; no parts guess
+for a word that the name lists (Wikidata) or the judges mark as a name.
