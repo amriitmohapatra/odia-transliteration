@@ -116,3 +116,32 @@ for aabashyakamate, "week + -wide" for a week-long course), local place names
 (Subuddhipur, Nilamadhab as a locality), and given names that are also words (Ashrit).
 The reph fold does not reach a stem match yet (barttamaanara with ending finds no row though barttamaana has one). Next: the remaining weak words of the mining set and of the ePaper pages (batch 14), and suffix rows for
 -ମତେ, -ବ୍ୟାପୀ and -ଟି in `verb-endings.tsv` or the endings table.
+
+**Round 4: a last-try lookup and meanings batch 14.**
+- Last try (commit de10471): when the exact and loose keys find nothing, the AI layer
+  tries the word without nukta and without a final virama (badi / baDi, paper / paper +
+  virama). Compound parts do not use it (it gave "mr + liquor", "air + tailor"). Rows
+  written in one spelling now answer the other ("in Odisha" for odishaare).
+- Its risk, measured: 150 cards whose meaning comes only from the last try, sampled from
+  the three sets and judged: 137 right, 1 weak, 5 wrong, 7 OCR. All 5 wrong ones are an
+  "other word" (bana "forest" for English one, tel "oil" in Tel Aviv, bidi for initials
+  B.D., param "supreme" for "after", yash "fame" for the actor). Without the last try
+  these words have no meaning at all, so it stays.
+- Batch 14: 1,998 rows (1,887 words, 111 stems) for the words still weak in the mining
+  articles and the ePaper pages; rows the lookup already finds under another spelling
+  left out (89).
+- Card audit, ok share: ePaper 90.7 → 92.7%, mining set 93.7 → 96.3% (both mined).
+- Held set: the 92 changed cards judged (84 right, 3 weak, 3 wrong, 2 OCR;
+  `tools/eval/data/card-judge-round4.tsv`, with the last-try sample).
+
+| whole held set, by occurrences | right | weak | wrong (misleading) | no meaning | OCR |
+|---|---|---|---|---|---|
+| round 0, before | 85.6% | 3.2% | 6.7% | 4.0% | 0.4% |
+| round 3, batch 13 + reph fold | 90.1% | 1.2% | 1.5% | 6.8% | 0.4% |
+| round 4, last try + batch 14 | **91.1%** | 1.1% | **1.2%** | 6.1% | 0.4% |
+
+Remaining kinds of error: parts guesses for compounds ("fierce + plaintiff" for
+ugrabaadii, "the other + SS" for RSS), negative and passive verb forms ("let + no" for
+niaajaaunaahin), names inside phrases (Aaj Tak, Tel Aviv). The no-meaning share (6.1%)
+is mostly names of people and rare words; the next source of words should be new
+articles (a fresh mining set), measured on the same held set.

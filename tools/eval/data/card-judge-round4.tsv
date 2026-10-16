@@ -1,0 +1,247 @@
+# Card judgments, round 4 (2026-10-16): the 92 held-set cards that changed after the last-try lookup and
+# meanings batch 14, judged in context by AI judges (not a native speaker); the other cards keep their earlier
+# verdict. Then 150 cards whose meaning comes only from the last try (no nukta, no final virama), sampled from
+# all three sets, judged for "other word" errors. plan/research/v219-card-quality.md. Words only.
+# set	word	previous	count	flag	verdict
+held	ଚେକ୍	ଯାଦବଙ୍କୁ	4	ok	ok
+held	ଓଡ଼ିଶାର	ଦିନ	3	ok	ok
+held	ଆବିର୍ଭାବ	ଶିବିରର	3	ok	ok
+held	ହସି	କରିସ୍ମା	2	ok	ok
+held	ଜଗତଜନନୀ	ରୂପରେ	2	ok	ok
+held	ପେପର୍		2	ok	ok
+held	ଇଣ୍ଟେଲିଜେନ୍ସ	ଆର୍ଟିଫିସିଆଲ୍	2	ok	ok
+held	କାରଣଦର୍ଶାଅ	ରିଫାଇନାରୀକୁ	2	parts	weak
+held	ଆର୍ଯ୍ୟ	ପାଇଁ	2	ok	ok
+held	ଓପନର	ଅନ୍ୟତମ	2	ok	ok
+held	ଫୁଟିଲା	ବିହାରରେ	2	ok	ok
+held	ଫରହାନ୍‌	ସାହିବଜାଦା	2	ok	ok
+held	ରେକର୍ଡକୁ	ଟ୍ବେଣ୍ଟି୨୦	2	ok	ok
+held	ନିର୍ଭରଯୋଗ୍ୟ	ଶତପ୍ରତିଶତ	2	ok	ok
+held	ବ୍ୟାଙ୍କମାନେ	କେନ୍ଦ୍ରୀୟ	2	ok	ok
+held	ବଖାଣିଲା	ସତ	1	ok	ok
+held	ହରିୟାଣାର	ତେବେ	1	ok	ok
+held	ଚାଟ	ଜୋହରଙ୍କ	1	ok	ok
+held	ଜିଣିଛନ୍ତି	ମନ	1	ok	ok
+held	ବ୍ୟାଗ	ସେମାନଙ୍କ	1	ok	ok
+held	ଇଣ୍ଡଷ୍ଟ୍ରିରେ	ଫିଲ୍ମ	1	ok	ok
+held	ନିକୋବର	ଓ	1	ok	ok
+held	ଦ୍ୱୀପପୁଞ୍ଜ	ନିକୋବର	1	ok	ok
+held	ହିମାଚଳ	ଥିବା	1	ok	ok
+held	କଶ୍ମୀର	ଜମ୍ମୁ	1	ok	ok
+held	ଷଷ୍ଠୀ	ଆଜି	1	ok	ok
+held	ନଅଟି	ଧରି	1	ok	ok
+held	ଶଦ୍ଦ	କାତ୍ୟାୟନୀ	1	ok	ocr
+held	ଆରଏସଏସ	ବିଜେପି	1	parts	wrong
+held	ନିଆଯାଉନାହିଁ	ଆକ୍ସନ	1	parts	wrong
+held	ଅନିୟମିତତାକୁ	କରିଛନ୍ତି	1	ok	ok
+held	ପଟେଲ୍	ସଚିବାଳୟ	1	ok	ok
+held	ପଡ଼ିଆରେ	ବୁରାଡ଼ି	1	ok	ok
+held	କକ୍ରୋଚ	ଦିଆଯିବ	1	ok	ok
+held	ଫୁଡ୍	ଫାଷ୍ଟ	1	ok	ok
+held	ଚଲାଇଥିଲେ	ଗାଡ଼ି	1	ok	ok
+held	ଚଲାଇ	ଗାଡ଼ି	1	ok	ok
+held	ଡକ୍ୟୁମେଣ୍ଟ୍	ଏକ	1	ok	ok
+held	ଉଗ୍ରବାଦୀ	ଏବଂ	1	parts	wrong
+held	ଗମ୍ଭୀରତାକୁ	ଧମକର	1	ok	ok
+held	ଆଦାନପ୍ରଦାନ	ତୁରନ୍ତ	1	ok	ok
+held	ଗଙ୍ଗା		1	ok	ok
+held	ଗଙ୍ଗାରେ	କହିଛନ୍ତି	1	ok	ok
+held	ଦୁର୍ନୀତିଗ୍ରସ୍ତ	କରିବା	1	ok	ok
+held	ଫଳସ୍ୱରୂପ	ନାହିଁ	1	ok	ok
+held	ମର୍ମାହତ	ଯୋଗୁଁ	1	ok	ok
+held	ଓଡ଼ିଶାରେ		1	ok	ok
+held	ବେଖାତିର	ନିୟମକୁ	1	ok	ok
+held	ସର୍ବଶେଷ	ରିଫାଇନାରୀର	1	parts	weak
+held	ନିର୍ମାଣାଧୀନ	ନିର୍ମିତ	1	ok	ok
+held	ନମିଳିଲେ	ଉତ୍ତର	1	ok	ok
+held	ଚୌଧୁରୀଙ୍କ	ଗୌରବ	1	ok	ok
+held	ସ୍କୋରରେ	କମ	1	ok	ok
+held	ଦମ	ସାମାନ୍ୟ	1	ok	ok
+held	ବୋଲରଙ୍କୁ	ଗୁଜରାଟର	1	ok	ok
+held	ବାଳକାଟି		1	ok	ok
+held	ପାଟଣାଗଡ଼	ହୋଇଛି	1	ok	ok
+held	ପକେଟ୍	ଆପଣଙ୍କ	1	ok	ok
+held	ସୂଚନାଥାଉକି	ହୋଇଛି	1	ok	ok
+held	ନିବାସ	ନୀଳକଣ୍ଠେଶ୍ୱର	1	ok	ok
+held	ବୁଦ୍ଧ	ଏଥିସହିତ	1	ok	ok
+held	ରନ୍ଧନ	ଏବଂ	1	ok	ok
+held	ଶିଶୁକନ୍ୟାକୁ	ବର୍ଷର	1	ok	ok
+held	ଆଜ୍		1	ok	weak
+held	ଫ୍ଲାଟ	କହିବାନୁଯାୟୀ	1	ok	ok
+held	ପଛର	ଘଟଣା	1	ok	ok
+held	ପରିସରଭୁକ୍ତ	ତଦନ୍ତ	1	ok	ok
+held	ଫୁଟିବା	ବୋମା	1	ok	ok
+held	ଦୌଡିଥିଲେ	ତେଣେ	1	ok	ok
+held	ପୂର୍ଣ୍ଣକାଳୀନ	ଆଇସିସି	1	ok	ok
+held	ଖଟେଇ	ଚିକୁନ	1	ok	ok
+held	ଗତିବିଧି	ନେତାଙ୍କ	1	ok	ok
+held	ନେତ୍ରୀମାନେ	ଓ	1	ok	ok
+held	ବେ	ପାଇ	1	ok	ocr
+held	ପଛ	ରାଜାଙ୍କୁ	1	ok	ok
+held	ସଂଗ୍ରହକାରୀ	ରନ	1	ok	ok
+held	ମିଲ୍‌ଟନ୍	ଅର୍ଥନୀତିଜ୍ଞ	1	ok	ok
+held	ଜର୍ମାନ୍	ମହାନ	1	ok	ok
+held	ଆୟୁଧ	ମୁଖ୍ୟ	1	ok	ok
+held	ତଳୁ	ହୋଇଥାଏ	1	ok	ok
+held	ଏହାଠାରୁ	ହାର	1	ok	ok
+held	ଯଥାସମ୍ଭବ	ହାରକୁ	1	ok	ok
+held	ବିଶୁଦ୍ଧ	ତେଣୁ	1	ok	ok
+held	ଉତ୍କର୍ଷ	ବୌଦ୍ଧିକ	1	ok	ok
+held	ଅଭିଯୋଗକାରୀଙ୍କ	ହୋଇଥିଲା	1	ok	ok
+held	ପ୍ରୋଜେକ୍ଟସ	ମୁରଲୀ	1	ok	ok
+held	ଜେଲଦଣ୍ଡ	ମାସ	1	ok	ok
+held	ମାର୍ଗଦର୍ଶନ	କିଶୋରୀଙ୍କୁ	1	ok	ok
+held	ବ୍ରିଟେନ୍	କରିଥିଲା	1	ok	ok
+held	ନିର୍ଭରଶୀଳତା	ଏହି	1	ok	ok
+held	ବ୍ରିଟିଶ୍	ଲକ୍ଷ୍ୟରେ	1	ok	ok
+held	ସ୍ୱଦେଶୀ	ଅଞ୍ଚଳରେ	1	ok	ok
+lasttry	ଇଲେକ୍ସନ	ହୋଇଥିବା	1	ok	ok
+lasttry	ରେସଲର	ଏହି	1	ok	ok
+lasttry	ପ୍ରେସର୍	ଏକ	1	ok	ok
+lasttry	ଫରହାନ୍‌	ସାହିବଜାଦା	2	ok	ok
+lasttry	ଓଡିଶାବାସୀ	ପ୍ରତି	1	ok	ok
+lasttry	ରିଲ	କିଏ	1	ok	ok
+lasttry	ଲେନ	ଅବକାଶ	1	ok	ok
+lasttry	ହକ		1	ok	ocr
+lasttry	ଫାଇଟର୍	ଜଏଣ୍ଟ	1	ok	weak
+lasttry	ଗାଡ଼ିକୁ		3	ok	ok
+lasttry	ଅଢେଇ	ବାଢିଛନ୍ତି	1	ok	ok
+lasttry	ରାସ୍ତାକଡରେ	ପରେ	1	ok	ok
+lasttry	କ୍ରିକେଟର୍‌	ଭାରତୀୟ	1	ok	ok
+lasttry	ହ୍ୟୁମାନ୍	କରିଛନ୍ତି	1	ok	ok
+lasttry	ଗାଡ଼ିରେ	କେତେକ	1	ok	ok
+lasttry	ଡଲଫିନ	ନଦୀ	1	ok	ok
+lasttry	ଆଥଲେଟିକ୍	ବିଶ୍ୱବିଦ୍ୟାଳୟର	1	ok	ok
+lasttry	ଭଗବାନ୍‌	ନୁହେଁ	1	ok	ok
+lasttry	ଚେକ୍	ନୂଆଦିଲ୍ଲୀ	4	ok	ok
+lasttry	ସେଗୁଡ଼ିକ	ଜିମ୍	1	ok	ok
+lasttry	ପିସ୍ତଲ୍		1	ok	ok
+lasttry	ବକ୍	ପଟ୍ଟାମୁଣ୍ଡାଇ	1	ok	ocr
+lasttry	ଡ଼ି	କୋଠାକୁ	1	ok	ocr
+lasttry	ଲୋଡ଼ିଛନ୍ତି	ମୁହଁ	2	ok	ok
+lasttry	ଇଞ୍ଜେକ୍ସନ୍	କ୍ଷେତ୍ରରେ	1	ok	ok
+lasttry	ପଡିଛି	ଭାଗରେ	1	ok	ok
+lasttry	ବଢ଼ୁଥିବା	ବୟସ	4	ok	ok
+lasttry	ପ୍ଲେସ୍	କନ୍ନଡ	1	ok	ok
+lasttry	ମୁସ୍କିଲ୍	କହିବା	1	ok	ok
+lasttry	ଜୋଶ୍‌	ଏଜ୍‌ଙ୍କର	1	ok	ok
+lasttry	ଓପନର	ଅନ୍ୟତମ	2	ok	ok
+lasttry	ତାମିଲ୍‌	ରହିଛି	1	ok	ok
+lasttry	ଅପିଲ୍	କଡ଼ା	1	ok	ok
+lasttry	ବିଲିୟନ୍		1	ok	ok
+lasttry	ପରମ୍	ତଥା	1	ok	wrong
+lasttry	ସର୍କୁଲାର୍‌	ତାରିଖର	1	ok	ok
+lasttry	ବଲିଉଡ଼ର	କରିବେ	1	ok	ok
+lasttry	ବିଏସ୍‌ଏଫ	ବା	1	ok	ok
+lasttry	ମେମୋରିଆଲ୍	ନେତାଜୀ	1	ok	ok
+lasttry	ପଢାଇବା	ଚାପ	1	ok	ocr
+lasttry	ଟେଲିଭିଜନ୍	ଅନେକ	1	ok	ok
+lasttry	ଅପଲୋଡ	ଭାବେ	1	ok	ok
+lasttry	ପଡ଼ିଆରେ	ମାରି	3	ok	ok
+lasttry	ନେଲସନ୍	ମିନିଟ୍	1	ok	ok
+lasttry	ମିଲ୍‌ଟନ୍	ଅର୍ଥନୀତିଜ୍ଞ	1	ok	ok
+lasttry	ଜିନ୍‌ପିଙ୍ଗ	ଶି	1	ok	ok
+lasttry	ଓଡ଼ିଶାର	ଭମିସ	5	ok	ok
+lasttry	ସେକେଣ୍ଡ୍‌		1	ok	ok
+lasttry	ପଡିଲା	ଯିବାକୁ	1	ok	ok
+lasttry	ଟେନିସ	ଓଡ଼ିଶା	1	ok	ok
+lasttry	ହେରୋଇନ୍‌	କେଜି	1	ok	ok
+lasttry	ଲଞ୍ଚ୍‌	ସ୍ମାର୍ଟ	1	ok	ok
+lasttry	ମୁନ୍	କଲମର	1	ok	ok
+lasttry	କ୍ୟାରିଅର୍	ଟେଷ୍ଟ	1	ok	ok
+lasttry	କ୍ୟାଡ଼ରର	ଜଜ୍	2	ok	ok
+lasttry	ସୁପରଭାଇଜର୍	ଟିକେଟ୍	1	ok	ok
+lasttry	ହର୍ମୁଜ୍	ଯୋଡ଼ୁଥିବା	1	ok	ok
+lasttry	ଡ଼ାକରା	ବାପା	1	ok	ok
+lasttry	କେକ	ବିସ୍କୁଟ	1	ok	ok
+lasttry	ଆଡାମ୍‌	ରେ	1	ok	ok
+lasttry	ଡଟ	ନେଲା	1	ok	ok
+lasttry	କମ୍ପାନୀଗୁଡ଼ିକର		2	ok	ok
+lasttry	ପାର୍ସଲ୍	ପଳ	1	ok	ok
+lasttry	ଯୋଡିବା	ଭୋଟରଙ୍କୁ	1	ok	ok
+lasttry	ହୋଟେଲ୍	ସରକାରଙ୍କୁ	1	ok	ok
+lasttry	ଝାରସୁଗୁଡାରେ	ମହାବିଦ୍ୟାଳୟ	1	ok	ok
+lasttry	ଏସଏସଆର୍‌	ପକ୍ଷରୁ	1	ok	ok
+lasttry	ସର୍ଭିସ୍‌	ସମସ୍ତ	1	ok	ok
+lasttry	ନ୍	ପ୍	1	ok	ocr
+lasttry	ବ୍ୟାଗ	ପ୍ଲାଷ୍ଟିକ	1	ok	ok
+lasttry	ଜେଡ	ସିଟି	1	ok	ok
+lasttry	ଏଜ		2	ok	ocr
+lasttry	ପିଡିଏସ	ଦାସ	1	ok	ok
+lasttry	ପଡିଛନ୍ତି	ମୁଖରେ	1	ok	ok
+lasttry	ଚଢ଼ି	ଉପରକୁ	1	ok	ok
+lasttry	ପ୍ରଫେସନାଲ୍‌	ଗ୍ଲୋବାଲ୍‌	1	ok	ok
+lasttry	ଏକଜୁଟ୍	ଜେନା	1	ok	ok
+lasttry	କମନ୍‌	ବାଳକ	1	ok	ok
+lasttry	ହୋଇପଡିଛି	ସଙ୍ଗଠନ	1	ok	ok
+lasttry	ଦମ	ସାମାନ୍ୟ	1	ok	ok
+lasttry	ହାଇଦ୍ରାବାଦ୍‌		1	ok	ok
+lasttry	ବିଡି	ସଭ୍ୟ	1	ok	wrong
+lasttry	ରୋଶନ୍	ହ୍ରିତିକ୍	1	ok	ok
+lasttry	କାଉନସିଲ	ପଣ୍ଡା	1	ok	ok
+lasttry	ଖୋଳତାଡ	ମଧ୍ୟ	1	ok	ok
+lasttry	ୟଶ୍‌	ଭୂମିକାରେ	1	ok	wrong
+lasttry	ମେଡାଲ୍‌	ଗୋଲ୍‌ଡ	1	ok	ok
+lasttry	ସାଉଥ	ବ୍ୟାଙ୍କ	1	ok	ok
+lasttry	ଡକ୍ୟୁମେଣ୍ଟ୍	ପରୀକ୍ଷା	1	ok	ok
+lasttry	ଜିତାପଟ୍	ପ୍ରାର୍ଥୀଙ୍କ	2	ok	ok
+lasttry	ପଡ଼ୁଛି	ପାଇଁ	2	ok	ok
+lasttry	ପକେଟ୍‌	ପୁଣି	1	ok	ok
+lasttry	ଆଇଫୋନ	ଏକ	1	ok	ok
+lasttry	ମୁସଲମାନ୍	ବିଶ୍ଵର	1	ok	ok
+lasttry	ଆମାଜନ୍‌	ସମୟରେ	1	ok	ok
+lasttry	କିଙ୍ଗ୍	ସ୍ଥିତ	1	ok	ok
+lasttry	ସିନିୟର୍	ଜଣେ	1	ok	ok
+lasttry	ପଢ଼ୁ	ଓ	1	ok	ok
+lasttry	ପେପର୍		2	ok	ok
+lasttry	ମାଟ୍ରିକ୍‌		1	ok	ok
+lasttry	ଅଶ୍ୱିନ	ସମ୍ପାଦକ	1	ok	ok
+lasttry	କକ୍ରୋଚ	ସତ୍ତ୍ୱେ	1	ok	ok
+lasttry	ଅର୍ବାନ୍	ଥିବା	1	ok	ok
+lasttry	ଅନ		3	ok	ok
+lasttry	ପଟେଲ୍	ସଚିବାଳୟ	1	ok	ok
+lasttry	ହର୍ମୁଜ୍‌	ଯେ	1	ok	ok
+lasttry	ଇଂଲିଶ୍‌	ପିଲେ	1	ok	ok
+lasttry	ଓଡ଼ିଆ		2	ok	ok
+lasttry	ଡ଼	ପୁତ୍ରୀ	1	ok	ok
+lasttry	ଚେକ୍‌	ଅନେକ	1	ok	ok
+lasttry	କ୍ରିକେଟର୍	ଭାରତୀୟ	1	ok	ok
+lasttry	ଗୁଡ଼ିକରେ	ବୁଥ୍	4	ok	ok
+lasttry	ଫୁଟେଜ	ସିସିଟିଭି	1	ok	ok
+lasttry	ନିଟ	ତାରିଖ	1	ok	ok
+lasttry	ତେଲ୍‌	ଦୁବାଇରୁ	1	ok	wrong
+lasttry	ସୁପ	ଦେଶଗୁଡ଼ିକ	1	ok	ocr
+lasttry	ମାରାଥନ	ଏକକାଳୀନ	1	ok	ok
+lasttry	କମ୍ପାନୀଗୁଡ଼ିକ	ଖଣି	2	ok	ok
+lasttry	କମିଶନର୍	ପାଇଁ	1	ok	ok
+lasttry	ଦାସ୍		1	ok	ok
+lasttry	ଲଣ୍ଡନ୍	ଅଫ୍	1	ok	ok
+lasttry	ବ୍ରିଟେନ୍	କରିଥିଲା	1	ok	ok
+lasttry	ଫୁଡ୍	ଫାଷ୍ଟ	1	ok	ok
+lasttry	ପ୍ରିମିୟର୍	ଟ୍ରି	1	ok	ok
+lasttry	ନିତିନ୍	ବିଚାରପତି	1	ok	ok
+lasttry	ସାହିଲ୍‌	ସହସଂପାଦକ	1	ok	ok
+lasttry	ହ୍ୱାଟ୍ସଆପ୍‌	ଯୁଗରେ	1	ok	ok
+lasttry	ମେସେଜ	କଂଗ୍ରାଚ୍ୟୁଲେସନ	1	ok	ok
+lasttry	ସିମ	ନାମରେ	1	ok	ok
+lasttry	ସଲାମ୍‌	କରୁଛନ୍ତି	1	ok	ok
+lasttry	ଓଡ଼ିଶାକୁ	ହେବ	1	ok	ok
+lasttry	ନୋଡାଲ୍	ତଥା	1	ok	ok
+lasttry	ଆସୋସିଏସନ	କ୍ଲିନ୍‌ଟେକ୍‌	1	ok	ok
+lasttry	ଟର୍ମିନାଲ୍		1	ok	ok
+lasttry	ବେଗମ୍	ଅଶ୍ୱିନ୍	1	ok	ok
+lasttry	ଆଜ୍		1	ok	ok
+lasttry	ଟ୍ରିଲିଅନ୍		1	ok	ok
+lasttry	ବେଡ	ତାଙ୍କୁ	1	ok	ok
+lasttry	ପ୍ଲସ	ୟୁଡିଆଇଏସ୍‌ଇ	1	ok	ok
+lasttry	ଏଲନ୍	ଗୁରୁତ୍ୱପୂର୍ଣ୍ଣ	1	ok	ok
+lasttry	ଜୋରଦାର୍	ପକ୍ଷରୁ	1	ok	ok
+lasttry	ବିରିଡି	ଜଗତସିଂହପୁର	1	ok	ok
+lasttry	ପୃଥକ୍	ପକ୍ଷକୁ	1	ok	ok
+lasttry	ରିଜିଓନାଲ	ଫରେନର୍ସ	1	ok	ok
+lasttry	ପବ୍ଲିକ	ସ୍ବତନ୍ତ୍ର	1	ok	ok
+lasttry	ସାବୁନ୍		1	ok	ok
+lasttry	ବିଡିକା	କୁମାର	1	ok	ok
+lasttry	ବନ୍	ନେସନ୍	1	ok	wrong
+lasttry	ସେଲିବ୍ରେସନ	ଫୁଟାଇ	1	ok	ok
+lasttry	ଏନ୍ଫୋର୍ସମେଣ୍ଟ୍	ଆଣ	1	ok	ok
