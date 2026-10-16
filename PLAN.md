@@ -261,6 +261,7 @@ Agents do not commit; the lead reviews, measures and commits.
 
 | Date | Change |
 |---|---|
+| 2026-10-16 | Mac lens: first build on the owner's Mac; fixed the main-actor start, the tesseract TSV output (Windows lens too) and the screen permission check; the lens opens and its dictionary loads. Owner testing (A-8). |
 | 2026-10-16 | V2.19 round 4: a last try without nukta or final virama for whole words (not compound parts); meanings batch 14 (1,998 rows); held set right 90.1 → 91.1%, misleading 1.5 → 1.2%. |
 | 2026-10-16 | V2.19 round 3: a consonant printed single after reph finds its meaning (kharca → kharcca); meanings batch 13 (1,973 rows from 16 ePaper pages read by the lens OCR); held set right 88.4 → 90.1%, misleading 1.9 → 1.5%; ePaper 80.7 → 90.5% ok. |
 | 2026-10-16 | V2.19 round 2: meanings batch 12 (1,756 rows from 200 news articles and the owner's ePaper page); held set right 85.0 → 88.4%, misleading 2.5 → 1.9%. 16 ePaper pages read with the lens OCR and audited (80.7% ok). |
