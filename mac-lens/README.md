@@ -38,6 +38,10 @@ cd mac-lens
 
 ## Use
 
+A full test plan, written as a prompt for an AI assistant that helps test on the Mac, is in
+`TESTING.md`.
+
+
 - The indigo bar with the Konark wheel: drag to move the frame. Its buttons: **Word**,
   **Line**, **Para** (sizes), **↻** read again, **✕** hide (show again from the menu bar).
 - Any edge or corner of the red-and-yellow border: drag to resize. Let go: it reads after
