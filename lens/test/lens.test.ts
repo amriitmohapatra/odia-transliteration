@@ -100,9 +100,9 @@ describe('describeWord: the lens card', () => {
   });
 
   it('gives no guessed meaning for a word that only begins like a headword', () => {
-    // samvaadikataa + ku: only the prefix samvaadika ("Logician" in 1930, "journalist" today)
-    // is a headword. Judged in context, such guesses were mostly wrong: no meaning instead.
-    const c = card('\u0B38\u0B3E\u0B2E\u0B4D\u0B2C\u0B3E\u0B26\u0B3F\u0B15\u0B24\u0B3E\u0B15\u0B41');
+    // Paporakis (a surname in the news): only its start paapa ("sin") is a headword.
+    // Judged in context, such guesses were mostly wrong: no meaning instead.
+    const c = card('\u0B2A\u0B3E\u0B2A\u0B4B\u0B30\u0B3E\u0B15\u0B3F\u0B38\u0B4D');
     expect(c.meanings).toEqual([]);
     expect(c.approximateHead).toBeNull();
   });

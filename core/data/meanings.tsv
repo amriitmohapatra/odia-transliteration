@@ -5734,3 +5734,1766 @@
 ପରିସଂଖ୍ୟାନ	statistics; data	statistics; data, figures		sanskrit	ai	
 ସିମ୍	SIM (card)	SIM, SIM card (mobile)		english	ai	
 ଅପସାରଣ	removal; abrogation	removal, taking away; abrogation, repeal (of a law or article)	ଅପ (away) + ସାରଣ (moving)	sanskrit	ai	
+# Batch 12 (2026-10-16): words of 200 news articles from 7 Odia news sites (Sambad,
+# Dharitri, Samaja, Odisha Bhaskar, Prameya, Odisha Reporter, Nandighosha) and of the
+# owner's Sambad ePaper page, picked where the lens card was missing, guessed or misleading
+# (V2.19); with 131 stems of case and verb forms. Written by 8 agents from their own
+# knowledge (contexts read only to pick the sense); every row reviewed by a separate agent
+# (9 wrong, 33 minor fixes; joiner variants, duplicates and rare typos skipped; caste and
+# occupation labels removed from surnames). No article text is stored here.
+ସାରଥି	charioteer; driver, guiding force	charioteer; driver; guide, the one who leads or steers (a change, a movement)		sanskrit	ai	X-ର ସାରଥି: the driving force of X.
+ରୂପାନ୍ତରର	of the transformation, of the change	of the transformation, of the change of form; of the conversion; of the translation or adaptation	ରୂପାନ୍ତର (transformation) + ର (of)	sanskrit	ai	
+ସାମ୍ବାଦିକତାର	of journalism	of journalism, journalism's	ସାମ୍ବାଦିକତା (journalism) + ର (of)	sanskrit	ai	
+ଦେୟଯୁକ୍ତ	paid, with a fee (not free)	paid, needing payment, with a fee or subscription (a paid e-paper, a paid service)	ଦେୟ (fee) + ଯୁକ୍ତ (with)	sanskrit	ai	
+ପେପରକୁ	to the paper; the paper (object)	to the paper; the newspaper, the e-paper (object)	ପେପର (paper) + କୁ (to)	english	ai	
+ପାଦେ	a step (one step)	a step, one step (as in 'one step further'); a foot's length	ପାଦ (foot, step) + ଏ (one)	sanskrit	ai	ଆଉ ପାଦେ ଆଗକୁ: one step further.
+ପ୍ରତିବଦ୍ଧ	committed (to), bound	committed, dedicated (to a cause, a goal); bound by a promise	ପ୍ରତି (towards) + ବଦ୍ଧ (bound)	sanskrit	ai	X ପାଇଁ ପ୍ରତିବଦ୍ଧ: committed to X.
+ସତ୍ୟନିଷ୍ଠ	truthful, devoted to truth	truthful, honest, devoted to the truth; factual (of reporting)	ସତ୍ୟ (truth) + ନିଷ୍ଠ (devoted)	sanskrit	ai	
+ସାମ୍ବାଦିକତାକୁ	to journalism; journalism (object)	to journalism; journalism (object)	ସାମ୍ବାଦିକତା (journalism) + କୁ (to)	sanskrit	ai	
+ପାଠକପାଠିକା	readers (men and women)	readers, male and female readers; dear readers (in a letter to readers)	ପାଠକ (reader, man) + ପାଠିକା (reader, woman)	sanskrit	ai	
+ଅଜଣା	unknown; unidentified	unknown, unfamiliar; unidentified (persons, a caller, a number)	ଅ (un-) + ଜଣା (known)	native	ai	
+ବ୍ୟାଙ୍କଗୁଡ଼ିକର	of the banks	of the banks, the banks'	ବ୍ୟାଙ୍କ (bank) + ଗୁଡ଼ିକର (plural, of)	english	ai	
+ହୁତି	Houthi (rebel group in Yemen)	Houthis, the Houthi movement (Ansar Allah), an armed rebel group in Yemen		name	ai	
+ମନ୍ତରରେ	at (Jantar) Mantar	at Jantar Mantar, the protest site in New Delhi	ମନ୍ତର (Mantar) + ରେ (in, at)	name	ai	
+ପଛୁଆ	backward (classes); lagging behind	backward (backward classes, backward areas); lagging behind; at the back	ପଛ (behind) + ଉଆ (-ward)	native	ai	
+ଯନ୍ତର	Jantar (in Jantar Mantar, Delhi)	Jantar, in Jantar Mantar, the old observatory and protest site in New Delhi		name	ai	Also spelt ଜନ୍ତର.
+ଆମେରିକାର	America's; of the USA	of America, the USA's; American	ଆମେରିକା (America) + ର (of)	name	ai	
+ୟେମେନର	of Yemen, Yemen's	of Yemen, Yemen's	ୟେମେନ (Yemen) + ର (of)	name	ai	
+ମ୍ୟାଚ୍‌ରେ	in the match	in the match, in the game	ମ୍ୟାଚ୍‌ (match) + ରେ (in)	english	ai	
+ନାନା	various, many kinds; Nana (name)	various, many kinds of, diverse; Nana, part of a name (as in Nana Patekar, actor); maternal grandfather (Hindi, spoken)			ai	
+ମୃତ୍ୟୁଦଣ୍ଡ	death sentence, capital punishment	death sentence, death penalty, capital punishment	ମୃତ୍ୟୁ (death) + ଦଣ୍ଡ (punishment)	sanskrit	ai	
+ଜନ୍ତର	Jantar (in Jantar Mantar, Delhi)	Jantar, in Jantar Mantar, the old observatory and protest site in New Delhi		name	ai	Also spelt ଯନ୍ତର.
+ପାର୍ବଣ	festival	festival, festive occasion (the festive season); a rite on new-moon and full-moon days (old)		sanskrit	ai	ପାର୍ବଣ ଋତୁ: festive season.
+ଏସଆଇ	SI, sub-inspector (police)	SI, sub-inspector of police (SI recruitment exam)		english	ai	
+ଫୋନ୍‌ର	of the phone, the phone's	of the phone, the phone's	ଫୋନ୍‌ (phone) + ର (of)	english	ai	
+ନନ୍ଦିଘୋଷ	Nandighosha, Lord Jagannath's chariot	Nandighosha, the chariot of Lord Jagannath in the Rath Yatra; name of an Odia news outlet; Arjuna's chariot (Mahabharata)		name	ai	
+ଡେସ୍କ	desk (news desk)	desk; news desk (of a newspaper or channel, in bylines)		english	ai	
+ବ୍ୟାଙ୍କଗୁଡ଼ିକ	banks	banks, the banks (plural)	ବ୍ୟାଙ୍କ (bank) + ଗୁଡ଼ିକ (plural)	english	ai	
+ରାଙ୍କାଙ୍କୁ	(to) Ranka (surname, respectful)	Ranka (surname) as object: to Ranka (respectful)	ରାଙ୍କା (Ranka) + ଙ୍କୁ (to, respectful)	name	ai	
+ଷ୍ଟାଣ୍ଡ	stand (bus stand; stand for)	stand (bus stand, taxi stand); stand, in English phrases (stand for)		english	ai	
+ପାଇପାରନ୍ତି	can get, may get (they)	can get, may get, may receive (they; or he/she, respectful)	ପାଇ (having got) + ପାରନ୍ତି (can, they)	native	ai	
+ବିବେଚନା	consideration; judgement	consideration, thinking over (with karibaa: to consider, to regard as); judgement, discretion		sanskrit	ai	ବିବେଚନା କରିବା: to consider, to regard.
+ନବରାତ୍ରି	Navratri (nine-night festival)	Navratri, the nine-night festival of the goddess Durga (autumn, before Dussehra)	ନବ (nine) + ରାତ୍ରି (night)	sanskrit	ai	
+ମାଇଗ୍ରେନ୍	migraine	migraine, a severe recurring headache		english	ai	
+ଆଫ୍ରିକାର	of Africa, Africa's	of Africa, Africa's	ଆଫ୍ରିକା (Africa) + ର (of)	name	ai	
+ଜ୍ୟୋତିଷୀୟ	astrological	astrological, according to astrology (astrological forecast)	ଜ୍ୟୋତିଷ (astrology) + ଈୟ (-al)	sanskrit	ai	
+ଭୁଶୁଡ଼ି	collapsing, having collapsed	having collapsed, caving in (with padibaa: to collapse: a roof, a building, a bridge)	ଭୁଶୁଡ଼ (collapse) + ଇ (having)	native	ai	ଭୁଶୁଡ଼ି ପଡ଼ିବା: to collapse.
+ମାଡ୍ରାସ	Madras, old name of Chennai	Madras, the old name of Chennai (Madras High Court, IIT Madras)		name	ai	
+ପରିବର୍ତ୍ତେ	instead of, in place of	instead of, in place of, rather than (after a word or a verbal noun)	ପରିବର୍ତ୍ତ (exchange) + ଏ (in)	sanskrit	ai	
+ଦୁର୍ଗାପୂଜା	Durga Puja (festival)	Durga Puja, the autumn festival of the goddess Durga	ଦୁର୍ଗା (goddess Durga) + ପୂଜା (worship)	sanskrit	ai	
+ଅଫିସିଆଲ୍	official	official (official channel, official website, official statement)		english	ai	
+କଲମର	of the pen	of the pen, the pen's	କଲମ (pen) + ର (of)	arabic	ai	
+ମୁସ୍କାନ	Muskan (female given name)	Muskan, a female given name; smile (Hindi, Urdu)		name	ai	
+କଲମ	pen	pen; writing, the pen of a writer or a judge (figurative)		arabic	ai	Came into Odia through Persian or Urdu.
+ଶତକ	century (100 runs; 100 years)	century: a hundred runs (cricket); a hundred years; a set of a hundred		sanskrit	ai	ଅର୍ଦ୍ଧଶତକ: half-century.
+ବିଶ୍ୱବ୍ୟାପୀ	worldwide, global	worldwide, global, across the world	ବିଶ୍ୱ (world) + ବ୍ୟାପୀ (spreading)	sanskrit	ai	
+ଅଜିଙ୍କ୍ୟ	Ajinkya (male given name)	Ajinkya, a male given name; invincible (Marathi)		name	ai	
+ମୁନ	point, tip (of a pen, a needle)	point, tip, nib (of a pen, a needle, a weapon)		native	ai	Also spelt ମୁନ୍.
+ସାହିଲ	Sahil (male given name)	Sahil, a male given name; shore (Urdu)		name	ai	
+ବ୍ୟକ୍ତ	expressed (with karibaa: to express)	expressed, stated (with karibaa: to express concern, grief, thanks); manifest, evident		sanskrit	ai	ବ୍ୟକ୍ତ କରିବା: to express.
+ଉନ୍ନୀତ	upgraded, promoted, raised	upgraded (a network, a hospital), promoted (to a higher post), raised, elevated	ଉତ୍ (up) + ନୀତ (led)	sanskrit	ai	
+ସାନା	Sanaa, capital of Yemen	Sanaa (Sana'a), the capital city of Yemen; Sana (female given name)		name	ai	
+ସାଢ଼େ	and a half (half past)	and a half: half past (an hour); plus a half (with numbers)		native	ai	ସାଢ଼େ ତିନି: three and a half.
+ଫାଉଣ୍ଟେନ	fountain (fountain pen)	fountain; fountain pen		english	ai	
+ପେନ	pen	pen (ball pen, fountain pen)		english	ai	
+ସର୍ଭେ	survey	survey (Survey of India; a survey of opinion or of land)		english	ai	
+ପ୍ରୀତି	love, fondness; Preeti (female name)	love, fondness, affection (for a person, a country); Preeti, a female given name		sanskrit	ai	
+ଦୃଶ୍ୟମ	Drishyam (film title)	Drishyam, title of an Indian film series (Hindi and Malayalam); seen, visible (Sanskrit)		name	ai	
+ଫିଲ୍ମଟି	the film	the film, the movie (that one)	ଫିଲ୍ମ (film) + ଟି (the)	english	ai	
+ବୁଝାମଣା	agreement, understanding	agreement, understanding, pact (between countries, parties); compromise		native	ai	
+ପ୍ରଦର୍ଶିତ	displayed, shown	displayed, shown, exhibited (with heba: to be displayed; screened, of a film)	ପ୍ର (forth) + ଦର୍ଶିତ (shown)	sanskrit	ai	
+ଡାଟା	data (mobile data)	data; mobile data, internet data (GB)		english	ai	
+ଦୈନନ୍ଦିନ	daily, everyday	daily, everyday, day-to-day (expenses, life)		sanskrit	ai	
+ଅସ୍ୱାଭାବିକ	unusual, abnormal; unnatural	unusual, abnormal, suspicious (an unusual transaction); unnatural (an unnatural death)	ଅ (un-) + ସ୍ୱାଭାବିକ (natural)	sanskrit	ai	
+ଋତୁରେ	in the season	in the season, during the season (festive season, monsoon)	ଋତୁ (season) + ରେ (in)	sanskrit	ai	
+ନିଜସ୍ୱ	own, one's own	own, one's own (own channel, own party); personal, private	ନିଜ (self) + ସ୍ୱ (own)	sanskrit	ai	
+ଉଡ଼ାଇବା	to fly, hoist; flying	to fly, hoist (a flag), fly (a kite, a drone); to blow away; to squander (money)	ଉଡ଼ା (make fly) + ଇବା (verbal noun)	native	ai	ପତାକା ଉଡ଼ାଇବା: to hoist a flag.
+ଇନଷ୍ଟିଚ୍ୟୁଟ୍	institute	institute (a research or educational institution)		english	ai	
+୬ଜି	6G (mobile network)	6G, the sixth-generation mobile network		english	ai	
+ବୋରା	Bora (surname)	Bora, a surname		name	ai	
+ଲୋକସେବା	public service	public service (Odisha Public Service Commission, OPSC); service to the people	ଲୋକ (people) + ସେବା (service)	sanskrit	ai	ଲୋକସେବା ଭବନ: the Odisha state secretariat.
+ୟେମେନ	Yemen (country)	Yemen, a country in the south of the Arabian Peninsula		name	ai	
+ପୃଥ୍ୱୀ	Prithvi (given name); the earth	Prithvi, a male given name (as in Prithvi Shaw, cricketer); the earth; Prithvi, a missile		name	ai	Also spelt ପୃଥ୍ବୀ.
+ନଭି	Navi (given name), as in Navi Pillay	Navi, a female given name (as in Navi Pillay)		name	ai	
+ଦିବ୍ୟା	Divya (female given name)	Divya, a female given name; divine, heavenly (feminine)		name	ai	
+ବିନିକା	Binika (town in Subarnapur district)	Binika, a town in Subarnapur district, Odisha		name	ai	
+କ୍ୟାମ୍ପ	camp	camp (nature camp, health camp, relief camp)		english	ai	
+ବଲ	ball (ball pen)	ball (ball pen; a cricket ball)		english	ai	
+ଆଡ଼କୁ	towards	towards, in the direction of; to the side of	ଆଡ଼ (side, direction) + କୁ (to)	native	ai	
+ମନ୍ତରକୁ	(to) Jantar Mantar	to Jantar Mantar (the Delhi protest site); Jantar Mantar (object)	ମନ୍ତର (Mantar) + କୁ (to)	name	ai	
+ନ୍ୟାୟିକ	judicial	judicial (judicial custody, judicial inquiry)	ନ୍ୟାୟ (justice) + ଇକ (-al)	sanskrit	ai	ନ୍ୟାୟିକ ହେପାଜତ: judicial custody.
+ଆୟୁକ୍ତ	commissioner	commissioner (Chief Election Commissioner, a municipal commissioner)		sanskrit	ai	
+ଗର୍ଭଧାରଣ	pregnancy, conceiving	pregnancy, conception, becoming pregnant	ଗର୍ଭ (womb) + ଧାରଣ (holding)	sanskrit	ai	
+ଆକ୍ସନ୍	action (strict measures)	action, strict measures (taken by an authority); action (film genre)		english	ai	
+ପରସ୍ପର	each other, mutually	each other, one another; mutual, mutually		sanskrit	ai	
+ଆମେରିକାରେ	in America, in the USA	in America, in the USA	ଆମେରିକା (America) + ରେ (in)	name	ai	
+ଶାନ୍ତିପୂର୍ଣ୍ଣ	peaceful	peaceful, calm (a peaceful protest, peaceful polling)	ଶାନ୍ତି (peace) + ପୂର୍ଣ୍ଣ (full)	sanskrit	ai	
+ମିଥୁନ	Gemini (zodiac sign)	Gemini, a zodiac sign (in horoscopes); a pair, couple; Mithun (male given name)		sanskrit	ai	
+କୁମ୍ଭ	Kumbh (Mela); pitcher; Aquarius (zodiac sign)	Kumbh Mela, the great pilgrimage fair; pitcher, ritual pot (purna kumbha); Aquarius, a zodiac sign (in horoscopes); the Odia month Kumbha (mid-February to mid-March)		sanskrit	ai	
+ସେବାୟତ	servitor (of the Puri Jagannath temple)	servitor, a hereditary temple servant (of Lord Jagannath at Puri, and of other temples)			ai	
+ରାଙ୍କା	Ranka (surname)	Ranka, a surname		name	ai	
+ନବରାତ୍ରିର	of Navratri	of Navratri, Navratri's (a day of Navratri)	ନବରାତ୍ରି (Navratri) + ର (of)	sanskrit	ai	
+ରାଜଯୋଗ	Raja yoga (lucky planet combination)	Raja yoga: in astrology, a planetary combination said to bring power and wealth; Raja yoga, a path of meditation	ରାଜ (royal) + ଯୋଗ (union, combination)	sanskrit	ai	
+ଜିଓର	Jio's, of Jio	of Jio, Jio's (mobile and internet company)	ଜିଓ (Jio) + ର (of)	name	ai	
+ଡେସିବଲ୍	decibel (dB)	decibel, dB, the unit of loudness of sound		english	ai	
+ଆପ୍ରେଣ୍ଟିସ୍	apprentice	apprentice; apprenticeship (apprentice posts)		english	ai	
+ସାମ୍ବିଧାନିକ	constitutional	constitutional (constitutional power, a constitutional post)	ସମ୍ବିଧାନ (constitution) + ଇକ (-al)	sanskrit	ai	
+ଏସ୍‌ଆଇଆର	SIR, special revision of the voter list	SIR, Special Intensive Revision of the electoral rolls (the voter list)		english	ai	
+ଫର	for (English, in names)	for, the English word in names and phrases (Centre for ...)		english	ai	
+ଏସଆଇଆର	SIR, special revision of the voter list	SIR, Special Intensive Revision of the electoral rolls (the voter list)		english	ai	
+ସୋଆ	SOA, Siksha 'O' Anusandhan university	SOA, Siksha 'O' Anusandhan, a deemed university in Bhubaneswar		name	ai	
+ସୋଆର	of SOA (the university)	of SOA, Siksha 'O' Anusandhan's	ସୋଆ (SOA) + ର (of)	name	ai	
+ଯୁବରାଜ	Yuvraj (given name); crown prince	Yuvraj, a male given name; crown prince, heir to the throne	ଯୁବ (young) + ରାଜ (king)	name	ai	
+ବିଏସ୍‌	BS (Bharat Stage emission norm)	BS, Bharat Stage, India's vehicle emission norms (BS-6, BS-7); BS in other abbreviations		english	ai	
+ଦ୍ୱାରସ୍ଥ	approached (with heba: to approach)	approached, at the door of (with heba: to approach an official or a court for help)	ଦ୍ୱାର (door) + ସ୍ଥ (standing at)	sanskrit	ai	X-ଙ୍କ ଦ୍ୱାରସ୍ଥ ହେବା: to approach X.
+ଦୁର୍ବ୍ୟବହାର	misbehaviour, ill-treatment; abuse	misbehaviour, ill-treatment, rude conduct; misuse, abuse (of power, of a law)	ଦୁଃ (bad) + ବ୍ୟବହାର (behaviour)	sanskrit	ai	
+ମନ୍ତର	Mantar (in Jantar Mantar, Delhi)	Mantar, in Jantar Mantar, the old observatory and protest site in New Delhi; mantra, charm (spoken)		name	ai	
+ଅରୁଣାଚଳ	Arunachal (Pradesh), Indian state	Arunachal Pradesh, a state in north-east India		name	ai	
+ଏଜ୍‌	Edge (wrestler's ring name); edge	Edge, the ring name of a WWE wrestler; edge (English)		name	ai	
+ଚୋରା	smuggled, illicit; secret	illicit, smuggled (with chalaana: smuggling); secret, hidden; stolen		native	ai	ଚୋରା ଚାଲାଣ: smuggling.
+ଯୁତି	conjunction (of planets)	conjunction, a meeting of planets in one sign (astrology); union, joining		sanskrit	ai	
+ବଢ଼ାଇବା	to increase, raise; increasing	to increase, raise, expand (business, prices); to extend (a deadline); to grow (hair, a plant)	ବଢ଼ା (make grow) + ଇବା (verbal noun)	native	ai	
+ପାଟେକରଙ୍କ	Patekar's (surname, respectful)	of Patekar (surname, respectful), as in Nana Patekar, actor	ପାଟେକର (Patekar) + ଙ୍କ (of, respectful)	name	ai	
+ତନୁଶ୍ରୀ	Tanushree (female given name)	Tanushree, a female given name (as in Tanushree Dutta, actress)		name	ai	
+ଅନ୍ତ୍ୟୋଦୟ	Antyodaya (uplift of the poorest)	Antyodaya, uplift of the poorest; name of welfare schemes (Antyodaya Anna Yojana)	ଅନ୍ତ୍ୟ (last) + ଉଦୟ (rise)	sanskrit	ai	
+ସ୍ବାକ୍ଷର	signature; signed (with heba)	signature; signed (with heba: to be signed: a pact, a deal)		sanskrit	ai	Also spelt ସ୍ୱାକ୍ଷର.
+ପାରସ୍ପରିକ	mutual	mutual, reciprocal, bilateral	ପରସ୍ପର (each other) + ଇକ (-al)	sanskrit	ai	
+ଚିନ୍ତାଧାରାକୁ	thinking, ideas (object)	thinking, ideas, way of thought (object); to the thinking	ଚିନ୍ତାଧାରା (thinking) + କୁ (to)	sanskrit	ai	
+ଇଜିପ୍ଟ୍‌	Egypt (country)	Egypt, a country in north-east Africa		name	ai	
+ମିଲବେନ	Millben (surname)	Millben, a surname (as in Mary Millben, American singer)		name	ai	
+ବ୍ରତ	religious vow, fast (observance)	religious vow, fast, ritual observance (the Navratri fast); a vow, a resolve		sanskrit	ai	
+ଲିଷ୍ଟ	list	list (shopping list, contact list, a list of names)		english	ai	
+ଝଟକା	shock, jolt, setback	shock, jolt, setback (a price rise, a defeat); jerk		hindi	ai	Also spelt ଝଟ୍‌କା.
+ରଶ୍ମିକା	Rashmika (female given name)	Rashmika, a female given name (as in Rashmika Mandanna, actress)		name	ai	
+ଠକମାନେ	fraudsters, cheats	fraudsters, cheats, swindlers (cyber fraudsters)	ଠକ (cheat) + ମାନେ (plural)	native	ai	
+ମେସେଜ୍‌	message (SMS, chat)	message, text message, SMS		english	ai	
+ଚ୍ୟାନେଲ୍	channel (TV, YouTube)	channel (TV channel, YouTube channel); channel, route		english	ai	
+ବୃଷ	Taurus (zodiac sign); bull	Taurus, a zodiac sign (in horoscopes); bull, ox		sanskrit	ai	
+ବାସି	stale (food); leftover	stale, not fresh (food, sweets); left over from the day before		native	ai	
+୫ଜି	5G (mobile network)	5G, the fifth-generation mobile network		english	ai	
+ଫୁସଫୁସ୍	lungs	lungs, lung (lung cancer)			ai	Also spelt ଫୁସଫୁସ.
+କ୍ୟାନ୍ସର	cancer (disease)	cancer (lung cancer, breast cancer)		english	ai	
+ତଟ	coast, shore	coast, shore, bank (East Coast Railway; a river bank)		sanskrit	ai	ପୂର୍ବ ତଟ ରେଳପଥ: East Coast Railway.
+ସ୍ୱୀକୃତିପ୍ରାପ୍ତ	recognised (university, party)	recognised, accredited (a recognised university, a recognised political party)	ସ୍ୱୀକୃତି (recognition) + ପ୍ରାପ୍ତ (received)	sanskrit	ai	
+ବ୍ରେଷ୍ଟ	breast (breast cancer)	breast (as in breast cancer)		english	ai	
+ବ୍ରତରେ	in the fast, during the vow	during a religious fast or vow; in the observance	ବ୍ରତ (vow, fast) + ରେ (in)	sanskrit	ai	
+ଶ୍ରେୟସ	Shreyas (male given name)	Shreyas, a male given name (as in Shreyas Iyer, cricketer); good, welfare (Sanskrit)		name	ai	
+ୱେଷ୍ଟଇଣ୍ଡିଜ୍‌ର	West Indies', of the West Indies	of the West Indies (team)	ୱେଷ୍ଟଇଣ୍ଡିଜ୍‌ (West Indies) + ର (of)	name	ai	
+ଲଙ୍ଗ୍	long (long Covid)	long, the English word (long Covid, long video)		english	ai	
+ଭବିଷ୍ୟବାଣୀ	prophecy, prediction	prophecy, prediction (of the future)	ଭବିଷ୍ୟ (future) + ବାଣୀ (word, saying)	sanskrit	ai	
+ବଡ଼ଧରଣର	big, large-scale, major	big, large-scale, major (a major opportunity, a big conspiracy)	ବଡ଼ଧରଣ (large-scale) + ର (of)	native	ai	
+ହୁତିମାନଙ୍କ	of the Houthis; the Houthis'	of the Houthis (Yemen rebels); the Houthis (object)	ହୁତି (Houthi) + ମାନଙ୍କ (of, plural)	name	ai	
+ଇରାନୀ	Iranian	Iranian, of Iran; an Iranian; Irani (surname)	ଇରାନ (Iran) + ଈ (-ian)	name	ai	
+ଅବତରଣ	landing (of an aircraft)	landing (of an aircraft, a spacecraft); descent; incarnation (old)		sanskrit	ai	
+ଆକୃତି	shape, form; Akriti (female name)	shape, form, size; Akriti, a female given name		sanskrit	ai	
+ସିଲିକନ	silicon (in names: Silicon Valley)	silicon (the element; in company names, Silicon Valley)		english	ai	
+ରାଜପାଲଙ୍କ	Rajpal's (given name, respectful)	of Rajpal (given name or surname, respectful)	ରାଜପାଲ (Rajpal) + ଙ୍କ (of, respectful)	name	ai	
+ନରସଂହାର	massacre, genocide	massacre, mass killing, genocide	ନର (man) + ସଂହାର (destruction)	sanskrit	ai	
+ଯାଂଚ	check, verification	check, verification, scrutiny (with karibaa: to check, to verify)			ai	Also spelt ଯାଞ୍ଚ.
+ବନ୍ୟପ୍ରାଣୀ	wildlife, wild animals	wildlife, wild animals	ବନ୍ୟ (wild) + ପ୍ରାଣୀ (animal)	sanskrit	ai	
+ଇମ୍ପାକ୍ଟ	impact	impact (research impact, an impact list)		english	ai	
+ଅଙ୍କିତା	Ankita (female given name)	Ankita, a female given name; marked, drawn (literary)		name	ai	
+ଖେଳପଡ଼ିଆ	playground, sports ground	playground, sports ground, playfield	ଖେଳ (play) + ପଡ଼ିଆ (open ground)	native	ai	
+ଟି୨୦	T20 (cricket match format)	T20, Twenty20, a 20-over cricket match format		english	ai	
+ବୁଦ୍ଧାଦିତ୍ୟ	Budhaditya (Sun-Mercury yoga)	Budhaditya yoga: in astrology, the Sun and Mercury in one sign, said to bring success	ବୁଧ (Mercury) + ଆଦିତ୍ୟ (Sun)	sanskrit	ai	
+ବଜେଟର	of the budget	of the budget, the budget's	ବଜେଟ (budget) + ର (of)	english	ai	
+ସିଲାଇ	sewing, stitching	sewing, stitching, tailoring		hindi	ai	
+ଟିକରପଡ଼ା	Tikarpada (in Satkosia, Angul district)	Tikarpada, a place in Satkosia, Angul district, Odisha (nature camp)		name	ai	
+ନେଚର୍‌	nature (nature camp)	nature (as in nature camp)		english	ai	
+ଦିନକ	a day, one day (a day later)	a day, one day (a day later, in a single day); for a day	ଦିନ (day) + କ (one)	sanskrit	ai	
+ଯୁଗ୍ମ	joint (joint secretary); pair	joint (joint secretary, joint director); pair, couple; twin		sanskrit	ai	
+ଦିନିଆ	-day (five-day); lasting days	lasting so many days (a five-day remand, a one-day match); daily	ଦିନ (day) + ଇଆ (of, lasting)	native	ai	
+କୂଟନୈତିକ	diplomatic	diplomatic (diplomatic level, diplomatic relations)	କୂଟନୀତି (diplomacy) + ଇକ (-ic)	sanskrit	ai	
+କମେଣ୍ଟ	comment; a lewd remark (spoken)	comment, remark (on social media); a lewd remark, teasing (spoken: comment maribaa)		english	ai	
+ଦାରିଙ୍ଗବାଡ଼ି	Daringbadi (hill town in Kandhamal)	Daringbadi, a hill town in Kandhamal district, Odisha		name	ai	
+ବୃହସ୍ପତି	Jupiter (planet, astrology); Thursday	Jupiter, the planet (in astrology; Brihaspati, the guru of the gods); Thursday (short)		sanskrit	ai	
+ଯୋଜନାବଦ୍ଧ	planned, systematic	planned, systematic, well-organised (in a planned way)	ଯୋଜନା (plan) + ବଦ୍ଧ (bound)	sanskrit	ai	
+ତରବରିଆ	hasty, hurried	hasty, hurried, in a rush	ତରବର (hurry) + ଇଆ (-ed)	native	ai	
+ଯୋଗାଇଦେବା	to provide, supply; providing	to provide, supply, make available (houses, services)	ଯୋଗାଇ (supplying) + ଦେବା (to give)	native	ai	
+ରଣନୈତିକ	strategic	strategic (a strategic defence pact, strategic thinking)	ରଣନୀତି (strategy) + ଇକ (-ic)	sanskrit	ai	
+ମୁସ୍‌ଲିମ୍‌	Muslim	Muslim, a follower of Islam; Muslim (countries)		arabic	ai	Also spelt ମୁସଲିମ.
+ଇରାନ୍‌	Iran (country)	Iran, a country in West Asia		name	ai	Also spelt ଇରାନ.
+ମେରି	Mary (given name)	Mary, a female given name (as in Mary Millben, singer); the Virgin Mary		name	ai	
+ଇସଲାମ	Islam (religion)	Islam, the religion		arabic	ai	
+ଧୈର୍ଯ୍ୟ	patience	patience, composure, endurance		sanskrit	ai	
+ଚରମ	extreme, utmost; final	extreme, utmost (an extreme crisis); final, last (the ultimate stage)		sanskrit	ai	
+କଲ୍‌ରେ	in calls; on a call	in phone calls; on a call	କଲ୍‌ (call) + ରେ (in)	english	ai	
+କଲିଂ	calling (as in calling name)	calling, the English word (calling name presentation)		english	ai	
+କୋଟିର	of (so many) crore	of crore: a film of 500 crore, a scheme worth crores	କୋଟି (crore) + ର (of)	sanskrit	ai	
+ଅର୍ପିତା	Arpita (female given name)	Arpita, a female given name; offered, dedicated (literary)		name	ai	
+ମଧ୍ୟବିତ୍ତ	middle-class	middle-class; the middle class	ମଧ୍ୟ (middle) + ବିତ୍ତ (wealth)	sanskrit	ai	
+ପାଟିତୁଣ୍ଡ	shouting, quarrel, uproar	shouting, a loud quarrel, uproar (with karibaa: to shout, to protest loudly)	ପାଟି (mouth, shout) + ତୁଣ୍ଡ (mouth)	native	ai	
+ଲାଗେ	seems, feels; it takes (cost, time)	seems, feels (like); it takes, costs (time, money); is needed (present, it)	ଲାଗ (seem, take) + ଏ (present, it)	native	ai	
+ମାତ୍ରେ	as soon as (after a verbal noun)	as soon as, the moment (after a verbal noun: as soon as one becomes); merely by	ମାତ୍ର (only) + ଏ (at)	sanskrit	ai	
+ଶେୟାର	share (a post; a stock share)	share (a post on social media); share, stock (share market)		english	ai	Also spelt ସେୟାର.
+ବ୍ରାଣ୍ଡ୍‌	brand	brand (branded goods, a brand name)		english	ai	Also spelt ବ୍ରାଣ୍ଡ.
+ତତ୍କାଳୀନ	then, of that time	then, of that time, the then (the then king, the then government)	ତତ୍ (that) + କାଳୀନ (of the time)	sanskrit	ai	
+ସମବାୟ	cooperative	cooperative (cooperative movement, cooperative bank, cooperative society)		sanskrit	ai	
+ଦେଖାଦେଇଥିଲା	appeared, arose, broke out (it, past)	appeared, arose, broke out, was seen (past, it: discontent, a disease, a problem)	ଦେଖା (appearance) + ଦେଇଥିଲା (had given)	native	ai	
+ଆକାଉଣ୍ଟରୁ	from the account	from the (bank) account	ଆକାଉଣ୍ଟ (account) + ରୁ (from)	english	ai	
+ଲେଖି	writing, having written	having written, by writing; written (with deba: to write down)	ଲେଖ (write) + ଇ (having)	native	ai	
+କରାଇବା	to get done, make someone do; getting done	to get (something) done, to have or make someone do it (install, treat, arrange); causing to do	କରା (cause to do) + ଇବା (verbal noun)	native	ai	
+ଇ	e- (electronic), as in e-commerce	e- (electronic), the English prefix written apart: e-commerce, e-mail, e-paper; E, the letter; the Odia vowel letter i		english	ai	The hyphen splits it from the next word.
+ରିସର୍ଚ୍ଚର	of research; Research's (in names)	of research; of a firm whose name ends in Research	ରିସର୍ଚ୍ଚ (research) + ର (of)	english	ai	
+ପୋର୍ଟାଲରେ	on the portal (website)	on the portal, on the (government) website	ପୋର୍ଟାଲ (portal) + ରେ (on, in)	english	ai	
+ପୁଜା	worship, puja (festival)	worship, puja; festival worship (Durga Puja); Puja (female given name)		sanskrit	ai	Also spelt ପୂଜା (the standard spelling).
+ଅନ୍	on (a setting switched on)	on, the English word (turn on a setting, switch on)		english	ai	ଅନ୍ କରିବା: to turn on.
+ସେଟିଂ	setting (phone, app)	setting, settings (of a phone, an app); setting up; fixing (spoken: a secret arrangement)		english	ai	
+ସରଳ	simple; plain, straightforward	simple, plain, easy; straightforward, honest (a simple person); a pine tree (old)		sanskrit	ai	
+ମୁଣ୍ଡବିନ୍ଧା	headache	headache	ମୁଣ୍ଡ (head) + ବିନ୍ଧା (piercing, ache)	native	ai	
+ଦ୍ରୁତଗାମୀ	speeding, fast-moving	speeding, fast-moving (a speeding bus, truck); express (train)	ଦ୍ରୁତ (fast) + ଗାମୀ (going)	sanskrit	ai	
+ପୌର	municipal, civic	municipal, civic, urban (municipal elections, a municipal body)		sanskrit	ai	ପୌର ନିର୍ବାଚନ: municipal elections.
+ଅଜିତ	Ajit (male given name); unconquered	Ajit, a male given name (as in Ajit Doval); unconquered, invincible		name	ai	
+ମୀନ	Pisces (zodiac sign); fish	Pisces, a zodiac sign (in horoscopes); fish (literary)		sanskrit	ai	
+କାର୍ଯ୍ୟକ୍ଷେତ୍ରରେ	at the workplace; in the field of work	at the workplace, at work; in one's field of work	କାର୍ଯ୍ୟକ୍ଷେତ୍ର (workplace) + ରେ (in, at)	sanskrit	ai	
+ଟାରିଫ୍	tariff (prices, rates)	tariff: rates, prices (mobile tariff); import duty (trade tariff)		english	ai	
+ଆଇପିଓ	IPO (initial public offering)	IPO, initial public offering of a company's shares		english	ai	
+ସ୍ପେଶାଲ୍	special	special (special executive magistrate, special train)		english	ai	
+ଡ୍ରମ୍	drum (container; musical)	drum: a barrel, a large container; a drum, the instrument		english	ai	
+କୋଟିକୋଟି	crores and crores; millions of	crores and crores, millions and millions of (people)	କୋଟି (crore) + କୋଟି (crore)	sanskrit	ai	
+ସଂସ୍ପର୍ଶରେ	in contact (with), exposed to	in contact with, exposed to (pollution, a disease); in touch with	ସଂସ୍ପର୍ଶ (contact) + ରେ (in)	sanskrit	ai	X-ର ସଂସ୍ପର୍ଶରେ ଆସିବା: to come in contact with X.
+ଆଚରଣ	behaviour, conduct	behaviour, conduct, manner; practice (of a rule, a religion)		sanskrit	ai	
+ନେତୃତ୍ୱାଧୀନ	led by, under the leadership of	led by, under the leadership of (after a name in -nka)	ନେତୃତ୍ୱ (leadership) + ଅଧୀନ (under)	sanskrit	ai	
+ଦେଖାଦେଲେ	if (it) appears; appeared (they)	if it appears, when it shows up (conditional); appeared, showed up (they; or he/she, respectful)	ଦେଖା (appearance) + ଦେଲେ (gave; if it gives)	native	ai	
+କେନ୍ଦ୍ରଶାସିତ	union territory (centrally ruled)	centrally administered: union territory (with anchala)	କେନ୍ଦ୍ର (Centre) + ଶାସିତ (ruled)	sanskrit	ai	କେନ୍ଦ୍ରଶାସିତ ଅଞ୍ଚଳ: union territory.
+ଆୟୋଗଙ୍କ	of the Commission (respectful)	of the Commission (the Election Commission etc.), the Commission's (respectful)	ଆୟୋଗ (commission) + ଙ୍କ (of, respectful)	sanskrit	ai	
+ୱେଷ୍ଟଇଣ୍ଡିଜ୍‌କୁ	to the West Indies; West Indies (object)	to the West Indies; the West Indies team (object)	ୱେଷ୍ଟଇଣ୍ଡିଜ୍‌ (West Indies) + କୁ (to)	name	ai	
+ସିରିଜ୍‌ରେ	in the series	in the series (a T20 series, a web series)	ସିରିଜ୍‌ (series) + ରେ (in)	english	ai	
+ବୋଲରମାନେ	bowlers (cricket)	bowlers (cricket), the bowlers	ବୋଲର (bowler) + ମାନେ (plural)	english	ai	
+ଇଣ୍ଟରନ୍ୟାସନାଲ୍‌ରେ	in internationals (T20 internationals)	in international matches (T20 internationals); in International (names)	ଇଣ୍ଟରନ୍ୟାସନାଲ୍‌ (international) + ରେ (in)	english	ai	
+କ୍ୟାଲେଣ୍ଡର	calendar	calendar (a calendar year)		english	ai	
+ଇନ୍ଦୋରରେ	in Indore	in Indore (a city in Madhya Pradesh)	ଇନ୍ଦୋର (Indore) + ରେ (in)	name	ai	
+ପାଣ୍ଡରା	Pandara (a place in Odisha)	Pandara, a place in Odisha (Pandara Durga Puja); grey, pale (old)		name	ai	?Probably the Pandara area of Bhubaneswar.
+ସ୍କର୍ପିଓ	Scorpio (SUV model)	Scorpio, a model of SUV car (Mahindra)		english	ai	
+ବୋରାଙ୍କ	Bora's (surname, respectful)	of Bora (surname, respectful)	ବୋରା (Bora) + ଙ୍କ (of, respectful)	name	ai	
+ସିଭିଲ୍	civil (civil engineering etc.)	civil (civil engineering, civil services, civil court)		english	ai	
+ଗାନ୍ଧି	Gandhi (surname)	Gandhi, a surname (Mahatma Gandhi; Rahul Gandhi)		name	ai	Also spelt ଗାନ୍ଧୀ.
+ସାଉଦୀ	Saudi (Saudi Arabia)	Saudi, of Saudi Arabia; Saudi Arabia		name	ai	Also spelt ସାଉଦି.
+ଭୌଗୋଳିକ	geographical	geographical, geographic	ଭୂଗୋଳ (geography) + ଇକ (-al)	sanskrit	ai	
+ତାଇଜ୍	Taiz (city and province in Yemen)	Taiz, a city and province in Yemen		name	ai	
+ଇସ୍ରାଏଲର	Israel's, of Israel	of Israel, Israel's	ଇସ୍ରାଏଲ (Israel) + ର (of)	name	ai	
+ଚାଲୁ	ongoing, in progress; running	ongoing, in progress, running (a process, a scheme); in working order		native	ai	ଚାଲୁ ରହିବା: to continue.
+ପଦାକୁ	out, into the open (with aasibaa)	out, into the open (with aasibaa: to come out, to come to light)	ପଦା (outside, open) + କୁ (to)	native	ai	ପଦାକୁ ଆସିବା: to come to light.
+ପ୍ରାଇଭେଟ	private (company)	private (private limited company, the private sector)		english	ai	
+ଅପରାଧିକ	criminal	criminal (a criminal case, a criminal angle, a criminal record)	ଅପରାଧ (crime) + ଇକ (-al)	sanskrit	ai	
+ଲିମିଟେଡ	limited (Ltd., in company names)	Limited, Ltd. (in company names)		english	ai	
+ଇଣ୍ଟରନ୍ୟାସନାଲ	international	international (in names: ... International Limited)		english	ai	
+ସମ୍	SUM (in SUM Hospital, Bhubaneswar)	SUM, in SUM Hospital, Bhubaneswar (of SOA university); sum (English)		name	ai	
+ବିକ୍ଷୋଭରେ	in the protest	in the protest, at the agitation	ବିକ୍ଷୋଭ (protest) + ରେ (in)	sanskrit	ai	
+ପିଲ୍ଲେଙ୍କ	Pillay's (surname, respectful)	of Pillay (surname, respectful), as in Navi Pillay	ପିଲ୍ଲେ (Pillay) + ଙ୍କ (of, respectful)	name	ai	
+ହେରୋଇନ	heroin (drug)	heroin, the drug		english	ai	
+ମିଲିୟନ	million	million (ten lakh)		english	ai	
+ଚଣ୍ଡିଖୋଲ	Chandikhol (town in Jajpur district)	Chandikhol, a town in Jajpur district, Odisha		name	ai	
+ଗବେଷକଙ୍କ	of researchers (respectful)	of the researcher(s), the researchers' (respectful)	ଗବେଷକ (researcher) + ଙ୍କ (of, respectful)	sanskrit	ai	
+ସାଇନ୍ସେସ୍	sciences (in names)	sciences, the English word in names (School of Pharmaceutical Sciences)		english	ai	
+ଭବନ	building; Bhawan (in names)	building, house; Bhawan, Bhavan (in names: Lok Seva Bhawan, Raj Bhavan)		sanskrit	ai	
+ମିତ୍ତଲ	Mittal (surname)	Mittal, a surname		name	ai	
+ବ୍ରଜମୋହନ	Brajmohan (male given name)	Brajmohan, a male given name; a name of Lord Krishna	ବ୍ରଜ (Braj) + ମୋହନ (charmer)	name	ai	
+ସିଦ୍ଧାର୍ଥ	Siddharth (male given name)	Siddharth, a male given name (also in names of colleges); Siddhartha, the Buddha's name		name	ai	
+ସବାହ୍	Sabah (given name)	Sabah, a given name		name	ai	
+ଗଜକେଶରୀ	Gajakesari yoga (astrology)	Gajakesari yoga: in astrology, a lucky combination of Jupiter and the Moon	ଗଜ (elephant) + କେଶରୀ (lion)	sanskrit	ai	
+ବୃହସ୍ପତିଙ୍କ	of Jupiter (planet, respectful)	of Jupiter (the planet in astrology, respectful); Brihaspati's	ବୃହସ୍ପତି (Jupiter) + ଙ୍କ (of, respectful)	sanskrit	ai	
+ଗ୍ରାମ୍ୟ	rural, village	rural, village (Odisha Gramya Bank, rural roads); rustic		sanskrit	ai	
+କମ୍ପାନିର	of the company	of the company, the company's	କମ୍ପାନି (company) + ର (of)	english	ai	
+ସାଈ	Sai (given name); Shai, as in Shai Hope	Sai, a given name; Sai Baba; Shai (in Shai Hope, cricketer)		name	ai	
+ଆରଏସ୍‌ଏସ୍‌ର	of the RSS	of the RSS, the Rashtriya Swayamsevak Sangh's	ଆରଏସ୍‌ଏସ୍‌ (RSS) + ର (of)	english	ai	
+ଆର୍ଥ୍ରାଇଟିସ୍	arthritis	arthritis, joint inflammation		english	ai	
+ଦାଦନ	migrant labour (hired with an advance)	migrant labour: workers taken to other states by agents after an advance payment; advance payment			ai	ଦାଦନ ଶ୍ରମିକ: migrant labourer.
+ବ୍ୟାଟର	batter (cricket)	batter, batsman (cricket)		english	ai	
+ଡିଏନ୍‌ଏ	DNA	DNA, the genetic material of cells		english	ai	
+ବିକ୍ରମ	Vikram (male given name); valour	Vikram, a male given name; valour, prowess		name	ai	
+ପ୍ରତିବାଦକାରୀଙ୍କ	of protesters; with protesters	of the protesters (respectful); the protesters (with saha: with the protesters)	ପ୍ରତିବାଦକାରୀ (protester) + ଙ୍କ (of, respectful)	sanskrit	ai	
+ଲଦାଖର	of Ladakh	of Ladakh (union territory)	ଲଦାଖ (Ladakh) + ର (of)	name	ai	
+ସେଠାକାର	of that place, there	of that place, from there, (the one) there	ସେଠା (there) + କାର (of)	native	ai	
+ରେସଲିଂ	wrestling	wrestling (WWE, pro wrestling)		english	ai	
+ରେସଲର୍‌	wrestler	wrestler		english	ai	
+ଚାମ୍ପିୟନ୍‌ସିପ୍‌	championship	championship, title		english	ai	
+ଉପଯୋଗ	use, usage	use, usage, utilisation (with karibaa: to use)		sanskrit	ai	
+ଜୈବିକ	organic; biological	organic (organic manure, organic farming); biological		sanskrit	ai	
+ଧନ	wealth, money	wealth, money, riches		sanskrit	ai	
+ବଦଳାଇବାକୁ	to change (it); for changing	to change, to switch (a job etc.); for changing (purpose)	ବଦଳାଇବା (to change) + କୁ (to)	native	ai	
+ଦତ୍ତା	Dutta (surname)	Dutta, a surname; given (feminine, literary)		name	ai	
+ମୋଟାମୋଟି	roughly, by and large, overall	roughly, approximately, by and large, overall	ମୋଟା (gross) + ମୋଟି (echo)	native	ai	
+ଜାତିଗତ	racial; caste-based	racial, ethnic (racial discrimination); caste-based (a caste census)	ଜାତି (caste, race) + ଗତ (related to)	sanskrit	ai	
+ଏସବିଆଇ	SBI (State Bank of India)	SBI, State Bank of India		english	ai	
+ରିଜର୍ଭ	reserve (Reserve Bank)	reserve (Reserve Bank of India, a reserve forest); reserved (a seat)		english	ai	
+ଗତିଶୀଳ	dynamic; speedy, moving	dynamic, moving, in motion; speedy (with karibaa: to speed up)	ଗତି (speed, motion) + ଶୀଳ (having)	sanskrit	ai	
+ମକ୍କା	Mecca (city in Saudi Arabia); maize	Mecca, the holy city of Islam in Saudi Arabia; maize, corn			ai	
+ଦୀର୍ଘକାଳୀନ	long-term	long-term, lasting a long time	ଦୀର୍ଘ (long) + କାଳୀନ (of time)	sanskrit	ai	
+କୋହଳ	flexible, lenient, soft	flexible, lenient, relaxed (a soft stand); soft, loose		native	ai	
+ଭୂମିକାକୁ	the role (object)	the role (object); to the role	ଭୂମିକା (role) + କୁ (to)	sanskrit	ai	
+ନିଜସ୍ବ	own, one's own	own, one's own; personal	ନିଜ (self) + ସ୍ବ (own)	sanskrit	ai	Also spelt ନିଜସ୍ୱ.
+ବ୍ୟାପାର	trade, business; affair	trade, business, commerce (foreign trade); affair, matter		sanskrit	ai	
+ବିଦ୍ରୋହୀଙ୍କ	of the rebels	of the rebels, the rebels' (respectful)	ବିଦ୍ରୋହୀ (rebel) + ଙ୍କ (of)	sanskrit	ai	
+ପଟୁ	from the side of; skilled	from the side of (after a noun); skilled, expert (literary)	ପଟ (side) + ଉ (from)		ai	ଭାରତ ପଟୁ: from India's side.
+ଅଘଟଣ	mishap, accident	mishap, accident, untoward incident	ଅ (un-) + ଘଟଣ (happening)	native	ai	
+ତ୍ୟାଗ	giving up, renouncing; sacrifice	giving up, leaving, renouncing (a religion, a post); sacrifice		sanskrit	ai	
+ଇନ୍ଦିରା	Indira (female given name)	Indira, a female given name (Indira Gandhi; in names of colleges, schemes); a name of the goddess Lakshmi		name	ai	
+ପଟେ	on one side, on the one hand	on one side, on the one hand (one side ... the other side)	ପଟ (side) + ଏ (on)		ai	ଗୋଟେ ପଟେ ... ଅନ୍ୟପଟେ: on one hand ... on the other.
+ସକାରାତ୍ମକ	positive	positive (an attitude, a result, an outlook)	ସକାର (affirmation) + ଆତ୍ମକ (-ive)	sanskrit	ai	
+ଫିଲ୍ମକୁ	the film (object); to the film	the film (object); to the film	ଫିଲ୍ମ (film) + କୁ (to)	english	ai	
+ରିଚାର୍ଜ	recharge (mobile plan)	recharge (of a mobile plan, a prepaid card)		english	ai	
+ବଢ଼ାଇବାକୁ	to increase, to take forward	to increase, to raise; to take forward (with aagaku); for increasing	ବଢ଼ାଇବା (to increase) + କୁ (to)	native	ai	
+ଅନ୍ତର୍ନିହିତ	inherent, inner, underlying	inherent, inner, underlying, hidden within	ଅନ୍ତଃ (within) + ନିହିତ (placed)	sanskrit	ai	
+ଶକ୍ତିହୀନ	powerless, weak	powerless, weak, helpless	ଶକ୍ତି (power) + ହୀନ (without)	sanskrit	ai	
+କ୍ଷମତାଶାଳୀ	powerful, influential	powerful, influential, mighty	କ୍ଷମତା (power) + ଶାଳୀ (having)	sanskrit	ai	
+ବୈତରଣୀ	Baitarani (river in Odisha)	Baitarani, a river of Odisha; Vaitarani, the river of the underworld (myth)		name	ai	
+ଭାଗୀଦାରି	share, participation	share, participation, partnership	ଭାଗୀଦାର (sharer, partner) + ଇ (-ship)	hindi	ai	
+ଡ	Dr. (doctor), title before a name	Dr., short for doctor, before a name (a full stop after it); D, a letter in abbreviations; the Odia letter da		english	ai	
+ନେତପିଲା	Netapila (girls' festival, Puri servitor families)	Netapila, a festival in which unmarried girls of Srimandir (Puri) servitor families sing songs			ai	
+ସିଜେଆଇ	CJI, Chief Justice of India	CJI, Chief Justice of India		english	ai	
+ପୋଷ୍ଟ୍	post (social media)	post (on social media); post, position (job); post (mail)		english	ai	
+ଗୋପନୀୟ	confidential, secret	confidential, secret, private (confidential data, a secret ballot)		sanskrit	ai	
+ଅଧିକୃତ	authorised, official; occupied	authorised, official (an authorised number); occupied (territory, as in Pakistan-occupied Kashmir)		sanskrit	ai	
+ନେଟୱାର୍କ	network	network (mobile network; a network of people)		english	ai	
+ସଂଗଠନଗୁଡ଼ିକୁ	organisations (object)	organisations (object); to the organisations	ସଂଗଠନ (organisation) + ଗୁଡ଼ିକୁ (plural, to)	sanskrit	ai	
+ରୁଦ୍ରପ୍ରୟାଗ	Rudraprayag (town in Uttarakhand)	Rudraprayag, a town and district in Uttarakhand	ରୁଦ୍ର (Shiva) + ପ୍ରୟାଗ (confluence)	name	ai	
+ଲିଷ୍ଟରେ	in the list	in the list (a contact list)	ଲିଷ୍ଟ (list) + ରେ (in)	english	ai	
+କଥାକୁ	words (object); what someone says	the words, what someone says (object); to the matter	କଥା (talk, word) + କୁ (to)	sanskrit	ai	
+ଲଙ୍ଗ	long (long video)	long, the English word (long video, long Covid)		english	ai	Also spelt ଲଙ୍ଗ୍.
+ମାଣ୍ଡିଆ	finger millet, ragi	finger millet, ragi (a millet grain much grown in Odisha)		native	ai	
+ଟେନସନ୍	tension (stress; tension headache)	tension, stress, worry; tension-type (headache)		english	ai	
+ହସ୍ପିଟାଲରୁ	from the hospital	from the hospital	ହସ୍ପିଟାଲ (hospital) + ରୁ (from)	english	ai	
+ଜେନ୍	Gen (as in Gen Z)	Gen, generation (Gen Z, Gen-Z voters)		english	ai	
+ବସ୍ତି	slum, basti	slum, basti (an urban settlement of the poor); bladder (old)		sanskrit	ai	
+ମକର	Makar (Sankranti festival); Capricorn (zodiac sign)	Makar Sankranti, the mid-January harvest festival (makara parba, makara chaula); Capricorn, a zodiac sign (in horoscopes); the Odia month Makara (mid-January to mid-February); makara, a mythical sea creature; crocodile (literary)		sanskrit	ai	
+ଦେଖାଦେଇପାରେ	may appear, may arise (it)	may appear, may arise, may crop up (it: a problem, a fault)	ଦେଖାଦେଇ (appearing) + ପାରେ (may)	native	ai	
+କାର୍ଯ୍ୟାନୁଷ୍ଠାନକୁ	the action (object)	the action taken, the measures (object)	କାର୍ଯ୍ୟାନୁଷ୍ଠାନ (action) + କୁ (to)	sanskrit	ai	
+ରତ୍ନା	Ratna (female given name)	Ratna, a female given name; gem (in names)		name	ai	
+ଇଣ୍ଟେନ୍ସିଭ୍	intensive	intensive (Special Intensive Revision; intensive care)		english	ai	
+ବେଙ୍ଗଲ	Bengal (in team names)	Bengal, the English name (the Bengal team, the Bay of Bengal)		name	ai	
+ଝଡ଼	storm (also figurative)	storm, gale; turmoil (a storm in one's life)		native	ai	
+ବିଚାରାଧୀନ	under trial; sub judice; pending	under trial (an undertrial prisoner); sub judice, pending in court; under consideration	ବିଚାର (trial, judgement) + ଅଧୀନ (under)	sanskrit	ai	
+ରସ୍ତୋଗୀ	Rastogi (surname)	Rastogi, a surname		name	ai	
+ଉପରୋକ୍ତ	above-mentioned	above-mentioned, aforesaid	ଉପରି (above) + ଉକ୍ତ (said)	sanskrit	ai	
+ଚିନ୍ତାଜନକ	worrying, alarming	worrying, alarming, a matter of concern	ଚିନ୍ତା (worry) + ଜନକ (causing)	sanskrit	ai	
+ଶ୍ରବଣଶକ୍ତି	hearing (ability to hear)	hearing, the power of hearing	ଶ୍ରବଣ (hearing) + ଶକ୍ତି (power)	sanskrit	ai	
+ପୁରୁଷଙ୍କଠାରେ	in men, among men	in men, among men (seen in men)	ପୁରୁଷ (man) + ଙ୍କଠାରେ (in, with, respectful)	sanskrit	ai	
+ଗୋଟାଳି	lump (in the body)	lump, swelling (a lump in the breast); a round piece		native	ai	
+ନବରାତ୍ରିରେ	during Navratri	during Navratri, in Navratri	ନବରାତ୍ରି (Navratri) + ରେ (in)	sanskrit	ai	
+ବ୍ରତର	of the fast, of the vow	of the religious fast or vow	ବ୍ରତ (vow, fast) + ର (of)	sanskrit	ai	
+ୟୁକୋ	UCO (UCO Bank)	UCO Bank, a public-sector bank of India		english	ai	
+କମିଶନରଙ୍କୁ	(to) the commissioners	to the commissioner(s); the commissioners (object, respectful)	କମିଶନର (commissioner) + ଙ୍କୁ (to, respectful)	english	ai	
+ଇନିଂସ୍	innings (cricket)	innings (cricket)		english	ai	
+ଅମ୍ବାନୀ	Ambani (surname)	Ambani, a surname (as in Mukesh Ambani, Akash Ambani)		name	ai	
+ସଫ୍ଟୱେର୍	software	software		english	ai	
+ପ୍ରଯୁକ୍ତିବିଦ୍ୟା	technology	technology	ପ୍ରଯୁକ୍ତି (technique) + ବିଦ୍ୟା (knowledge)	sanskrit	ai	
+ସୂର୍ଯ୍ୟକୁମାର	Suryakumar (male given name)	Suryakumar, a male given name (as in Suryakumar Yadav, cricketer)	ସୂର୍ଯ୍ୟ (sun) + କୁମାର (son, prince)	name	ai	
+ନୃସିଂହ	Narasimha (deity); a given name	Narasimha, the man-lion form of Vishnu; Nrusingha, a male given name	ନୃ (man) + ସିଂହ (lion)	sanskrit	ai	
+ଗର୍ଭାଶୟ	uterus, womb	uterus, womb	ଗର୍ଭ (womb, foetus) + ଆଶୟ (seat)	sanskrit	ai	
+ଅପମିଶ୍ରିତ	adulterated	adulterated (food, milk products)	ଅପ (bad) + ମିଶ୍ରିତ (mixed)	sanskrit	ai	
+ଛେନା	chhena, fresh cottage cheese	chhena, fresh cheese from curdled milk (for rasagola, chhena poda)		native	ai	
+ଷ୍ଟ୍ରିଟ୍	street (street theatre)	street (street theatre, street food)		english	ai	
+ଡଲାରର	of the dollar	of the (US) dollar, the dollar's	ଡଲାର (dollar) + ର (of)	english	ai	
+ମୁଦ୍ରାସ୍ଫୀତି	inflation (rising prices)	inflation, a rise in prices	ମୁଦ୍ରା (currency) + ସ୍ଫୀତି (swelling)	sanskrit	ai	
+ଆଦେନ	Aden (port city in Yemen)	Aden, a port city in Yemen		name	ai	
+ଯୋଡ଼ୁଥିବା	joining, connecting (that joins)	that joins, linking, connecting (participle: the road linking X with Y)	ଯୋଡ଼ (join) + ଉଥିବା (-ing, that)	native	ai	
+ବାବ୍	Bab (as in Bab al-Mandab strait)	Bab, part of Bab al-Mandab, the strait between the Red Sea and the Gulf of Aden; gate (Arabic)		name	ai	
+ମାନ୍ଦେବ	Mandab (as in Bab al-Mandab strait)	Mandab, part of Bab al-Mandab, the strait at the south end of the Red Sea		name	ai	
+ହୁତିମାନେ	the Houthis	the Houthis, the Houthi rebels (Yemen)	ହୁତି (Houthi) + ମାନେ (plural)	name	ai	
+ଘନ	dense, thick; frequent (doubled)	dense, thick, heavy (dense forest, thick fog); frequent (doubled: again and again); cube (maths)		sanskrit	ai	ଘନ ଘନ: again and again.
+ମିସାଇଲ୍	missile	missile		english	ai	
+ଉତ୍ତରାଖଣ୍ଡ	Uttarakhand (Indian state)	Uttarakhand, a state in north India		name	ai	
+ରାଜନୀତିକ	political	political (a political party, political pressure)	ରାଜନୀତି (politics) + କ (-al)	sanskrit	ai	Also spelt ରାଜନୈତିକ.
+ମେହଟା	Mehta (surname)	Mehta, a surname		name	ai	
+କର୍ପୋରେଟ	corporate	corporate, of companies (a corporate conspiracy, the corporate sector)		english	ai	
+ଟେକଲାବ	Techlab (part of a company name)	Techlab, part of a company's name		name	ai	
+ଆର୍	R (the letter, in abbreviations)	R, the English letter in abbreviations and initials		english	ai	The two news lines here print ଆର୍ଥିକ (financial) garbled.
+ଇଡିର	of the ED (Enforcement Directorate)	of the ED, the Enforcement Directorate's	ଇଡି (ED) + ର (of)	english	ai	
+ଆଇଟିଆଇ	ITI (Industrial Training Institute)	ITI, Industrial Training Institute; ITI Limited, a public-sector telecom company		english	ai	
+ପରୀକ୍ଷାର୍ଥୀଙ୍କୁ	(to) the candidates, examinees	the examinees, exam candidates (object); to the candidates	ପରୀକ୍ଷାର୍ଥୀ (examinee) + ଙ୍କୁ (to)	sanskrit	ai	
+ଅବସରକାଳୀନ	retirement (benefits, dues)	retirement (retirement benefits, dues); post-retirement	ଅବସର (retirement) + କାଳୀନ (of the time)	sanskrit	ai	
+କ୍ରାନ୍ତି	revolution; Kranti (in names)	revolution, uprising (August Kranti, the Quit India movement); Kranti, in names		sanskrit	ai	
+ହୋହଲ୍ଲା	uproar, commotion	uproar, commotion, ruckus		hindi	ai	
+ମିଟିଂରେ	in the meeting, at the meeting	in the meeting, at the meeting	ମିଟିଂ (meeting) + ରେ (in)	english	ai	
+ପିଲ୍ଲେ	Pillay (surname)	Pillay, Pillai, a South Indian surname (as in Navi Pillay)		name	ai	
+ପରୀକ୍ଷାର୍ଥୀ	examinee, exam candidate	examinee, candidate (in an exam)	ପରୀକ୍ଷା (exam) + ଅର୍ଥୀ (seeker)	sanskrit	ai	
+ଇନ୍	in (English, as in log in)	in, the English word (log in, sign in)		english	ai	
+କ୍ରିଟିକାଲ	critical (critical minerals)	critical (critical minerals, critical condition)		english	ai	
+ନିରୀକ୍ଷଣ	monitoring, observation; inspection	monitoring, observation, study; inspection		sanskrit	ai	
+ସେଂଟର	centre (in names)	centre (Centre for ..., a research centre)		english	ai	Also spelt ସେଣ୍ଟର.
+ପଲିଟେକନିକରେ	at the polytechnic	at the polytechnic (college)	ପଲିଟେକନିକ (polytechnic) + ରେ (in, at)	english	ai	
+ମଇଳା	dirty; dirt, filth	dirty, soiled (dirty water); dirt, filth		native	ai	
+ଭଣ୍ଡାରୀ	Bhandari (surname)	Bhandari, a surname		name	ai	
+ଦୁଷ୍ୟନ୍ତ	Dushyant (male given name)	Dushyant, a male given name; Dushyanta, a king in the Shakuntala story		name	ai	
+ସଂପର୍କିତ	related (to), concerning	related to, concerning, connected with (after a word)	ସଂପର୍କ (relation) + ଇତ (-ed)	sanskrit	ai	Also spelt ସମ୍ପର୍କିତ.
+ଏଯାଏଁ	so far, till now	so far, till now, as yet; up to here	ଏ (this) + ଯାଏଁ (up to)	native	ai	
+ପଣ୍ୟବାହୀ	cargo (ship), goods-carrying	cargo, goods-carrying (a cargo ship, a goods train)	ପଣ୍ୟ (goods) + ବାହୀ (carrying)	sanskrit	ai	
+ଗାର୍ଡ	guard (security guard)	guard (security guard; railway guard)		english	ai	
+କଲାମ	Kalam (as in APJ Abdul Kalam)	Kalam, a name (as in Dr APJ Abdul Kalam, former President of India)		name	ai	
+ବ୍ଲୁ	blue	blue (a blue drum)		english	ai	
+ତାପମାତ୍ରାକୁ	the temperature (object)	the temperature (object); to the temperature	ତାପମାତ୍ରା (temperature) + କୁ (to)	sanskrit	ai	
+ଟ୍ରେରେ	in the tray	in the tray, on the tray (of sweets)	ଟ୍ରେ (tray) + ରେ (in, on)	english	ai	
+ବାଲୁଗାଁ	Balugaon (town near Chilika lake)	Balugaon, a town on Chilika lake, Khordha district, Odisha		name	ai	
+ଅହମ୍ମଦ	Ahmed (given name)	Ahmed, Ahmad, a male given name or surname		name	ai	
+ଜେଲର୍	jailer; Jailer (film title)	jailer, prison officer; Jailer, a Tamil film		english	ai	
+ଡିଏମକେ	DMK, a political party of Tamil Nadu	DMK, Dravida Munnetra Kazhagam, a party of Tamil Nadu		english	ai	
+ଆର୍ଥ୍ରାଇଟିସର	of arthritis	of arthritis	ଆର୍ଥ୍ରାଇଟିସ (arthritis) + ର (of)	english	ai	
+କାପୁରଙ୍କ	Kapoor's (surname, respectful)	of Kapoor (surname, respectful)	କାପୁର (Kapoor) + ଙ୍କ (of, respectful)	name	ai	
+ପ୍ଲେ	play (in names: Tata Play)	play, the English word (Tata Play, Google Play)		english	ai	
+ପେନର	of the pen	of the pen, the pen's	ପେନ (pen) + ର (of)	english	ai	
+ଉପଜିଲାପାଳ	sub-collector	sub-collector, the head of a subdivision	ଉପ (sub-, deputy) + ଜିଲାପାଳ (collector)	sanskrit	ai	
+କ୍ୟାରିୟରର	of (one's) career	of the career, career's (in sport, films, work)	କ୍ୟାରିୟର (career) + ର (of)	english	ai	
+ପଦାର୍ପଣ	debut; entering (a field, an age)	debut (in a sport, films, politics); setting foot in, entering (a place, an age); arrival	ପଦ (foot) + ଅର୍ପଣ (placing)	sanskrit	ai	ପଦାର୍ପଣ କରିବା: to make a debut; to enter.
+ସ୍ମରଣୀୟ	memorable	memorable, worth remembering	ସ୍ମରଣ (remembering) + ଈୟ (worthy of)	sanskrit	ai	
+ଦ୍ରୁତଗତିରେ	rapidly, at a fast pace	rapidly, quickly, at high speed	ଦ୍ରୁତଗତି (rapid pace) + ରେ (in, at)	sanskrit	ai	
+ମିଥାଇଲେସନ	methylation (DNA methylation)	methylation, a chemical mark on DNA that turns genes on or off		english	ai	
+ନିଷ୍କ୍ରିୟ	inactive; switched off	inactive, idle, not working; dormant, switched off (a gene, an account); passive	ନିଃ (without) + କ୍ରିୟ (action)	sanskrit	ai	
+ନାଇଡୁ	Naidu (surname)	Naidu, a South Indian surname; in Col. C. K. Nayudu Trophy, an age-group cricket tournament		name	ai	
+ଉଦ୍‌ଯାପିତ	concluded, came to a close (an event)	concluded, brought to a close (a tournament, a festival, a meeting); celebrated, observed	ଉଦ୍ (up) + ଯାପିତ (spent, passed)	sanskrit	ai	ଉଦ୍‌ଯାପିତ ହେବା: to come to a close.
+ଶରତ	autumn; Sarat (given name)	autumn, the season of Ashwin and Kartik (mid-September to mid-November); Sarat, Sharat (given name); Sarat, a place name		sanskrit	ai	
+ନନ୍ଦ	Nanda (surname; given name)	Nanda, a common Odia surname; Nanda, foster father of Krishna; joy (literary)		name	ai	
+ଭୂଷଣ	Bhushan (in names); ornament; honour	Bhushan, part of men's names (Bibhuti Bhushan); ornament, decoration; an honour (Padma Bhushan)		sanskrit	ai	
+ଓମକାର	Omkar (given name); the syllable Om	Omkar (given name); the sacred syllable Om	ଓମ୍ (Om) + କାର (the sound)	name	ai	Also spelt ଓଁକାର.
+ରଖାଯିବା	to be kept, be named; being kept	being kept, being held (in detention); being named, being given a name; being placed	ରଖା (kept) + ଯିବା (going): passive verbal noun	native	ai	
+ପଠାଯାଇଥିଲା	was sent	was sent (passive, past); was dispatched, was referred (to a hospital, to custody)	ପଠା (send) + ଯାଇଥିଲା (went): passive	native	ai	
+ରାମଲୀଳା	Ramlila; Ramlila Maidan (Delhi)	Ramlila, a folk play of the Ramayana at Dussehra; Ramlila Maidan, a big rally and protest ground in Delhi	ରାମ (Rama) + ଲୀଳା (play)	sanskrit	ai	
+ଜିନ୍‌ପିଙ୍ଗ୍‌	Jinping (Xi Jinping, president of China)	Jinping, as in Xi Jinping, president of China		name	ai	
+ବହିର୍ବ୍ୟାପାର	external affairs, foreign affairs	external affairs, foreign affairs (ministry); foreign relations	ବହିଃ (outside) + ବ୍ୟାପାର (affairs)	sanskrit	ai	
+ଦମ୍‌ଦାର	powerful, strong, impressive	powerful, strong, forceful, impressive (a win, a show); spirited	ଦମ୍ (breath, strength) + ଦାର (having)	persian	ai	Came into Odia through Persian or Urdu.
+କରାଇଛି	has caused (to do); has made (known)	has caused (someone) to do, has got (it) done; with an adjective: has made (known, aware) (he/she/it)	କରା (cause to do) + ଇଛି (has)	native	ai	ପରିଚିତ କରାଇବା: to introduce, to make known.
+ଗଣେଶ	Ganesha (god); Ganesh (given name)	Ganesha, the elephant-headed god (Ganesh Puja); Ganesh, a given name		sanskrit	ai	
+ବାୟୋଗ୍ୟାସ	biogas	biogas, fuel gas made from food or farm waste		english	ai	
+ନନ୍ଦିପଦା	Nandipada (place, Keonjhar district)	Nandipada, a place with a police station in Keonjhar district, Odisha		name	ai	
+ପାଠପଢ଼ାରେ	in studies, in one's education	in studies, in one's education, in schoolwork	ପାଠପଢ଼ା (studies) + ରେ (in)	mixed	ai	
+ଚଢ଼ଉ	raid	raid (by police, officials); attack, assault		native	ai	Also spelt ଚଢ଼ାଉ.
+ଚଳନ	movement, transit (of planets)	movement, transit (of a planet into a sign, in astrology); motion; conduct, custom		sanskrit	ai	
+ଚାହୁଁଥିବା	who want(s), wanting (to)	who want, wishing to, wanting (participle: who is ...-ing)	ଚାହିଁବା (want) + ଉଥିବା (who is ...-ing)	native	ai	
+ନେବାବେଳେ	while taking, when taking	while taking, at the time of taking (a decision, a loan)	ନେବା (taking) + ବେଳେ (while, at the time)	native	ai	
+ପ୍ରତିଯୋଗିତାମୂଳକ	competitive (exam, market)	competitive (competitive exam, market, price)	ପ୍ରତିଯୋଗିତା (competition) + ମୂଳକ (based on)	sanskrit	ai	
+ତରବର	hurry, haste	hurry, haste, rush; hasty		native	ai	ତରବର ହେବା: to be in a hurry.
+ପାଟେକର	Patekar (surname; actor Nana Patekar)	Patekar, a Marathi surname (actor Nana Patekar)		name	ai	
+ଅଧରେ	in the middle (of the night); halfway	at half, in the middle; with raati: at midnight, in the middle of the night; halfway (left halfway)	ଅଧ (half) + ରେ (in, at)	native	ai	
+ଦେହାନ୍ତ	death, passing away	death, passing away (respectful)	ଦେହ (body) + ଅନ୍ତ (end)	sanskrit	ai	ଦେହାନ୍ତ ହେବା: to pass away.
+କାର୍ଯ୍ୟଦକ୍ଷତା	efficiency at work, performance	efficiency at work, competence; performance (of an employee)	କାର୍ଯ୍ୟ (work) + ଦକ୍ଷତା (skill, efficiency)	sanskrit	ai	
+ଦେବଗନଙ୍କ	of Devgn (actor Ajay Devgn)	of Devgan, Devgn's (respectful); Ajay Devgn, a Hindi film actor	ଦେବଗନ (Devgan) + ଙ୍କ (of, respectful)	name	ai	
+ଇଶିତା	Ishita (given name)	Ishita, a woman's given name		name	ai	
+କିଲୋଗ୍ରାମ	kilogram (kg)	kilogram, kg		english	ai	
+ମାତାପିତା	parents (mother and father)	parents, mother and father	ମାତା (mother) + ପିତା (father)	sanskrit	ai	
+ମାଇଲଖୁଣ୍ଟ	milestone	milestone, a mark reached (box office, a record); a roadside stone that marks miles	ମାଇଲ (mile) + ଖୁଣ୍ଟ (post)	mixed	ai	
+ଝଟ୍‌କା	jolt, shock; setback	jolt, shock, setback (to customers, a party); a sudden jerk		hindi	ai	
+ରେପୋ	repo (repo rate)	repo, as in repo rate: the rate at which the RBI lends to banks		english	ai	
+ଲିଙ୍କଡ୍	linked	linked (repo-linked, performance-linked)		english	ai	
+ଶକ୍ତିସମ୍ପନ୍ନ	powerful, possessing power	powerful; possessing (nuclear, economic) power	ଶକ୍ତି (power) + ସମ୍ପନ୍ନ (endowed with)	sanskrit	ai	ପରମାଣୁ ଶକ୍ତିସମ୍ପନ୍ନ: nuclear-armed.
+ନାଟୋ	NATO (military alliance)	NATO, the North Atlantic Treaty Organization; (figurative) a military alliance		english	ai	
+ଗୋଇନ୍ଦା	intelligence (information); spy, detective	intelligence (information, an agency); spy, detective, secret agent		persian	ai	Came into Odia through Persian or Urdu.
+ଭୂ	geo-, land (in compounds); the earth	geo-, land- (in compounds: geo-political); the earth, land, ground		sanskrit	ai	
+ମଧ୍ୟସ୍ଥତାରେ	through the mediation (of)	through the mediation of, brokered by (after a word in -ra or -nka)	ମଧ୍ୟସ୍ଥତା (mediation) + ରେ (in, by)	sanskrit	ai	
+ଉଦ୍ଦିଷ୍ଟ	intended, meant (for)	intended, meant for, designated (for a purpose); aimed at		sanskrit	ai	
+କୋଠା	building (concrete house)	building, a pucca (brick or concrete) house; storey		native	ai	
+ଡୋନରଙ୍କଠାରୁ	from donors	from donors (respectful; often plural)	ଡୋନର (donor) + ଙ୍କଠାରୁ (from)	english	ai	
+ନ୍ୟୁୟର୍କର	of New York	of New York, New York's	ନ୍ୟୁୟର୍କ (New York) + ର (of)	name	ai	
+ଅସାମ୍ବିଧାନିକ	unconstitutional	unconstitutional, against the constitution	ଅ (un-, not) + ସାମ୍ବିଧାନିକ (constitutional)	sanskrit	ai	
+ଚନ୍ଦ୍ରଶେଖରଙ୍କ	of Chandrasekhar (respectful)	of Chandrasekhar, Chandrasekhar's (respectful)	ଚନ୍ଦ୍ରଶେଖର (Chandrasekhar) + ଙ୍କ (of, respectful)	name	ai	
+ହେଉଥିଲେ	were (being); used to be (they)	were becoming, were being, used to be (they; or he/she, respectful); with bi: even though (it) was	ହେ (be) + ଉଥିଲେ (was ...-ing)	native	ai	
+ଶିଖ	Sikh	Sikh (the religion, a follower of it); learn! (spoken imperative of shikhibaa)			ai	
+ମାନ୍ୟତାର	of the status, of recognition; of the ranking	of recognition, of status; of the ranking (ICC rankings)	ମାନ୍ୟତା (recognition, status, ranking) + ର (of)	sanskrit	ai	
+ତାମିଲନାଡୁର	of Tamil Nadu	of Tamil Nadu, Tamil Nadu's	ତାମିଲନାଡୁ (Tamil Nadu) + ର (of)	name	ai	
+ଜନ୍ମଗ୍ରହଣ	birth (being born)	birth, being born (with karibaa: to be born)	ଜନ୍ମ (birth) + ଗ୍ରହଣ (taking)	sanskrit	ai	ଜନ୍ମଗ୍ରହଣ କରିବା: to be born.
+ଶଙ୍କର	Shankar (given name); Shiva	Shankar, a given name or part of one; Shankara, a name of Shiva		name	ai	
+କେବେବି	ever; never (with a negative)	ever, at any time; never (with nahin or a negative verb)	କେବେ (when) + ବି (even)	native	ai	
+ଆତ୍ମବିଶ୍ୱାସକୁ	self-confidence (object); to self-confidence	self-confidence (object), to self-confidence	ଆତ୍ମବିଶ୍ୱାସ (self-confidence) + କୁ (to; object)	sanskrit	ai	
+ପ୍ରୀତିର	of love, of affection	of love, of affection (a bond of love)	ପ୍ରୀତି (love, affection) + ର (of)	sanskrit	ai	
+ପୂଜାପାଠ	worship and prayers	worship, prayers and rituals (puja and recitation)	ପୂଜା (worship) + ପାଠ (recitation)	sanskrit	ai	
+କରିନେବା	to secure, make one's own; securing	to do for oneself, get (it) done; to secure (votes); to make (someone) one's own	କରି (having done) + ନେବା (take)	native	ai	
+କଏଦ	captured (on camera); imprisonment	captured, recorded (on CCTV, a camera); imprisoned, confined; imprisonment, captivity		arabic	ai	କଏଦ ହେବା: to be captured (on camera). Came into Odia through Persian or Urdu.
+ଦୂରସଞ୍ଚାର	telecommunications, telecom	telecommunications, telecom (Department of Telecommunications)	ଦୂର (far) + ସଞ୍ଚାର (transmission)	sanskrit	ai	
+କଲ୍‌କୁ	to a (phone) call; the call (object)	to a (phone) call; a call (object)	କଲ୍ (call) + କୁ (to; object)	english	ai	
+ଗଢ଼ିବାର	of building, of forming	of building, of making, of forming (a relationship, a company)	ଗଢ଼ିବା (to build) + ର (of)	native	ai	
+ଆରିୟା	Ariya, Arya (given name)	Ariya, Arya, a woman's given name		name	ai	Also spelt ଆର୍ୟା.
+ସଭାନେତ୍ରୀ	president (woman), chairwoman	president, chairwoman (of a students' union, a body); woman who leads a meeting	ସଭା (assembly) + ନେତ୍ରୀ (woman leader)	sanskrit	ai	
+ପ୍ରିୟଦର୍ଶିନୀ	Priyadarshini (given name)	Priyadarshini, a woman's given name (literally: pleasing to look at)	ପ୍ରିୟ (dear) + ଦର୍ଶିନୀ (looking)	name	ai	
+ଦଣ୍ଡସେନା	Dandasena (surname)	Dandasena, an Odia surname		name	ai	
+କିଣାକିଣି	shopping, buying	shopping, buying, purchases (festive shopping)	କିଣା (buying) + କିଣି (repeated)	native	ai	
+ବାସ୍‌	that's it, enough; and then (spoken)	that's it, enough, and then (spoken: bas); just, only		hindi	ai	
+ସାବତପୁଅ	stepson; (figurative) a neglected one	stepson; (figurative) one treated as an outsider, neglected	ସାବତ (step-) + ପୁଅ (son)	native	ai	
+ସାବତପୁଅର	of the stepson	of a stepson; (figurative) of the neglected one	ସାବତପୁଅ (stepson) + ର (of)	native	ai	
+ବାଲାନ୍ସ	balance (bank balance)	balance (bank balance, account balance); balance, equilibrium		english	ai	
+ଆୟକର	income tax	income tax (income tax return)	ଆୟ (income) + କର (tax)	sanskrit	ai	
+ଏପ୍ରିଲ୍‌ରୁ	from April	from April	ଏପ୍ରିଲ୍ (April) + ରୁ (from)	english	ai	
+କୋଟିରେ	at (N) crore; in crores	at, to (N) crore; in crores	କୋଟି (crore, ten million) + ରେ (in, at)	sanskrit	ai	
+ମାନବିକ	humane, humanitarian	humane, humanitarian; human (feelings, values)	ମାନବ (human) + ଇକ (-ic)	sanskrit	ai	
+ସମାନତା	equality; similarity	equality; similarity, likeness	ସମାନ (equal, same) + ତା (-ness)	sanskrit	ai	
+ଆତ୍ମବିଶ୍ୱାସୀ	self-confident	self-confident, sure of oneself	ଆତ୍ମ (self) + ବିଶ୍ୱାସୀ (trusting)	sanskrit	ai	
+ଛଡ଼ାଇ	snatching, having snatched; freeing	taking away, snatching, having snatched (with nebaa: to snatch away); freeing, getting (someone) released	ଛଡ଼ା (make leave) + ଇ (having)	native	ai	
+ମନେହୁଏ	seems, appears	seems, appears, feels (like)	ମନେ (in mind) + ହୁଏ (happens)	native	ai	
+ଅସମ୍ମାନ	disrespect, insult	disrespect, insult, dishonour	ଅ (not) + ସମ୍ମାନ (respect)	sanskrit	ai	
+ସମୃଦ୍ଧି	prosperity	prosperity, affluence; richness (of a culture)		sanskrit	ai	
+ନିବାରଣ	prevention; removal	prevention (prevention of money laundering); removal, eradication (of untouchability)		sanskrit	ai	
+ପଥ	path, way, route	path, way, road; route (a sea route); way, method		sanskrit	ai	ପଥ ପ୍ରଦର୍ଶକ: guide, one who shows the way.
+ଅଥବା	or	or; or else	ଅଥ (then) + ବା (or)	sanskrit	ai	
+ପାଟଣା	Patna (capital of Bihar); part of Odisha place names	Patna, the capital of Bihar; Patna, a block in Keonjhar district; part of place names (Narayan Patna, Koraput)		name	ai	
+ପୁନରାବୃତ୍ତି	repetition, recurrence	repetition, recurrence (of an incident); revision	ପୁନଃ (again) + ଆବୃତ୍ତି (repeating)	sanskrit	ai	
+ନାକେଦମ	harassed, at one's wits' end	harassed, exhausted, at one's wits' end (with hebaa: to have a tough time)	ନାକେ (in the nose) + ଦମ (breath)	mixed	ai	ନାକେଦମ ହେବା: to have a very hard time.
+କୁଆଁରୀ	unmarried girl, maiden	unmarried girl, maiden, virgin		native	ai	
+ଅନଧିକୃତ	unauthorised	unauthorised, illegal (entry, a transaction)	ଅନ୍ (not) + ଅଧିକୃତ (authorised)	sanskrit	ai	
+ପାର୍ଲାମେଣ୍ଟ	Parliament	Parliament (Parliament Street police station, New Delhi)		english	ai	
+ଗେଟରେ	at the gate	at the gate, at a gate	ଗେଟ (gate) + ରେ (at)	english	ai	
+ଏକ୍ସରେ	on X (social media); X-ray	on X, the social media platform formerly Twitter; X-ray (a medical image)	ଏକ୍ସ (X) + ରେ (on, in)	english	ai	
+କଟିଥିବା	cut, deducted (that had been)	that had been cut, deducted (money from an account); cut, chopped	କଟ (be cut) + ଇଥିବା (that had)	native	ai	
+ମେସେଜ୍‌ର	of the message	of the message (a text message)	ମେସେଜ୍ (message) + ର (of)	english	ai	
+ମେସେଜ୍‌ରେ	in the message	in the message (a text message)	ମେସେଜ୍ (message) + ରେ (in)	english	ai	
+ପାସୱାର୍ଡ	password	password		english	ai	
+ଲିଙ୍କ୍‌ରେ	on the link, in the link	on the link (click on the link), in the link	ଲିଙ୍କ୍ (link) + ରେ (on, in)	english	ai	
+ୱେବସାଇଟ୍‌ରେ	on the website	on the website, on a website	ୱେବସାଇଟ୍ (website) + ରେ (on, in)	english	ai	
+ଅବଲମ୍ବନ	adopting, following (precautions)	adopting, following (precautions, a method: with karibaa); support, dependence		sanskrit	ai	ସତର୍କତା ଅବଲମ୍ବନ କରିବା: to take precautions.
+ଜଣାନ୍ତୁ	please inform, let (them) know	inform, let know, report (polite imperative, you)	ଜଣା (make known) + ଅନ୍ତୁ (please; imperative)	native	ai	
+ରିପୋର୍ଟିଂ	reporting	reporting (news reporting; a reporting portal)		english	ai	
+ପାର୍ବଣରେ	in the festival (season)	in the festival, during the festive season	ପାର୍ବଣ (festival) + ରେ (in, at)	sanskrit	ai	
+ଋତୁ	season	season (of the year; the festive season); menstrual period (formal)		sanskrit	ai	
+କାଉଣ୍ଟରପଏଣ୍ଟ	Counterpoint (market research firm)	Counterpoint Research, a technology market research firm; counterpoint		english	ai	
+ଦାମ୍	price	price, cost		persian	ai	Came into Odia through Persian or Urdu.
+ଦାମୀ	expensive, costly	expensive, costly, valuable		persian	ai	Came into Odia through Persian or Urdu.
+ସେଭ୍	save, saved (a number, a file)	save, saved (a phone number, a file); a save (in sport)		english	ai	
+ଠକ	fraud, cheat; fraudulent	cheat, fraudster, swindler; fraudulent (fraud calls)		native	ai	
+ଖାଇକୁ	into a gorge, into a ditch	into a gorge, into a ravine, into a ditch	ଖାଇ (gorge, ditch) + କୁ (to, into)	native	ai	
+ଅଭିମୁଖେ	towards, heading to	towards, in the direction of, bound for (after a place name)	ଅଭିମୁଖ (facing) + ଏ (in)	sanskrit	ai	
+ଲକ୍ଷ୍ମଣ	Lakshman (given name); Lakshmana	Lakshman, a given name; Lakshmana, brother of Rama in the Ramayana		name	ai	
+ଲଗାଯିବା	to be installed, be imposed; being put up	being installed, put up (cameras); being imposed, levied (a tax); being applied	ଲଗା (attach) + ଯିବା (going): passive verbal noun	native	ai	
+ହ୍ୱାଟସଆପ୍‌ରେ	on WhatsApp	on WhatsApp, in WhatsApp	ହ୍ୱାଟସଆପ୍ (WhatsApp) + ରେ (on, in)	english	ai	
+ଫିଚର୍	feature (of an app, a phone)	feature (of an app, a phone); feature (a long article, a film)		english	ai	
+ହୋଇନଥିବା	not (yet) ...-ed; that has not been	that has not been, not ...-ed (participle: not saved, not agreed)	ହୋଇ (having been) + ନ (not) + ଥିବା (that was)	native	ai	
+ସର୍ଭର	server (computer); process server (court)	server, a computer that relays data; process server, a court officer who delivers summons		english	ai	
+ଏଣ୍ଟ୍ରି	entry (arrival, debut)	entry, debut (arrival into a field); entry (in a list); admission		english	ai	
+ପଦଯାତ୍ରାକୁ	to the padayatra; the foot march (object)	to the foot march, the padayatra (object)	ପଦଯାତ୍ରା (foot march) + କୁ (to; object)	sanskrit	ai	
+ମୁଣ୍ଡବିନ୍ଧାର	of headache	of headache, of a headache	ମୁଣ୍ଡବିନ୍ଧା (headache) + ର (of)	native	ai	
+ଚାରିପାଖରେ	around, all around	around, all around, on all sides	ଚାରିପାଖ (all around) + ରେ (in, at)	native	ai	
+ଭାରୀ	heavy; very (spoken)	heavy (a vehicle, a feeling); very, extremely (spoken)		native	ai	
+ରୋଡୱେଜ୍	roadways (state transport bus)	roadways, a state road transport corporation (a roadways bus)		english	ai	
+ଡ୍ରାଇଭରଙ୍କୁ	the driver (object); to the driver	the driver (object), to the driver (respectful)	ଡ୍ରାଇଭର (driver) + ଙ୍କୁ (to; respectful)	english	ai	
+ଭଗତ	Bhagat (in names, place names); devotee	Bhagat, a surname or part of a place name; devotee (spoken form of bhakta)		name	ai	
+ଫାଇଦା	benefit, advantage	benefit, advantage, gain; profit		arabic	ai	ଫାଇଦା ଉଠାଇବା: to take advantage of. Came into Odia through Persian or Urdu.
+ରାଜସାକ୍ଷୀ	approver (accused who turns state witness)	approver, an accused who turns state witness against the others	ରାଜ (state) + ସାକ୍ଷୀ (witness)	sanskrit	ai	
+ରାହୁଲଙ୍କୁ	Rahul (object); to Rahul	Rahul (object), to Rahul (respectful)	ରାହୁଲ (Rahul) + ଙ୍କୁ (to; respectful)	name	ai	
+ନହେବା	to not be, not happen; not being	not being, not happening; with paryanta: until (it) is done	ନ (not) + ହେବା (being)	native	ai	ନହେବା ପର୍ଯ୍ୟନ୍ତ: until ... is done.
+ଗୌତମ	Gautam (given name); Gautama, the Buddha	Gautam, a given name; Gautama, the Buddha		name	ai	
+ଲୋକାର୍ପଣ	inauguration, dedication to the public	inauguration, dedicating (a project, a building) to the public	ଲୋକ (people) + ଅର୍ପଣ (offering)	sanskrit	ai	
+ରେସିଡେନ୍ସି	residency (in names of housing projects)	residency, as in names of housing projects; residence		english	ai	
+ଭଡ଼ା	rent; fare	rent (house rent); fare (bus, train); hire charge; rented (a rented house)		native	ai	
+ଉତ୍ସର୍ଗ	dedication; dedicating	dedication, dedicating (to someone, to the public); sacrifice, giving up		sanskrit	ai	ଉତ୍ସର୍ଗ କରିବା: to dedicate.
+ମାପକାଠି	yardstick, criterion, measure	yardstick, criterion, measure; measuring rod, ruler	ମାପ (measure) + କାଠି (stick)	native	ai	
+ମାପିବା	to measure; measuring	to measure; to assess, to judge (progress)	ମାପ (measure) + ଇବା (verbal noun)	native	ai	
+ପ୍ରତୀକାତ୍ମକ	symbolic	symbolic, token (a symbolic step)	ପ୍ରତୀକ (symbol) + ଆତ୍ମକ (-ic)	sanskrit	ai	
+ନ୍ୟାସନାଲ୍	national	national (in English names)		english	ai	
+ଦିନସାରା	all day, throughout the day	all day, throughout the day	ଦିନ (day) + ସାରା (whole)	native	ai	
+ଧୈର୍ଯ୍ୟର	of patience; with saha: patiently	of patience; with saha: patiently, with patience	ଧୈର୍ଯ୍ୟ (patience) + ର (of)	sanskrit	ai	
+ଫିକ୍ସଡ୍	fixed (fixed broadband, deposit)	fixed (fixed broadband, fixed deposit)		english	ai	
+ବ୍ରଡବ୍ୟାଣ୍ଡ	broadband (internet)	broadband, high-speed internet		english	ai	
+ନିବେଶକଙ୍କ	of investors	of investors, investors' (respectful; often plural)	ନିବେଶକ (investor) + ଙ୍କ (of)	sanskrit	ai	
+ସିନ୍ଧେଙ୍କୁ	Shinde (object); to Shinde	Shinde (object), to Shinde (respectful)	ସିନ୍ଧେ (Shinde) + ଙ୍କୁ (to; respectful)	name	ai	
+ବଣ୍ଡ୍‌ରେ	on a bond (bail bond)	on a bond, on a personal (bail) bond; in bonds (investment)	ବଣ୍ଡ୍ (bond) + ରେ (on, in)	english	ai	
+ତିହାର	Tihar (jail in Delhi)	Tihar, the large prison complex in Delhi		name	ai	
+ମୈଦାନ	ground, open field (maidan)	ground, playing field, open field; maidan (Ramlila Maidan)		persian	ai	Came into Odia through Persian or Urdu.
+ରିଭିଜନ୍	revision	revision (Special Intensive Revision of voter lists)		english	ai	
+କଥିତ	alleged; said	alleged, so-called; said, stated		sanskrit	ai	
+ରଣଜୀ	Ranji (Ranji Trophy, cricket)	Ranji, as in the Ranji Trophy, India's first-class cricket championship		name	ai	
+ମ୍ୟାଚ୍‌ର	of the match	of the match	ମ୍ୟାଚ୍ (match) + ର (of)	english	ai	
+ଟ୍ରଫିରେ	in the trophy (tournament)	in the trophy (a tournament)	ଟ୍ରଫି (trophy) + ରେ (in)	english	ai	
+ବ୍ୟାଟ୍‌ରୁ	from the bat	from the bat (runs from his bat)	ବ୍ୟାଟ୍ (bat) + ରୁ (from)	english	ai	
+ମନକୁ	the mind (object); to the mind	to the mind; the mind, the heart (object)	ମନ (mind) + କୁ (to; object)	sanskrit	ai	
+ବହୁଚର୍ଚ୍ଚିତ	much-discussed, high-profile	much-discussed, much-talked-about, high-profile	ବହୁ (much) + ଚର୍ଚ୍ଚିତ (discussed)	sanskrit	ai	
+ଶୁକ୍ଳାଙ୍କୁ	Shukla (object); to Shukla	Shukla (object), to Shukla (respectful)	ଶୁକ୍ଳା (Shukla) + ଙ୍କୁ (to; respectful)	name	ai	
+ଲେଖାଯିବା	to be written; being written	being written; with paryanta: (until) the time of writing	ଲେଖା (written) + ଯିବା (going): passive verbal noun	native	ai	ଖବର ଲେଖାଯିବା ପର୍ଯ୍ୟନ୍ତ: at the time of writing.
+କ୍ୟାନସର୍	cancer	cancer (the disease)		english	ai	
+ଯେମିତିକି	such as, for example	such as, like, for example; namely	ଯେମିତି (like, as) + କି (that)	native	ai	
+ପୁନର୍ଗଠନ	restructuring, reorganisation	restructuring, reorganisation, rebuilding	ପୁନଃ (again) + ଗଠନ (formation)	sanskrit	ai	
+ଉଦ୍ୟୋଗ	industry, enterprise; effort	industry, enterprise, undertaking (small and medium enterprises; public sector undertaking); effort, initiative		sanskrit	ai	
+ବୋନସ୍	bonus	bonus (Diwali bonus, performance-linked bonus)		english	ai	
+ସୁବିଧାଜନକ	convenient	convenient, comfortable, easy	ସୁବିଧା (convenience) + ଜନକ (producing)	sanskrit	ai	
+ବାନାର୍ଜୀଙ୍କ	of Banerjee (Mamata Banerjee)	of Banerjee, Banerjee's (respectful)	ବାନାର୍ଜୀ (Banerjee) + ଙ୍କ (of, respectful)	name	ai	
+ସାକେତ	Saket (given name); old name of Ayodhya	Saket, a given name; Saketa, an old name of Ayodhya		name	ai	
+ଲକ୍ଷ୍ମୀପୂଜା	Lakshmi Puja (festival)	Lakshmi Puja, worship of goddess Lakshmi (in Odisha and Bengal, on the full moon after Dussehra)	ଲକ୍ଷ୍ମୀ (Lakshmi) + ପୂଜା (worship)	sanskrit	ai	
+ଦେଢ଼	one and a half	one and a half (1.5)		native	ai	
+ବସିମ	Wasim (given name)	Wasim, Waseem, a given name		name	ai	
+ଡେସିବଲ୍‌ରେ	in decibels	in decibels, at (N) decibels	ଡେସିବଲ୍ (decibel) + ରେ (in, at)	english	ai	
+ସବୁଠି	everywhere	everywhere, in all places	ସବୁ (all) + ଠି (place)	native	ai	
+ଏକକ	unit (of measure); single, unitary	unit (of measurement); single, sole, unitary (a unitary university)		sanskrit	ai	
+କରନ୍ତୁନି	don't (do), please do not	don't, please do not (polite imperative; spoken)	କରନ୍ତୁ (please do) + ନି (not)	native	ai	
+କମିଯିବା	to decrease, drop; decreasing	to go down, decrease, reduce (weight, appetite); dropping	କମି (lessening) + ଯିବା (to go)	native	ai	
+ଥାଇପାରେ	may be (there), may exist	may be, may exist, there may be	ଥାଇ (being) + ପାରେ (can)	native	ai	
+ଶାରଦୀୟ	autumnal (of autumn)	autumnal, of the autumn season (Sharadiya Navaratri, Durga Puja)	ଶରଦ (autumn) + ଈୟ (of)	sanskrit	ai	
+ନଅ	nine (9)	nine, 9		native	ai	
+ଜଳୀୟ	watery, of water; fluid (content)	watery, of water, liquid; with amsha: water content, fluids (of the body)	ଜଳ (water) + ଈୟ (of)	sanskrit	ai	
+ଖାଦ୍ୟଠାରୁ	from food	from food (stay away from food)	ଖାଦ୍ୟ (food) + ଠାରୁ (from)	sanskrit	ai	
+ସାମା	sama, barnyard millet (sama rice)	sama, barnyard millet (sama rice, eaten during fasts)		hindi	ai	
+ତାଜା	fresh	fresh (food, fruit, news)		persian	ai	Came into Odia through Persian or Urdu.
+ଘଟଣାକ୍ରମ	course of events, developments	sequence of events, turn of events, developments	ଘଟଣା (event) + କ୍ରମ (sequence)	sanskrit	ai	
+କାନ୍ତ	Kant (in names: Surya Kant)	Kant, part of names (Chief Justice Surya Kant); lovely, beloved (literary)		name	ai	
+ସଲିସିଟର	solicitor (Solicitor General)	solicitor, as in Solicitor General (the government's law officer)		english	ai	
+ଆୟରଙ୍କ	of Iyer (Shreyas Iyer)	of Iyer, Iyer's (respectful)	ଆୟର (Iyer) + ଙ୍କ (of, respectful)	name	ai	Not ଆୟ + ର (of income).
+ଅପଗ୍ରେଡ୍	upgrade	upgrade (a software upgrade)		english	ai	
+ତାରକା	star (celebrity); star	star, celebrity (a film or cricket star); star (in the sky, literary)		sanskrit	ai	
+ବଢ଼ାଇ	raising, extending (having raised)	having raised, increasing, extending (with debaa: to increase); stretching out (a hand)	ବଢ଼ା (make grow) + ଇ (having)	native	ai	
+ବିନୋଦ	Binod (given name); amusement	Binod, Vinod, a given name; amusement, entertainment (literary)		name	ai	
+ଚମାଖଣ୍ଡି	Chamakhandi (place in Ganjam)	Chamakhandi, a place on National Highway 16 in Ganjam district		name	ai	
+ବୁଝାସୁଝା	persuasion, talking (them) round	persuasion, pacifying talks, talking someone round (with karibaa: to persuade, pacify)	ବୁଝା (explaining) + ସୁଝା (echo word)	native	ai	
+ଅପ୍ରତ୍ୟାଶିତ	unexpected	unexpected, unforeseen	ଅ (un-) + ପ୍ରତ୍ୟାଶିତ (expected)	sanskrit	ai	
+ଜଟିଳତା	complication; complexity	complication (medical); complexity, intricacy	ଜଟିଳ (complex) + ତା (-ness)	sanskrit	ai	
+ପୋଷଣ	nutrition, nourishment	nutrition, nourishment; upbringing, rearing; harbouring (a feeling)		sanskrit	ai	
+ତତ୍ତ୍ୱାବଧାନରେ	under the supervision (of)	under the supervision of, overseen by	ତତ୍ତ୍ୱାବଧାନ (supervision) + ରେ (in, under)	sanskrit	ai	
+ଡେଲିଭରି	delivery (childbirth; of goods)	delivery, childbirth; delivery (of goods, of a futures contract)		english	ai	
+ଛିଡ଼ା	standing (upright); posted (a score)	standing, upright (with hebaa: to stand); with karibaa: to set up, post (a score), to field (a candidate)		native	ai	
+କ୍ୱିଣ୍ଟାଲ	quintal (100 kg)	quintal, 100 kilograms		english	ai	
+ନହୁଏ	does not happen; is not	does not happen, does not become; with yepari: so that (it) does not	ନ (not) + ହୁଏ (happens)	native	ai	
+ରୁଷ	Russia (country)	Russia, a country in Europe and Asia		name	ai	
+ପାଶ୍ଚାତ୍ୟ	Western (countries, culture)	Western (countries, culture); of the West		sanskrit	ai	
+ଦୀର୍ଘମିଆଦୀ	long-term	long-term (long-term capital gains; long-term thinking)	ଦୀର୍ଘ (long) + ମିଆଦୀ (term)	mixed	ai	
+କକ୍ରୋଚ୍	cockroach (Cockroach Janata Party)	cockroach; in the name of the Cockroach Janata Party (CJP)		english	ai	
+ନେହାଙ୍କ	of Neha (given name)	of Neha, Neha's (respectful)	ନେହା (Neha) + ଙ୍କ (of, respectful)	name	ai	
+ମଲ୍ଟି	multi- (Multi Commodity Exchange)	multi-, as in Multi Commodity Exchange (MCX); many		english	ai	
+କମୋଡିଟି	commodity	commodity, a traded good (gold, oil, grain)		english	ai	
+ଫ୍ୟୁଚର୍ସ	futures (contracts)	futures, futures contracts (in commodity and share markets)		english	ai	
+ବର୍ଷିଆ	-year-old; of (N) years	aged (N) years, -year-old (after a number); of (N) years (a 10-year bond)	ବର୍ଷ (year) + ଇଆ (of)	native	ai	
+ଇଞ୍ଜିନିୟରିଂର	of engineering	of engineering (civil, mechanical engineering)	ଇଞ୍ଜିନିୟରିଂ (engineering) + ର (of)	english	ai	
+ବର୍ଗଭିତ୍ତିକ	category-wise, category-based	category-wise, by category (reserved posts by category)	ବର୍ଗ (category) + ଭିତ୍ତିକ (based)	sanskrit	ai	
+ସାକ୍ଷାତ୍‌କାର	interview	interview (for a job, with the press); meeting	ସାକ୍ଷାତ୍ (meeting) + କାର (making)	sanskrit	ai	
+ଜନ୍ତରମନ୍ତରରେ	at Jantar Mantar (Delhi)	at Jantar Mantar, the protest site in New Delhi	ଜନ୍ତରମନ୍ତର (Jantar Mantar) + ରେ (at)	name	ai	
+ସୁପ୍ରିମ	Supreme (Court)	Supreme, as in the Supreme Court; (in headlines) of the Supreme Court		english	ai	
+ସଘନ	intensive	intensive (Special Intensive Revision of voter lists); dense, thick	ସ (with) + ଘନ (dense)	sanskrit	ai	
+ବାଗଚୀଙ୍କ	of (Justice) Bagchi	of Bagchi, Bagchi's (respectful)	ବାଗଚୀ (Bagchi) + ଙ୍କ (of, respectful)	name	ai	
+ସପା	SP, Samajwadi Party	SP, the Samajwadi Party (a party in Uttar Pradesh)		name	ai	
+ସିପିଆଇ	CPI, Communist Party of India	CPI, the Communist Party of India; with (M): CPI(M), the Communist Party of India (Marxist)		name	ai	
+ପାୱାର	power (power hitter); Pawar (surname)	power (power hitter, power play); Pawar, a Marathi surname (Sharad Pawar)		english	ai	
+ବିଦ୍ରୋହୀମାନେ	rebels	rebels, insurgents	ବିଦ୍ରୋହୀ (rebel) + ମାନେ (plural)	sanskrit	ai	
+କେନ୍ଦ୍ରବିନ୍ଦୁ	centre, focal point	centre, focal point, centre of attention	କେନ୍ଦ୍ର (centre) + ବିନ୍ଦୁ (point)	sanskrit	ai	
+କାଉନସିଲ୍	council	council (a leadership council, a governing council)		english	ai	
+ଠେଲି	pushing, having pushed	pushing, having pushed (with debaa: to push into, drive into)	ଠେଲ (push) + ଇ (having)	native	ai	
+ହୋଦେଇଦା	Hodeidah (port city, Yemen)	Hodeidah, a port city on the Red Sea coast of Yemen		name	ai	
+ମଧ୍ୟସ୍ଥତା	mediation	mediation, arbitration (of a dispute)	ମଧ୍ୟସ୍ଥ (mediator) + ତା (-ness)	sanskrit	ai	
+ବିରତି	pause, break; ceasefire (with juddha)	pause, break, halt, cessation; with juddha: ceasefire		sanskrit	ai	ଯୁଦ୍ଧ ବିରତି: ceasefire.
+ମାନବୀୟ	humanitarian; human	humanitarian (a crisis, aid); human (dignity)	ମାନବ (human) + ଈୟ (of)	sanskrit	ai	
+ଇରାନର	of Iran	of Iran, Iran's	ଇରାନ (Iran) + ର (of)	name	ai	
+ହୁତିଙ୍କ	of the Houthis	of the Houthis, the Houthis' (Yemen's Houthi rebels)	ହୁତି (Houthi) + ଙ୍କ (of)	name	ai	
+ବୁରକାନ୍	Burkan (a Houthi missile)	Burkan, a series of missiles used by Yemen's Houthis (Arabic: volcano)		name	ai	
+ରେଞ୍ଜ୍	range (distance)	range (of a missile, a vehicle); range (mountain range; forest range)		english	ai	
+ଡ୍ରାଫ୍ଟ	draft (draft list)	draft (a draft voter list, a draft bill)		english	ai	
+ମଣିପୁର	Manipur (state)	Manipur, a state in north-east India		name	ai	
+ଏସଏସଆର	SSR, Special Summary Revision (voter lists)	SSR, the Special Summary Revision of voter lists		english	ai	
+ନିର୍ବାଚକ	electoral; elector	electoral (electoral registration officer); elector, voter		sanskrit	ai	
+ମେକର	maker (reel maker)	maker (a reel maker, a film maker)		english	ai	
+ଯୌନ	sexual	sexual (sexual harassment, sexual violence)		sanskrit	ai	
+ଘନିଷ୍ଠ	close, intimate	close, intimate (a friend, an aide); closely associated		sanskrit	ai	
+ପୋଷ୍ଟକୁ	the post (object); to the post	the (social media) post (object); to the post, to the job	ପୋଷ୍ଟ (post) + କୁ (to; object)	english	ai	
+ରୋମାଣ୍ଟିକ	romantic	romantic		english	ai	
+ନିର୍ଦ୍ଦେଶାଳୟ	directorate	directorate (Enforcement Directorate, ED)	ନିର୍ଦ୍ଦେଶ (direction) + ଆଳୟ (office)	sanskrit	ai	
+ଲିମିଟେଡର	of (... Private) Limited	of a limited company (... Private Limited's)	ଲିମିଟେଡ (Limited) + ର (of)	english	ai	
+ରାଷ୍ଟ୍ରାୟତ୍ତ	state-owned, public sector	state-owned, nationalised, public sector (a bank, an undertaking)	ରାଷ୍ଟ୍ର (nation) + ଆୟତ୍ତ (under control)	sanskrit	ai	
+ଦାଏର	filed (a case, an FIR)	filed, lodged (an FIR, a case, a petition)		arabic	ai	Also spelt ଦାୟର. ଦାଏର କରିବା: to file.
+ନଗଦ	cash	cash; in cash		arabic	ai	Came into Odia through Persian or Urdu.
+ନିକୋ	Nicco (Nicco Park, Bhubaneswar)	Nicco, as in Nicco Park, an amusement park in Bhubaneswar		name	ai	
+ପ୍ରାପ୍ୟ	dues, entitlements	dues, entitlements (retirement dues); obtainable, due		sanskrit	ai	
+ପାର୍କର	of the park	of the park	ପାର୍କ (park) + ର (of)	english	ai	Also the surname Parker.
+ଏକାମ୍ର	Ekamra (old name of Bhubaneswar)	Ekamra, an old name of Bhubaneswar (Ekamra Kshetra); in names of colleges and projects	ଏକ (one) + ଆମ୍ର (mango tree)	name	ai	
+ହୋତା	Hota (surname)	Hota, an Odia surname; (old) a priest who offers oblations		name	ai	
+ଅପରପକ୍ଷରେ	on the other hand	on the other hand; elsewhere, meanwhile	ଅପର (other) + ପକ୍ଷ (side) + ରେ (on)	sanskrit	ai	
+ବଳିଆ	Balia (name; Baba Balia College near Baripada)	Balia, part of names (Baba Balia College, Baripada); strong, sturdy (spoken)		name	ai	
+ଯୁବପିଢ଼ିଙ୍କ	of the young generation	of the young generation, of the youth	ଯୁବପିଢ଼ି (young generation) + ଙ୍କ (of)	mixed	ai	
+ଷ୍ଟିଲ୍	steel	steel		english	ai	
+ମଧ୍ୟସ୍ଥିଙ୍କ	of a mediator	of a mediator; with jariaare: through a mediator	ମଧ୍ୟସ୍ଥି (mediator) + ଙ୍କ (of)	sanskrit	ai	
+ଲ	la (letter); law (Law', in college names)	the letter la; law, as in Law' (Law College, Live Law)			ai	
+ରାଜପାଲଙ୍କୁ	Rajpal (object); to Rajpal	Rajpal (object), to Rajpal (respectful)	ରାଜପାଲ (Rajpal) + ଙ୍କୁ (to; respectful)	name	ai	
+ମୁରଲୀ	Murali (given name); flute	Murali, a given name (also in company names); flute, Krishna's flute (literary)		name	ai	
+ପ୍ରୋଜେକ୍ଟସ୍‌	projects (in company names)	projects (in company names)		english	ai	
+ଠେଲାପେଲା	jostling, pushing and shoving	jostling, pushing and shoving, a scuffle	ଠେଲା (push) + ପେଲା (shove)	native	ai	
+କିରାଣି	clerk	clerk (junior or senior clerk in an office)			ai	
+ଟାଇପିଷ୍ଟ	typist	typist		english	ai	
+ସ୍ୱରାଷ୍ଟ୍ର	home (affairs); Home Ministry	home affairs (Home Ministry, Home Secretary); one's own country (literary)	ସ୍ୱ (own) + ରାଷ୍ଟ୍ର (nation)	sanskrit	ai	
+ଗୋବିନ୍ଦ	Govind (given name); Krishna	Govind, a given name; Govinda, a name of Krishna		name	ai	
+ଅପ୍ରୀତିକର	unpleasant, untoward	unpleasant, untoward (an incident, a situation)	ଅ (un-) + ପ୍ରୀତିକର (pleasing)	sanskrit	ai	
+ସତ୍ୟପାଠରେ	in an affidavit	in an affidavit (to a court)	ସତ୍ୟପାଠ (affidavit) + ରେ (in)	sanskrit	ai	
+ପିଲ୍ଲେଙ୍କୁ	Pillay (object); to Pillay	Pillay (object), to Pillay (respectful)	ପିଲ୍ଲେ (Pillay) + ଙ୍କୁ (to; respectful)	name	ai	
+ବର୍ଣ୍ଣବୈଷମ୍ୟ	racial discrimination; apartheid	racial discrimination; apartheid	ବର୍ଣ୍ଣ (colour, race) + ବୈଷମ୍ୟ (discrimination)	sanskrit	ai	
+ମର୍ଯ୍ୟାଦା	dignity; respect	dignity, honour; respect, prestige; limit, propriety		sanskrit	ai	
+ଜେଜେବାପା	grandfather (father's father)	grandfather, paternal grandfather	ଜେଜେ (grand-) + ବାପା (father)	native	ai	
+ମାତା	mother	mother; Mata, the Mother goddess (in names)		sanskrit	ai	
+ଶ୍ୱେତାଙ୍ଗ	white (person), white-skinned	white, white-skinned (a white person)	ଶ୍ୱେତ (white) + ଅଙ୍ଗ (body)	sanskrit	ai	
+ଉତ୍ତୋଳନ	raising; extraction (of minerals)	raising (a voice, a flag); lifting; extraction, mining (of minerals); withdrawal (of money)		sanskrit	ai	
+ଊର୍ଦ୍ଧ୍ୱରେ	above, beyond	above, beyond (above the law, above party lines)	ଊର୍ଦ୍ଧ୍ୱ (above) + ରେ (in)	sanskrit	ai	
+କନଷ୍ଟେବଲ	constable (police)	constable, a police constable		english	ai	
+ରକ୍ଷକ	protector, guard; keeper (wicketkeeper)	protector, guard, guardian; keeper (wicketkeeper)		sanskrit	ai	
+କରନଦୀପ	Karandeep (given name)	Karandeep, a given name		name	ai	
+ମିନେରାଲ୍ସ	minerals	minerals (critical minerals)		english	ai	
+ବଚ୍ଚନଙ୍କ	of Bachchan (Amitabh Bachchan)	of Bachchan, Bachchan's (respectful)	ବଚ୍ଚନ (Bachchan) + ଙ୍କ (of, respectful)	name	ai	
+ନାନାଙ୍କ	of Nana (actor Nana Patekar)	of Nana, Nana's (respectful; actor Nana Patekar); of the maternal grandfather (spoken)	ନାନା (Nana) + ଙ୍କ (of, respectful)		ai	
+ବାସସ୍ଥଳୀ	habitat; place of living	habitat (of wild animals); place of living	ବାସ (living) + ସ୍ଥଳୀ (place)	sanskrit	ai	
+ବିସ୍ତାରିତ	expanded, extended; detailed	expanded, extended, spread over; detailed		sanskrit	ai	
+ପୋକ୍ସୋ	POCSO (child sexual abuse law)	POCSO, the Protection of Children from Sexual Offences Act (a special POCSO court)		english	ai	
+ଦଣ୍ଡାଦେଶ	sentence (court punishment)	sentence, punishment ordered by a court	ଦଣ୍ଡ (punishment) + ଆଦେଶ (order)	sanskrit	ai	
+ଭୈରବାନନ୍ଦ	Bhairabananda (name, as of a college)	Bhairabananda, a name (Baba Bhairabananda college, Chandikhol)		name	ai	
+ସ୍ଥାନିତ	placed, ranked, listed	placed, ranked, listed (in a list or a ranking)			ai	
+ସିଙ୍ଗଲ	single	single (single year)		english	ai	
+ଇୟର	year (in English names)	year (in English names and phrases)		english	ai	
+ସଂଘମିତ୍ରା	Sanghamitra (given name)	Sanghamitra, a woman's given name		name	ai	
+ଗଣଗୁଳିକାଣ୍ଡ	mass shooting	mass shooting, a shooting incident with many victims	ଗଣ (mass) + ଗୁଳି (bullet) + କାଣ୍ଡ (incident)	mixed	ai	
+ଇଲେକ୍ଟ୍ରିକାଲ୍	electrical	electrical (electrical engineering department)		english	ai	
+ସନ୍ଦୀପ	Sandeep (given name)	Sandeep, a given name		name	ai	
+ଇଲେକ୍ଟ୍ରୋନିକ୍	electronic	electronic (electronic devices)		english	ai	
+ଡିଭାଇସ୍	device	device, a gadget		english	ai	
+ହରିବାବୁ	Haribabu (given name)	Haribabu, a given name	ହରି (Hari) + ବାବୁ (babu)	name	ai	
+ସମ୍ବର୍ଦ୍ଧନା	felicitation, honouring (ceremony)	felicitation, a ceremony to honour someone (a farewell felicitation)		sanskrit	ai	
+କମ୍ଭମପାଟୀ	Kambhampati (surname)	Kambhampati, a Telugu surname		name	ai	
+ଜଣାପଡ଼ିବ	will be known; will come to light	will be known, will become clear, will come to light	ଜଣା (known) + ପଡ଼ିବ (will fall)	native	ai	
+ସହରାଞ୍ଚଳରେ	in urban areas	in urban areas, in the towns	ସହରାଞ୍ଚଳ (urban area) + ରେ (in)	mixed	ai	
+ସଂଗଠନଗୁଡ଼ିକର	of the organisations	of the organisations	ସଂଗଠନ (organisation) + ଗୁଡ଼ିକର (of the, plural)	sanskrit	ai	
+ସିଙ୍ଗାପୁରର	of Singapore	of Singapore, Singapore's	ସିଙ୍ଗାପୁର (Singapore) + ର (of)	name	ai	
+ଇମିଗ୍ରେସନ	immigration	immigration (immigration law)		english	ai	
+ଆର୍ୟା	Arya (given name)	Arya, a given name		name	ai	Also spelt ଆରିୟା.
+ଓଁକାର	Omkar (given name); the syllable Om	Omkar (given name); the sacred syllable Om		name	ai	Also spelt ଓମକାର.
+ଧନୁପାଲି	Dhanupali (area of Sambalpur)	Dhanupali, an area and police station in Sambalpur		name	ai	
+ମନୋନୟନକାରୀ	selector (cricket selector)	selector (a member of a selection committee)	ମନୋନୟନ (selection) + କାରୀ (one who does)	sanskrit	ai	
+ପାର୍ଥିବ	Parthiv (given name); earthly	Parthiv, a given name; earthly, worldly (literary)		name	ai	
+ପ୍ରଜ୍ଞାନ	Pragyan (given name)	Pragyan, a given name; wisdom (literary)		name	ai	
+ମନୋନୟନ	selection; nomination	selection (a selection committee); nomination (for an election)		sanskrit	ai	
+ପଶ୍ଚିମାଞ୍ଚଳର	of the western zone	of the western zone, of the western region	ପଶ୍ଚିମାଞ୍ଚଳ (western zone) + ର (of)	sanskrit	ai	
+ସ୍ପିନର	spinner (spin bowler)	spinner, a spin bowler		english	ai	
+ଭିଲ୍ଲା	villa (in names of housing complexes)	villa (in names of housing complexes)		english	ai	
+ମାନ୍ୟତାରେ	in the rankings; in recognition	in the rankings; in status, in recognition	ମାନ୍ୟତା (ranking, recognition) + ରେ (in)	sanskrit	ai	
+ସୂର୍ଯ୍ୟକାନ୍ତ	Surya Kant (given name)	Suryakant, Surya Kant, a given name (Chief Justice Surya Kant); sunstone (literary)	ସୂର୍ଯ୍ୟ (sun) + କାନ୍ତ (beloved)	name	ai	
+ଗୋଲ୍‌ଡ	gold (gold medal)	gold (a gold medal)		english	ai	
+ସୁନାଝିଅକୁ	the golden girl (object)	the golden girl (object), to the golden girl	ସୁନାଝିଅ (golden girl) + କୁ (to; object)	native	ai	
+ସବ୍‌ହା	Sabah (given name)	Sabah, a given name		name	ai	Also spelt ସବାହ୍.
+ସାକ୍ଷ୍ୟ	testimony, evidence	testimony, evidence (with debaa: to testify)		sanskrit	ai	
+କ୍ୟାରିଅର	career	career		english	ai	Also spelt କ୍ୟାରିୟର.
+ରେଫ୍ରିଜରେଟର	refrigerator, fridge	refrigerator, fridge		english	ai	
+ସେଟ୍	set (set the temperature); a set	set (to set a temperature, a target); a set		english	ai	
+ମିଆଦ	term, validity; expiry	term, period, validity (with shesha: expiry date); deadline		persian	ai	Came into Odia through Persian or Urdu.
+ନଗଣ୍ୟ	negligible, insignificant	negligible, insignificant, very small	ନ (not) + ଗଣ୍ୟ (countable)	sanskrit	ai	
+ଯୋଜନାଗୁଡ଼ିକରେ	in the schemes	in the schemes, in the plans	ଯୋଜନା (scheme) + ଗୁଡ଼ିକରେ (in the, plural)	sanskrit	ai	
+ଏଲ	L (letter, in abbreviations)	the letter L (in abbreviations: RBL, SLBC)		english	ai	
+ଏଣ୍ଡ	and (in English phrases); end	and (in English phrases: brick and mortar, use and throw); end		english	ai	
+ମାନ୍ୟତାରୁ	from the status (of)	from the status, from recognition (as a protest site)	ମାନ୍ୟତା (status, recognition) + ରୁ (from)	sanskrit	ai	
+ଈଶା	Isha (given name)	Isha, a woman's given name		name	ai	Also spelt ଇଶା.
+ରିଲାଏନ୍ସର	of Reliance (Reliance Industries)	of Reliance, Reliance's (Reliance Industries)	ରିଲାଏନ୍ସ (Reliance) + ର (of)	name	ai	
+ଇଶା	Isha (given name); Isa (Jesus)	Isha, a woman's given name; Isa, Jesus (old)		name	ai	
+ଭାଗିଦାରୀ	partnership (in cricket); share	partnership (a batting partnership); participation, share		hindi	ai	
+ସମତଳ	flat, level; plain	flat, level (a flat roof); plains	ସମ (even) + ତଳ (surface)	sanskrit	ai	
+ଢାଲୁ	sloping	sloping, slanting (a sloping roof)		native	ai	
+ସୂର୍ଯ୍ୟକିରଣର	of sunlight	of sunlight, of the sun's rays	ସୂର୍ଯ୍ୟକିରଣ (sunlight) + ର (of)	sanskrit	ai	
+ଲକ୍ଷ୍ମଣଙ୍କ	of Lakshman (Lakshmana)	of Lakshman, Lakshmana's (respectful)	ଲକ୍ଷ୍ମଣ (Lakshman) + ଙ୍କ (of, respectful)	name	ai	
+କମ୍ପାନିଗୁଡ଼ିକ	companies	companies, the companies	କମ୍ପାନି (company) + ଗୁଡ଼ିକ (plural)	english	ai	
+ସେକ୍ସନ	section (of a law)	section (of a law, an act)		english	ai	
+ଥଲପତି	Thalapathy (title of actor Vijay)	Thalapathy, 'commander', a title of the Tamil actor and politician Vijay		name	ai	
+ପୋଷ୍ୟ	adopted (son); dependant	adopted (an adopted son); dependant, one to be maintained		sanskrit	ai	
+ଗଞ୍ଜାମରେ	in Ganjam (district)	in Ganjam, a district of south Odisha	ଗଞ୍ଜାମ (Ganjam) + ରେ (in)	name	ai	
+ହିନ୍ଦୁଫୋବିଆ	Hinduphobia	Hinduphobia, prejudice against Hindus		mixed	ai	
+ଟ୍ରାଏଲ	trial (trial court)	trial (a trial court)		english	ai	
+ଆଇଟିଏଫ୍‌	ITF (International Tennis Federation)	ITF, the International Tennis Federation (ITF tournaments)		english	ai	
+ଆଜମ	Azam (given name)	Azam, a given name (Azam Khan)		name	ai	
+ଠିକା	contract (for work); contractual	contract (a government contract, a tender); contractual, on contract (staff)		hindi	ai	
+ପାତ୍ରପୁର	Patrapur (place in Ganjam)	Patrapur, a block and town in Ganjam district		name	ai	
+କେବୁଲ୍‌	cable (TV, wire)	cable (cable TV, a wire)		english	ai	
+କ୍ୟାମ୍ପରେ	at the camp, in the camp	at the camp, in the camp	କ୍ୟାମ୍ପ (camp) + ରେ (at, in)	english	ai	
+ଜୈବ	bio-, biological; organic	biological, bio- (biodiversity, biotechnology); organic (manure, farming)		sanskrit	ai	
+ଇନ୍‌ଭିକ୍ଟସ୍‌	Invictus (programme name)	Invictus, part of the name of a coaching programme		english	ai	
+ବିଶୁ	Bishu (pet name)	Bishu, a pet name (short for Biswanath)		name	ai	
+ପୀଡ଼ିତାଙ୍କୁ	to the victim (girl or woman)	to the victim, the survivor (girl or woman; respectful)	ପୀଡ଼ିତା (woman victim) + ଙ୍କୁ (to; respectful)	sanskrit	ai	
+ଅନ୍ନଦାନମ୍	Annadanam (free meal scheme)	Annadanam, free food for all; a scheme of free meals (Tamil Nadu)	ଅନ୍ନ (food) + ଦାନମ୍ (gift)	sanskrit	ai	
+ମହର୍ଷି	great sage; Maharshi (in names)	great sage; Maharshi, in names (Maharshi College)	ମହା (great) + ଋଷି (sage)	sanskrit	ai	
+ଗନମାଷ୍ଟର	Gunmaster (film title)	Gunmaster, part of a film title (Gunmaster G9)		english	ai	
+ଜି୯	G9 (in a film title)	G9, part of a film title (Gunmaster G9)		english	ai	
+ହାଶମୀଙ୍କ	of Hashmi (Emraan Hashmi)	of Hashmi, Hashmi's (respectful)	ହାଶମୀ (Hashmi) + ଙ୍କ (of, respectful)	name	ai	
+ଉପଜିଲାପାଳଙ୍କୁ	to the sub-collector	to the sub-collector, the sub-collector (object; respectful)	ଉପଜିଲାପାଳ (sub-collector) + ଙ୍କୁ (to; respectful)	sanskrit	ai	
+ବାଏ	bye (bye-bye)	bye, as in bye-bye (farewell)		english	ai	
+ପୁନମ୍‌	Punam, Poonam (given name)	Punam, Poonam, a woman's given name		name	ai	
+ଟି୨୦ରେ	in T20 (matches)	in T20 internationals, in T20 cricket	ଟି୨୦ (T20) + ରେ (in)	english	ai	
+ଟୁର୍ନାମେଣ୍ଟରେ	in the tournament	in the tournament	ଟୁର୍ନାମେଣ୍ଟ (tournament) + ରେ (in)	english	ai	
+ଦୀପ୍ତି	Deepti (given name); radiance	Deepti, a woman's given name; radiance, brightness (literary)		name	ai	
+ଓପନିଂ	opening (partnership, day)	opening (an opening partnership, an opening day)		english	ai	
+ଯୋଡ଼ିଥିଲେ	had added (runs); had joined	added, had added (runs; they, or he/she respectful); had joined, connected	ଯୋଡ଼ (join) + ଇଥିଲେ (had)	native	ai	
+ଭରି	filling, having filled; bhari (gold weight)	filled, having filled (with rahibaa: was full of); bhari, a unit of gold weight (about 11.66 g, a tola)	ଭର (fill) + ଇ (having)	native	ai	
+ୱାଶିଂଟନ	Washington (US capital; a name)	Washington, DC, the capital of the USA; Washington, a name		name	ai	
+ଗବେଷକମାନଙ୍କ	of researchers	of researchers, by researchers	ଗବେଷକ (researcher) + ମାନଙ୍କ (of, plural)	sanskrit	ai	
+କୋଷିକା	cell (biology)	cell, the unit of living tissue		sanskrit	ai	
+ଜିନ୍‌	gene; gin; jinn	gene (in biology); gin (liquor); jinn, a spirit		english	ai	
+ମାଈ	female (animal)	female (of an animal: a female dog)		native	ai	
+ଅନେକାଂଶରେ	to a large extent, largely	to a large extent, largely, in many ways	ଅନେକାଂଶ (large part) + ରେ (in)	sanskrit	ai	
+ଅଣ୍ଡିରା	male (animal)	male (of an animal: a male dog)		native	ai	
+କ୍ରମଶଃ	gradually	gradually, step by step		sanskrit	ai	
+କର୍ଣ୍ଣେଲ	colonel	colonel (Col. C. K. Nayudu Trophy)		english	ai	
+ଉଦ୍‌ଯାପନୀ	closing (ceremony)	closing, concluding (a closing ceremony)		sanskrit	ai	
+ହରିନାରାୟଣ	Harinarayan (given name)	Harinarayan, a given name	ହରି (Hari) + ନାରାୟଣ (Narayan)	name	ai	
+ପଦ୍ମଚରଣ	Padmacharan (given name)	Padmacharan, a given name	ପଦ୍ମ (lotus) + ଚରଣ (feet)	name	ai	
+ହେମନ୍ତ	Hemant (given name); early winter	Hemant, a given name; Hemanta, the season of early winter		name	ai	
+ରବିନ୍ଦ୍ର	Rabindra (given name)	Rabindra, a given name		name	ai	Also spelt ରବୀନ୍ଦ୍ର.
+କୋଚ	coach (sports)	coach, a sports coach		english	ai	
+ସୁଜନ	Sujan (given name); good person	Sujan, a given name; a good person (literary)		name	ai	
+ଉଦୀୟମାନ	emerging, rising (player)	emerging, rising, upcoming (a player, a talent)		sanskrit	ai	
+ସମ୍ବର୍ଦ୍ଧିତ	felicitated, honoured	felicitated, honoured (at a ceremony)		sanskrit	ai	
+ହେପାଜତକୁ	into custody	into custody (police or judicial custody)	ହେପାଜତ (custody) + କୁ (to, into)	arabic	ai	
+ମୈଦାନରେ	at the ground (maidan)	at the ground, on the field (maidan)	ମୈଦାନ (ground) + ରେ (at, on)	persian	ai	
+ଫି	fee	fee (school fee, a fee for a permit)		english	ai	
+ଫେରସ୍ତଯୋଗ୍ୟ	refundable	refundable (a refundable deposit)	ଫେରସ୍ତ (refund) + ଯୋଗ୍ୟ (fit for)	mixed	ai	
+ବ୍ରିକ୍ସ	BRICS (group of countries)	BRICS, a group of countries (Brazil, Russia, India, China, South Africa and others)		english	ai	
+ନେତୃତ୍ୱର	of leadership	of leadership, of the leadership	ନେତୃତ୍ୱ (leadership) + ର (of)	sanskrit	ai	
+ଦିଆଯାଇପାରେ	can be given; may be (done)	can be given, may be given (passive); with a verb: may be (done)	ଦିଆ (given) + ଯାଇ (going) + ପାରେ (can)	native	ai	
+ମାଡ଼ି	spreading over, encroaching; the gums	spreading over, encroaching (with basibaa: to occupy, to swoop on); the gums (of the teeth)		native	ai	
+ପ୍ରତିକ୍ରିୟାଶୀଳ	reactive; reacting (strongly)	reactive, responding, reacting; reactionary (in politics)	ପ୍ରତିକ୍ରିୟା (reaction) + ଶୀଳ (given to)	sanskrit	ai	
+କଦାପି	ever; never (with a negative)	ever, at any time; never, by no means (with a negative)		sanskrit	ai	
+ସୁସମ୍ପର୍କ	good relations	good relations, cordial ties	ସୁ (good) + ସମ୍ପର୍କ (relation)	sanskrit	ai	
+ଭ୍ରମିତ	misled, confused	misled, confused, deceived		sanskrit	ai	
+ଟ୍ରମ୍ପ୍‌ଙ୍କ	of Trump (Donald Trump)	of Trump, Trump's (respectful)	ଟ୍ରମ୍ପ୍ (Trump) + ଙ୍କ (of, respectful)	name	ai	
+ଟ୍ରମ୍ପ୍‌	Trump (Donald Trump); trump (card)	Trump, Donald Trump, president of the USA; trump card		name	ai	
+ବାହାବା	praise, applause	praise, applause, acclaim (with nebaa: to take credit)			ai	
+କେଉଁଭଳି	how, in what way	how, in what way, what kind of	କେଉଁ (which) + ଭଳି (like)	native	ai	
+ବିଧିବଦ୍ଧ	formal, systematic; official	formal, systematic; official, statutory (a notification)	ବିଧି (rule) + ବଦ୍ଧ (bound)	sanskrit	ai	
+ଯୋଗାଡ଼	arranging, gathering (money, people)	arranging, gathering, procuring (with karibaa: to arrange, collect); means, arrangement		native	ai	
+ଦିଗ୍ଗଜ	veteran, giant (of a field)	veteran, giant, stalwart (of a field); the elephants guarding the directions (myth)	ଦିକ୍ (direction) + ଗଜ (elephant)	sanskrit	ai	
+କ୍ୟାରିୟର୍‌	career	career		english	ai	
+ମିଳିବନି	will not get, will not be available	will not be got, will not be available (spoken negative)	ମିଳିବ (will be got) + ନି (not)	native	ai	
+ସଦ୍ୟତମ	latest, most recent	latest, most recent		sanskrit	ai	
+ୱାର୍ଲ୍ଡ	world	world (World Championship)		english	ai	
+କ୍ରିଷ୍ଟିଆନ୍‌	Christian (given name)	Christian, a given name; Christian (of the religion)		name	ai	
+କେଜ୍‌ଙ୍କ	of Cage (ring name)	of Cage, Cage's (respectful)	କେଜ୍ (Cage) + ଙ୍କ (of, respectful)	name	ai	
+ଚାମ୍ପିୟନ୍‌	champion	champion		english	ai	
+ସ୍ବିରି	Sewri (area of Mumbai; its hospital)	Sewri, an area of Mumbai (Sewri TB hospital)		name	ai	
+ବାୟୋମିଥେନେଶନ	biomethanation	biomethanation, making biogas from waste		english	ai	
+ତ୍ୱରିତ	quick, speedy, fast-track	quick, speedy, fast-track (disposal of cases)		sanskrit	ai	
+ହାଟଡିହୀ	Hatadihi (block, Keonjhar)	Hatadihi, a block in Keonjhar district		name	ai	
+ପ୍ରଳୟ	cataclysm, doomsday; Pralay (given name)	great destruction, cataclysm; the end of the world (Hindu cosmology); deluge, flood; Pralay (given name); Pralay, an Indian missile		sanskrit	ai	
+ଯେନା	Jena (surname)	Jena (an Odia surname)		name	ai	Also spelt ଜେନା.
+ଟୁକୁନା	Tukuna (given name; pet name)	Tukuna (an Odia given name or pet name)		name	ai	
+ସର୍ଜିକାଲ୍	surgical (surgical strike)	surgical; surgical strike (a quick targeted raid, also figurative)		english	ai	
+କେଶରୀ	lion; Keshari (name or surname)	lion (the maned one); Keshari (given name, middle name or surname); the Keshari dynasty of old Odisha		sanskrit	ai	
+କେତୁ	Ketu (shadow planet, astrology)	Ketu, the south node of the moon, a shadow planet in Hindu astrology; (old) flag, banner; comet		sanskrit	ai	
+ଚମକିବ	will shine (luck, fortune); will be startled	will shine, will sparkle (he/she/it, future): luck will shine; will be startled	ଚମକ (shine, flash) + ଇବ (will)	native	ai	
+କେତୁଙ୍କ	of Ketu (astrology)	of Ketu, the south lunar node (astrology)	କେତୁ (Ketu) + ଙ୍କ (of, respectful)	sanskrit	ai	
+କାରକ	factor; significator (astrology); case (grammar)	factor, cause; significator, the planet that rules a matter (astrology); case (grammar); doer, maker (at the end of compounds)		sanskrit	ai	
+କର୍ମକ୍ଷେତ୍ର	workplace; field of work	workplace, field of work, career; sphere of action	କର୍ମ (work) + କ୍ଷେତ୍ର (field)	sanskrit	ai	
+ନହୋଇ	without being, not being (hasty etc.)	without being, without becoming; not having become	ନ (not) + ହୋଇ (being, having become)	native	ai	Also written ନ ହୋଇ.
+ଦେଖିନାହାନ୍ତି	have not seen (they; or he/she, respectful)	have not seen, did not see (they; or he/she, respectful)	ଦେଖି (having seen) + ନାହାନ୍ତି (are not)	native	ai	
+ହଇଚଇ	uproar, commotion, stir	uproar, commotion, stir, sensation (in the news)		native	ai	Also spelt ହୈଚୈ.
+କରାଇବାକୁ	to get (it) done; to have (a test) done	to get done, to have (something) done by another; in order to get done	କରାଇବା (getting done) + କୁ (to)	native	ai	
+ପାଟେକରଙ୍କୁ	Patekar (object; surname)	to Patekar, Patekar (object); Patekar is a Marathi surname (actor Nana Patekar)	ପାଟେକର (Patekar) + ଙ୍କୁ (to, respectful)	name	ai	
+ଚାକିରିଆଙ୍କ	of salaried people, of employees	of salaried people, of employees, of job holders	ଚାକିରିଆ (salaried person) + ଙ୍କ (of)	persian	ai	
+ହାରାହାରିଠାରୁ	than (the) average; from the average	than the average (more than average); from the average	ହାରାହାରି (average) + ଠାରୁ (from, than)	native	ai	
+ସର୍ଭିସେସ୍‌	services (in names of firms)	services (professional services, financial services)		english	ai	
+ଏନ୍‌ବିଏଫ୍‌ସି	NBFC, non-banking financial company	NBFC, non-banking financial company (a lender that is not a bank)		english	ai	
+ବଦଳାଇବା	to change, replace; changing	to change, to replace, to exchange; to switch (a job); to transfer	ବଦଳ (change) + ଆଇବା (cause to, verbal noun)	native	ai	
+ଉତ୍ପାଦକତା	productivity	productivity; productiveness	ଉତ୍ପାଦକ (productive) + ତା (-ness)	sanskrit	ai	
+ସଂହିତା	code (wage code, legal code); compilation	code of laws or rules (wage code, penal code); a collection of texts, a samhita (Vedic); compilation		sanskrit	ai	
+କମ୍‌ରେ	at least (with ati); for less	at least (with ati: ati kamre); for less, at a low price	କମ୍ (less) + ରେ (at)	persian	ai	
+ଅଭିନୀତ	acted (in a film); starring	acted, performed (a role); starring (a film starring X)		sanskrit	ai	
+କଷ୍ଟଦାୟକ	painful, distressing, hard	painful, distressing, hard, troublesome	କଷ୍ଟ (pain, hardship) + ଦାୟକ (giving)	sanskrit	ai	
+ଗର୍ଭଧାରଣର	of pregnancy	of pregnancy, of conceiving	ଗର୍ଭଧାରଣ (pregnancy) + ର (of)	sanskrit	ai	
+କମିଯାଇଥିଲା	had come down, had decreased (weight etc.)	had decreased, had come down, had dropped (he/she/it)	କମି (decreasing) + ଯାଇଥିଲା (had gone)	native	ai	
+ସେଠ	Seth, Sheth (surname); rich merchant	Seth, Sheth (surname); a rich merchant, a moneylender (spoken)		name	ai	
+ଇଶିତାଙ୍କ	of Ishita (given name)	of Ishita, Ishita's (a female given name)	ଇଶିତା (Ishita) + ଙ୍କ (of, respectful)	name	ai	
+ଦେବଗନ	Devgn (surname, as in actor Ajay Devgn)	Devgn, Devgan (surname)		name	ai	
+ଅଫିସ୍‌ରେ	in (the) office; at the box office	in the office, at the office; at the box office (with baksa)	ଅଫିସ୍ (office) + ରେ (in, at)	english	ai	
+ଛୁଇଁବା	to touch; touching; reaching (a mark)	to touch; touching; to reach (a figure, a milestone)	ଛୁଇଁ (touch) + ବା (verbal noun)	native	ai	
+ଅଗ୍ରସର	moving ahead, advancing	moving ahead, advancing, proceeding (with hebaa: to move forward)	ଅଗ୍ର (front) + ସର (moving)	sanskrit	ai	
+ଫ୍ରାନ୍ସର	of France; France's	of France, France's (Air France)	ଫ୍ରାନ୍ସ (France) + ର (of)	name	ai	
+ଫ୍ଲାଏଦୁବାଇ	flydubai (airline of Dubai)	flydubai, an airline based in Dubai		name	ai	
+ଅଭିମୁଖୀ	bound for, heading to; facing	bound for, heading towards (Israel-bound flights); facing, turned towards; -oriented	ଅଭି (towards) + ମୁଖୀ (facing)	sanskrit	ai	
+ଆକାଶମାର୍ଗ	airspace; air route	airspace; air route, by air	ଆକାଶ (sky) + ମାର୍ଗ (path)	sanskrit	ai	
+ବିମାନବନ୍ଦରର	of the airport	of the airport, the airport's	ବିମାନବନ୍ଦର (airport) + ର (of)	mixed	ai	
+ଭେଦଭାବ	discrimination	discrimination, unequal treatment (caste, racial)	ଭେଦ (difference) + ଭାବ (attitude)	sanskrit	ai	
+ଲେଣ୍ଡିଂ	lending (lending rate)	lending (lending rate, lending business)		english	ai	
+ଲୋନ୍	loan	loan (home loan, personal loan)		english	ai	
+ପଞ୍ଚାୟତିରାଜ	Panchayati Raj, village self-government	Panchayati Raj, the system of village self-government; the Panchayati Raj department	ପଞ୍ଚାୟତି (of the panchayat) + ରାଜ (rule)	mixed	ai	
+ହିତାଧିକାରୀମାନେ	beneficiaries	beneficiaries (of a scheme)	ହିତାଧିକାରୀ (beneficiary) + ମାନେ (plural)	sanskrit	ai	
+ସମୂହ	group, collection; collective, collectively	group, collection, mass; collective, joint; collectively		sanskrit	ai	
+ତ୍ରିପାକ୍ଷିକ	trilateral, three-party	trilateral, three-party, between three sides or countries	ତ୍ରି (three) + ପାକ୍ଷିକ (of sides)	sanskrit	ai	
+ପ୍ରତିପାଦନ	affirming, establishing; demonstrating	affirming, upholding, establishing; demonstrating, proving (an argument)	ପ୍ରତି (towards) + ପାଦନ (bringing about)	sanskrit	ai	
+ଆଗେଇନେବାରେ	in taking forward, in advancing	in taking forward, in carrying ahead (ties, a plan)	ଆଗେଇନେବା (taking forward) + ରେ (in)	native	ai	
+ତୁର୍କୀକୁ	to Turkey; Turkey (object)	to Turkey, Turkey (object)	ତୁର୍କୀ (Turkey) + କୁ (to)	name	ai	
+ନୌସେନା	navy	navy, naval force	ନୌ (ship) + ସେନା (army)	sanskrit	ai	
+ସିଷ୍ଟମ	system	system (air defence system, a computer system)		english	ai	
+ଆଦାନ	taking, receiving (in aadan pradan: exchange)	taking, receiving; with pradan: exchange, give and take		sanskrit	ai	
+ସୈନ୍ୟାଭ୍ୟାସ	military exercise	military exercise, joint war games	ସୈନ୍ୟ (troops) + ଅଭ୍ୟାସ (practice)	sanskrit	ai	
+ସଞ୍ଚାର	communication; spread; movement	communication(s) (radio, telecom); spread, transmission (of disease); movement, circulation; infusion (of energy)		sanskrit	ai	
+ବୈଶ୍ୱିକ	global	global, worldwide		sanskrit	ai	
+ମନୋବୃତ୍ତି	attitude, mindset	attitude, mindset, mentality	ମନଃ (mind) + ବୃତ୍ତି (disposition)	sanskrit	ai	
+ଏସିଆର	of Asia (West Asia etc.)	of Asia, Asia's (West Asia, South Asia)	ଏସିଆ (Asia) + ର (of)	name	ai	
+ଇସ୍ରାଏଲ୍‌ର	of Israel; Israel's	of Israel, Israel's	ଇସ୍ରାଏଲ୍ (Israel) + ର (of)	name	ai	
+ଅନଟନ	shortage, want, hardship (financial)	shortage, want, scarcity; hardship (financial hardship)			ai	
+ବାଂଲାଦେଶର	of Bangladesh	of Bangladesh, Bangladesh's	ବାଂଲାଦେଶ (Bangladesh) + ର (of)	name	ai	
+ହାଉତି	Houthi (Yemeni rebel group)	Houthi, the Houthi rebels of Yemen		name	ai	Also spelt ହୁତି.
+ପଛଘୁଞ୍ଚା	backing off, retreat	backing off, retreat, pulling back (with deba: to back off)	ପଛ (back) + ଘୁଞ୍ଚା (moving)	native	ai	
+ସ୍କୁଲ୍‌ର	of the school; school's	of the school, the school's	ସ୍କୁଲ୍ (school) + ର (of)	english	ai	
+ଉଦ୍ଧାରକାରୀ	rescuer; rescue (team)	rescuer, rescue worker; rescue (team)	ଉଦ୍ଧାର (rescue) + କାରୀ (doer)	sanskrit	ai	
+ଲେଡି	lady	lady; Lady (title, in names: Lady Reading Hospital)		english	ai	
+ରିଡିଂ	reading; Reading (in names)	reading; Reading (in names: Lady Reading Hospital)		english	ai	
+ସ୍କୁଲ୍‌ରେ	in (the) school, at school	in the school, at school	ସ୍କୁଲ୍ (school) + ରେ (in, at)	english	ai	
+ସୌଭାଗ୍ୟବଶତଃ	fortunately, luckily	fortunately, luckily, by good fortune	ସୌଭାଗ୍ୟ (good fortune) + ବଶତଃ (owing to)	sanskrit	ai	
+ଆଠ	eight	eight (8)		native	ai	
+ଦୁଃଖଦ	sad, tragic, unfortunate	sad, tragic, unfortunate, painful	ଦୁଃଖ (sorrow) + ଦ (giving)	sanskrit	ai	
+ଉମରକୋଟ	Umarkot (town in Sindh); Umerkote (Odisha)	Umarkot, a town in Sindh, Pakistan; Umerkote, a town in Nabarangpur district, Odisha		name	ai	
+ଯୁବପିଢ଼ିଙ୍କୁ	to the young generation, the youth	to the young generation, the youth (object)	ଯୁବପିଢ଼ି (young generation) + ଙ୍କୁ (to)	mixed	ai	
+ତିନିଥର	three times, thrice	three times, thrice; for the third time	ତିନି (three) + ଥର (time)	native	ai	
+ମମଦାନୀଙ୍କୁ	Mamdani (object; surname)	to Mamdani, Mamdani (object); a surname (Zohran Mamdani)	ମମଦାନୀ (Mamdani) + ଙ୍କୁ (to, respectful)	name	ai	
+ଭାଗବତଙ୍କ	of Bhagwat (surname, as in Mohan Bhagwat)	of Bhagwat, Bhagwat's (surname)	ଭାଗବତ (Bhagwat) + ଙ୍କ (of, respectful)	sanskrit	ai	
+ଚର୍ଚ୍ଚାକୁ	to the discussion; the debate (object)	to the discussion, the talk, the debate (object)	ଚର୍ଚ୍ଚା (talk, discussion) + କୁ (to)	sanskrit	ai	
+ବିମୁକ୍ତ	freed, released; denotified (tribes)	freed, released, liberated; denotified (communities, tribes)	ବି (away) + ମୁକ୍ତ (free)	sanskrit	ai	
+ସ୍ୱୟଂଚାଳିତ	automatic; self-driven	automatic, self-operating; automatically (with bhaabe)	ସ୍ୱୟଂ (self) + ଚାଳିତ (driven)	sanskrit	ai	
+ଚାଣକ୍ୟ	Chanakya, ancient Indian statesman	Chanakya (Kautilya), ancient Indian statesman and thinker, known for Chanakya Niti; a shrewd strategist (figurative)		name	ai	
+ରଣନୀତିକ	strategic	strategic	ରଣନୀତି (strategy) + ଇକ (-ic)	sanskrit	ai	
+ରହସ୍ୟକୁ	the secret (object); to the mystery	the secret, the mystery (object); to the mystery	ରହସ୍ୟ (secret, mystery) + କୁ (to)	sanskrit	ai	
+କ୍ରୋଧିତ	angry, enraged	angry, enraged, furious	କ୍ରୋଧ (anger) + ଇତ (-ed)	sanskrit	ai	
+ସଦୁପଯୋଗ	good use, proper use	good use, proper use, making the best use of	ସତ୍ (good) + ଉପଯୋଗ (use)	sanskrit	ai	
+ଭଲପାଇବା	to love; loving; love (noun)	to love, loving; love, affection (noun)	ଭଲ (good) + ପାଇବା (to feel, get)	native	ai	
+ଗଲାଣି	has gone (by now); has vanished	has gone, is gone by now (he/she/it); has vanished, has disappeared (after another verb)	ଗଲା (went) + ଣି (already, by now)	native	ai	
+ଘଟି	happening, occurring (having occurred)	happening, occurring, having happened; (noun) a small pot	ଘଟ (happen) + ଇ (having)	native	ai	
+ହାନି	loss, harm, damage	loss, harm, damage (loss of life and property)		sanskrit	ai	
+ଆସ୍ଥା	faith, trust, belief	faith, trust, belief, confidence		sanskrit	ai	
+ଛଳନାପୂର୍ଣ୍ଣ	deceitful, hypocritical	deceitful, hypocritical, false	ଛଳନା (deceit) + ପୂର୍ଣ୍ଣ (full of)	sanskrit	ai	
+ଘରଦ୍ୱାର	house and home; household	house and home, a home; household	ଘର (house) + ଦ୍ୱାର (door)	mixed	ai	
+ନାରାଜ	unwilling, reluctant; displeased	unwilling, reluctant; displeased, unhappy		persian	ai	Came into Odia through Persian or Urdu.
+ଗଁା	village	village; of the village		native	ai	Also spelt ଗାଁ (standard).
+ମାତାପିତାଙ୍କ	of parents	of parents, of mother and father	ମାତାପିତା (parents) + ଙ୍କ (of)	sanskrit	ai	
+ତପସ୍ୟା	penance, austerity; hard dedication	penance, austerity, meditation; hard and long dedication (figurative)		sanskrit	ai	
+ନିର୍ଯାତିତ	tormented, harassed, oppressed	tormented, harassed, oppressed, tortured		sanskrit	ai	
+ନଚେତ	or else, otherwise; or	or else, otherwise; or	ନ (not) + ଚେତ୍ (if)	sanskrit	ai	Also spelt ନଚେତ୍.
+ଛଟପଟ	restless, writhing (in pain or distress)	restless, writhing, tossing about (in pain, worry or distress)		native	ai	
+ଛଡ଼ା	except, apart from, besides	except, apart from, besides, other than; (spoken) left, abandoned		native	ai	
+କ୍ଷୁଣ୍ଣ	harmed, undermined, hurt (dignity)	harmed, undermined, hurt, tarnished (dignity, image); with karibaa: to harm		sanskrit	ai	
+ଖୁଣ୍ଟିଆ	Khuntia (surname)	Khuntia (Odia surname); a servitor group of the Jagannath temple		name	ai	
+ଫୁଟେଜ୍‌	footage (CCTV footage)	footage, video footage (CCTV footage)		english	ai	
+ଯଶୀପୁର	Jashipur, a town in Mayurbhanj district	Jashipur, a town and block in Mayurbhanj district, Odisha		name	ai	
+ନିବାସୀ	resident (of)	resident, inhabitant (of a place)		sanskrit	ai	
+ଫୋନ୍‌କୁ	to the phone; the phone (object)	to the phone, the phone (object)	ଫୋନ୍ (phone) + କୁ (to)	english	ai	
+ରିସିଭ୍‌	receive (a call)	receive (a call, a payment)		english	ai	
+କଣ୍ଟାକ୍ଟ	contact (contact list)	contact (contact list, contact number)		english	ai	
+ଅପରେଟରଙ୍କ	of (the) operators (telecom)	of the operators, the operators' (telecom operators)	ଅପରେଟର (operator) + ଙ୍କ (of)	english	ai	
+ରେକର୍ଡରେ	in the record(s)	in the record(s), on record	ରେକର୍ଡ (record) + ରେ (in)	english	ai	
+କରାଇବେ	will make (available); will get (it) done (they)	will make, will cause (to be available); will get (it) done (they; or he/she, respectful)	କରା (cause to do) + ଇବେ (will, they)	native	ai	
+ନିଆଯାଇପାରେ	may be taken (a decision)	may be taken, can be taken (a decision); may be carried (passive)	ନିଆ (taken) + ଯାଇପାରେ (can go): passive	native	ai	
+ପଞ୍ଜୀକୃତ	registered	registered (a registered trademark, firm, voter)	ପଞ୍ଜୀ (register) + କୃତ (made)	sanskrit	ai	Also spelt ପଞ୍ଜିକୃତ.
+ଜାତକଙ୍କ	of people born under (a sign) (astrology)	of the natives, of people born under a zodiac sign (astrology)	ଜାତକ (one born; horoscope) + ଙ୍କ (of)	sanskrit	ai	
+କ୍ୟାରିୟରରେ	in (one's) career	in (one's) career, at work	କ୍ୟାରିୟର (career) + ରେ (in)	english	ai	
+ଦ୍ୱାଦଶ	twelfth; twelve	twelfth (on the twelfth day); twelve		sanskrit	ai	
+କଲେକ୍ସନ	collection (box-office collection)	collection (box-office collection, earnings); a collection (of things)		english	ai	
+ମାଣିକେଶରୀ	Manikeshwari, a goddess (in a university name)	Manikeshwari, the goddess of Bhawanipatna (Maa Manikeshwari University, Kalahandi)		name	ai	
+ଭୋଜରାଜ	Bhojraj (given name)	Bhojraj (given name); King Bhoja of legend	ଭୋଜ (Bhoja) + ରାଜ (king)	name	ai	
+ଉମାକାନ୍ତ	Umakanta (given name)	Umakanta (given name); (literally) Uma's husband, Shiva	ଉମା (Uma) + କାନ୍ତ (husband)	name	ai	
+ପ୍ରତ୍ୟାଶା	expectation, hope; Pratyasha (given name)	expectation, hope; Pratyasha (female given name)		sanskrit	ai	
+ଲାଜ	shame, shyness, embarrassment	shame, embarrassment; shyness, modesty; (old) fried paddy		native	ai	
+ରାଗୁଛି	is getting angry (he/she)	is getting angry, gets angry these days (he/she)	ରାଗ (be angry) + ଉଛି (is -ing)	native	ai	
+ଠନ୍‌	clang, ding (sound of metal)	clang, ding (sound of metal or a bell); in thhan thhan gopal: penniless		native	ai	
+ସତେ	really, truly; as if	really, truly, indeed; as if, as though (with jemiti)		native	ai	
+ହସ	smile, laugh, laughter	smile, laugh, laughter		native	ai	
+ବିଜୁଳି	electricity, power; lightning	electricity, power (supply); lightning		native	ai	
+ଶିଳ୍ପପତି	industrialist	industrialist, business magnate	ଶିଳ୍ପ (industry) + ପତି (master)	sanskrit	ai	
+ଜିନିଷରେ	on (every) item; in things	on (every) item, in things, in goods	ଜିନିଷ (thing, item) + ରେ (in, on)	persian	ai	
+ବଳଦ	bullock, ox	bullock, ox (draught animal); (figurative) one who toils without reward		native	ai	
+ଦରଦାମ୍‌	prices	prices, the cost of things	ଦର (rate) + ଦାମ୍ (price)	persian	ai	Came into Odia through Persian or Urdu.
+ପଡ଼ିଯିବା	to fall, fall behind; falling	to fall, falling; to fall behind (with pachhare); to drop	ପଡ଼ି (falling) + ଯିବା (to go)	native	ai	
+ସତରେ	really, truly, in fact	really, truly, in fact, actually	ସତ (truth) + ରେ (in)	native	ai	
+ପ୍ଲାନ୍‌	plan (recharge plan)	plan (a recharge plan, a scheme); plan, intention		english	ai	
+ବଢ଼ାଇପାରେ	may raise, may increase (he/she/it)	may raise, may increase, can raise (he/she/it)	ବଢ଼ାଇ (raising) + ପାରେ (can, may)	native	ai	
+ଜଣାପଡ଼େ	is known, becomes clear; it seems	is known, becomes clear, comes to light; it seems, it appears	ଜଣା (known) + ପଡ଼େ (falls)	native	ai	
+ମନ୍ଦାନା	Mandanna (surname, as in Rashmika Mandanna)	Mandanna (surname)		name	ai	
+ରଣବାଲି	Ranabaali (title of a film)	Ranabaali, title of a film		name	ai	
+ମହତ୍‌	noble, great	noble, great, generous (a noble step)		sanskrit	ai	
+ରାସନ	ration(s)	ration(s), food rations, provisions		english	ai	
+ଗ୍ରୋସରି	grocery, groceries	grocery, groceries		english	ai	
+ଚରିତ୍ର	character (in a film or story); conduct	character, role (in a film or story); character, conduct, morals		sanskrit	ai	
+ଆଇଫୋନ୍‌	iPhone	iPhone (Apple smartphone)		english	ai	
+ପଦମର୍ଯ୍ୟାଦା	rank, status, position	rank, status, official position, standing	ପଦ (post) + ମର୍ଯ୍ୟାଦା (dignity)	sanskrit	ai	
+ଉତ୍ତ୍ୟକ୍ତ	agitated, enraged, provoked	agitated, enraged, provoked (an angry mob); harassed, irritated		sanskrit	ai	
+ଚୂରମାର	smashed to pieces, shattered	smashed to pieces, shattered, in ruins (with karibaa: to smash)		native	ai	
+ରାକ୍ଷସ	demon, monster	demon, monster; a cruel, savage person (figurative)		sanskrit	ai	
+ଘଣ୍ଟି	small bell (worship bell)	small bell, hand bell used in worship		native	ai	
+ସଂସ୍ଥାଗୁଡ଼ିକରେ	in organisations, in institutions	in organisations, in institutions, in companies	ସଂସ୍ଥା (organisation) + ଗୁଡ଼ିକ (plural) + ରେ (in)	sanskrit	ai	
+ସେତେ	that much, so much	that much, so much (the more ... the more: jete ... sete)		native	ai	
+ଅଶାଳୀନ	indecent, improper, vulgar	indecent, improper, vulgar, unseemly	ଅ (not) + ଶାଳୀନ (decent)	sanskrit	ai	
+ମନେକରେ	considers, thinks (he/she/it)	considers, thinks, regards as (he/she/it, present or habitual)	ମନେ (in mind) + କରେ (does)	native	ai	
+ବୋଝ	burden, load	burden, load, weight		native	ai	
+ନିନ୍ଦିତ	condemned, disgraced, blamed	condemned, disgraced, blamed, censured		sanskrit	ai	
+ସମୃଦ୍ଧିର	of prosperity	of prosperity, of richness	ସମୃଦ୍ଧି (prosperity) + ର (of)	sanskrit	ai	
+ବୈଷ୍ଣବ	Vaishnava, devotee of Vishnu	Vaishnava, devotee of Vishnu or Krishna; of the Vaishnava tradition		sanskrit	ai	
+ଝଗଡ଼ା	quarrel, fight	quarrel, fight, dispute		native	ai	
+ହରିହର	Harihara (Vishnu and Shiva in one form)	Harihara, Vishnu and Shiva as one deity (Lingaraj temple); Harihar (given name)	ହରି (Vishnu) + ହର (Shiva)	sanskrit	ai	
+ପଦକ୍ଷେପରୁ	from the step(s), from the measure	from the step(s), from the measure(s), from the initiative	ପଦକ୍ଷେପ (step, measure) + ରୁ (from)	sanskrit	ai	
+ଅଛୁ	(we) are	(we) are; (we) are present, exist	ଅଛ (be) + ଉ (we)	native	ai	
+ଲଜ୍ଜିତ	ashamed, embarrassed	ashamed, embarrassed		sanskrit	ai	
+ଗଢ଼ିବାରେ	in building, in shaping (making)	in building, in shaping, in making (people, a nation)	ଗଢ଼ିବା (building) + ରେ (in)	native	ai	
+ଦରବାରରେ	in the court (of); on the (world) stage	in the court, in the durbar; on the world stage (with bishwa)	ଦରବାର (court) + ରେ (in)	persian	ai	
+ନିଆରା	unique, distinctive, different	unique, distinctive, different, unusual		native	ai	
+ସିପି	CP, Commissioner of Police	CP, Commissioner of Police		english	ai	
+ହୋଇପାରିନାହିଁ	could not be (held, done)	could not be (held, done); has not been possible	ହୋଇ (being) + ପାରି (able) + ନାହିଁ (not)	native	ai	
+ଅଣଛାତ୍ରମାନଙ୍କୁ	non-students (object); outsiders	non-students, outsiders on a campus (object)	ଅଣଛାତ୍ର (non-student) + ମାନଙ୍କୁ (plural, to)	mixed	ai	
+କ୍ୟାମ୍ପସରୁ	from the campus	from the campus, off the campus	କ୍ୟାମ୍ପସ (campus) + ରୁ (from)	english	ai	
+ବଳି	sacrifice, offering; Bali Puja (girls' ritual, Puri)	sacrifice, animal sacrifice; offering; Bali Puja, a 21-day ritual in which unmarried girls of Puri worship Hara-Parvati; Bali, the demon king of legend; fold, wrinkle		sanskrit	ai	The headline quotes a line of the ritual song.
+ବର	bridegroom; boon, blessing	bridegroom, husband; boon, blessing (from a god); best, excellent		sanskrit	ai	
+ଆଭୂଷଣ	ornament, jewellery; adornment	ornament, jewellery; adornment, dressing up (of a deity)		sanskrit	ai	
+ପାର୍ବତୀ	Parvati (goddess, wife of Shiva)	Parvati, the goddess, wife of Shiva; Parvati (female given name)		name	ai	
+ସିନ୍ଦେ	Shinde (surname)	Shinde (a Marathi surname)		name	ai	Also spelt ଶିନ୍ଦେ.
+ଆରେଷ୍ଟ	arrest	arrest (preventive arrest)		english	ai	
+ସୂର୍ଯ୍ୟକାନ୍ତଙ୍କ	of Surya Kant (given name)	of Surya Kant, Suryakanta's (given name)	ସୂର୍ଯ୍ୟକାନ୍ତ (Surya Kant) + ଙ୍କ (of, respectful)	name	ai	
+ଇନଷ୍ଟଲ୍‌	install	install (an app, software)		english	ai	
+ଡାଉନଲୋଡ୍‌	download	download		english	ai	
+ସତ୍ୟତା	truth, authenticity, veracity	truth, truthfulness, authenticity, veracity	ସତ୍ୟ (true) + ତା (-ness)	sanskrit	ai	
+ମାନ୍ଦା	slow, sluggish, dull (market, sales)	slow, sluggish, dull (market, sales); slump		persian	ai	Came into Odia through Persian or Urdu.
+ପୂର୍ବବର୍ଷ	previous year, last year	previous year, last year	ପୂର୍ବ (previous) + ବର୍ଷ (year)	sanskrit	ai	
+ସେଲ୍‌ର	of the sale (festive sale)	of the sale (festive sale, online sale); of the cell	ସେଲ୍ (sale; cell) + ର (of)	english	ai	
+ସେଲ୍‌ରେ	in the sale (festive sale)	in the sale (festive sale, online sale); in a cell	ସେଲ୍ (sale; cell) + ରେ (in)	english	ai	
+ମେମୋରୀ	memory (memory chip)	memory (computer memory, memory chip)		english	ai	
+ଚିପ୍‌	chip (memory chip)	chip, microchip (memory chip)		english	ai	
+ଖର୍ଚ୍ଚକୁ	the cost (object); to the expense	the cost, the expense (object); to the expense	ଖର୍ଚ୍ଚ (expense, cost) + କୁ (to)	persian	ai	
+ରୋଚକ	interesting, exciting, intriguing	interesting, exciting, intriguing; tasty, appetising		sanskrit	ai	
+କଲରଙ୍କ	of the caller	of the caller, the caller's (phone)	କଲର (caller) + ଙ୍କ (of)	english	ai	
+କାର୍ଯ୍ୟାନ୍ୱୟନକୁ	the implementation (object)	the implementation, the carrying out (object); to implementation	କାର୍ଯ୍ୟାନ୍ୱୟନ (implementation) + କୁ (to)	sanskrit	ai	
+ସମୟୋଚିତ	timely	timely, opportune, suited to the time	ସମୟ (time) + ଉଚିତ (proper)	sanskrit	ai	
+ଉତ୍ତରାଖଣ୍ଡର	of Uttarakhand	of Uttarakhand, Uttarakhand's	ଉତ୍ତରାଖଣ୍ଡ (Uttarakhand) + ର (of)	name	ai	
+ଖସିପଡ଼ିବାରୁ	as (it) slipped and fell; after falling	because of slipping and falling, as (it) fell (into a gorge)	ଖସିପଡ଼ିବା (slipping, falling) + ରୁ (from: because of)	native	ai	
+ଭ୍ୟୁ	view (in names: River View)	view (in names: River View Cafe)		english	ai	
+କାଫେ	cafe	cafe		english	ai	
+ରାୱତଙ୍କ	of Rawat (surname)	of Rawat, Rawat's (surname)	ରାୱତ (Rawat) + ଙ୍କ (of, respectful)	name	ai	
+ରାଉରକେଲାରେ	in Rourkela	in Rourkela, at Rourkela	ରାଉରକେଲା (Rourkela) + ରେ (in)	name	ai	
+ପଶ୍ଚିମାଞ୍ଚଳ	western region, western range (police)	western region, western range (of the police)	ପଶ୍ଚିମ (west) + ଅଞ୍ଚଳ (region)	sanskrit	ai	
+ପ୍ଲାଟୁନ୍	platoon (of police)	platoon (of police, armed force)		english	ai	
+କଲ୍‌ଗୁଡ଼ିକ	calls (phone calls)	calls, the phone calls	କଲ୍ (call) + ଗୁଡ଼ିକ (plural)	english	ai	
+ଜାଣିବାର	of knowing; to know (risk of knowing)	of knowing; (risk, chance) to know, of finding out	ଜାଣିବା (knowing) + ର (of)	native	ai	
+ମନେରଖନ୍ତୁ	remember, keep in mind (please)	remember, keep in mind, note (polite command)	ମନେ (in mind) + ରଖନ୍ତୁ (keep, please)	native	ai	
+ସ୍ୱତଃ	by itself, automatically, on its own	by itself, automatically, on its own, of its own accord		sanskrit	ai	
+ୟୁଟ୍ୟୁବରେ	on YouTube	on YouTube	ୟୁଟ୍ୟୁବ (YouTube) + ରେ (on, in)	english	ai	
+ଭାଇଜାନଙ୍କ	of Bhaijaan (Salman Khan's nickname)	of Bhaijaan, big brother (Salman Khan's nickname)	ଭାଇଜାନ (Bhaijaan) + ଙ୍କ (of, respectful)	hindi	ai	
+ଥାଉ	let (it) be; be it known (with prakash)	let (it) be, may (it) remain; prakash thaau ki: be it known that	ଥା (be, stay) + ଉ (let)	native	ai	
+ହୋଇଥାଆନ୍ତି	are, stay (they; or respectful; habitual)	are, stay, usually become (they; or he/she, respectful; habitual)	ହୋଇ (being) + ଥାଆନ୍ତି (are, habitual)	native	ai	Also spelt ହୋଇଥାନ୍ତି.
+ସମୀକ୍ଷକ	analyst, critic, reviewer	analyst, critic, reviewer (political analyst)		sanskrit	ai	
+ଲାଭଦାୟୀ	beneficial, profitable	beneficial, good for (health); profitable	ଲାଭ (gain) + ଦାୟୀ (giving)	sanskrit	ai	
+ପୁଷ୍ଟିକର	nutritious	nutritious, nourishing	ପୁଷ୍ଟି (nourishment) + କର (making)	sanskrit	ai	
+କ୍ୟାଲସିୟମ୍	calcium	calcium		english	ai	
+ଅସ୍ୱସ୍ତି	discomfort, unease	discomfort, unease, uneasiness	ଅ (not) + ସ୍ୱସ୍ତି (well-being)	sanskrit	ai	
+ଚାହିଁପାରନ୍ତି	may want (to) (they; or respectful)	may want (to), may wish (they; or he/she, respectful)	ଚାହିଁ (wanting) + ପାରନ୍ତି (can, may: they)	native	ai	
+ଚଢ଼ିବା	to climb, ride; climbing	to climb (stairs), to go up; to ride, to mount (a bike, a bus); to rise	ଚଢ଼ (climb) + ଇବା (verbal noun)	native	ai	
+ଆଭା	aura (migraine aura); glow, radiance	aura (before a migraine); glow, radiance, lustre		sanskrit	ai	
+ଝିମ୍	tingling, pins and needles (jhim jhim)	tingling, numbness, pins and needles (jhim jhim)		native	ai	
+ସୂଚାଇପାରେ	may indicate, can point to (he/she/it)	may indicate, can point to, may suggest (he/she/it)	ସୂଚାଇ (indicating) + ପାରେ (can, may)	native	ai	
+ତାଣ୍ଡବ	rampage, havoc; Shiva's dance of destruction	rampage, havoc (a bus on the rampage); tandava, Shiva's dance of destruction		sanskrit	ai	
+ମୁରଲୀପୁରା	Muralipura, an area of Jaipur	Muralipura, an area of Jaipur, Rajasthan		name	ai	
+ସ୍କୁଟର	scooter	scooter, motor scooter		english	ai	
+ବିଦ୍ୟାଧର	Vidyadhar (name; Vidyadhar Nagar, Jaipur)	Vidyadhar (given name); Vidyadhar Nagar, an area of Jaipur; Vidyadhara, a class of celestial beings	ବିଦ୍ୟା (learning) + ଧର (holder)	name	ai	
+ଜିମା	custody, charge (handed over to)	custody, charge, care (handed over to the police)		arabic	ai	Came into Odia through Persian or Urdu.
+ବସ୍‌ଟି	the bus	the bus (one particular bus)	ବସ୍ (bus) + ଟି (the)	english	ai	
+ବୟାନବାଜି	war of words, exchange of statements	war of words, exchange of statements (between politicians)	ବୟାନ (statement) + ବାଜି (contest)	persian	ai	Came into Odia through Persian or Urdu.
+କ୍ୟାମ୍ପସଗୁଡ଼ିକରେ	on campuses, in the campuses	on campuses, in the (college) campuses	କ୍ୟାମ୍ପସ (campus) + ଗୁଡ଼ିକ (plural) + ରେ (in, on)	english	ai	
+ରିଲିଜିୟସ୍	religious (in names)	religious (in a department name)		english	ai	
+ଚାରିଟେବୁଲ	charitable	charitable (charitable endowments, trust)		english	ai	
+ଫଟୋଗ୍ରାଫି	photography	photography		english	ai	
+ରେକର୍ଡିଂ	recording (video recording)	recording (video recording, audio recording)		english	ai	
+ରିଲ୍	reel (short video); reel (of film, thread)	reel, a short social media video (Instagram reel); reel of film or thread		english	ai	
+ମୁକ୍ତେଶ୍ୱର	Mukteshwar (Shiva; a temple; in names)	Mukteshwar, a form of Shiva; the Mukteswar temple of Bhubaneswar; in names (Mukteshwar Residency)	ମୁକ୍ତ (free) + ଈଶ୍ୱର (lord)	name	ai	
+ଗଢ଼ିବା	to build, shape; building	to build, make, shape, form (a city, a team, character); to mould	ଗଢ଼ (build) + ଇବା (verbal noun)	native	ai	
+କେରଳମ୍	Keralam, Kerala (state)	Keralam, Kerala (state in south India)		name	ai	
+ଗୁଣବତ୍ତାକୁ	the quality (object)	the quality (object); to the quality	ଗୁଣବତ୍ତା (quality) + କୁ (to)	sanskrit	ai	
+ସ୍ୱଶାସନ	self-government (local self-government)	self-government, self-rule (local self-government)	ସ୍ୱ (self) + ଶାସନ (rule)	sanskrit	ai	
+ଢାଞ୍ଚା	structure, framework, set-up	structure, framework, set-up, outline		native	ai	
+ସାଇନ୍ସେସ୍‌ର	of Sciences (School of Social Sciences)	of Sciences (in names: School of Social Sciences)	ସାଇନ୍ସେସ୍ (sciences) + ର (of)	english	ai	
+ଆନନ୍ଦମ୍‌	Anandam (name: joy, happiness)	Anandam, a name meaning joy (name of a happiness department)		name	ai	
+ଆୟୁଷ୍ମାନ	long-lived; Ayushman (yoga, scheme, name)	long-lived, blessed with long life; Ayushman yoga (astrology); Ayushman Bharat (health scheme); Ayushman (given name)		sanskrit	ai	
+ଚନ୍ଦ୍ରମା	the moon	the moon		sanskrit	ai	
+ଜୀବନସାଥୀଙ୍କ	of (one's) life partner, spouse	of (one's) life partner, spouse; with the spouse (with saha)	ଜୀବନସାଥୀ (life partner) + ଙ୍କ (of)	mixed	ai	
+ଖର୍ଚ୍ଚର	of expenses, of the cost	of expenses, of the cost	ଖର୍ଚ୍ଚ (expense, cost) + ର (of)	persian	ai	
+କର୍ମକ୍ଷେତ୍ରରେ	at the workplace; in one's career	at the workplace, at work; in one's career	କର୍ମକ୍ଷେତ୍ର (workplace) + ରେ (in, at)	sanskrit	ai	
+ସେଣ୍ଟ୍ରମ୍	Centrum (Centrum Broking, a broking firm)	Centrum, as in Centrum Broking, a stock-broking firm		name	ai	
+ବ୍ରୋକିଂର	of broking (Centrum Broking)	of broking, of the broking firm	ବ୍ରୋକିଂ (broking) + ର (of)	english	ai	
+କ୍ୱାର୍ଟରରେ	in the quarter (of a financial year)	in the quarter (three months of a financial year)	କ୍ୱାର୍ଟର (quarter) + ରେ (in)	english	ai	
+ପ୍ରିମିୟମ୍	premium (premium plan; insurance premium)	premium (a premium plan, premium quality); insurance premium		english	ai	
+ବାଛିବା	to choose, select; choosing	to choose, to select, to pick	ବାଛ (choose) + ଇବା (verbal noun)	native	ai	
+ବର୍ଷଗୁଡ଼ିକରେ	in (the) years (coming years)	in (the) years (in the coming years)	ବର୍ଷ (year) + ଗୁଡ଼ିକ (plural) + ରେ (in)	sanskrit	ai	
+ନେଟୱାର୍କକୁ	the network (object); to the network	the network (object); to the network (5G network)	ନେଟୱାର୍କ (network) + କୁ (to)	english	ai	
+ରାଜ୍‌ରେ	in the rule (of), in the raj (Modi raj)	in the rule of, in the reign of, under the raj	ରାଜ୍ (rule, reign) + ରେ (in)	hindi	ai	
+ଏକ୍‌ଜିକ୍ୟୁଟିଭ୍	executive (Special Executive Magistrate)	executive (executive magistrate, chief executive)		english	ai	
+ମାଜିଷ୍ଟ୍ରେଟ୍‌ଙ୍କ	of the magistrate	of the magistrate, the magistrate's	ମାଜିଷ୍ଟ୍ରେଟ୍ (magistrate) + ଙ୍କ (of, respectful)	english	ai	
+ସରଗରମ	heated, hot (political atmosphere)	heated, hot, lively (the political atmosphere is heated)		persian	ai	Came into Odia through Persian or Urdu.
+ପ୍ରତିଷେଧମୂଳକ	preventive (preventive arrest)	preventive (preventive arrest, preventive measures)	ପ୍ରତିଷେଧ (prevention) + ମୂଳକ (-based)	sanskrit	ai	
+ଲିଗାଲ୍	legal (legal head)	legal (legal head, legal advice)		english	ai	
+ହେଡ୍	head (of a department)	head (of a department, a team)		english	ai	
+ବ୍ୟାରିକେଡ୍	barricade	barricade (police barricade)		english	ai	
+ବୁରାଡ଼ି	Burari, an area of Delhi (Burari Ground)	Burari, an area of north Delhi (Burari Ground)		name	ai	
+ଗ୍ରାଉଣ୍ଡ	ground (sports ground, open ground)	ground (a sports or open ground for rallies)		english	ai	
+ଗ୍ରାଉଣ୍ଡକୁ	to the ground; the ground (object)	to the ground; the ground (object)	ଗ୍ରାଉଣ୍ଡ (ground) + କୁ (to)	english	ai	
+ଗିରଫଦାରୀକୁ	the arrest (object)	the arrest (object); to the arrest	ଗିରଫଦାରୀ (arrest) + କୁ (to)	persian	ai	
+କାନ୍ଦିଲେ	cried, wept (he/she, respectful; they)	cried, wept (they; or he/she, respectful); if (someone) cries	କାନ୍ଦ (cry) + ଇଲେ (past: they, respectful)	native	ai	
+ପୋରେଲ	Porel (surname, as in cricketer Abishek Porel)	Porel (a Bengali surname)		name	ai	
+ଭାବପ୍ରବଣ	emotional	emotional, sentimental, moving	ଭାବ (feeling) + ପ୍ରବଣ (inclined)	sanskrit	ai	
+ବ୍ୟାଟର୍‌ଙ୍କ	of the batters	of the batters, the batsmen's (cricket)	ବ୍ୟାଟର୍ (batter) + ଙ୍କ (of)	english	ai	
+ପୋରେଲ୍‌ଙ୍କ	of Porel (surname)	of Porel, Porel's (surname)	ପୋରେଲ୍ (Porel) + ଙ୍କ (of, respectful)	name	ai	
+ଶୁକ୍ଳା	Shukla (surname); white, bright	Shukla (surname); white, bright (the bright fortnight)		name	ai	
+ନବରାତ୍ରୀର	of Navaratri	of Navaratri, the nine nights of Durga worship	ନବରାତ୍ରୀ (Navaratri) + ର (of)	sanskrit	ai	
+ଚତୁର୍ଥୀ	chaturthi, the fourth lunar day	chaturthi, the fourth day of a lunar fortnight (Ganesh Chaturthi); fourth (feminine)		sanskrit	ai	
+ଆସିଥିବାବେଳେ	while (it) has come or brought; whereas	while (it) has come, while (it) has brought; whereas	ଆସିଥିବା (having come) + ବେଳେ (while)	native	ai	
+ଛାତ୍ରଛାତ୍ରୀମାନଙ୍କୁ	to students (boys and girls)	to the students, boys and girls (object)	ଛାତ୍ରଛାତ୍ରୀ (students) + ମାନଙ୍କୁ (plural, to)	sanskrit	ai	
+ଆଶାଠାରୁ	than expected, than hoped	than expected, than hoped (more than expected)	ଆଶା (hope, expectation) + ଠାରୁ (than)	sanskrit	ai	
+ସଫଳତାରେ	at the success (of); in success	at the success (of someone), in success	ସଫଳତା (success) + ରେ (in, at)	sanskrit	ai	
+ଦେଖିଥିବେ	must have seen (you; they)	must have seen, may have seen (you, they; or he/she, respectful)	ଦେଖି (having seen) + ଥିବେ (will have)	native	ai	
+ଦୌରାଜଜ୍	sessions judge	sessions judge (district and sessions judge)	ଦୌରା (sessions, circuit) + ଜଜ୍ (judge)	mixed	ai	
+କଲମରେ	with the pen, in a pen	with the pen, in a pen	କଲମ (pen) + ରେ (with, in)	arabic	ai	
+ବାଧ୍ୟତା	obligation, compulsion	obligation, compulsion, binding requirement	ବାଧ୍ୟ (bound) + ତା (-ness)	sanskrit	ai	
+ଥାଉଁ	while (it) still is (thaun thaun)	while (it) still is; samaya thaun thaun: while there is still time	ଥା (be, remain) + ଉଁ (while)	native	ai	
+କ୍ୟାନସର୍‌ର	of cancer	of cancer	କ୍ୟାନସର୍ (cancer) + ର (of)	english	ai	
+ସେବନ	consumption, intake (of tobacco, food)	consumption, intake (of tobacco, food, medicine); use; (old) serving, attending upon		sanskrit	ai	
+ପ୍ରଦୂଷଣର	of pollution	of pollution	ପ୍ରଦୂଷଣ (pollution) + ର (of)	sanskrit	ai	
+ସର୍ଜରୀ	surgery	surgery, operation		english	ai	
+ଗୁଡ଼ିକୁ	the ...s (plural object ending, written apart)	plural object ending, written apart: the industries (object) etc.	ଗୁଡ଼ିକ (plural) + କୁ (to)	native	ai	Usually joined to the noun.
+ଛଅ	six	six (6)		native	ai	
+ଅଭିବୃଦ୍ଧିକୁ	growth (object); to growth	growth, development (object); to growth	ଅଭିବୃଦ୍ଧି (growth) + କୁ (to)	sanskrit	ai	
+ତୀର୍ଥଯାତ୍ରା	pilgrimage	pilgrimage, a journey to holy places	ତୀର୍ଥ (holy place) + ଯାତ୍ରା (journey)	sanskrit	ai	
+ମିଲିଅନ	million	million		english	ai	
+ଛୁରି	knife	knife		native	ai	
+ଡୋଲା	Dola (given name); palanquin; Dola festival	Dola (female given name); palanquin, litter; swing (Dola festival of Krishna)		name	ai	
+ବାସଭବନ	residence (official residence)	residence, official residence, home	ବାସ (dwelling) + ଭବନ (building)	sanskrit	ai	
+ବିବୃତିରେ	in the statement	in the statement (official statement)	ବିବୃତି (statement) + ରେ (in)	sanskrit	ai	
+ଟିଏମ୍‌ସି	TMC, Trinamool Congress (party)	TMC, the All India Trinamool Congress, a party of West Bengal		name	ai	
+ଗୋଖଲେ	Gokhale (surname)	Gokhale (a Marathi surname)		name	ai	
+ରାଜାବଜାରରେ	in Rajabazar (area of Kolkata)	in Rajabazar, an area of Kolkata	ରାଜାବଜାର (Rajabazar) + ରେ (in)	name	ai	
+ସ୍ଲୋଗାନ	slogan	slogan (shouting slogans)		english	ai	
+ଔପଚାରିକ	formal, official	formal, official (formal information); a formality		sanskrit	ai	
+କରୱା	Karva (in Karva Chauth)	Karva, an earthen pot (in Karva Chauth, a fast kept by married women)		hindi	ai	
+ଚୌଥ	Chauth, fourth lunar day (Karva Chauth)	Chauth, the fourth lunar day (Karva Chauth)		hindi	ai	
+କରିନିଅନ୍ତୁ	do (it), make sure to do (please)	do (it) for yourself, make sure to do, get (it) done (polite command)	କରି (having done) + ନିଅନ୍ତୁ (take, please)	native	ai	
+ବିଜୟା	Vijaya (Vijaya Dashami); victory	Vijaya (Vijaya Dashami, Dussehra); victorious; a name of Durga; Vijaya (female given name)		sanskrit	ai	
+ଦଶମୀ	Dashami, the tenth lunar day	Dashami, the tenth day of a lunar fortnight (Vijaya Dashami); (old) extreme old age		sanskrit	ai	
+ଚଣ୍ଡିଗଡ଼	Chandigarh (city)	Chandigarh, a city and union territory, capital of Punjab and Haryana		name	ai	
+ଅନଲାଇନ୍‌ରେ	online	online, over the internet	ଅନଲାଇନ୍ (online) + ରେ (in)	english	ai	
+ଜାଫର	Jaffer, Zafar (surname)	Jaffer, Zafar (surname)		name	ai	
+ଅଗରକରଙ୍କ	of Agarkar (surname)	of Agarkar, Agarkar's (surname)	ଅଗରକର (Agarkar) + ଙ୍କ (of, respectful)	name	ai	
+କ୍ରିକେଟ୍‌ରେ	in cricket	in cricket	କ୍ରିକେଟ୍ (cricket) + ରେ (in)	english	ai	
+ପାଳିରେ	in (an) innings; in a turn, in a shift	in (an) innings (cricket); in a turn; in a shift	ପାଳି (turn; innings) + ରେ (in)	native	ai	
+କରିସାରିଛନ୍ତି	have already done, scored (they; respectful)	have already done, have already scored (they; or he/she, respectful)	କରି (having done) + ସାରିଛନ୍ତି (have finished)	native	ai	
+ସହିପାରେ	can bear, can tolerate (he/she/it)	can bear, can tolerate, can withstand (he/she/it)	ସହି (bearing) + ପାରେ (can)	native	ai	
+ଗ୍ରାଜୁଏଟ୍	graduate	graduate (a graduate degree holder)		english	ai	
+ଡକ୍ୟୁମେଣ୍ଟ	document (document verification)	document (document verification)		english	ai	
+କ୍ୟାନ୍ସରର	of cancer	of cancer (breast cancer)	କ୍ୟାନ୍ସର (cancer) + ର (of)	english	ai	
+ନିପଲ୍‌ରୁ	from the nipple	from the nipple	ନିପଲ୍ (nipple) + ରୁ (from)	english	ai	
+ତରଳ	liquid, fluid	liquid, fluid; melted, molten		sanskrit	ai	
+ଦେଖାଗଲେ	if (it) is seen, if (it) appears	if (it) is seen, if (it) appears, if noticed; were seen (they)	ଦେଖା (seen) + ଗଲେ (if went): passive	native	ai	
+ଖାଇବେନି	will not eat, should not eat (spoken)	will not eat, should not eat (you, they; or he/she, respectful; spoken)	ଖାଇବେ (will eat) + ନି (not, spoken)	native	ai	
+ସିଂଘଡ଼ା	water chestnut (singhara flour, for fasts)	water chestnut; singhara atta, water-chestnut flour eaten on fast days		hindi	ai	Not ସିଙ୍ଗଡ଼ା, the samosa.
+ଖିଚୁଡ଼ି	khichdi (rice and lentils cooked together)	khichdi, rice and lentils cooked together; a mix-up (figurative)		native	ai	Also spelt ଖେଚୁଡ଼ି.
+ବୁଲାଇବା	to turn, spin; turning	to turn, spin, rotate; to take around, show around; mundaa bulaaibaa: dizziness	ବୁଲ (turn, wander) + ଆଇବା (cause to, verbal noun)	native	ai	
+ପ୍ରତିମାସରେ	every month, per month	every month, per month, monthly	ପ୍ରତି (every) + ମାସ (month) + ରେ (in)	sanskrit	ai	
+ଷ୍ଟାଇପେଣ୍ଡ	stipend	stipend (paid during training)		english	ai	
+ନିୟମାନୁସାରେ	as per the rules, according to rules	as per the rules, according to the rules, by rule	ନିୟମ (rule) + ଅନୁସାରେ (according to)	sanskrit	ai	
+ଭର୍ତ୍ସନା	rebuke, reprimand	rebuke, reprimand, censure		sanskrit	ai	
+ଚାରୋଟି	four (things)	four (with the counter -ti: four items)	ଚାରି (four) + ଓଟି (counter)	native	ai	
+ଆୟୋଗଙ୍କୁ	to the commission (Election Commission)	to the commission (Election Commission; object)	ଆୟୋଗ (commission) + ଙ୍କୁ (to, respectful)	sanskrit	ai	
+ଭାଟିଆ	Bhatia (surname)	Bhatia, a surname		name	ai	
+ସାମ୍ବାଦିକାଙ୍କ	of the (woman) journalist	of the woman journalist, the female reporter's	ସାମ୍ବାଦିକା (woman journalist) + ଙ୍କ (of)	sanskrit	ai	
+କାର୍ଯ୍ୟାନୁଷ୍ଠାନର	of (the) action (taken)	of the action taken, of the measures	କାର୍ଯ୍ୟାନୁଷ୍ଠାନ (action taken) + ର (of)	sanskrit	ai	
+ଓୱାଇସିଙ୍କ	of Owaisi (surname)	of Owaisi, Owaisi's (surname)	ଓୱାଇସି (Owaisi) + ଙ୍କ (of, respectful)	name	ai	
+ଇନ୍ଦୋରର	of Indore	of Indore, Indore's	ଇନ୍ଦୋର (Indore) + ର (of)	name	ai	
+କରିପାରିଥିଲା	could do, managed to (score) (he/she/it)	could do, managed to do, could score (he/she/it)	କରି (doing) + ପାରିଥିଲା (had been able)	native	ai	
+ଅମ୍ବାନୀଙ୍କ	of Ambani (surname)	of Ambani, Ambani's (surname)	ଅମ୍ବାନୀ (Ambani) + ଙ୍କ (of, respectful)	name	ai	
+ବଦଳାଇବାର	of changing, of replacing	of changing, of replacing (need of replacing)	ବଦଳାଇବା (changing) + ର (of)	native	ai	
+ଜ୍ଞାନକୌଶଳ	technology; know-how	technology; know-how, technical skill	ଜ୍ଞାନ (knowledge) + କୌଶଳ (skill)	sanskrit	ai	
+ପ୍ରଯୁକ୍ତିବିଦ୍ୟାକୁ	technology (object)	technology (object); to technology	ପ୍ରଯୁକ୍ତିବିଦ୍ୟା (technology) + କୁ (to)	sanskrit	ai	
+ପ୍ରି	pre- (pre-6G)	pre- (English prefix: before, as in pre-6G)		english	ai	The hyphen splits it from the next word.
+ସୁପ୍ରିମକୋର୍ଟର	of the Supreme Court	of the Supreme Court	ସୁପ୍ରିମକୋର୍ଟ (Supreme Court) + ର (of)	english	ai	
+ବିଚାରପତିଙ୍କୁ	the judge (object); to the judge	the judge, the justice (object); to the judge	ବିଚାରପତି (judge) + ଙ୍କୁ (to, respectful)	sanskrit	ai	
+ନୈତିକ	moral, ethical	moral, ethical		sanskrit	ai	
+ଅଭିହିତ	called, termed, described as	called, termed, described as, branded		sanskrit	ai	
+ଆଗତ	moved, tabled (a motion); arrived	moved, tabled (a motion, a resolution); arrived, come		sanskrit	ai	
+ରେକର୍ଡର	of the record	of the record (a sporting record)	ରେକର୍ଡ (record) + ର (of)	english	ai	
+ସମକକ୍ଷ	equal, on a par (equalled a record)	equal, on a par, of the same rank (with hebaa: to equal)	ସମ (equal) + କକ୍ଷ (rank)	sanskrit	ai	
+ସାଦର	cordial, warm (invitation); respectful	cordial, warm (a cordial invitation); respectful	ସ (with) + ଆଦର (respect)	sanskrit	ai	
+ସିଂହବାହିନୀଙ୍କ	of Singhabahini (Durga riding a lion)	of Singhabahini, Durga who rides a lion	ସିଂହବାହିନୀ (Singhabahini) + ଙ୍କ (of, respectful)	sanskrit	ai	
+ହାଇଟେକ୍	hi-tech (in names)	hi-tech, high-tech (Hi-Tech Medical College)		english	ai	
+ଉଦ୍ଧାରକାରୀମାନେ	rescuers, rescue workers	rescuers, rescue workers	ଉଦ୍ଧାରକାରୀ (rescuer) + ମାନେ (plural)	sanskrit	ai	
+ପର‌୍ୟ୍ୟନ୍ତ	until, up to, till	until, up to, till; as far as		sanskrit	ai	Also spelt ପର୍ଯ୍ୟନ୍ତ.
+ତ୍ରିଗ୍ରହୀ	of three planets (trigrahi yoga, astrology)	of three planets together (trigrahi yoga, astrology)	ତ୍ରି (three) + ଗ୍ରହୀ (of planets)	sanskrit	ai	
+ବ୍ରହ୍ମଚାରିଣୀଙ୍କ	of Brahmacharini (a form of Durga)	of Brahmacharini, the form of Durga worshipped on the second day of Navaratri	ବ୍ରହ୍ମଚାରିଣୀ (Brahmacharini) + ଙ୍କ (of, respectful)	sanskrit	ai	
+୧୪ତମ	14th, fourteenth	14th, fourteenth	୧୪ (14) + ତମ (-th)		ai	
+ଜୁନିୟର	junior	junior (junior doctor)		english	ai	
+ଆନିମିଆ	anaemia	anaemia, lack of blood		english	ai	
+ଗର୍ଭାବସ୍ଥାରେ	during pregnancy	during pregnancy, in pregnancy	ଗର୍ଭାବସ୍ଥା (pregnancy) + ରେ (in)	sanskrit	ai	
+ବନ୍ଧ୍ୟାତ୍ୱ	infertility	infertility, sterility	ବନ୍ଧ୍ୟା (barren) + ତ୍ୱ (-ness)	sanskrit	ai	
+ଗର୍ଭାଶୟମୁଖ	cervix	cervix, the mouth of the womb	ଗର୍ଭାଶୟ (womb) + ମୁଖ (mouth)	sanskrit	ai	
+ବ୍ୟାକ୍ଟେରିଆର	of bacteria	of bacteria	ବ୍ୟାକ୍ଟେରିଆ (bacteria) + ର (of)	english	ai	
+ୟୁନିଭର୍ସିଟି	university	university		english	ai	
+ୟୁକେର	of the UK	of the UK, the United Kingdom's	ୟୁକେ (UK) + ର (of)	name	ai	
+କୋଭିଡ୍‌ର	of Covid (long Covid)	of Covid, Covid-19's (long Covid)	କୋଭିଡ୍ (Covid) + ର (of)	english	ai	
+ପ୍ରତ୍ୟାବର୍ତ୍ତନ	comeback, return	comeback, return; repatriation	ପ୍ରତି (back) + ଆବର୍ତ୍ତନ (turning)	sanskrit	ai	
+ଅଡ଼ୁଆରେ	in trouble, in difficulty	in trouble, in difficulty (with pakaaibaa: to put in trouble)	ଅଡ଼ୁଆ (trouble) + ରେ (in)	native	ai	
+ଶାଇ	Shai (given name, as in cricketer Shai Hope)	Shai (male given name)		name	ai	
+ହୋପ୍‌ଙ୍କୁ	Hope (object; surname, as in Shai Hope)	to Hope, Hope (object; surname)	ହୋପ୍ (Hope) + ଙ୍କୁ (to, respectful)	english	ai	
+କ୍ଲିନ୍	clean (clean bowled)	clean (clean bowled; a clean image)		english	ai	
+କାମିଲ	Kamil (given name)	Kamil (male given name)		name	ai	
+ପାୱେଲ	Powell (surname)	Powell (surname)		name	ai	
+ନମନଙ୍କୁ	Naman (object; given name)	to Naman, Naman (object; given name)	ନମନ (Naman) + ଙ୍କୁ (to, respectful)	name	ai	
+ରେସ୍ତୋରାଣ୍ଟ	restaurant	restaurant		english	ai	
+କମ୍ପ୍ଲେକ୍ସ	complex (market complex)	complex (a market or housing complex); complex, complicated		english	ai	
+ଭେଙ୍ଗାଙ୍କ	of Baba Vanga (Bulgarian seer)	of (Baba) Vanga, the Bulgarian seer famous for predictions	ଭେଙ୍ଗା (Vanga) + ଙ୍କ (of, respectful)	name	ai	
+ଭେଙ୍ଗା	Vanga (Baba Vanga, a Bulgarian seer)	Vanga, Baba Vanga, a blind Bulgarian seer famous for predictions		name	ai	
+ବିଶ୍ୱଯୁଦ୍ଧ	world war	world war (the Third World War)	ବିଶ୍ୱ (world) + ଯୁଦ୍ଧ (war)	sanskrit	ai	
+ପାଣିପାଗକୁ	the weather (object); the (political) climate	the weather (object); the climate, situation (figurative: geopolitical climate)	ପାଣିପାଗ (weather) + କୁ (to)	native	ai	
+ପୁଞ୍ଜିଗତ	capital (capital gains)	capital, relating to capital (capital gains, capital expenditure)	ପୁଞ୍ଜି (capital) + ଗତ (related to)	mixed	ai	
+ବିବୃତ୍ତି	statement	statement (an official statement)		sanskrit	ai	Also spelt ବିବୃତି, the standard spelling.
+ନେଟ୍‌ୱର୍ଥ	net worth	net worth		english	ai	
+ଛାତ୍ରନେତ୍ରୀ	student leader (woman)	student leader (woman)	ଛାତ୍ର (student) + ନେତ୍ରୀ (woman leader)	sanskrit	ai	
+ଗ୍ରୁପ୍	group	group (theatre group, WhatsApp group; group A)		english	ai	
+ଦସ୍ତାବିଜ୍‌	document(s)	document(s), papers, deeds		persian	ai	Came into Odia through Persian or Urdu.
+ଏକ୍ସଚେଞ୍ଜ୍‌	exchange (commodity, stock exchange)	exchange (Multi Commodity Exchange, stock exchange); exchange (offer)		english	ai	
+ଡଲାରରେ	at (n) dollars; in dollars	at (n) dollars; in dollars	ଡଲାର (dollar) + ରେ (at, in)	english	ai	
+ଇଣ୍ଡେକ୍ସ	index (dollar index)	index (dollar index, stock index)		english	ai	
+ରିଟର୍ଣ୍ଣ	return (on bonds, investment)	return, yield (on bonds, investment); tax return; return (ticket)		english	ai	
+ଫେଡେରାଲ୍‌	federal (Federal Reserve)	federal (the US Federal Reserve)		english	ai	
+ରିଜର୍ଭର	of the Reserve (Federal Reserve)	of the Reserve (Federal Reserve); of the reserve	ରିଜର୍ଭ (reserve) + ର (of)	english	ai	
+କ୍ୟାଡର	cadre	cadre (service cadre; party cadre)		english	ai	
+ମେକାନିକାଲ୍	mechanical	mechanical (mechanical engineering)		english	ai	
+ସିନ୍ଦେଙ୍କୁ	Shinde (object; surname)	to Shinde, Shinde (object; surname)	ସିନ୍ଦେ (Shinde) + ଙ୍କୁ (to, respectful)	name	ai	
+ଏସ୍‌ଆଇଆରରେ	in the SIR (revision of voter lists)	in the SIR, the Special Intensive Revision of voter lists	ଏସ୍‌ଆଇଆର (SIR) + ରେ (in)	english	ai	
+କଟିବା	to be cut, be deleted; cutting	to be cut, to get cut; to be deleted, struck off (a name from a list); to pass (time)	କଟ (cut) + ଇବା (verbal noun)	native	ai	
+ତଲବ	summons, call (for a reply)	summons, call (for a reply or to appear); with karibaa: to summon, seek (a reply)		arabic	ai	Came into Odia through Persian or Urdu.
+ଗାନ୍ଧିଙ୍କ	of Gandhi	of Gandhi, Gandhi's (Rahul Gandhi, Mahatma Gandhi)	ଗାନ୍ଧି (Gandhi) + ଙ୍କ (of, respectful)	name	ai	
+ସୁପ୍ରିୟା	Supriya (female given name)	Supriya (female given name); (literally) much loved		name	ai	
+ଅନସାରୁଲ୍ଲାହ୍	Ansarullah, the Houthi movement of Yemen	Ansarullah, the Houthi movement of Yemen		name	ai	
+ଯୁଦ୍ଧବିରତି	ceasefire	ceasefire, truce	ଯୁଦ୍ଧ (war) + ବିରତି (pause)	sanskrit	ai	
+ସଫିୟା	Safiya (place in Yemen); Safiya (given name)	Safiya (in Al-Safiya, a place in Yemen); Safiya (female given name)		name	ai	
+ତୁରବା	Turbah (Al-Turbah, a town in Yemen)	Turbah, a town in Yemen (Al-Turbah)		name	ai	
+ପାହାଡ଼ିଆ	hilly, mountainous	hilly, mountainous; of the hills, a hill person	ପାହାଡ଼ (hill) + ଇଆ (-y)	native	ai	
+ତାଇଜ୍‌କୁ	to Taiz (city in Yemen)	to Taiz, Taiz (object; a city in Yemen)	ତାଇଜ୍ (Taiz) + କୁ (to)	name	ai	
+ଫାୟାର୍	fire	fire (fire control, fire brigade)		english	ai	
+କଣ୍ଟ୍ରୋଲ୍	control	control (fire control)		english	ai	
+ଘେରାବନ୍ଦୀ	encirclement, siege	encirclement, siege, blockade	ଘେରା (encircling) + ବନ୍ଦୀ (closing)	persian	ai	Came into Odia through Persian or Urdu.
+ଚାରିପାଖରୁ	from all sides, from all around	from all sides, from all around	ଚାରିପାଖ (all around) + ରୁ (from)	native	ai	
+ପ୍ରେସିଡେନ୍ସିଆଲ୍	presidential	presidential (Presidential Leadership Council)		english	ai	
+ଲିଡରସିପ୍	leadership	leadership		english	ai	
+ଜଳପଥ	waterway; strait	waterway, sea route; strait	ଜଳ (water) + ପଥ (path)	sanskrit	ai	
+ଏସିଆକୁ	to Asia; Asia (object)	to Asia, Asia (object)	ଏସିଆ (Asia) + କୁ (to)	name	ai	
+ସଙ୍କଟର	of the crisis	of the crisis	ସଙ୍କଟ (crisis) + ର (of)	sanskrit	ai	
+ହାଦି	Hadi (surname)	Hadi (surname, as in Yemen's former president)		name	ai	
+ବାଲିଷ୍ଟିକ୍	ballistic (ballistic missile)	ballistic (ballistic missile)		english	ai	
+ପ୍ରତିଷ୍ଠାନ	institution, establishment; facility	institution, establishment; facility, plant (oil facility); firm		sanskrit	ai	
+ହୁତିମାନଙ୍କୁ	the Houthis (object)	the Houthis, the Houthi rebels (object); to the Houthis	ହୁତି (Houthi) + ମାନଙ୍କୁ (plural, to)	name	ai	
+ୟେମେନବାସୀ	Yemenis, people of Yemen	Yemenis, the people of Yemen	ୟେମେନ (Yemen) + ବାସୀ (resident)	mixed	ai	
+ଅବ୍ୟାହତ	continuing, uninterrupted	continuing, uninterrupted, unabated (remains in force)		sanskrit	ai	
+ଏୟାରଷ୍ଟ୍ରାଇକ୍	airstrike	airstrike, air strike		english	ai	
+ଆକାଶଛୁଆଁ	sky-high (prices)	sky-high, skyrocketing (prices, rates); very tall (building)	ଆକାଶ (sky) + ଛୁଆଁ (touching)	mixed	ai	
+ଏସିଆରେ	in Asia	in Asia (West Asia, Central Asia)	ଏସିଆ (Asia) + ରେ (in)	name	ai	
+ସାନାରେ	in Sanaa (capital of Yemen)	in Sanaa, the capital city of Yemen	ସାନା (Sanaa) + ରେ (in)	name	ai	Not ସାନ (younger).
+ୟେମେନକୁ	to Yemen; Yemen (object)	to Yemen; Yemen (object form)	ୟେମେନ (Yemen) + କୁ (to, object)	name	ai	
+ତାଇଜ୍‌ର	of Taiz (city in Yemen)	of Taiz, a city in south-west Yemen	ତାଇଜ୍ (Taiz) + ର (of)	name	ai	
+ଜବଲ୍	Jabal (Arabic: mountain), in place names	Jabal, Arabic for mountain or hill, in Arab place names		arabic	ai	
+ବିଭକ୍ତ	divided, split	divided, split, partitioned (into parts or phases)		sanskrit	ai	
+ରିୟାଦ୍	Riyadh, capital of Saudi Arabia	Riyadh, the capital of Saudi Arabia; the Saudi government (figurative)		name	ai	
+ଗାଜା	Gaza (Gaza Strip)	Gaza, the Gaza Strip (Palestinian territory)		name	ai	
+ବାଣିଜ୍ୟିକ	commercial	commercial, of trade (commercial ship, commercial vehicle)	ବାଣିଜ୍ୟ (trade) + ଇକ (of)	sanskrit	ai	
+ହୋପ୍	hope (Cape of Good Hope); Hope (surname, Shai Hope)	hope, in English names and titles (Cape of Good Hope); Hope, a surname (Shai Hope, West Indies cricketer)		english	ai	
+ବାଦ	left out, excluded	left out, excluded, dropped (baada padibaa: be left out); argument, dispute (in badabibada); -ism, doctrine (in compounds)			ai	
+ନିର୍ଦ୍ଦେଶନାମାରେ	in the directive, in the order	in the directive, in the written order or notification	ନିର୍ଦ୍ଦେଶନାମା (written directive) + ରେ (in)	mixed	ai	
+ଛତିଶଗଡ଼	Chhattisgarh (state)	Chhattisgarh, a state of India bordering Odisha		name	ai	
+ଘୋଷଣାପତ୍ର	declaration (form); manifesto	declaration (a signed form or statement); manifesto (election manifesto)	ଘୋଷଣା (declaration) + ପତ୍ର (paper)	sanskrit	ai	
+ପୁନଃଯାଞ୍ଚ	re-verification, re-check	re-verification, re-checking, second scrutiny	ପୁନଃ (again) + ଯାଞ୍ଚ (check)	mixed	ai	
+ଇଆରଓ	ERO, Electoral Registration Officer	ERO, Electoral Registration Officer		english	ai	
+ବୁଥ୍‌ସ୍ତରୀୟ	booth-level (officer, agent)	booth-level (booth-level officer BLO, booth-level agent BLA)	ବୁଥ୍ (booth) + ସ୍ତରୀୟ (level)	mixed	ai	
+ସୁପ୍ରିମକୋର୍ଟଙ୍କୁ	to the Supreme Court	to the Supreme Court (respectful, as courts are addressed)	ସୁପ୍ରିମକୋର୍ଟ (Supreme Court) + ଙ୍କୁ (to, respectful)	english	ai	
+ଟେକ୍ନୋଲୋଜିର	of technology	of technology; Technology's (in college names)	ଟେକ୍ନୋଲୋଜି (technology) + ର (of)	english	ai	
+ବିକ୍ଷୋଭର	of the protest	of the protest or agitation	ବିକ୍ଷୋଭ (protest) + ର (of)	sanskrit	ai	
+ଜୈସିଂହ	Jaising (surname)	Jaising (surname), as in the lawyer Indira Jaising		name	ai	
+ମାଇକ	mic, microphone	mic, microphone; loudspeaker		english	ai	
+ସେକଥା	that (matter), that thing	that, that matter, that fact (it is not clear)	ସେ (that) + କଥା (matter)	native	ai	
+ଜଜ	judge	judge (district judge, sessions judge)		english	ai	
+ଏସିପି	ACP, Assistant Commissioner of Police	ACP, Assistant Commissioner of Police		english	ai	
+ଏଫଆଇଆର	FIR, First Information Report	FIR, First Information Report (a police complaint)		english	ai	
+ବ୍ରେକ	break (break-up)	break (as in break-up of a couple; a pause); brake (of a vehicle)		english	ai	
+ସହମତି	consent, agreement	consent, agreement, concurrence (sahamati prakash: to agree)	ସହ (with) + ମତି (opinion)	sanskrit	ai	
+ଆକୃତିଙ୍କ	Akriti's; of Akriti (respectful)	of Akriti (respectful), Akriti's	ଆକୃତି (Akriti; shape) + ଙ୍କ (of, respectful)	sanskrit	ai	Akriti, a woman's given name.
+ଭାବୀ	future, would-be (wife, husband)	future, would-be, to-be (bhabi patni: future wife); coming		sanskrit	ai	
+ଶୀର୍ଷକ	title, heading; titled	title, heading, headline; titled, entitled (X shirshaka: titled X)		sanskrit	ai	
+କ୍ୟାପିଟାଲ୍ସ	Capitals (Delhi Capitals, IPL team)	Capitals, as in Delhi Capitals (an IPL cricket team)		english	ai	
+କାରନାମା	deed, act (usually a misdeed)	deed, act, exploit (usually a misdeed or racket)		persian	ai	Came into Odia through Persian or Urdu.
+ପ୍ରେସ	press (media; press release)	press (the news media, press release); printing press		english	ai	
+ମେସର୍ସ	M/s, Messrs (before a firm's name)	M/s, Messrs, written before the name of a firm		english	ai	
+ଚକ୍ରାନ୍ତ	conspiracy, plot	conspiracy, plot, scheme		sanskrit	ai	
+ପର୍ଦ୍ଦାଫାସ	exposure, busting (of a racket)	exposure, unmasking, busting (of a racket or plot)	ପର୍ଦ୍ଦା (curtain) + ଫାସ (exposed)	persian	ai	Also spelt ପର୍ଦ୍ଦାଫାଶ.
+ଜୋନାଲ	zonal	zonal (zonal office)		english	ai	
+ପାଂଚସଫ୍ଟ	Panchsoft (company name)	Panchsoft, part of a company name (Panchsoft Technologies)		name	ai	
+ପିଏସଆଇଏଲ	PSIL (company initials)	PSIL, initials in a company name (PSIL International)		english	ai	
+ରିକ୍ରୁଟମେଣ୍ଟ	recruitment	recruitment (Police Recruitment Board)		english	ai	
+ଲିମିଟେଡକୁ	to (the) Limited (company)	to the Limited company; Ltd (object form)	ଲିମିଟେଡ (Limited) + କୁ (to)	english	ai	
+ଭୁବନେଶ୍ୱରସ୍ଥିତ	Bhubaneswar-based, in Bhubaneswar	Bhubaneswar-based, located in Bhubaneswar	ଭୁବନେଶ୍ୱର (Bhubaneswar) + ସ୍ଥିତ (located)	mixed	ai	
+ସିଲିକନ୍	silicon	silicon; Silicon (in company names)		english	ai	
+ଆଳରେ	on the pretext of, in the name of	on the pretext of, under the cover of, in the name of	ଆଳ (pretext) + ରେ (in)	native	ai	
+ଶାଶ୍ୱତୀ	Saswati (woman's given name)	Saswati, a woman's given name; eternal (feminine, literary)		name	ai	
+ଟେକଲାବର	of Techlab (company name)	of Techlab, part of a company name (Silicon Techlab)	ଟେକଲାବ (Techlab) + ର (of)	name	ai	
+ଗୋପନ	secret, confidential	secret, confidential, hidden (gopan rakhiba: to keep secret)		sanskrit	ai	
+ପରୀକ୍ଷାର୍ଥୀଙ୍କ	of the examinee(s), candidates'	of the examinee or examinees (respectful or plural), candidates'	ପରୀକ୍ଷାର୍ଥୀ (examinee) + ଙ୍କ (of)	sanskrit	ai	
+ପରୀକ୍ଷାର୍ଥୀଙ୍କଠାରୁ	from the examinee(s), from candidates	from the examinee or examinees (respectful or plural); from each candidate	ପରୀକ୍ଷାର୍ଥୀ (examinee) + ଙ୍କଠାରୁ (from)	sanskrit	ai	
+ପ୍ଲାନିଂ	planning	planning (town planning)		english	ai	
+ବିଡିଏର	of the BDA (Bhubaneswar Development Authority)	of the BDA, the Bhubaneswar Development Authority	ବିଡିଏ (BDA) + ର (of)	name	ai	
+ପଡ଼ିରହିଥିବା	lying (neglected); pending	lying neglected, left lying; pending for long (cases)	ପଡ଼ି (fallen) + ରହିଥିବା (that has stayed)	native	ai	
+ଅଣାଯିବ	will be brought	will be brought, will be brought back (passive)	ଅଣା (bring) + ଯିବ (will go): passive	native	ai	
+ପ୍ରଶସ୍ତ	wide, broad (road); paved (way)	wide, broad, spacious (road); open, paved (the way: patha prashasta kariba); (old) praised, excellent		sanskrit	ai	
+ହସ୍ପିଟାଲ୍‌	hospital	hospital		english	ai	
+ବର୍ଷବର୍ଷ	for years and years	for years and years, for many years (barsha barsha dhari)	ବର୍ଷ (year) + ବର୍ଷ (year)	sanskrit	ai	
+ଉଷ୍ମ	warm; heated (politics)	warm; heated, tense (politics); cordial (welcome)		sanskrit	ai	
+ସର୍କିଟ	circuit (Circuit House)	circuit (Circuit House: a government guest house); electric circuit		english	ai	
+ହାଉସରେ	in the house (Circuit House); in the House	in the house (Circuit House); in the House (legislature)	ହାଉସ (house) + ରେ (in)	english	ai	
+ନାଗରିକତ୍ୱ	citizenship	citizenship, nationality	ନାଗରିକ (citizen) + ତ୍ୱ (-ship)	sanskrit	ai	
+ସୋମୈୟା	Somaiya (surname)	Somaiya (surname), as in the politician Kirit Somaiya		name	ai	
+ଏଠାକୁ	here, to this place	here, to this place (came here)	ଏଠା (here) + କୁ (to)	native	ai	
+ଭଣଜା	nephew (sister's son)	nephew, sister's son		native	ai	
+ଆସିଗଲାଣି	has (already) come, is out by now	has already come, has arrived by now (results are out)	ଆସି (having come) + ଗଲାଣି (has gone by now)	native	ai	
+ଗୋଦାବରୀ	Godavari (river); in names	Godavari, a large river of south India; Godavari, in names of colleges and people		name	ai	
+କନ୍‌ଭେନ୍‌ସନ୍	convention (convention hall)	convention (convention hall, centre)		english	ai	
+ସର୍ବଣା	Saravana (given name)	Saravana, a man's given name (Tamil)		name	ai	
+ଉପକଣ୍ଠ	outskirts, suburb (of a town)	outskirts, suburbs, edge of a town; vicinity; (old) part of the neck near the throat	ଉପ (near) + କଣ୍ଠ (throat, edge)	sanskrit	ai	
+ବାଡ଼ିଆ	Badia (part of a place name near Baripada)	Badia, part of the place name Baigana Badia, on the outskirts of Baripada (Mayurbhanj district)		name	ai	
+ମୂର୍ଚ୍ଛା	fainting; unconsciousness	fainting, swoon, unconsciousness (murchha heba: to faint)		sanskrit	ai	
+ନଓହରିଲେ	if (he/she) does not withdraw	if (he/she or they) do not withdraw; unless they step back	ନ (not) + ଓହରିଲେ (if withdraw)	native	ai	
+ରାଜ୍ୟବ୍ୟାପୀ	statewide, across the state	statewide, across the state, all over the state	ରାଜ୍ୟ (state) + ବ୍ୟାପୀ (spread over)	sanskrit	ai	
+ଗଣ୍ଡଗୋଳ	trouble, ruckus, commotion	trouble, ruckus, commotion, disturbance; quarrel; confusion, mess		native	ai	
+ଧରଣୀଧର	Dharanidhar (given name; university)	Dharanidhar, a given name (Dharanidhar University, Keonjhar); bearer of the earth (an epithet of Vishnu)	ଧରଣୀ (earth) + ଧର (bearer)	name	ai	
+କଳିଙ୍ଗନଗରଠାରେ	at Kalinganagar	at Kalinganagar (steel hub in Jajpur district; also an area of Bhubaneswar)	କଳିଙ୍ଗନଗର (Kalinganagar) + ଠାରେ (at)	name	ai	
+ପରୋକ୍ଷ	indirect	indirect (direct and indirect jobs; indirect light); (old) out of sight	ପରଃ (beyond) + ଅକ୍ଷ (eye)	sanskrit	ai	
+ଉଭା	standing; emerging (ubha heba)	standing up, upright; emerging as (ubha heba: to emerge, arise)		native	ai	
+ଜିନ୍ଦଲ	Jindal (surname; Jindal group)	Jindal (surname); the Jindal business group (Jindal Stainless)		name	ai	
+ବୟନଶିଳ୍ପ	textile industry, weaving	textile industry, textiles and weaving (Handloom and Textiles minister)	ବୟନ (weaving) + ଶିଳ୍ପ (industry)	sanskrit	ai	
+ରୋଜଗାରକ୍ଷମ	earning; job-giving (sector)	able to earn, earning (the only earning member); employment-generating (sector)	ରୋଜଗାର (earning, job) + କ୍ଷମ (able)	mixed	ai	
+ଅତା	ata (Hindi ata-pata: whereabouts)	ata, in the Hindi phrase ata-pata (whereabouts), as in a film title		hindi	ai	From the Hindi film title Ata Pata Laapata.
+ପତା	eyelid; (Hindi) trace, address	eyelid (akhi pata); trace, whereabouts, address (Hindi pata, ata-pata)			ai	
+ଲାପତା	missing, untraceable	missing, untraceable, vanished		persian	ai	Came into Odia through Hindi or Urdu.
+ଲିମିଟେଡ୍‌	Limited, Ltd (company)	Limited, Ltd, after a company's name		english	ai	
+ଚମ୍ପା	Champa (woman's given name); champak	Champa, a woman's given name; champak, a tree with fragrant yellow flowers; (old) Champa, an ancient city		name	ai	
+ଫଇସଲା	decision, verdict, disposal (of a case)	decision, verdict, disposal (of a case); settlement		arabic	ai	Came into Odia through Persian or Urdu.
+ତ୍ୱରିତ୍	speedy, quick (trial)	speedy, quick, expedited (trial, hearing)		sanskrit	ai	Also spelt ତ୍ୱରିତ.
+ଜଜସ୍ତରୀୟ	judge-level (court)	judge-level, of the rank of a judge (district judge-level court)	ଜଜ (judge) + ସ୍ତରୀୟ (level)	mixed	ai	
+ନିଃସର୍ତ୍ତ	unconditional	unconditional (unconditional apology)	ନିଃ (without) + ସର୍ତ୍ତ (condition)	mixed	ai	
+ଏହାବାଦ	besides this, apart from this	besides this, apart from this; moreover	ଏହା (this) + ବାଦ (apart)	mixed	ai	
+ଇଣ୍ଟରନେଟ	internet	internet		english	ai	
+ଷ୍ଟେସନକୁ	to the station	to the station (police station, metro station); the station (object)	ଷ୍ଟେସନ (station) + କୁ (to)	english	ai	
+ସେଲୁଲାର	cellular (mobile)	cellular, mobile (cellular internet)		english	ai	
+ନୋଟିସକୁ	the notice (object); to the notice	the notice (object form); to the notice	ନୋଟିସ (notice) + କୁ (object)	english	ai	
+ସିଜେପିର	of the CJP (Cockroach Janata Party)	of the CJP (Cockroach Janata Party)	ସିଜେପି (CJP) + ର (of)	name	ai	
+ହୋଇନି	has not been, has not happened	has not been (done), has not happened, is not yet (spoken form)	ହୋଇ (been) + ନି (not)	native	ai	Spoken short form of ହୋଇନାହିଁ.
+ଆଜୀବନ	lifelong; for life	lifelong, for life (life imprisonment, lifetime struggle)	ଆ (until) + ଜୀବନ (life)	sanskrit	ai	
+ମାନବାଧିକାରର	of human rights	of human rights (violation of human rights)	ମାନବାଧିକାର (human rights) + ର (of)	sanskrit	ai	
+ବର୍ବର	barbaric, brutal	barbaric, brutal, savage; (old) a barbarian, uncivilised		sanskrit	ai	
+ହାଇକମିଶନର	High Commissioner	High Commissioner (UN High Commissioner; a diplomat)		english	ai	
+ଉପନିବେଶବାଦୀ	colonialist, colonial	colonialist, colonial; a colonialist	ଉପନିବେଶ (colony) + ବାଦୀ (-ist)	sanskrit	ai	
+ତାମିଲ	Tamil	Tamil (the people, the language)		name	ai	
+ନାଟାଲ	Natal (province of South Africa)	Natal, a former province of South Africa		name	ai	
+ନିଷ୍ଠାପର	dedicated, devoted, sincere	dedicated, devoted, sincere (worker, effort)	ନିଷ୍ଠା (devotion) + ପର (intent on)	sanskrit	ai	
+ଆଫ୍ରିକାରେ	in Africa	in Africa (South Africa)	ଆଫ୍ରିକା (Africa) + ରେ (in)	name	ai	
+ଓକିଲାତି	legal practice, law (as a career)	legal practice, the profession of a lawyer; law (as a course of study)	ଓକିଲ (lawyer) + ଆତି (-ship)	arabic	ai	
+ଆଦୌ	at all (not at all)	at all, in the least (with a negative: not at all); (old) at first		sanskrit	ai	
+ପ୍ରତିବଦ୍ଧତାକୁ	commitment (object); to the commitment	commitment, dedication (object form); to the commitment	ପ୍ରତିବଦ୍ଧତା (commitment) + କୁ (object)	sanskrit	ai	
+ଯୁଦ୍ଧାପରାଧ	war crime(s)	war crime, war crimes	ଯୁଦ୍ଧ (war) + ଅପରାଧ (crime)	sanskrit	ai	
+ନରସଂହାରର	of genocide, of the massacre	of genocide, of the massacre	ନରସଂହାର (genocide) + ର (of)	sanskrit	ai	
+ନେଲସନ	Nelson (given name; Nelson Mandela)	Nelson, a given name (Nelson Mandela)		name	ai	
+ରବେନ	Robben (Robben Island)	Robben, as in Robben Island (former prison island, South Africa)		name	ai	
+ଦ୍ୱୀପର	of the island	of the island	ଦ୍ୱୀପ (island) + ର (of)	sanskrit	ai	
+ଅତୁଳନୀୟ	incomparable, unmatched	incomparable, unmatched, unparalleled	ଅ (un-) + ତୁଳନୀୟ (comparable)	sanskrit	ai	
+ରୁୱାଣ୍ଡା	Rwanda (country in Africa)	Rwanda, a country in central Africa		name	ai	
+ନିର୍ମମ	brutal, merciless	brutal, merciless, ruthless (brutal murder); (old) free of attachment	ନିଃ (without) + ମମ (mine, attachment)	sanskrit	ai	
+ବଳାତ୍କାର	rape	rape; (old) force, violence	ବଳ (force) + କାର (act)	sanskrit	ai	
+ମାନବତା	humanity	humanity (crimes against humanity); humaneness, kindness	ମାନବ (human) + ତା (-ness)	sanskrit	ai	
+ଅଂଶବିଶେଷ	a part (of), a portion	a part, a portion, one part (of something larger)	ଅଂଶ (part) + ବିଶେଷ (particular)	sanskrit	ai	
+ଅବସ୍ଥାପିତ	posted, serving (in a post); placed	posted, appointed, serving (in a post); placed, established		sanskrit	ai	
+ଗାଜାରେ	in Gaza	in Gaza, in the Gaza Strip	ଗାଜା (Gaza) + ରେ (in)	name	ai	
+କନଷ୍ଟେବଲଙ୍କୁ	(to) the constable	the constable (object, respectful); to the constable	କନଷ୍ଟେବଲ (constable) + ଙ୍କୁ (to, respectful)	english	ai	
+ତରନ	Tarn (in Tarn Taran, Punjab)	Tarn, as in Tarn Taran, a district of Punjab		name	ai	
+ତାରାନ	Taran (in Tarn Taran, Punjab)	Taran, as in Tarn Taran, a district of Punjab		name	ai	Not ତାରା (star).
+ହେରୋଇନକୁ	the heroin (object)	the heroin (object form)	ହେରୋଇନ (heroin) + କୁ (object)	english	ai	
+ସୁରିନ୍ଦର	Surinder (given name)	Surinder, a man's given name (Punjabi)		name	ai	
+ଓପିଆରବି	OPRB, Odisha Police Recruitment Board	OPRB, Odisha Police Recruitment Board		english	ai	
+ଓୟୁଏସଏସଏସସି	OUSSSC (Odisha uniformed-services recruitment)	OUSSSC, Odisha's selection commission for uniformed services (police and others)		english	ai	
+ଲଗ୍‌	log (log in)	log, as in log in, log-in		english	ai	
+ଆଶାୟୀ	aspiring, hopeful; aspirant	aspiring, hopeful; an aspirant, a candidate	ଆଶା (hope) + ଆୟୀ (having)	sanskrit	ai	
+ୟୁନିଫର୍ମ	uniform	uniform (school uniform; uniformed services)		english	ai	
+ମାଇନିଂ	mining	mining (Odisha Mining Corporation)		english	ai	
+ସନ୍ଧାନ	search, exploration; trace	search, exploration, prospecting (minerals); trace, whereabouts (sandhan miluni: no trace)		sanskrit	ai	
+ହାଇଦ୍ରାବାଦର	of Hyderabad; Hyderabad-based	of Hyderabad; Hyderabad-based	ହାଇଦ୍ରାବାଦ (Hyderabad) + ର (of)	name	ai	
+ସ୍ୱାକ୍ଷରିତ	signed (agreement, MoU)	signed (an agreement, MoU); bearing a signature	ସ୍ୱାକ୍ଷର (signature) + ଇତ (-ed)	sanskrit	ai	
+କର୍ପୋରେସନ	corporation	corporation (a company; municipal corporation)		english	ai	
+ମିନେରାଲ	mineral	mineral (critical minerals)		english	ai	
+ପ୍ରଯୁକ୍ତିବିଦ୍ୟାର	of technology	of technology (exchange of technology; biotechnology)	ପ୍ରଯୁକ୍ତିବିଦ୍ୟା (technology) + ର (of)	sanskrit	ai	
+କମାଇବା	to reduce, lower; reducing	to reduce, lower, cut down; reducing; to earn (colloquial, from Hindi)	କମା (reduce) + ଇବା (verbal noun)	native	ai	
+ଓଏମ୍ସି	OMC, Odisha Mining Corporation	OMC, Odisha Mining Corporation		english	ai	
+କ୍ରୋମାଇଟ୍	chromite (ore)	chromite, chromium ore		english	ai	
+ଲୁହାପଥର	iron ore	iron ore	ଲୁହା (iron) + ପଥର (stone)	native	ai	
+ବକ୍ସାଇଟ୍	bauxite	bauxite (aluminium ore)		english	ai	
+ତୁକାରାମ	Tukaram (given name)	Tukaram, a given name (Sant Tukaram, a Marathi poet-saint)		name	ai	
+ମୁଣ୍ଡେ	Munde (surname)	Munde, a Marathi surname		name	ai	Not ମୁଣ୍ଡ (head).
+ନାନାଙ୍କୁ	(to) Nana (name, respectful)	to Nana (a person's name or nickname, respectful)	ନାନା (Nana) + ଙ୍କୁ (to, respectful)		ai	
+ବନ୍ୟଜୀବ	wildlife	wildlife (World Wildlife Fund)	ବନ୍ୟ (wild) + ଜୀବ (creature)	sanskrit	ai	
+ଲିଭିଂ	living (Living Planet Report)	living, as in Living Planet Report		english	ai	
+ପ୍ଲାନେଟ୍	planet	planet		english	ai	
+ଦ୍ୱିତୀୟତଃ	secondly	secondly, in the second place	ଦ୍ୱିତୀୟ (second) + ତଃ (-ly)	sanskrit	ai	
+ଟ୍ରିଲିଅନ	trillion	trillion		english	ai	
+ବିଚରଣ	roaming, moving about (range)	roaming, moving about; range (bicharana kshetra: the range of tigers)		sanskrit	ai	
+ବାନରାଙ୍କୁ	(to) Banra (surname, respectful)	to Banra (surname, respectful); Banra (object)	ବାନରା (Banra) + ଙ୍କୁ (to)	name	ai	Not ବାନର (monkey).
+ସଶ୍ରମ	rigorous (imprisonment)	rigorous, with hard labour (rigorous imprisonment)	ସ (with) + ଶ୍ରମ (labour)	sanskrit	ai	
+କାରାଦଣ୍ଡ	imprisonment, jail sentence	imprisonment, jail sentence	କାରା (prison) + ଦଣ୍ଡ (punishment)	sanskrit	ai	
+ଅନାଦେୟ	unpaid; in default of payment (fine)	unpaid; in default of payment (if the fine is not paid)	ଅନ୍ (not) + ଆଦେୟ (paid, payable)	sanskrit	ai	
+ପୀଡ଼ିତା	the victim (woman or girl)	the victim, survivor (a woman or girl)	ପୀଡ଼ିତ (victim) + ଆ (feminine)	sanskrit	ai	
+ଇସି	EC, Election Commission	EC, Election Commission		english	ai	
+ଏସଏସଆରରେ	in the SSR (Special Summary Revision)	in the SSR, the Special Summary Revision of voter lists	ଏସଏସଆର (SSR) + ରେ (in)	english	ai	
+ବଦଳାନ୍ତି	change (they; or he/she, respectful)	change, they change (present; they, or he/she respectful)	ବଦଳା (change) + ଅନ୍ତି (they)	native	ai	
+ଏସଆଇଆରରେ	in the SIR (Special Intensive Revision)	in the SIR, the Special Intensive Revision of voter lists	ଏସଆଇଆର (SIR) + ରେ (in)	english	ai	
+କରିସାରିଲେଣି	have already done (they; or respectful)	have already done (they; or he/she, respectful)	କରି (having done) + ସାରିଲେଣି (have finished by now)	native	ai	
+ଏସଆଇଆରକୁ	the SIR (object); about the SIR	the SIR (object form); about the SIR (with nei)	ଏସଆଇଆର (SIR) + କୁ (object)	english	ai	
+ମତଦାତା	voter	voter, elector (voter list)	ମତ (vote, opinion) + ଦାତା (giver)	sanskrit	ai	
+ଯାକ	all (of them), whole (after a number)	all of them, the whole number (duiti jaka: both; athati jaka: all eight)		native	ai	
+ଗବେଷକମାନଙ୍କୁ	(to) the researchers	the researchers (object); to the researchers	ଗବେଷକ (researcher) + ମାନଙ୍କୁ (to, plural)	sanskrit	ai	
+ଏଜୁକେସନ୍	education	education (college of education)		english	ai	
+ଫାର୍ମାସ୍ୟୁଟିକାଲ୍	pharmaceutical	pharmaceutical (pharmaceutical sciences)		english	ai	
+ସ୍ୱର୍ଗତ	late, deceased (the late)	late, deceased (the late Professor X)	ସ୍ୱର୍ଗ (heaven) + ଗତ (gone)	sanskrit	ai	
+ପ୍ରଦୀପ୍ତ	Pradipta (given name)	Pradipta, a man's given name; (literary) shining, lit up		name	ai	
+ସଂଗେ	with, along with (sange sange)	with, along with; sange sange: at the same time, at once		native	ai	Also spelt ସଙ୍ଗେ.
+କାମନା	wish, desire	wish, desire (saphalata kamana: to wish success)		sanskrit	ai	
+ନାନୋ	nano (nanoscience)	nano, as in nanoscience and nanotechnology		english	ai	
+ବିହାରୀ	Bihari (in given names); of Bihar	Bihari, part of given names (Atal Bihari, Lala Bihari); a person from Bihar; (old) one who roams, an epithet of Krishna		name	ai	
+ଇଣ୍ଡଷ୍ଟ୍ରିଆଲ୍	industrial	industrial		english	ai	
+ବାୟୋଟେକ୍ନୋଲୋଜି	biotechnology	biotechnology		english	ai	
+ବାୟୋଟେକ୍ନୋଲୋଜିର	of biotechnology	of biotechnology	ବାୟୋଟେକ୍ନୋଲୋଜି (biotechnology) + ର (of)	english	ai	
+ଜ୍ଞାନରଞ୍ଜନ	Gyanaranjan (given name)	Gyanaranjan, a man's given name	ଜ୍ଞାନ (knowledge) + ରଞ୍ଜନ (delighting)	name	ai	
+ହୋଇଥାନ୍ତା	would have happened, would have been	would have happened, would have been (if not stopped)	ହୋଇ (been) + ଥାନ୍ତା (would have)	native	ai	
+ଗଣହତ୍ୟା	mass killing, massacre	mass killing, massacre, carnage	ଗଣ (mass) + ହତ୍ୟା (killing)	sanskrit	ai	
+ହାଇଡ୍ରାମା	high drama (a dramatic scene)	high drama, a dramatic scene, commotion		english	ai	
+ରଗଡି	Ragadi (place in Jajpur district)	Ragadi, a place in Jajpur district (Ragadi Government Polytechnic)		name	ai	
+କମ୍ଭମପାଟୀଙ୍କୁ	(to) Kambhampati (surname, respectful)	to Kambhampati (surname, respectful)	କମ୍ଭମପାଟୀ (Kambhampati) + ଙ୍କୁ (to)	name	ai	
+ଅଭୁଲା	unforgettable	unforgettable (abhula smruti: unforgettable memory)	ଅ (un-) + ଭୁଲା (forgotten)	native	ai	
+ଭବନର	of the building; of the Bhavan	of the building, of the Bhavan (Lok Seva Bhavan)	ଭବନ (building) + ର (of)	sanskrit	ai	
+ସୌହାର୍ଦ୍ଦ୍ୟପୂର୍ଣ୍ଣ	cordial, friendly, harmonious	cordial, friendly, harmonious (relations)	ସୌହାର୍ଦ୍ଦ୍ୟ (goodwill) + ପୂର୍ଣ୍ଣ (full)	sanskrit	ai	
+ସେଲିବ୍ରେସନ୍	celebration	celebration		english	ai	
+ରାଜପଥକୁ	the highway (object); to the highway	the highway, main road (object form); to the highway	ରାଜପଥ (highway) + କୁ (object)	sanskrit	ai	
+ହତ୍ୟାକାଣ୍ଡକୁ	the murder (case) (object); about it	the murder or murder case (object form); about the murder (with nei)	ହତ୍ୟାକାଣ୍ଡ (murder case) + କୁ (object)	sanskrit	ai	
+ଭିଆଇପିଙ୍କ	of a VIP; for a VIP	of a VIP (respectful); for a VIP (with lagi)	ଭିଆଇପି (VIP) + ଙ୍କ (of)	english	ai	
+ଗାରିମା	dignity, grace, prestige	dignity, grace, prestige (constitutional dignity); Garima (woman's given name)		sanskrit	ai	
+ଅଙ୍କିତାଙ୍କ	Ankita's; of Ankita (respectful)	of Ankita (respectful), Ankita's	ଅଙ୍କିତା (Ankita) + ଙ୍କ (of)	name	ai	Ankita, a woman's given name.
+ଗୌତମଙ୍କୁ	(to) Gautam (respectful)	to Gautam (respectful); Gautam (object)	ଗୌତମ (Gautam) + ଙ୍କୁ (to)	name	ai	
+ଟାଇପ୍	type (E-type); typing	type, kind (E-type quarters); typing; (old) printing type		english	ai	
+ପ୍ରକଟ	expressed, manifest (prakata kariba)	expressed, shown, manifest (asha prakata kariba: to express hope)		sanskrit	ai	
+ଆଇଏମଡି	IMD, India Meteorological Department	IMD, India Meteorological Department		english	ai	
+ସ୍ବାଭାବିକଠାରୁ	than normal, than usual	than normal, than usual (less rain than normal)	ସ୍ବାଭାବିକ (normal) + ଠାରୁ (than)	sanskrit	ai	
+ଆଇଏସ	IAS (short spelling); IS (Islamic State)	IAS (Indian Administrative Service), when written short; IS, the Islamic State (militant group)		english	ai	In these contexts it stands for ଆଇଏଏସ (IAS).
+ଜୟପ୍ରକାଶ	Jayaprakash (given name)	Jayaprakash, a man's given name (Jayaprakash Narayan)	ଜୟ (victory) + ପ୍ରକାଶ (light)	name	ai	
+ଆର୍ସିପି	RCP (initials, as in R.C.P. Singh)	RCP, initials in a name (R.C.P. Singh, a former Union minister)		english	ai	
+ମିତ୍ତଲଙ୍କ	Mittal's; of Mittal (respectful)	of Mittal (respectful), Mittal's	ମିତ୍ତଲ (Mittal) + ଙ୍କ (of)	name	ai	Mittal, a surname.
+ଡୋର୍	door (door to door)	door (door to door)		english	ai	
+ଚୌହଦୀ	premises, precincts; boundaries	premises, precincts, campus area; boundaries (of a property)		persian	ai	
+ଇପ୍ସିତା	Ipsita (woman's given name)	Ipsita, a woman's given name; (literary) desired, wished for		name	ai	
+ଗେଟ୍	gate	gate (college gate, main gate)		english	ai	
+କପଡ଼ାରେ	on (a) cloth, in cloth	on a cloth, in cloth (written on a white cloth)	କପଡ଼ା (cloth) + ରେ (on, in)	native	ai	
+ଆକ୍ସନ	action (action mode)	action (in action mode: acting firmly); action (film scene)		english	ai	
+ଘାଟିକିଆରେ	at Ghatikia (area of Bhubaneswar)	at Ghatikia, an area of Bhubaneswar	ଘାଟିକିଆ (Ghatikia) + ରେ (at)	name	ai	
+ବଜରଙ୍ଗୀ	Bajrangi, a name of Hanuman (in names)	Bajrangi, a name of Hanuman; used in names of places and things		name	ai	
+ବସ୍ତିବାସିନ୍ଦା	slum dwellers, slum residents	slum dwellers, residents of slums	ବସ୍ତି (slum) + ବାସିନ୍ଦା (resident)	mixed	ai	
+ଖେଳକୁଦ	sports, games	sports, games and play, athletics	ଖେଳ (play) + କୁଦ (jump)	native	ai	
+ପୁନର୍ବାସ	rehabilitation, resettlement	rehabilitation, resettlement (of displaced people; of patients)	ପୁନଃ (again) + ବାସ (settling)	sanskrit	ai	
+ଡିନ୍	dean	dean (of a college or faculty)		english	ai	
+ସୁପରିଟେଣ୍ଡେଂଟ	superintendent	superintendent (medical superintendent)		english	ai	
+ସାମନ୍ତସିଂହାର	Samantasinghar (surname)	Samantasinghar, an Odia surname		name	ai	
+ଉପନିର୍ଦ୍ଦେଶକ	deputy director	deputy director	ଉପ (deputy) + ନିର୍ଦ୍ଦେଶକ (director)	sanskrit	ai	
+ଜନସଚେତନତା	public awareness	public awareness, mass awareness	ଜନ (people) + ସଚେତନତା (awareness)	sanskrit	ai	
+ରାଜଶ୍ରୀ	Rajashree (woman's given name)	Rajashree, a woman's given name	ରାଜ (royal) + ଶ୍ରୀ (grace)	name	ai	
+ଗାନ୍ଧିଙ୍କୁ	(to) Gandhi (respectful)	to Gandhi (respectful); Gandhi (object), as in Rahul Gandhi	ଗାନ୍ଧି (Gandhi) + ଙ୍କୁ (to)	name	ai	
+କଟାକ୍ଷ	jibe, taunt, dig (kataksha kariba)	jibe, taunt, sarcastic dig (kataksha kariba: to take a dig at); (old) sidelong glance		sanskrit	ai	
+ସଂସଦରୁ	from Parliament; from the (student) union	from Parliament; from the student union	ସଂସଦ (parliament) + ରୁ (from)	sanskrit	ai	
+ରାସ୍ତାକଡ଼ରେ	on the roadside	on the roadside, by the road	ରାସ୍ତାକଡ଼ (roadside) + ରେ (on)	mixed	ai	
+ମାଡ଼ିଗଲା	ran over, ploughed into (vehicle)	ran over, ploughed into (a vehicle into people); spread over, climbed over	ମାଡ଼ି (climbing on) + ଗଲା (went)	native	ai	
+ସ୍କର୍ପିଓଟି	the Scorpio (SUV)	the Scorpio, a Scorpio SUV	ସ୍କର୍ପିଓ (Scorpio) + ଟି (the)	english	ai	
+ହର୍ମୁଜ	Hormuz (Strait of Hormuz)	Hormuz, the Strait of Hormuz (sea route between Iran and Oman)		name	ai	
+ଜିଏଫଏସ୍‌	GFS (letters in ships' names)	GFS, letters in the names of cargo ships (GFS Pride)		english	ai	
+ନାବିକ	sailor, seaman; crew member	sailor, seaman, crew member; (old) boatman		sanskrit	ai	
+ଖଣ୍ଡଗିରି	Khandagiri (hill, area of Bhubaneswar)	Khandagiri, a hill with ancient Jain caves; the area and police station in Bhubaneswar	ଖଣ୍ଡ (broken) + ଗିରି (hill)	name	ai	
+ଗଣନାକାରୀ	counter, counting staff (votes)	counter, counting staff (of votes); enumerator	ଗଣନା (counting) + କାରୀ (doer)	sanskrit	ai	
+ଖଲିଆବନ୍ଧ	Khaliabandh (place in Sambalpur)	Khaliabandh, a locality in Sambalpur district		name	ai	
+ହାଇଦରାବାଦ	Hyderabad	Hyderabad, capital of Telangana		name	ai	Also spelt ହାଇଦ୍ରାବାଦ.
+ଟ୍ବେଣ୍ଟି୨୦	Twenty20, T20 (cricket)	Twenty20, T20 (a short form of cricket)		english	ai	
+ପେସ୍‌	pace (pace bowler)	pace, as in pace bowler (cricket)		english	ai	
+ବ୍ୟାଟ୍‌ସମ୍ୟାନ	batsman	batsman, batter (cricket)		english	ai	
+ଅପରିବର୍ତ୍ତିତ	unchanged	unchanged, unaltered	ଅ (un-) + ପରିବର୍ତ୍ତିତ (changed)	sanskrit	ai	
+ନାତୁଣୀକୁ	the granddaughter (object); to her	the granddaughter (object form); to the granddaughter	ନାତୁଣୀ (granddaughter) + କୁ (object)	native	ai	
+ଭିଲ୍ଲାର	of the villa (housing estate)	of the villa or villa estate	ଭିଲ୍ଲା (villa) + ର (of)	english	ai	
+ଖୋଜାଖୋଜି	frantic search, searching everywhere	frantic search, searching high and low	ଖୋଜା (search) + ଖୋଜି (searching)	native	ai	
+ମିଲ୍‌ଟନ	Milton (given name)	Milton, a man's given name		name	ai	
+ପୁଲିସରେ	to the police; in the police	to the police (complained to the police); in the police force	ପୁଲିସ (police) + ରେ (in, to)	english	ai	
+ବିକ୍ରମକୁ	(to) Vikram (given name)	Vikram (object); to Vikram	ବିକ୍ରମ (Vikram) + କୁ (object)	name	ai	
+ରେଟିଂ	rating	rating (rating points; credit rating)		english	ai	
+ତିଲକ	Tilak (given name); tilak (forehead mark)	Tilak, a man's given name; tilak, a mark of sandal paste on the forehead		name	ai	
+ଅଷ୍ଟ୍ରେଲିଆର	of Australia, Australia's	of Australia, Australia's; Australian	ଅଷ୍ଟ୍ରେଲିଆ (Australia) + ର (of)	name	ai	
+ରେନ୍‌ସା	Renshaw (surname)	Renshaw (surname), as in the cricketer Matthew Renshaw		name	ai	
+ଖାନ୍‌ଙ୍କୁ	(to) Khan (surname, respectful)	to Khan (respectful); Khan (object)	ଖାନ୍ (Khan) + ଙ୍କୁ (to)	name	ai	
+ଫରେନର୍ସ	foreigners (Foreigners Act)	foreigners (Foreigners Act, Foreigners Regional Registration Office)		english	ai	
+ଏଫଆରଆରଓ	FRRO, Foreigners Regional Registration Office	FRRO, Foreigners Regional Registration Office or Officer		english	ai	
+ଯନ୍ତରମନ୍ତରକୁ	(to) Jantar Mantar (Delhi)	Jantar Mantar (object), the Delhi observatory and protest site; to Jantar Mantar	ଯନ୍ତରମନ୍ତର (Jantar Mantar) + କୁ (object)	name	ai	
+ପ୍ରତିବାଦକାରୀ	protester(s)	protester, protesters, demonstrators	ପ୍ରତିବାଦ (protest) + କାରୀ (doer)	sanskrit	ai	
+ଜୁମେଇ	Jumei (place in Keonjhar district)	Jumei, a place near the Baitarani river, Keonjhar district		name	ai	
+ଦୁଆଘାଟ	Duaghat (a village in Odisha)	Duaghat, a village in Odisha		name	ai	
+ତୁରୁମୁଙ୍ଗା	Turumunga (place in Keonjhar district)	Turumunga, a place and police station in Keonjhar district		name	ai	
+କୁଳ	bank (of a river); family, lineage	bank, shore (of a river: nadi kula); family, lineage, clan		sanskrit	ai	The bank sense is properly spelt କୂଳ.
+ଦୀପ୍ତିରଞ୍ଜନ	Diptiranjan (given name)	Diptiranjan, a man's given name	ଦୀପ୍ତି (radiance) + ରଞ୍ଜନ (delighting)	name	ai	
+ବ୍ୟବଚ୍ଛେଦ	post-mortem, autopsy; dissection	post-mortem, autopsy (shaba byabachheda); dissection; (old) analysis		sanskrit	ai	
+ଏପିଜେ	APJ (initials, A.P.J. Abdul Kalam)	APJ, initials in A.P.J. Abdul Kalam (former President)		english	ai	
+ଅବଦୁଲ	Abdul (given name)	Abdul, a man's given name (A.P.J. Abdul Kalam)		name	ai	
+ମହାକାଶ	space, outer space (aerospace)	space, outer space (aerospace engineering, space science); the sky	ମହା (great) + ଆକାଶ (sky)	sanskrit	ai	
+ପଦ୍ମ	lotus; Padma (awards)	lotus; Padma, as in the Padma awards (Padma Bhushan); Padma, a given name		sanskrit	ai	
+ମେଡାଲ	medal	medal (gold medal)		english	ai	
+ଖାଲିଦ	Khalid (given name)	Khalid, a man's given name (King Khalid airport, Riyadh)		name	ai	Not ଖାଲି (empty).
+ତାଇକୋଣ୍ଡୋ	taekwondo	taekwondo (a Korean martial art)		english	ai	
+କିଙ୍ଗ	king (in names: King Khalid)	king, in names (King Khalid, King Fahd)		english	ai	
+କରିସାରିଥିଲେ	had already done (they; or respectful)	had already done, had achieved by then (they; or he/she, respectful)	କରି (having done) + ସାରିଥିଲେ (had finished)	native	ai	
+କଲାବେଳେ	while doing; when (one) does	while doing, at the time of doing (while describing)	କଲା (did) + ବେଳେ (at the time)	native	ai	
+ଧାଁ	running, dash (dhan dhapad: commotion)	running, dash; dhan dhapad: running about in panic, commotion		native	ai	
+ପ୍ରେମୀ	lover; fond of (a lover of)	lover (premi jugala: the couple of lovers); fond of, a lover of (sweets, books)	ପ୍ରେମ (love) + ଈ (one who has)	sanskrit	ai	
+ସାହିଲଙ୍କୁ	(to) Sahil (respectful)	to Sahil (respectful); Sahil (object)	ସାହିଲ (Sahil) + ଙ୍କୁ (to)	name	ai	
+ରାଜପୁତଙ୍କୁ	(to) Rajput (surname, respectful)	to Rajput (respectful); Rajput (object)	ରାଜପୁତ (Rajput) + ଙ୍କୁ (to)	name	ai	
+ଡ୍ରମରେ	in a drum (container)	in a drum (a large container)	ଡ୍ରମ (drum) + ରେ (in)	english	ai	
+ଯୋଗକୁ	the yoga (astrology: combination)	the yoga, an astrological combination (object form); to the joining	ଯୋଗ (combination) + କୁ (object)	sanskrit	ai	
+ଯାନବାହାନ	vehicles	vehicles, means of transport (house or vehicle)		sanskrit	ai	Also spelt ଯାନବାହନ, the standard spelling.
+ବିଲ୍‌ଡିଂରେ	in a building	in a building, in the building	ବିଲ୍‌ଡିଂ (building) + ରେ (in)	english	ai	
+ଫାୟାର	fire (fire fighter; Fire TV)	fire (fire fighter, fire brigade); Fire (Fire TV)		english	ai	
+ତାପମାତ୍ରାରେ	in temperature; at a temperature	in temperature (each degree rise in temperature); at a temperature	ତାପମାତ୍ରା (temperature) + ରେ (in, at)	sanskrit	ai	
+ସେଲ୍ସିୟସ୍	Celsius	Celsius (degree Celsius)		english	ai	
+ପ୍ଲଗ୍	plug	plug (plug in; smart plug)		english	ai	
+ଷ୍ଟାଣ୍ଡବାଏ	standby (standby power)	standby (standby power, standby mode)		english	ai	
+ଅନପ୍ଲଗ୍	unplug	unplug, disconnect from the socket		english	ai	
+ଭାଗ୍ୟବାନ	lucky, fortunate	lucky, fortunate	ଭାଗ୍ୟ (luck) + ବାନ (having)	sanskrit	ai	
+ଦିହୁଡ଼ି	Dihudi (surname)	Dihudi, an Odia surname; a flaming torch		name	ai	
+ଅଣାଯାଇଥିଲା	was brought	was brought, was taken (to a place) (passive)	ଅଣା (bring) + ଯାଇଥିଲା (had gone): passive	native	ai	
+ଲାହୋରର	of Lahore	of Lahore (city in Pakistan)	ଲାହୋର (Lahore) + ର (of)	name	ai	
+ଓବିସି	OBC, Other Backward Classes	OBC, Other Backward Classes (reservation category)		english	ai	
+କ୍ୟାପିଟାଲ୍‌ସର	of the Capitals (Delhi Capitals)	of the Capitals, Delhi Capitals' (IPL cricket team)	କ୍ୟାପିଟାଲ୍‌ସ (Capitals) + ର (of)	english	ai	
+ବେଲପାହାଡ଼	Belpahar (town in Jharsuguda district)	Belpahar, a town in Jharsuguda district	ବେଲ (bael) + ପାହାଡ଼ (hill)	name	ai	
+ଦେଣନେଣ	transactions, dealings (money)	transactions, dealings, giving and taking (of money)	ଦେଣ (giving) + ନେଣ (taking)	native	ai	
+ଏକ୍‌ସିସ	Axis (Axis Bank)	Axis, as in Axis Bank (a private bank)		english	ai	
+ବ୍ୟାଙ୍କ୍	bank	bank (private bank, public sector bank)		english	ai	
+ଏଫ	F (the letter, in initials)	F, the letter, in initials (H.D.F.C.)		english	ai	
+ଅନୁପାତ	ratio, proportion	ratio, proportion (credit-deposit ratio)	ଅନୁ (after) + ପାତ (fall)	sanskrit	ai	
+ପ୍ରଯୁଜ୍ୟ	applicable	applicable, that applies (to)		sanskrit	ai	
+ବାସ୍ତବତା	reality	reality, the real situation; truth	ବାସ୍ତବ (real) + ତା (-ness)	sanskrit	ai	
+ଜନଧନ	Jan Dhan (PM Jan Dhan Yojana)	Jan Dhan, as in Pradhan Mantri Jan Dhan Yojana (a bank-account scheme)	ଜନ (people) + ଧନ (wealth)	sanskrit	ai	
+ପେନସନ	pension	pension (Atal Pension Yojana)		english	ai	
+ପିଏମ	PM (Prime Minister; in scheme names)	PM, Prime Minister; in names of central schemes (PM Vishwakarma)		english	ai	
+ହଟାଯିବା	to be removed; being removed, removal	to be removed; being removed, removal (passive verbal noun)	ହଟା (remove) + ଯିବା (go): passive	native	ai	
+ବିଚାରବିଭାଗୀୟ	judicial (judicial custody)	judicial (judicial custody)	ବିଚାର (justice) + ବିଭାଗୀୟ (of the department)	sanskrit	ai	
+ପଠାଯିବା	to be sent; being sent	to be sent; being sent (passive verbal noun)	ପଠା (send) + ଯିବା (go): passive	native	ai	
+ସିଜେପିକୁ	(to) the CJP (Cockroach Janata Party)	to the CJP; the CJP (object), Cockroach Janata Party	ସିଜେପି (CJP) + କୁ (to)	name	ai	
+ଶିନ୍ଦେଙ୍କୁ	(to) Shinde (surname, respectful)	to Shinde (respectful); Shinde (object)	ଶିନ୍ଦେ (Shinde) + ଙ୍କୁ (to)	name	ai	
+ଅନ୍‌ଲାଇନ୍‌ରେ	online	online (submit online, book online)	ଅନ୍‌ଲାଇନ୍ (online) + ରେ (in)	english	ai	Also spelt ଅନଲାଇନରେ.
+ଅଂଶୀଦାରଙ୍କୁ	(to) the shareholders, partners	to the shareholders, partners or stakeholders (respectful or plural)	ଅଂଶୀଦାର (shareholder) + ଙ୍କୁ (to)	mixed	ai	
+ଧୀରୁଭାଇ	Dhirubhai (given name)	Dhirubhai, a man's given name (Dhirubhai Ambani)		name	ai	
+ବିବେଚିତ	considered, deemed	considered, deemed (deemed eligible, held guilty)		sanskrit	ai	
+ରାଜୀବ	Rajiv (given name); (old) lotus	Rajiv, a man's given name (Rajiv Gandhi); (old) lotus		name	ai	
+ଆଣ୍ଡ୍ର୍ୟୁ	Andrew (given name or surname)	Andrew, a given name or a surname (Jewel Andrew, West Indies cricketer)		name	ai	
+ବିବିଧତା	diversity, variety	diversity, variety (jaiba bibidhata: biodiversity)	ବିବିଧ (various) + ତା (-ness)	sanskrit	ai	
+ଗଡ଼ାଣିଆ	sloping (roof)	sloping, slanting (a sloping roof)		native	ai	
+ତୁଷାରପାତ	snowfall	snowfall	ତୁଷାର (snow) + ପାତ (fall)	sanskrit	ai	
+ସୂର୍ଯ୍ୟକିରଣ	sunlight, sun's rays	sunlight, the sun's rays	ସୂର୍ଯ୍ୟ (sun) + କିରଣ (ray)	sanskrit	ai	
+ଝରକାର	of the window	of the window or windows	ଝରକା (window) + ର (of)	native	ai	
+ଶ୍ରୀରାମଚନ୍ଦ୍ରଙ୍କ	of Lord Rama (Shri Ramachandra)	of Lord Rama, Shri Ramachandra's	ଶ୍ରୀରାମଚନ୍ଦ୍ର (Lord Rama) + ଙ୍କ (of)	sanskrit	ai	
+ଦର୍ଶକଙ୍କଠାରୁ	from the audience, from viewers	from the audience or viewers (got a good response)	ଦର୍ଶକ (viewer) + ଙ୍କଠାରୁ (from)	sanskrit	ai	
+ଟ୍ରେଲର୍‌	trailer (film trailer)	trailer (film trailer); trailer (vehicle)		english	ai	
+ଚରିତ୍ରରେ	in the role (of); in character	in the role of (a character in a film); in character, in conduct	ଚରିତ୍ର (character, role) + ରେ (in)	sanskrit	ai	
+ଗୋଡ଼ାଇ	chasing (godai godai: in hot pursuit)	chasing, having chased (godai godai: in hot pursuit)	ଗୋଡ଼ା (chase) + ଇ (having)	native	ai	
+ସୁବର୍ଣ୍ଣରେଖା	Subarnarekha (river)	Subarnarekha, a river of Jharkhand, West Bengal and Odisha	ସୁବର୍ଣ୍ଣ (gold) + ରେଖା (line)	name	ai	
+ଉପାର୍ଜନ	earning, income	earning, income (artha uparjana: earning money)		sanskrit	ai	
+ଦହମୁଣ୍ଡା	Dahamunda (a place in Odisha)	Dahamunda, a place on the Subarnarekha river		name	ai	
+ମାଲବାହୀ	goods-carrying, freight (vehicle)	goods-carrying, freight (goods vehicle, truck)	ମାଲ (goods) + ବାହୀ (carrying)	mixed	ai	
+ଲଜିଷ୍ଟିକ୍ସ	logistics	logistics		english	ai	
+ସେକ୍ସନ୍‌	section (of a law)	section (of a law or act)		english	ai	
+ତଦୁର୍ଦ୍ଧ୍ୱ	or above, and above (age)	or above, and more (60 years or above)	ତତ୍ (that) + ଊର୍ଦ୍ଧ୍ୱ (above)	sanskrit	ai	
+ରକ୍ଷାବନ୍ଧନ	Raksha Bandhan (festival)	Raksha Bandhan, the festival of the protective thread between brother and sister	ରକ୍ଷା (protection) + ବନ୍ଧନ (tie)	sanskrit	ai	
+ରଜନୀକାନ୍ତଙ୍କ	Rajinikanth's (film star)	of Rajinikanth (respectful), the Tamil film star	ରଜନୀକାନ୍ତ (Rajinikanth) + ଙ୍କ (of)	name	ai	
+ଫିଲ୍ମଟିକୁ	the film (object)	the film (object form); to the film	ଫିଲ୍ମ (film) + ଟି (the) + କୁ (object)	english	ai	
+ଫିଲ୍ମଟିର	of the film	of the film, the film's	ଫିଲ୍ମ (film) + ଟି (the) + ର (of)	english	ai	
+ଡିଏମକେର	of the DMK (party in Tamil Nadu)	of the DMK, a political party of Tamil Nadu	ଡିଏମକେ (DMK) + ର (of)	english	ai	
+ଟିଭିକେ	TVK (actor Vijay's party, Tamil Nadu)	TVK, Tamilaga Vettri Kazhagam, actor Vijay's party in Tamil Nadu		english	ai	
+ୱିଙ୍ଗ୍‌	wing (IT wing of a party)	wing (IT wing, youth wing of a party); wing (of a building)		english	ai	
+ଇଙ୍ଗିତ	hint, sign, gesture	hint, sign, gesture, indication		sanskrit	ai	
+ତାମିଲନାଡୁରେ	in Tamil Nadu	in Tamil Nadu	ତାମିଲନାଡୁ (Tamil Nadu) + ରେ (in)	name	ai	
+ଡବା	box, tin, container	box, tin, container, jar (with a lid)		native	ai	
+ଶକ୍ତ	hard, firm, stiff; tight	hard, firm, stiff (stiff joints); tight (grip)		native	ai	
+କାଡ଼	creak, crack (kaad-kaad: a cracking sound)	creak, crack (kaad-kaad: a cracking or creaking sound)		native	ai	
+ରୁମାଟଏଡ୍	rheumatoid	rheumatoid (rheumatoid arthritis)		english	ai	
+ମୁଠା	fist; handful	fist (mutha kariba: to make a fist); handful		native	ai	
+ଗାଉଟ୍	gout	gout (a joint disease)		english	ai	
+ଫେରାଇବାକୁ	to return (it), to give back	to return, to give back (ordered to return the passport)	ଫେରାଇବା (to return) + କୁ (to)	native	ai	
+ମାନବସେବାର	of service to humanity	of service to humanity, of humanitarian service	ମାନବସେବା (service to humanity) + ର (of)	sanskrit	ai	
+ନାଇଜେରିଆର	of Nigeria, Nigeria's	of Nigeria, Nigeria's; Nigerian	ନାଇଜେରିଆ (Nigeria) + ର (of)	name	ai	
+ଦରଜୀ	tailor	tailor		persian	ai	Came into Odia through Persian or Urdu.
+ହସନ୍	Hasan (given name)	Hasan, a man's given name		name	ai	Not ହସ (laugh).
+ମାରାଥନ୍‌ର	of the marathon	of the marathon (sewing marathon record)	ମାରାଥନ୍ (marathon) + ର (of)	english	ai	
+ଏମ୍‌ଟି୨୦୦	MT200 (a grade of ITF Masters tennis event)	MT200, a grade of ITF masters tennis tournament		english	ai	
+ଅଂଶୁ	Anshu (given name); ray of light	Anshu, a given name; ray of light; (old) fibre		name	ai	
+ପୂଜାଶ୍ରୀ	Pujashree (woman's given name)	Pujashree, a woman's given name	ପୂଜା (worship) + ଶ୍ରୀ (grace)	name	ai	
+ଅଜୀମନଗର	Azeemnagar (police station area)	Azeemnagar, a place and police station in Uttar Pradesh		name	ai	
+ମୌଲାନା	Maulana (title of a Muslim scholar)	Maulana, a title of a Muslim religious scholar		arabic	ai	
+ଜୌହର	Jauhar (in names)	Jauhar, in names (Maulana Mohammad Ali Jauhar); jauhar, mass self-immolation (history)		name	ai	
+ମିଳୁନଥିବା	not (being) found; not available	that is not found, not traceable, not available (accounts not found)	ମିଳୁ (being found) + ନଥିବା (that is not)	native	ai	
+ଏଫ୍‌ଆଇଆର୍‌ରେ	in the FIR	in the FIR (First Information Report)	ଏଫ୍‌ଆଇଆର୍ (FIR) + ରେ (in)	english	ai	
+ରିଟର୍ଣ୍ଣରେ	in the (tax) return	in the return (income tax return)	ରିଟର୍ଣ୍ଣ (return) + ରେ (in)	english	ai	
+ଛାଡ଼ିଦେଲେ	gave up, quit (they; or respectful)	gave up, quit, left (they; or he/she, respectful); if (one) gives up	ଛାଡ଼ି (leaving) + ଦେଲେ (gave)	native	ai	
+ଉତ୍ତୀର୍ଣ୍ଣ	passed (an exam)	passed (an examination); (old) crossed over		sanskrit	ai	
+ସାମ୍ସ	SAMS (Odisha student admission portal)	SAMS, Odisha's online student admission portal		english	ai	
+ଚୟନିତ	selected	selected, chosen (selected candidates)		sanskrit	ai	
+ଡିଟିଏଚ୍‌	DTH, direct-to-home (satellite TV)	DTH, direct-to-home satellite television		english	ai	
+ଆଣ୍ଡ୍ରଏଡ୍‌	Android	Android (phone and TV system)		english	ai	
+ସାତକୋଶିଆ	Satkosia (gorge, tiger reserve)	Satkosia, the Mahanadi gorge and tiger reserve in Angul district	ସାତ (seven) + କୋଶିଆ (of kos, a distance)	name	ai	
+ନେଚର	nature (nature camp)	nature (nature camp)		english	ai	
+କାପୁର	Kapoor (surname)	Kapoor, a surname (Ekta Kapoor)		name	ai	
+ଧାଗା	thread (sacred thread on the wrist)	thread (a sacred thread worn on the wrist)		hindi	ai	
+ଲୋକକଥା	folk tale, folklore	folk tale, folklore	ଲୋକ (folk) + କଥା (story)	sanskrit	ai	
+ପାଠ୍ୟକ୍ରମର	of the course	of the course, of the syllabus	ପାଠ୍ୟକ୍ରମ (course) + ର (of)	sanskrit	ai	
+ଫିସ୍	fee, fees	fee, fees (course fee, application fee)		english	ai	
+ଜେଇଇ	JEE, Joint Entrance Examination	JEE, Joint Entrance Examination (engineering entrance)		english	ai	
+ଛାତ୍ରଛାତ୍ରୀମାନଙ୍କ	of the students	of the students (boys and girls)	ଛାତ୍ରଛାତ୍ରୀ (students) + ମାନଙ୍କ (of, plural)	sanskrit	ai	
+ଏକାଡେମିକ୍‌	academic	academic (academic director)		english	ai	
+କାଠି	stick, twig (kathi kalama: reed pen)	stick, twig, thin piece of wood; kathi kalama: a reed or stick pen; matchstick		native	ai	
+ଝର	spring, flowing (jhara kalama)	spring of water; flowing (jhara kalama: fountain pen)		native	ai	
+ୟୁଜ	use (use and throw)	use, as in use and throw		english	ai	
+ଥ୍ରୋ	throw (use and throw)	throw, as in use and throw; a throw (sport)		english	ai	
+ତହିଁରେ	in it, in that	in it, in that (literary)	ତହିଁ (that) + ରେ (in)	native	ai	
+ସରିଗଲା	ran out, was used up; was over	ran out, was used up (ink ran out); was over, ended	ସରି (ending) + ଗଲା (went)	native	ai	
+ସଂପର୍କର	of the relationship	of the relationship, of the bond	ସଂପର୍କ (relationship) + ର (of)	sanskrit	ai	
+ରିଫିଲ	refill (pen refill)	refill (of a ball pen)		english	ai	
+ପେନଗୁଡ଼ିକୁ	the pens (object)	the pens (object form); to the pens	ପେନ (pen) + ଗୁଡ଼ିକୁ (the, plural object)	english	ai	
+ପେନଗୁଡ଼ିକ	the pens; pens	the pens; pens	ପେନ (pen) + ଗୁଡ଼ିକ (plural)	english	ai	
+ପ୍ରଚଳନ	use, currency, prevalence	use, currency, prevalence; bringing into use (puna prachalana: revival)		sanskrit	ai	
+ଆଡ	ad (as in ad hoc)	ad, as in ad hoc		english	ai	Also a spelling without nukta of ଆଡ଼ (side, direction).
+ଦୌରା	sessions (court); tour	sessions, as in sessions judge (daura jaja); tour, round (daura)		persian	ai	
+ଟ୍ରାଭେଲର	Traveller (van); traveller	Traveller, a passenger van (Tempo Traveller); traveller		english	ai	
+ବିଶୁକୁ	(to) Bishu (nickname)	Bishu (object); to Bishu, a nickname for Biswanath	ବିଶୁ (Bishu) + କୁ (object)	name	ai	
+କ୍ୟାଣ୍ଟନମେଣ୍ଟ	cantonment	cantonment (Cantonment police station, Cuttack)		english	ai	
+ପୀଡ଼ିତାଙ୍କ	of the (woman) victim(s)	of the victim or victims (a woman or girl, respectful or plural)	ପୀଡ଼ିତା (victim) + ଙ୍କ (of)	sanskrit	ai	
+ଫେବ୍ରୁଆରି	February	February		english	ai	
+ସୁବ୍ରମଣ୍ୟ	Subramanya (the god Murugan; name)	Subramanya, the god Kartikeya or Murugan (temples); a given name		name	ai	
+ଏସ୍‌ୟୁଭି	SUV	SUV, sport utility vehicle		english	ai	
+ଲଗେଜ	luggage	luggage, baggage		english	ai	
+ଯାଞ୍ଚ୍	check, inspection	check, inspection, verification			ai	Also spelt ଯାଞ୍ଚ.
+ଏଜେନ୍ସିଗୁଡ଼ିକୁ	(to) the agencies	the agencies (object); to the agencies (security agencies)	ଏଜେନ୍ସି (agency) + ଗୁଡ଼ିକୁ (the, plural object)	english	ai	
+କ୍ରୁ	crew	crew (crew members of a plane or ship)		english	ai	
+ଶାନ୍ତିଶୃଙ୍ଖଳାର	peacefully (with law and order)	of law and order; shantishrunkhala ra sahita: peacefully, in an orderly way	ଶାନ୍ତିଶୃଙ୍ଖଳା (law and order) + ର (of)	sanskrit	ai	
+ଅର୍ଚ୍ଚନା	Archana (given name); worship	Archana, a woman's given name; worship, prayer offering		name	ai	
+ଏସୟୁଭି	SUV	SUV, sport utility vehicle		english	ai	
+ସେଟ୍‌ରେ	on the set (film set)	on the set (film set, shooting set)	ସେଟ୍ (set) + ରେ (on)	english	ai	
+ଷ୍ଟଣ୍ଟ	stunt	stunt (action stunt in a film)		english	ai	
+ଓଲଟି	overturning (olati padiba: to overturn)	having overturned, overturning (olati padiba: to overturn, capsize)	ଓଲଟ (overturn) + ଇ (having)	native	ai	
+ଗେରୁଆମୟ	all saffron, saffron-filled	all saffron, filled with saffron (flags of a party)	ଗେରୁଆ (saffron) + ମୟ (full of)	mixed	ai	
+ଚଳଚଞ୍ଚଳ	abuzz, bustling, lively	abuzz, bustling, lively, busy		native	ai	
+ରୂପାନ୍ତର	transformation, change of form	transformation, change of form, conversion; translation, adaptation (of a text)	ରୂପ (form) + ଅନ୍ତର (other)	sanskrit	ai	stem of ରୂପାନ୍ତରର
+ଆମେରିକା	America, the USA	America, the United States of America (USA); the Americas		name	ai	stem of ଆମେରିକାର, ଆମେରିକାରେ
+ଆଫ୍ରିକା	Africa	Africa, the continent		name	ai	stem of ଆଫ୍ରିକାର
+ଆଡ଼	side, direction	side, direction (towards, from the side of)		native	ai	stem of ଆଡ଼କୁ
+ବଡ଼ଧରଣ	large-scale, major	large-scale, major; of a big kind	ବଡ଼ (big) + ଧରଣ (kind)	native	ai	stem of ବଡ଼ଧରଣର
+ଦିନ	day	day; daytime; date (a fixed day)		sanskrit	ai	stem of ଦିନକ, ଦିନିଆ
+ଭୁଶୁଡ଼ିବା	to collapse, cave in; collapsing	to collapse, cave in (a roof, a building, a bridge); to fall down	ଭୁଶୁଡ଼ (collapse) + ଇବା (verbal noun)	native	ai	stem of ଭୁଶୁଡ଼ି
+ଦେଖାଦେବା	to appear, arise; appearing	to appear, arise, break out (a problem, a disease, discontent); to show up	ଦେଖା (appearance) + ଦେବା (to give)	native	ai	stem of ଦେଖାଦେଇଥିଲା, ଦେଖାଦେଲେ, ଦେଖାଦେଇପାରେ
+ପୋର୍ଟାଲ	portal (website)	portal, a website for a service		english	ai	stem of ପୋର୍ଟାଲରେ
+କାର୍ଯ୍ୟକ୍ଷେତ୍ର	workplace; field of work	workplace, place of work; field of work, area of activity	କାର୍ଯ୍ୟ (work) + କ୍ଷେତ୍ର (field)	sanskrit	ai	stem of କାର୍ଯ୍ୟକ୍ଷେତ୍ରରେ
+ସଂସ୍ପର୍ଶ	contact, touch	contact, touch, exposure	ସଂ (together) + ସ୍ପର୍ଶ (touch)	sanskrit	ai	stem of ସଂସ୍ପର୍ଶରେ
+ଇଣ୍ଟରନ୍ୟାସନାଲ୍‌	international; international match	international; an international match (T20 international)		english	ai	stem of ଇଣ୍ଟରନ୍ୟାସନାଲ୍‌ରେ
+ଇନ୍ଦୋର	Indore (city in Madhya Pradesh)	Indore, a city in Madhya Pradesh		name	ai	stem of ଇନ୍ଦୋରରେ
+ଇସ୍ରାଏଲ	Israel (country)	Israel, a country in West Asia		name	ai	stem of ଇସ୍ରାଏଲର
+ପଦା	outside, open; in public	outside, the open; in public (come out, be exposed)		native	ai	stem of ପଦାକୁ
+ଆରଏସ୍‌ଏସ୍‌	RSS, Rashtriya Swayamsevak Sangh	RSS, Rashtriya Swayamsevak Sangh, a Hindu nationalist organisation		english	ai	stem of ଆରଏସ୍‌ଏସ୍‌ର
+ଲଦାଖ	Ladakh (union territory)	Ladakh, a union territory in the far north of India		name	ai	stem of ଲଦାଖର
+ବିଦ୍ରୋହୀ	rebel, insurgent	rebel, insurgent; rebellious		sanskrit	ai	stem of ବିଦ୍ରୋହୀଙ୍କ
+ପଟ	side	side; direction (on this side, from that side)			ai	stem of ପଟୁ, ପଟେ
+ଯୋଡ଼ିବା	to join, connect, add; joining	to join, connect, link; to add (a name, a record)	ଯୋଡ଼ (join) + ଇବା (verbal noun)	native	ai	stem of ଯୋଡ଼ୁଥିବା
+ପଲିଟେକନିକ	polytechnic (college)	polytechnic, a college for technical diplomas		english	ai	stem of ପଲିଟେକନିକରେ
+ଟ୍ରେ	tray	tray		english	ai	stem of ଟ୍ରେରେ
+ଆର୍ଥ୍ରାଇଟିସ	arthritis	arthritis, joint inflammation		english	ai	stem of ଆର୍ଥ୍ରାଇଟିସର
+ଦ୍ରୁତଗତି	rapid pace, high speed	rapid pace, high speed, fast motion	ଦ୍ରୁତ (fast) + ଗତି (speed, motion)	sanskrit	ai	stem of ଦ୍ରୁତଗତିରେ
+ଅଧ	half; middle	half; the middle (of the night, of a task); in compounds: half-		native	ai	stem of ଅଧରେ
+ଡୋନର	donor	donor (of money, blood, organs)		english	ai	stem of ଡୋନରଙ୍କଠାରୁ
+ନ୍ୟୁୟର୍କ	New York (city, USA)	New York, the largest city of the USA; New York State		name	ai	stem of ନ୍ୟୁୟର୍କର
+ଚନ୍ଦ୍ରଶେଖର	Chandrasekhar (given name or surname)	Chandrasekhar, Chandrashekhar (given name or surname); a name of Shiva (moon-crested)	ଚନ୍ଦ୍ର (moon) + ଶେଖର (crest)	name	ai	stem of ଚନ୍ଦ୍ରଶେଖରଙ୍କ
+ଛଡ଼ାଇବା	to snatch, take away; snatching	to snatch, take away, wrest; to free, get (someone) released; to peel	ଛଡ଼ା (make leave) + ଇବା (verbal noun)	native	ai	stem of ଛଡ଼ାଇ
+ଗେଟ	gate	gate (of a college, a building)		english	ai	stem of ଗେଟରେ
+ଖାଇ	having eaten; (noun) ditch, gorge	having eaten, after eating; (noun) a ditch, a moat, a deep gorge	ଖା (eat) + ଇ (having)	native	ai	stem of ଖାଇକୁ
+ହ୍ୱାଟସଆପ୍	WhatsApp (messaging app)	WhatsApp, a messaging and calling app		english	ai	stem of ହ୍ୱାଟସଆପ୍‌ରେ
+ଚାରିପାଖ	surroundings, all sides	the surroundings, all four sides, around	ଚାରି (four) + ପାଖ (side)	native	ai	stem of ଚାରିପାଖରେ
+ନିବେଶକ	investor	investor (in shares, an IPO, gold)	ନିବେଶ (investment) + କ (-er)	sanskrit	ai	stem of ନିବେଶକଙ୍କ
+ସିନ୍ଧେ	Shinde (surname)	Shinde, a Marathi surname		name	ai	stem of ସିନ୍ଧେଙ୍କୁ
+ବଣ୍ଡ୍	bond (bail bond; investment bond)	bond (a personal or bail bond; a government bond)		english	ai	stem of ବଣ୍ଡ୍‌ରେ
+ବ୍ୟାଟ୍	bat (cricket bat)	bat (a cricket bat)		english	ai	stem of ବ୍ୟାଟ୍‌ରୁ
+ତତ୍ତ୍ୱାବଧାନ	supervision, oversight	supervision, oversight, care	ତତ୍ତ୍ୱ (matter) + ଅବଧାନ (attention)	sanskrit	ai	stem of ତତ୍ତ୍ୱାବଧାନରେ
+ଜନ୍ତରମନ୍ତର	Jantar Mantar (Delhi protest site)	Jantar Mantar, an old observatory in New Delhi, the city's main protest site		name	ai	stem of ଜନ୍ତରମନ୍ତରରେ
+ବାଗଚୀ	Bagchi (surname)	Bagchi, a Bengali surname		name	ai	stem of ବାଗଚୀଙ୍କ
+ଠେଲିବା	to push, shove; pushing	to push, to shove; to push (someone) into (a crisis)	ଠେଲ (push) + ଇବା (verbal noun)	native	ai	stem of ଠେଲି
+ଇରାନ	Iran (country)	Iran, a country in West Asia		name	ai	stem of ଇରାନର
+ଯୁବପିଢ଼ି	young generation, youth	the young generation, youth	ଯୁବ (young) + ପିଢ଼ି (generation)	mixed	ai	stem of ଯୁବପିଢ଼ିଙ୍କ
+ମଧ୍ୟସ୍ଥି	mediator, arbitrator	mediator, arbitrator, go-between		sanskrit	ai	stem of ମଧ୍ୟସ୍ଥିଙ୍କ. Also spelt ମଧ୍ୟସ୍ଥ.
+ସତ୍ୟପାଠ	affidavit	affidavit, a sworn statement to a court	ସତ୍ୟ (truth) + ପାଠ (statement)	sanskrit	ai	stem of ସତ୍ୟପାଠରେ
+ସହରାଞ୍ଚଳ	urban area	urban area, the towns	ସହର (city) + ଅଞ୍ଚଳ (area)	mixed	ai	stem of ସହରାଞ୍ଚଳରେ
+ସିଙ୍ଗାପୁର	Singapore (country)	Singapore, a city-state in South-East Asia		name	ai	stem of ସିଙ୍ଗାପୁରର
+ସୁନାଝିଅ	golden girl (a gold-winning sportswoman)	golden girl, a girl who wins gold or brings glory	ସୁନା (gold) + ଝିଅ (girl)	native	ai	stem of ସୁନାଝିଅକୁ
+ହାଶମୀ	Hashmi (surname)	Hashmi, a surname (actor Emraan Hashmi)		name	ai	stem of ହାଶମୀଙ୍କ
+ଟୁର୍ନାମେଣ୍ଟ	tournament	tournament		english	ai	stem of ଟୁର୍ନାମେଣ୍ଟରେ
+ଭରିବା	to fill; filling	to fill (a form, a tank, a refill); to pay (a fine, a fee: spoken)	ଭର (fill) + ଇବା (verbal noun)	native	ai	stem of ଭରି
+ଅନେକାଂଶ	large part, great extent	a large part, a great extent	ଅନେକ (many) + ଅଂଶ (part)	sanskrit	ai	stem of ଅନେକାଂଶରେ
+ହେପାଜତ	custody	custody (police or judicial custody); safekeeping		arabic	ai	stem of ହେପାଜତକୁ. Came into Odia through Persian or Urdu.
+କେଜ୍	Cage (name); cage	Cage, a surname or ring name; cage		name	ai	stem of କେଜ୍‌ଙ୍କ
+ଚମକିବା	to shine, sparkle; shining	to shine, sparkle, glitter; to flash; to be startled	ଚମକ (shine) + ଇବା (verbal noun)	native	ai	stem of ଚମକିବ
+ଚାକିରିଆ	salaried person, employee	a person with a job, salaried employee, job holder	ଚାକିରି (job) + ଆ (-er)	persian	ai	stem of ଚାକିରିଆଙ୍କ
+ଅଫିସ୍	office	office (a workplace; a post)		english	ai	stem of ଅଫିସ୍‌ରେ
+ଫ୍ରାନ୍ସ	France (country)	France (country)		name	ai	stem of ଫ୍ରାନ୍ସର
+ଆଗେଇନେବା	to take forward, carry ahead; taking forward	to take forward, carry ahead, advance (a plan, ties)	ଆଗେଇ (moving ahead) + ନେବା (to take)	native	ai	stem of ଆଗେଇନେବାରେ
+ତୁର୍କୀ	Turkey, Turkiye (country)	Turkey, Turkiye (country); Turkish		name	ai	stem of ତୁର୍କୀକୁ
+ଏସିଆ	Asia (continent)	Asia (continent)		name	ai	stem of ଏସିଆର
+ଇସ୍ରାଏଲ୍	Israel (country)	Israel (country)		name	ai	stem of ଇସ୍ରାଏଲ୍‌ର
+ବାଂଲାଦେଶ	Bangladesh (country)	Bangladesh (country)	ବାଂଲା (Bengal) + ଦେଶ (country)	name	ai	stem of ବାଂଲାଦେଶର
+ମମଦାନୀ	Mamdani (surname)	Mamdani (surname, as in Zohran Mamdani)		name	ai	stem of ମମଦାନୀଙ୍କୁ
+ଭାଗବତ	Bhagavata (scripture); Bhagwat (surname)	the Bhagavata Purana, esp. the Odia Bhagabata of Jagannath Das; Bhagwat (surname); devotee of Vishnu		sanskrit	ai	stem of ଭାଗବତଙ୍କ
+ଅପରେଟର	operator (telecom, machine)	operator (telecom operator, machine operator, tour operator)		english	ai	stem of ଅପରେଟରଙ୍କ
+ଜାତକ	horoscope; native (one born under a sign)	horoscope, birth chart; the native, a person born under a sign (astrology); Jataka, Buddhist birth stories		sanskrit	ai	stem of ଜାତକଙ୍କ
+ରାଗିବା	to get angry; getting angry	to get angry, to be angry	ରାଗ (anger) + ଇବା (verbal noun)	native	ai	stem of ରାଗୁଛି
+ମନେକରିବା	to consider, think; considering	to consider, think, regard as; to recall	ମନେ (in mind) + କରିବା (to do)	native	ai	stem of ମନେକରେ
+ଦରବାର	court (royal); assembly; stage	royal court, durbar; assembly, gathering; forum, stage (the world stage)		persian	ai	stem of ଦରବାରରେ. Came into Odia through Persian or Urdu.
+କଲର	caller (phone); collar	caller (on the phone); collar (of a shirt)		english	ai	stem of କଲରଙ୍କ
+କାର୍ଯ୍ୟାନ୍ୱୟନ	implementation, carrying out	implementation, carrying out (a scheme, an order)	କାର୍ଯ୍ୟ (work) + ଅନ୍ୱୟନ (carrying out)	sanskrit	ai	stem of କାର୍ଯ୍ୟାନ୍ୱୟନକୁ
+ଖସିପଡ଼ିବା	to slip, fall; slipping	to slip and fall, fall off (into a gorge); to collapse; to drop	ଖସି (slipping) + ପଡ଼ିବା (to fall)	native	ai	stem of ଖସିପଡ଼ିବାରୁ
+ରାୱତ	Rawat (surname)	Rawat (surname)		name	ai	stem of ରାୱତଙ୍କ
+ମନେରଖିବା	to remember; remembering	to remember, keep in mind, bear in mind	ମନେ (in mind) + ରଖିବା (to keep)	native	ai	stem of ମନେରଖନ୍ତୁ
+ୟୁଟ୍ୟୁବ	YouTube (video site)	YouTube, the video-sharing site		english	ai	stem of ୟୁଟ୍ୟୁବରେ
+ଭାଇଜାନ	elder brother (affectionate); Bhaijaan	elder brother (affectionate, Urdu); Bhaijaan (Salman Khan's nickname)	ଭାଇ (brother) + ଜାନ (dear)	hindi	ai	stem of ଭାଇଜାନଙ୍କ
+ଚାହିଁବା	to want, wish; wanting	to want, wish; to look, gaze at	ଚାହିଁ (want; look) + ବା (verbal noun)	native	ai	stem of ଚାହିଁପାରନ୍ତି
+ସୂଚାଇବା	to indicate, point to; indicating	to indicate, point to, suggest; to inform	ସୂଚା (indicate) + ଇବା (verbal noun)	native	ai	stem of ସୂଚାଇପାରେ
+ଜୀବନସାଥୀ	life partner, spouse	life partner, spouse, husband or wife	ଜୀବନ (life) + ସାଥୀ (companion)	mixed	ai	stem of ଜୀବନସାଥୀଙ୍କ
+ବ୍ରୋକିଂ	broking (stock broking)	broking, stock broking (a broking firm)		english	ai	stem of ବ୍ରୋକିଂର
+କ୍ୱାର୍ଟର	quarter (three months); quarters	quarter (three months of a financial year); quarters (staff housing)		english	ai	stem of କ୍ୱାର୍ଟରରେ
+ରାଜ୍	rule, reign, raj	rule, reign, raj (British Raj; under X's rule)		hindi	ai	stem of ରାଜ୍‌ରେ
+ମାଜିଷ୍ଟ୍ରେଟ୍	magistrate	magistrate (executive magistrate)		english	ai	stem of ମାଜିଷ୍ଟ୍ରେଟ୍‌ଙ୍କ
+ଗିରଫଦାରୀ	arrest	arrest, being arrested	ଗିରଫ (arrest) + ଦାରୀ (-ing)	persian	ai	stem of ଗିରଫଦାରୀକୁ. Came into Odia through Persian or Urdu.
+କାନ୍ଦିବା	to cry, weep; crying	to cry, to weep	କାନ୍ଦ (cry) + ଇବା (verbal noun)	native	ai	stem of କାନ୍ଦିଲେ
+ପୋରେଲ୍	Porel (surname)	Porel (a Bengali surname)		name	ai	stem of ପୋରେଲ୍‌ଙ୍କ. Also spelt ପୋରେଲ.
+ନବରାତ୍ରୀ	Navaratri, the nine nights of Durga	Navaratri, the nine-night festival of Durga	ନବ (nine) + ରାତ୍ରୀ (night)	sanskrit	ai	stem of ନବରାତ୍ରୀର. Also spelt ନବରାତ୍ରି.
+ବିବୃତି	statement (official statement)	statement (official statement); description, account		sanskrit	ai	stem of ବିବୃତିରେ
+ରାଜାବଜାର	Rajabazar, an area of Kolkata	Rajabazar, an area of Kolkata	ରାଜା (king) + ବଜାର (market)	name	ai	stem of ରାଜାବଜାରରେ
+ଅଗରକର	Agarkar (surname)	Agarkar (a Marathi surname, as in Ajit Agarkar)		name	ai	stem of ଅଗରକରଙ୍କ
+ପାଳି	turn; shift; innings (cricket)	turn (wait your turn); shift (of work); innings (cricket); rotation		native	ai	stem of ପାଳିରେ
+ସହିବା	to bear, endure; bearing	to bear, endure, tolerate, put up with	ସହ (bear) + ଇବା (verbal noun)	native	ai	stem of ସହିପାରେ
+ନିପଲ୍	nipple	nipple; teat (of a feeding bottle)		english	ai	stem of ନିପଲ୍‌ରୁ
+ପ୍ରତିମାସ	every month, monthly	every month, monthly	ପ୍ରତି (every) + ମାସ (month)	sanskrit	ai	stem of ପ୍ରତିମାସରେ
+ସାମ୍ବାଦିକା	woman journalist, female reporter	woman journalist, female reporter	ସାମ୍ବାଦିକ (journalist) + ଆ (feminine)	sanskrit	ai	stem of ସାମ୍ବାଦିକାଙ୍କ
+ଓୱାଇସି	Owaisi (surname)	Owaisi (surname, as in Asaduddin Owaisi, AIMIM chief)		name	ai	stem of ଓୱାଇସିଙ୍କ
+ସିଂହବାହିନୀ	Singhabahini (Durga riding a lion)	Singhabahini, Durga who rides a lion	ସିଂହ (lion) + ବାହିନୀ (rider)	sanskrit	ai	stem of ସିଂହବାହିନୀଙ୍କ
+ବ୍ରହ୍ମଚାରିଣୀ	Brahmacharini (a form of Durga)	Brahmacharini, the second form of Durga in Navaratri; a celibate woman	ବ୍ରହ୍ମ (Brahman) + ଚାରିଣୀ (one who follows)	sanskrit	ai	stem of ବ୍ରହ୍ମଚାରିଣୀଙ୍କ
+ଗର୍ଭାବସ୍ଥା	pregnancy	pregnancy, the state of being pregnant	ଗର୍ଭ (womb) + ଅବସ୍ଥା (state)	sanskrit	ai	stem of ଗର୍ଭାବସ୍ଥାରେ
+ବ୍ୟାକ୍ଟେରିଆ	bacteria	bacteria		english	ai	stem of ବ୍ୟାକ୍ଟେରିଆର
+ୟୁକେ	UK, United Kingdom	UK, the United Kingdom, Britain		name	ai	stem of ୟୁକେର
+ଅଡ଼ୁଆ	trouble, difficulty; tangled	trouble, difficulty, problem; tangled, complicated		native	ai	stem of ଅଡ଼ୁଆରେ
+ନମନ	Naman (given name); bowing, salutation	Naman (male given name); bowing, salutation		name	ai	stem of ନମନଙ୍କୁ
+ଆଳ	pretext, excuse	pretext, excuse, cover (X alare: on the pretext of X)		native	ai	stem of ଆଳରେ
+ହାଉସ	house (Circuit House); the House	house (Circuit House, White House); the House (legislature)		english	ai	stem of ହାଉସରେ
+ଓହରିବା	to withdraw, step back; withdrawing	to withdraw, step back, move away; withdrawing (from a contest)	ଓହର (withdraw) + ଇବା (verbal noun)	native	ai	stem of ନଓହରିଲେ
+କଳିଙ୍ଗନଗର	Kalinganagar (industrial hub, Jajpur district)	Kalinganagar, an industrial and steel hub in Jajpur district; Kalinganagar, an area of Bhubaneswar	କଳିଙ୍ଗ (Kalinga) + ନଗର (town)	name	ai	stem of କଳିଙ୍ଗନଗରଠାରେ
+ପ୍ରତିବଦ୍ଧତା	commitment	commitment, dedication, being bound (to a cause)	ପ୍ରତିବଦ୍ଧ (committed) + ତା (-ness)	sanskrit	ai	stem of ପ୍ରତିବଦ୍ଧତାକୁ
+ବାନରା	Banra (surname)	Banra (surname)		name	ai	stem of ବାନରାଙ୍କୁ. Not ବାନର (monkey).
+ଭିଆଇପି	VIP	VIP, very important person		english	ai	stem of ଭିଆଇପିଙ୍କ
+କପଡ଼ା	cloth, fabric	cloth, fabric; clothes		native	ai	stem of କପଡ଼ାରେ
+ଘାଟିକିଆ	Ghatikia (area of Bhubaneswar)	Ghatikia, an area of Bhubaneswar		name	ai	stem of ଘାଟିକିଆରେ
+ରାସ୍ତାକଡ଼	roadside	roadside, the side of the road	ରାସ୍ତା (road) + କଡ଼ (side)	mixed	ai	stem of ରାସ୍ତାକଡ଼ରେ
+ମାଡ଼ିବା	to climb over, run over; climbing over	to climb over, run over, plough into; to spread over, advance on; climbing over	ମାଡ଼ (climb over) + ଇବା (verbal noun)	native	ai	stem of ମାଡ଼ିଗଲା
+ନାତୁଣୀ	granddaughter	granddaughter (son's or daughter's daughter)		native	ai	stem of ନାତୁଣୀକୁ
+ଅଷ୍ଟ୍ରେଲିଆ	Australia	Australia (country and continent)		name	ai	stem of ଅଷ୍ଟ୍ରେଲିଆର
+ଯନ୍ତରମନ୍ତର	Jantar Mantar (Delhi)	Jantar Mantar, the old observatory in Delhi, a protest site		name	ai	stem of ଯନ୍ତରମନ୍ତରକୁ
+ରାଜପୁତ	Rajput (surname)	Rajput, a surname		name	ai	stem of ରାଜପୁତଙ୍କୁ
+ଡ୍ରମ	drum (container; music)	drum (a large container, barrel); drum (musical instrument)		english	ai	stem of ଡ୍ରମରେ
+ଲାହୋର	Lahore (city in Pakistan)	Lahore, a city in Pakistan, capital of Punjab province		name	ai	stem of ଲାହୋରର
+ଶିନ୍ଦେ	Shinde (surname)	Shinde, a Marathi surname		name	ai	stem of ଶିନ୍ଦେଙ୍କୁ
+ଝରକା	window	window		native	ai	stem of ଝରକାର
+ଶ୍ରୀରାମଚନ୍ଦ୍ର	Lord Rama (Shri Ramachandra)	Lord Rama, Shri Ramachandra	ଶ୍ରୀ (holy) + ରାମଚନ୍ଦ୍ର (Ramachandra)	sanskrit	ai	stem of ଶ୍ରୀରାମଚନ୍ଦ୍ରଙ୍କ
+ଗୋଡ଼ାଇବା	to chase; chasing	to chase, pursue, run after; chasing	ଗୋଡ଼ା (chase) + ଇବା (verbal noun)	native	ai	stem of ଗୋଡ଼ାଇ
+ରଜନୀକାନ୍ତ	Rajinikanth (Tamil film star)	Rajinikanth, the Tamil film star; Rajanikanta, a given name		name	ai	stem of ରଜନୀକାନ୍ତଙ୍କ
+ଫେରାଇବା	to return, give back; returning	to return, give back, send back; returning	ଫେରା (return) + ଇବା (verbal noun)	native	ai	stem of ଫେରାଇବାକୁ
+ମାନବସେବା	service to humanity	service to humanity, humanitarian service	ମାନବ (human) + ସେବା (service)	sanskrit	ai	stem of ମାନବସେବାର
+ନାଇଜେରିଆ	Nigeria (country)	Nigeria, a country in West Africa		name	ai	stem of ନାଇଜେରିଆର
+ମାରାଥନ୍	marathon	marathon (race; any very long effort)		english	ai	stem of ମାରାଥନ୍‌ର
+ଓଲଟିବା	to overturn, turn over; overturning	to overturn, turn over, capsize; overturning	ଓଲଟ (overturn) + ଇବା (verbal noun)	native	ai	stem of ଓଲଟି
