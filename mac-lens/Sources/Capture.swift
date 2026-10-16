@@ -43,8 +43,14 @@ enum Capture {
     }
 
     static func image(of target: Target, excluding windowIDs: [CGWindowID]) async throws -> CGImage {
-        guard CGPreflightScreenCaptureAccess() else { throw CaptureError.noPermission }
-        let content = try await SCShareableContent.excludingDesktopWindows(false, onScreenWindowsOnly: true)
+        // Try the capture first: for an ad-hoc signed app, CGPreflightScreenCaptureAccess can
+        // say "no" although the switch in System Settings is on. Only a failed capture counts.
+        let content: SCShareableContent
+        do {
+            content = try await SCShareableContent.excludingDesktopWindows(false, onScreenWindowsOnly: true)
+        } catch {
+            throw CGPreflightScreenCaptureAccess() ? error : CaptureError.noPermission
+        }
         guard let display = content.displays.first(where: { $0.displayID == target.displayID }) else {
             throw CaptureError.noDisplay
         }

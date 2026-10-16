@@ -66,6 +66,13 @@ cd mac-lens
 - The menu bar item **ଓ** can be hidden behind the camera notch when the menu bar is full.
   Quit some menu bar apps, or hold ⌘ and drag other icons out to make room.
 - To stop it completely: `killall OdiaLens` in Terminal.
+- **"No permission to read the screen" although the switch is on:** macOS still holds the
+  permission of an earlier build. Reset it, then allow again when macOS asks:
+
+  ```bash
+  killall OdiaLens; tccutil reset ScreenCapture in.odiatransliteration.lens
+  open build/OdiaLens.app
+  ```
 
 ## How it works
 
