@@ -286,10 +286,13 @@ function chipFor(word: string): string | null {
   if (m) return m;
   // A stem or prefix match: the shorter word's owner or AI meaning before its 1930s
   // Praharaj sense, as the lens card does (lens/src/describe.ts).
-  if (entry && entry.how !== 'exact') {
+  if (entry && entry.how === 'stem') {
     const head = ownerGloss(entry.head)?.meaning ?? aiMeaning(entry.head)?.meaning;
     if (head) return tidyGloss(head, true);
   }
+  // No chip from a prefix match: judged in context, it was wrong far more often than
+  // right (plan/research/v219-card-quality.md), as on the lens card.
+  if (entry && entry.how === 'prefix') return null;
   const g = entry ? shortGloss(entry) : null;
   return entry && g ? tidyGloss(g, entry.how !== 'exact') : null;
 }

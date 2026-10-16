@@ -204,10 +204,14 @@ export function describeWord(
   // A stem or prefix match whose shorter word has an owner or AI meaning: that modern
   // meaning, marked "maybe", before Praharaj's 1930s sense of the same word
   // (samvaadikataaku: "maybe: journalist", not "maybe: Logician").
-  const headMeaning = !settled && entry && entry.how !== 'exact' ? meaningOf(entry.head) : null;
+  const headMeaning = !settled && entry && entry.how === 'stem' ? meaningOf(entry.head) : null;
   if (headMeaning) add(tidyGloss(headMeaning, true), 'meaning of the shorter word');
 
-  if (entry && definition !== null && !settled) {
+  // A prefix match (the word only begins like a headword) gives no meaning: judged in
+  // context on fresh news, its 1930s gloss was wrong 90% of the time and the shorter
+  // word's modern meaning 47% (plan/research/v219-card-quality.md). No meaning is better
+  // than a wrong one; the parts guess above still covers real compounds.
+  if (entry && entry.how !== 'prefix' && definition !== null && !settled && !headMeaning) {
     const gloss = shortGlossOf(definition);
     add(gloss === null ? null : tidyGloss(gloss, entry.how !== 'exact'), 'Praharaj dictionary (1931–40)');
   }
@@ -227,7 +231,7 @@ export function describeWord(
     roman: romanize(odia),
     meanings,
     // An owner or AI meaning is for this exact word: no "approximate" note then.
-    approximateHead: entry && entry.how !== 'exact' && !own && !first && !explained && !number && !compound ? entry.head : null,
+    approximateHead: entry && entry.how === 'stem' && !own && !first && !explained && !number && !compound ? entry.head : null,
     origin,
     loan,
     formation:

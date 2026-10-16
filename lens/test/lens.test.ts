@@ -99,12 +99,12 @@ describe('describeWord: the lens card', () => {
     expect(c.meanings.some((m) => m.text.startsWith('maybe: '))).toBe(true);
   });
 
-  it('gives a shorter word\'s modern meaning before its 1930s sense', () => {
-    // samvaadikataa + ku: Praharaj knows only samvaadika ("Logician"), the AI layer "journalist".
+  it('gives no guessed meaning for a word that only begins like a headword', () => {
+    // samvaadikataa + ku: only the prefix samvaadika ("Logician" in 1930, "journalist" today)
+    // is a headword. Judged in context, such guesses were mostly wrong: no meaning instead.
     const c = card('\u0B38\u0B3E\u0B2E\u0B4D\u0B2C\u0B3E\u0B26\u0B3F\u0B15\u0B24\u0B3E\u0B15\u0B41');
-    expect(c.approximateHead).not.toBeNull();
-    expect(c.meanings[0]).toMatchObject({ source: 'meaning of the shorter word' });
-    expect(c.meanings[0]!.text.startsWith('maybe: ')).toBe(true);
+    expect(c.meanings).toEqual([]);
+    expect(c.approximateHead).toBeNull();
   });
 
   it('names an English loan word', () => {
