@@ -78,7 +78,7 @@ spelling. The commit message says both.
 **The ePaper through the lens's own OCR** (2026-10-16: 16 pages, 4 each of Sambad,
 Dharitri, Samaja, Prameya, Bhubaneswar edition; 35,456 words; read with
 `lens/vendor/ori.traineddata` as `readPage()` does; images and text kept outside the
-repository). Card audit, with the lens's word correction:
+repository). Card audit, with the lens's word correction (applied without the lens's step that keeps a word the dictionaries know, so it changes more words than the lens does: the corrected row is an upper bound):
 
 | | ok | parts | approximate | Praharaj only | no card |
 |---|---|---|---|---|---|
@@ -103,7 +103,7 @@ names of local places (Hatipala, Chandaka). Sambad and Samaja images are only ab
   161 minor fixes; fragments, OCR misreadings and a coarse word skipped).
 - ePaper pages (now a mining set, so not a fair test): ok 80.9 → 90.5%, no card 11.1 →
   6.6%, Praharaj only 5.8 → 1.7%.
-- Held set (independent of batch 13): the 107 changed cards judged (95 right, 10 weak,
+- Held set (independent of batch 13; 79 batch 13 words, 114 occurrences, also occur there): the 107 changed cards judged (95 right, 10 weak,
   2 wrong; `tools/eval/data/card-judge-round3.tsv`).
 
 | whole held set, by occurrences | right | weak | wrong (misleading) | no meaning | OCR |
@@ -114,5 +114,5 @@ names of local places (Hatipala, Chandaka). Sambad and Samaja images are only ab
 Remaining kinds of error: suffix guesses that read clumsily or wrongly ("necessary + me"
 for aabashyakamate, "week + -wide" for a week-long course), local place names
 (Subuddhipur, Nilamadhab as a locality), and given names that are also words (Ashrit).
-Next: the mining set's remaining 1,976 weak words (batch 14), and suffix rows for
+The reph fold does not reach a stem match yet (barttamaanara with ending finds no row though barttamaana has one). Next: the remaining weak words of the mining set and of the ePaper pages (batch 14), and suffix rows for
 -ମତେ, -ବ୍ୟାପୀ and -ଟି in `verb-endings.tsv` or the endings table.

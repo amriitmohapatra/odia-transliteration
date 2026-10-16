@@ -358,7 +358,7 @@ Manifest V3. Details and install steps: `lens/README.md`.
 | `lens/src/background.ts` | Toolbar click or Alt+Shift+O → injects `content.js` into that tab and toggles it (badge ON). Answers lookups from the packed dictionary. |
 | `lens/src/content.ts` | Word under the pointer (`caretRangeFromPoint`, `word.ts`), card in a shadow root (constructed style sheet, so page CSP cannot block it), Esc, scroll hides. |
 | `lens/src/describe.ts` | Word + entry → card: `romanize()` (the app's read-back), owner meaning, modern layer, Praharaj gloss, loan note, origin. |
-| `Appv2/src/dictionary/lookup.ts` | The lookup the app's Meanings panel uses too (fold, exact / stem / prefix, short gloss). |
+| `Appv2/src/dictionary/lookup.ts` | The lookup the app's Meanings panel uses too (fold, exact / stem / prefix, short gloss). The AI layer (`meaningFinder`) also has a loose key: no joiners U+200C/U+200D, and a consonant doubled after reph read as single (V2.19). |
 | `lens/build.mjs` | esbuild bundles (classic scripts); splits `praharaj.bin` into a keys file and 78 gzip chunks of 500 definitions, so a restarted worker answers in ~0.3 s instead of unpacking 24 MB. Copies the OCR engine and model (`ocr/`) and the word list (`dict/words.bin`). |
 
 **Picture mode (V4.2, 2026-10-15):** Odia in images, canvases and paused videos (ePapers,
