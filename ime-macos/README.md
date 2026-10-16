@@ -65,14 +65,12 @@ Write what happened into `plan/03-spikes.md` under "S4". If it fails, record *ho
 it never appeared in Input Sources, or appeared but swallowed keystrokes. That distinction
 determines whether a paid Developer ID signature would fix it.
 
-## What happens after S4 passes
+## After S4
 
-The structure of `OdiaInputController.swift` stays. Two things change:
-
-- `stubTable` is replaced by `EngineBridge.swift`, which hosts JavaScriptCore running the
-  real `core/dist/engine.js` — the same bundle the web app and the future iOS keyboard use.
-- A candidate window (`IMKCandidates`) is added, so ambiguous input offers a ranked list
-  instead of committing the first guess.
+Both steps planned for after the spike are done (V5): `EngineBridge.swift` runs the real
+engine (`build/stage/engine.js`, from `js/bridge.ts`) in JavaScriptCore instead of the
+spike's small table, and the candidate window (`IMKCandidates`) shows the ranked list. The
+first build on a Mac is also the first test of that Swift (A-12).
 
 ## Notes for whoever touches this next
 
