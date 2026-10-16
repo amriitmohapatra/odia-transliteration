@@ -258,17 +258,21 @@ export interface MeaningFinder {
   ending(suffix: string): Meaning | undefined;
 }
 
+/** A meaning key that also ignores the joiners U+200C/U+200D: news sites print police
+ * both with and without a joiner after the final virama (pulis + ZWNJ). It also reads a
+ * consonant doubled after reph as single: newspapers print kharca and paribartana where
+ * the dictionary spelling is kharcca and paribarttana (both spellings are in use). */
+function looseKey(word: string): string {
+  return foldKey(word)
+    .replace(/[\u200c\u200d]/g, '')
+    .replace(/\u0b30\u0b4d([\u0b15-\u0b39])\u0b4d\1/g, '\u0b30\u0b4d$1');
+}
+
 /**
  * Lookup over the AI layer. Exact keys first; then the same 1930s-spelling fold
  * the Praharaj keys use, so a page that writes the va letter or ya differently
  * still finds the entry.
  */
-/** A meaning key that also ignores the joiners U+200C/U+200D: news sites print police
- * both with and without a joiner after the final virama (pulis + ZWNJ). */
-function looseKey(word: string): string {
-  return foldKey(word).replace(/[\u200c\u200d]/g, '');
-}
-
 export function meaningFinder(meanings: Meanings): MeaningFinder {
   const folded = new Map<string, Meaning>();
   for (const m of meanings.all()) {

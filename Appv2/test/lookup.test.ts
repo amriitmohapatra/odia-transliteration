@@ -153,3 +153,20 @@ describe('meaningFinder: joiners', () => {
     expect(f.word(POLICE)?.meaning).toBe('police');
   });
 });
+
+describe('meaningFinder: a consonant doubled after reph', () => {
+  it('finds kharcca printed as kharca, and the other way round', () => {
+    const KHARCCA = 'ଖର୍ଚ୍ଚ'; // kha + reph + ca + virama + ca
+    const KHARCA = 'ଖର୍ଚ';
+    const f = meaningFinder(parseMeanings(`${KHARCCA}\texpense\texpense\t\tpersian\tai\t\n`));
+    expect(f.word(KHARCA)?.meaning).toBe('expense');
+    const g = meaningFinder(parseMeanings(`${KHARCA}\texpense\texpense\t\tpersian\tai\t\n`));
+    expect(g.word(KHARCCA)?.meaning).toBe('expense');
+  });
+
+  it('leaves a word with a different second consonant alone', () => {
+    const KARTTA = 'କର୍ତ୍ତା'; // kartaa doubled: ka + reph + ta + virama + ta + aa
+    const f = meaningFinder(parseMeanings(`${KARTTA}\tdoer\tdoer\t\tsanskrit\tai\t\n`));
+    expect(f.word('କର୍ତ୍ଥା')).toBeUndefined(); // ta + virama + tha
+  });
+});
