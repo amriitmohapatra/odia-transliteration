@@ -119,9 +119,14 @@ export function splitPoints(word: string): Array<[string, string]> {
  * longer shorter part (an even cut beats a long word with a two-letter tail),
  * then the longer first part.
  */
-export function chooseSplits(word: string, known: (part: string) => boolean): Array<[string, string]> {
+export function chooseSplits(
+  word: string,
+  known: (part: string) => boolean,
+  /** A case form (a known word + an ending: taa + ku, "him") is never the second part of a compound. */
+  inflected: (part: string) => boolean = () => false,
+): Array<[string, string]> {
   return splitPoints(word)
-    .filter(([a, b]) => known(a) && known(b))
+    .filter(([a, b]) => known(a) && known(b) && !inflected(b))
     .sort(([xa, xb], [ya, yb]) => Math.min(letters(ya), letters(yb)) - Math.min(letters(xa), letters(xb)) || ya.length - xa.length);
 }
 
@@ -195,6 +200,12 @@ export function describeWord(
       if (line) add(tidyGloss(line.gloss, found.how !== 'exact'), line.tag === 'cldr' ? 'standard modern name' : line.tag === 'wd' ? 'name (Wikidata)' : 'modern usage');
     }
   }
+
+  // A stem or prefix match whose shorter word has an owner or AI meaning: that modern
+  // meaning, marked "maybe", before Praharaj's 1930s sense of the same word
+  // (samvaadikataaku: "maybe: journalist", not "maybe: Logician").
+  const headMeaning = !settled && entry && entry.how !== 'exact' ? meaningOf(entry.head) : null;
+  if (headMeaning) add(tidyGloss(headMeaning, true), 'meaning of the shorter word');
 
   if (entry && definition !== null && !settled) {
     const gloss = shortGlossOf(definition);

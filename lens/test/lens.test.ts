@@ -99,6 +99,14 @@ describe('describeWord: the lens card', () => {
     expect(c.meanings.some((m) => m.text.startsWith('maybe: '))).toBe(true);
   });
 
+  it('gives a shorter word\'s modern meaning before its 1930s sense', () => {
+    // samvaadikataa + ku: Praharaj knows only samvaadika ("Logician"), the AI layer "journalist".
+    const c = card('\u0B38\u0B3E\u0B2E\u0B4D\u0B2C\u0B3E\u0B26\u0B3F\u0B15\u0B24\u0B3E\u0B15\u0B41');
+    expect(c.approximateHead).not.toBeNull();
+    expect(c.meanings[0]).toMatchObject({ source: 'meaning of the shorter word' });
+    expect(c.meanings[0]!.text.startsWith('maybe: ')).toBe(true);
+  });
+
   it('names an English loan word', () => {
     const [english, loans] = [...data.loans.byEnglish].find(([, l]) => l[0]?.language === 'en')!;
     expect(card(loans[0]!.odia).loan).toBe(`English loan word: ${english}`);
@@ -190,6 +198,14 @@ describe('a word explained from its parts', () => {
     expect(splitPoints(PRAKASHA).every(([a]) => !a.endsWith('\u0B4D'))).toBe(true);
     // A one-letter tail (re, "in") is an ending, not a word.
     expect(splitPoints(JIBANA + '\u0B30\u0B47').map(([a]) => a)).not.toContain(JIBANA);
+  });
+
+  it('never takes a case form as the second part', () => {
+    const JOURNALIST = '\u0B38\u0B3E\u0B2E\u0B4D\u0B2C\u0B3E\u0B26\u0B3F\u0B15';
+    const TAAKU = '\u0B24\u0B3E\u0B15\u0B41'; // taa + ku, "him"
+    const known = (w: string) => w === JOURNALIST || w === TAAKU;
+    expect(chooseSplits(JOURNALIST + TAAKU, known)).toEqual([[JOURNALIST, TAAKU]]);
+    expect(chooseSplits(JOURNALIST + TAAKU, known, (w) => w === TAAKU)).toEqual([]);
   });
 
   it('needs both parts known, and prefers an even cut', () => {

@@ -260,6 +260,7 @@ Agents do not commit; the lead reviews, measures and commits.
 
 | Date | Change |
 |---|---|
+| 2026-10-16 | Owner's Sambad ePaper test: the parts guess no longer takes a case form as its second part (samvaadikataaku was "journalist + him"); a stem or prefix match shows the shorter word's modern meaning before its 1930s sense, in the lens and the app. A stricter, judged card evaluation follows (V2.19). |
 | 2026-10-15 | V2.7 done (D-5): the machine-translation `[mt]` rows removed from the MODERN layer; batch 11 (1,997 AI meanings) and 777 Wikidata names instead. E-1 measured, not shipped. The §2b queue is finished. |
 | 2026-10-15 | V2.6 done: IndicXlit spellings for 17,484 common words in no word list (real typing top-5 72.5 → 81.5% for them; held-out overall top-1 −0.9 pp, rival spellings). Spellings for the top 30,000 words held for stage P. |
 | 2026-10-15 | V5: the macOS input method runs the real engine (JavaScriptCore, the website's data); key handling in TypeScript under tests; first build on the owner's Mac (A-12). |

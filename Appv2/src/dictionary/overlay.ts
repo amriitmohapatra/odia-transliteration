@@ -284,6 +284,12 @@ function chipFor(word: string): string | null {
   if (explained) return explained.text;
   const m = modernChip(mo);
   if (m) return m;
+  // A stem or prefix match: the shorter word's owner or AI meaning before its 1930s
+  // Praharaj sense, as the lens card does (lens/src/describe.ts).
+  if (entry && entry.how !== 'exact') {
+    const head = ownerGloss(entry.head)?.meaning ?? aiMeaning(entry.head)?.meaning;
+    if (head) return tidyGloss(head, true);
+  }
   const g = entry ? shortGloss(entry) : null;
   return entry && g ? tidyGloss(g, entry.how !== 'exact') : null;
 }

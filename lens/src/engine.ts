@@ -150,7 +150,15 @@ function wordParts(odia: string, key: string, data: LensData): [WordPart, WordPa
     return m ? partGloss(m) : modernGloss(part);
   };
   const meaning = (part: string): string | null => (data.ai?.ending(part) ? null : known(part));
-  const best = chooseSplits(odia, (part) => meaning(part) !== null)[0];
+  // samvaadikataaku is journalism (samvaadikataa) + ku, not journalist + taaku ("him"):
+  // a part that is itself a known word with a case ending is not a compound member.
+  const inflected = (part: string): boolean => {
+    for (let i = 1; i < part.length; i++) {
+      if (data.ai?.ending(part.slice(i)) && known(part.slice(0, i)) !== null) return true;
+    }
+    return false;
+  };
+  const best = chooseSplits(odia, (part) => meaning(part) !== null, inflected)[0];
   if (!best) return null;
   const [a, b] = best;
   return [{ word: a, gloss: meaning(a) as string }, { word: b, gloss: meaning(b) as string }];
