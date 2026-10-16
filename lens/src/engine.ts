@@ -145,8 +145,9 @@ function wordParts(odia: string, key: string, data: LensData): [WordPart, WordPa
     const line = modernLines(defAt(data.modern, found.index)).find((l) => l.tag !== 'loan');
     return line ? partGloss(line.gloss) : null;
   };
+  // Strict: with the last try a part matched too loosely (shrii + mad "liquor" for shriimad).
   const known = (part: string): string | null => {
-    const m = data.owner.get(part)?.meaning ?? data.ai?.word(part)?.meaning;
+    const m = data.owner.get(part)?.meaning ?? data.ai?.word(part, true)?.meaning;
     return m ? partGloss(m) : modernGloss(part);
   };
   const meaning = (part: string): string | null => (data.ai?.ending(part) ? null : known(part));

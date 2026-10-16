@@ -170,3 +170,29 @@ describe('meaningFinder: a consonant doubled after reph', () => {
     expect(f.word('କର୍ତ୍ଥା')).toBeUndefined(); // ta + virama + tha
   });
 });
+
+describe('meaningFinder: nukta and final virama, as a last try', () => {
+  const PAPER = 'ପେପର'; // pepara
+  const BADI = 'ବାଡ଼ି'; // baa + Da + nukta + i (garden)
+
+  it('finds a word printed without its nukta or with a final virama', () => {
+    const f = meaningFinder(parseMeanings(`${PAPER}\tpaper\tpaper\t\tenglish\tai\t\n${BADI}\tgarden\tgarden\t\tnative\tai\t\n`));
+    expect(f.word(PAPER + '୍')?.meaning).toBe('paper');
+    expect(f.word('ବାଡି')?.meaning).toBe('garden');
+  });
+
+  it('keeps an exact or joiner-loose match first', () => {
+    const f = meaningFinder(parseMeanings(`${PAPER}\tpaper\tpaper\t\tenglish\tai\t\n${PAPER}୍\tpaper (2)\tpaper\t\tenglish\tai\t\n`));
+    expect(f.word(PAPER + '୍')?.meaning).toBe('paper (2)');
+    expect(f.word(PAPER)?.meaning).toBe('paper');
+  });
+});
+
+describe('meaningFinder: strict leaves out the last try', () => {
+  it('finds a final-virama spelling only when not strict', () => {
+    const PAPER = 'ପେପର';
+    const f = meaningFinder(parseMeanings(`${PAPER}\tpaper\tpaper\t\tenglish\tai\t\n`));
+    expect(f.word(PAPER + '୍')?.meaning).toBe('paper');
+    expect(f.word(PAPER + '୍', true)).toBeUndefined();
+  });
+});

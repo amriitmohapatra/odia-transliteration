@@ -250,8 +250,9 @@ export function shortGlossOf(definition: string): string | null {
  * ------------------------------------------------------------ */
 
 export interface MeaningFinder {
-  /** The entry for a word: its canonical form, else its folded spelling. */
-  word(word: string): Meaning | undefined;
+  /** The entry for a word: its canonical form, else its folded spelling. `strict` leaves out
+   * the last try (no nukta, no final virama): a compound part must match more closely. */
+  word(word: string, strict?: boolean): Meaning | undefined;
   /** A two-word or "-suffix word" construction for `word` after `previous`. */
   after(previous: string, word: string): Meaning | undefined;
   /** The meaning of an ending ("re": in, at), or undefined. */
@@ -273,17 +274,26 @@ function looseKey(word: string): string {
  * the Praharaj keys use, so a page that writes the va letter or ya differently
  * still finds the entry.
  */
+/** The last try, only when the loose key finds nothing: no nukta (news sites print badi
+ * for baDi, odisa for oDisa) and no final virama (paper and paper + virama). */
+function looserKey(word: string): string {
+  return looseKey(word).replace(/\u0b3c/g, '').replace(/\u0b4d$/, '');
+}
+
 export function meaningFinder(meanings: Meanings): MeaningFinder {
   const folded = new Map<string, Meaning>();
+  const looser = new Map<string, Meaning>();
   for (const m of meanings.all()) {
     if (m.odia.startsWith('-') || m.odia.includes(' ')) continue;
     const key = looseKey(m.odia);
     if (!folded.has(key)) folded.set(key, m);
+    const key2 = looserKey(m.odia);
+    if (!looser.has(key2)) looser.set(key2, m);
   }
   return {
-    word(word) {
+    word(word, strict = false) {
       const odia = canonical(word);
-      return meanings.get(odia) ?? folded.get(looseKey(odia));
+      return meanings.get(odia) ?? folded.get(looseKey(odia)) ?? (strict ? undefined : looser.get(looserKey(odia)));
     },
     after(previous, word) {
       return previous.length === 0 ? undefined : meanings.construction(canonical(previous), canonical(word));
