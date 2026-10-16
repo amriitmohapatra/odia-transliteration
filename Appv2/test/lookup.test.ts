@@ -143,3 +143,13 @@ describe('modern layer: no calendar abbreviations (owner report, 2026-10-15)', (
     }
   });
 });
+
+describe('meaningFinder: joiners', () => {
+  it('finds a word printed with a joiner after the final virama', () => {
+    const POLICE = '\u0b2a\u0b41\u0b32\u0b3f\u0b38\u0b4d'; // pulis + virama
+    const m = parseMeanings(`${POLICE}\tpolice\tpolice\t\tenglish\tai\t\n`);
+    const f = meaningFinder(m);
+    expect(f.word(POLICE + '\u200c')?.meaning).toBe('police');
+    expect(f.word(POLICE)?.meaning).toBe('police');
+  });
+});

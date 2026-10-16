@@ -263,17 +263,23 @@ export interface MeaningFinder {
  * the Praharaj keys use, so a page that writes the va letter or ya differently
  * still finds the entry.
  */
+/** A meaning key that also ignores the joiners U+200C/U+200D: news sites print police
+ * both with and without a joiner after the final virama (pulis + ZWNJ). */
+function looseKey(word: string): string {
+  return foldKey(word).replace(/[\u200c\u200d]/g, '');
+}
+
 export function meaningFinder(meanings: Meanings): MeaningFinder {
   const folded = new Map<string, Meaning>();
   for (const m of meanings.all()) {
     if (m.odia.startsWith('-') || m.odia.includes(' ')) continue;
-    const key = foldKey(m.odia);
+    const key = looseKey(m.odia);
     if (!folded.has(key)) folded.set(key, m);
   }
   return {
     word(word) {
       const odia = canonical(word);
-      return meanings.get(odia) ?? folded.get(foldKey(odia));
+      return meanings.get(odia) ?? folded.get(looseKey(odia));
     },
     after(previous, word) {
       return previous.length === 0 ? undefined : meanings.construction(canonical(previous), canonical(word));
