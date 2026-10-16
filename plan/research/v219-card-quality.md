@@ -1,0 +1,147 @@
+# V2.19: a judged evaluation of the lens cards (2026-10-16)
+
+**Why.** The owner pointed the lens at a Sambad ePaper notice and found words it could not
+explain ("journalist + him" for samvaadikataaku, "maybe: Width" for pratibaddha). The
+coverage numbers (`tools/eval/meanings-coverage.ts`) count a card as covered when it has a
+meaning, not when the meaning is right. This round measures whether the card is right for
+the word as used.
+
+**Method.**
+- Corpus: 228 Odia news articles of 2026-10-11 to 16 from 7 sites (dharitri, sambad,
+  samajalive, odishabhaskar, prameyanews7, odishareporter, nandighoshatv; kanaknews left
+  out because it shows a bot check to plain requests). Text kept outside the repository.
+- Split by article: 28 held-out articles (4 per site) for measurement only; 200 for mining
+  words (batch 12). Words are never mined from the held set.
+- `tools/eval/card-audit.mjs`: every word through the lens's own lookup, with a flag for
+  the card's source.
+- Judges (5 AI agents, `JUDGE.md` rules: ok / weak / wrong / ocr, in context): every
+  flagged card of the held set (849 words) and a random 600 of the 1,953 ok-flagged words;
+  occurrence-weighted, the ok flag scaled from its sample. Verdicts, words only:
+  `tools/eval/data/card-judge-round0.tsv`. The judges are a proxy, not a native speaker;
+  the owner's samples (C-13) stay the real check.
+
+**Round 0** (held set: 2,802 words, 7,078 occurrences):
+
+| card source | share of text | judged right | weak | wrong |
+|---|---|---|---|---|
+| owner / AI / ending / number ("ok") | 83.5% | 99.0% | 0.3% | 0.6% |
+| Praharaj exact (1930s) | 4.1% | 39% | 30% | 30% |
+| parts guess | 1.0% | 27% | 52% | 21% |
+| shorter word's modern meaning | 2.5% | 24% | 28% | 47% |
+| "maybe:" from a shorter headword | 4.6% | 10% | 11% | 79% |
+| no meaning | 4.3% | 0 | 0 | 93% (rest OCR) |
+
+By match type: a prefix match (the word only begins like a headword) gave a right 1930s
+gloss for 3% of its occurrences and a wrong one for 90%; the shorter word's modern meaning
+on a prefix match was right for 25%, wrong for 47%. A stem match (headword + ending) was
+right for 28%.
+
+**Change (same day).** A prefix match no longer gives a meaning in the lens card or the
+app's chip; the card says the dictionaries have no meaning yet. The parts guess and stem
+matches stay.
+
+| whole held set, by occurrences | right | weak | wrong (misleading) | no meaning | OCR |
+|---|---|---|---|---|---|
+| round 0, before | 85.6% | 3.2% | 6.7% | 4.0% | 0.4% |
+| round 1, no prefix guesses | 85.0% | 2.3% | **2.5%** | 9.8% | 0.4% |
+
+Misleading cards fall from 6.7% to 2.5% of the running text; the empty cards (9.8%) are
+the work list for batch 12 (mined from the other 200 articles) and are measured again on
+the same held set after it.
+
+Main kinds of error the judges named: names of people and places shown with a dictionary
+sense ("Beer" for Birla, "Flag" for Banerjee), English loans with no or a wrong meaning
+(plan, task, concert, notice "a small metal jug"), 1930s senses ("A coachman" for
+saarathi, "Unboiled" for invalid, "Czech" for cheque), and case forms of stems with no row.
+
+**Round 2: after meanings batch 12** (1,756 rows mined from the other 200 articles and the
+owner's ePaper page). The same held set through `card-audit.mjs`; the 205 cards that
+changed were judged again (same rules, 2 judges; `tools/eval/data/card-judge-round2.tsv`);
+every other card keeps its round 0 verdict, an empty card counts as "no meaning". This
+method gives round 1's numbers back exactly.
+
+| whole held set, by occurrences | right | weak | wrong (misleading) | no meaning | OCR |
+|---|---|---|---|---|---|
+| round 0, before | 85.6% | 3.2% | 6.7% | 4.0% | 0.4% |
+| round 1, no prefix guesses | 85.0% | 2.3% | 2.5% | 9.8% | 0.4% |
+| round 2, batch 12 | **88.4%** | 1.5% | **1.9%** | 7.7% | 0.4% |
+
+Of the 205 changed cards, 191 were judged right, 10 weak, 4 wrong. Only 162 batch 12 words
+occur in the held set (the words were mined from other articles), so the gain is what a
+reader of new articles sees. The wrong ones are parts guesses for names (Patnagarh
+"patna + fort", Nicobar, Janpath "people + path") and a set phrase.
+
+Note on round 1's joiner change (commit 797d17a): only the AI-written meanings
+(`meaningFinder`) ignore a zero-width joiner; the owner's meanings still need the exact
+spelling. The commit message says both.
+
+**The ePaper through the lens's own OCR** (2026-10-16: 16 pages, 4 each of Sambad,
+Dharitri, Samaja, Prameya, Bhubaneswar edition; 35,456 words; read with
+`lens/vendor/ori.traineddata` as `readPage()` does; images and text kept outside the
+repository). Card audit, with the lens's word correction (applied without the lens's step that keeps a word the dictionaries know, so it changes more words than the lens does: the corrected row is an upper bound):
+
+| | ok | parts | approximate | Praharaj only | no card |
+|---|---|---|---|---|---|
+| raw OCR | 73.1% | 1.4% | 1.1% | 5.4% | 19.0% |
+| corrected | 80.7% | 1.4% | 0.9% | 5.8% | 11.2% |
+
+Of the 11.2% with no card, 7.8 points are words common in IndicCorp (≥ 50 times) and 3.4
+are OCR noise. Many of the common ones are print spellings that drop a doubled or joined
+letter (khaRca for khaRcca, parabaRtii for parabaRttii, byabasthaa printed with ta) and
+names of local places (Hatipala, Chandaka). Sambad and Samaja images are only about
+1,000 px wide, so their OCR is weaker (mean confidence 71-75 against 82-90).
+
+**Round 3: the reph fold and meanings batch 13.**
+- Reph fold (commit b77c124): the AI layer's loose key reads a consonant doubled after
+  reph as single, on both sides (kharca finds kharcca). On the ePaper pages 29 cards
+  changed, all right; ok 80.7 → 80.9%. The web-text held set did not change (the sites
+  print the doubled form).
+- Parts guesses for names: no parts-guess word on either set has a Wikidata or CLDR name
+  row, so the card order is not the cause; names need rows (batch 13).
+- Batch 13: 1,973 rows (1,898 words, 75 stems) for the ePaper words with no card or only
+  the 1930s sense, common in IndicCorp (≥ 50). 4 writers, a separate reviewer (11 wrong,
+  161 minor fixes; fragments, OCR misreadings and a coarse word skipped).
+- ePaper pages (now a mining set, so not a fair test): ok 80.9 → 90.5%, no card 11.1 →
+  6.6%, Praharaj only 5.8 → 1.7%.
+- Held set (independent of batch 13; 79 batch 13 words, 114 occurrences, also occur there): the 107 changed cards judged (95 right, 10 weak,
+  2 wrong; `tools/eval/data/card-judge-round3.tsv`).
+
+| whole held set, by occurrences | right | weak | wrong (misleading) | no meaning | OCR |
+|---|---|---|---|---|---|
+| round 2, batch 12 | 88.4% | 1.5% | 1.9% | 7.7% | 0.4% |
+| round 3, batch 13 + reph fold | **90.1%** | 1.2% | **1.5%** | 6.8% | 0.4% |
+
+Remaining kinds of error: suffix guesses that read clumsily or wrongly ("necessary + me"
+for aabashyakamate, "week + -wide" for a week-long course), local place names
+(Subuddhipur, Nilamadhab as a locality), and given names that are also words (Ashrit).
+The reph fold does not reach a stem match yet (barttamaanara with ending finds no row though barttamaana has one). Next: the remaining weak words of the mining set and of the ePaper pages (batch 14), and suffix rows for
+-ମତେ, -ବ୍ୟାପୀ and -ଟି in `verb-endings.tsv` or the endings table.
+
+**Round 4: a last-try lookup and meanings batch 14.**
+- Last try (commit de10471): when the exact and loose keys find nothing, the AI layer
+  tries the word without nukta and without a final virama (badi / baDi, paper / paper +
+  virama). Compound parts do not use it (it gave "mr + liquor", "air + tailor"). Rows
+  written in one spelling now answer the other ("in Odisha" for odishaare).
+- Its risk, measured: 150 cards whose meaning comes only from the last try, sampled from
+  the three sets and judged: 137 right, 1 weak, 5 wrong, 7 OCR. All 5 wrong ones are an
+  "other word" (bana "forest" for English one, tel "oil" in Tel Aviv, bidi for initials
+  B.D., param "supreme" for "after", yash "fame" for the actor). Without the last try
+  these words have no meaning at all, so it stays.
+- Batch 14: 1,998 rows (1,887 words, 111 stems) for the words still weak in the mining
+  articles and the ePaper pages; rows the lookup already finds under another spelling
+  left out (89).
+- Card audit, ok share: ePaper 90.7 → 92.7%, mining set 93.7 → 96.3% (both mined).
+- Held set: the 92 changed cards judged (84 right, 3 weak, 3 wrong, 2 OCR;
+  `tools/eval/data/card-judge-round4.tsv`, with the last-try sample).
+
+| whole held set, by occurrences | right | weak | wrong (misleading) | no meaning | OCR |
+|---|---|---|---|---|---|
+| round 0, before | 85.6% | 3.2% | 6.7% | 4.0% | 0.4% |
+| round 3, batch 13 + reph fold | 90.1% | 1.2% | 1.5% | 6.8% | 0.4% |
+| round 4, last try + batch 14 | **91.1%** | 1.1% | **1.2%** | 6.1% | 0.4% |
+
+Remaining kinds of error: parts guesses for compounds ("fierce + plaintiff" for
+ugrabaadii, "the other + SS" for RSS), negative and passive verb forms ("let + no" for
+niaajaaunaahin), names inside phrases (Aaj Tak, Tel Aviv). The no-meaning share (6.1%)
+is mostly names of people and rare words; the next source of words should be new
+articles (a fresh mining set), measured on the same held set.

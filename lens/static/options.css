@@ -1,0 +1,22 @@
+:root {
+  color-scheme: light dark;
+  --nila: #1e2f5c; --hingula: #b7321e; --haritala: #e8b23a;
+  --shankha: #fbf6ea; --kajal: #1c1712; --stone: #6f6253; --line: #e3d6bb;
+}
+body { margin: 0; background: var(--shankha); color: var(--kajal); font: 15px/1.55 system-ui, -apple-system, "Segoe UI", sans-serif; }
+main { max-width: 640px; margin: 0 auto; padding: 32px 16px 48px; }
+header { display: flex; align-items: center; gap: 12px; padding-bottom: 14px; margin-bottom: 8px;
+  border-bottom: 7px solid transparent;
+  border-image: linear-gradient(135deg, var(--hingula) 25%, transparent 25%) 0 0 7 0 / 0 0 7px 0 round; }
+.mark { width: 28px; height: 28px; border-radius: 50%; background: var(--nila); box-shadow: inset 0 0 0 3px var(--haritala), inset 0 0 0 9px var(--nila), inset 0 0 0 14px var(--haritala); }
+h1 { margin: 0; font: italic 600 24px/1.2 "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif; color: var(--nila); }
+h2 { margin: 28px 0 6px; font-size: 16px; }
+p { margin: 0 0 10px; }
+.switch { display: flex; gap: 10px; align-items: flex-start; padding: 12px 14px; border: 1px solid var(--line); border-radius: 10px; background: #fff; cursor: pointer; }
+.switch input { width: 18px; height: 18px; margin-top: 3px; accent-color: var(--hingula); }
+.state { margin-top: 10px; font-size: 13.5px; color: var(--stone); }
+.state.on { color: var(--nila); font-weight: 600; }
+@media (prefers-color-scheme: dark) {
+  :root { --shankha: #17150f; --kajal: #f3ead6; --stone: #c9bb9d; --line: #3a3326; --nila: #9fb3e8; }
+  .switch { background: #231f17; }
+}

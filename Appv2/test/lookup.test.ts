@@ -125,3 +125,74 @@ describe('explainVerb: verb forms by their ending', () => {
   });
 });
 
+
+describe('modern layer: no calendar abbreviations (owner report, 2026-10-15)', () => {
+  const lines = (i: number): string[] => M.defs.slice(M.offsets[i], (M.offsets[i] as number) + (M.lens[i] as number)).split('\n');
+  it('CLDR month and weekday names only on the full Gregorian names', () => {
+    for (let i = 0; i < M.keys.length; i++) {
+      for (const line of lines(i)) {
+        if (/^cldr\t.*\((month|weekday)\)$/.test(line)) expect((M.keys[i] as string).length, `${M.keys[i]}: ${line}`).toBeGreaterThan(1);
+        if (/^cldr\t.*\(weekday\)$/.test(line)) expect(M.keys[i]).toMatch(/\u0b2c\u0b3e\u0b30$/);
+      }
+    }
+  });
+  it('the possessive particle RA is not "Sunday", the negation NA not "November"', () => {
+    for (const key of ['\u0b30', '\u0b28', '\u0b2e', '\u0b05', '\u0b17\u0b41\u0b30\u0b41', '\u0b1a\u0b48\u0b24\u0b4d\u0b30']) {
+      const i = M.keys.indexOf(key);
+      if (i >= 0) expect(lines(i).some((l) => l.startsWith('cldr\t'))).toBe(false);
+    }
+  });
+});
+
+describe('meaningFinder: joiners', () => {
+  it('finds a word printed with a joiner after the final virama', () => {
+    const POLICE = '\u0b2a\u0b41\u0b32\u0b3f\u0b38\u0b4d'; // pulis + virama
+    const m = parseMeanings(`${POLICE}\tpolice\tpolice\t\tenglish\tai\t\n`);
+    const f = meaningFinder(m);
+    expect(f.word(POLICE + '\u200c')?.meaning).toBe('police');
+    expect(f.word(POLICE)?.meaning).toBe('police');
+  });
+});
+
+describe('meaningFinder: a consonant doubled after reph', () => {
+  it('finds kharcca printed as kharca, and the other way round', () => {
+    const KHARCCA = 'ଖର୍ଚ୍ଚ'; // kha + reph + ca + virama + ca
+    const KHARCA = 'ଖର୍ଚ';
+    const f = meaningFinder(parseMeanings(`${KHARCCA}\texpense\texpense\t\tpersian\tai\t\n`));
+    expect(f.word(KHARCA)?.meaning).toBe('expense');
+    const g = meaningFinder(parseMeanings(`${KHARCA}\texpense\texpense\t\tpersian\tai\t\n`));
+    expect(g.word(KHARCCA)?.meaning).toBe('expense');
+  });
+
+  it('leaves a word with a different second consonant alone', () => {
+    const KARTTA = 'କର୍ତ୍ତା'; // kartaa doubled: ka + reph + ta + virama + ta + aa
+    const f = meaningFinder(parseMeanings(`${KARTTA}\tdoer\tdoer\t\tsanskrit\tai\t\n`));
+    expect(f.word('କର୍ତ୍ଥା')).toBeUndefined(); // ta + virama + tha
+  });
+});
+
+describe('meaningFinder: nukta and final virama, as a last try', () => {
+  const PAPER = 'ପେପର'; // pepara
+  const BADI = 'ବାଡ଼ି'; // baa + Da + nukta + i (garden)
+
+  it('finds a word printed without its nukta or with a final virama', () => {
+    const f = meaningFinder(parseMeanings(`${PAPER}\tpaper\tpaper\t\tenglish\tai\t\n${BADI}\tgarden\tgarden\t\tnative\tai\t\n`));
+    expect(f.word(PAPER + '୍')?.meaning).toBe('paper');
+    expect(f.word('ବାଡି')?.meaning).toBe('garden');
+  });
+
+  it('keeps an exact or joiner-loose match first', () => {
+    const f = meaningFinder(parseMeanings(`${PAPER}\tpaper\tpaper\t\tenglish\tai\t\n${PAPER}୍\tpaper (2)\tpaper\t\tenglish\tai\t\n`));
+    expect(f.word(PAPER + '୍')?.meaning).toBe('paper (2)');
+    expect(f.word(PAPER)?.meaning).toBe('paper');
+  });
+});
+
+describe('meaningFinder: strict leaves out the last try', () => {
+  it('finds a final-virama spelling only when not strict', () => {
+    const PAPER = 'ପେପର';
+    const f = meaningFinder(parseMeanings(`${PAPER}\tpaper\tpaper\t\tenglish\tai\t\n`));
+    expect(f.word(PAPER + '୍')?.meaning).toBe('paper');
+    expect(f.word(PAPER + '୍', true)).toBeUndefined();
+  });
+});

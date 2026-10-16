@@ -1,0 +1,12 @@
+{
+  // Typecheck only (Vercel compiles the functions itself): npx tsc -p api
+  "extends": "../tsconfig.base.json",
+  "compilerOptions": {
+    "lib": ["ES2022", "DOM"],
+    "types": ["node"],
+    "noEmit": true,
+    "declaration": false,
+    "sourceMap": false
+  },
+  "include": ["**/*.ts", "../tools/assist/*.ts"]
+}

@@ -10,8 +10,7 @@ the source of truth for scope, staging and rationale.
 `https://odia-transliteration-web.vercel.app/`, kids `https://odia-phonetic-kids.vercel.app/`.
 V2 (better words) has started. **2026-10-12:** the hybrid engine with Desh keyboard data
 (V2.13 typed spellings, V2.14 spelling converter, V2.15 next word, V2.16 completion) is
-built and in PR #9, not merged: merging publishes Desh data before the written permission
-(L-1), and C-11 (content probe) comes first. Owner checks after the merge are open in `plan/06-owner-followups.md`. Status per item: `PLAN.md`. Earlier: Stages A and B were in progress. Three single-file web apps
+built; PR #9 and PR #10 were merged to `main` (so Desh data is on the live site; the written permission L-1 is still open). Later work is on the branch until the next PR: lens 0.2.0 to 0.7.0 (own OCR model), the Mac and Windows lenses, meaning batches 6–11, V2.6 (IndicXlit lexicon fill), V2.7 (the `[mt]` rows removed, D-5), V3 (read-aloud and voice typing), V5 (macOS input method on the real engine, not yet built on a Mac). **The autonomous queue (owner, 2026-10-15; `PLAN.md` §2b) is finished.** Owner checks after the merge are open in `plan/06-owner-followups.md`. Status per item: `PLAN.md`. Earlier: Stages A and B were in progress. Three single-file web apps
 are built and measured: `docs/odia-app.html`, `docs/odia-app-sanskrit.html` (from `Appv2/`)
 and `Odia_Sanskrit_Appv2/odia-app-sanskrit-v2.html` (adds the dictionary). The v3 direction
 and the owner's decisions are in `plan/05-v3-direction.md`. See also `plan/02-stages.md`.
@@ -55,7 +54,7 @@ npm run -w cli start -- "odisha" --codepoints    # expect U+0B21 U+0B3C
 
 ## Architecture
 
-One TypeScript engine, five consumers.
+One TypeScript engine, seven consumers.
 
 ```
 core/  ──────────────────────────────┐
@@ -65,6 +64,8 @@ core/  ────────────────────────�
   ├─ web/         browser            │  direct import
   ├─ Appv2/       Sanskrit web app   │  direct import
   ├─ lens/        browser extension  │  esbuild bundle (V4.1)
+  ├─ mac-lens/    Swift lens window  │  WKWebView page from lens/src/mac.ts (owner testing)
+  ├─ win-lens/    C# lens window     │  WebView2, the same page (owner testing)
   └─ ime-macos/   Swift input method │  JavaScriptCore
                                      ┘
 ```
@@ -188,13 +189,18 @@ Rows marked unknown or unverified below are open items, not exceptions:
 | AI4Bharat IndicCorp v2 (`ory_Orya`) | CC0 | Word frequencies |
 | Noto Sans Oriya | OFL 1.1 | Bundled font, weights 400 and 700, in `web/src/fonts/` (used by `web/` and `Appv2/`) |
 | Praharaj, *Purnnachandra Odia Bhashakosha* (1931–40), via indic-dict | Public domain (text). indic-dict packaging has no licence file. | Classical dictionary layer |
-| OdiaNLP `dictionary` `cleaned_pairs.json` | Repo MIT. **Origin of the text unknown.** To be replaced (D-5). | MODERN dictionary layer, `[mt]` rows |
+| OdiaNLP `dictionary` `cleaned_pairs.json` | Repo MIT. Origin of the text unknown. | **No longer shipped** (removed 2026-10-15, V2.7, D-5); was the MODERN layer's `[mt]` rows |
+| Wikidata labels | CC0 | MODERN dictionary layer, `[wd]` rows: names of places, parties, institutions, festivals (`Odia_Sanskrit_Appv2/build/wikidata-names.tsv`) |
 | Unicode CLDR `or.xml` | Unicode License v3 | MODERN dictionary layer, `[cldr]` rows |
 | wordfreq, CMUdict | Unverified (see provenance file) | Build time: loanword detection |
 | CMU Pronouncing Dictionary (data file) | BSD-2-Clause | Build time: English words and sounds for `loans.tsv` |
 | SCOWL `american-english-small` | Permissive / public domain | Build time: common English words for `loans.tsv` |
-| IndicCorp v2 Odia `or.txt` (word counts) | CC0 | Build time: attestation for `loans.tsv` (`tools/build-data/count_indiccorp.py`) |
+| IndicCorp v2 Odia `or.txt` (word counts) | CC0 | Build time: attestation for `loans.tsv` (`tools/build-data/count_indiccorp.py`); shipped in the Odia Lens as the OCR word list `core/data/indiccorp-words.tsv` |
+| Tesseract (`tesseract.js` 5.1.1, `tesseract.js-core` 5.1.1) and the Odia model `lens/vendor/ori.traineddata` (own fine-tune of `tessdata_best/ori`, V4.3, trained only on CC0/CC-BY word lists rendered in OFL fonts) | Apache-2.0 (model: modified) | Odia Lens OCR (V4.2, V4.3); `lens/PROVENANCE.md`, `plan/research/v43-ocr-model/clean-PROVENANCE.md` |
+| AI4Bharat IndicXlit (`ai4bharat/IndicXlit`, Odia → Latin model) | MIT | Build time only: Latin spellings for common words in no word list, `core/data/lexicon-xlit*.tsv` (V2.6) |
 | pako inflate | MIT | Unpacks the dictionary payloads |
+| WebView2 SDK (`Microsoft.Web.WebView2` 1.0.4258.31) | BSD-3-Clause | Odia Lens for Windows (`win-lens/`, owner testing); `win-lens/PROVENANCE.md` |
+| pdf.js (`pdfjs-dist` 6.3.289, legacy build; image decoders; Foxit standard fonts only) | Apache-2.0; decoders BSD-3/BSD-2/MIT; Foxit fonts BSD-3 | Odia Lens PDF reader (V4.6); `lens/PROVENANCE.md`. Liberation fonts left out (GPL with font exception) |
 
 The dictionary sources and their checksums are in `Odia_Sanskrit_Appv2/PROVENANCE.md`.
 
@@ -254,6 +260,10 @@ third-party text (archive.org books, literature, news, government pages, X posts
 that the MIT `LICENSE` does not cover.
 
 If the user says they want to make the repo public, remind them of this first.
+
+**Saved for later (owner, 2026-10-15): guide video.** Once both the transliteration app and
+the Odia Lens are ready and updated, remind the owner about the brag and user-guide video
+(`PLAN.md` stage G); the owner gives the requirements then.
 
 **Saved for later (owner, 2026-10-04):** the website is public, the repository stays private
 for now. When the owner says the project is finished, remind them to plan the public

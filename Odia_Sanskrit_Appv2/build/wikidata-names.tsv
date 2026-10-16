@@ -1,0 +1,780 @@
+# Names from Wikidata (CC0): items with an Odia (or) and an English label, by class.
+# Built 2026-10-15 by a SPARQL query per class (query.wikidata.org); single-word Odia labels only.
+# odia	english	kind	qid
+ଅକୋଲା	Akola	city	Q213014
+ଅଗରତାଲା	Agartala	city	Q170454
+ଅଞ୍ଜନଗାଓଁ	Anjangaon	city	Q583982
+ଅଞ୍ଜାର୍	Anjar	town	Q1945434
+ଅଦୂର	Adoor	town	Q490941
+ଅନନ୍ତପୁର	Ananthapuram	city	Q760144
+ଅନୁରାଧାପୁର	Anuradhapura	city	Q5724
+ଅବୁଜା	Abuja	city	Q3787
+ଅମରପୁର	Amarpur	town	Q589674
+ଅମରାବତୀ	Amravati	city	Q269899
+ଅମରେଲୀ	Amreli	city	Q589163
+ଅମୃତସର	Amritsar	city	Q48403
+ଅମ୍ବିକାପୁର	Ambikapur	city	Q2088480
+ଅମ୍ସିନ	Amsin	town	Q4748786
+ଅଯୋଧ୍ୟା	Ayodhya	city	Q186040
+ଅରୁପ୍ପୁକ୍କୋଟ୍ଟାଇ	Aruppukkottai	town	Q584327
+ଅରୁବ	Aruba	country	Q21203
+ଅଲ୍ୱର୍	Alwar	city	Q2722762
+ଅଶୋକନଗର	Ashoknagar	city	Q589108
+ଅଷ୍ଟ୍ରିଆ	Austria	country	Q40
+ଅଷ୍ଟ୍ରେଲିଆ	Australia	country	Q408
+ଅସଲୋ	Oslo	city	Q585
+ଅସୁରଗଡ଼	Asurgarh	archaeological site	Q4811930
+ଅସ୍ତାନା	Astana	city	Q1520
+ଅହମଦନଗର	Ahilyanagar	city	Q223517
+ଅହମଦାବାଦ	Ahmedabad	city	Q1070
+ଅୱଧୀ	Awadhi	language	Q29579
+ଆଇଜୋଲ	Aizawl	city	Q192379
+ଆଇସଲ୍ୟାଣ୍ଡ	Iceland	country	Q189
+ଆକବରପୁର	Akbarpur	city	Q416835
+ଆକ୍ରା	Accra	city	Q3761
+ଆଗ୍ରା	Agra	city	Q42941
+ଆଙ୍କାରା	Ankara	city	Q3640
+ଆଙ୍କ୍ଲେଶ୍ଵର	Ankleshwar	town	Q588924
+ଆଙ୍ଗୋଲା	Angola	country	Q916
+ଆଜମେର	Ajmer	city	Q200049
+ଆଜମ୍ଗଡ଼	Azamgarh	city	Q526757
+ଆଜାରବାଇଜାନ	Azerbaijan	country	Q227
+ଆଣ୍ଡୋରା	Andorra	country	Q228
+ଆଦିତ୍ୟପୁର	Adityapur	town	Q490645
+ଆଫଗାନିସ୍ତାନ	Afghanistan	country	Q889
+ଆବୁଧାବି	Abu Dhabi	city	Q1519
+ଆମଷ୍ଟରଡ଼୍ୟାମ	Amsterdam	city	Q727
+ଆମ୍ରୋହା	Amroha	city	Q584515
+ଆରମ୍ବାଗ୍	Arambagh	city	Q582917
+ଆରାରିଅ	Araria	city	Q4660870
+ଆର୍ଜେଣ୍ଟିନା	Argentina	country	Q414
+ଆର୍ମେନିଆ	Armenia	country	Q399
+ଆଲଜେରିଆ	Algeria	country	Q262
+ଆଲବାନିଆ	Albania	country	Q222
+ଆଲମଚଣ୍ଡି	Alama Chandi Temple	temple	Q20873578
+ଆଲମୋଡ଼ା	Almora	town	Q588817
+ଆସନସୋଲ	Asansol	city	Q202139
+ଆୟରଲ୍ୟାଣ୍ଡ	Ireland	country	Q27
+ଇକ୍ୱେଡୋର	Ecuador	country	Q736
+ଇଜିପ୍ଟ	Egypt	country	Q79
+ଇଟାନଗର	Itanagar	city	Q41128
+ଇଟାଲୀ	Italy	country	Q38
+ଇଡିର୍ନେ	Edirne	city	Q43387
+ଇଣ୍ଡୋନେସିଆ	Indonesia	country	Q252
+ଇତାର୍ସି	Itarsi	city	Q928162
+ଇଥିଓପିଆ	Ethiopia	country	Q115
+ଇନ୍ଦୁପ୍ରକାଶ	Induprakash	newspaper	Q18125990
+ଇନ୍ଦୋର	Indore	city	Q66616
+ଇନ୍ଦ୍ରାବତୀ	Indravati River	river	Q1661830
+ଇମ୍ଫାଲ	Imphal	city	Q208097
+ଇରାକ	Iraq	country	Q796
+ଇରାନ	Iran	country	Q794
+ଇରିଟ୍ରିଆ	Eritrea	country	Q986
+ଇସଲାମାବାଦ	Islamabad	city	Q1362
+ଇସ୍ତାନବୁଲ	Istanbul	city	Q406
+ଇସ୍ରାଏଲ	Israel	country	Q801
+ଉଗାଣ୍ଡା	Uganda	country	Q1036
+ଉଜବେକିସ୍ଥାନ	Uzbekistan	country	Q265
+ଉଜ୍ଜୈନ	Ujjain	city	Q200119
+ଉଟି	Ooty	town	Q9888
+ଉତ୍ତରାୟଣ	Uttarayana	festival	Q3350192
+ଉଦୟପୁର	Udaipur	city	Q2248438
+ଉନକୋଟି	Unakoti	archaeological site	Q7882256
+ଉରୁଗୁଏ	Uruguay	country	Q77
+ଋଡ଼କୀ	Roorkee	city	Q1020718
+ଋଷିଆ	Russia	country	Q159
+ଋଷିକେଶ	Rishikesh	city	Q502141
+ଏଥେନ୍ସ	Athens	city	Q1524
+ଏଲୁରୁ	Eluru	city	Q1003496
+ଏଷ୍ଟୋନିଆ	Estonia	country	Q191
+ଓଁକାରେଶ୍ଵର	Omkareshwar Temple	town	Q1093334
+ଓଙ୍ଗୋଲେ	Ongole	city	Q1920249
+ଓଟାୱା	Ottawa	city	Q1930
+ଓଡ଼ିଆ	Odia	language	Q33810
+ଓମାନ	Oman	country	Q842
+ଓରାଉଁ	Kurukh people	ethnic group	Q4335685
+ଓସ୍ମାନାବାଦ	Dharashiv	city	Q2462135
+କଙ୍ଗୋ	Republic of the Congo	country	Q971
+କଟକ	Cuttack	city	Q207324
+କଟନୀ	Katni	city	Q172581
+କଡପ୍ପା	Kadapa	city	Q30651
+କଡ଼ି	Kadi	town	Q2726621
+କଣ୍ଡଲା	Kandla	town	Q581480
+କତର	Qatar	country	Q846
+କନଫୁସିଅସବାଦ	Confucianism	religion	Q9581
+କନ୍ଧ	Kondha	ethnic group	Q1241443
+କନ୍ୟାକୁମାରୀ	Kanniyakumari	city	Q222267
+କପଡ଼ଗଞ୍ଜ	Kapadvanj	town	Q2341421
+କପୂରଥଲା	Kapurthala	city	Q781354
+କମୋରୋସ	Comoros	country	Q970
+କମ୍ବୋଡ଼ିଆ	Cambodia	country	Q424
+କରାଚୀ	Karachi	city	Q8660
+କରିମଗଞ୍ଜ	Sribhumi	city	Q1729385
+କରିମନଗର	Karimnagar	city	Q16039783
+କଲିକତା	Kolkata	city	Q1348
+କଲୋମ୍ବିଆ	Colombia	country	Q739
+କଲୋମ୍ବୋ	Colombo	city	Q35381
+କାଇଲାସହର	Kailashahar	town	Q2576072
+କାଉରା	Kawar people	ethnic group	Q106862279
+କାଏରୋ	Cairo	city	Q85
+କାକିନାଡ଼ା	Kakinada	city	Q59018
+କାଜାକିସ୍ତାନ	Kazakhstan	country	Q232
+କାଞ୍ଚିପୁରମ	Kanchipuram	city	Q212332
+କାଠମାଣ୍ଡୁ	Kathmandu	city	Q3037
+କାଠୁଆ	Kathua	town	Q2597901
+କାଡ଼ିଆଁ	Qadian	city	Q1026436
+କାନପୁର	Kanpur	city	Q66568
+କାନବେରା	Canberra	city	Q3114
+କାନାଡ଼ା	Canada	country	Q16
+କାନ୍ନର	Kannur	city	Q4789666
+କାବୁଲ	Kabul	city	Q5838
+କାମେରୁନ	Cameroon	country	Q1009
+କାମ୍ପାଲା	Kampala	city	Q3894
+କାରାକାସ	Caracas	city	Q1533
+କାଲ୍ପି	Kalpi	city	Q2281643
+କାଶଗର	Kashgar	city	Q170521
+କାଶିପୁର	Kashipur	city	Q1026180
+କାହ୍ନନଗଡ଼	Kanhangad	town	Q720627
+କିଙ୍ଗଷ୍ଟନ	Kingston	city	Q34692
+କିରଗିଜସ୍ତାନ	Kyrgyzstan	country	Q813
+କିରିବାସ	Kiribati	country	Q710
+କିଲାକରାଇ	Kilakarai	town	Q2135478
+କିଶାନଗଞ୍ଜ	Kishanganj	town	Q1949375
+କୁଆଲାଲୁମ୍ପୁର	Kuala Lumpur	city	Q1865
+କୁଏତ	Kuwait	country	Q817
+କୁମାରଗଞ୍ଜ	Kumarganj	town	Q23808323
+କୁରୁକ୍ଷେତ୍ର	Kurukshetra	city	Q593256
+କୁର୍ନୂଲ	Kurnool	city	Q3635276
+କୁଲି	Kuli people	ethnic group	Q106862286
+କୁଶୀନଗର	Kushinagar	town	Q825673
+କେନିଆ	Kenya	country	Q114
+କେନ୍ଦ୍ରାପଡ଼ା	Kendrapara	town	Q2082443
+କେଶୋଦ୍	Keshod	town	Q599414
+କେସାରିଆ	Kesaria	town	Q3630833
+କୈଥଲ	Kaithal	city	Q1949385
+କୋଈଲାଣ୍ଡୀ	Koyilandy	town	Q2720777
+କୋଏମ୍ବାଟୁର	Coimbatore	city	Q9885
+କୋଚି	Kochi	city	Q1800
+କୋଟା	Kota	city	Q330531
+କୋଟିଆ	Kotia people	ethnic group	Q106862285
+କୋଡ଼ାଇକାନାଲ	Kodaikanal	city	Q253851
+କୋଣାର୍କ	Konark	town	Q749189
+କୋଣ୍ଡାଦରା	Kondadora people	ethnic group	Q106862283
+କୋଥାଗୁଡେମ୍	Kothagudem	town	Q2238988
+କୋପେନହେଗେନ	Copenhagen	city	Q1748
+କୋରବା	Korba	city	Q2008189
+କୋରା	Kora	ethnic group	Q85774890
+କୋରୁଆ	Korua people	ethnic group	Q106862284
+କୋଲୋସିୟମ	Colosseum	archaeological site	Q10285
+କୋଲ୍ଲାମ୍	Kollam	city	Q321475
+କୋଳିକୋଡ଼	Kozhikode	city	Q28729
+କୋଷ୍ଟାରିକା	Costa Rica	country	Q800
+କୋହିମା	Kohima	city	Q234056
+କୋହ୍ଲ	Kolha people	ethnic group	Q106862282
+କୋହ୍ଲାପୁର	Kolhapur	city	Q209698
+କୋୟା	Koya	ethnic group	Q113437783
+କ୍ଯୋଟୋ	Kyoto	city	Q34600
+କ୍ରୋଏସିଆ	Croatia	country	Q224
+କ୍ୟୁବା	Cuba	country	Q241
+ଖଜୁରାହୋ	Khajuraho	city	Q178948
+ଖାନ୍ନା	Khanna	city	Q1101873
+ଖାରୁଆ	Kharwar people	ethnic group	Q106862280
+ଖୋର୍ଦ୍ଧା	Khordha	city	Q2241122
+ଗାଇଓନା	Guyana	country	Q734
+ଗାଙ୍ଗଟକ	Gangtok	city	Q186141
+ଗାଜିଆବାଦ	Ghaziabad	city	Q207098
+ଗାନ୍ଦିଆ	Gandia people	ethnic group	Q106862275
+ଗାନ୍ଧୀନଗର	Gandhinagar	city	Q11910
+ଗାବୋନ	Gabon	country	Q1000
+ଗାମ୍ବିଆ	The Gambia	country	Q1005
+ଗିନି	Guinea	country	Q1006
+ଗୀଲଂ	Geelong	city	Q231765
+ଗୁଆଟେମାଳା	Guatemala	country	Q774
+ଗୁଣପୁର	Gunupur	town	Q1707762
+ଗୁଣ୍ଟୁର	Guntur	city	Q3120966
+ଗୁରଦାସପୁର	Gurdaspur	city	Q1707629
+ଗୁରୁଗ୍ରାମ	Gurgaon	city	Q238508
+ଗୋକାକ	Gokak	city	Q1708149
+ଗୋଣ୍ଡଲ	Gondal	city	Q1536978
+ଗୋଣ୍ଡିଆ	Gondia	city	Q1707857
+ଗୋଧ୍ରା	Godhra	town	Q1708114
+ଗୋଲକୁଣ୍ଡା	Golconda	archaeological site	Q4141623
+ଗୋଳବାଇ	Golabai	archaeological site	Q5578345
+ଗୌହାଟୀ	Guwahati	city	Q199605
+ଗ୍ରୀକ	Greeks	ethnic group	Q539051
+ଗ୍ରୀନଲାଣ୍ଡ	Greenland	country	Q223
+ଗ୍ରୀସ	Greece	country	Q41
+ଗ୍ରେନେଡା	Grenada	country	Q769
+ଗୟା	Gaya	city	Q251329
+ଘରା	Ghara people	ethnic group	Q106862276
+ଘାନା	Ghana	country	Q117
+ଚଣ୍ଡୀଗଡ଼	Chandigarh	city	Q43433
+ଚତୁର୍ମାସ୍ୟା	Chaturmas	festival or holiday	Q3225597
+ଚାଙ୍ଗସା	Changsha	city	Q174091
+ଚାଡ଼	Chad	country	Q657
+ଚାରମୀନାର	Charminar	mosque	Q1771696
+ଚିକିଟି	Chikiti	town	Q1105855
+ଚିଟାଗଙ୍ଗ	Chittagong	city	Q376749
+ଚିତ୍ତୂର	Chittoor	city	Q11198998
+ଚିତ୍ରାଳ	Chitral	town	Q12126543
+ଚିତ୍ରୋତ୍ପଳା	Chitroptala river	river	Q5102368
+ଚିଲି	Chile	country	Q298
+ଚୀନ	People's Republic of China	country	Q148
+ଚେଙ୍ଗାଲପଟ୍ଟୁ	Chengalpattu	city	Q888769
+ଚେନ୍ନାଇ	Chennai	city	Q1352
+ଚେରାପୁଞ୍ଜୀ	Cherrapunji	town	Q211030
+ଛତିଆ	Chhatia Bata	temple	Q5094807
+ଛାଡ଼ଖାଇ	Chhadakhai	festival	Q103839866
+ଜଗଦଲପୁର	Jagdalpur	city	Q1006363
+ଜଟଣୀ	Jatani	town	Q2352196
+ଜବଲପୁର	Jabalpur	city	Q200878
+ଜମାଲପୁର	Jamalpur	city	Q2734136
+ଜର୍ଜଟାଉନ	Georgetown	city	Q10717
+ଜର୍ଜିଆ	Georgia	country	Q230
+ଜର୍ମାନୀ	Germany	country	Q183
+ଜଳନ୍ଧର	Jalandhar	city	Q33377
+ଜହ୍ନମାମୁଁ	Chandamama	publisher	Q3526670
+ଜାକର୍ତା	Jakarta	city	Q3630
+ଜାତାପୁ	Jatapu people	ethnic group	Q6164497
+ଜାପାନ	Japan	country	Q17
+ଜାମସେଦପୁର	Jamshedpur	city	Q200054
+ଜାମାଇକା	Jamaica	country	Q766
+ଜାମାଲପୁର	Jamalpur	city	Q4159797
+ଜାମ୍ବିଆ	Zambia	country	Q953
+ଜିବ୍ରାଲେଟର	Gibraltar	city	Q1410
+ଜିମ୍ବାୱେ	Zimbabwe	country	Q954
+ଜିରୋ	Ziro	town	Q663062
+ଜୀବିତପୁତ୍ରିକା	Jivitputrika	festival or holiday	Q6203489
+ଜୁନାଗଡ଼	Junagadh	city	Q11864
+ଜେନେଭା	Geneva	city	Q71
+ଜେରୁଜେଲମ	Jerusalem	city	Q1218
+ଜେସଲମେର	Jaisalmer	city	Q242898
+ଜୋର୍ଡାନ	Jordan	country	Q810
+ଜ୍ୟୋତିର୍ମଠ	Joshimath	town	Q1026878
+ଜୟପୁର	Jaipur	city	Q66485
+ଝାନ୍ସୀ	Jhansi	city	Q242995
+ଟିରାନା	Tirana	city	Q19689
+ଟୁନିସିଆ	Tunisia	country	Q948
+ଟୁଭାଲୋ	Tuvalu	country	Q672
+ଟୋକିଓ	Tokyo	city	Q1490
+ଟୋଗୋ	Togo	country	Q945
+ଟୋଙ୍ଗା	Tonga	country	Q678
+ଠାଣେ	Thane	city	Q207749
+ଡବଲିନ	Dublin	city	Q1761
+ଡାକୋର	Dakor	city	Q1192377
+ଡାମନ	Daman	city	Q463252
+ଡାମାସକସ	Damascus	city	Q3766
+ଡିଜିବୋଇଟି	Djibouti	country	Q977
+ଡୀଉ	Diu	town	Q631849
+ଡୁମକା	Dumka	city	Q1389472
+ଡୁରେସ୍	Durrës	city	Q83285
+ଡେନମାର୍କ	Denmark	country	Q35
+ଡେରାଡୁନ	Dehradun	city	Q199528
+ଡୋମିନିକା	Dominica	country	Q784
+ଢାକା	Dhaka	city	Q1354
+ଢେଙ୍କାନାଳ	Dhenkanal	city	Q1931717
+ଢୋଲବିରା	Dholavira	archaeological site	Q9468
+ତନ୍ଦୁର	Tandur	town	Q720922
+ତରଭା	Tarbha	town	Q132295
+ତାଇପେ	Taipei	city	Q1867
+ତାଜାକିସ୍ଥାନ	Tajikistan	country	Q863
+ତାଞ୍ଜାନିଆ	Tanzania	country	Q924
+ତାମ୍ରଲିପ୍ତ	Tamralipta	city	Q117731
+ତାଲାଜା	Talaja	town	Q766933
+ତାଳଚେର	Talcher	city	Q2352219
+ତିରୁପତି	Tirupati	city	Q1436816
+ତିଲିସି	Tbilisi	city	Q994
+ତୁରା	Tura	city	Q2317186
+ତୁର୍କମେନିସ୍ଥାନ	Turkmenistan	country	Q874
+ତୁର୍କୀ	Turkey	country	Q43
+ତେକ୍କାଲାକୋଟ	Tekkalakote	town	Q429171
+ତେଜପୁର	Tezpur	city	Q1021162
+ତେଜୁ	Tezu	town	Q13221
+ତେହରି	New Tehri	city	Q2249856
+ତ୍ରିପୁରା	Tripura	city	Q1363
+ଥାଇଲାଣ୍ଡ	Thailand	country	Q869
+ଥାଞ୍ଜାବର	Thanjavur	city	Q41496
+ଥାନଗଡ଼	Thangadh	town	Q2231030
+ଥାରୁଆ	Tharua people	ethnic group	Q106862298
+ଥିମ୍ପୁ	Thimphu	city	Q9270
+ଥିରୁଅନନ୍ତପୁରମ	Thiruvananthapuram	city	Q167715
+ଦଳିତ	Dalit	ethnic group	Q219517
+ଦଶହରା	Vijayadashami	festival	Q10274
+ଦାର୍ଜିଲିଂ	Darjeeling	city	Q169997
+ଦାଲ	Dal people	ethnic group	Q106862270
+ଦିଦାଇ	Didayi people	ethnic group	Q106862273
+ଦିଲ୍ଲୀ	Delhi	city	Q1353
+ଦିସପୁର	Dispur	city	Q271911
+ଦୀପାବଳି	Diwali	festival	Q10244
+ଦୁରୁଆ	Duruwa	ethnic group	Q113437782
+ଦୁର୍ଗ	Durg	city	Q956602
+ଦୂର୍ଗାଷ୍ଟମୀ	Durga Ashtami	festival	Q24938710
+ଦେଓଗଡ଼	Deoghar	city	Q1192453
+ଦେବପ୍ରୟାଗ	Devprayag	town	Q27832
+ଦେଶିଆ	Desia	language	Q12629755
+ଦ୍ଵାରକା	Dwarka	city	Q817247
+ଧଉଳି	Dhauli	archaeological site	Q3498218
+ଧନୁଯାତ୍ରା	Dhanu Jatra	festival or holiday	Q3264778
+ଧନୁଷ୍କୋଡ଼ି	Dhanushkodi	town	Q1207562
+ଧର୍ମଶାଳା	Dharamshala	city	Q186182
+ଧାନବାଦ	Dhanbad	city	Q244159
+ଧୋରାଜି	Dhoraji	town	Q1259573
+ନକ୍ସଲବାଦ	Naxalite	political party	Q912158
+ନବଦ୍ୱୀପ	Nabadwip	city	Q1006330
+ନବରାତ୍ର	Navratri	festival	Q10269
+ନବସାରୀ	Navsari	town	Q1922248
+ନମକ୍କାଲ୍	Namakkal	town	Q9923
+ନରକନ୍ଦା	Narkanda	town	Q568317
+ନର୍ସିଙ୍ଘଗଡ଼	Narsinghgarh	town	Q584544
+ନରୱେ	Norway	country	Q20
+ନାଇଜର	Niger	country	Q1032
+ନାଇଜେରିଆ	Nigeria	country	Q1033
+ନାଉରୁ	Nauru	country	Q697
+ନାଗଗାଁ	Nagaon	city	Q11938328
+ନାଗପୁର	Nagpur	city	Q1513
+ନାଗା	Naga people	ethnic group	Q1130145
+ନାଗାପାଟ୍ଟିନମ୍	Nagapattinam	town	Q695585
+ନାଗାର୍ଜୁନକୋଣ୍ଡା	Nagarjunakonda	archaeological site	Q749108
+ନାଙ୍ଗଲ୍	Nangal	town	Q2311518
+ନାଜିବାବାଦ୍	Najibabad	city	Q2543489
+ନାନ୍ଦୁର୍ବାର୍	Nandurbar	city	Q2087583
+ନାଭା	Nabha	city	Q1023691
+ନାମିବିଆ	Namibia	country	Q1030
+ନାର୍ନାଉଲ୍	Narnaul	city	Q2341892
+ନାଳନ୍ଦା	Nalanda Mahavihara	university	Q216243
+ନାଶିକ	Nashik	city	Q200235
+ନାହାନ୍	Nahan	town	Q781615
+ନିଉଜିଲ୍ୟାଣ୍ଡ	New Zealand	country	Q664
+ନିକାରାଗୁଆ	Nicaragua	country	Q811
+ନିକୋସିଆ	Nicosia	city	Q3856
+ନିଜାମାବାଦ	Nizamabad	city	Q41473
+ନିଳାମ୍ବୁର	Nilambur	town	Q3525638
+ନିଷ୍କର୍ଷ	Nishkarsha	newspaper	Q124706305
+ନୀମଚ	Neemuch	town	Q941901
+ନୁକ	Nuuk	city	Q226
+ନେଦରଲାଣ୍ଡ	Netherlands	country	Q55
+ନେପାଳ	Nepal	country	Q837
+ନେଲ୍ଲୋର	Nellore	city	Q61434
+ନେୟାଟ୍ଟିଙ୍କାରା	Neyyattinkara	town	Q2569280
+ନୋଏଡ଼ା	Noida	city	Q278204
+ନୋଖା	Nokha	town	Q1749714
+ପଟନା	Patna	city	Q80484
+ପଟିଆଲା	Patiala	city	Q208162
+ପଟ୍ଟାଡାକାଲ	Pattadakal Group of Monuments	archaeological site	Q817250
+ପଣ୍ଡିଚେରୀ	Pondicherry	city	Q639421
+ପର୍ତ୍ତୁଗାଲ	Portugal	country	Q45
+ପର୍ସେପୋଲିସ	Persepolis	archaeological site	Q129072
+ପଲାଓ	Palau	country	Q695
+ପାଉନି	Pauni	archaeological site	Q2719440
+ପାକିସ୍ତାନ	Pakistan	country	Q843
+ପାଟଣ	Patan	city	Q579702
+ପାଣାଜୀ	Panaji	city	Q214681
+ପାଥାନାମଥିତ୍ତା	Pathanamthitta	town	Q1025266
+ପାଦ୍ମନାଭପୁରମ	Padmanabhapuram	town	Q1815867
+ପାଦ୍ରା	Padra	town	Q2247454
+ପାଦ୍ରାଉନା	Padrauna	city	Q2341393
+ପାନରୁତି	Panruti	town	Q2229494
+ପାନାମା	Panama	country	Q804
+ପାନ୍ନା	Panna	city	Q593695
+ପାରଲି	Parli	city	Q3785959
+ପାରସୀ	Persian	language	Q9168
+ପାରାଗୁଏ	Paraguay	country	Q733
+ପାରାଙ୍ଗିପେତ୍ତାଇ	Parangipettai	town	Q2542786
+ପାରେଙ୍ଗା	Parenga	ethnic group	Q138637146
+ପାର୍ଦି	Pardi	town	Q1925363
+ପାଲନପୁର	Palanpur	city	Q949907
+ପାଲିତାଣା	Palitana	town	Q6730925
+ପାଲେଷ୍ଟାଇନ	Palestine	country	Q219060
+ପିତୃପକ୍ଷ	Pitru Paksha	festival or holiday	Q2394624
+ପିଲିଭିତ	Pilibhit	city	Q1197824
+ପୁଡୁକ୍କୋଟ୍ଟାଇ	Pudukkottai	town	Q921719
+ପୁଡୁଚେରୀ	Puducherry	union territory of India	Q66743
+ପୁଣେ	Pune	city	Q1538
+ପୁତ୍ତୁର	Puttur	city	Q1089504
+ପୁନାଲୁର	Punalur	city	Q742720
+ପୁରୀ	Puri	city	Q207799
+ପୁର୍ନିଆ	Purnia	city	Q1771762
+ପୁଲଗାଓଁ	Pulgaon	town	Q2719107
+ପୁଷପୁନି	Puspuni	festival or holiday	Q7261906
+ପୁଷ୍କର	Pushkar	city	Q749170
+ପେଣ୍ଟିଆ	Pentia people	ethnic group	Q106862294
+ପେରାବୁରାନି	Peravurani	town	Q2716752
+ପେରାମ୍ବାଲୁର	Perambalur	town	Q1025402
+ପେରୁ	Peru	country	Q419
+ପେଶାବର	Peshawar	city	Q1113311
+ପୋଖରାନ	Pokhran	town	Q1779576
+ପୋଙ୍ଗଲ	Pongal	festival	Q29271
+ପୋଝିକାରା	Pozhikara	town	Q16898801
+ପୋନ୍ନାନି	Ponnani	town	Q2568315
+ପୋରବନ୍ଦର	Porbandar	city	Q6419912
+ପୋଲାଣ୍ଡ	Poland	country	Q36
+ପ୍ରଥମାଷ୍ଟମୀ	Prathamastami	festival	Q5475545
+ପ୍ରମେୟ	Prameya	newspaper	Q19895389
+ପ୍ରାଗ	Prague	city	Q1085
+ପ୍ରାନ୍ତିଜ	Prantij	town	Q2724388
+ପ୍ରୟାଗରାଜ	Prayagraj	city	Q162442
+ପ୍ୟାରିସ	Paris	city	Q90
+ଫଗୁନ	Fagun	newspaper	Q59156174
+ଫଗୱାରା	Phagwara	city	Q338696
+ଫରିଦକୋଟ	Faridkot	city	Q1780350
+ଫରୀଦାବାଦ	Faridabad	city	Q200663
+ଫିଜି	Fiji	country	Q712
+ଫିନଲ୍ୟାଣ୍ଡ	Finland	country	Q33
+ଫିଲିପାଇନସ	Philippines	country	Q928
+ଫୈଜାବାଦ	Faizabad	city	Q842411
+ଫୈସଲାବାଦ	Faisalabad	city	Q173985
+ଫ୍ରାନ୍ସ	France	country	Q142
+ବଙ୍ଗଳାଦେଶ	Bangladesh	country	Q902
+ବଡ଼ଓଷା	Bada Osha	festival	Q115069039
+ବଡ଼ନଗର	Vadnagar	town	Q2570726
+ବରପାଲି	Barapali	town	Q712508
+ବରପେଇଟା	Barpetia	language	Q30642960
+ବର୍ନ	Bern	city	Q70
+ବର୍ଲିନ	Berlin	city	Q64
+ବଲ୍ଲାରୀ	Ballari	city	Q429063
+ବଳରାମପୁର	Balrampur	city	Q612328
+ବାଇଗା	Baiga people	ethnic group	Q106861958
+ବାକୁ	Baku	city	Q9248
+ବାଗଦାଦ	Baghdad	city	Q1530
+ବାଗମତୀ	Bagmati River	river	Q4461769
+ବାଣଗଡ଼	Bangarh	archaeological site	Q5267600
+ବାତାଲା	Batala	city	Q709254
+ବାରଣାସୀ	Varanasi	city	Q79980
+ବାରବାଡସ	Barbados	country	Q244
+ବାରମୁଳା	Baramulla	city	Q712644
+ବାରିପଦା	Baripada	city	Q712356
+ବାର୍ସିଲୋନା	Barcelona	city	Q1492
+ବାଲିଯାତ୍ରା	Bali Jatra	festival	Q4850838
+ବାଲେଶ୍ଵର	Balasore	town	Q641098
+ବାହାମା	The Bahamas	country	Q778
+ବାହାରିନ	Bahrain	country	Q398
+ବାହ୍ରାଇଚ୍	Bahraich	city	Q638621
+ବିକାନେର	Bikaner	city	Q200718
+ବିକ୍ରମଖୋଲ	Vikramkhol	archaeological site	Q19899151
+ବିକ୍ରମଶିଳା	Vikramaśīla University	university	Q1634624
+ବିଜାପୁର	Vijayapura	city	Q3636023
+ବିଜୟନଗରମ	Vizianagaram	city	Q3619248
+ବିଜୟୱାଡ଼ା	Vijayawada	city	Q200017
+ବିଞ୍ଝାଲ	Binjhal people	ethnic group	Q85747312
+ବିଞ୍ଝିଆ	Binjhia	ethnic group	Q97170150
+ବିନ୍ଦୁସାଗର	Bindusagar Lake	lake	Q4914068
+ବିରୁଟ	Beirut	city	Q3820
+ବିଲାସପୁର	Bilaspur	city	Q860452
+ବିଶାଖାପଟନମ	Visakhapatnam	city	Q200016
+ବୀଡ଼	Beed	city	Q814033
+ବୁଜୁମବୁରା	Bujumbura	city	Q3854
+ବୁଦାପେଷ୍ଟ	Budapest	city	Q1781
+ବୁନ୍ଦି	Bundi	city	Q862612
+ବୁରୁଣ୍ଡି	Burundi	country	Q967
+ବୁଲଗାରିଆ	Bulgaria	country	Q219
+ବୃନେଇ	Brunei	country	Q921
+ବେଗୁସରାଇ	Begusarai	city	Q598985
+ବେଙ୍ଗାଳୁରୁ	Bengaluru	city	Q1355
+ବେଜିଂ	Beijing	city	Q956
+ବେନିନ	Benin	country	Q962
+ବେଲଗାଁ	Belgaum	city	Q270176
+ବେଲଜିଅମ	Belgium	country	Q31
+ବେଲାଋଷ	Belarus	country	Q184
+ବେଲିଜ	Belize	country	Q242
+ବୈଶାଳୀ	Vaishali	archaeological site	Q1509463
+ବୋଗୋଟା	Bogotá	city	Q2841
+ବୋନାଜ	Bonaz	ethnic group	Q96631523
+ବୋରୋବୁଦୁର	Borobudur Temple	archaeological site	Q42798
+ବୋଲିଭିଆ	Bolivia	country	Q750
+ବୋସଚୱାନା	Botswana	country	Q963
+ବୋସରା	Bosra	city	Q272680
+ବୌଦ୍ଧ	Boudh	town	Q303761
+ବ୍ରାଜାଭିଲ	Brazzaville	city	Q3844
+ବ୍ରାଜିଲ	Brazil	country	Q155
+ବ୍ରାସିଲିଆ	Brasília	city	Q2844
+ବ୍ଲୁଫିଲ୍ଡସ୍	Bluefields	city	Q115471966
+ବ୍ୟାଙ୍କକ	Bangkok	city	Q1861
+ଭଟିଣ୍ଡା	Bathinda	city	Q709319
+ଭତରା	Bhottada people	ethnic group	Q97355609
+ଭଦୋଦରା	Vadodara	city	Q11909
+ଭବାନୀପାଟଣା	Bhawanipatna	city	Q759348
+ଭରୁଚ	Bharuch	city	Q760153
+ଭାଗଲପୁର	Bhagalpur	city	Q760714
+ଭାଙ୍କୋଭର	Vancouver	city	Q24639
+ଭାତୁରି	Bathudi people	ethnic group	Q85745731
+ଭାନୁଆଟୁ	Vanuatu	country	Q686
+ଭାରତ	India	country	Q668
+ଭିଏତନାମ	Vietnam	country	Q881
+ଭିଏନା	Vienna	city	Q1741
+ଭିରାଜପେଟ	Virajpet	town	Q2571884
+ଭିଲାଇ	Bhilai	city	Q242144
+ଭିୱାନି	Bhiwani	city	Q796669
+ଭୀମା	Bhimma people	ethnic group	Q106867342
+ଭୁଟାନ	Bhutan	country	Q917
+ଭୁବନେଶ୍ୱର	Bhubaneswar	city	Q171771
+ଭୂଞ୍ଜିଆ	Bhunjia people	ethnic group	Q4902161
+ଭୂମିଆ	Bhumia people	ethnic group	Q106862264
+ଭୂୟାଁ	Bhuyan	ethnic group	Q85746897
+ଭେନେଜୁଏଲା	Venezuela	country	Q717
+ଭୋପାଳ	Bhopal	city	Q80989
+ମକାଉ	Macau	city	Q14773
+ମଙ୍ଗୋଲିଆ	Mongolia	country	Q711
+ମଛଲିପଟନମ	Machilipatnam	city	Q845662
+ମଞ୍ଜଲେଗାଓଁ	Majalgaon	town	Q2546703
+ମଦୁରାଇ	Madurai	city	Q228405
+ମରିସସ	Mauritius	country	Q1027
+ମଲାୱୀ	Malawi	country	Q1020
+ମଲ୍ଲିକାର୍ଜୁନ	Mallikarjuna Temple	temple	Q2767976
+ମସ୍କଟ	Muscat	city	Q3826
+ମସ୍କୋ	Moscow	city	Q649
+ମହବୁବନଗର	Mahabubnagar	city	Q2768192
+ମହାନଦୀ	Mahanadi	river	Q271044
+ମହାବଳିପୁରମ	Mahabalipuram	town	Q208000
+ମହୁଁ	Dr. Ambedkar Nagar	city	Q2283203
+ମହୁଆ	Mahuva	town	Q1924998
+ମହେମଦାବାଦ୍	Mahemdavad	town	Q2233469
+ମହେସାନା	Mehsana	city	Q1922283
+ମାଇକ୍ରୋନେସିଆ	Federated States of Micronesia	country	Q702
+ମାଙ୍କିଡ଼ି	Mankidi people	ethnic group	Q106862287
+ମାଙ୍କିଡ଼ିଆ	Mankidia people	ethnic group	Q85783655
+ମାଙ୍ଗ୍ରୋଲ୍	Mangrol	town	Q2577440
+ମାଟିଆ	Matya people	ethnic group	Q106862288
+ମାଣିକପାଟଣା	Manikpatna	archaeological site	Q6749630
+ମାଣ୍ଡବୀ	Mandvi	town	Q2570689
+ମାତାଗାଲପା	Matagalpa	city	Q3851689
+ମାତ୍ତାନ୍ନୁର୍	Mattannur	town	Q2475713
+ମାନସା	Mansa	city	Q2573916
+ମାନାବାଦାର୍	Manavadar	town	Q1330938
+ମାନାମା	Manama	city	Q3882
+ମାନିଲା	Manila	city	Q1461
+ମାନିହାରି	Manihari	town	Q2453339
+ମାନ୍ଦ୍ସାଉର୍	Mandsaur	city	Q1922275
+ମାବୁର୍	Mavoor	town	Q2475602
+ମାର୍ଭେଲ	Marvel Comics	publisher	Q173496
+ମାଲଟା	Malta	country	Q233
+ମାଲଡୋଭା	Moldova	country	Q217
+ମାଲାପ୍ପୁରମ୍	Malappuram	city	Q956893
+ମାଲି	Mali	country	Q912
+ମାଲେ	Malé	city	Q9347
+ମାଲେର୍କୋଟ୍ଲା	Malerkotla	city	Q1470987
+ମାଲେସିଆ	Malaysia	country	Q833
+ମାଲୋଉତ୍	Malout	city	Q2349902
+ମାଳଦ୍ଵୀପ	Maldives	country	Q826
+ମାଶୋବ୍ରା	Mashobra	town	Q6783187
+ମାସିଡୋନିଆ	North Macedonia	country	Q221
+ମାହାଲି	Mahali people	ethnic group	Q6732936
+ମାହିଦ୍ପୁର	Mahidpur	city	Q2311223
+ମିଆଁମାର	Myanmar	country	Q836
+ମିର୍ଦ୍ଧା	Mirdha (Kapu)	ethnic group	Q6873074
+ମୀରଟ	Meerut	city	Q200237
+ମୁଜଫରନଗର	Muzaffarnagar	city	Q2768828
+ମୁଣ୍ଡାରୀ	Mundari people	ethnic group	Q106862289
+ମୁଦାବିଦ୍ରି	Moodubidire	town	Q1949058
+ମୁନ୍ନାର	Munnar	town	Q1025124
+ମୁମ୍ବାଇ	Mumbai	city	Q1156
+ମୁଲାନ୍ନା	Mullana	city	Q24952263
+ମେକ୍ସିକୋ	Mexico	country	Q96
+ମେଙ୍ଗଲୁର	Mangaluru	city	Q127041
+ମେଡାଗାସ୍କର	Madagascar	country	Q1019
+ମୈସୁର	Mysore	city	Q10086
+ମୋଗାଡ଼ିସୁ	Mogadishu	city	Q2449
+ମୋଜାମ୍ବିକ	Mozambique	country	Q1029
+ମୋଡାସା	Modasa	town	Q2320097
+ମୋଣ୍ଟେନେଗ୍ରୋ	Montenegro	country	Q236
+ମୋତିହାରି	Motihari	city	Q1774606
+ମୋଦିନଗର	Modinagar	town	Q2451005
+ମୋନାକୋ	Monaco	country	Q235
+ମୋରିତାନିଆ	Mauritania	country	Q1025
+ମୋରୋକୋ	Morocco	country	Q1028
+ମୋର୍ମୁଗାଓ	Mormugao	city	Q1814480
+ମୋହାଲି	Mohali	city	Q1949069
+ଯମଦ୍ଵିତୀୟା	Bhai Dooj	festival	Q31023
+ଯମୁନା	Yamuna	river	Q132726
+ଯୁକ୍ତରାଜ୍ୟ	United Kingdom	country	Q145
+ଯୋଧପୁର	Jodhpur	city	Q200019
+ରଙ୍ଗପଡ଼	Rongpa people	ethnic group	Q7365671
+ରଜ	Raja	festival	Q20865624
+ରତଲାମ	Ratlam	city	Q652376
+ରତ୍ନଗିରି	Ratnagiri	city	Q1922257
+ରଥ	Rath	town	Q3930467
+ରଥଯାତ୍ରା	Ratha Yatra	festival	Q1423773
+ରବୋଟ	Rabat	city	Q3551
+ରଵାଣ୍ଡା	Rwanda	country	Q1037
+ରାଇଗଞ୍ଜ	Raiganj	city	Q2304045
+ରାଉରକେଲା	Rourkela	city	Q1012706
+ରାଜକୋଟ	Rajkot	city	Q11854
+ରାଜଗଡ଼	Rajgarh	city	Q2468221
+ରାଜଗିର	Rajgir	town	Q863683
+ରାଜପିପ୍ଲା	Rajpipla	town	Q1816866
+ରାଜମହେନ୍ଦ୍ରୀ	Rajahmundry	city	Q1639492
+ରାଜାପାଲାୟମ	Rajapalayam	town	Q2237707
+ରାଜୁଆର	Rajuar people	ethnic group	Q106862295
+ରାଞ୍ଚି	Ranchi	city	Q174461
+ରାଣାଭାବ	Ranavav	town	Q2570700
+ରାଧନପୁର	Radhanpur	town	Q2068178
+ରାପାର	Rapar	town	Q2724400
+ରାମଟେକ	Ramtek, Maharashtra	town	Q2545077
+ରାମନଗର	Ramnagar	town	Q2669058
+ରାମପୁର	Rampur	city	Q1487593
+ରାମେଶ୍ଵର	Rameswaram	town	Q1435144
+ରାଯୌରି	Rajauri	town	Q1949395
+ରାୟଗଢ	Raigarh	city	Q1922254
+ରାୱତସାର	Rawatsar	city	Q667224
+ରାୱଲପିଣ୍ଡୀ	Rawalpindi	city	Q93230
+ରାୱାତଭାତା	Rawatbhata	city	Q2554975
+ରୁଦ୍ରପୁର	Rudrapur	city	Q2333417
+ରୂପନଗର	Rupnagar	city	Q2341875
+ରେକ୍ଜାଭିକ	Reykjavík	city	Q1764
+ରେୱା	Rewa	city	Q1000495
+ରେୱାରି	Rewari	city	Q1949364
+ରୋମ	Rome	city	Q220
+ରୋମାନିଆ	Romania	country	Q218
+ରୋହତକ	Rohtak	city	Q1453180
+ଲକ୍ସମବର୍ଗ	Luxembourg	country	Q32
+ଲଖନଉ	Lucknow	city	Q47916
+ଲଣ୍ଡନ	London	city	Q84
+ଲଦାଖ	Ladakh	union territory of India	Q200667
+ଲଳିତଗିରି	Lalitgiri	archaeological site	Q3445538
+ଲାଇବେରିଆ	Liberia	country	Q1014
+ଲାଓସ	Laos	country	Q819
+ଲାକ୍ଷାଦ୍ଵୀପ	Lakshadweep	union territory of India	Q26927
+ଲାଗୋସ	Lagos	city	Q8673
+ଲାଟଭିଆ	Latvia	country	Q211
+ଲାଥି	Lathi	town	Q2240989
+ଲାପାଜ	La Paz	city	Q1491
+ଲାଲିପୁର	Lalitpur	city	Q1025286
+ଲାସା	Lhasa	city	Q5869
+ଲାହୋର	Lahore	city	Q11739
+ଲିଓନ	Lyon	city	Q456
+ଲିକଟେନଷ୍ଟାଇନ	Liechtenstein	country	Q347
+ଲିଥୁଆନିଆ	Lithuania	country	Q37
+ଲିବିଆ	Libya	country	Q1016
+ଲିମା	Lima	city	Q2868
+ଲିମ୍ବିଡ଼ି	Limbdi	town	Q715228
+ଲିଲୋଙ୍ଗ୍	Lilong	town	Q2234602
+ଲୁଙ୍ଗ୍ଲେଇ	Lunglei	town	Q2182763
+ଲୁଣାୱାଡ଼ା	Lunavada	town	Q2240915
+ଲୁଧିଆନା	Ludhiana	city	Q200123
+ଲୁସାକ	Lusaka	city	Q3881
+ଲେଓନ୍	León	city	Q130253115
+ଲେବନାନ	Lebanon	country	Q822
+ଲେସୋଥୋ	Lesotho	country	Q1013
+ଲୋଥଲ	Lothal	archaeological site	Q9443
+ଲୋଧା	Lodha people	ethnic group	Q6666357
+ଶବର	Sabar people	ethnic group	Q7395905
+ଶାନ୍ତିପୁର	Santipur	city	Q2035284
+ଶାମଳି	Shamli	city	Q2450994
+ଶାହଡ଼ୋଲ	Shahdol	city	Q2484025
+ଶାହାଦା	Shahada	town	Q1383573
+ଶାହାବାଦ	Shahabad	city	Q1748735
+ଶିକୋହାବାଦ	Shikohabad	city	Q2717915
+ଶିଗଗାଓଁ	Shiggaon	town	Q1122693
+ଶିବକାଶୀ	Sivakasi	town	Q2061870
+ଶିବଗଙ୍ଗ	Sivaganga	city	Q1025396
+ଶିବପୁରି	Shivpuri	city	Q2036966
+ଶିବସାଗର	Sivasagar	city	Q1284453
+ଶିବସେନା	Shiv Sena	political party	Q59177
+ଶିମଲା	Shimla	city	Q83786
+ଶିଲଂ	Shillong	city	Q207752
+ଶିଶୁପାଳଗଡ଼	Sisupalgarh	archaeological site	Q3485360
+ଶୁଜଳପୁର	Shujalpur	city	Q2720813
+ଶୁଣ୍ଟି	Sounti people	ethnic group	Q106862297
+ଶେଇଖଗାଲ	Sheikhgal	language	Q47482662
+ଶୋଲାବନ୍ଦନ	Sholavandan	town	Q2543146
+ଶୋଲିଙ୍ଗୁର	Sholinghur	town	Q2229686
+ଶ୍ରବଣବେଲଗୋଳା	Shravanabelagola	town	Q1026193
+ଶ୍ରାବସ୍ତୀ	Shravasti	archaeological site	Q2594448
+ଶ୍ରୀକାକୁଲମ	Srikakulam	city	Q671757
+ଶ୍ରୀନଗର	Srinagar	city	Q2548709
+ଶ୍ରୀନିବାସପୁର	Srinivaspur	town	Q2552087
+ଶ୍ରୀଲଙ୍କା	Sri Lanka	country	Q854
+ସଙ୍ଗରୁର	Sangrur	city	Q2441398
+ସମସ୍ତିପୁର	Samastipur	city	Q1925191
+ସମୋଆ	Samoa	country	Q683
+ସମ୍ବଲପୁର	Sambalpur	city	Q876483
+ସମ୍ଭାଲ	Sambhal	city	Q247248
+ସର୍ବସାଧାରଣ	Sarbasadharana	newspaper	Q25644163
+ସର୍ବିଆ	Serbia	country	Q403
+ସହାରନପୁର	Saharanpur	city	Q242895
+ସାଇଗନ	Ho Chi Minh City	city	Q1854
+ସାଇପ୍ରସ	Cyprus	country	Q229
+ସାଇଲୁ	Selu	town	Q2718737
+ସାଗର	Sagar	city	Q1006355
+ସାଙ୍କରି	Sankagiri	town	Q9847
+ସାଙ୍ଗଲି	Sangli	city	Q429215
+ସାଙ୍ଗୋଲେ	Sangole	city	Q2544948
+ସାଣନ୍ଦ	Sanand	town	Q2228906
+ସାଣ୍ଟିଆଗୋ	Santiago	city	Q2887
+ସାତନା	Satna	city	Q58794
+ସାତାରା	Satara	city	Q581562
+ସାନାୱାଦ	Sanawad	city	Q2465668
+ସାବରକୁଣ୍ଡଲା	Savarkundla	town	Q2734216
+ସାବ୍ରିଆ	Sabria	river	Q21054694
+ସାରାୟେଭୋ	Sarajevo	city	Q11194
+ସାସବାଦ	Saswad	city	Q2544796
+ସାସାରାମ	Sasaram	city	Q1949410
+ସାହାର୍ସା	Saharsa	city	Q1949422
+ସିଓଲ	Seoul	city	Q8684
+ସିକାର	Sikar	city	Q33334
+ସିଙ୍ଗରାଉଲି	Singrauli	city	Q255780
+ସିଙ୍ଗାପୁର	Singapore	country	Q334
+ସିତାପୁର	Sitapur	city	Q922701
+ସିତାମାଢୀ	Sitamarhi	town	Q2360633
+ସିତାରଗଞ୍ଜ	Sitarganj	city	Q2720109
+ସିଦ୍ଦିପେଟ	Siddipet	city	Q260547
+ସିଦ୍ଧପୁର	Siddhpur	town	Q2572203
+ସିନ୍ନାର	Sinnar	city	Q2724534
+ସିରିଆ	Syria	country	Q858
+ସିରୋହି	Sirohi	city	Q940829
+ସିର୍କାଲି	Sirkazhi	town	Q1278427
+ସିଲିଗୁଡ଼ି	Siliguri	city	Q5087
+ସିୱାନ	Siwan	city	Q2234098
+ସୁଆର	Suar	archaeological site	Q2464375
+ସୁଇଜରଲ୍ୟାଣ୍ଡ	Switzerland	country	Q39
+ସୁଜାନପୁର	Sujanpur	city	Q2719362
+ସୁଦାନ	Sudan	country	Q1049
+ସୁନାମ	Sunam	town	Q512825
+ସୁରତ	Surat	city	Q4629
+ସୁରାନ୍ଦାଇ	Surandai	town	Q2715986
+ସୁରିନାମ	Suriname	country	Q730
+ସେକ୍ରେନି	Sekrenyi festival	festival or holiday	Q24952229
+ସେନେଗାଲ	Senegal	country	Q1041
+ସେନ୍ସ	Sense	river	Q676671
+ସେମିଳିଗୁଡ଼ା	Semiliguda	town	Q7449434
+ସେଲମ୍	Salem	city	Q9863
+ସେସେଲଜ	Seychelles	country	Q1042
+ସୋଙ୍ଗଧ	Songadh	town	Q2734240
+ସୋନିପତ	Sonipat	town	Q41561
+ସୋପୋର	Sopore	town	Q2321929
+ସୋମାଲିଆ	Somalia	country	Q1045
+ସୋର	Soro	town	Q3965109
+ସୋଲନ	Solan	city	Q462766
+ସୋଲାପୁର	Solapur	city	Q237847
+ସ୍ପେନ	Spain	country	Q29
+ସ୍ଲୋଭାକିଆ	Slovakia	country	Q214
+ସ୍ଲୋଭେନିଆ	Slovenia	country	Q215
+ସ୍ଵାଜିଲ୍ୟାଣ୍ଡ	Eswatini	country	Q1050
+ସ୍ଵିଡେନ	Sweden	country	Q34
+ହଂକଂ	Hong Kong	city	Q8646
+ହଙ୍ଗେରୀ	Hungary	country	Q28
+ହନଲୁଲୁ	Honolulu	city	Q18094
+ହରଦୋଇ	Hardoi	city	Q1708143
+ହରପ୍ପା	Harappa	archaeological site	Q185562
+ହରିଦ୍ଵାର	Haridwar	city	Q273030
+ହଲଦ୍ୱାନି	Haldwani	city	Q1707839
+ହଲବା	Holva people	ethnic group	Q106862277
+ହସ୍ତିନାପୁର	Hastinapur	city	Q459714
+ହାଜିପୁର	Hajipur	city	Q1949403
+ହାଥରସ	Hathras	city	Q1709695
+ହାନୋଇ	Hanoi	city	Q1858
+ହାବରା	Habra	city	Q1708439
+ହାଭାନା	Havana	city	Q1563
+ହାମ୍ପି	Hampi	archaeological site	Q26732
+ହାରାରେ	Harare	city	Q3921
+ହିଟି	Haiti	country	Q790
+ହିସାର	Hisar	city	Q1772825
+ହେରାପଞ୍ଚମୀ	Hera Panchami	festival or holiday	Q15725430
+ହେଲସିଙ୍କି	Helsinki	city	Q1757
+ହୋଣ୍ଡାରୁସ	Honduras	country	Q783
+ହୋଶିଆରପୁର	Hoshiarpur	city	Q928349
+ୟାଂଗୋନ	Yangon	city	Q37995
+ୟାମୁସସୁତ୍ରୋ	Yamoussoukro	city	Q3768
+ୟୁକ୍ରେନ	Ukraine	country	Q212
+ୟେମନ	Yemen	country	Q805
+ୱାରଙ୍ଗଲ	Hanamkonda district	district of India	Q213077
+ୱାରସ	Warsaw	city	Q270

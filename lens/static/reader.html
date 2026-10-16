@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Odia Lens reader</title>
+<link rel="stylesheet" href="reader.css">
+<body>
+  <header class="bar">
+    <span class="grip" id="grip"><span class="brand">Odia Lens</span><span class="sub">Reader</span></span>
+    <button type="button" id="open" class="primary">Open PDF</button>
+    <input type="file" id="file" accept="application/pdf,.pdf" hidden>
+    <span class="name" id="name"></span>
+    <span class="pager" id="pager" hidden>
+      <button type="button" id="prev" aria-label="Previous page">&lsaquo;</button>
+      <label><span class="visually-hidden">Page</span><input id="pageNo" inputmode="numeric" size="4" aria-label="Page number"></label>
+      <span>of <span id="pageCount"></span></span>
+      <button type="button" id="next" aria-label="Next page">&rsaquo;</button>
+    </span>
+    <span class="zoom" id="zoom" hidden>
+      <button type="button" id="zoomOut" aria-label="Smaller">&minus;</button>
+      <span id="zoomLabel">100%</span>
+      <button type="button" id="zoomIn" aria-label="Larger">+</button>
+    </span>
+  </header>
+  <main>
+    <section id="pages" aria-label="Pages">
+      <div id="empty" class="empty">
+        <h1>Read an Odia book or newspaper PDF</h1>
+        <p id="fromViewer" hidden></p>
+        <p>Open a PDF from this computer, or drop it here. The lens reads each page and explains any word you point at.
+          The file stays on this computer: nothing is sent anywhere.</p>
+        <button type="button" id="open2" class="primary big">Choose a PDF</button>
+        <p class="hint">Scanned books at 300 dots per inch read well; old low-resolution scans less well.</p>
+      </div>
+    </section>
+    <aside id="side" aria-label="Word and page">
+      <div class="side-head"><span id="status" aria-live="polite">No PDF open</span></div>
+      <div id="word" class="word"><p class="muted">Point at a word on the page. Click it to keep it here.</p></div>
+      <div class="tools" id="tools" hidden>
+        <button type="button" id="showText">Text of this page</button>
+        <button type="button" id="copy">Copy text</button>
+        <button type="button" id="translate" class="primary">Translate page</button>
+      </div>
+      <div id="translation"></div>
+      <div id="text" hidden></div>
+    </aside>
+  </main>
+  <script type="module" src="reader.js"></script>
+</body>
+</html>

@@ -13,11 +13,14 @@ came from:
           only accepted when the word has NO exact Praharaj entry — Praharaj
           acts as the native-vocabulary filter, which is what stops କର from
           being glossed as "car".
-  [mt]    Community English↔Odia translation pairs from the MTEnglish2Odia /
-          OdiaNLP project (modern web + community-validated content),
-          inverted to Odia→English and filtered hard: single-Odia-word pairs
-          only, English glosses ranked by corpus frequency (Zipf >= 3.3),
-          at most 4 per word. Approximate by nature; labelled as such.
+  [mt]    REMOVED 2026-10-15 (V2.7, decision D-5): community translation pairs
+          from OdiaNLP `cleaned_pairs.json`, whose text is of unknown origin
+          and often wrong. Their place is taken by the AI-written meanings
+          (core/data/meanings.tsv) and by [wd]. `mt_glosses` stays below only
+          to document what the layer was; it is no longer called.
+  [wd]    Wikidata (CC0) names: countries, districts, cities, parties,
+          universities, festivals, rivers, temples, languages
+          (build/wikidata-names.tsv).
   [cldr]  Unicode CLDR or.xml — the modern standard Odia names of languages,
           scripts, countries and regions. High quality, unambiguous.
 
@@ -27,7 +30,7 @@ each def a set of lines "TAG\\tgloss".
 
 Run from the repo root:
   python3 Odia_Sanskrit_Appv2/build/build_modern_layer.py \\
-      <cleaned_pairs.json> <cldr-or.xml> <praharaj.babylon>
+      <cldr-or.xml> <praharaj.babylon>
 """
 import base64
 import gzip
@@ -304,8 +307,12 @@ def cldr_names(or_xml: Path) -> dict:
         ('.//languages/language', 'language'),
         ('.//scripts/script', 'script'),
         ('.//territories/territory', 'country/region'),
-        ('.//months//month', 'month'),
-        ('.//days//day', 'weekday'),
+        # The Gregorian calendar's full (wide) names only: the abbreviated and
+        # one-letter forms are everyday words (RA "of", NA "not", GURU "teacher"),
+        # and the Indian calendar's months do not match Gregorian numbers
+        # (owner report 2026-10-15; tools/build-data/filter_cldr_short.py).
+        (".//calendar[@type='gregorian']/months/monthContext[@type='format']/monthWidth[@type='wide']/month", 'month'),
+        (".//calendar[@type='gregorian']/days/dayContext[@type='format']/dayWidth[@type='wide']/day", 'weekday'),
     ]:
         for el in root.findall(path):
             od = (el.text or '').strip()
@@ -313,6 +320,9 @@ def cldr_names(or_xml: Path) -> dict:
             if not od or not ODIA_ONLY.match(od.replace(' ', '')):
                 continue
             if el.get('alt'):
+                continue
+            # Two-letter language and script codes are everyday syllables (GA, YI).
+            if kind in ('language', 'script', 'country/region') and len(fold(canonical(od))) <= 2:
                 continue
             out.setdefault(fold(canonical(od)), (code, kind))
     return out
@@ -361,7 +371,18 @@ def praharaj_headwords(babylon: Path) -> set:
     return heads
 
 
-def main(pairs_json: str, or_xml: str, babylon: str) -> None:
+def wikidata_names() -> dict:
+    """build/wikidata-names.tsv: folded Odia key -> 'English (kind)'."""
+    out = {}
+    for line in (Path(__file__).resolve().parent / 'wikidata-names.tsv').read_text(encoding='utf-8').splitlines():
+        if not line or line.startswith('#'):
+            continue
+        odia, english, kind, _qid = line.split('\t')
+        out.setdefault(fold(canonical(odia)), f'{english} ({kind})')
+    return out
+
+
+def main(or_xml: str, babylon: str) -> None:
     words = app_words()
     heads = praharaj_headwords(Path(babylon))
     print(f'app words: {len(words)}, praharaj heads: {len(heads)}')
@@ -369,9 +390,8 @@ def main(pairs_json: str, or_xml: str, babylon: str) -> None:
     loans = detect_loans(words, heads)
     print(f'loanwords detected: {len(loans)}')
 
-    mt = mt_glosses(Path(pairs_json))
-    mt = {k: v for k, v in mt.items() if k in words}
-    print(f'MT-pair glosses (in app vocabulary): {len(mt)}')
+    names = wikidata_names()
+    print(f'Wikidata names: {len(names)}')
 
     odia_names = cldr_names(Path(or_xml))
     en_names = cldr_english(Path(or_xml).with_name('en.xml'))
@@ -390,10 +410,12 @@ def main(pairs_json: str, or_xml: str, babylon: str) -> None:
     entries = {}
     for w, en in loans.items():
         entries.setdefault(w, []).append('loan\t' + en)
-    for w, gl in mt.items():
-        entries.setdefault(w, []).append('mt\t' + '; '.join(gl))
     for w, (en, kind) in cldr.items():
         entries.setdefault(w, []).append('cldr\t' + en + ' (' + kind + ')')
+    for w, name in names.items():
+        lines = entries.setdefault(w, [])
+        if not any(l.startswith('cldr\t') for l in lines):
+            lines.insert(0, 'wd\t' + name)
     print(f'modern entries total: {len(entries)}')
 
     keys = sorted(entries)
@@ -407,4 +429,4 @@ def main(pairs_json: str, or_xml: str, babylon: str) -> None:
 
 
 if __name__ == '__main__':
-    main(sys.argv[1], sys.argv[2], sys.argv[3])
+    main(sys.argv[1], sys.argv[2])

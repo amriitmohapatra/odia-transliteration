@@ -284,6 +284,15 @@ function chipFor(word: string): string | null {
   if (explained) return explained.text;
   const m = modernChip(mo);
   if (m) return m;
+  // A stem or prefix match: the shorter word's owner or AI meaning before its 1930s
+  // Praharaj sense, as the lens card does (lens/src/describe.ts).
+  if (entry && entry.how === 'stem') {
+    const head = ownerGloss(entry.head)?.meaning ?? aiMeaning(entry.head)?.meaning;
+    if (head) return tidyGloss(head, true);
+  }
+  // No chip from a prefix match: judged in context, it was wrong far more often than
+  // right (plan/research/v219-card-quality.md), as on the lens card.
+  if (entry && entry.how === 'prefix') return null;
   const g = entry ? shortGloss(entry) : null;
   return entry && g ? tidyGloss(g, entry.how !== 'exact') : null;
 }
@@ -695,7 +704,7 @@ function entryBlock(word: string, num: number | null, entry: Entry | null, moder
       row.className = 'dict-modern-row';
       const lab = document.createElement('span');
       lab.className = 'dict-modern-tag dict-modern-tag-' + line.tag;
-      lab.textContent = line.tag === 'loan' ? 'English word?' : line.tag === 'cldr' ? 'name' : 'today';
+      lab.textContent = line.tag === 'loan' ? 'English word?' : line.tag === 'cldr' || line.tag === 'wd' ? 'name' : 'today';
       lab.title = MODERN_LABEL[line.tag] || line.tag;
       const val = document.createElement('span');
       val.className = 'dict-modern-gloss';

@@ -1,0 +1,21 @@
+{
+  "extends": "../tsconfig.base.json",
+  "compilerOptions": {
+    // ime-macos/build.mjs bundles js/bridge.ts for JavaScriptCore; vitest runs test/.
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "lib": ["ES2022"],
+    "types": ["node"],
+    "allowJs": true,
+    "checkJs": false,
+    "paths": {
+      "@odia/core": ["../core/src/index.ts"],
+      "@odia/core/types": ["../core/src/types.ts"],
+      "@odia/core/normalize": ["../core/src/normalize.ts"]
+    },
+    "noEmit": true,
+    "declaration": false,
+    "sourceMap": false
+  },
+  "include": ["js/**/*.ts", "test/**/*.ts", "vitest.config.ts"]
+}

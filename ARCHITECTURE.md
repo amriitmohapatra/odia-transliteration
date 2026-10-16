@@ -118,7 +118,8 @@ mode is not filtered.
 | Rules (natural mode) | `core/rules/symbols.toml` | Owner + Claude | Yes, with eval delta |
 | Rules (strict ITRANS) | `core/rules/itrans.toml` | From MIT `oriya.toml` | Rarely |
 | Sanskrit profiles | `Appv2/rules/*.delta.toml` → `sanskrit.toml`, `unified.toml` | `Appv2/scripts/gen-rules.ts` | Only the `.delta` files |
-| Lexicon, unigrams | `core/data/lexicon*.tsv`, `unigrams*.tsv` | `tools/build-data/` (reproducible since PR #1; `j`-keys for ଯ-words since V2.1) | No |
+| Lexicon, unigrams | `core/data/lexicon*.tsv`, `unigrams*.tsv` | `tools/build-data/` (reproducible since PR #1; `j`-keys for ଯ-words since V2.1; IndicXlit spellings `lexicon-xlit*.tsv` merged in since V2.6, `build_xlit_fill.py`) | No |
+| MODERN meanings layer | `Appv2/src/dictionary/modern.bin` (= `Odia_Sanskrit_Appv2/build/modern_payload.b64`): `[loan]` auto-detected English loans, `[cldr]` standard names, `[wd]` Wikidata names. The machine-translation `[mt]` rows were removed in V2.7 (D-5) | `Odia_Sanskrit_Appv2/build/build_modern_layer.py`; `tools/build-data/replace_mt_layer.py` | No |
 | Word pairs | `core/data/bigrams.tsv` (full, evals), `bigrams-web.tsv` (≤1.5 MB, browser) | `tools/build-data/build_bigrams.py` | No |
 | Typed spellings (Desh) | `core/data/typed.tsv` (1.56 MB, 412 KB gzipped; adult web app, not kids) | `tools/build-data/build_typed.py` (raw file outside the repo) | No |
 | Spelling converter (Desh) | `core/data/converter.bin` (gzip, 843 KB; adult and kids, not sloka) | `tools/build-data/build_converter.py` (raw file outside the repo) | No |
@@ -127,6 +128,7 @@ mode is not filtered.
 | AI-written meanings | `core/data/meanings.tsv` (word / pair / "-suffix word" keys; status ai, owner, wrong) | Claude, in sessions; checked by the owner (C-13) | Yes |
 | Verb endings | `core/data/verb-endings.tsv` (ending after a consonant root / after a vowel root / meaning); `explainVerb()` in `lookup.ts` takes the verb from the verbal noun's "to …" meaning: ପାଇଛନ୍ତି = "get + have …-ed (they, or respectful)" | Claude, in sessions; checked by the owner (C-13) | Yes |
 | Numbers in Odia digits | no data: `readNumber()` in `Appv2/src/dictionary/lookup.ts` reads digits, counting words (-ti, -taa, -jana), ordinals and the ending rows of `meanings.tsv` ("2019 + in, at, on") | code | Yes |
+| Words no dictionary has, made of two known words | no data: `wordParts()` in `lens/src/engine.ts` with `chooseSplits()` in `lens/src/describe.ts` cuts the word between letter clusters into two parts that both have an owner, AI or modern meaning ("nation + minister"); the card says "guessed from its parts". The old dictionary alone does not count (its short headwords are often obscure); a part that is itself a known word + a case ending (taa + ku, "him") is never the second part (owner's Sambad test, 2026-10-16) | code | Lens only |
 | Owner preferences | `core/data/preferences.tsv` | Owner | Yes |
 | Word labels | `core/data/labels.tsv` | Owner (empty until curated) | Yes |
 | Owner meanings | `core/data/glosses.tsv` (read by the dictionary module, not the engine) | Owner; `seed` rows suggested by agents | Yes |
@@ -306,17 +308,45 @@ and `dictionary/overlay.css` together.
   location. **V3 and V4 must relax that policy** (`microphone=(self)` for speak-to-write,
   `camera=(self)` for the lens) in the same commit that adds the feature.
 
-## 7. The assist layer (V3, planned)
+## 7. The assist layer (V3)
 
-| Route | Does | Provider (D-3) |
-|---|---|---|
-| `/api/speak` | Odia text → audio | Sarvam Bulbul (browser voice first where present) |
-| `/api/listen` | audio → Odia text | Sarvam Saarika |
-| `/api/translate` | sentence → English | Google or Claude Haiku (100-sentence test decides) |
+| Route | Does | Provider (D-3) | Built |
+|---|---|---|---|
+| `/api/speak` | Odia text → MP3 speech | Sarvam Bulbul (`bulbul:v3`, `od-IN`); the device's own Odia voice first | 2026-10-15: web app "Listen" |
+| `/api/listen` | recording (WebM/Ogg/MP4, ≤ 30 s, ≤ 1 MB) → Odia text | Sarvam Saaras (`saaras:v4`, `od-IN`) | 2026-10-15: web app "Speak" |
+| `/api/translate` | Odia text → English | Claude Haiku or Google (100-sentence test decides) | 2026-10-15: lens "Translate" |
 
-Rules: keys only in Vercel environment variables; `.env*` never committed; rate limit per
-visitor; provider spending limit; hard cap US$20/month (D-4); logs never hold user text;
-every result passes `canonical()`; cache by canonical text.
+Each route is a Vercel function in `api/` with Web-standard `POST`/`OPTIONS` handlers;
+the logic is in `api/_lib/` (`speech.ts`, `translate.ts`) and is unit-tested with a fake
+provider (`tools/assist/`). Only the app's own site and the lens may call (origin check).
+
+In the web app (`Appv2/src/speech.ts`): **Listen** on the "Reads as" line reads the
+selected text, else the whole box (500 characters at most). It uses the device's Odia
+voice (`speechSynthesis`, language `or`/`od`) when there is one, with no network; else
+`/api/speak`, only when Settings > "Read aloud online" is on. **Speak** (shown only when
+Settings > "Voice typing" is on) records with `MediaRecorder` and types the answer of
+`/api/listen` at the caret. Both switches are off by default; the line under the page
+says what goes online while one is on. `vercel.json` allows the microphone for the site
+itself only. Browser check: `Appv2/eval/browser/speech-check.mjs` (stand-in routes, fake
+microphone).
+
+Rules: keys only in Vercel environment variables (`SARVAM_API_KEY`, `ANTHROPIC_API_KEY`);
+`.env*` never committed; provider spending limit; hard cap US$20/month (D-4); logs never
+hold user text; every result passes `canonical()`; read-aloud and translation cached by
+canonical text (in the function's memory).
+
+## 7e. macOS input method (`ime-macos/`, V5)
+
+Type Odia inline in any Mac app. An InputMethodKit app (Swift, no Xcode project) hosts a
+`JSContext` running `engine.js`: `ime-macos/js/bridge.ts` and the core engine bundled by
+`ime-macos/build.mjs` into one classic script. The engine is built like the website's
+"Everyday" mode (`unified` rules, core + Sanskrit web lexicons, unigrams, web bigrams,
+typed spellings, next-word table, converter, owner files), so the same word comes first.
+Swift reads `Resources/data/` and passes the files as strings (the gzip converter as
+base64); key handling is `js/composer.ts`, a pure state machine under unit tests, and
+Swift only turns key events into composer keys and applies the answer (commit text,
+underlined word, `IMKCandidates` list). The user's choices are saved in `UserDefaults`
+as JSON. No network. Status and first build: `PLAN.md` V5, follow-up A-12.
 
 ## 7b. Odia Lens, the browser extension (`lens/`, V4.1)
 
@@ -328,15 +358,125 @@ Manifest V3. Details and install steps: `lens/README.md`.
 | `lens/src/background.ts` | Toolbar click or Alt+Shift+O → injects `content.js` into that tab and toggles it (badge ON). Answers lookups from the packed dictionary. |
 | `lens/src/content.ts` | Word under the pointer (`caretRangeFromPoint`, `word.ts`), card in a shadow root (constructed style sheet, so page CSP cannot block it), Esc, scroll hides. |
 | `lens/src/describe.ts` | Word + entry → card: `romanize()` (the app's read-back), owner meaning, modern layer, Praharaj gloss, loan note, origin. |
-| `Appv2/src/dictionary/lookup.ts` | The lookup the app's Meanings panel uses too (fold, exact / stem / prefix, short gloss). |
-| `lens/build.mjs` | esbuild bundles (classic scripts); splits `praharaj.bin` into a keys file and 78 gzip chunks of 500 definitions, so a restarted worker answers in ~0.3 s instead of unpacking 24 MB. |
+| `Appv2/src/dictionary/lookup.ts` | The lookup the app's Meanings panel uses too (fold, exact / stem / prefix, short gloss). The AI layer (`meaningFinder`) also has a loose key: no joiners U+200C/U+200D, and a consonant doubled after reph read as single; as a last try, no nukta and no final virama (not for compound parts: `word(part, true)`) (V2.19). |
+| `lens/build.mjs` | esbuild bundles (classic scripts); splits `praharaj.bin` into a keys file and 78 gzip chunks of 500 definitions, so a restarted worker answers in ~0.3 s instead of unpacking 24 MB. Copies the OCR engine and model (`ocr/`) and the word list (`dict/words.bin`). |
 
-**Privacy:** permissions `activeTab` and `scripting` only, no host permissions (a unit test
-checks the shipped manifest); nothing leaves the computer (the browser check fails on any
-outside request). **No Desh data** in the extension. Package: 6.3 MB zip.
+**Picture mode (V4.2, 2026-10-15):** Odia in images, canvases and paused videos (ePapers,
+YouTube frames). When the pointer rests on a picture, `content.ts` hides the card and asks
+the background; the background takes a screenshot (`captureVisibleTab`, allowed by
+`activeTab`) and crops 640 × 140 CSS px around the pointer; the OCR page
+(`lens/src/offscreen.ts`, an offscreen document) finds the text line from the pixels
+(`picture.ts findLine`, a few ms), reads that line alone with Tesseract `ori` (tesseract.js,
+WebAssembly, single-line mode, letters enlarged to ~64 px; the image goes in as raw grey
+PGM, because Chrome delays PNG encoding in hidden pages by ~1 s), and falls back to reading
+the region when the line is unclear. The background splits run-together words and digits
+(`correct.ts separate`), corrects each word with the IndicCorp list (`correct.ts`: known
+word, rare misprint of a 300× more common word, nearest word within 1–2 edits), and builds
+the same card, which says "Read from the picture" (and what OCR saw when it was
+corrected, or "unclear print"). The line's words stay cached until scroll or a playing
+video changes the screen. About 0.4–0.7 s per new line; 1.3 s for the first (engine start).
 
-**Limits of v1:** top frame, real text only (no OCR: lens v2), one word at a time, no
-sentence translation (`/api/translate`, V3), Chrome and Edge only.
+**Frame (lens 0.3.0, Alt+Shift+F):** a see-through box the reader moves (bar) and resizes
+(any edge or corner). `frame.ts` owns its DOM, layout, pointer handling and the Puri/Konark
+theme (inline CSS and SVG only); `content.ts` gives it the shadow root and the messaging. On
+release (and when the page scrolls under it) the panel dims (it stays in place), the background
+captures the inside of the frame, and the OCR page reads it as a block (`ocr.ts readBlock`:
+lines found with Tesseract's block mode, then each line read again alone, up to 12). Each
+line comes back as read, plus its words, each corrected and looked up with the word before
+it (constructions such as "-ku nei"). `frameview.ts` draws the list (shared with the Mac
+lens). The lookup and OCR code is platform-neutral: `engine.ts` (dictionary loading,
+lookup, OCR word handling; a file loader is set by the host) and `ocr.ts` (Tesseract; the
+host sets the file paths).
+
+**Privacy:** permissions `activeTab`, `scripting` and `offscreen`, no host permissions (a
+unit test checks the shipped manifest); CSP allows WebAssembly only from the extension;
+nothing leaves the computer (the browser check fails on any outside request), except
+translation (V4.5) when the reader turns it on. **No Desh data** in the extension.
+
+**PDF reader (lens 0.5.0, V4.6):** `reader.html` + `reader.ts`, an extension page (Chrome's
+PDF viewer refuses content scripts). pdf.js (legacy build: the modern one needs
+`Map.getOrInsertComputed`) draws pages lazily (IntersectionObserver; far pages are
+released). Each page is read once, from its own pixels at about 300 dpi (at most 3,000 px
+wide): `ocr.ts readPage` (Tesseract page layout, psm 3; lines under 70 confidence read again
+alone; lines under 40 dropped as another script or noise), then `engine.ts explainLines`
+(shared with the frame and the Mac lens). Words keep their boxes, so pointing is instant
+after the read; the page in view is read first. The PDF comes from the file picker or drag
+and drop: no permission. The action icon on a `.pdf` tab opens the reader with the address
+and download instructions instead of injecting. Command `open-reader` (Alt+Shift+R).
+
+**Typed text in PDFs (lens 0.6.0, V4.7):** before OCR, `reader.ts typedLines` takes the
+page's text layer (`getTextContent({ disableNormalization: true })`, runs mapped into the
+OCR pixels). `textlayer.ts` (pure, unit-tested): `textLines` builds lines and words with
+boxes (stored spaces are the breaks; widths split by letter weight); `spokenWords` joins a
+word split where a pre-base vowel sign is drawn (when the joined word is more frequent than
+the second part alone) and puts e/ai after their consonant cluster when that form is more
+frequent (`fixOrder`, counts from the IndicCorp list); `trustText` uses the page only with
+at least 20 Odia words of which 85% are exact list words (a broken character counts as
+unknown). Measured: Chromium's own print-to-PDF stores broken Odia text (conjunct letters
+and nukta letters lost), so such pages go to OCR. Exact pages skip correction
+(`explainLines(..., { exact: true })`). Fixture: `lens/test/fixtures/typed-odia.pdf`.
+
+**Translation (lens 0.4.0, V4.5):** the only online feature, through the assist layer.
+The settings page (`options.ts`) is the switch: turning it on requests the one optional
+host permission, `https://odia-transliteration-web.vercel.app/*` (a unit test pins it);
+turning it off removes it; there is no other stored setting. The frame's **Translate**
+sends the lines as read (`TRANSLATE` message → background → `POST /api/translate`); with
+the permission missing the background sends nothing and the panel explains how to turn it
+on. `api/translate.ts` (Vercel function, the assist layer's first route) takes
+`{"text"}` (Odia, at most 2,000 characters, made canonical), allows only extension
+origins and the site, and calls Claude Haiku (`TRANSLATE_PROVIDER=claude`, default,
+`ANTHROPIC_API_KEY`) or Google (`google`, `GOOGLE_TRANSLATE_KEY`); answers are cached
+in memory by canonical text. Keys live only in Vercel's environment. Tests:
+`tools/assist/translate.test.ts` (fake fetch, no network) and the browser check (a local
+stand-in server). Package: about 10 MB zip.
+
+**Videos (lens 0.4.0, V4.4):** `pictureUnder` looks through the whole element stack for a
+`<video>` (YouTube's player puts about a dozen see-through layers over it); the capture is
+of the screen, so a playing video is read as shown at that moment, and the cached line is
+dropped when the video time moves. Captions are page text (normal path). In full screen
+only the full-screen element is drawn, so the lens's host element moves into it on
+`fullscreenchange` (not into a bare `<video>`, which cannot hold it) and back after.
+
+**Limits:** top frame; OCR quality is the stock Tesseract model's (good on clean print and
+most headlines, weak on 5 px ePaper body text: own model V4.3); one word at a time; no
+sentence translation (V4.5); Chrome and Edge only.
+
+## 7c. Odia Lens for Mac (`mac-lens/`, owner testing, 2026-10-15)
+
+A see-through frame over any app (the "v3 native" lens, first spike). Swift, built like
+`ime-macos/` (xcrun swiftc, no Xcode project, ad-hoc signed; macOS 14+). The frame window
+(borderless floating panel, same theme as the browser frame: bar to drag with size, read
+again and close buttons; every edge and corner resizes) reads when it stops moving:
+ScreenCaptureKit captures the pixels under it without the lens's own windows; the
+`tesseract` program (Homebrew) reads them with the packed `ori.traineddata`; a WKWebView
+page built from `lens/src/mac.ts` (served from the app through the `odialens:` scheme)
+corrects, splits and looks up the words with the browser lens's own code and draws the
+list. Not shared beyond the owner: no notarization, Screen Recording permission asked again
+after every rebuild. Details: `mac-lens/README.md`.
+
+**Point mode (V4.8):** with Accessibility permission, a global mouse-moved monitor waits for
+a 350 ms rest, then `PointReader` asks macOS for the element under the pointer, the
+character range at the point (`kAXRangeForPositionParameterizedAttribute`), the text ±60
+characters around it and the character's bounds. The text and the UTF-16 offset go to the
+page in card mode (`index.html#card`, `mac.ts word()`), which finds the word and the one
+before it with `word.ts` (as the browser lens does for page text) and shows the card in a
+small non-activating panel. Exact text: no OCR. Apps without text access, and pictures,
+give no card (the frame reads those).
+
+## 7d. Odia Lens for Windows (`win-lens/`, owner testing, V4.9, 2026-10-15)
+
+The Mac lens's design on Windows, in C# (.NET 8, WPF + Windows Forms tray), built and
+compile-checked on Linux (`EnableWindowsTargeting`, Microsoft's SDK) and never run there.
+`FrameWindow` (transparent topmost window; themed bar, border, grips with a faint fill
+so Windows gives them the mouse; inside fully clear so clicks pass through) → settles →
+`Capture` (`CopyFromScreen`; the lens's windows use `SetWindowDisplayAffinity`
+`WDA_EXCLUDEFROMCAPTURE`) → `Ocr` (`tesseract.exe`, TSV, the packed `ori.traineddata`) →
+`ResultsPanel` (WebView2, the shared page from `mac-lens/build/web` mapped to
+`https://odialens.app/`, a local folder). Point mode: the pointer polled every 0.1 s; after a
+0.35 s rest `PointReader` asks UI Automation (on a worker thread) for the element under
+the point, its `TextPattern`, the line around `RangeFromPoint` and the pointer's offset; the
+card page (`#card`) finds the word as on the Mac. The page talks to either host
+(`webkit.messageHandlers.lens` or `chrome.webview.postMessage`). Details: `win-lens/README.md`.
 
 ## 8. Testing and measurement
 

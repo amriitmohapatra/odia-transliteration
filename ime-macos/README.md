@@ -1,31 +1,38 @@
-# macOS input method — spike S4
+# macOS input method (V5, Stage C)
 
-A minimal Odia input method. This is the thing that lets you type Odia **inline in Word,
-Notes, Safari and anywhere else**, rather than composing in a separate window and pasting.
+Type Odia **inline in Word, Notes, Safari and any other app**: select "Odia Phonetic" in
+the menu bar, type `kemiti achha`, and the words appear as କେମିତି ଅଛ, with a numbered list of
+alternatives under the word.
 
-Right now it is a **spike, not the product**. It contains a five-word hardcoded lookup
-table instead of the real engine. Its only job is to answer one question that no amount of
-reading the docs could settle:
+It runs **the same engine and the same data as the website's "Everyday" mode**, through
+JavaScriptCore (a macOS system framework). No network.
 
-> Will macOS 26 load an input method that is only ad-hoc signed, built with a free Apple ID?
+## How it is built
 
-Apple's general guidance says signing to run locally is enough and that the $99/yr
-Developer Program is only needed to notarize and distribute. But Keyman's own macOS build
-docs claim signing *and notarization* are required even for local test builds in order to
-interact with keyboard input. Those two statements cannot both be right, and the answer
-decides whether a week and a half of Stage C work is viable.
-
-## Status
-
-| | |
+| File | Does |
 |---|---|
-| Compiles with Command Line Tools only, no Xcode project | ✅ verified |
-| Ad-hoc signature valid, satisfies Designated Requirement | ✅ verified |
-| Bundle size | 116 KB |
-| Appears in Input Sources after install | ⬜ needs your logout |
-| Actually receives keystrokes in Notes / Word | ⬜ needs your logout |
+| `js/composer.ts` | All key handling, as a pure state machine (unit-tested): letters build the word and the best Odia word shows underlined; Space or Enter takes the highlighted word; 1–9 take a numbered one; Up/Down/Tab move the highlight; Escape keeps the English letters; Backspace edits; punctuation commits the word first, and `\|` types the danda. The previous word is the context for the next. |
+| `js/bridge.ts` | Builds the engine like `Appv2/src/engine.ts` (profile `unified`) from file contents and defines `OdiaIME` (`load`, `key`, `flush`, `learned`). Plain ECMAScript: no `fetch`, `TextDecoder` or `atob`. |
+| `build.mjs` | Bundles `js/bridge.ts` into `build/stage/engine.js` (one classic script) and stages the data files in `build/stage/data/` (the converter as base64). |
+| `Sources/EngineBridge.swift` | A `JSContext`: runs `engine.js`, reads `Resources/data/` and calls `OdiaIME.load`; saves the user's choices in `UserDefaults`. |
+| `Sources/OdiaInputController.swift` | Turns key events into composer keys and applies the answer: commit text, underlined word, candidate window (`IMKCandidates`). |
+| `Sources/main.swift` | The `IMKServer`, the candidate window, and the engine loaded at start. |
+| `test/` | `composer.test.ts` (keys) and `bundle.test.ts` (the built `engine.js` in a bare JavaScript context: types `kemiti achha`, keeps the nukta decomposed, learns). `npx vitest run --root ime-macos`, part of `npm test`. |
 
-## Run the spike
+The TypeScript is tested in the cloud. **The Swift is not compiled there** (no Swift
+compiler on Linux): the first build is on a Mac (follow-up A-12).
+
+## Build and install (on a Mac)
+
+```bash
+npm install                      # at the repository root, once (esbuild)
+cd ime-macos && ./build.sh --install
+```
+
+`build/` is not committed: it holds copies of the data files, including the Desh-derived
+`typed.tsv`, `nextword.tsv` and converter (see `core/data/PROVENANCE.md`).
+
+## First run (spike S4, still open)
 
 ```bash
 ./build.sh --install

@@ -1,0 +1,55 @@
+# C-13 sample, batch 11: 50 AI-written meanings picked at random from the batch 11 rows of core/data/meanings.tsv
+# (the most common words whose meaning came from the old machine-translation list, now removed: everyday words,
+# case and verb forms, places, parties, English loans). Check the first line most.
+# For each row, fill "verdict": ok, wrong, or fix. For "fix", write the better meaning in "correction".
+odia	meaning	senses	origin	verdict	correction
+ପ୍ରବାହ	flow, current	flow, current, stream (blood flow, river flow)	sanskrit		
+ଟାୱାର	tower	tower (transmission tower, mobile tower)	english		
+ପ୍ରଥା	custom, practice, tradition	custom, practice, tradition, system	sanskrit		
+ଉଦ୍ୟୋଗୀ	entrepreneur; industrious	entrepreneur, businessperson; enterprising, industrious	sanskrit		
+ଇଲେକ୍ଟ୍ରୋନିକ୍ସ	electronics	electronics; electronic goods	english		
+ମାଂସପେଶୀ	muscle	muscle, muscles	sanskrit		
+ଅଭୟାରଣ୍ୟ	(wildlife) sanctuary	wildlife sanctuary (Satkosia, Chilika)	sanskrit		
+ଭଙ୍ଗାରୁଜା	vandalism, ransacking	vandalism, ransacking, smashing up (of property)	native		
+ସଶକ୍ତିକରଣ	empowerment	empowerment (women's empowerment, youth empowerment); strengthening	sanskrit		
+ସୀମାନ୍ତରେ	on the border	on the border, at the frontier; in the border area	sanskrit		
+ଡିଜାଇନ୍	design	design	english		
+ଯୋଗଦାନ	joining (a party); contribution	joining (a party, a job; with karibaa: to join); contribution; attendance	sanskrit		
+ଚୁକ୍ତି	agreement, contract, deal	agreement, contract, deal, treaty			
+ଗ୍ୟାଙ୍ଗଷ୍ଟର	gangster	gangster	english		
+ଜଜ୍	judge	judge (district judge, sessions judge)	english		
+ଆତଙ୍କବାଦୀମାନେ	terrorists	terrorists, militants (plural)	sanskrit		
+ପାଇପ୍	pipe	pipe (water pipe, pipeline)	english		
+ଦୃଶ୍ୟମାନ	visible	visible, seen; apparent	sanskrit		
+କର୍ମଶାଳା	workshop (training)	workshop, a training session or seminar; a workshop for work	sanskrit		
+ଶ୍ରମ	labour, work	labour, work, toil; labour (labour department, labour law)	sanskrit		
+ଆମ୍ବୁଲାନ୍ସ	ambulance	ambulance	english		
+ମୂଲ୍ୟର	worth, of value; of the price	worth, of value (worth X rupees); of the price	sanskrit		
+ବଲ୍	ball	ball	english		
+ଅବରୋଧ	blockade, road block	blockade, road block, obstruction (of a road, often as a protest); siege	sanskrit		
+ଡାକ୍ତରଖାନା	hospital	hospital	mixed		
+ଅଧାରୁ	halfway, midway	halfway, midway, in the middle (leave studies halfway); from half	native		
+ରାଞ୍ଚି	Ranchi (capital of Jharkhand)	Ranchi, the capital city of Jharkhand	name		
+ବୁଥ	booth	booth (polling booth, selfie booth, toll booth)	english		
+ବେଞ୍ଚ	bench	bench (seat); bench (of judges in a court)	english		
+ସିମେଣ୍ଟ	cement	cement; (adj.) concrete, made of cement	english		
+ସମ୍ପତ୍ତି	property; assets, wealth	property; assets, wealth	sanskrit		
+ଜୋରରେ	loudly; with force, fast	loudly (shout loudly); with force, hard; fast, at speed	persian		
+ରାକ୍ଷୀ	rakhi (thread of Raksha Bandhan)	rakhi, the thread a sister ties on a brother's wrist; Rakhi Purnima (Raksha Bandhan)			
+କୋଠରୀରେ	in the room	in the room	native		
+ପ୍ରତିନିଧିତ୍ୱ	representation	representation; (with karibaa) to represent	sanskrit		
+ଚାରିଆଡ଼େ	all around, everywhere	all around, everywhere, on all sides	native		
+ବାରି	backyard garden, kitchen garden	backyard garden, kitchen garden, a plot behind the house; (Sanskrit) water	native		
+କଳାକାରଙ୍କ	of the artist(s) (respectful)	of the artist, artiste (respectful); of the artists	sanskrit		
+ନମସ୍କାର	namaskar, greeting; hello	namaskar, a greeting with joined palms; hello; salutation	sanskrit		
+ଦୋଷୀ	guilty; convict, culprit	guilty; the convict, the culprit (a person found guilty)	sanskrit		
+ସଂଖ୍ୟାଲଘୁ	minority (religious, linguistic)	minority (a religious or linguistic minority); in a minority	sanskrit		
+ସନ୍ଦେହ	suspicion; doubt	suspicion; doubt	sanskrit		
+ଛାଡପତ୍ର	divorce	divorce; deed of divorce	mixed		
+ମୋହର	seal, stamp (of approval); gold coin	seal, stamp; approval (a cabinet seal on a proposal); gold coin (old, the mohur)	persian		
+ୱିକେଟ୍	wicket (cricket)	wicket (cricket)	english		
+ଭୁଲ	mistake, error; wrong	mistake, error; wrong; forgetting (old)	native		
+ଇତ୍ୟାଦି	etc., and so on	etc., and so on, and others	sanskrit		
+ଚଳଚ୍ଚିତ୍ରରେ	in a film, in films	in a film, in (the) films	sanskrit		
+ଅମୂଲ୍ୟ	priceless, invaluable	priceless, invaluable, precious	sanskrit		
+ମୂଲ୍ୟରେ	in the price (of); at a price	in the price (of); at a price, at the cost of; in value	sanskrit		

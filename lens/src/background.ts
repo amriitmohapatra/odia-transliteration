@@ -5,128 +5,214 @@
  *    or off for that tab. The extension asks for no host permissions: the
  *    click grants `activeTab`, and the content script is injected only then.
  * 2. It answers the content script's lookups from the dictionary files packed
- *    in the extension. Nothing goes over the network.
- *
- * The dictionary is split at build time (build.mjs): the Praharaj keys in one
- * file, the definitions in chunks of `chunk` entries, so a worker that the
- * browser stopped after 30 s idle restarts in milliseconds, not the second it
- * takes to unpack the whole 24 MB text.
+ *    in the extension (engine.ts). Nothing goes over the network.
+ * 3. Picture mode: it takes the screenshot and asks the OCR page (offscreen.ts).
  */
 
-import { parseGlosses, parseMeanings, parseVerbEndings } from '@odia/core';
 import { canonical } from '@odia/core/normalize';
 
-import { findEntry, foldKey, meaningFinder, parsePayload, type Dict } from '../../Appv2/src/dictionary/lookup.js';
-import { cleanDefinition } from '../../Appv2/src/dictionary/clean.js';
-import { parseOrigin } from '../../Appv2/src/dictionary/origin.js';
-import { parseLoans } from '../../Appv2/src/dictionary/loans.js';
-import { inflate } from '../../Appv2/src/dictionary/pako-inflate.js';
-import glossesTsv from '../../core/data/glosses.tsv';
-import meaningsTsv from '../../core/data/meanings.tsv';
-import verbEndingsTsv from '../../core/data/verb-endings.tsv';
-import loansTsv from '../../Appv2/src/dictionary/loans.tsv';
+import { separate } from './correct.js';
+import { explainLines, explainer, fetchLoader, loadWords, lookup, readWord, setLoader } from './engine.js';
+import {
+  FRAME,
+  LOOKUP,
+  OCR,
+  PICTURE,
+  READ_WORD,
+  TOGGLE_COMMAND,
+  FRAME_COMMAND,
+  OPEN_SETTINGS,
+  READER_COMMAND,
+  TRANSLATE,
+  type FrameRequest,
+  type FrameResponse,
+  type LookupRequest,
+  type LookupResponse,
+  type OcrRequest,
+  type OcrResponse,
+  type PictureRequest,
+  type PictureResponse,
+  type ReadWordRequest,
+  type ReadWordResponse,
+  type TranslateRequest,
+  type TranslateResponse,
+} from './messages.js';
+import { ASSIST_ORIGIN, ASSIST_PERMISSION } from './assist.js';
+import { cleanRead, mapBox, pickWord, regionAround } from './picture.js';
 
-import { describeWord, type LensCard, type LensData } from './describe.js';
-import { LOOKUP, TOGGLE_COMMAND, type LookupRequest, type LookupResponse } from './messages.js';
+setLoader(fetchLoader((path) => chrome.runtime.getURL(path)));
 
-interface ChunkIndex {
-  count: number;
-  chunk: number;
-  files: number;
+/* Chrome allows about two screenshots a second per extension. */
+let lastCapture = 0;
+async function capture(windowId: number | undefined): Promise<string> {
+  const wait = lastCapture + 550 - Date.now();
+  if (wait > 0) await new Promise((r) => setTimeout(r, wait));
+  lastCapture = Date.now();
+  return chrome.tabs.captureVisibleTab(windowId, { format: 'png' });
 }
 
-let keys: Promise<{ keys: string[]; index: ChunkIndex }> | undefined;
-let extras: Promise<LensData> | undefined;
-/** Recently used definition chunks; a few are enough for one page. */
-const chunks = new Map<number, Promise<string[]>>();
-const CHUNKS_KEPT = 12;
-
-async function bytes(path: string): Promise<Uint8Array> {
-  const response = await fetch(chrome.runtime.getURL(path));
-  if (!response.ok) throw new Error(`${path}: ${response.status}`);
-  return new Uint8Array(await response.arrayBuffer());
+let offscreen: Promise<void> | undefined;
+function ensureOffscreen(): Promise<void> {
+  offscreen ??= chrome.offscreen
+    .createDocument({
+      url: 'offscreen.html',
+      reasons: ['WORKERS'],
+      justification: 'Reads Odia text in pictures with the OCR engine packed in the extension.',
+    })
+    .catch((error: unknown) => {
+      if (/single offscreen/i.test(String(error))) return; // already open
+      offscreen = undefined;
+      throw error;
+    });
+  return offscreen;
 }
 
-const text = async (path: string): Promise<string> => new TextDecoder('utf-8').decode(inflate(await bytes(path)));
-
-function loadKeys(): Promise<{ keys: string[]; index: ChunkIndex }> {
-  keys ??= Promise.all([text('dict/praharaj-keys.bin'), bytes('dict/index.json')]).then(([k, i]) => ({
-    keys: k.split('\n'),
-    index: JSON.parse(new TextDecoder('utf-8').decode(i)) as ChunkIndex,
-  }));
-  return keys;
-}
-
-function loadExtras(): Promise<LensData> {
-  extras ??= (async (): Promise<LensData> => {
-    const { keys: k } = await loadKeys();
-    let modern: Dict | null = null;
+async function ocr(request: OcrRequest): Promise<OcrResponse> {
+  for (let attempt = 0; ; attempt++) {
+    await ensureOffscreen();
     try {
-      modern = parsePayload(await bytes('dict/modern.bin'));
-    } catch {
-      modern = null; // optional, as in the app
+      const answer = await new Promise<OcrResponse | undefined>((resolve) => chrome.runtime.sendMessage(request, resolve));
+      if (answer) return answer;
+      throw new Error(chrome.runtime.lastError?.message ?? 'no answer from the OCR page');
+    } catch (error) {
+      // The browser may have closed the OCR page: open it again once.
+      offscreen = undefined;
+      if (attempt > 0) throw error;
     }
-    let origin: string[] | null = null;
-    try {
-      origin = parseOrigin(await text('dict/origin.bin'), k);
-    } catch {
-      origin = null;
-    }
-    let ai: LensData['ai'] = null;
-    try {
-      ai = meaningFinder(parseMeanings(meaningsTsv, 'core/data/meanings.tsv'));
-    } catch {
-      ai = null; // a broken file must not take the lens down; the unit tests catch it
-    }
-    let verbs: LensData['verbs'] = null;
-    try {
-      verbs = parseVerbEndings(verbEndingsTsv, 'core/data/verb-endings.tsv');
-    } catch {
-      verbs = null;
-    }
-    return { modern, origin, owner: parseGlosses(glossesTsv, 'core/data/glosses.tsv'), loans: parseLoans(loansTsv), ai, verbs };
-  })();
-  return extras;
-}
-
-async function definition(i: number): Promise<string> {
-  const { index } = await loadKeys();
-  const n = Math.floor(i / index.chunk);
-  let chunk = chunks.get(n);
-  if (chunk === undefined) {
-    chunk = text(`dict/praharaj-${String(n).padStart(3, '0')}.bin`).then((t) => JSON.parse(t) as string[]);
-    chunks.set(n, chunk);
-    if (chunks.size > CHUNKS_KEPT) chunks.delete(chunks.keys().next().value as number);
   }
-  return cleanDefinition((await chunk)[i - n * index.chunk] ?? '');
 }
 
-async function lookup(word: string, previous: string): Promise<LensCard | null> {
-  const odia = canonical(word);
-  const key = foldKey(odia);
-  if (key.length === 0) return null;
-  const [{ keys: k }, data] = await Promise.all([loadKeys(), loadExtras()]);
-  const entry = findEntry(k, key);
-  const def = entry ? await definition(entry.index) : null;
-  return describeWord(odia, key, entry, def, data, previous);
+function dataUrl(bytes: ArrayBuffer): string {
+  const view = new Uint8Array(bytes);
+  let binary = '';
+  for (let i = 0; i < view.length; i += 0x8000) binary += String.fromCharCode(...view.subarray(i, i + 0x8000));
+  return `data:image/png;base64,${btoa(binary)}`;
 }
 
-chrome.runtime.onMessage.addListener((message: LookupRequest, sender, sendResponse: (r: LookupResponse) => void) => {
-  if (message?.type !== LOOKUP || sender.id !== chrome.runtime.id) return false;
-  lookup(message.word, message.previous ?? '').then(
-    (card) => sendResponse({ ok: true, card }),
-    (error: unknown) => sendResponse({ ok: false, error: String(error) }),
+async function readPicture(request: PictureRequest, windowId: number | undefined): Promise<PictureResponse> {
+  const t0 = Date.now();
+  const shot = await createImageBitmap(await (await fetch(await capture(windowId))).blob());
+  const ratio = shot.width / Math.max(1, request.viewportWidth);
+  const region = regionAround(request.x, request.y, ratio, shot.width, shot.height);
+  const canvas = new OffscreenCanvas(region.x1 - region.x0, region.y1 - region.y0);
+  (canvas.getContext('2d') as OffscreenCanvasRenderingContext2D).drawImage(shot, -region.x0, -region.y0);
+  const png = await canvas.convertToBlob({ type: 'image/png' });
+  const answer = await ocr({
+    type: OCR,
+    target: 'offscreen',
+    image: dataUrl(await png.arrayBuffer()),
+    mode: 'at',
+    x: request.x * ratio - region.x0,
+    y: request.y * ratio - region.y0,
+  });
+  if (!answer.ok) return answer;
+  const [list, explainable] = await Promise.all([loadWords(), explainer()]);
+  const line = separate(
+    (answer.line?.words ?? []).map((w) => ({ ...w, box: mapBox(w.box, 1 / ratio, region.x0, region.y0) })),
+    list,
+    (t) => canonical(cleanRead(t)),
+    explainable,
   );
-  return true; // the answer comes asynchronously
+  const index = pickWord(line, request.x, request.y);
+  const hit = index >= 0 ? line[index] : undefined;
+  const found = hit ? await readWord(hit.text, hit.conf, hit.whole) : null;
+  return { ok: true, words: line, index, card: found?.card ?? null, reading: found?.reading ?? null, ms: Date.now() - t0, timing: answer.timing };
+}
+
+/** Everything inside the lens frame: every line, every word with its card (frame mode). */
+async function readFrame(request: FrameRequest, windowId: number | undefined): Promise<FrameResponse> {
+  const t0 = Date.now();
+  const shot = await createImageBitmap(await (await fetch(await capture(windowId))).blob());
+  const ratio = shot.width / Math.max(1, request.viewportWidth);
+  const box = {
+    x0: Math.max(0, Math.round(request.box.x0 * ratio)),
+    y0: Math.max(0, Math.round(request.box.y0 * ratio)),
+    x1: Math.min(shot.width, Math.round(request.box.x1 * ratio)),
+    y1: Math.min(shot.height, Math.round(request.box.y1 * ratio)),
+  };
+  if (box.x1 - box.x0 < 8 || box.y1 - box.y0 < 8) return { ok: true, lines: [], ms: Date.now() - t0 };
+  const canvas = new OffscreenCanvas(box.x1 - box.x0, box.y1 - box.y0);
+  (canvas.getContext('2d') as OffscreenCanvasRenderingContext2D).drawImage(shot, -box.x0, -box.y0);
+  const png = await canvas.convertToBlob({ type: 'image/png' });
+  const answer = await ocr({ type: OCR, target: 'offscreen', image: dataUrl(await png.arrayBuffer()), mode: 'block', x: 0, y: 0 });
+  if (!answer.ok) return answer;
+  const lines = await explainLines(
+    (answer.lines ?? []).map((line) => ({ words: line.words.map((w) => ({ ...w, box: mapBox(w.box, 1 / ratio, box.x0, box.y0) })) })),
+  );
+  return { ok: true, lines, ms: Date.now() - t0 };
+}
+
+/** The browser check points translation at its own local server (test build only). */
+let assistOrigin = ASSIST_ORIGIN;
+
+/**
+ * Translate the frame's text through the Odia app's server. Only when the reader
+ * turned translation on (the optional host permission for that one site); with it
+ * off, nothing is sent and the panel says how to turn it on.
+ */
+async function translateText(request: TranslateRequest): Promise<TranslateResponse> {
+  const on = await chrome.permissions.contains(assistOrigin === ASSIST_ORIGIN ? ASSIST_PERMISSION : { origins: [`${assistOrigin}/*`] });
+  if (!on) return { ok: false, off: true, error: 'Translation is off.' };
+  const text = canonical(request.text).trim();
+  if (!text) return { ok: false, error: 'Nothing to translate.' };
+  const response = await fetch(`${assistOrigin}/api/translate`, {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({ text }),
+    credentials: 'omit',
+  });
+  const data = (await response.json().catch(() => null)) as TranslateResponse | null;
+  if (!data) return { ok: false, error: `The server answered ${response.status}.` };
+  return data;
+}
+
+type Request = LookupRequest | PictureRequest | ReadWordRequest | FrameRequest | TranslateRequest | { type: typeof OPEN_SETTINGS };
+
+chrome.runtime.onMessage.addListener((message: Request, sender, sendResponse: (r: LookupResponse | PictureResponse | ReadWordResponse | FrameResponse | TranslateResponse) => void) => {
+  if (sender.id !== chrome.runtime.id) return false;
+  const fail = (error: unknown): void => sendResponse({ ok: false, error: String(error) });
+  if (message?.type === LOOKUP) {
+    lookup(message.word, message.previous ?? '').then((card) => sendResponse({ ok: true, card }), fail);
+    return true; // the answer comes asynchronously
+  }
+  if (message?.type === PICTURE) {
+    readPicture(message, sender.tab?.windowId).then(sendResponse, fail);
+    return true;
+  }
+  if (message?.type === FRAME) {
+    readFrame(message, sender.tab?.windowId).then(sendResponse, fail);
+    return true;
+  }
+  if (message?.type === TRANSLATE) {
+    translateText(message).then(sendResponse, fail);
+    return true;
+  }
+  if (message?.type === OPEN_SETTINGS) {
+    void chrome.runtime.openOptionsPage();
+    return false;
+  }
+  if (message?.type === READ_WORD) {
+    readWord(message.text, message.conf, message.whole).then(
+      (found) => sendResponse(found ? { ok: true, ...found } : { ok: false, error: 'not an Odia word' }),
+      fail,
+    );
+    return true;
+  }
+  return false;
 });
 
-/** Turn the lens on or off in a tab; the badge says which. */
-async function toggle(tabId: number): Promise<void> {
+/** Turn the lens on or off in a tab (or open / close its frame); the badge says whether it is on. */
+async function toggle(tabId: number, what: 'lens' | 'frame' = 'lens'): Promise<void> {
   try {
     await chrome.scripting.executeScript({ target: { tabId }, files: ['content.js'] });
     const [result] = await chrome.scripting.executeScript({
       target: { tabId },
-      func: () => (window as unknown as { __odiaLens?: { toggle(): boolean } }).__odiaLens?.toggle() ?? false,
+      func: what === 'frame'
+        ? () => {
+            (window as unknown as { __odiaLens?: { frame(): boolean } }).__odiaLens?.frame();
+            return true; // the frame turns the lens on
+          }
+        : () => (window as unknown as { __odiaLens?: { toggle(): boolean } }).__odiaLens?.toggle() ?? false,
     });
     await chrome.action.setBadgeText({ tabId, text: result?.result === true ? 'ON' : '' });
   } catch {
@@ -136,12 +222,25 @@ async function toggle(tabId: number): Promise<void> {
   }
 }
 
+/** A PDF in Chrome's own viewer: extensions cannot read inside it. */
+const isPdf = (url: string | undefined): boolean => !!url && /^(https?|file):[^#?]*\.pdf([?#]|$)/i.test(url);
+
+/** The lens's PDF reader (V4.6) in a new tab; with the address of a PDF the reader says how to bring it there. */
+function openReader(from?: chrome.tabs.Tab): void {
+  const url = chrome.runtime.getURL('reader.html') + (from && isPdf(from.url) ? `#url=${encodeURIComponent(from.url as string)}` : '');
+  void chrome.tabs.create({ url, ...(from?.id !== undefined ? { openerTabId: from.id } : {}) });
+}
+
 chrome.action.onClicked.addListener((tab) => {
-  if (tab.id !== undefined) void toggle(tab.id);
+  if (isPdf(tab.url)) openReader(tab);
+  else if (tab.id !== undefined) void toggle(tab.id);
 });
 
 chrome.commands.onCommand.addListener((command, tab) => {
-  if (command === TOGGLE_COMMAND && tab?.id !== undefined) void toggle(tab.id);
+  if (command === READER_COMMAND) return openReader(tab);
+  if (tab?.id === undefined) return;
+  if (command === TOGGLE_COMMAND) void toggle(tab.id);
+  if (command === FRAME_COMMAND) void toggle(tab.id, 'frame');
 });
 
 // A new page in the tab has no lens: clear the badge.
@@ -149,5 +248,13 @@ chrome.tabs.onUpdated.addListener((tabId, change) => {
   if (change.status === 'loading') void chrome.action.setBadgeText({ tabId, text: '' }).catch(() => undefined);
 });
 
-// For the browser check (lens/eval/lens-check.mjs): toggle a tab without a click.
-(self as unknown as { odiaLensToggle: typeof toggle }).odiaLensToggle = toggle;
+// For the browser check (lens/eval/lens-check.mjs): toggle a tab without a click,
+// and read a picture point directly.
+(self as unknown as { odiaLensToggle: typeof toggle; odiaLensReadPicture: typeof readPicture }).odiaLensToggle = toggle;
+(self as unknown as { odiaLensReadPicture: typeof readPicture }).odiaLensReadPicture = readPicture;
+(self as unknown as { odiaLensReadFrame: typeof readFrame }).odiaLensReadFrame = readFrame;
+if (typeof __LENS_TEST__ !== 'undefined' && __LENS_TEST__) {
+  (self as unknown as { odiaLensSetAssist(origin: string): void }).odiaLensSetAssist = (origin) => {
+    assistOrigin = origin;
+  };
+}

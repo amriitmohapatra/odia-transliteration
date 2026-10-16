@@ -2,9 +2,12 @@
  * Build the Odia Lens extension into lens/dist (load it unpacked, or zip it).
  *
  *   node lens/build.mjs            lens/dist, and lens/odia-lens.zip with --zip
- *   node lens/build.mjs --test     lens/dist-test: the same, plus host access to
- *                                  http://127.0.0.1/* so lens/eval/lens-check.mjs
- *                                  can turn it on without a toolbar click
+ *   node lens/build.mjs --test     lens/dist-test: the same, plus host access to all
+ *                                  sites, so lens/eval/lens-check.mjs can turn it on
+ *                                  and take screenshots without a toolbar click
+ *   node lens/build.mjs --mac      mac-lens/build/web: the Mac lens's results page
+ *                                  (mac.js, index.html and dict/; no OCR files: the
+ *                                  Mac app runs the tesseract program itself)
  *
  * It bundles background.ts and content.ts (classic scripts: executeScript
  * injects a classic script) and packs the dictionary the app already ships
@@ -17,13 +20,21 @@
  *                            [NNN*chunk, (NNN+1)*chunk)
  *   dict/index.json          { count, chunk, files }
  *   dict/modern.bin, dict/origin.bin   copied as they are (small)
+ *   dict/words.bin           gzip, core/data/indiccorp-words.tsv (OCR correction)
+ *
+ * Picture mode (V4.2) adds the OCR engine, all local (no remote code):
+ *
+ *   offscreen.html/.js       the OCR page (tesseract.js bundled)
+ *   ocr/worker.min.js        tesseract.js worker            (node_modules/tesseract.js, Apache-2.0)
+ *   ocr/tesseract-core-simd-lstm.wasm.js  Tesseract in WebAssembly (tesseract.js-core, Apache-2.0)
+ *   ocr/ori.traineddata      Odia model, own fine-tune (V4.3) (lens/vendor, Apache-2.0; lens/PROVENANCE.md)
  *
  * No Desh data goes into the extension.
  */
 
 import { build } from 'esbuild';
 import { execFileSync } from 'node:child_process';
-import { copyFileSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { copyFileSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { gunzipSync, gzipSync } from 'node:zlib';
@@ -32,14 +43,18 @@ const LENS = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(LENS, '..');
 const test = process.argv.includes('--test');
 const zip = process.argv.includes('--zip');
-const OUT = resolve(LENS, test ? 'dist-test' : 'dist');
+const mac = process.argv.includes('--mac');
+const OUT = mac ? resolve(LENS, '../mac-lens/build/web') : resolve(LENS, test ? 'dist-test' : 'dist');
 /** Definitions per chunk: about 300 KB of text, 80 KB gzipped. */
 const CHUNK = 500;
 const SEP = '\u0002';
 
 rmSync(OUT, { recursive: true, force: true });
 mkdirSync(resolve(OUT, 'dict'), { recursive: true });
-mkdirSync(resolve(OUT, 'icons'), { recursive: true });
+if (!mac) {
+  mkdirSync(resolve(OUT, 'icons'), { recursive: true });
+  mkdirSync(resolve(OUT, 'ocr'), { recursive: true });
+}
 
 // @odia/core and its subpaths, as Appv2/vite.config.ts maps them.
 const coreAlias = {
@@ -53,16 +68,40 @@ const coreAlias = {
 };
 
 await build({
-  entryPoints: { background: resolve(LENS, 'src/background.ts'), content: resolve(LENS, 'src/content.ts') },
+  entryPoints: mac
+    ? { mac: resolve(LENS, 'src/mac.ts') }
+    : {
+        background: resolve(LENS, 'src/background.ts'),
+        content: resolve(LENS, 'src/content.ts'),
+        offscreen: resolve(LENS, 'src/offscreen.ts'),
+        options: resolve(LENS, 'src/options.ts'),
+      },
   outdir: OUT,
   bundle: true,
   format: 'iife',
   target: 'chrome110',
   loader: { '.tsv': 'text' },
+  define: { __LENS_TEST__: String(test) },
   plugins: [coreAlias],
   legalComments: 'inline',
   logLevel: 'warning',
 });
+
+// The PDF reader (V4.6) imports pdf.js, an ES module: its own module bundle.
+if (!mac) {
+  await build({
+    entryPoints: { reader: resolve(LENS, 'src/reader.ts') },
+    outdir: OUT,
+    bundle: true,
+    format: 'esm',
+    target: 'chrome110',
+    loader: { '.tsv': 'text' },
+    define: { __LENS_TEST__: String(test) },
+    plugins: [coreAlias],
+    legalComments: 'inline',
+    logLevel: 'warning',
+  });
+}
 
 // The Praharaj payload: N SEP keys SEP lens SEP defs (Appv2/src/dictionary/lookup.ts).
 const text = gunzipSync(readFileSync(resolve(ROOT, 'Appv2/src/dictionary/praharaj.bin'))).toString('utf8');
@@ -92,9 +131,49 @@ for (const name of ['modern.bin', 'origin.bin']) {
   copyFileSync(resolve(ROOT, 'Appv2/src/dictionary', name), resolve(OUT, 'dict', name));
 }
 
+writeFileSync(resolve(OUT, 'dict/words.bin'), gzipSync(readFileSync(resolve(ROOT, 'core/data/indiccorp-words.tsv')), { level: 9, mtime: 0 }));
+
+if (mac) {
+  writeFileSync(
+    resolve(OUT, 'index.html'),
+    '<!doctype html>\n<meta charset="utf-8">\n<meta name="viewport" content="width=device-width">\n<title>Odia Lens</title>\n<body>\n<script src="mac.js"></script>\n',
+  );
+  console.log(`odia lens (Mac page): ${OUT}`);
+  console.log(`  praharaj: ${count} keys in ${files} chunks of ${CHUNK}`);
+  process.exit(0);
+}
+
+// The OCR engine and the Odia model.
+const NM = resolve(ROOT, 'node_modules');
+copyFileSync(resolve(NM, 'tesseract.js/dist/worker.min.js'), resolve(OUT, 'ocr/worker.min.js'));
+copyFileSync(resolve(NM, 'tesseract.js-core/tesseract-core-simd-lstm.wasm.js'), resolve(OUT, 'ocr/tesseract-core-simd-lstm.wasm.js'));
+copyFileSync(resolve(LENS, 'vendor/ori.traineddata'), resolve(OUT, 'ocr/ori.traineddata'));
+copyFileSync(resolve(NM, 'tesseract.js/LICENSE.md'), resolve(OUT, 'ocr/LICENSE-tesseract.js.md'));
+copyFileSync(resolve(NM, 'tesseract.js-core/LICENSE'), resolve(OUT, 'ocr/LICENSE-tesseract.js-core.txt'));
+copyFileSync(resolve(LENS, 'static/offscreen.html'), resolve(OUT, 'offscreen.html'));
+copyFileSync(resolve(LENS, 'static/options.html'), resolve(OUT, 'options.html'));
+copyFileSync(resolve(LENS, 'static/options.css'), resolve(OUT, 'options.css'));
+copyFileSync(resolve(LENS, 'static/reader.html'), resolve(OUT, 'reader.html'));
+copyFileSync(resolve(LENS, 'static/reader.css'), resolve(OUT, 'reader.css'));
+// pdf.js (Apache-2.0): its worker, the image decoders (JBIG2, JPEG 2000, colour profiles) and
+// the standard fonts; not the CJK character maps or its JavaScript engine (the reader runs no PDF scripts).
+const PDFJS = resolve(NM, 'pdfjs-dist');
+mkdirSync(resolve(OUT, 'pdf/wasm'), { recursive: true });
+mkdirSync(resolve(OUT, 'pdf/standard_fonts'), { recursive: true });
+copyFileSync(resolve(PDFJS, 'legacy/build/pdf.worker.min.mjs'), resolve(OUT, 'pdf/pdf.worker.min.mjs'));
+copyFileSync(resolve(PDFJS, 'LICENSE'), resolve(OUT, 'pdf/LICENSE-pdf.js.txt'));
+for (const f of readdirSync(resolve(PDFJS, 'wasm'))) {
+  if (/^(jbig2|openjpeg|qcms_bg)\.wasm$|^LICENSE/.test(f)) copyFileSync(resolve(PDFJS, 'wasm', f), resolve(OUT, 'pdf/wasm', f));
+}
+// The Foxit standard fonts (BSD, PDFium) only: the Liberation fonts' licence (GPL with a
+// font exception) is not one this project ships (CLAUDE.md, Licensing).
+for (const f of readdirSync(resolve(PDFJS, 'standard_fonts'))) {
+  if (/^Foxit.*\.pfb$|^LICENSE_FOXIT$/.test(f)) copyFileSync(resolve(PDFJS, 'standard_fonts', f), resolve(OUT, 'pdf/standard_fonts', f));
+}
+
 copyFileSync(resolve(ROOT, 'Appv2/public/icons/icon-192.png'), resolve(OUT, 'icons/icon.png'));
 const manifest = JSON.parse(readFileSync(resolve(LENS, 'static/manifest.json'), 'utf8'));
-if (test) manifest.host_permissions = ['http://127.0.0.1/*'];
+if (test) manifest.host_permissions = ['<all_urls>'];
 writeFileSync(resolve(OUT, 'manifest.json'), `${JSON.stringify(manifest, null, 2)}\n`);
 
 console.log(`odia lens ${manifest.version}${test ? ' (test build)' : ''}: ${OUT}`);

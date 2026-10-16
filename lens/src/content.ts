@@ -10,16 +10,44 @@
  * and the card cannot restyle each other. It never takes the pointer except
  * over its own speaker button.
  *
- * v1 limits: the top frame only, and a word inside one text node (web Odia is
- * real text, so no OCR). Pages that draw text on a canvas are not read.
+ * Odia that is page text is read from the page (v1). Odia inside a picture
+ * (an ePaper page image, a canvas, a paused video) is read by OCR (picture
+ * mode, V4.2): when the pointer rests on a picture, the background takes a
+ * screenshot of the tab, reads the line under the pointer offline, and the
+ * card says what it read. The words of that line stay cached until the page
+ * scrolls, so moving along the line needs no new reading.
+ *
+ * Limits: the top frame only; a word inside one text node.
  */
 
 import type { LensCard } from './describe.js';
 import { wordAt, wordBefore } from './word.js';
-import { LOOKUP, type LookupRequest, type LookupResponse } from './messages.js';
+import { FRAME_CSS, createFrame } from './frame.js';
+import {
+  FRAME,
+  LOOKUP,
+  PICTURE,
+  OPEN_SETTINGS,
+  READ_WORD,
+  TRANSLATE,
+  type FrameRequest,
+  type FrameResponse,
+  type LookupRequest,
+  type LookupResponse,
+  type PictureRequest,
+  type PictureResponse,
+  type Reading,
+  type ReadWordRequest,
+  type ReadWordResponse,
+  type TranslateRequest,
+  type TranslateResponse,
+} from './messages.js';
+import { pickWord, type OcrWord } from './picture.js';
 
 interface Lens {
   toggle(): boolean;
+  /** Open or close the frame (turns the lens on first); true when the frame is open. */
+  frame(): boolean;
 }
 
 declare global {
@@ -30,36 +58,73 @@ declare global {
 
 const CSS = `
 :host { all: initial; }
+/* Same Puri/Konark palette as the frame (frame.ts): shankha-white card under a
+ * band of temple-flag triangles, hingula red for notes, Nilachakra indigo for the button. */
 .card {
+  --nila: #1e2f5c; --hingula: #b7321e; --haritala: #e8b23a;
+  --shankha: #fbf6ea; --kajal: #1c1712; --stone: #6f6253; --line: #e3d6bb;
   position: fixed; z-index: 2147483647; max-width: 340px; min-width: 180px;
-  box-sizing: border-box; padding: 10px 12px; border-radius: 10px;
-  background: #fffdf8; color: #1d1b16; border: 1px solid #d9d2c3;
-  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.18);
+  box-sizing: border-box; padding: 13px 13px 10px; border-radius: 11px; overflow: hidden;
+  background: var(--shankha); color: var(--kajal); border: 1px solid var(--line);
+  box-shadow: 0 10px 28px rgba(28, 23, 18, 0.24), 0 1px 0 rgba(28, 23, 18, 0.06);
   font: 14px/1.4 system-ui, -apple-system, "Segoe UI", sans-serif;
   pointer-events: none;
 }
-.card[hidden] { display: none; }
-.word { font: 600 22px/1.3 "Noto Sans Oriya", "Oriya Sangam MN", "Kalinga", "Odia MN", sans-serif; }
-.roman { font-style: italic; color: #5a5446; margin-top: 1px; }
-.row { display: flex; align-items: baseline; gap: 8px; }
-.meanings { margin: 6px 0 0; padding: 0; list-style: none; }
-.meanings li { margin-top: 4px; }
-.source, .note { display: block; font-size: 11.5px; color: #6b6455; }
-.say {
-  pointer-events: auto; cursor: pointer; margin-left: auto; border: 1px solid #d9d2c3;
-  border-radius: 6px; background: #f4efe4; color: inherit; font: inherit; font-size: 12px; padding: 1px 8px;
+.card::before {
+  content: ""; position: absolute; left: 0; right: 0; top: 0; height: 5px;
+  background:
+    linear-gradient(135deg, var(--hingula) 25%, transparent 25%) 0 0 / 10px 5px repeat-x,
+    linear-gradient(225deg, var(--hingula) 25%, transparent 25%) 0 0 / 10px 5px repeat-x,
+    var(--haritala);
 }
-.foot { margin-top: 6px; font-size: 10.5px; color: #8a8370; }
+.card[hidden] { display: none; }
+.word { font: 600 23px/1.3 "Noto Sans Oriya", "Oriya Sangam MN", "Kalinga", "Odia MN", sans-serif; }
+.roman { font-style: italic; color: var(--stone); margin-top: 1px; }
+.row { display: flex; align-items: baseline; gap: 8px; }
+.meanings { margin: 7px 0 0; padding: 0; list-style: none; }
+.meanings li { margin-top: 5px; padding-left: 11px; position: relative; }
+.meanings li::before {
+  content: ""; position: absolute; left: 0; top: 0.55em; width: 5px; height: 5px;
+  background: var(--hingula); transform: rotate(45deg);
+}
+.source, .note { display: block; font-size: 11.5px; color: var(--stone); }
+.say {
+  pointer-events: auto; cursor: pointer; margin-left: auto; border: 0;
+  border-radius: 7px; background: var(--nila); color: var(--shankha); font: inherit; font-size: 12px; padding: 2px 9px;
+}
+.say:hover { background: var(--hingula); }
+.say:focus-visible { outline: 2px solid var(--haritala); outline-offset: 1px; }
+.foot { margin-top: 8px; padding-top: 6px; border-top: 1px solid var(--line); font-size: 10.5px; color: var(--stone); }
+.read { display: block; font-size: 11.5px; color: #7a4f0a; margin-top: 2px; }
+.unclear { color: var(--hingula); }
 @media (prefers-color-scheme: dark) {
-  .card { background: #24221d; color: #f1ece0; border-color: #4a4538; }
-  .roman, .source, .note { color: #c3bba8; }
-  .say { background: #34302a; border-color: #4a4538; }
-  .foot { color: #9d957f; }
+  .card { --shankha: #17150f; --kajal: #f3ead6; --stone: #c9bb9d; --line: #3a3326; --hingula: #e0573d; }
+  .say { background: #2c3f73; color: #f3ead6; }
+  .read { color: #e8b23a; }
 }
 `;
 
 /** Hide the card this long after the pointer leaves the word (it may be going to the card). */
 const HIDE_DELAY_MS = 250;
+/** Read a picture only after the pointer rests this long on it. */
+const REST_MS = 350;
+/** Say "Reading the picture…" if the reading takes longer than this. */
+const SLOW_MS = 700;
+/** Below this OCR confidence the card says the reading is unclear. */
+const UNCLEAR_BELOW = 60;
+/** Elements whose pixels may hold Odia that is not page text. */
+const PICTURES = new Set(['IMG', 'CANVAS', 'VIDEO', 'EMBED', 'OBJECT', 'IFRAME', 'PICTURE']);
+
+interface PictureCache {
+  words: OcrWord[];
+  scrollX: number;
+  scrollY: number;
+  width: number;
+  height: number;
+  video: HTMLVideoElement | null;
+  videoTime: number;
+  found: Map<number, { card: LensCard | null; reading: Reading }>;
+}
 
 function start(): Lens {
   const host = document.createElement('odia-lens');
@@ -68,13 +133,16 @@ function start(): Lens {
   const root = host.attachShadow({ mode: 'open' });
   const sheet = new CSSStyleSheet();
   sheet.replaceSync(CSS);
-  root.adoptedStyleSheets = [sheet];
+  const frameSheet = new CSSStyleSheet();
+  frameSheet.replaceSync(FRAME_CSS);
+  root.adoptedStyleSheets = [sheet, frameSheet];
   const card = document.createElement('div');
   card.className = 'card';
   card.hidden = true;
   card.setAttribute('role', 'tooltip');
   card.lang = 'en';
   root.append(card);
+
 
   let active = false;
   let current = '';
@@ -86,6 +154,12 @@ function start(): Lens {
   let overCard = false;
   let lastX = 0;
   let lastY = 0;
+  let picture: PictureCache | null = null;
+  let pictureIndex = -1;
+  let restTimer: number | undefined;
+  let slowTimer: number | undefined;
+  let reads = 0;
+  let moved = false;
 
   const odiaVoice = (): SpeechSynthesisVoice | undefined =>
     typeof speechSynthesis === 'undefined' ? undefined : speechSynthesis.getVoices().find((v) => v.lang.toLowerCase().startsWith('or'));
@@ -97,6 +171,7 @@ function start(): Lens {
     current = '';
     currentNode = null;
     currentStart = -1;
+    pictureIndex = -1;
   }
 
   function hideSoon(): void {
@@ -119,7 +194,7 @@ function start(): Lens {
     card.style.top = `${Math.round(top)}px`;
   }
 
-  function render(word: string, lensCard: LensCard | null, rect: DOMRect): void {
+  function render(word: string, lensCard: LensCard | null, rect: DOMRect, reading: Reading | null = null): void {
     card.textContent = '';
     const head = document.createElement('div');
     head.className = 'row';
@@ -167,6 +242,7 @@ function start(): Lens {
         list.append(li);
       }
       card.append(list);
+      if (reading) card.append(readLine(reading));
       for (const [line, odia] of [
         [lensCard.approximateHead ? `Approximate: the dictionary word is ${lensCard.approximateHead}` : null, false],
         [lensCard.more, false],
@@ -182,12 +258,198 @@ function start(): Lens {
         card.append(note);
       }
     }
+    if (!lensCard && reading) card.append(readLine(reading));
     const foot = document.createElement('div');
     foot.className = 'foot';
     foot.textContent = 'Odia Lens · offline · Esc closes';
     card.append(foot);
     card.hidden = false;
     place(rect);
+  }
+
+  /** How the word was read from a picture: what OCR saw, and whether it was corrected. */
+  function readLine(reading: Reading): HTMLElement {
+    const el = document.createElement('span');
+    el.className = 'read';
+    const said = document.createElement('span');
+    said.lang = 'or';
+    said.textContent = reading.readAs;
+    if (reading.corrected) {
+      el.append('Read from the picture as ', said, ', corrected to a dictionary word');
+    } else {
+      el.append('Read from the picture');
+    }
+    if (reading.partOf) {
+      const whole = document.createElement('span');
+      whole.lang = 'or';
+      whole.textContent = reading.partOf;
+      el.append('; part of a longer word read as ', whole);
+    }
+    if (reading.conf < UNCLEAR_BELOW) {
+      const unclear = document.createElement('span');
+      unclear.className = 'unclear';
+      unclear.textContent = ' (unclear print: check the word)';
+      el.append(unclear);
+    }
+    return el;
+  }
+
+  /** A one-line card: "Reading the picture…", or why a picture could not be read. */
+  function notice(text: string, rect: DOMRect): void {
+    card.textContent = '';
+    const line = document.createElement('div');
+    line.textContent = text;
+    card.append(line);
+    card.hidden = false;
+    place(rect);
+  }
+
+  // The frame (frame.ts): the content script lends it the shadow root and the messaging.
+  const lensFrame = createFrame({
+    root,
+    isActive: () => active,
+    hideCard: () => hide(),
+    slowMs: SLOW_MS,
+    read(box, done) {
+      const request: FrameRequest = { type: FRAME, box, viewportWidth: window.innerWidth };
+      chrome.runtime.sendMessage(request, (response: FrameResponse | undefined) => {
+        done(response, chrome.runtime.lastError?.message);
+      });
+    },
+    translate(text, done) {
+      const request: TranslateRequest = { type: TRANSLATE, text };
+      chrome.runtime.sendMessage(request, (response: TranslateResponse | undefined) => {
+        done(response, chrome.runtime.lastError?.message);
+      });
+    },
+    openSettings() {
+      chrome.runtime.sendMessage({ type: OPEN_SETTINGS }, () => void chrome.runtime.lastError);
+    },
+  });
+
+  /** A picture (image, canvas, video, frame) under the point, unless page text is there. */
+  function pictureUnder(x: number, y: number): Element | null {
+    if (textUnder(x, y)) return null;
+    const stack = document.elementsFromPoint(x, y);
+    for (const el of stack.slice(0, 8)) {
+      if (el === host) continue;
+      if (PICTURES.has(el.tagName)) return el;
+      if (el.tagName === 'svg' || el.tagName === 'image') return el;
+      // A background picture of an element (not of the whole page: reading blank paper costs CPU).
+      if (el !== document.body && el !== document.documentElement && /url\(/.test(getComputedStyle(el).backgroundImage)) return el;
+    }
+    // A video under a video player's see-through layers (YouTube has a dozen: controls,
+    // gradients, cards, captions).
+    return stack.find((el) => el.tagName === 'VIDEO') ?? null;
+  }
+
+  /**
+   * In full screen only the full-screen element is drawn: the lens goes inside it
+   * (a video player's box), and back to the page after. A bare full-screen video
+   * cannot hold it; the lens then waits for the page.
+   */
+  function placeHost(): void {
+    if (!active) return;
+    const full = document.fullscreenElement;
+    const parent = full && full.tagName !== 'VIDEO' ? full : document.documentElement;
+    if (host.parentNode !== parent) parent.append(host);
+  }
+  const onFullscreen = (): void => {
+    hide();
+    picture = null;
+    placeHost();
+    lensFrame.moved();
+  };
+
+  /** Page text (any script) right under the point: picture mode leaves it to the text path. */
+  function textUnder(x: number, y: number): boolean {
+    const range = typeof document.caretRangeFromPoint === 'function' ? document.caretRangeFromPoint(x, y) : null;
+    const node = range?.startContainer;
+    if (!node || node.nodeType !== Node.TEXT_NODE || !(node as Text).data.trim()) return false;
+    const r = document.createRange();
+    r.selectNodeContents(node);
+    return Array.from(r.getClientRects()).some((b) => x >= b.left && x <= b.right && y >= b.top && y <= b.bottom);
+  }
+
+  function cacheValid(): PictureCache | null {
+    if (!picture) return null;
+    const moved =
+      picture.scrollX !== window.scrollX || picture.scrollY !== window.scrollY ||
+      picture.width !== window.innerWidth || picture.height !== window.innerHeight;
+    const playing = picture.video !== null && picture.video.currentTime !== picture.videoTime;
+    if (moved || playing) picture = null;
+    return picture;
+  }
+
+  /** The point is within the band of the cached line (between its words, say). */
+  function onLine(cache: PictureCache, x: number, y: number): boolean {
+    if (cache.words.length === 0) return false;
+    const x0 = Math.min(...cache.words.map((w) => w.box.x0));
+    const x1 = Math.max(...cache.words.map((w) => w.box.x1));
+    const y0 = Math.min(...cache.words.map((w) => w.box.y0));
+    const y1 = Math.max(...cache.words.map((w) => w.box.y1));
+    return x >= x0 && x <= x1 && y >= y0 && y <= y1;
+  }
+
+  const rectOf = (w: OcrWord): DOMRect => new DOMRect(w.box.x0, w.box.y0, w.box.x1 - w.box.x0, w.box.y1 - w.box.y0);
+
+  function showPictureWord(cache: PictureCache, index: number): void {
+    window.clearTimeout(hideTimer);
+    hideTimer = undefined;
+    if (index === pictureIndex && !card.hidden) return;
+    pictureIndex = index;
+    current = '';
+    currentNode = null;
+    const word = cache.words[index] as OcrWord;
+    const known = cache.found.get(index);
+    if (known) return render(known.reading.corrected ?? known.reading.readAs, known.card, rectOf(word), known.reading);
+    const request: ReadWordRequest = { type: READ_WORD, text: word.text, conf: word.conf, ...(word.whole ? { whole: word.whole } : {}) };
+    chrome.runtime.sendMessage(request, (response: ReadWordResponse | undefined) => {
+      if (chrome.runtime.lastError || !response?.ok || picture !== cache || pictureIndex !== index || !active) return;
+      cache.found.set(index, { card: response.card, reading: response.reading });
+      render(response.reading.corrected ?? response.reading.readAs, response.card, rectOf(word), response.reading);
+    });
+  }
+
+  /** Read the picture at the pointer: hide the card (it must not be in the screenshot), then ask. */
+  function readPicture(target: Element): void {
+    restTimer = undefined;
+    if (!active) return;
+    hide();
+    const x = lastX;
+    const y = lastY;
+    const ticket = ++reads;
+    const video = target.closest('video') ?? (target.tagName === 'VIDEO' ? (target as HTMLVideoElement) : null);
+    // Two frames: the hidden card is off the screen before the capture.
+    window.requestAnimationFrame(() => window.requestAnimationFrame(() => {
+      const request: PictureRequest = { type: PICTURE, x, y, viewportWidth: window.innerWidth };
+      const at = { scrollX: window.scrollX, scrollY: window.scrollY, width: window.innerWidth, height: window.innerHeight };
+      window.clearTimeout(slowTimer);
+      slowTimer = window.setTimeout(() => {
+        if (ticket === reads && active) notice('Reading the picture\u2026', new DOMRect(x, y, 1, 18));
+      }, SLOW_MS);
+      chrome.runtime.sendMessage(request, (response: PictureResponse | undefined) => {
+        window.clearTimeout(slowTimer);
+        if (chrome.runtime.lastError || !response?.ok || !active) {
+          if (ticket !== reads || !active) return;
+          // Say why, so a report can name it (for example a page the browser does not let extensions capture).
+          const why = chrome.runtime.lastError?.message ?? (response && !response.ok ? response.error : 'no answer');
+          notice(`Could not read the picture: ${why}`, new DOMRect(x, y, 1, 18));
+          return;
+        }
+        const cache: PictureCache = {
+          words: response.words, ...at, video, videoTime: video?.currentTime ?? 0, found: new Map(),
+        };
+        if (response.index >= 0 && response.reading) {
+          cache.found.set(response.index, { card: response.card, reading: response.reading });
+        }
+        picture = cache;
+        if (ticket !== reads) return;
+        const index = pickWord(cache.words, lastX, lastY);
+        if (index >= 0) showPictureWord(cache, index);
+        else hide();
+      });
+    }));
   }
 
   /** The Odia word under the point, with its box, or null. */
@@ -225,7 +487,24 @@ function start(): Lens {
     frame = 0;
     if (!active || overCard) return;
     const hit = wordAtPoint(lastX, lastY);
-    if (!hit) return hideSoon();
+    if (!hit) {
+      window.clearTimeout(restTimer);
+      restTimer = undefined;
+      // With the frame open, pictures are read through the frame only.
+      const target = lensFrame.open ? null : pictureUnder(lastX, lastY);
+      if (!target) return hideSoon();
+      const cache = cacheValid();
+      const index = cache ? pickWord(cache.words, lastX, lastY, 2) : -1;
+      if (cache && index >= 0) return showPictureWord(cache, index);
+      hideSoon();
+      // Between two words of the line already read: nothing new to read.
+      if (cache && onLine(cache, lastX, lastY)) return;
+      restTimer = window.setTimeout(() => readPicture(target), REST_MS);
+      return;
+    }
+    window.clearTimeout(restTimer);
+    restTimer = undefined;
+    pictureIndex = -1;
     window.clearTimeout(hideTimer);
     hideTimer = undefined;
     if (hit.node === currentNode && hit.start === currentStart && !card.hidden) return;
@@ -245,12 +524,21 @@ function start(): Lens {
     if (event.composedPath().includes(host)) return;
     lastX = event.clientX;
     lastY = event.clientY;
+    moved = true;
     if (frame === 0) frame = window.requestAnimationFrame(onFrame);
   };
   const onKey = (event: KeyboardEvent): void => {
-    if (event.key === 'Escape' && !card.hidden) hide();
+    if (event.key !== 'Escape') return;
+    if (!card.hidden) hide();
+    else if (lensFrame.open) lensFrame.hide();
   };
-  const onScroll = (): void => hide();
+  const onScroll = (): void => {
+    picture = null;
+    window.clearTimeout(restTimer);
+    hide();
+    // The page moved under the frame: read again when it stops.
+    lensFrame.moved();
+  };
   card.addEventListener('pointerenter', () => {
     overCard = true;
   });
@@ -263,20 +551,40 @@ function start(): Lens {
     toggle(): boolean {
       active = !active;
       if (active) {
-        document.documentElement.append(host);
+        placeHost();
+        document.addEventListener('fullscreenchange', onFullscreen);
         document.addEventListener('mousemove', onMove, { passive: true, capture: true });
         document.addEventListener('keydown', onKey, true);
         window.addEventListener('scroll', onScroll, { passive: true, capture: true });
+        window.addEventListener('resize', onScroll, { passive: true });
         // Voices load late in Chrome; asking once starts the load.
         if (typeof speechSynthesis !== 'undefined') speechSynthesis.getVoices();
       } else {
         hide();
+        document.removeEventListener('fullscreenchange', onFullscreen);
         document.removeEventListener('mousemove', onMove, { capture: true });
         document.removeEventListener('keydown', onKey, true);
         window.removeEventListener('scroll', onScroll, { capture: true });
+        window.removeEventListener('resize', onScroll);
+        window.clearTimeout(restTimer);
+        picture = null;
+        lensFrame.hide();
         host.remove();
       }
       return active;
+    },
+    frame(): boolean {
+      if (!active) this.toggle();
+      if (lensFrame.open) lensFrame.hide();
+      else {
+        // A picture read still under way must not put its card over the frame.
+        reads++;
+        window.clearTimeout(restTimer);
+        window.clearTimeout(slowTimer);
+        hide();
+        lensFrame.show(moved ? { x: lastX, y: lastY } : null);
+      }
+      return lensFrame.open;
     },
   };
 }

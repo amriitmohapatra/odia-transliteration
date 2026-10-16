@@ -227,6 +227,42 @@ gave byte-identical files.
 
 Precomposed U+0B5C / U+0B5D in all four files: 0.
 
+## IndicXlit lexicon fill (`lexicon-xlit*.tsv`, 2026-10-15, V2.6)
+
+The Latin spellings that AI4Bharat IndicXlit predicts for the IndicCorp words that are in
+no other word list. Measured in `plan/research/v26-indicxlit-fill.md`.
+
+| Item | Source | Licence | sha256 |
+|---|---|---|---|
+| IndicXlit Odia → Latin model, `indicxlit-indic-en-v1.0/transformer/indicxlit.pt` | <https://huggingface.co/ai4bharat/IndicXlit> | MIT | `45ffecef88d990ae12f915939b91267a3fc8f69f26331baa59f7932005976f28` |
+| its vocabularies `corpus-bin/dict.or.txt`, `dict.en.txt` | same | MIT | `0fe786202f4418cec9d8fcd8413c715a2be7fabb5b58fdc47671e6227dde384f`, `5ed7b43557095f70f20bad9fb0484ea9f2099001467bc8c732c8a9e6b3d7c34a` |
+| `tools/build-data/indicxlit_lang_list.txt` | `ai4bharat-transliteration` 1.1.3 (PyPI), `models/indic2en/lang_list.txt` | MIT | — |
+| Words: the 17,484 words of `indiccorp-words.tsv` (CC0) in neither `lexicon.tsv` nor `typed.tsv` nor the held-out set | this repository | CC0 | input list `b0ebba4f…3d9`; model output `f44b4975…c642` |
+
+Steps: `indicxlit_romanize.py` (fairseq 0.12.2, torch 2.1.2 CPU, beam 4, the four best
+spellings) → `indicxlit_finalize.py` (Latin a–z only; the Odia copied from the input, not
+from the model) → `build_xlit_fill.py` (rows, weights, merge). Left out: 332 words with a
+letter the model reads as `<unk>` (mostly U+0B35), 16 outputs that are not a–z, every
+held-out (key, word) pair, every pair the other two sources already have.
+
+```
+lexicon.tsv      = lexicon.tsv.aksharantar-only      + lexicon-common.tsv     + lexicon-xlit.tsv
+lexicon-web.tsv  = lexicon-web.tsv.aksharantar-only  + lexicon-common-web.tsv + lexicon-xlit-web.tsv
+```
+
+The merge keeps the higher weight per (key, word); without `lexicon-xlit*.tsv` it gives
+the earlier `lexicon.tsv` and `lexicon-web.tsv` byte for byte (checked).
+
+| File | Rows | Size | sha256 |
+|---|---|---|---|
+| `core/data/lexicon-xlit.tsv` | 68,660 | 2,724,717 B | `421945711cff271d2013315551e5984cd03fdccd9916487beca3a4abfa4b40d1` |
+| `core/data/lexicon-xlit-web.tsv` | 6,702 | 265,174 B | `13d33f377a6578bedf81cfd22471ec98d62a1b0018bb19ca92317b15244f56a3` |
+| `core/data/lexicon.tsv` (merged) | 847,651 | 35,955,318 B | `6eca98aa8777c165493df47b6b6027803f1816861a9ebec119aaf721b5d01c12` |
+| `core/data/lexicon-web.tsv` (merged) | 129,827 | 4,992,100 B | `3000ea0ac69c20acc251ddc701b7adb317cc8b5803bdfd2999fec39641b06523` |
+
+Precomposed U+0B5C / U+0B5D: 0. The merged-lexicon rows in "Everyday lexicon and the
+merge" above describe the state before this fill.
+
 ## Word pairs (bigrams) for context ranking
 
 Added 2026-10-04 (V2.2) by `tools/build-data/build_bigrams.py` (Python 3 stdlib).
@@ -357,6 +393,18 @@ Pruned from Desh's Odia n-gram model (chat text, 30.08 M tokens).
 | Quality | phrase table pairs: 15 of 21 in the top 3, 10 first |
 | Labels | one row predicts a word labelled offensive in `labels.tsv`; the engine never predicts it (content filter) |
 | Not in | the kids edition; the sloka profile |
+
+## OCR word list (`indiccorp-words.tsv`, 2026-10-15)
+
+The 100,000 most frequent Odia words (letters and signs only) in IndicCorp v2 `or.txt`
+(CC0), with their counts, for the Odia Lens to correct what OCR reads (V4.2). Built by
+`tools/build-data/indiccorp_words.py` from the `count_indiccorp.py` counts (input
+`or.txt` sha256 `42c97403c4a547c6093e38b0cba952be02428070a6ab7986fc509436d4d78fc6`;
+counts file sha256 `6a276baa26bab6383049b56bdadaaf366d4e373ce0d792d9aa89fc4f1fb97d16`).
+
+| File | Rows | Bytes | SHA-256 |
+|---|---|---|---|
+| `core/data/indiccorp-words.tsv` | 100,000 | 2,702,803 | `abe6815b691b311b5c561a97205366f9bb9c608b686d87c87a01051913e5e3aa` |
 
 ## AI-written meanings (`meanings.tsv`, 2026-10-14)
 

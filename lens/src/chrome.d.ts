@@ -9,6 +9,7 @@ declare namespace chrome {
     const id: string;
     const lastError: { message?: string } | undefined;
     function getURL(path: string): string;
+    function openOptionsPage(): Promise<void>;
     function sendMessage<T = unknown>(message: unknown, callback: (response: T | undefined) => void): void;
     interface MessageSender {
       id?: string;
@@ -24,7 +25,10 @@ declare namespace chrome {
     interface Tab {
       id?: number;
       url?: string;
+      windowId?: number;
     }
+    function captureVisibleTab(windowId: number | undefined, options: { format: 'png' | 'jpeg'; quality?: number }): Promise<string>;
+    function create(properties: { url: string; index?: number; openerTabId?: number }): Promise<Tab>;
     function query(info: { active?: boolean; lastFocusedWindow?: boolean; currentWindow?: boolean }): Promise<Tab[]>;
     const onUpdated: {
       addListener(listener: (tabId: number, change: { status?: string }, tab: Tab) => void): void;
@@ -45,10 +49,21 @@ declare namespace chrome {
     function getBadgeText(details: { tabId?: number }): Promise<string>;
     const onClicked: { addListener(listener: (tab: tabs.Tab) => void): void };
   }
+  namespace permissions {
+    function contains(permissions: { origins: string[] }): Promise<boolean>;
+    function request(permissions: { origins: string[] }): Promise<boolean>;
+    function remove(permissions: { origins: string[] }): Promise<boolean>;
+  }
+  namespace offscreen {
+    function createDocument(parameters: { url: string; reasons: string[]; justification: string }): Promise<void>;
+  }
   namespace commands {
     const onCommand: { addListener(listener: (command: string, tab?: tabs.Tab) => void): void };
   }
 }
+
+/** True in the test build (lens/build.mjs --test): the browser check may point translation at its own server. */
+declare const __LENS_TEST__: boolean;
 
 /** esbuild's `text` loader (lens/build.mjs) imports a .tsv file as a string. */
 declare module '*.tsv' {

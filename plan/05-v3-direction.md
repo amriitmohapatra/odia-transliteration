@@ -420,7 +420,7 @@ their trigger occurs.
 | D-2 | Architecture (§4) | Decided 2026-10-04 | Offline core plus an opt-in assist layer |
 | D-3 | Cloud providers that may receive user text or voice | Partly decided 2026-10-04 | Voice: **Sarvam**. Translation: Google or Claude Haiku. The 100-sentence test (§9) picks one. |
 | D-4 | Monthly budget for cloud services | Decided 2026-10-04 | Hard cap **US$20 per month** |
-| D-5 | Replace the "MODERN" dictionary layer (§5) | Decided 2026-10-04 | Yes |
+| D-5 | Replace the "MODERN" dictionary layer (§5) | Decided 2026-10-04 | Yes. **Done 2026-10-15** (V2.7): the `[mt]` rows removed; method changed where measured: Samanantar is CC-BY-NC and BPCC gated, so AI-written meanings (D-13) and Wikidata (CC0) replaced them (`plan/research/v27-modern-layer.md`) |
 | D-6 | Nukta policy for ଜ / ଫ in Urdu and English loans | **Open** | Trigger: the owner reviews 50 loanword examples |
 | D-7 | Lens v1 form (§9) | Decided 2026-10-04 | Browser extension |
 | D-8 | Vercel plan | Decided 2026-10-04 | Hobby until public, then Pro |
