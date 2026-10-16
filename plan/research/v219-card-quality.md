@@ -91,7 +91,28 @@ letter (khaRca for khaRcca, parabaRtii for parabaRttii, byabasthaa printed with 
 names of local places (Hatipala, Chandaka). Sambad and Samaja images are only about
 1,000 px wide, so their OCR is weaker (mean confidence 71-75 against 82-90).
 
-**Next round (planned):** batch 13 from the ePaper words with no card (about 2,000
-common words); a lookup step that tries the doubled-letter spelling (ta → tta, ca → cca)
-when a word has no entry, measured on the same pages before it ships; no parts guess
-for a word that the name lists (Wikidata) or the judges mark as a name.
+**Round 3: the reph fold and meanings batch 13.**
+- Reph fold (commit b77c124): the AI layer's loose key reads a consonant doubled after
+  reph as single, on both sides (kharca finds kharcca). On the ePaper pages 29 cards
+  changed, all right; ok 80.7 → 80.9%. The web-text held set did not change (the sites
+  print the doubled form).
+- Parts guesses for names: no parts-guess word on either set has a Wikidata or CLDR name
+  row, so the card order is not the cause; names need rows (batch 13).
+- Batch 13: 1,973 rows (1,898 words, 75 stems) for the ePaper words with no card or only
+  the 1930s sense, common in IndicCorp (≥ 50). 4 writers, a separate reviewer (11 wrong,
+  161 minor fixes; fragments, OCR misreadings and a coarse word skipped).
+- ePaper pages (now a mining set, so not a fair test): ok 80.9 → 90.5%, no card 11.1 →
+  6.6%, Praharaj only 5.8 → 1.7%.
+- Held set (independent of batch 13): the 107 changed cards judged (95 right, 10 weak,
+  2 wrong; `tools/eval/data/card-judge-round3.tsv`).
+
+| whole held set, by occurrences | right | weak | wrong (misleading) | no meaning | OCR |
+|---|---|---|---|---|---|
+| round 2, batch 12 | 88.4% | 1.5% | 1.9% | 7.7% | 0.4% |
+| round 3, batch 13 + reph fold | **90.1%** | 1.2% | **1.5%** | 6.8% | 0.4% |
+
+Remaining kinds of error: suffix guesses that read clumsily or wrongly ("necessary + me"
+for aabashyakamate, "week + -wide" for a week-long course), local place names
+(Subuddhipur, Nilamadhab as a locality), and given names that are also words (Ashrit).
+Next: the mining set's remaining 1,976 weak words (batch 14), and suffix rows for
+-ମତେ, -ବ୍ୟାପୀ and -ଟି in `verb-endings.tsv` or the endings table.
