@@ -59,6 +59,14 @@ cd mac-lens
   (the tesseract version, or the error), then the last reading. If something does not
   work, send that line.
 
+## If the lens does not show
+
+- The lens has no Dock icon. **✕** only hides it; the app keeps running. Open it again
+  (`open build/OdiaLens.app`, or double-click it in Finder) and the frame comes back.
+- The menu bar item **ଓ** can be hidden behind the camera notch when the menu bar is full.
+  Quit some menu bar apps, or hold ⌘ and drag other icons out to make room.
+- To stop it completely: `killall OdiaLens` in Terminal.
+
 ## How it works
 
 | Part | Does |

@@ -30,6 +30,14 @@ final class AppDelegate: NSObject, NSApplicationDelegate, FrameWindowDelegate {
         frameWindow.settleSoon()
     }
 
+    /// Opening the app while it runs (Finder, `open`, Spotlight) shows the lens again. Without
+    /// this, a lens hidden with ✕ could only come back from the menu bar item, which macOS
+    /// hides behind the camera notch when the menu bar is full.
+    func applicationShouldHandleReopen(_ sender: NSApplication, hasVisibleWindows flag: Bool) -> Bool {
+        if !frameWindow.isVisible { toggleLens() }
+        return true
+    }
+
     // MARK: Menu bar item
 
     private func makeMenu() {

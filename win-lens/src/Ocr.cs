@@ -50,15 +50,24 @@ public static class Ocr
         string tessdata = Path.Combine(AppContext.BaseDirectory, "tessdata");
         var info = new ProcessStartInfo(exe)
         {
-            ArgumentList = { png, outBase, "--tessdata-dir", tessdata, "-l", "ori", "--psm", oneLine ? "13" : "6", "tsv" },
+            // The TSV is asked for with -c, not the "tsv" config file: with --tessdata-dir set to
+            // the app's folder, tesseract looks for configs\tsv there, writes only a .txt file,
+            // and still exits 0.
+            ArgumentList =
+            {
+                png, outBase, "--tessdata-dir", tessdata, "-l", "ori", "--psm", oneLine ? "13" : "6",
+                "-c", "tessedit_create_tsv=1", "-c", "tessedit_create_txt=0",
+            },
             UseShellExecute = false,
             CreateNoWindow = true,
             RedirectStandardError = true,
         };
+        File.Delete(outBase + ".tsv"); // never read the last frame's result
         using var process = Process.Start(info) ?? throw new InvalidOperationException("tesseract did not start.");
         string errors = await process.StandardError.ReadToEndAsync();
         await process.WaitForExitAsync();
         if (process.ExitCode != 0) throw new InvalidOperationException($"tesseract failed: {errors.Trim()}");
+        if (!File.Exists(outBase + ".tsv")) throw new InvalidOperationException($"tesseract gave no TSV output. {errors.Trim()}");
         var lines = Parse(await File.ReadAllTextAsync(outBase + ".tsv"), scale);
         return (lines, await VersionAsync(exe));
     }

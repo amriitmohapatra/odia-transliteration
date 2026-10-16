@@ -65,8 +65,16 @@ enum OCR {
         guard let data = rep.representation(using: .png, properties: [:]) else { throw OCRError.failed("could not make a PNG") }
         try data.write(to: png)
         // Output goes to a file, not a pipe: a long result cannot block the program.
-        _ = try await run(exe, [png.path, base.path, "--tessdata-dir", tessdata.path, "-l", "ori", "--psm", oneLine ? "13" : "6", "tsv"])
-        let text = try String(contentsOf: tsv, encoding: .utf8)
+        // The TSV is asked for with -c, not with the `tsv` config file: with --tessdata-dir
+        // set to the app's folder, tesseract looks for configs/tsv there, does not find it,
+        // writes only a .txt file, and still exits 0.
+        let errors = try await run(exe, [png.path, base.path, "--tessdata-dir", tessdata.path, "-l", "ori",
+                                         "--psm", oneLine ? "13" : "6",
+                                         "-c", "tessedit_create_tsv=1", "-c", "tessedit_create_txt=0"],
+                                   stderr: true)
+        guard let text = try? String(contentsOf: tsv, encoding: .utf8) else {
+            throw OCRError.failed("no TSV output. \(errors.trimmingCharacters(in: .whitespacesAndNewlines))")
+        }
         if versionText == nil {
             let v = (try? await run(exe, ["--version"])) ?? ""
             versionText = v.split(separator: "\n").first.map(String.init) ?? "tesseract"
@@ -108,8 +116,9 @@ enum OCR {
         return order.compactMap { lines[$0] }
     }
 
+    /// Runs the program; gives its output (or, with `stderr`, its error output).
     @discardableResult
-    static func run(_ exe: String, _ arguments: [String]) async throws -> String {
+    static func run(_ exe: String, _ arguments: [String], stderr: Bool = false) async throws -> String {
         try await withCheckedThrowingContinuation { (done: CheckedContinuation<String, Error>) in
             let process = Process()
             process.executableURL = URL(fileURLWithPath: exe)
@@ -122,7 +131,7 @@ enum OCR {
                 let o = out.fileHandleForReading.readDataToEndOfFile()
                 let e = err.fileHandleForReading.readDataToEndOfFile()
                 if p.terminationStatus == 0 {
-                    done.resume(returning: String(decoding: o, as: UTF8.self))
+                    done.resume(returning: String(decoding: stderr ? e : o, as: UTF8.self))
                 } else {
                     done.resume(throwing: OCRError.failed(String(decoding: e, as: UTF8.self)))
                 }
