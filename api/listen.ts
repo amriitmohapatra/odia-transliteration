@@ -37,6 +37,6 @@ export async function POST(request: Request): Promise<Response> {
   }
   const audio = new Uint8Array(await request.arrayBuffer());
   const result = await listen(audio, request.headers.get('content-type'), process.env);
-  if (!result.ok) return Response.json({ ok: false, error: result.error }, { status: result.status, headers: headers(origin) });
+  if (result.ok === false) return Response.json({ ok: false, error: result.error }, { status: result.status, headers: headers(origin) });
   return Response.json(result, { headers: headers(origin) });
 }
