@@ -1,0 +1,64 @@
+# 60 random rows of Appv2/src/dictionary/english-ai.tsv (AI-written English -> Odia, 2026-11-03).
+# Owner check (C-16): add a third column: ok | wrong | better: <Odia word>. Claude then
+# fixes the rows, and the share marked ok tells how much of the list to trust.
+# english<TAB>odia options (everyday word first)<TAB>your verdict
+apologise	କ୍ଷମା ମାଗିବା	
+bangle	ଚୁଡ଼ି|ବାଲା	
+bengal	ବଙ୍ଗ|ବଙ୍ଗଳା	
+bengaluru	ବେଙ୍ଗାଲୁରୁ	
+bitter	ପିତା|ତିକ୍ତ	
+bowl	ବାଟି|କଂସା	
+cattle	ଗୋରୁ|ଗୋରୁଗାଈ	
+christian	ଖ୍ରୀଷ୍ଟିଆନ|ଖ୍ରୀଷ୍ଟାନ	
+clever	ଚାଲାକ|ବୁଦ୍ଧିମାନ|ଚତୁର	
+crop	ଫସଲ	
+crowd	ଭିଡ଼|ଜନତା	
+crown	ମୁକୁଟ	
+cuttack	କଟକ	
+dahi bara	ଦହିବରା	
+daughter	ଝିଅ|କନ୍ୟା	
+difficulty	ଅସୁବିଧା|କଷ୍ଟ	
+do	କରିବା|କର	
+dola purnima	ଦୋଳ ପୂର୍ଣ୍ଣିମା	
+earth	ପୃଥିବୀ|ମାଟି|ଧରିତ୍ରୀ	
+expect	ଆଶା କରିବା	
+explain	ବୁଝାଇବା|ବ୍ୟାଖ୍ୟା	
+fall	ପଡ଼ିବା|ଖସିବା	
+fish curry	ମାଛ ତରକାରୀ|ମାଛ ଝୋଳ	
+fix	ଠିକ କରିବା|ମରାମତି	
+french	ଫରାସୀ|ଫ୍ରେଞ୍ଚ	
+ganesh	ଗଣେଶ	
+garden	ବଗିଚା|ବାଡ଼ି|ଉଦ୍ୟାନ	
+grade	ଶ୍ରେଣୀ|ଗ୍ରେଡ|ମାନ	
+grow	ବଢ଼ିବା	
+he	ସେ|ସିଏ	
+home	ଘର|ଗୃହ	
+however	ତଥାପି|କିନ୍ତୁ	
+intelligent	ବୁଦ୍ଧିମାନ	
+kakara	କାକରା	
+korea	କୋରିଆ	
+lose	ହଜିବା|ହରାଇବା|ହାରିବା	
+music	ସଙ୍ଗୀତ|ବାଜା	
+mustard oil	ସୋରିଷ ତେଲ	
+new moon	ଅମାବାସ୍ୟା|ଅମାବାସ	
+north	ଉତ୍ତର	
+other	ଅନ୍ୟ|ଆର	
+ourselves	ଆମେ ନିଜେ|ନିଜେ	
+policeman	ପୋଲିସ|ପୋଲିସ କର୍ମଚାରୀ	
+relationship	ସମ୍ପର୍କ	
+rice	ଭାତ|ଚାଉଳ|ଧାନ	
+show	ଦେଖାଇବା|ଶୋ	
+soup	ସୁପ|ଝୋଳ	
+sow	ବୁଣିବା	
+specifically	ବିଶେଷ ଭାବେ	
+tamarind	ତେନ୍ତୁଳି	
+temple	ମନ୍ଦିର|ଦେଉଳ	
+text	ପାଠ|ଲେଖା|ଟେକ୍ସଟ	
+tight	ଟାଣ|କଷା	
+towards	ଆଡ଼କୁ|ପ୍ରତି	
+tribe	ଆଦିବାସୀ|ଜନଜାତି	
+twelve	ବାର	
+vomit	ବାନ୍ତି	
+watermelon	ତରଭୁଜ	
+wave	ଢେଉ|ତରଙ୍ଗ	
+weak	ଦୁର୍ବଳ	

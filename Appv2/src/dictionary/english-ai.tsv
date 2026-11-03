@@ -1,0 +1,2274 @@
+# english-ai.tsv: English -> Odia, written by Claude (Anthropic) for this project
+# (2026-11-03, owner: "an extensive addition of common English to Odia words ... use
+# your own trained corpus"). From its own knowledge of Odia; not copied from any
+# dictionary. Every Odia word was checked against the app's word lists (IndicCorp top
+# 100k, the lexicon, the meanings layers): tools/eval/english-words-check.py.
+# Licence: MIT (this project). Status: AI-written, not yet checked by a native speaker;
+# shown after the curated english.tsv entries and labelled as such.
+#
+# Format: english <TAB> odia options, "|"-separated, the everyday word first.
+#   english  lowercase a-z, space, hyphen, apostrophe (a word or a short phrase)
+#   odia     canonical (nukta decomposed); a word or a short phrase
+aarti	ଆରତି
+about	ବିଷୟରେ|ପ୍ରାୟ
+above	ଉପରେ|ଊର୍ଦ୍ଧ୍ୱରେ
+abroad	ବିଦେଶ|ବିଦେଶରେ
+absolute	ସମ୍ପୂର୍ଣ୍ଣ|ପୂର୍ଣ୍ଣ
+absolutely	ସମ୍ପୂର୍ଣ୍ଣ ଭାବେ|ନିଶ୍ଚୟ
+accident	ଦୁର୍ଘଟଣା
+according	ଅନୁସାରେ|ଅନୁଯାୟୀ
+according to	ଅନୁସାରେ|ଅନୁଯାୟୀ
+account	ଖାତା|ଆକାଉଣ୍ଟ|ହିସାବ
+achieve	ହାସଲ କରିବା|ଅର୍ଜନ କରିବା
+achievement	ସଫଳତା|କୃତିତ୍ୱ
+activity	କାର୍ଯ୍ୟକଳାପ|କାମ
+actor	ଅଭିନେତା
+actress	ଅଭିନେତ୍ରୀ
+add	ଯୋଡ଼ିବା|ମିଶାଇବା|ଯୋଗ କରିବା
+addition	ଯୋଗ|ସଂଯୋଗ|ଯୋଡ଼
+address	ଠିକଣା
+admission	ଭର୍ତ୍ତି|ପ୍ରବେଶ
+admit	ସ୍ୱୀକାର କରିବା|ଭର୍ତ୍ତି କରିବା
+advertisement	ବିଜ୍ଞାପନ
+advertising	ବିଜ୍ଞାପନ
+advice	ପରାମର୍ଶ|ଉପଦେଶ
+aeroplane	ଉଡ଼ାଜାହାଜ|ବିମାନ
+affection	ସ୍ନେହ|ମମତା
+afford	ସାମର୍ଥ୍ୟ|କ୍ଷମତା
+afraid	ଭୟଭୀତ
+africa	ଆଫ୍ରିକା
+african	ଆଫ୍ରିକୀୟ|ଆଫ୍ରିକା
+after	ପରେ|ପଛରେ
+afternoon	ଅପରାହ୍ନ|ଖରାବେଳ
+again	ପୁଣି|ପୁନର୍ବାର|ଆଉଥରେ
+age	ବୟସ|ଉମର|ଯୁଗ
+agree	ରାଜି ହେବା|ସହମତ
+agriculture	କୃଷି|ଚାଷ
+aid	ସାହାଯ୍ୟ|ସହାୟତା
+aim	ଲକ୍ଷ୍ୟ|ଉଦ୍ଦେଶ୍ୟ
+air	ପବନ|ବାୟୁ
+airplane	ଉଡ଼ାଜାହାଜ|ବିମାନ
+airport	ବିମାନବନ୍ଦର
+album	ଆଲବମ
+alcohol	ମଦ|ମଦ୍ୟ
+alive	ଜୀବିତ
+all	ସବୁ|ସମସ୍ତ|ସମସ୍ତେ
+allow	ଅନୁମତି ଦେବା|ଦେବା
+almond	ବାଦାମ
+almost	ପ୍ରାୟ
+alone	ଏକା|ଏକୁଟିଆ|ଏକାକୀ
+alphabet	ବର୍ଣ୍ଣମାଳା
+already	ପୂର୍ବରୁ|ଆଗରୁ
+also	ମଧ୍ୟ|ବି
+although	ଯଦିଓ
+always	ସବୁବେଳେ|ସର୍ବଦା|ସଦାବେଳେ
+america	ଆମେରିକା
+american	ଆମେରିକୀୟ|ଆମେରିକା
+amount	ପରିମାଣ|ରାଶି
+and	ଓ|ଏବଂ|ଆଉ
+andhra pradesh	ଆନ୍ଧ୍ରପ୍ରଦେଶ
+anger	ରାଗ|କ୍ରୋଧ
+angry	ରାଗିଛି|କ୍ରୋଧିତ|ରାଗି
+animal	ପଶୁ|ଜୀବଜନ୍ତୁ|ଜନ୍ତୁ
+animals	ପଶୁ|ଜୀବଜନ୍ତୁ
+another	ଆଉ ଏକ|ଅନ୍ୟ
+answer	ଉତ୍ତର|ଉତ୍ତର ଦେବା|ଜବାବ
+ant	ପିମ୍ପୁଡ଼ି
+anybody	କେହି|ଯେକେହି
+anymore	ଆଉ|ଆଉ ନୁହେଁ
+anyone	କେହି|ଯେକେହି
+anything	କିଛି|ଯାହା କିଛି
+anyway	ଯାହା ହେଉ|ଯାହାହେଉ
+anywhere	ଯେଉଁଠି|କେଉଁଠି ବି
+apologise	କ୍ଷମା ମାଗିବା
+apologize	କ୍ଷମା ମାଗିବା
+apparently	ଦେଖାଯାଉଛି|ବୋଧହୁଏ
+apple	ସେଓ
+appreciate	ପ୍ରଶଂସା କରିବା|ଆଦର କରିବା
+april	ଏପ୍ରିଲ
+area	ଅଞ୍ଚଳ|କ୍ଷେତ୍ର
+arisa	ଆରିସା
+arm	ବାହୁ|ହାତ
+army	ସେନା|ଫୌଜ
+around	ଚାରିପାଖେ|ପ୍ରାୟ
+arrange	ସଜାଇବା|ବ୍ୟବସ୍ଥା କରିବା
+arrive	ପହଞ୍ଚିବା
+art	କଳା
+artist	କଳାକାର|ଶିଳ୍ପୀ
+as usual	ସବୁଦିନ ପରି|ସବୁଥର ପରି
+ashram	ଆଶ୍ରମ
+asia	ଏସିଆ
+ask	ପଚାରିବା|ପଚାର|ମାଗିବା
+assam	ଆସାମ
+assembly	ବିଧାନସଭା|ସଭା
+assume	ଅନୁମାନ କରିବା|ଧରିନେବା
+at least	ଅନ୍ତତଃ
+attack	ଆକ୍ରମଣ|ଆକ୍ରମଣ କରିବା
+attention	ଧ୍ୟାନ
+attorney	ଓକିଲ
+august	ଅଗଷ୍ଟ
+aunt	ମାଉସୀ|ପିଉସୀ|ମାଈଁ|ଖୁଡ଼ୀ|ମାମୀ
+australia	ଅଷ୍ଟ୍ରେଲିଆ
+australian	ଅଷ୍ଟ୍ରେଲୀୟ|ଅଷ୍ଟ୍ରେଲିଆ
+auto	ଅଟୋ
+autumn	ଶରତ
+avoid	ଏଡ଼ାଇବା
+award	ପୁରସ୍କାର|ସମ୍ମାନ
+away	ଦୂର|ଦୂରରେ|ଚାଲିଗଲା
+awesome	ଚମତ୍କାର|ବହୁତ ଭଲ
+baby	ଛୁଆ|ଶିଶୁ|ପିଲା
+back	ପିଠି
+backyard	ବାଡ଼ି|ପଛପଟ
+bad	ଖରାପ|ମନ୍ଦ
+bag	ବ୍ୟାଗ|ଥଳି|ମୁଣା
+bake	ସେକିବା
+balabhadra	ବଳଭଦ୍ର
+balasore	ବାଲେଶ୍ୱର
+bali yatra	ବାଲିଯାତ୍ରା
+ball	ବଲ|ଗେଣ୍ଡୁ
+bamboo	ବାଉଁଶ
+banana	କଦଳୀ
+bangalore	ବାଙ୍ଗାଲୋର
+bangladesh	ବାଂଲାଦେଶ
+bangle	ଚୁଡ଼ି|ବାଲା
+bank	ବ୍ୟାଙ୍କ|କୂଳ
+banyan	ବରଗଛ|ବର
+bara	ବରା
+barber	ବାରିକ|ଭଣ୍ଡାରୀ
+baripada	ବାରିପଦା
+basically	ମୂଳତଃ
+basil	ତୁଳସୀ
+basket	ଟୋକେଇ|ଟୋକି
+bath	ଗାଧୁଆ|ସ୍ନାନ
+bathe	ଗାଧୋଇବା
+bathroom	ଗାଧୁଆ ଘର|ବାଥରୁମ
+battery	ବ୍ୟାଟେରୀ
+bay of bengal	ବଙ୍ଗୋପସାଗର
+be	ହେବା|ଥିବା
+beach	ବେଳାଭୂମି|ସମୁଦ୍ରକୂଳ
+beans	ବିନ୍ସ|ଶିମ୍ବ
+bear	ଭାଲୁ|ସହିବା
+beard	ଦାଢ଼ି
+beat	ମାରିବା|ପିଟିବା
+beautiful	ସୁନ୍ଦର|ସୁନ୍ଦରୀ
+beauty	ସୌନ୍ଦର୍ଯ୍ୟ|ସୁନ୍ଦରତା
+because	କାରଣ|କାହିଁକି ନା
+because of	ପାଇଁ|କାରଣରୁ
+become	ହେବା|ହୋଇଯିବା
+bed	ଖଟ|ଶେଯ|ବିଛଣା
+bedroom	ଶୋଇବା ଘର
+bee	ମହୁମାଛି
+beer	ବିୟର|ମଦ
+before	ଆଗରୁ|ପୂର୍ବରୁ|ଆଗରେ
+beggar	ଭିକାରି|ଭିକାରୀ
+begin	ଆରମ୍ଭ କରିବା|ଆରମ୍ଭ
+beginning	ଆରମ୍ଭ|ପ୍ରାରମ୍ଭ
+behavior	ବ୍ୟବହାର|ଆଚରଣ
+behaviour	ବ୍ୟବହାର|ଆଚରଣ
+behind	ପଛରେ|ପଛ
+believe	ବିଶ୍ୱାସ କରିବା|ବିଶ୍ୱାସ
+bell	ଘଣ୍ଟି|ଘଣ୍ଟା
+belly	ପେଟ
+below	ତଳେ|ନିମ୍ନରେ
+bend	ନଇଁବା|ମୋଡ଼ିବା
+bengal	ବଙ୍ଗ|ବଙ୍ଗଳା
+bengali	ବଙ୍ଗଳା|ବଙ୍ଗାଳୀ
+bengaluru	ବେଙ୍ଗାଲୁରୁ
+berhampur	ବ୍ରହ୍ମପୁର
+best wishes	ଶୁଭେଚ୍ଛା|ଶୁଭକାମନା
+betel	ପାନ
+betel leaf	ପାନ
+betel nut	ଗୁଆ
+between	ମଧ୍ୟରେ|ମଝିରେ
+bhagavad gita	ଭଗବଦ୍ ଗୀତା|ଗୀତା
+bhagavata	ଭାଗବତ
+bhajan	ଭଜନ
+bhog	ଭୋଗ
+bhubaneswar	ଭୁବନେଶ୍ୱର
+bible	ବାଇବେଲ
+bicycle	ସାଇକେଲ
+big	ବଡ଼|ବିଶାଳ
+bigger	ବଡ଼|ଅଧିକ ବଡ଼
+bihar	ବିହାର
+bike	ବାଇକ|ସାଇକେଲ
+bill	ବିଲ
+billion	ଶହେ କୋଟି
+bird	ଚଢ଼େଇ|ପକ୍ଷୀ
+birds	ଚଢ଼େଇ|ପକ୍ଷୀ
+birth	ଜନ୍ମ
+birthday	ଜନ୍ମଦିନ
+bite	କାମୁଡ଼ିବା
+bitter	ପିତା|ତିକ୍ତ
+bitter gourd	କଲରା
+black	କଳା
+blacksmith	କମାର
+blade	ବ୍ଲେଡ|ଧାର
+blame	ଦୋଷ|ଦୋଷ ଦେବା
+blanket	କମ୍ବଳ
+bleed	ରକ୍ତ ବାହାରିବା
+bless	ଆଶୀର୍ବାଦ କରିବା|ଆଶୀର୍ବାଦ
+blessing	ଆଶୀର୍ବାଦ
+blind	ଅନ୍ଧ
+block	ବ୍ଲକ
+blog	ବ୍ଲଗ
+blood	ରକ୍ତ|ଲହୁ
+blow	ଫୁଙ୍କିବା|ବହିବା
+blue	ନୀଳ
+board	ବୋର୍ଡ|ପଟା
+boat	ଡଙ୍ଗା|ନୌକା
+body	ଦେହ|ଶରୀର
+boil	ସିଝାଇବା|ଫୁଟାଇବା
+bomb	ବୋମା
+bone	ହାଡ଼|ଅସ୍ଥି
+book	ବହି|ପୁସ୍ତକ
+books	ବହି
+border	ସୀମା|ସୀମାନ୍ତ
+bored	ବିରକ୍ତ
+boring	ବିରକ୍ତିକର
+born	ଜନ୍ମ|ଜନ୍ମିତ
+borrow	ଧାର କରିବା|ଉଧାର ନେବା
+boss	ମାଲିକ|ବସ
+both	ଉଭୟ|ଦୁହେଁ|ଦୁଇଟି
+bottle	ବୋତଲ
+bottle gourd	ଲାଉ
+bottom	ତଳ|ମୂଳ
+bowl	ବାଟି|କଂସା
+box	ବାକ୍ସ|ପେଡ଼ି
+boy	ପିଲା|ବାଳକ|ଟୋକା
+boyfriend	ପ୍ରେମିକ|ସାଙ୍ଗ
+brahma	ବ୍ରହ୍ମା
+brain	ମସ୍ତିଷ୍କ|ମଗଜ
+branch	ଡାଳ|ଶାଖା
+brass	ପିତ୍ତଳ
+brave	ସାହସୀ|ବୀର
+brazil	ବ୍ରାଜିଲ
+bread	ରୁଟି|ପାଉଁରୁଟି
+break	ଭାଙ୍ଗିବା|ଭଙ୍ଗା|ବିରତି
+breakfast	ଜଳଖିଆ|ସକାଳ ଜଳଖିଆ
+breath	ନିଶ୍ୱାସ|ଶ୍ୱାସ
+breathe	ନିଶ୍ୱାସ ନେବା
+bribe	ଲାଞ୍ଚ
+brick	ଇଟା
+bride	କନିଆଁ|ବଧୂ
+bridegroom	ବର
+bridge	ପୋଲ|ସେତୁ
+bright	ଉଜ୍ଜ୍ୱଳ|ଚମକିଲା
+bring	ଆଣିବା|ଆଣ
+brinjal	ବାଇଗଣ
+britain	ବ୍ରିଟେନ
+british	ବ୍ରିଟିଶ
+broom	ଝାଡ଼ୁ
+brother	ଭାଇ|ଭାଇନା|ଭ୍ରାତା
+brother-in-law	ଶଳା|ଦେଢ଼ଶୁର|ଦିଅର|ଭିଣୋଇ
+brown	ମାଟିଆ|ବାଦାମୀ
+bubble	ଫୋଟକା
+bucket	ବାଲ୍ଟି
+buddha	ବୁଦ୍ଧ
+budget	ବଜେଟ
+buffalo	ମଇଁଷି
+build	ନିର୍ମାଣ କରିବା|ତିଆରି କରିବା|ଗଢ଼ିବା
+bull	ଷଣ୍ଢ|ବଳଦ
+bullock cart	ଶଗଡ଼
+burn	ଜଳିବା|ଜାଳିବା|ପୋଡ଼ିବା
+bury	ପୋତିବା
+bus	ବସ
+bus stand	ବସ ଷ୍ଟାଣ୍ଡ
+business	ବ୍ୟବସାୟ|ବେପାର|କାରବାର
+businessman	ବ୍ୟବସାୟୀ|ବେପାରୀ
+busy	ବ୍ୟସ୍ତ
+but	କିନ୍ତୁ|ମାତ୍ର|ପରନ୍ତୁ
+butter	ଲହୁଣୀ|ବଟର
+butterfly	ପ୍ରଜାପତି
+button	ବଟନ|ବୋତାମ
+buy	କିଣିବା|କିଣ
+bye	ଆସୁଛି|ବିଦାୟ
+cabbage	ବନ୍ଧାକୋବି
+cake	ପିଠା|କେକ
+calcutta	କୋଲକାତା
+calf	ବାଛୁରୀ
+call	ଡାକିବା|ଫୋନ କରିବା|ଡାକ
+calm	ଶାନ୍ତ|ଧୀର
+camel	ଓଟ
+camera	କ୍ୟାମେରା
+can	ପାରିବା|ପାରେ
+canada	କାନାଡା
+cancer	କର୍କଟ|କ୍ୟାନସର
+candle	ମହମବତୀ
+cap	ଟୋପି
+capital	ରାଜଧାନୀ|ପୁଞ୍ଜି
+car	ଗାଡ଼ି|କାର
+car festival	ରଥଯାତ୍ରା
+card	କାର୍ଡ
+care	ଯତ୍ନ|ଚିନ୍ତା
+careful	ସାବଧାନ|ସତର୍କ
+careless	ଅସାବଧାନ
+carpenter	ବଢ଼େଇ
+carrot	ଗାଜର
+carry	ବୋହିବା|ନେଇଯିବା
+cart	ଶଗଡ଼|ଗାଡ଼ି
+case	ମାମଲା|ଘଟଣା|ବାକ୍ସ
+cashew	କାଜୁ
+caste	ଜାତି
+cat	ବିରାଡ଼ି
+catch	ଧରିବା|ଧର
+cattle	ଗୋରୁ|ଗୋରୁଗାଈ
+cauliflower	ଫୁଲକୋବି
+cause	କାରଣ
+cave	ଗୁମ୍ଫା
+celebrate	ପାଳନ କରିବା|ଉତ୍ସବ
+celebration	ଉତ୍ସବ|ପାଳନ
+center	କେନ୍ଦ୍ର|ମଝି
+centre	କେନ୍ଦ୍ର|ମଝି
+century	ଶତାବ୍ଦୀ
+ceremony	ଉତ୍ସବ|ସମାରୋହ
+certainly	ନିଶ୍ଚୟ|ନିଶ୍ଚିତ ଭାବେ
+chain	ଶିକୁଳି|ଚେନ
+chair	ଚେୟାର|ଚୌକି
+chakuli	ଚକୁଳି
+chalk	ଚକ
+chance	ସୁଯୋଗ|ସମ୍ଭାବନା
+change	ବଦଳାଇବା|ପରିବର୍ତ୍ତନ|ବଦଳ
+chapati	ରୁଟି|ଚପାତି
+chapter	ଅଧ୍ୟାୟ
+character	ଚରିତ୍ର
+charger	ଚାର୍ଜର
+chariot	ରଥ
+cheap	ଶସ୍ତା|ସସ୍ତା
+cheat	ଠକିବା|ପ୍ରତାରଣା
+check	ଯାଞ୍ଚ|ଯାଞ୍ଚ କରିବା|ଦେଖିବା
+cheek	ଗାଲ
+cheese	ଛେନା|ପନିର
+chennai	ଚେନ୍ନାଇ
+chest	ଛାତି|ବକ୍ଷ
+chew	ଚୋବାଇବା
+chhattisgarh	ଛତିଶଗଡ଼
+chhena poda	ଛେନାପୋଡ଼
+chicken	କୁକୁଡ଼ା|ଚିକେନ
+chickpea	ବୁଟ
+chief minister	ମୁଖ୍ୟମନ୍ତ୍ରୀ
+child	ପିଲା|ଶିଶୁ|ସନ୍ତାନ
+children	ପିଲାମାନେ|ପିଲାଏ|ଶିଶୁମାନେ
+chili	ଲଙ୍କା
+chilika	ଚିଲିକା
+chilli	ଲଙ୍କା
+chin	ଥୋଡ଼ି
+china	ଚୀନ
+chinese	ଚାଇନିଜ|ଚୀନ
+chocolate	ଚକୋଲେଟ
+choice	ପସନ୍ଦ|ବାଛିବା
+choose	ବାଛିବା|ବାଛ
+christian	ଖ୍ରୀଷ୍ଟିଆନ|ଖ୍ରୀଷ୍ଟାନ
+christmas	ବଡ଼ଦିନ|କ୍ରିସମାସ
+church	ଗିର୍ଜା
+chutney	ଚଟଣି
+cigarette	ସିଗାରେଟ
+cinema	ସିନେମା|ଚଳଚ୍ଚିତ୍ର
+circle	ବୃତ୍ତ|ଗୋଲ
+circumstance	ପରିସ୍ଥିତି
+circumstances	ପରିସ୍ଥିତି
+citizen	ନାଗରିକ
+city	ସହର|ନଗର
+class	ଶ୍ରେଣୀ|କ୍ଲାସ
+classic	ଶାସ୍ତ୍ରୀୟ|ଉତ୍କୃଷ୍ଟ|କ୍ଲାସିକ
+classical	ଶାସ୍ତ୍ରୀୟ|ଧ୍ରୁପଦୀ
+classroom	ଶ୍ରେଣୀଗୃହ
+clean	ସଫା କରିବା|ସଫା|ପରିଷ୍କାର
+cleanliness	ପରିଷ୍କାର ପରିଚ୍ଛନ୍ନତା|ସ୍ୱଚ୍ଛତା
+clear	ସ୍ପଷ୍ଟ|ସଫା|ପରିଷ୍କାର
+clever	ଚାଲାକ|ବୁଦ୍ଧିମାନ|ଚତୁର
+client	ଗ୍ରାହକ
+climate	ଜଳବାୟୁ
+climb	ଚଢ଼ିବା
+clock	ଘଣ୍ଟା
+close	ବନ୍ଦ କରିବା|ବନ୍ଦ|ପାଖ
+closed	ବନ୍ଦ
+cloth	କପଡ଼ା|ଲୁଗା|ବସ୍ତ୍ର
+clothes	ଲୁଗା|ପୋଷାକ|କପଡ଼ା
+cloud	ମେଘ
+clouds	ମେଘ
+coal	କୋଇଲା|ଅଙ୍ଗାର
+cobra	ନାଗ|ଗହମ ସାପ
+cock	କୁକୁଡ଼ା|ଗଞ୍ଜା
+cockroach	ଅସରପା
+coconut	ନଡ଼ିଆ
+coconut offering	ନଡ଼ିଆ
+coffee	କଫି
+coin	ମୁଦ୍ରା|ପଇସା
+cold	ଥଣ୍ଡା|ଶୀତ|ସର୍ଦ୍ଦି
+collect	ସଂଗ୍ରହ କରିବା|ଏକାଠି କରିବା
+collector	ଜିଲ୍ଲାପାଳ|କଲେକ୍ଟର
+college	କଲେଜ|ମହାବିଦ୍ୟାଳୟ
+color	ରଙ୍ଗ|ବର୍ଣ୍ଣ
+colour	ରଙ୍ଗ|ବର୍ଣ୍ଣ
+comb	ପାନିଆ
+combination	ମିଶ୍ରଣ|ସଂଯୋଗ
+come	ଆସିବା|ଆସ|ଆ
+comfortable	ଆରାମଦାୟକ|ଆରାମରେ
+committee	କମିଟି|ସମିତି
+common	ସାଧାରଣ|ସାମାନ୍ୟ
+company	କମ୍ପାନୀ|ସଙ୍ଗ
+compare	ତୁଳନା କରିବା|ତୁଳନା
+complain	ଅଭିଯୋଗ କରିବା
+complaint	ଅଭିଯୋଗ
+complete	ସମ୍ପୂର୍ଣ୍ଣ|ପୂରା
+computer	କମ୍ପ୍ୟୁଟର
+concept	ଧାରଣା
+concert	ସଙ୍ଗୀତ ସନ୍ଧ୍ୟା|କନସର୍ଟ
+conch	ଶଙ୍ଖ
+condition	ଅବସ୍ଥା|ସର୍ତ୍ତ
+confirm	ନିଶ୍ଚିତ କରିବା
+confirmed	ନିଶ୍ଚିତ
+congratulations	ଅଭିନନ୍ଦନ|ଶୁଭେଚ୍ଛା
+connect	ଯୋଡ଼ିବା|ସଂଯୋଗ
+constant	ସ୍ଥିର|ନିରନ୍ତର
+contain	ଧାରଣ କରିବା|ଥିବା
+contemporary	ସମସାମୟିକ|ଆଧୁନିକ
+continue	ଜାରି ରଖିବା|ଚାଲୁ ରଖିବା
+cook	ରୋଷେୟା|ରାନ୍ଧିବା
+cooked rice	ଭାତ
+copper	ତମ୍ବା
+copy	ନକଲ|କପି
+corner	କୋଣ|କଣ
+correct	ଠିକ|ସଠିକ
+corruption	ଦୁର୍ନୀତି
+cost	ଖର୍ଚ୍ଚ|ମୂଲ୍ୟ|ଦାମ
+costly	ମହଙ୍ଗା|ଦାମୀ
+cottage cheese	ଛେନା
+cotton	କପା|ତୁଳା
+cough	କାଶ|କାଶିବା
+count	ଗଣିବା|ଗଣନା
+country	ଦେଶ|ରାଷ୍ଟ୍ର
+courage	ସାହସ
+court	କୋର୍ଟ|ଅଦାଲତ
+courtyard	ଅଗଣା|ଦାଣ୍ଡ
+cousin	ମାମୁଁ ପୁଅ|ଦାଦା ପୁଅ|ମାଉସୀ ପୁଅ
+cover	ଘୋଡ଼ାଇବା|ଆବରଣ
+cow	ଗାଈ|ଗାଭୀ|ଗୋରୁ|ଧେନୁ
+crab	କଙ୍କଡ଼ା
+crash	ଦୁର୍ଘଟଣା|ଧକ୍କା
+crazy	ପାଗଳ|ବାୟା
+cricket	କ୍ରିକେଟ
+crime	ଅପରାଧ
+crocodile	କୁମ୍ଭୀର
+crop	ଫସଲ
+crore	କୋଟି
+cross	ପାର ହେବା|କ୍ରସ
+crow	କାଉ
+crowd	ଭିଡ଼|ଜନତା
+crown	ମୁକୁଟ
+cruel	ନିଷ୍ଠୁର|ନିର୍ଦ୍ଦୟ
+cry	କାନ୍ଦିବା|କାନ୍ଦ
+cucumber	କାକୁଡ଼ି
+culture	ସଂସ୍କୃତି
+cup	କପ|ଗିନା
+cupboard	ଆଲମାରି
+curd	ଦହି
+curd rice	ଦହି ପଖାଳ
+curious	କୌତୂହଳୀ
+current	କରେଣ୍ଟ|ବର୍ତ୍ତମାନର|ସ୍ରୋତ
+curry	ତରକାରୀ|ତିଅଣ
+curse	ଅଭିଶାପ|ଶାପ
+curtain	ପରଦା
+custom	ପ୍ରଥା|ରୀତି
+customer	ଗ୍ରାହକ
+cut	କାଟିବା|କାଟ
+cute	ସୁନ୍ଦର|ଗେହ୍ଲା
+cuttack	କଟକ
+cycle	ସାଇକେଲ|ଚକ୍ର
+cyclone	ବାତ୍ୟା|ଘୂର୍ଣ୍ଣିବାତ୍ୟା
+dad	ବାପା|ନାନା
+dahi bara	ଦହିବରା
+daily	ଦୈନିକ|ପ୍ରତିଦିନ
+dal	ଡାଲି
+dalma	ଡାଲମା
+dance	ନାଚିବା|ନାଚ|ନୃତ୍ୟ
+dancer	ନର୍ତ୍ତକ|ନର୍ତ୍ତକୀ
+danger	ବିପଦ
+dangerous	ବିପଦଜନକ
+dark	ଅନ୍ଧାର|କଳା|ଗାଢ଼
+darkness	ଅନ୍ଧାର|ଅନ୍ଧକାର
+date	ତାରିଖ|ଖଜୁରୀ
+dates	ଖଜୁରୀ
+daughter	ଝିଅ|କନ୍ୟା
+daughter-in-law	ବୋହୂ|ବୋହୁ
+dawn	ଭୋର|ପାହାନ୍ତି|ଉଷା
+day	ଦିନ|ଦିବସ
+day after tomorrow	ପଅରଦିନ
+days	ଦିନ
+dead	ମୃତ|ମରିଛି
+deaf	କାଲ|ବଧିର
+dear	ପ୍ରିୟ|ଗେହ୍ଲା
+death	ମୃତ୍ୟୁ|ମରଣ
+debt	ଋଣ|କରଜ
+december	ଡିସେମ୍ବର
+decide	ସ୍ଥିର କରିବା|ନିଷ୍ପତ୍ତି ନେବା
+decision	ନିଷ୍ପତ୍ତି
+decorate	ସଜାଇବା
+decrease	କମିବା|ହ୍ରାସ
+deep	ଗଭୀର|ଗହିରିଆ
+deepavali	ଦୀପାବଳି
+deer	ହରିଣ
+defeat	ପରାଜୟ|ହାର
+defence	ପ୍ରତିରକ୍ଷା|ସୁରକ୍ଷା
+defense	ପ୍ରତିରକ୍ଷା|ସୁରକ୍ଷା
+definition	ସଂଜ୍ଞା|ପରିଭାଷା
+delhi	ଦିଲ୍ଲୀ
+delicious	ସ୍ୱାଦିଷ୍ଟ|ସୁଆଦିଆ
+deliver	ପହଞ୍ଚାଇବା|ପ୍ରସବ
+depend	ନିର୍ଭର କରିବା
+deputy	ଉପ|ଡେପୁଟି
+describe	ବର୍ଣ୍ଣନା କରିବା|ବର୍ଣ୍ଣନା
+desert	ମରୁଭୂମି
+deserve	ଯୋଗ୍ୟ|ପାଇବା ଯୋଗ୍ୟ
+desire	ଇଚ୍ଛା|ବାସନା
+desk	ଡେସ୍କ|ଟେବୁଲ
+destiny	ଭାଗ୍ୟ|ନିୟତି
+destroy	ନଷ୍ଟ କରିବା|ଧ୍ୱଂସ କରିବା
+develop	ବିକାଶ କରିବା|ବଢ଼ାଇବା
+development	ବିକାଶ|ଉନ୍ନୟନ
+devil	ଶୟତାନ|ରାକ୍ଷସ
+devotee	ଭକ୍ତ
+devotion	ଭକ୍ତି
+dew	କାକର|ଶିଶିର
+dhoti	ଧୋତି|ଲୁଗା
+diabetes	ମଧୁମେହ|ସୁଗାର
+diary	ଡାଏରୀ|ଦିନଲିପି
+dictionary	ଅଭିଧାନ|ଶବ୍ଦକୋଷ
+die	ମରିବା|ମୃତ୍ୟୁ
+die out	ଲୋପ ପାଇବା
+different	ଅଲଗା|ଭିନ୍ନ
+difficult	କଷ୍ଟକର|କଠିନ
+difficulty	ଅସୁବିଧା|କଷ୍ଟ
+dig	ଖୋଳିବା
+dinner	ରାତି ଖାଇବା|ରାତ୍ରି ଭୋଜନ
+dirty	ମଇଳା
+disappear	ହଜିଯିବା|ଅଦୃଶ୍ୟ ହେବା
+disciple	ଶିଷ୍ୟ
+discover	ଆବିଷ୍କାର କରିବା|ଖୋଜି ପାଇବା
+discovery	ଆବିଷ୍କାର
+discuss	ଆଲୋଚନା କରିବା|ଆଲୋଚନା
+discussion	ଆଲୋଚନା
+disease	ରୋଗ|ବେମାରି
+dish	ଥାଳି|ବ୍ୟଞ୍ଜନ
+distance	ଦୂରତା|ଦୂରତ୍ୱ
+district	ଜିଲ୍ଲା
+district collector	ଜିଲ୍ଲାପାଳ
+divide	ଭାଗ କରିବା|ବାଣ୍ଟିବା
+divorce	ଛାଡ଼ପତ୍ର
+diwali	ଦୀପାବଳି
+do	କରିବା|କର
+doctor	ଡାକ୍ତର|ଚିକିତ୍ସକ
+dog	କୁକୁର
+dola purnima	ଦୋଳ ପୂର୍ଣ୍ଣିମା
+doll	କଣ୍ଢେଇ
+dolphin	ଡଲଫିନ|ଶିଶୁମାର
+donkey	ଗଧ
+door	କବାଟ|ଦ୍ୱାର|ଦୁଆର
+dosa	ଦୋସା
+double	ଦୁଇଗୁଣ|ଦ୍ୱିଗୁଣ
+doubt	ସନ୍ଦେହ
+down	ତଳ|ତଳକୁ
+draw	ଆଙ୍କିବା|ଟାଣିବା
+dream	ସ୍ୱପ୍ନ|ସପନ
+dress	ପୋଷାକ|ଲୁଗା|ଫ୍ରକ
+dress up	ସଜେଇ ହେବା|ସଜ ହେବା
+drink	ପିଇବା|ପିଅ|ପାନୀୟ
+drinking water	ପିଇବା ପାଣି
+drive	ଚଳାଇବା|ଗାଡ଼ି ଚଳାଇବା
+driver	ଡ୍ରାଇଭର|ଚାଳକ
+drought	ମରୁଡ଼ି
+drown	ବୁଡ଼ି ମରିବା|ବୁଡ଼ିବା
+drum	ଢୋଲ|ଡ୍ରମ|ମୃଦଙ୍ଗ
+drumstick	ସଜନା ଛୁଇଁ|ସଜନା
+drunk	ମଦୁଆ|ନିଶାଗ୍ରସ୍ତ
+dry	ଶୁଖିବା|ଶୁଖିଲା|ଶୁଖାଇବା
+dubai	ଦୁବାଇ
+duck	ବତକ|ହଂସ
+dumb	ମୂକ|ବୋକା
+durga	ଦୁର୍ଗା
+durga puja	ଦୁର୍ଗାପୂଜା
+during	ସମୟରେ|ବେଳେ
+dussehra	ଦଶହରା
+dust	ଧୂଳି
+duty	କର୍ତ୍ତବ୍ୟ|ଡ୍ୟୁଟି
+each	ପ୍ରତ୍ୟେକ|ପ୍ରତି
+eagle	ଚିଲ|ଗରୁଡ଼
+ear	କାନ|କର୍ଣ୍ଣ
+early	ଶୀଘ୍ର|ଆଗୁଆ|ସକାଳୁ
+earn	ରୋଜଗାର କରିବା|ଅର୍ଜନ କରିବା
+earring	କାନଫୁଲ
+earth	ପୃଥିବୀ|ମାଟି|ଧରିତ୍ରୀ
+earthquake	ଭୂମିକମ୍ପ
+easier	ସହଜ|ଅଧିକ ସହଜ
+east	ପୂର୍ବ
+easy	ସହଜ|ସରଳ
+eat	ଖାଇବା|ଖାଅ|ଖା
+edge	ଧାର|କଡ଼
+education	ଶିକ୍ଷା
+effect	ପ୍ରଭାବ|ଫଳ
+effort	ଚେଷ୍ଟା|ପ୍ରୟାସ|ଉଦ୍ୟମ
+egg	ଅଣ୍ଡା
+eggplant	ବାଇଗଣ
+eggs	ଅଣ୍ଡା
+ego	ଅହଙ୍କାର|ଅହମିକା
+eid	ଇଦ
+eight	ଆଠ
+eighteen	ଅଠର
+eighty	ଅଶୀ
+either	ଯେକୌଣସି|ଦୁଇଟିରୁ ଗୋଟିଏ
+elbow	କହୁଣି
+elder	ବଡ଼|ବୟସ୍କ|ମୁରବି
+elder brother	ଭାଇନା|ବଡ଼ ଭାଇ
+elder sister	ଅପା|ନାନୀ|ଦିଦି
+election	ନିର୍ବାଚନ|ଭୋଟ
+electricity	ବିଦ୍ୟୁତ|କରେଣ୍ଟ
+element	ଉପାଦାନ|ମୌଳିକ
+elements	ଉପାଦାନ
+elephant	ହାତୀ|ଗଜ
+eleven	ଏଗାର
+else	ଅନ୍ୟ|ଆଉ
+email	ଇମେଲ
+empty	ଖାଲି|ଶୂନ୍ୟ
+end	ଶେଷ|ଅନ୍ତ|ସମାପ୍ତ
+enemy	ଶତ୍ରୁ
+energy	ଶକ୍ତି
+engineer	ଇଞ୍ଜିନିୟର|ଯନ୍ତ୍ରୀ
+england	ଇଂଲଣ୍ଡ
+english	ଇଂରାଜୀ
+enjoy	ଉପଭୋଗ କରିବା|ମଜା ନେବା|ଆନନ୍ଦ
+enough	ଯଥେଷ୍ଟ|ବହୁତ ହେଲା
+ensure	ନିଶ୍ଚିତ କରିବା
+enter	ପଶିବା|ପ୍ରବେଶ କରିବା
+envelope	ଲଫାପା|ଖାମ
+environment	ପରିବେଶ
+environmental	ପରିବେଶ
+episode	ଏପିସୋଡ|ପର୍ବ|ଘଟଣା
+equal	ସମାନ|ସମ
+equivalent	ସମାନ|ସମତୁଲ୍ୟ
+error	ଭୁଲ|ତ୍ରୁଟି
+escape	ଖସିଯିବା|ପଳାଇବା
+estate	ସମ୍ପତ୍ତି|ଜମିଦାରୀ
+europe	ୟୁରୋପ
+even	ମଧ୍ୟ|ବି|ଏପରିକି
+evening	ସନ୍ଧ୍ୟା|ସଞ୍ଜ
+event	ଘଟଣା|କାର୍ଯ୍ୟକ୍ରମ
+eventually	ଶେଷରେ|ଶେଷକୁ
+every	ପ୍ରତ୍ୟେକ|ପ୍ରତି|ସବୁ
+every day	ପ୍ରତିଦିନ|ରୋଜ
+everybody	ସମସ୍ତେ|ସବୁଲୋକ
+everyday	ଦୈନନ୍ଦିନ|ପ୍ରତିଦିନ
+everyone	ସମସ୍ତେ|ସବୁଲୋକ
+everything	ସବୁକିଛି|ସବୁ
+everywhere	ସବୁଠି|ସବୁଆଡ଼େ|ସର୍ବତ୍ର
+exact	ଠିକ|ସଠିକ
+exam	ପରୀକ୍ଷା
+examination	ପରୀକ୍ଷା
+examine	ପରୀକ୍ଷା କରିବା|ଯାଞ୍ଚ କରିବା
+example	ଉଦାହରଣ
+excellent	ଉତ୍କୃଷ୍ଟ|ବହୁତ ଭଲ|ଚମତ୍କାର
+excited	ଉତ୍ସାହିତ
+excuse	ବାହାନା
+excuse me	କ୍ଷମା କରିବେ|ଶୁଣନ୍ତୁ
+exist	ଥିବା|ରହିବା|ଅସ୍ତିତ୍ୱ
+existence	ଅସ୍ତିତ୍ୱ
+existing	ବର୍ତ୍ତମାନର|ଥିବା
+exit	ବାହାରିବା|ପ୍ରସ୍ଥାନ
+expect	ଆଶା କରିବା
+expensive	ମହଙ୍ଗା|ଦାମୀ
+experience	ଅନୁଭୂତି|ଅଭିଜ୍ଞତା
+explain	ବୁଝାଇବା|ବ୍ୟାଖ୍ୟା
+eye	ଆଖି|ଚକ୍ଷୁ|ନୟନ
+eyebrow	ଭ୍ରୁ|ଆଖିପତା
+eyes	ଆଖି
+face	ମୁହଁ|ମୁଖ
+fact	ତଥ୍ୟ|ସତ୍ୟ
+factory	କାରଖାନା
+fail	ଫେଲ ହେବା|ବିଫଳ ହେବା
+failure	ବିଫଳତା|ଅସଫଳତା
+fair	ମେଳା|ନ୍ୟାୟ|ଗୋରା
+faith	ବିଶ୍ୱାସ|ଶ୍ରଦ୍ଧା
+fake	ନକଲି|ମିଛ
+fall	ପଡ଼ିବା|ଖସିବା
+false	ମିଛ|ଅସତ୍ୟ
+family	ପରିବାର|ଘର
+famous	ପ୍ରସିଦ୍ଧ|ବିଖ୍ୟାତ
+fan	ପଙ୍ଖା|ଫ୍ୟାନ
+fantastic	ଚମତ୍କାର|ଅଦ୍ଭୁତ
+fantasy	କଳ୍ପନା
+far	ଦୂର|ଦୂରରେ
+far away	ବହୁତ ଦୂର|ଦୂରରେ
+farm	ଚାଷ ଜମି|ଫାର୍ମ|ଖେତ
+farmer	ଚାଷୀ|କୃଷକ
+fast	ଶୀଘ୍ର|ଦ୍ରୁତ|ଉପବାସ
+faster	ଶୀଘ୍ର|ଅଧିକ ଦ୍ରୁତ
+fasting	ଉପବାସ|ବ୍ରତ
+fat	ମୋଟା|ଚର୍ବି
+fate	ଭାଗ୍ୟ|କପାଳ|ନିୟତି
+father	ବାପା|ପିତା|ବାପ
+father-in-law	ଶ୍ୱଶୁର
+fault	ଦୋଷ|ତ୍ରୁଟି
+favor	ଅନୁଗ୍ରହ|ପକ୍ଷ|ସାହାଯ୍ୟ
+favorite	ପ୍ରିୟ|ପସନ୍ଦର
+favour	ଅନୁଗ୍ରହ|ପକ୍ଷ|ସାହାଯ୍ୟ
+favourite	ପ୍ରିୟ|ପସନ୍ଦର
+fear	ଭୟ|ଡର
+feast	ଭୋଜି|ଭୋଜ
+february	ଫେବୃଆରୀ
+fee	ଶୁଳ୍କ|ଫିସ
+feel	ଅନୁଭବ କରିବା|ଲାଗିବା
+feet	ପାଦ
+fence	ବାଡ଼|ଘେରା
+fertiliser	ସାର
+fertilizer	ସାର
+festival	ପର୍ବ|ଉତ୍ସବ
+fever	ଜ୍ୱର
+few	କମ|ଅଳ୍ପ କେତେକ
+field	ବିଲ|କ୍ଷେତ|ପଡ଼ିଆ
+fifteen	ପନ୍ଦର
+fifth	ପଞ୍ଚମ
+fifty	ପଚାଶ
+fight	ଝଗଡ଼ା|ଲଢ଼େଇ|ଯୁଦ୍ଧ
+figure	ସଂଖ୍ୟା|ଆକୃତି|ଚିତ୍ର
+fill	ଭରିବା|ଭର୍ତ୍ତି କରିବା
+film	ଫିଲ୍ମ|ଚଳଚ୍ଚିତ୍ର|ସିନେମା
+find	ଖୋଜି ପାଇବା|ପାଇବା|ଖୋଜିବା
+fine	ଭଲ|ଠିକ|ଜରିମାନା
+finger	ଆଙ୍ଗୁଠି
+finish	ଶେଷ କରିବା|ସାରିବା|ଶେଷ
+fire	ନିଆଁ|ଅଗ୍ନି
+firewood	ଜାଳେଣି|କାଠ
+first	ପ୍ରଥମ|ପହିଲା
+fish	ମାଛ|ମତ୍ସ୍ୟ
+fish curry	ମାଛ ତରକାରୀ|ମାଛ ଝୋଳ
+fisherman	ମଛୁଆ|ଧୀବର
+five	ପାଞ୍ଚ
+fix	ଠିକ କରିବା|ମରାମତି
+flag	ପତାକା|ଝଣ୍ଡା
+flame	ଶିଖା|ନିଆଁ
+flattened rice	ଚୁଡ଼ା
+float	ଭାସିବା
+flood	ବନ୍ୟା
+floor	ଚଟାଣ|ମହଲା
+flour	ଅଟା|ମଇଦା
+flower	ଫୁଲ|ପୁଷ୍ପ
+flower garland	ଫୁଲମାଳ
+flowers	ଫୁଲ
+flute	ବଂଶୀ
+fly	ମାଛି|ଉଡ଼ିବା
+fog	କୁହୁଡ଼ି
+fold	ଭାଙ୍ଗିବା|ଗୁଡ଼ାଇବା
+folks	ଲୋକ|ଲୋକମାନେ
+follow	ଅନୁସରଣ କରିବା|ପଛେ ପଛେ ଯିବା
+food	ଖାଦ୍ୟ|ଖାଇବା|ଆହାର
+fool	ବୋକା|ମୂର୍ଖ
+foolish	ବୋକା|ମୂର୍ଖ
+foot	ପାଦ|ଗୋଡ଼
+football	ଫୁଟବଲ
+for	ପାଇଁ|ନିମନ୍ତେ
+forbid	ମନା କରିବା|ନିଷେଧ
+force	ଶକ୍ତି|ବଳ
+forehead	କପାଳ
+foreign	ବିଦେଶୀ|ବିଦେଶ
+foreigner	ବିଦେଶୀ
+forest	ଜଙ୍ଗଲ|ବଣ|ଅରଣ୍ୟ
+forget	ଭୁଲିବା|ଭୁଲିଯିବା
+forgive	କ୍ଷମା କରିବା|କ୍ଷମା
+form	ଫର୍ମ|ରୂପ|ଆକାର
+forty	ଚାଳିଶି
+four	ଚାରି
+fourteen	ଚଉଦ
+fourth	ଚତୁର୍ଥ
+fox	ଶିଆଳ
+fragrance	ସୁଗନ୍ଧ|ବାସ୍ନା
+frame	ଫ୍ରେମ|ଢାଞ୍ଚା
+france	ଫ୍ରାନ୍ସ
+free	ମାଗଣା|ମୁକ୍ତ|ଖାଲି
+freedom	ସ୍ୱାଧୀନତା|ମୁକ୍ତି
+french	ଫରାସୀ|ଫ୍ରେଞ୍ଚ
+fresh	ତାଜା|ସତେଜ
+friday	ଶୁକ୍ରବାର
+friend	ସାଙ୍ଗ|ବନ୍ଧୁ|ସାଥୀ
+friends	ସାଙ୍ଗମାନେ|ସାଙ୍ଗ|ବନ୍ଧୁମାନେ
+friendship	ବନ୍ଧୁତା|ସାଙ୍ଗସାଥୀ
+frog	ବେଙ୍ଗ
+from	ରୁ|ଠାରୁ
+front	ଆଗ|ସାମ୍ନା
+fruit	ଫଳ
+fruits	ଫଳ
+fry	ଭାଜିବା
+full	ପୂର୍ଣ୍ଣ|ଭର୍ତ୍ତି|ପୂରା
+full moon	ପୂର୍ଣ୍ଣିମା|ପୁନେଇ
+fun	ମଜା|ଆନନ୍ଦ
+function	କାର୍ଯ୍ୟକ୍ରମ|ଉତ୍ସବ|କାମ
+funny	ମଜାଳିଆ|ହସିବା କଥା
+future	ଭବିଷ୍ୟତ
+gallery	ଗ୍ୟାଲେରୀ|ଚିତ୍ରଶାଳା
+game	ଖେଳ
+ganesh	ଗଣେଶ
+ganesh puja	ଗଣେଶ ପୂଜା
+ganga	ଗଙ୍ଗା
+ganges	ଗଙ୍ଗା
+ganjam	ଗଞ୍ଜାମ
+garbage	ଅଳିଆ|ଆବର୍ଜନା
+garden	ବଗିଚା|ବାଡ଼ି|ଉଦ୍ୟାନ
+garland	ମାଳ|ମାଳା
+garlic	ରସୁଣ
+gate	ଫାଟକ|ଗେଟ|ଦ୍ୱାର
+gather	ଏକାଠି ହେବା|ଜମା ହେବା
+general	ସାଧାରଣ|ଜେନେରାଲ
+gentle	କୋମଳ|ଭଦ୍ର
+geography	ଭୂଗୋଳ
+german	ଜର୍ମାନ
+germany	ଜର୍ମାନୀ
+get	ପାଇବା|ମିଳିବା
+get up	ଉଠିବା|ଉଠ
+ghee	ଘିଅ
+ghost	ଭୂତ|ପ୍ରେତ
+gift	ଉପହାର|ଭେଟି
+ginger	ଅଦା
+girl	ଝିଅ|ବାଳିକା|ଟୋକୀ
+girlfriend	ପ୍ରେମିକା|ସାଙ୍ଗ
+gita	ଗୀତା
+give	ଦେବା|ଦିଅ
+glad	ଖୁସି
+glass	ଗ୍ଲାସ|କାଚ
+glue	ଅଠା|ଗମ
+go	ଯିବା|ଯାଅ|ଯା
+go away	ଚାଲିଯାଅ|ଦୂର ହୁଅ
+goa	ଗୋଆ
+goal	ଲକ୍ଷ୍ୟ|ଗୋଲ
+goat	ଛେଳି
+god	ଭଗବାନ|ଠାକୁର|ଈଶ୍ୱର|ଦେବତା
+goddess	ଦେବୀ|ମା
+gold	ସୁନା|ସ୍ୱର୍ଣ୍ଣ
+goldsmith	ବଣିଆ|ସୁନାରି
+good	ଭଲ|ଉତ୍ତମ
+good morning	ଶୁଭ ସକାଳ|ସୁପ୍ରଭାତ
+good night	ଶୁଭ ରାତ୍ରି
+goodbye	ବିଦାୟ|ଆସୁଛି
+government	ସରକାର
+governor	ରାଜ୍ୟପାଳ
+grade	ଶ୍ରେଣୀ|ଗ୍ରେଡ|ମାନ
+gram	ବୁଟ
+grammar	ବ୍ୟାକରଣ
+granddaughter	ନାତୁଣୀ
+grandfather	ଜେଜେବାପା|ଅଜା|ଦାଦା
+grandmother	ଜେଜେମା|ଆଈ
+grandson	ନାତି
+grapes	ଅଙ୍ଗୁର
+grass	ଘାସ
+gravy	ଝୋଳ
+gray	ଧୂସର
+great	ମହାନ|ବହୁତ ଭଲ|ବଡ଼
+greed	ଲୋଭ
+greedy	ଲୋଭୀ
+greek	ଗ୍ରୀକ
+green	ସବୁଜ
+greens	ଶାଗ
+greet	ନମସ୍କାର କରିବା|ସ୍ୱାଗତ କରିବା
+grey	ଧୂସର
+grief	ଶୋକ|ଦୁଃଖ
+groom	ବର
+groundnut	ଚିନାବାଦାମ
+group	ଦଳ|ଗୋଷ୍ଠୀ|ଗ୍ରୁପ
+grow	ବଢ଼ିବା
+guava	ପିଜୁଳି
+guess	ଅନୁମାନ|ଅନୁମାନ କରିବା
+guest	ଅତିଥି|ବନ୍ଧୁ|କୁଣିଆ
+guilty	ଦୋଷୀ
+gujarat	ଗୁଜରାଟ
+gun	ବନ୍ଧୁକ
+guru	ଗୁରୁ
+guy	ଲୋକ|ଟୋକା
+guys	ଲୋକମାନେ|ସାଙ୍ଗମାନେ
+habit	ଅଭ୍ୟାସ
+hair	ବାଳ|କେଶ
+half	ଅଧା|ଅର୍ଦ୍ଧ
+halwa	ହାଲୁଆ
+hammer	ହାତୁଡ଼ି
+hand	ହାତ|ହସ୍ତ
+handsome	ସୁନ୍ଦର|ସୁପୁରୁଷ
+hang	ଟାଙ୍ଗିବା|ଝୁଲିବା
+hanuman	ହନୁମାନ
+happen	ଘଟିବା|ହେବା
+happiness	ଖୁସି|ସୁଖ|ଆନନ୍ଦ
+happy	ଖୁସି|ଆନନ୍ଦିତ|ସୁଖୀ
+happy birthday	ଜନ୍ମଦିନର ଶୁଭେଚ୍ଛା
+hard	କଠିନ|ଟାଣ|କଷ୍ଟକର
+hard work	ପରିଶ୍ରମ
+harder	କଷ୍ଟକର|ଅଧିକ କଷ୍ଟ
+harvest	ଅମଳ|ଫସଲ କାଟିବା|ଫସଲ
+hat	ଟୋପି
+hate	ଘୃଣା|ଘୃଣା କରିବା
+have	ଅଛି|ଥିବା|ପାଖରେ ଅଛି
+he	ସେ|ସିଏ
+head	ମୁଣ୍ଡ|ମସ୍ତକ
+headache	ମୁଣ୍ଡବିନ୍ଧା
+heal	ଭଲ ହେବା|ଆରୋଗ୍ୟ
+health	ସ୍ୱାସ୍ଥ୍ୟ
+healthy	ସୁସ୍ଥ|ସ୍ୱାସ୍ଥ୍ୟବାନ
+hear	ଶୁଣିବା|ଶୁଣ
+heart	ହୃଦୟ|ହୃତପିଣ୍ଡ|ମନ
+heat	ଗରମ|ଉତ୍ତାପ|ଖରା|ତାପ
+heaven	ସ୍ୱର୍ଗ
+heavy	ଭାରି|ଓଜନିଆ
+heel	ଗୋଇଠି
+height	ଉଚ୍ଚତା
+hell	ନର୍କ
+hello	ନମସ୍କାର|ହେଲୋ
+help	ସାହାଯ୍ୟ|ସାହାଯ୍ୟ କରିବା|ସହାୟତା
+helpful	ସାହାଯ୍ୟକାରୀ|ଉପକାରୀ
+hen	କୁକୁଡ଼ା
+her	ତାଙ୍କର|ତାର|ତାଙ୍କୁ
+here	ଏଠି|ଏଠାରେ|ଏଇଠି
+hi	ନମସ୍କାର|ହାଏ
+hide	ଲୁଚିବା|ଲୁଚାଇବା
+high	ଉଚ୍ଚ|ଉପରେ
+hill	ପାହାଡ଼|ଡଙ୍ଗର
+himalaya	ହିମାଳୟ
+himself	ସେ ନିଜେ|ନିଜେ
+hindi	ହିନ୍ଦୀ
+hindu	ହିନ୍ଦୁ
+his	ତାଙ୍କର|ତାର
+history	ଇତିହାସ
+hit	ମାରିବା|ଆଘାତ
+hockey	ହକି
+hold	ଧରିବା|ଧର
+hole	ଗାତ|କଣା
+holi	ହୋଲି|ଦୋଳ
+holiday	ଛୁଟି
+home	ଘର|ଗୃହ
+homework	ଘରକାମ|ହୋମୱାର୍କ
+honest	ସଚ୍ଚୋଟ|ସତ୍ୟବାଦୀ
+honey	ମହୁ
+honor	ସମ୍ମାନ|ମାନ
+honour	ସମ୍ମାନ|ମାନ
+hope	ଆଶା|ଭରସା
+horn	ଶିଙ୍ଗ|ହର୍ନ
+horse	ଘୋଡ଼ା|ଅଶ୍ୱ
+hospital	ଡାକ୍ତରଖାନା|ହସ୍ପିଟାଲ
+hot	ଗରମ|ତାତି
+hotel	ହୋଟେଲ
+hour	ଘଣ୍ଟା
+house	ଘର|ଗୃହ|ବାସଭବନ
+how	କେମିତି|କିପରି
+how are you	କେମିତି ଅଛ|କେମିତି ଅଛନ୍ତି
+how many	କେତେ|କେତୋଟି
+how much	କେତେ
+however	ତଥାପି|କିନ୍ତୁ
+hug	କୁଣ୍ଢାଇବା|ଆଲିଙ୍ଗନ
+huge	ବିଶାଳ|ବହୁତ ବଡ଼
+human	ମଣିଷ|ମାନବ|ମନୁଷ୍ୟ
+hundred	ଶହେ|ଶତ
+hunger	ଭୋକ|କ୍ଷୁଧା
+hungry	ଭୋକିଲା
+hurry	ଶୀଘ୍ର|ତରବର
+hurt	ଦୁଃଖ ଦେବା|ଆଘାତ|କଷ୍ଟ
+husband	ସ୍ୱାମୀ|ଗେରସ୍ତ|ପତି
+hut	କୁଡ଼ିଆ|ଝୁମ୍ପୁଡ଼ି
+hyderabad	ହାଇଦ୍ରାବାଦ
+i	ମୁଁ|ମୋତେ
+ice	ବରଫ
+idea	ଧାରଣା|ଚିନ୍ତା|ଉପାୟ
+idli	ଇଡ଼ଲି
+if	ଯଦି
+ikat	ବାନ୍ଧ
+ill	ଅସୁସ୍ଥ|ବେମାର
+illness	ରୋଗ|ଅସୁସ୍ଥତା
+imagine	କଳ୍ପନା କରିବା|କଳ୍ପନା
+immediate	ତୁରନ୍ତ|ତତ୍କାଳ
+immediately	ତୁରନ୍ତ|ସଙ୍ଗେ ସଙ୍ଗେ
+important	ଗୁରୁତ୍ୱପୂର୍ଣ୍ଣ|ଜରୁରୀ
+impossible	ଅସମ୍ଭବ
+improve	ଉନ୍ନତି କରିବା|ସୁଧାରିବା
+in	ରେ|ଭିତରେ
+in addition	ଏହା ବ୍ୟତୀତ|ଏହା ସହିତ
+in front	ଆଗରେ|ସାମ୍ନାରେ
+incense	ଧୂପ
+incident	ଘଟଣା
+include	ସାମିଲ କରିବା|ଅନ୍ତର୍ଭୁକ୍ତ କରିବା
+income	ଆୟ|ରୋଜଗାର
+increase	ବଢ଼ିବା|ବୃଦ୍ଧି
+incredible	ଅବିଶ୍ୱସନୀୟ|ଚମତ୍କାର
+independence	ସ୍ୱାଧୀନତା
+india	ଭାରତ|ହିନ୍ଦୁସ୍ତାନ
+indian	ଭାରତୀୟ
+inform	ଜଣାଇବା|ସୂଚନା ଦେବା
+information	ସୂଚନା|ତଥ୍ୟ
+injection	ଇଞ୍ଜେକସନ|ଟିକା
+injury	ଆଘାତ|କ୍ଷତ
+injustice	ଅନ୍ୟାୟ
+innocent	ନିରୀହ|ନିର୍ଦ୍ଦୋଷ
+insect	କୀଟ|ପୋକ
+inside	ଭିତରେ|ଭିତର
+instead	ବଦଳରେ|ପରିବର୍ତ୍ତେ
+insult	ଅପମାନ
+intelligent	ବୁଦ୍ଧିମାନ
+interest	ଆଗ୍ରହ|ସୁଧ
+interesting	ଆକର୍ଷଣୀୟ|ମଜାଦାର
+internet	ଇଣ୍ଟରନେଟ
+introduce	ପରିଚୟ କରାଇବା|ଆରମ୍ଭ କରିବା
+introduction	ପରିଚୟ|ଭୂମିକା
+invention	ଉଦ୍ଭାବନ
+invite	ନିମନ୍ତ୍ରଣ କରିବା|ଡାକିବା
+iron	ଲୁହା|ଇସ୍ତ୍ରୀ
+island	ଦ୍ୱୀପ
+issue	ପ୍ରସଙ୍ଗ|ସମସ୍ୟା
+it	ଏହା|ସେଇଟା|ଏଇଟା
+italian	ଇଟାଲୀୟ|ଇଟାଲୀ
+italy	ଇଟାଲୀ
+item	ଜିନିଷ|ବସ୍ତୁ
+itself	ନିଜେ|ସ୍ୱୟଂ
+jackal	ବିଲୁଆ|ଶିଆଳ
+jackfruit	ପଣସ
+jagannath	ଜଗନ୍ନାଥ
+jaggery	ଗୁଡ଼
+jail	ଜେଲ|କାରାଗାର
+jain	ଜୈନ
+january	ଜାନୁଆରୀ
+japan	ଜାପାନ
+japanese	ଜାପାନୀ|ଜାପାନ
+jasmine	ମଲ୍ଲୀ|ଜାଈ
+jealous	ଈର୍ଷାପରାୟଣ|ଈର୍ଷା
+jealousy	ଈର୍ଷା
+jewellery	ଅଳଙ୍କାର|ଗହଣା
+jewelry	ଅଳଙ୍କାର|ଗହଣା
+jharkhand	ଝାଡ଼ଖଣ୍ଡ
+job	ଚାକିରି|କାମ
+join	ଯୋଗ ଦେବା|ମିଶିବା|ଯୋଡ଼ିବା
+joke	ଥଟ୍ଟା|ମଜା
+journalist	ସାମ୍ବାଦିକ
+journey	ଯାତ୍ରା
+joy	ଆନନ୍ଦ|ଖୁସି
+judge	ବିଚାରପତି|ଜଜ
+juice	ରସ|ଜୁସ
+july	ଜୁଲାଇ
+jump	ଡେଇଁବା|ଡିଆଁ
+june	ଜୁନ
+jungle	ଜଙ୍ଗଲ|ବଣ
+junior	କନିଷ୍ଠ|ସାନ
+just	କେବଳ|ଏଇନା|ମାତ୍ର
+justice	ନ୍ୟାୟ
+kakara	କାକରା
+kali	କାଳୀ
+karnataka	କର୍ଣ୍ଣାଟକ
+kartika	କାର୍ତ୍ତିକ
+kashmir	କାଶ୍ମୀର
+keep	ରଖିବା|ରଖ
+kerala	କେରଳ
+key	ଚାବି
+kheer	କ୍ଷୀରି|ପାୟସ
+khichdi	ଖେଚୁଡ଼ି
+khichuri	ଖେଚୁଡ଼ି
+khordha	ଖୋର୍ଦ୍ଧା
+kick	ଲାତ|ଲାତ ମାରିବା
+kidney	ବୃକକ|କିଡ୍ନୀ
+kill	ମାରିବା|ହତ୍ୟା
+kind	ଦୟାଳୁ|ପ୍ରକାର
+kindness	ଦୟା|କରୁଣା
+king	ରାଜା
+kingdom	ରାଜ୍ୟ|ସାମ୍ରାଜ୍ୟ
+kirtan	କୀର୍ତ୍ତନ
+kiss	ଚୁମା|ଚୁମ୍ବନ
+kitchen	ରୋଷେଇ ଘର|ରନ୍ଧାଘର
+kite	ଗୁଡ଼ି|ଚିଲ
+knee	ଆଣ୍ଠୁ
+kneel	ଆଣ୍ଠେଇ ପଡ଼ିବା
+knife	ଛୁରୀ|ଛୁରି
+knit	ବୁଣିବା
+knock	ଠକ ଠକ କରିବା|ବାଡ଼େଇବା
+knot	ଗଣ୍ଠି
+know	ଜାଣିବା|ଜାଣ
+knowledge	ଜ୍ଞାନ
+kolkata	କୋଲକାତା
+konark	କୋଣାର୍କ
+koraput	କୋରାପୁଟ
+korea	କୋରିଆ
+krishna	କୃଷ୍ଣ
+kumar purnima	କୁମାର ପୂର୍ଣ୍ଣିମା
+labor	ଶ୍ରମ|ପରିଶ୍ରମ
+labourer	ମୂଲିଆ|ଶ୍ରମିକ
+ladder	ସିଡ଼ି
+laddu	ଲଡୁ
+ladoo	ଲଡୁ
+lake	ହ୍ରଦ|ସରୋବର
+lakh	ଲକ୍ଷ
+lakshmi	ଲକ୍ଷ୍ମୀ
+lame	ଛୋଟା|ପଙ୍ଗୁ
+lamp	ଦୀପ|ଡିବି|ଲ୍ୟାମ୍ପ
+lamp lighting	ଦୀପ ଜାଳିବା
+land	ଜମି|ଭୂମି|ଦେଶ
+lane	ଗଳି
+language	ଭାଷା
+lap	କୋଳ
+large	ବଡ଼|ବିଶାଳ
+last	ଶେଷ|ଅନ୍ତିମ|ଗତ
+late	ଡେରି|ବିଳମ୍ବ
+later	ପରେ|ପରବର୍ତ୍ତୀ
+laugh	ହସିବା|ହସ
+law	ଆଇନ|ନିୟମ
+lawyer	ଓକିଲ|ଆଇନଜୀବୀ
+lazy	ଅଳସୁଆ|ଆଳସ୍ୟ
+lead	ଆଗେଇ ନେବା|ନେତୃତ୍ୱ|ସୀସା
+leader	ନେତା|ନେତୃତ୍ୱ
+leaf	ପତ୍ର
+leafy vegetable	ଶାଗ
+learn	ଶିଖିବା|ଶିଖ
+least	ଅତି କମ|ସବୁଠୁ କମ
+leather	ଚମଡ଼ା
+leave	ଛାଡ଼ିବା|ଚାଲିଯିବା|ଛୁଟି
+leaves	ପତ୍ର
+left	ବାମ|ବାଁ|ବାକି
+leg	ଗୋଡ଼|ପାଦ
+legislation	ଆଇନ|ବିଧାନ
+legs	ଗୋଡ଼
+lemon	ଲେମ୍ବୁ
+lend	ଧାର ଦେବା|ଉଧାର ଦେବା
+length	ଲମ୍ବ|ଦୈର୍ଘ୍ୟ
+lentil	ଡାଲି
+lentils	ଡାଲି
+leopard	ଚିତାବାଘ
+less	କମ|ଅଳ୍ପ
+lesson	ପାଠ
+let	ଦିଅ|ଦେବା
+letter	ଚିଠି|ଅକ୍ଷର
+level	ସ୍ତର
+library	ପାଠାଗାର|ଲାଇବ୍ରେରୀ
+licence	ଲାଇସେନ୍ସ|ଅନୁମତି ପତ୍ର
+license	ଲାଇସେନ୍ସ|ଅନୁମତି ପତ୍ର
+lick	ଚାଟିବା
+lie	ମିଛ|ମିଛ କହିବା|ଶୋଇବା
+lie down	ଶୋଇବା|ଗଡ଼ିବା
+life	ଜୀବନ|ପ୍ରାଣ
+lift	ଉଠାଇବା|ଲିଫ୍ଟ
+light	ଆଲୁଅ|ଲାଇଟ|ହାଲୁକା|ଆଲୋକ
+light weight	ହାଲୁକା
+lightning	ବିଜୁଳି
+like	ଭଲ ପାଇବା|ପସନ୍ଦ|ଭଳି|ପରି
+like that	ସେମିତି|ସେପରି
+like this	ଏମିତି|ଏପରି
+lime	ଲେମ୍ବୁ|ଚୂନ
+line	ଧାଡ଼ି|ରେଖା|ଲାଇନ
+lingaraj	ଲିଙ୍ଗରାଜ
+lion	ସିଂହ
+lip	ଓଠ
+lips	ଓଠ
+liquor	ମଦ
+list	ତାଲିକା|ସୂଚୀ
+listen	ଶୁଣିବା|ଶୁଣ
+literally	ସତରେ
+little	ଟିକିଏ|ଛୋଟ|ଅଳ୍ପ
+live	ରହିବା|ବଞ୍ଚିବା|ଜୀବନ୍ତ
+liver	ଯକୃତ|କଲିଜା
+lizard	ଝିଟିପିଟି|ଏଣ୍ଡୁଅ
+loan	ଋଣ|କରଜ|ଲୋନ
+local	ସ୍ଥାନୀୟ
+lock	ତାଲା
+long	ଲମ୍ବା|ଦୀର୍ଘ
+longer	ଅଧିକ ଲମ୍ବା|ଆଉ
+look	ଦେଖିବା|ଚାହିଁବା|ଦେଖ
+loose	ଢିଲା
+lord jagannath	ମହାପ୍ରଭୁ ଜଗନ୍ନାଥ|ଜଗନ୍ନାଥ
+lose	ହଜିବା|ହରାଇବା|ହାରିବା
+loss	କ୍ଷତି|ହାନି
+lotus	ପଦ୍ମ
+loud	ଜୋରରେ|ଉଚ୍ଚ ସ୍ୱରରେ
+love	ଭଲ ପାଇବା|ପ୍ରେମ|ସ୍ନେହ|ଭଲପାଇବା
+lover	ପ୍ରେମିକ|ପ୍ରେମିକା
+low	ତଳ|ନିମ୍ନ|କମ
+luck	ଭାଗ୍ୟ|କପାଳ
+lucky	ଭାଗ୍ୟବାନ
+lunch	ମଧ୍ୟାହ୍ନ ଭୋଜନ|ଦିନ ଖାଇବା
+lung	ଫୁସଫୁସ
+lungs	ଫୁସଫୁସ
+machine	ଯନ୍ତ୍ର|ମେସିନ
+mad	ପାଗଳ|ବାୟା
+mahabharata	ମହାଭାରତ
+mahanadi	ମହାନଦୀ
+mahaprasad	ମହାପ୍ରସାଦ
+maharashtra	ମହାରାଷ୍ଟ୍ର
+main	ମୁଖ୍ୟ|ପ୍ରଧାନ
+maintain	ବଜାୟ ରଖିବା|ରକ୍ଷଣାବେକ୍ଷଣ
+makar sankranti	ମକର ସଂକ୍ରାନ୍ତି
+make	ତିଆରି କରିବା|କରିବା|ବନାଇବା
+malaria	ମ୍ୟାଲେରିଆ
+man	ଲୋକ|ପୁରୁଷ|ମଣିଷ
+manda	ମଣ୍ଡା
+mango	ଆମ୍ବ
+manner	ଢଙ୍ଗ|ଶୈଳୀ|ଆଚରଣ
+mantra	ମନ୍ତ୍ର
+many	ଅନେକ|ବହୁତ
+map	ମାନଚିତ୍ର|ନକ୍ସା
+march	ମାର୍ଚ୍ଚ|ପଦଯାତ୍ରା
+mark	ଚିହ୍ନ|ନମ୍ବର
+market	ବଜାର|ହାଟ
+marks	ନମ୍ବର|ଅଙ୍କ
+marriage	ବାହାଘର|ବିବାହ
+marry	ବାହା ହେବା|ବିବାହ କରିବା
+mat	ପଟି|ମସିଣା
+match	ମ୍ୟାଚ|ଖେଳ|ଦିଆସିଲି
+maternal uncle	ମାମୁଁ
+math	ଗଣିତ
+mathematics	ଗଣିତ
+maths	ଗଣିତ
+matter	ବିଷୟ|କଥା|ପଦାର୍ଥ
+may	ମେ|ହୋଇପାରେ
+maybe	ହୁଏତ|ବୋଧହୁଏ
+mayurbhanj	ମୟୂରଭଞ୍ଜ
+me	ମୋତେ|ମୁଁ
+meal	ଖାଇବା|ଭୋଜନ
+meaning	ଅର୍ଥ|ମାନେ
+measure	ମାପିବା|ମାପ
+meat	ମାଂସ
+medal	ପଦକ
+medicine	ଔଷଧ|ଦବା|ଓଷଦ
+meditation	ଧ୍ୟାନ
+meet	ଭେଟିବା|ଦେଖା କରିବା|ସାକ୍ଷାତ
+meeting	ସଭା|ବୈଠକ|ମିଟିଂ
+melt	ତରଳିବା
+member	ସଦସ୍ୟ
+memory	ସ୍ମୃତି|ମନେ
+men	ଲୋକମାନେ|ପୁରୁଷମାନେ
+mention	ଉଲ୍ଲେଖ କରିବା|ଉଲ୍ଲେଖ
+merchant	ବେପାରୀ|ବଣିକ
+mercy	ଦୟା|କରୁଣା
+mess	ଗୋଳମାଳ|ବିଶୃଙ୍ଖଳା
+message	ସନ୍ଦେଶ|ମେସେଜ|ବାର୍ତ୍ତା
+metal	ଧାତୁ
+method	ପଦ୍ଧତି|ଉପାୟ
+mexico	ମେକ୍ସିକୋ
+middle	ମଝି|ମଧ୍ୟ
+midnight	ଅଧରାତି|ମଧ୍ୟରାତ୍ରି
+might	ହୁଏତ|ଶକ୍ତି
+mile	ମାଇଲ
+miles	ମାଇଲ
+milk	କ୍ଷୀର|ଦୁଧ
+million	ନିୟୁତ|ଦଶ ଲକ୍ଷ
+mind	ମନ|ମସ୍ତିଷ୍କ
+mine	ମୋର|ଖଣି
+minister	ମନ୍ତ୍ରୀ
+minute	ମିନିଟ
+mirror	ଦର୍ପଣ|ଆଇନା
+miss	ମନେ ପଡ଼ିବା|ହରାଇବା|ଛାଡ଼ିଯିବା
+mistake	ଭୁଲ|ତ୍ରୁଟି
+mix	ମିଶାଇବା|ମିଶ୍ରଣ
+mixed vegetable	ମିଶା ପରିବା|ଘାଣ୍ଟ
+mla	ବିଧାୟକ
+mobile	ମୋବାଇଲ
+modern	ଆଧୁନିକ
+mom	ମା|ବୋଉ
+moment	ମୁହୂର୍ତ୍ତ|କ୍ଷଣ
+monastery	ମଠ
+monday	ସୋମବାର
+money	ଟଙ୍କା|ପଇସା|ଅର୍ଥ
+monk	ସନ୍ନ୍ୟାସୀ|ଭିକ୍ଷୁ
+monkey	ମାଙ୍କଡ଼|ବାନର
+month	ମାସ
+moon	ଜହ୍ନ|ଚନ୍ଦ୍ର
+more	ଅଧିକ|ଆହୁରି|ଆଉ
+morning	ସକାଳ|ପ୍ରଭାତ
+mosque	ମସଜିଦ
+mosquito	ମଶା
+mother	ମା|ବୋଉ|ମାଆ|ଜନନୀ
+mother-in-law	ଶାଶୁ
+motorcycle	ମଟରସାଇକେଲ|ବାଇକ
+mountain	ପାହାଡ଼|ପର୍ବତ
+mouse	ମୂଷା
+moustache	ନିଶ
+mouth	ପାଟି|ମୁହଁ|ମୁଖ
+move	ଘୁଞ୍ଚିବା|ଘୁଞ୍ଚାଇବା|ଚଳିବା
+movie	ସିନେମା|ଫିଲ୍ମ|ଚଳଚ୍ଚିତ୍ର
+mp	ସାଂସଦ
+much	ବହୁତ|ଅଧିକ
+mud	କାଦୁଅ|ମାଟି
+mum	ମା|ବୋଉ
+mumbai	ମୁମ୍ବାଇ
+museum	ସଂଗ୍ରହାଳୟ|ମ୍ୟୁଜିୟମ
+music	ସଙ୍ଗୀତ|ବାଜା
+muslim	ମୁସଲମାନ
+must	ନିଶ୍ଚୟ|ପଡ଼ିବ
+mustache	ନିଶ
+mustard	ସୋରିଷ
+mustard oil	ସୋରିଷ ତେଲ
+mutton	ଛେଳି ମାଂସ|ମଟନ
+my	ମୋର|ମୋ
+myself	ମୁଁ ନିଜେ|ନିଜେ
+nail	ନଖ|କଣ୍ଟା
+namaste	ନମସ୍କାର
+name	ନାଁ|ନାମ
+narrow	ସଂକୀର୍ଣ୍ଣ|ସରୁ
+nation	ଦେଶ|ରାଷ୍ଟ୍ର|ଜାତି
+natural	ପ୍ରାକୃତିକ|ସ୍ୱାଭାବିକ
+nature	ପ୍ରକୃତି|ସ୍ୱଭାବ
+naughty	ଦୁଷ୍ଟ|ଦୁଷ୍ଟାମି
+navel	ନାଭି
+near	ପାଖ|ପାଖରେ|ନିକଟ
+nearby	ପାଖରେ|ନିକଟରେ
+necessary	ଆବଶ୍ୟକ|ଦରକାରୀ
+neck	ବେକ|ଗଳା
+necklace	ହାର|ମାଳି
+need	ଦରକାର|ଆବଶ୍ୟକ|ଆବଶ୍ୟକତା
+needle	ଛୁଞ୍ଚି
+neem	ନିମ୍ବ
+neighbor	ପଡ଼ୋଶୀ
+neighborhood	ଅଞ୍ଚଳ|ପଡ଼ୋଶୀ
+neighbour	ପଡ଼ୋଶୀ
+neighbourhood	ଅଞ୍ଚଳ|ପଡ଼ୋଶୀ
+neither	କେହି ନୁହେଁ|କୌଣସି ନୁହେଁ
+nepal	ନେପାଳ
+nephew	ପୁତୁରା|ଭଣଜା
+nervous	ଘାବରା|ଭୟଭୀତ
+nest	ବସା
+net	ଜାଲ|ନେଟ
+never	କେବେ ନୁହେଁ|କେବେବି ନୁହେଁ
+new	ନୂଆ|ନୂତନ
+new delhi	ନୂଆଦିଲ୍ଲୀ
+new moon	ଅମାବାସ୍ୟା|ଅମାବାସ
+new year	ନୂଆ ବର୍ଷ|ନବବର୍ଷ
+news	ଖବର|ସମ୍ବାଦ
+newspaper	ଖବରକାଗଜ|ସମ୍ବାଦପତ୍ର
+nice	ସୁନ୍ଦର|ଭଲ
+niece	ଝିଆରୀ|ଭାଣିଜୀ
+night	ରାତି|ରାତ୍ରି
+nine	ନଅ
+nineteen	ଊଣେଇଶି
+ninety	ନବେ
+no	ନା|ନାହିଁ|ନୁହେଁ
+no problem	କିଛି ଅସୁବିଧା ନାହିଁ|କିଛି ନାହିଁ
+nobody	କେହି ନାହିଁ|କେହି ନୁହେଁ
+noise	ଶବ୍ଦ|ହୋହଲ୍ଲା|ଗୋଳମାଳ
+none	କେହି ନୁହେଁ|କିଛି ନୁହେଁ
+noon	ମଧ୍ୟାହ୍ନ|ଦ୍ୱିପ୍ରହର
+normal	ସାଧାରଣ|ସ୍ୱାଭାବିକ
+north	ଉତ୍ତର
+nose	ନାକ|ନାସିକା
+not	ନାହିଁ|ନୁହେଁ|ନ
+nothing	କିଛି ନାହିଁ|କିଛି ନୁହେଁ
+notice	ଲକ୍ଷ୍ୟ କରିବା|ବିଜ୍ଞପ୍ତି|ନୋଟିସ
+november	ନଭେମ୍ବର
+now	ବର୍ତ୍ତମାନ|ଏବେ
+nowhere	କେଉଁଠି ନାହିଁ
+nuakhai	ନୂଆଖାଇ
+number	ସଂଖ୍ୟା|ନମ୍ବର
+numerous	ଅନେକ|ବହୁ
+nurse	ନର୍ସ|ସେବିକା
+nuts	ବାଦାମ
+oath	ଶପଥ|ରାଣ
+obey	ମାନିବା|ପାଳନ କରିବା
+obvious	ସ୍ପଷ୍ଟ
+obviously	ନିଶ୍ଚୟ|ସ୍ପଷ୍ଟତଃ
+ocean	ମହାସାଗର|ସମୁଦ୍ର
+october	ଅକ୍ଟୋବର
+odia	ଓଡ଼ିଆ
+odisha	ଓଡ଼ିଶା
+odissi	ଓଡ଼ିଶୀ
+offer	ଦେବା|ଅଫର|ପ୍ରସ୍ତାବ
+offering	ଭୋଗ|ନୈବେଦ୍ୟ|ଉତ୍ସର୍ଗ
+office	ଅଫିସ|କାର୍ଯ୍ୟାଳୟ
+officer	ଅଧିକାରୀ|ଅଫିସର
+often	ଅନେକ ସମୟରେ|ପ୍ରାୟ
+oil	ତେଲ
+ok	ଠିକ ଅଛି|ଠିକ
+okay	ଠିକ ଅଛି|ଠିକ
+okra	ଭେଣ୍ଡି
+old	ପୁରୁଣା|ବୁଢ଼ା|ପୁରାତନ
+old man	ବୁଢ଼ା|ବୃଦ୍ଧ
+old woman	ବୁଢ଼ୀ|ବୃଦ୍ଧା
+older	ବଡ଼|ପୁରୁଣା|ବୟସ୍କ
+on	ଉପରେ
+one	ଏକ|ଗୋଟିଏ|ଜଣେ
+onion	ପିଆଜ
+only	କେବଳ|ମାତ୍ର
+open	ଖୋଲିବା|ଖୋଲା|ଖୋଲ
+operation	ଅସ୍ତ୍ରୋପଚାର|ଅପରେସନ
+opinion	ମତ|ଅଭିମତ
+opportunity	ସୁଯୋଗ
+or	ବା|କିମ୍ବା|ଅଥବା
+or else	ନଚେତ|ନହେଲେ
+orange	କମଳା
+orange colour	କମଳା
+order	ଆଦେଶ|ଅର୍ଡର|କ୍ରମ
+organisation	ସଂଗଠନ|ସଂସ୍ଥା
+organise	ଆୟୋଜନ କରିବା|ସଂଗଠିତ କରିବା
+organised	ଆୟୋଜିତ|ସଂଗଠିତ
+organization	ସଂଗଠନ|ସଂସ୍ଥା
+organize	ଆୟୋଜନ କରିବା|ସଂଗଠିତ କରିବା
+organized	ଆୟୋଜିତ|ସଂଗଠିତ
+original	ମୂଳ|ଅସଲି
+orissa	ଓଡ଼ିଶା
+oriya	ଓଡ଼ିଆ
+orphan	ଅନାଥ
+other	ଅନ୍ୟ|ଆର
+our	ଆମର|ଆମ
+ourselves	ଆମେ ନିଜେ|ନିଜେ
+outside	ବାହାରେ|ବାହାର
+outstanding	ଉତ୍କୃଷ୍ଟ|ବକେୟା
+oven	ଚୁଲି|ଓଭେନ
+owl	ପେଚା
+own	ନିଜ|ନିଜର
+owner	ମାଲିକ
+ox	ବଳଦ
+pack	ବାନ୍ଧିବା|ପ୍ୟାକ
+packet	ପ୍ୟାକେଟ|ପୁଡ଼ିଆ
+paddy	ଧାନ
+page	ପୃଷ୍ଠା|ପେଜ
+pain	ଯନ୍ତ୍ରଣା|ବିନ୍ଧା|କଷ୍ଟ
+paint	ରଙ୍ଗ ଦେବା|ରଙ୍ଗ
+painter	ଚିତ୍ରକର
+pakhala	ପଖାଳ
+pakistan	ପାକିସ୍ତାନ
+pakoda	ପକୁଡ଼ି
+pakora	ପକୁଡ଼ି
+palm	ପାପୁଲି|ତାଳ
+pan	କରେଇ|ପ୍ୟାନ
+pana sankranti	ପଣା ସଂକ୍ରାନ୍ତି
+panchayat	ପଞ୍ଚାୟତ
+paneer	ଛେନା|ପନିର
+pant	ପ୍ୟାଣ୍ଟ
+pants	ପ୍ୟାଣ୍ଟ
+papaya	ଅମୃତଭଣ୍ଡା
+paper	କାଗଜ
+paratha	ପରଟା
+parcel	ପାର୍ସଲ
+parents	ବାପାମା|ପିତାମାତା
+parliament	ସଂସଦ
+parrot	ଶୁଆ
+part	ଭାଗ|ଅଂଶ
+party	ଦଳ|ପାର୍ଟି|ଭୋଜି
+parvati	ପାର୍ବତୀ
+pass	ପାସ ହେବା|ପାର ହେବା
+password	ପାସୱାର୍ଡ
+past	ଅତୀତ|ଗତ
+paternal uncle	ଦାଦା|କକା|ଖୁଡ଼ୁ
+path	ବାଟ|ପଥ
+patience	ଧୈର୍ଯ୍ୟ
+patient	ରୋଗୀ|ଧୈର୍ଯ୍ୟଶୀଳ
+pattachitra	ପଟ୍ଟଚିତ୍ର
+pattern	ଢାଞ୍ଚା|ନମୁନା|ଢଙ୍ଗ
+pay	ଦେବା|ଦେୟ|ଦରମା
+peace	ଶାନ୍ତି
+peace of mind	ମନ ଶାନ୍ତି
+peacock	ମୟୂର
+peanut	ଚିନାବାଦାମ
+peas	ମଟର
+pen	କଲମ|ପେନ
+pencil	ପେନସିଲ
+people	ଲୋକ|ଲୋକମାନେ|ଜନତା
+pepper	ଗୋଲମରିଚ|ଲଙ୍କା
+perfect	ସଠିକ|ଉତ୍ତମ|ନିଖୁଣ
+perfectly	ଠିକ ଭାବେ|ସମ୍ପୂର୍ଣ୍ଣ ଭାବେ
+perform	ପ୍ରଦର୍ଶନ କରିବା|କରିବା
+performance	ପ୍ରଦର୍ଶନ|କାର୍ଯ୍ୟଦକ୍ଷତା
+perhaps	ହୁଏତ|ବୋଧହୁଏ
+permit	ଅନୁମତି|ଅନୁମତି ପତ୍ର
+person	ଲୋକ|ବ୍ୟକ୍ତି|ମଣିଷ
+personal	ବ୍ୟକ୍ତିଗତ
+phone	ଫୋନ|ଦୂରଭାଷ
+photo	ଫଟୋ|ଛବି
+pick	ତୋଳିବା|ବାଛିବା|ଉଠାଇବା
+pickle	ଆଚାର
+picture	ଛବି|ଚିତ୍ର
+piece	ଖଣ୍ଡ|ଟୁକୁରା
+pig	ଘୁଷୁରି
+pigeon	ପାରା
+pilgrim	ତୀର୍ଥଯାତ୍ରୀ
+pilgrimage	ତୀର୍ଥଯାତ୍ରା|ତୀର୍ଥ
+pillow	ତକିଆ
+pineapple	ସପୁରୀ
+pink	ଗୋଲାପୀ
+pipe	ପାଇପ|ନଳ
+pitcher	କଳସୀ|ମାଠିଆ
+pitha	ପିଠା
+pity	ଦୟା|ଦୁଃଖ
+place	ସ୍ଥାନ|ଜାଗା
+plan	ଯୋଜନା|ପ୍ଲାନ
+plane	ଉଡ଼ାଜାହାଜ|ବିମାନ
+planet	ଗ୍ରହ
+plant	ଗଛ|ଉଦ୍ଭିଦ|ଲଗାଇବା
+plantain	କଞ୍ଚା କଦଳୀ|କଦଳୀ
+plate	ଥାଳି|ପ୍ଲେଟ
+play	ଖେଳିବା|ଖେଳ|ବଜାଇବା
+please	ଦୟାକରି|ଦୟା କରି
+pleasure	ଆନନ୍ଦ|ସୁଖ
+plough	ଲଙ୍ଗଳ
+pluck	ତୋଳିବା
+pocket	ପକେଟ
+poda pitha	ପୋଡ଼ପିଠା
+poem	କବିତା
+poet	କବି
+poetry	କବିତା|କାବ୍ୟ
+point	ଦେଖାଇବା|ବିନ୍ଦୁ|କଥା
+pointed gourd	ପୋଟଳ
+poison	ବିଷ
+police	ପୋଲିସ|ପୁଲିସ
+police station	ଥାନା
+policeman	ପୋଲିସ|ପୋଲିସ କର୍ମଚାରୀ
+polite	ଭଦ୍ର|ନମ୍ର
+pollution	ପ୍ରଦୂଷଣ
+pomegranate	ଡାଳିମ୍ବ
+pond	ପୋଖରୀ
+poor	ଗରିବ|ଦରିଦ୍ର
+popular	ଲୋକପ୍ରିୟ
+port	ବନ୍ଦର
+position	ସ୍ଥିତି|ପଦବୀ|ସ୍ଥାନ
+possible	ସମ୍ଭବ
+post	ପଦ|ଡାକ|ପୋଷ୍ଟ
+post office	ଡାକଘର
+pot	ହାଣ୍ଡି|ପାତ୍ର
+potato	ଆଳୁ
+potential	ସମ୍ଭାବ୍ୟ|ସମ୍ଭାବନା
+potter	କୁମ୍ଭାର
+pour	ଢାଳିବା
+poverty	ଗରିବୀ|ଦାରିଦ୍ର୍ୟ
+powder	ଗୁଣ୍ଡ|ପାଉଡର
+power	ଶକ୍ତି|କ୍ଷମତା|ବିଦ୍ୟୁତ
+practice	ଅଭ୍ୟାସ
+praise	ପ୍ରଶଂସା|ତାରିଫ
+prasad	ପ୍ରସାଦ
+prawn	ଚିଙ୍ଗୁଡ଼ି
+pray	ପ୍ରାର୍ଥନା କରିବା|ପ୍ରାର୍ଥନା
+prayer	ପ୍ରାର୍ଥନା
+prefer	ପସନ୍ଦ କରିବା|ଅଧିକ ଭଲ ପାଇବା
+pregnancy	ଗର୍ଭାବସ୍ଥା
+pregnant	ଗର୍ଭବତୀ
+prepare	ପ୍ରସ୍ତୁତ କରିବା|ତିଆରି କରିବା
+present	ବର୍ତ୍ତମାନ|ଉପସ୍ଥିତ|ଉପହାର
+president	ରାଷ୍ଟ୍ରପତି|ସଭାପତି
+press	ଚାପିବା|ପ୍ରେସ
+pressure	ଚାପ
+pretty	ସୁନ୍ଦର|ସୁନ୍ଦରୀ
+prevent	ରୋକିବା|ପ୍ରତିରୋଧ
+price	ଦାମ|ମୂଲ୍ୟ|ଦର
+pride	ଗର୍ବ|ଅହଙ୍କାର
+priest	ପୂଜାରୀ|ପୁରୋହିତ|ପଣ୍ଡା
+prime	ମୁଖ୍ୟ|ପ୍ରଧାନ
+prime minister	ପ୍ରଧାନମନ୍ତ୍ରୀ
+prince	ରାଜକୁମାର
+princess	ରାଜକୁମାରୀ
+print	ଛାପିବା|ପ୍ରିଣ୍ଟ
+prior	ପୂର୍ବ|ଆଗରୁ
+prison	ଜେଲ|କାରାଗାର
+private	ବ୍ୟକ୍ତିଗତ|ଘରୋଇ
+prize	ପୁରସ୍କାର
+problem	ସମସ୍ୟା|ଅସୁବିଧା
+process	ପ୍ରକ୍ରିୟା
+produce	ଉତ୍ପାଦନ କରିବା|ଉତ୍ପାଦନ
+product	ଉତ୍ପାଦ|ଜିନିଷ
+production	ଉତ୍ପାଦନ
+profile	ପ୍ରୋଫାଇଲ|ପରିଚୟ
+profit	ଲାଭ
+program	କାର୍ଯ୍ୟକ୍ରମ|ପ୍ରୋଗ୍ରାମ
+programme	କାର୍ଯ୍ୟକ୍ରମ
+progress	ପ୍ରଗତି|ଉନ୍ନତି
+project	ପ୍ରକଳ୍ପ|ପ୍ରୋଜେକ୍ଟ
+promise	ପ୍ରତିଜ୍ଞା|କଥା ଦେବା|ବଚନ
+promote	ପ୍ରୋତ୍ସାହିତ କରିବା|ପଦୋନ୍ନତି ଦେବା
+promotion	ପଦୋନ୍ନତି
+pronounce	ଉଚ୍ଚାରଣ କରିବା
+pronunciation	ଉଚ୍ଚାରଣ
+proof	ପ୍ରମାଣ
+property	ସମ୍ପତ୍ତି|ଜମିବାଡ଼ି
+protect	ରକ୍ଷା କରିବା|ସୁରକ୍ଷା
+protection	ସୁରକ୍ଷା|ରକ୍ଷା
+proud	ଗର୍ବିତ|ଅହଙ୍କାରୀ
+prove	ପ୍ରମାଣ କରିବା
+public	ଜନସାଧାରଣ|ସର୍ବସାଧାରଣ|ଜନତା|ସାଧାରଣ
+puffed rice	ମୁଢ଼ି
+puja	ପୂଜା
+pull	ଟାଣିବା
+pumpkin	କଖାରୁ
+punish	ଦଣ୍ଡ ଦେବା
+punishment	ଦଣ୍ଡ|ସଜା
+punjab	ପଞ୍ଜାବ
+puppy	କୁକୁର ଛୁଆ
+puri	ପୁରୀ
+puri bread	ପୁରି
+purple	ବାଇଗଣୀ
+purpose	ଉଦ୍ଦେଶ୍ୟ
+purse	ପର୍ସ|ବଟୁଆ
+push	ଠେଲିବା
+put	ରଖିବା|ରଖ|ଦେବା
+quality	ଗୁଣ|ଗୁଣବତ୍ତା
+quantity	ପରିମାଣ
+quarrel	ଝଗଡ଼ା|କଳି
+quarter	ପାଉ|ଚତୁର୍ଥାଂଶ
+queen	ରାଣୀ
+question	ପ୍ରଶ୍ନ|ସବାଲ
+queue	ଧାଡ଼ି|ଲାଇନ
+quick	ଶୀଘ୍ର|ଜଲଦି
+quickly	ଶୀଘ୍ର|ଜଲଦି
+quiet	ଚୁପ|ଶାନ୍ତ
+quote	ଉଦ୍ଧୃତି|ଉଦ୍ଧୃତ କରିବା
+rabbit	ଠେକୁଆ
+radio	ରେଡିଓ
+radish	ମୂଳା
+railway station	ରେଳ ଷ୍ଟେସନ
+rain	ବର୍ଷା|ପାଣି
+rainy season	ବର୍ଷାଋତୁ|ବର୍ଷା
+raja	ରଜ|ରାଜା
+raja festival	ରଜ
+rajasthan	ରାଜସ୍ଥାନ
+rama	ରାମ
+ramayana	ରାମାୟଣ
+random	ଅନିୟମିତ|ଯେକୌଣସି
+rank	ସ୍ଥାନ|ପଦବୀ
+rasabali	ରସାବଳି
+rasgulla	ରସଗୋଲା
+rat	ମୂଷା
+rath yatra	ରଥଯାତ୍ରା
+ratha yatra	ରଥଯାତ୍ରା
+raw	କଞ୍ଚା
+reach	ପହଞ୍ଚିବା
+read	ପଢ଼ିବା|ପଢ଼
+ready	ପ୍ରସ୍ତୁତ|ତିଆରି|ରେଡି
+real	ପ୍ରକୃତ|ଅସଲି|ସତ
+real estate	ଜମିବାଡ଼ି|ସମ୍ପତ୍ତି
+realise	ବୁଝିବା|ଅନୁଭବ କରିବା
+reality	ବାସ୍ତବତା
+realize	ବୁଝିବା|ଅନୁଭବ କରିବା
+really	ସତରେ|ପ୍ରକୃତରେ
+reason	କାରଣ
+receipt	ରସିଦ
+receive	ପାଇବା|ଗ୍ରହଣ କରିବା
+recipe	ରନ୍ଧନ ପ୍ରଣାଳୀ|ରେସିପି
+recognise	ଚିହ୍ନିବା
+recognize	ଚିହ୍ନିବା
+recommend	ସୁପାରିଶ କରିବା|ପରାମର୍ଶ ଦେବା
+red	ନାଲି|ଲାଲ
+reduce	କମାଇବା|ହ୍ରାସ କରିବା
+refuse	ମନା କରିବା|ପ୍ରତ୍ୟାଖ୍ୟାନ
+region	ଅଞ୍ଚଳ|କ୍ଷେତ୍ର
+register	ପଞ୍ଜୀକରଣ|ରେଜିଷ୍ଟର
+registration	ପଞ୍ଜୀକରଣ
+relationship	ସମ୍ପର୍କ
+relative	ସମ୍ପର୍କୀୟ|ବନ୍ଧୁ|କୁଟୁମ୍ବ
+relax	ଆରାମ କରିବା|ଆରାମ
+religion	ଧର୍ମ
+remain	ରହିବା|ବାକି ରହିବା
+remember	ମନେ ପକାଇବା|ମନେ ରଖିବା|ମନେ ଅଛି
+remove	ହଟାଇବା|କାଢ଼ିବା
+rent	ଭଡ଼ା
+repair	ମରାମତି|ମରାମତି କରିବା
+reply	ଉତ୍ତର|ଜବାବ|ଉତ୍ତର ଦେବା
+report	ରିପୋର୍ଟ|ବିବରଣୀ|ଖବର ଦେବା
+represent	ପ୍ରତିନିଧିତ୍ୱ କରିବା
+representative	ପ୍ରତିନିଧି
+request	ଅନୁରୋଧ|ନିବେଦନ
+require	ଆବଶ୍ୟକ କରିବା|ଦରକାର
+requirement	ଆବଶ୍ୟକତା
+rescue	ଉଦ୍ଧାର|ଉଦ୍ଧାର କରିବା
+respect	ସମ୍ମାନ|ଆଦର|ଶ୍ରଦ୍ଧା
+respond	ଉତ୍ତର ଦେବା|ପ୍ରତିକ୍ରିୟା
+response	ପ୍ରତିକ୍ରିୟା|ଉତ୍ତର
+rest	ବିଶ୍ରାମ|ଆରାମ|ବାକି
+restaurant	ହୋଟେଲ|ରେଷ୍ଟୁରାଣ୍ଟ
+result	ଫଳାଫଳ|ଫଳ
+return	ଫେରିବା|ଫେରାଇବା|ଫେରନ୍ତା
+reward	ପୁରସ୍କାର|ଇନାମ
+rice	ଭାତ|ଚାଉଳ|ଧାନ
+rice cake	ପିଠା
+rich	ଧନୀ|ଧନବାନ|ବଡ଼ଲୋକ
+ride	ଚଢ଼ିବା|ସବାରି
+ridge gourd	ଜହ୍ନି
+right	ଠିକ|ଡାହାଣ|ଅଧିକାର
+right side	ଡାହାଣ|ଡାହାଣପଟ
+ring	ମୁଦି|ରିଙ୍ଗ
+ripe	ପାଚିଲା
+rise	ଉଠିବା|ବୃଦ୍ଧି
+risk	ବିପଦ|ଆଶଙ୍କା
+river	ନଦୀ
+road	ରାସ୍ତା|ସଡ଼କ|ବାଟ
+rob	ଲୁଟିବା|ଡକାୟତି
+rock	ପଥର|ଶିଳା
+roof	ଛାତ|ଛପର
+room	ଘର|କୋଠରି|ରୁମ
+root	ମୂଳ|ଚେର
+rope	ଦଉଡ଼ି
+rose	ଗୋଲାପ
+roti	ରୁଟି
+rotten	ପଚା|ସଢ଼ା
+rough	ଖସଡ଼ା|ରୁକ୍ଷ
+round	ଗୋଲ|ଗୋଲାକାର
+rourkela	ରାଉରକେଲା
+rub	ଘଷିବା
+rubber	ରବର
+rude	ଅଭଦ୍ର|ରୁକ୍ଷ
+rule	ନିୟମ|ଶାସନ
+run	ଦୌଡ଼ିବା|ଦୌଡ଼
+run away	ପଳାଇବା|ପଳେଇବା
+rupee	ଟଙ୍କା
+rush	ତରବର|ଭିଡ଼
+russia	ରୁଷିଆ
+sad	ଦୁଃଖୀ|ଦୁଃଖିତ|ମନ ଖରାପ
+sadness	ଦୁଃଖ
+safe	ସୁରକ୍ଷିତ|ନିରାପଦ
+safety	ସୁରକ୍ଷା|ନିରାପତ୍ତା
+saffron	କେଶରୀ|ଗେରୁଆ
+saint	ସାଧୁ|ସନ୍ଥ
+salary	ଦରମା|ବେତନ
+salt	ଲୁଣ|ଲବଣ
+salty	ଲୁଣିଆ
+sambalpur	ସମ୍ବଲପୁର
+sambalpuri	ସମ୍ବଲପୁରୀ
+same	ସେହି|ସମାନ|ଏକା
+samosa	ସିଙ୍ଗଡ଼ା|ସମୋସା
+sample	ନମୁନା
+sand	ବାଲି
+sandal	ଚପଲ|ଚନ୍ଦନ
+sandalwood	ଚନ୍ଦନ
+sankranti	ସଂକ୍ରାନ୍ତି
+sanskrit	ସଂସ୍କୃତ
+santhali	ସାନ୍ତାଳୀ
+santula	ସନ୍ତୁଳା
+saraswati	ସରସ୍ୱତୀ
+saraswati puja	ସରସ୍ୱତୀ ପୂଜା
+saree	ଶାଢ଼ୀ
+sari	ଶାଢ଼ୀ
+sarpanch	ସରପଞ୍ଚ
+saturday	ଶନିବାର
+save	ବଞ୍ଚାଇବା|ସଞ୍ଚୟ|ରକ୍ଷା କରିବା
+say	କହିବା|କୁହ
+scare	ଡରାଇବା|ଭୟ
+scheme	ଯୋଜନା
+school	ସ୍କୁଲ|ବିଦ୍ୟାଳୟ
+science	ବିଜ୍ଞାନ
+scientist	ବୈଜ୍ଞାନିକ
+scissors	କଇଁଚି
+scold	ଗାଳି ଦେବା|ବକିବା
+scorpion	ବିଛା
+scratch	କୁଣ୍ଡାଇବା|ଚିରିବା
+screen	ପରଦା|ସ୍କ୍ରିନ
+sea	ସମୁଦ୍ର|ସାଗର
+search	ଖୋଜିବା|ସନ୍ଧାନ
+season	ଋତୁ|ମୌସୁମୀ
+second	ସେକେଣ୍ଡ|ଦ୍ୱିତୀୟ
+secret	ରହସ୍ୟ|ଗୁପ୍ତ କଥା
+security	ସୁରକ୍ଷା|ନିରାପତ୍ତା
+see	ଦେଖିବା|ଦେଖ
+seed	ମଞ୍ଜି|ବିହନ|ବୀଜ
+self	ନିଜ|ସ୍ୱୟଂ
+sell	ବିକିବା|ବିକ୍ରି
+senate	ସିନେଟ
+senator	ସିନେଟର
+send	ପଠାଇବା|ପଠାଅ
+senior	ବରିଷ୍ଠ|ବଡ଼
+sentence	ବାକ୍ୟ
+september	ସେପ୍ଟେମ୍ବର
+serious	ଗମ୍ଭୀର
+servant	ଚାକର|ସେବକ
+serve	ସେବା କରିବା|ପରଷିବା
+service	ସେବା
+set	ଅସ୍ତ ହେବା|ରଖିବା|ସେଟ
+settle	ସମାଧାନ କରିବା|ବସବାସ କରିବା
+seven	ସାତ
+seventeen	ସତର
+seventy	ସତୁରି
+sew	ସିଲେଇ କରିବା
+shade	ଛାଇ|ଛାୟା
+shadow	ଛାଇ|ଛାୟା
+shake	ହଲାଇବା|ହଲିବା
+shall	କରିବି|କରିବା
+shame	ଲାଜ|ଲଜ୍ଜା
+shape	ଆକାର|ଆକୃତି
+share	ବାଣ୍ଟିବା|ଅଂଶ|ସେୟାର
+sharp	ଧାରୁଆ|ତୀକ୍ଷ୍ଣ
+she	ସେ|ସିଏ
+sheep	ମେଣ୍ଢା
+shelf	ଥାକ|ସେଲ୍ଫ
+shell	ଶାମୁକା|ଖୋଳ
+shine	ଚମକିବା
+ship	ଜାହାଜ
+shirt	ସାର୍ଟ|କମିଜ
+shiva	ଶିବ|ମହାଦେବ
+shivaratri	ଶିବରାତ୍ରି
+shloka	ଶ୍ଳୋକ
+shoe	ଜୋତା
+shoes	ଜୋତା
+shop	ଦୋକାନ
+shopkeeper	ଦୋକାନୀ
+shore	କୂଳ|ତଟ
+short	ଛୋଟ|ଗେଡ଼ା
+should	ଉଚିତ
+shoulder	କାନ୍ଧ
+shout	ପାଟି କରିବା|ଚିତ୍କାର
+show	ଦେଖାଇବା|ଶୋ
+shut	ବନ୍ଦ କରିବା|ବନ୍ଦ
+shy	ଲାଜକୁଳା|ଲାଜ
+sick	ଅସୁସ୍ଥ|ବେମାର|ରୋଗୀ
+side	ପାଖ|ପଟ|ପାର୍ଶ୍ୱ
+sign	ଚିହ୍ନ|ସଙ୍କେତ|ଦସ୍ତଖତ
+signature	ଦସ୍ତଖତ|ସ୍ୱାକ୍ଷର
+sikh	ଶିଖ
+silence	ନୀରବତା|ଚୁପ
+silent	ଚୁପ|ନୀରବ
+silver	ରୁପା
+simple	ସରଳ|ସହଜ
+simply	କେବଳ|ସରଳ ଭାବେ
+sin	ପାପ
+since	ଠାରୁ|ଯେହେତୁ
+sing	ଗାଇବା|ଗୀତ ଗାଇବା
+singapore	ସିଙ୍ଗାପୁର
+singer	ଗାୟକ|ଗାୟିକା
+sink	ବୁଡ଼ିବା
+sister	ଭଉଣୀ|ଅପା|ଦିଦି
+sister-in-law	ଭାଉଜ|ଶାଳୀ|ନଣନ୍ଦ
+sit	ବସିବା|ବସ
+situation	ପରିସ୍ଥିତି|ଅବସ୍ଥା
+six	ଛଅ
+sixteen	ଷୋହଳ
+sixty	ଷାଠିଏ
+size	ଆକାର|ମାପ|ସାଇଜ
+skill	ଦକ୍ଷତା|କୌଶଳ
+skin	ଚମ|ଚର୍ମ
+sky	ଆକାଶ
+sleep	ଶୋଇବା|ନିଦ|ଶୁଅ
+sleepy	ନିଦୁଆ
+slip	ଖସିବା|ଖସିପଡ଼ିବା
+slippers	ଚପଲ
+sloka	ଶ୍ଳୋକ
+slow	ଧୀରେ|ମନ୍ଥର
+slowly	ଧୀରେ ଧୀରେ|ଧୀରେ
+small	ଛୋଟ|ସାନ
+smaller	ଛୋଟ|ଅଧିକ ଛୋଟ
+smart	ଚାଲାକ|ବୁଦ୍ଧିମାନ|ସ୍ମାର୍ଟ
+smell	ଗନ୍ଧ|ଶୁଙ୍ଘିବା|ବାସ୍ନା
+smile	ହସ|ମୁରୁକି ହସ|ହସିବା
+smoke	ଧୂଆଁ
+smooth	ଚିକ୍କଣ|ମସୃଣ
+snack	ଜଳଖିଆ
+snake	ସାପ|ସର୍ପ
+snana yatra	ସ୍ନାନଯାତ୍ରା
+sneeze	ଛିଙ୍କ|ଛିଙ୍କିବା
+snow	ବରଫ|ହିମ
+so	ତେଣୁ|ସେଥିପାଇଁ|ଏତେ
+soak	ଭିଜାଇବା|ବତୁରିବା
+soap	ସାବୁନ
+society	ସମାଜ
+soft	ନରମ|କୋମଳ
+soil	ମାଟି
+soldier	ସୈନିକ|ଯବାନ
+solution	ସମାଧାନ
+some	କିଛି|କେତେକ
+somebody	କେହି|କିଏ
+someone	କେହି|କିଏ
+something	କିଛି|କିଛି ଜିନିଷ
+sometimes	ବେଳେବେଳେ|କେବେକେବେ
+somewhat	କିଛି ପରିମାଣରେ|ଟିକିଏ
+somewhere	କେଉଁଠି|କୋଉଠି
+son	ପୁଅ|ପୁତ୍ର
+son-in-law	ଜ୍ୱାଇଁ|ଜାମାତା
+song	ଗୀତ|ସଙ୍ଗୀତ
+soon	ଶୀଘ୍ର|ଜଲଦି
+sorrow	ଦୁଃଖ|ଶୋକ
+sorry	ଦୁଃଖିତ|କ୍ଷମା କରନ୍ତୁ
+soul	ଆତ୍ମା|ପ୍ରାଣ
+sound	ଶବ୍ଦ|ଆୱାଜ
+soup	ସୁପ|ଝୋଳ
+sour	ଖଟା|ଅମ୍ଳ
+south	ଦକ୍ଷିଣ
+sow	ବୁଣିବା
+space	ସ୍ଥାନ|ଜାଗା|ମହାକାଶ
+spanish	ସ୍ପେନୀୟ|ସ୍ପାନିସ
+sparrow	ଘରଚଟିଆ|ଚଟିଆ
+speak	କହିବା|କଥା ହେବା|ବୋଲିବା
+special	ବିଶେଷ|ସ୍ୱତନ୍ତ୍ର
+specifically	ବିଶେଷ ଭାବେ
+speed	ବେଗ|ଗତି|ସ୍ପିଡ
+spend	ଖର୍ଚ୍ଚ କରିବା|ଖର୍ଚ୍ଚ|ବିତାଇବା
+spice	ମସଲା
+spices	ମସଲା
+spicy	ରାଗ|ମସଲାଦାର
+spider	ବୁଢ଼ିଆଣି
+spinach	ପାଳଙ୍ଗ ଶାଗ|ଶାଗ
+spoon	ଚାମଚ
+sport	କ୍ରୀଡ଼ା|ଖେଳ
+sports	କ୍ରୀଡ଼ା|ଖେଳ
+spread	ବିଛାଇବା|ବ୍ୟାପିବା
+spring	ବସନ୍ତ|ଝରଣା
+squeeze	ଚିପିବା
+squirrel	ଗୁଣ୍ଡୁଚି ମୂଷା
+sri lanka	ଶ୍ରୀଲଙ୍କା
+stage	ପର୍ଯ୍ୟାୟ|ମଞ୍ଚ
+stairs	ସିଡ଼ି|ପାହାଚ
+stand	ଠିଆ ହେବା|ଛିଡ଼ା ହେବା
+star	ତାରା|ନକ୍ଷତ୍ର
+stars	ତାରା
+start	ଆରମ୍ଭ|ଆରମ୍ଭ କରିବା
+state	ରାଜ୍ୟ|ଅବସ୍ଥା
+station	ଷ୍ଟେସନ|ଷ୍ଟେସନ୍
+stay	ରହିବା|ରୁହ
+steal	ଚୋରି କରିବା|ଚୋରି
+steam	ବାଷ୍ପ
+step	ପାଦ|ପଦକ୍ଷେପ|ପାହାଚ
+stick	ବାଡ଼ି|ଲାଠି
+still	ଏବେ ବି|ତଥାପି|ସ୍ଥିର
+stir	ଘାଣ୍ଟିବା
+stomach	ପେଟ
+stomach ache	ପେଟବିନ୍ଧା|ପେଟ ବିନ୍ଧା
+stone	ପଥର
+stop	ବନ୍ଦ କରିବା|ରହିଯିବା|ଅଟକିବା|ରୁହ
+storage	ସଂରକ୍ଷଣ|ଗୋଦାମ
+store	ଦୋକାନ|ଗୋଦାମ|ରଖିବା
+storm	ଝଡ଼|ତୋଫାନ
+story	ଗଳ୍ପ|କାହାଣୀ|କାହାଣି
+stove	ଚୁଲି|ଷ୍ଟୋଭ
+straight	ସିଧା|ସଳଖ
+strange	ଅଦ୍ଭୁତ|ଅଜବ
+stranger	ଅଜଣା ଲୋକ|ଅପରିଚିତ
+street	ରାସ୍ତା|ଗଳି
+strength	ଶକ୍ତି|ବଳ
+strict	କଡ଼ା|କଠୋର
+string	ସୂତା|ଦଉଡ଼ି
+strong	ବଳିଷ୍ଠ|ଶକ୍ତ|ଟାଣ
+student	ଛାତ୍ର|ଛାତ୍ରୀ|ପିଲା
+study	ପଢ଼ିବା|ଅଧ୍ୟୟନ|ପାଠ ପଢ଼ିବା
+stupid	ବୋକା|ମୂର୍ଖ
+style	ଶୈଳୀ|ଢଙ୍ଗ|ଷ୍ଟାଇଲ
+subhadra	ସୁଭଦ୍ରା
+subject	ବିଷୟ
+success	ସଫଳତା
+sudden	ହଠାତ|ଆକସ୍ମିକ
+suddenly	ହଠାତ|ହଠାତ୍
+suffer	କଷ୍ଟ ପାଇବା|ଭୋଗିବା
+suffering	ଦୁଃଖ|କଷ୍ଟ|ଯନ୍ତ୍ରଣା
+sugar	ଚିନି
+suggest	ପରାମର୍ଶ ଦେବା
+suggestion	ପରାମର୍ଶ|ପ୍ରସ୍ତାବ
+suit	ସୁଟ|ମାମଲା|ମାନିବା
+summer	ଖରାଦିନ|ଗ୍ରୀଷ୍ମ|ଗ୍ରୀଷ୍ମଋତୁ
+sun	ସୂର୍ଯ୍ୟ|ଖରା
+sun temple	ସୂର୍ଯ୍ୟ ମନ୍ଦିର
+sunday	ରବିବାର
+sunlight	ଖରା|ସୂର୍ଯ୍ୟାଲୋକ
+sunshine	ଖରା
+supply	ଯୋଗାଣ|ଯୋଗାଇବା
+support	ସମର୍ଥନ|ସହଯୋଗ
+suppose	ଧରିନେବା|ମନେକର
+supposed	ଅନୁମାନିତ|କଥା
+sure	ନିଶ୍ଚିତ|ନିଶ୍ଚୟ
+surface	ପୃଷ୍ଠ|ଉପରିଭାଗ
+surprise	ଆଶ୍ଚର୍ଯ୍ୟ|ଚମତ୍କାର
+surround	ଘେରିବା
+suspect	ସନ୍ଦେହ କରିବା|ସନ୍ଦିଗ୍ଧ
+swallow	ଗିଳିବା
+swan	ହଂସ
+swear	ଶପଥ କରିବା|ରାଣ ପକାଇବା
+sweat	ଝାଳ|ଘର୍ମ
+sweep	ଝାଡ଼ୁ ମାରିବା|ଓଳାଇବା
+sweet	ମିଠା|ମିଠାଇ|ମିଷ୍ଟାନ୍ନ|ମଧୁର
+sweets	ମିଠା|ମିଠାଇ
+swim	ପହଁରିବା
+swing	ଦୋଳି|ଝୁଲିବା
+sword	ଖଣ୍ଡା|ତରବାରି
+symbol	ପ୍ରତୀକ|ଚିହ୍ନ
+system	ବ୍ୟବସ୍ଥା|ପ୍ରଣାଳୀ
+table	ଟେବୁଲ
+tablet	ଟାବଲେଟ|ବଟିକା
+tailor	ଦରଜି
+take	ନେବା|ନିଅ
+talent	ପ୍ରତିଭା
+talk	କଥା ହେବା|କଥାବାର୍ତ୍ତା
+tall	ଡେଙ୍ଗା|ଉଚ୍ଚ
+tamarind	ତେନ୍ତୁଳି
+tamil nadu	ତାମିଲନାଡୁ
+tank	ଟାଙ୍କି|ଟ୍ୟାଙ୍କ
+tap	କଳ|ଟ୍ୟାପ
+taste	ସ୍ୱାଦ|ଚାଖିବା
+tasty	ସ୍ୱାଦିଷ୍ଟ|ସୁଆଦିଆ
+tax	ଟିକସ|କର
+tea	ଚା|ଚାହା
+teach	ଶିଖାଇବା|ପଢ଼ାଇବା
+teacher	ଶିକ୍ଷକ|ମାଷ୍ଟର|ଶିକ୍ଷୟିତ୍ରୀ
+team	ଦଳ|ଟିମ
+tear	ଲୁହ|ଚିରିବା
+tears	ଲୁହ|ଅଶ୍ରୁ
+tease	ଚିଡ଼ାଇବା|ଖେଳାଇବା
+teeth	ଦାନ୍ତ
+television	ଟେଲିଭିଜନ|ଟିଭି
+tell	କହିବା|କୁହ
+temple	ମନ୍ଦିର|ଦେଉଳ
+temple car	ରଥ
+ten	ଦଶ
+tend	ପ୍ରବଣ|ଯତ୍ନ ନେବା
+tender coconut	ପାଣିଚିଆ ନଡ଼ିଆ|ଡାବ
+tent	ତମ୍ବୁ
+terrible	ଭୟଙ୍କର|ବହୁତ ଖରାପ
+territory	ଅଞ୍ଚଳ|ଭୂଖଣ୍ଡ
+test	ପରୀକ୍ଷା|ପରୀକ୍ଷଣ
+text	ପାଠ|ଲେଖା|ଟେକ୍ସଟ
+thank	ଧନ୍ୟବାଦ ଦେବା|ଧନ୍ୟବାଦ
+thank you	ଧନ୍ୟବାଦ
+thanks	ଧନ୍ୟବାଦ
+that	ସେହି|ସେଇ|ସେଇଟା|ଯେ
+their	ସେମାନଙ୍କର
+them	ସେମାନଙ୍କୁ
+then	ତେବେ|ସେତେବେଳେ|ତାପରେ
+there	ସେଠି|ସେଠାରେ
+therefore	ତେଣୁ|ଅତଏବ
+these	ଏଗୁଡ଼ିକ|ଏହି
+they	ସେମାନେ
+thick	ମୋଟା|ବହଳ
+thief	ଚୋର
+thigh	ଜଙ୍ଘ
+thin	ପତଳା|ସରୁ
+thing	ଜିନିଷ|ବସ୍ତୁ|କଥା
+things	ଜିନିଷ|ଜିନିଷପତ୍ର
+think	ଭାବିବା|ଚିନ୍ତା କରିବା
+third	ତୃତୀୟ
+thirst	ଶୋଷ|ତୃଷ୍ଣା
+thirsty	ଶୋଷିଲା
+thirteen	ତେର
+thirty	ତିରିଶି
+this	ଏହି|ଏଇ|ଏଇଟା|ଏହା
+those	ସେଗୁଡ଼ିକ|ସେହି
+thought	ଚିନ୍ତା|ବିଚାର
+thousand	ହଜାର|ସହସ୍ର
+thread	ସୂତା
+three	ତିନି
+throat	ଗଳା|କଣ୍ଠ
+throw	ଫୋପାଡ଼ିବା|ପକାଇବା
+thumb	ବୁଢ଼ା ଆଙ୍ଗୁଠି
+thunder	ଘଡ଼ଘଡ଼ି|ମେଘ ଗର୍ଜ୍ଜନ
+thursday	ଗୁରୁବାର
+ticket	ଟିକେଟ
+tie	ବାନ୍ଧିବା
+tiger	ବାଘ
+tight	ଟାଣ|କଷା
+time	ସମୟ|ବେଳ|ଥର
+tiny	ଛୋଟିଆ|ଅତି ଛୋଟ
+tire	ଟାୟାର|ଥକିଯିବା
+tired	କ୍ଳାନ୍ତ|ଥକି ଯାଇଛି|ଥକା
+title	ଶୀର୍ଷକ|ଉପାଧି
+to	କୁ|ପ୍ରତି
+tobacco	ଧୂଆଁପତ୍ର|ତମାଖୁ
+today	ଆଜି
+toe	ପାଦ ଆଙ୍ଗୁଠି
+together	ଏକାଠି|ଏକତ୍ର
+together with	ସହିତ|ସାଙ୍ଗରେ
+toilet	ପାଇଖାନା|ଶୌଚାଳୟ
+tolerate	ସହିବା|ସହ୍ୟ କରିବା
+tomato	ଟମାଟୋ|ବିଲାତି ବାଇଗଣ
+tomorrow	କାଲି|ଆସନ୍ତାକାଲି
+tongue	ଜିଭ|ଜିହ୍ୱା
+tonight	ଆଜି ରାତି|ଆଜି ରାତିରେ
+too	ମଧ୍ୟ|ବି|ବହୁତ
+tool	ଉପକରଣ|ଯନ୍ତ୍ର
+tooth	ଦାନ୍ତ
+top	ଉପର|ଶୀର୍ଷ
+topic	ବିଷୟ|ପ୍ରସଙ୍ଗ
+tortoise	କଇଁଛ
+total	ମୋଟ|ସମୁଦାୟ
+touch	ଛୁଇଁବା|ସ୍ପର୍ଶ
+tour	ଭ୍ରମଣ|ଗସ୍ତ
+toward	ଆଡ଼କୁ|ପ୍ରତି
+towards	ଆଡ଼କୁ|ପ୍ରତି
+towel	ଗାମୁଛା|ତଉଲିଆ
+tower	ଟାୱାର|ଗମ୍ବୁଜ
+town	ସହର|ନଗର
+toy	ଖେଳନା
+trade	ବାଣିଜ୍ୟ|ବେପାର
+tradition	ପରମ୍ପରା
+train	ଟ୍ରେନ|ରେଳଗାଡ଼ି
+translate	ଅନୁବାଦ କରିବା|ଅନୁବାଦ
+trap	ଫାନ୍ଦ
+travel	ଯାତ୍ରା|ବୁଲିବା|ଭ୍ରମଣ
+treat	ଚିକିତ୍ସା କରିବା|ବ୍ୟବହାର କରିବା|ଭୋଜି
+treatment	ଚିକିତ୍ସା
+tree	ଗଛ|ବୃକ୍ଷ
+trees	ଗଛ|ଗଛପତ୍ର
+tribal	ଆଦିବାସୀ
+tribe	ଆଦିବାସୀ|ଜନଜାତି
+trip	ଯାତ୍ରା|ବୁଲା
+trouble	ଅସୁବିଧା|ଝାମେଲା|କଷ୍ଟ
+truck	ଟ୍ରକ
+true	ସତ|ସତ୍ୟ
+trust	ବିଶ୍ୱାସ|ଭରସା
+truth	ସତ୍ୟ|ସତ
+try	ଚେଷ୍ଟା|ଚେଷ୍ଟା କରିବା
+try on	ପିନ୍ଧି ଦେଖିବା
+tuesday	ମଙ୍ଗଳବାର
+tulsi	ତୁଳସୀ
+turmeric	ହଳଦୀ
+turn	ବୁଲିବା|ମୋଡ଼ିବା|ପାଳି
+turtle	କଇଁଛ
+twelve	ବାର
+twenty	କୋଡ଼ିଏ
+twenty five	ପଚିଶି
+two	ଦୁଇ|ଦୁଇଟି
+type	ଟାଇପ କରିବା|ପ୍ରକାର|ଧରଣ
+typical	ସାଧାରଣ
+typically	ସାଧାରଣତଃ
+tyre	ଟାୟାର
+ugly	ଅସୁନ୍ଦର|ବିକୃତ
+ultimate	ଚରମ|ଶେଷ
+ultimately	ଶେଷରେ|ପରିଶେଷରେ
+umbrella	ଛତା
+uncle	ମାମୁଁ|ଦାଦା|ମଉସା|ପିଉସା|କକା
+uncooked rice	ଚାଉଳ
+under	ତଳେ
+understand	ବୁଝିବା|ବୁଝ
+universe	ବ୍ରହ୍ମାଣ୍ଡ
+university	ବିଶ୍ୱବିଦ୍ୟାଳୟ
+unlike	ଭିନ୍ନ|ପରି ନୁହେଁ
+unlucky	ଅଭାଗା|ଦୁର୍ଭାଗା
+untie	ଫିଟାଇବା
+until	ଯାଏଁ|ପର୍ଯ୍ୟନ୍ତ
+up	ଉପର|ଉପରକୁ
+upma	ଉପମା
+urgent	ଜରୁରୀ
+us	ଆମକୁ|ଆମେ
+usa	ଆମେରିକା
+use	ବ୍ୟବହାର|ବ୍ୟବହାର କରିବା
+useful	ଉପଯୋଗୀ|କାମର
+useless	ଅଦରକାରୀ|ଅକାମୀ
+usual	ସାଧାରଣ|ସବୁଦିନିଆ
+usually	ସାଧାରଣତଃ
+utensils	ବାସନକୁସନ|ବାସନ
+uttar pradesh	ଉତ୍ତରପ୍ରଦେଶ
+vacation	ଛୁଟି
+vaccine	ଟିକା|ଭ୍ୟାକସିନ
+valley	ଉପତ୍ୟକା
+veda	ବେଦ
+vegetable	ପରିବା|ତରକାରୀ
+vegetables	ପରିବା
+vehicle	ଗାଡ଼ି|ଯାନ
+veranda	ବାରଣ୍ଡା|ପିଣ୍ଡା
+vermilion	ସିନ୍ଦୂର
+very	ବହୁତ|ଅତି|ଖୁବ
+very good	ବହୁତ ଭଲ|ଅତି ଉତ୍ତମ
+vessel	ବାସନ|ପାତ୍ର
+vice	ଉପ|ଦୋଷ
+victory	ବିଜୟ|ଜିତ
+video	ଭିଡିଓ
+village	ଗାଁ|ଗ୍ରାମ
+village fair	ମେଳା|ଯାତ୍ରା
+village head	ସରପଞ୍ଚ
+villager	ଗାଁ ଲୋକ|ଗ୍ରାମବାସୀ
+virtue	ପୁଣ୍ୟ|ଗୁଣ
+vishnu	ବିଷ୍ଣୁ
+visit	ବୁଲି ଯିବା|ଗସ୍ତ|ପରିଦର୍ଶନ
+visual	ଦୃଶ୍ୟ|ଦୃଶ୍ୟମାନ
+voice	ସ୍ୱର|କଣ୍ଠ|ଗଳା
+volume	ପରିମାଣ|ଖଣ୍ଡ|ଶବ୍ଦ
+vomit	ବାନ୍ତି
+vote	ଭୋଟ|ମତ
+vow	ବ୍ରତ|ପ୍ରତିଜ୍ଞା
+vulture	ଶାଗୁଣା
+waist	ଅଣ୍ଟା
+wait	ଅପେକ୍ଷା|ଅପେକ୍ଷା କରିବା|ରୁହ
+wake	ଉଠିବା|ଜାଗିବା
+wake up	ଉଠିବା|ଉଠ
+walk	ଚାଲିବା|ଚାଲ|ବୁଲିବା
+wall	କାନ୍ଥ|ପାଚେରି
+want	ଚାହିଁବା|ଦରକାର|ଇଚ୍ଛା
+war	ଯୁଦ୍ଧ|ଲଢ଼େଇ
+warm	ଉଷୁମ|ଗରମ
+warn	ସତର୍କ କରିବା|ଚେତାବନୀ
+warning	ଚେତାବନୀ|ସତର୍କତା
+wash	ଧୋଇବା|ସଫା କରିବା
+washerman	ଧୋବା
+waste	ନଷ୍ଟ|ଅପଚୟ|ଆବର୍ଜନା
+watch	ଘଣ୍ଟା|ଦେଖିବା
+water	ପାଣି|ଜଳ|ପାଣି ଦେବା
+water body	ଜଳାଶୟ
+watered rice	ପଖାଳ
+waterfall	ଜଳପ୍ରପାତ
+watermelon	ତରଭୁଜ
+wave	ଢେଉ|ତରଙ୍ଗ
+waves	ଢେଉ
+way	ବାଟ|ରାସ୍ତା|ଉପାୟ
+we	ଆମେ|ଆମ୍ଭେ
+weak	ଦୁର୍ବଳ
+weakness	ଦୁର୍ବଳତା
+wealth	ଧନ|ସମ୍ପତ୍ତି|ସମ୍ପଦ
+wear	ପିନ୍ଧିବା|ପିନ୍ଧ
+weather	ପାଗ
+weaver	ବୁଣାକାର|ତନ୍ତୀ
+website	ୱେବସାଇଟ
+wedding	ବାହାଘର|ବିବାହ
+wednesday	ବୁଧବାର
+week	ସପ୍ତାହ
+weekend	ସପ୍ତାହାନ୍ତ
+weep	କାନ୍ଦିବା
+weigh	ଓଜନ କରିବା|ଓଜନ
+weight	ଓଜନ
+welcome	ସ୍ୱାଗତ|ସ୍ୱାଗତମ
+well	କୂଅ|ଭଲ
+west	ପଶ୍ଚିମ
+west bengal	ପଶ୍ଚିମବଙ୍ଗ
+wet	ଓଦା|ଭିଜା
+what	କଣ|କି
+whatever	ଯାହା ବି ହେଉ|ଯାହା କିଛି
+wheat	ଗହମ
+wheel	ଚକ|ଚକ୍ର
+when	କେବେ|ଯେତେବେଳେ
+whenever	ଯେତେବେଳେ|ଯେବେ ବି
+where	କେଉଁଠି|କୋଉଠି|କେଉଁଠାରେ
+which	କେଉଁ|କେଉଁଟି|ଯାହା
+while	ବେଳେ|ସମୟରେ
+whisper	ଫୁସଫୁସ କରିବା
+white	ଧଳା|ଶୁକ୍ଳ
+who	କିଏ|କେଉଁ|ଯିଏ
+whole	ପୂରା|ସମ୍ପୂର୍ଣ୍ଣ|ଗୋଟା
+whom	କାହାକୁ
+whose	କାହାର
+why	କାହିଁକି|କାହିଁ
+wide	ଓସାର|ଚଉଡ଼ା
+widow	ବିଧବା
+wife	ସ୍ତ୍ରୀ|ପତ୍ନୀ|ମାଇପ
+wild	ବଣୁଆ|ଜଙ୍ଗଲୀ
+will	ଇଚ୍ଛା|ଇଚ୍ଛାପତ୍ର
+win	ଜିତିବା|ବିଜୟ
+wind	ପବନ|ବାୟୁ
+window	ଝରକା
+wine	ମଦ|ୱାଇନ
+winter	ଶୀତ|ଶୀତଦିନ|ଶୀତଋତୁ
+wipe	ପୋଛିବା
+wire	ତାର
+wise	ଜ୍ଞାନୀ|ବୁଦ୍ଧିମାନ
+wish	ଇଚ୍ଛା|ଶୁଭେଚ୍ଛା|କାମନା
+with	ସହ|ସହିତ|ସାଙ୍ଗରେ
+without	ବିନା
+wolf	ଗଧିଆ
+woman	ମହିଳା|ସ୍ତ୍ରୀ|ମାଇପ
+women	ମହିଳାମାନେ|ମହିଳା
+wonder	ଆଶ୍ଚର୍ଯ୍ୟ|ଚମତ୍କାର
+wood	କାଠ
+wool	ପଶମ
+word	ଶବ୍ଦ|କଥା
+words	ଶବ୍ଦ|କଥା
+work	କାମ|କାର୍ଯ୍ୟ|କାମ କରିବା
+worker	ଶ୍ରମିକ|କର୍ମଚାରୀ|ମୂଲିଆ
+world	ଦୁନିଆ|ବିଶ୍ୱ|ଜଗତ|ସଂସାର
+worm	ପୋକ|କୀଟ
+worried	ଚିନ୍ତିତ
+worry	ଚିନ୍ତା|ଚିନ୍ତା କରିବା
+worship	ପୂଜା|ପୂଜା କରିବା|ଉପାସନା
+would	ହୁଅନ୍ତା|କରନ୍ତା
+wound	ଘା|କ୍ଷତ
+wow	ବାଃ|ଆରେ ବାଃ
+wrap	ଗୁଡ଼ାଇବା
+wrist	ମଣିବନ୍ଧ
+write	ଲେଖିବା|ଲେଖ
+writer	ଲେଖକ|ଲେଖିକା
+wrong	ଭୁଲ|ଅନ୍ୟାୟ
+yard	ଅଗଣା|ଗଜ
+yeah	ହଁ
+year	ବର୍ଷ|ସାଲ
+years	ବର୍ଷ
+yellow	ହଳଦିଆ
+yes	ହଁ
+yesterday	କାଲି|ଗତକାଲି
+yet	ଏ ପର୍ଯ୍ୟନ୍ତ|ତଥାପି
+yoga	ଯୋଗ
+yogurt	ଦହି
+you	ତୁମେ|ଆପଣ|ତୁ
+young	ଯୁବ|ଯୁବକ|କମ ବୟସ
+young man	ଯୁବକ|ଟୋକା
+young woman	ଯୁବତୀ|ଟୋକୀ
+younger brother	ସାନ ଭାଇ|ଭାଇ
+younger sister	ସାନ ଭଉଣୀ|ଭଉଣୀ
+your	ତୁମର|ଆପଣଙ୍କର|ତୋର
+yourself	ତୁମେ ନିଜେ|ନିଜେ
+youth	ଯୁବକ|ଯୁବତୀ|ଯୌବନ
+zero	ଶୂନ|ଶୂନ୍ୟ

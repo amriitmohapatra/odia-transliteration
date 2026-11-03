@@ -3,6 +3,28 @@
 The existing `praharaj.bin`, `modern.bin`, and `origin.bin` retain the sources,
 licenses and build records in [`Odia_Sanskrit_Appv2/PROVENANCE.md`](../../../Odia_Sanskrit_Appv2/PROVENANCE.md).
 
+## AI-written English → Odia list — 3 November 2026
+
+`english-ai.tsv`: **2,263 English words with 3,961 Odia options**, everyday word first,
+written by Claude (Anthropic) for this project from its own knowledge of Odia, at the
+owner's request ("an extensive addition of common English to Odia words ... use your own
+trained corpus"). Not copied from any dictionary or corpus. Licence: MIT (this project).
+
+Checks: every Odia option was looked up in the app's own word lists (IndicCorp v2 top
+100,000, CC0; the lexicon; the meanings layers) with `tools/eval/english-words-check.py`;
+36 options found nowhere were corrected or dropped by hand, and 2 correct but rarely
+written words are kept (ଊଣେଇଶି "nineteen", ଖୁଡ଼ୁ "father's younger brother"). Meanings
+were reread by hand; mistakes the word lists cannot see were fixed (fox had ଠେକୁଆ,
+"rabbit"; drought had ଖରାପ, "bad"). Swear words and people's names were left out.
+Status: AI-written, not yet checked by a native speaker; every result says so. Owner
+sample: `plan/review/english-sample.tsv` (C-16).
+
+Coverage was measured on wordfreq's top 3,000 English words (wordfreq, used at build time
+only, as for `loans.tsv`; the list is not in the repository).
+
+SHA-256 (`english-ai.tsv`):
+`c82452c148675096e5a15979421448fe73d20e2b1484b08b7bd225570972c618`.
+
 ## English lookup starter — 12 October 2026
 
 `english.tsv` is an original, deliberately small starter list written for this
