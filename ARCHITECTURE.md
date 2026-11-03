@@ -314,7 +314,7 @@ and `dictionary/overlay.css` together.
 |---|---|---|---|
 | `/api/speak` | Odia text → MP3 speech | Sarvam Bulbul (`bulbul:v3`, `od-IN`); the device's own Odia voice first | 2026-10-15: web app "Listen" |
 | `/api/listen` | recording (WebM/Ogg/MP4, ≤ 30 s, ≤ 1 MB) → Odia text | Sarvam Saaras (`saaras:v4`, `od-IN`) | 2026-10-15: web app "Speak" |
-| `/api/translate` | Odia text → English | Claude Haiku or Google (100-sentence test decides) | 2026-10-15: lens "Translate" |
+| `/api/translate` | Odia text → English; `source` `ocr` (lens, default) or `typed` (web app) picks the prompt | Claude Haiku or Google (100-sentence test decides) | 2026-10-15: lens "Translate"; 2026-11-03: web app "In English" |
 
 Each route is a Vercel function in `api/` with Web-standard `POST`/`OPTIONS` handlers;
 the logic is in `api/_lib/` (`speech.ts`, `translate.ts`) and is unit-tested with a fake
@@ -329,6 +329,15 @@ Settings > "Voice typing" is on) records with `MediaRecorder` and types the answ
 says what goes online while one is on. `vercel.json` allows the microphone for the site
 itself only. Browser check: `Appv2/eval/browser/speech-check.mjs` (stand-in routes, fake
 microphone).
+
+**In English** (`Appv2/src/translate.ts`, shown only when Settings > "Translate online" is
+on) sends the selected text, else the whole box (2,000 characters at most, cut at a
+sentence end), to `/api/translate` with `source: "typed"`. The server then uses a prompt
+for phonetic typing (a word may be a similar-sounding wrong pick) instead of the lens's
+OCR prompt; the two are cached apart. The English shows under "Reads as" with a
+"Machine translation by …" note and goes as soon as the text changes. Not in the kids
+edition (the server answers only the adult site). Browser check:
+`Appv2/eval/browser/translate-check.mjs` (stand-in route).
 
 Rules: keys only in Vercel environment variables (`SARVAM_API_KEY`, `ANTHROPIC_API_KEY`);
 `.env*` never committed; provider spending limit; hard cap US$20/month (D-4); logs never

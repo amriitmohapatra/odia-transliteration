@@ -18,6 +18,7 @@ node Appv2/eval/browser/phrases-check.mjs 4810 # phrase table: browse, search, I
 node Appv2/eval/browser/editing-check.mjs 4810 # literal text, caret, commits, undo and mobile input events
 node Appv2/eval/browser/desh-check.mjs 4810    # Desh layers: completion, converter, next word, dictionary prefix (adult build)
 node Appv2/eval/browser/speech-check.mjs 4810  # Listen and Speak (V3): switches off send nothing; stand-in /api/speak and /api/listen; fake microphone
+node Appv2/eval/browser/translate-check.mjs 4810 # In English (V3.4): switch off sends nothing; stand-in /api/translate; stale English goes
 ```
 
 Playwright: in the Claude Code cloud environment it loads from

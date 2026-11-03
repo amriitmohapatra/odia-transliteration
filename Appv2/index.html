@@ -155,12 +155,21 @@
             <div class="readback-head">
               <span class="readback-label" id="readback-label">Reads as</span>
               <span class="readback-hint">tap a word to change it</span>
+              <!-- Listen and In English wrap together, at the right of the head. -->
+              <span class="readback-actions">
               <!-- Read-aloud (V3, src/speech.ts): the device's Odia voice, else
                    /api/speak only when Settings > Read aloud online is on. -->
               <button type="button" id="speak" class="btn btn-small readback-speak" aria-label="Listen: read the Odia aloud">
                 <svg aria-hidden="true" viewBox="0 0 24 24" width="16" height="16"><path fill="currentColor" d="M3 9v6h4l5 4V5L7 9H3zm13.5 3a4.5 4.5 0 0 0-2.5-4v8a4.5 4.5 0 0 0 2.5-4zM14 3.2v2.1a7 7 0 0 1 0 13.4v2.1a9 9 0 0 0 0-17.6z"/></svg>
                 Listen
               </button>
+              <!-- In English (V3, src/translate.ts): shown only when Settings >
+                   Translate online is on; the Odia goes to /api/translate. -->
+              <button type="button" id="translate" class="btn btn-small readback-speak" aria-label="In English: translate the Odia online" hidden>
+                <svg aria-hidden="true" viewBox="0 0 24 24" width="16" height="16"><path fill="currentColor" d="M12.9 15.1l-2.5-2.5.1-.1A17.5 17.5 0 0 0 14 6h3V4h-7V2H8v2H1v2h11.2A15.7 15.7 0 0 1 9 11.4 15.6 15.6 0 0 1 6.7 8H4.7a17.6 17.6 0 0 0 3 4.4l-5.1 5 1.4 1.5L9 14l3.1 3.1.8-2zM18.5 10h-2L12 22h2l1.1-3h4.8l1.1 3h2l-4.5-12zm-2.6 7l1.6-4.3 1.6 4.3h-3.2z"/></svg>
+                In English
+              </button>
+              </span>
             </div>
             <div
               id="readback"
@@ -169,6 +178,13 @@
               translate="no"
               aria-labelledby="readback-label"
             ></div>
+          </div>
+          <!-- The English for the text above (V3, src/translate.ts). Hidden again as
+               soon as the text changes, so it never describes older text. -->
+          <div class="translation" id="translation-row" hidden>
+            <span class="readback-label" id="translation-label">In English</span>
+            <p id="translation" class="translation-text" lang="en" aria-labelledby="translation-label" aria-live="polite"></p>
+            <p class="translation-note" id="translation-note"></p>
           </div>
           <p class="mode-hint" id="profile-hint"></p>
         </section>
@@ -332,6 +348,17 @@
               <span class="setting-help">
                 Shows a Speak button: say something in Odia and it is typed for you. The recording
                 (30 seconds at most) is sent to Sarvam AI (India). Nothing is sent while this is off.
+              </span>
+            </span>
+          </label>
+          <label class="setting" id="translate-setting">
+            <input type="checkbox" id="toggle-translate-online" role="switch" />
+            <span class="setting-text">
+              <span class="setting-label">Translate online</span>
+              <span class="setting-help">
+                Shows an In English button: it sends the Odia in the text box to Anthropic's Claude
+                (USA) for an English translation. Machine translation: check it before you rely on it.
+                Nothing is sent while this is off.
               </span>
             </span>
           </label>
