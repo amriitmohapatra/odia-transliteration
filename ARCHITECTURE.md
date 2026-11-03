@@ -336,7 +336,8 @@ sentence end), to `/api/translate` with `source: "typed"`. The server then uses 
 for phonetic typing (a word may be a similar-sounding wrong pick) instead of the lens's
 OCR prompt; the two are cached apart. The English shows under "Reads as" with a
 "Machine translation by …" note and goes as soon as the text changes. Not in the kids
-edition (the server answers only the adult site). Browser check:
+edition: there (owner, 2026-11-03) none of the three online switches is shown or on,
+because the server answers only the adult site; Listen stays, with the device's own voice. Browser check:
 `Appv2/eval/browser/translate-check.mjs` (stand-in route).
 
 Rules: keys only in Vercel environment variables (`SARVAM_API_KEY`, `ANTHROPIC_API_KEY`);

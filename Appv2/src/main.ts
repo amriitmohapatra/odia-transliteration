@@ -95,6 +95,7 @@ const voiceLabelEl = must<HTMLSpanElement>('voice-label');
 const speakOnlineEl = must<HTMLInputElement>('toggle-speak-online');
 const listenOnlineEl = must<HTMLInputElement>('toggle-listen-online');
 const privacyNoteEl = must<HTMLParagraphElement>('privacy-note');
+const onlineHeadingEl = must<HTMLHeadingElement>('settings-online');
 const translateEl = must<HTMLButtonElement>('translate');
 const translateOnlineEl = must<HTMLInputElement>('toggle-translate-online');
 const translationRowEl = must<HTMLDivElement>('translation-row');
@@ -227,15 +228,20 @@ async function boot(): Promise<void> {
   strictEl.checked = readPref(PREF_STRICT);
   numberPickEl.checked = readPref(PREF_NUMBER_PICK, true);
   nextWordEl.checked = readPref(PREF_NEXT_WORD, true);
-  speakOnlineEl.checked = readPref(PREF_SPEAK_ONLINE);
-  listenOnlineEl.checked = readPref(PREF_LISTEN_ONLINE);
+  // Kids edition (owner, 2026-11-03): no online features. The assist layer answers
+  // only the adult site, so the three switches are not shown and are never on.
+  // Listen stays: it uses the device's own Odia voice, offline.
+  speakOnlineEl.checked = !KIDS && readPref(PREF_SPEAK_ONLINE);
+  listenOnlineEl.checked = !KIDS && readPref(PREF_LISTEN_ONLINE);
   voiceEl.hidden = !listenOnlineEl.checked;
-  // Kids edition: the server answers only the adult site, so no switch (and never on).
   translateOnlineEl.checked = !KIDS && readPref(PREF_TRANSLATE_ONLINE);
   translateEl.hidden = !translateOnlineEl.checked;
   if (KIDS) {
-    const row = translateOnlineEl.closest<HTMLElement>('.setting');
-    if (row) row.hidden = true;
+    for (const el of [speakOnlineEl, listenOnlineEl, translateOnlineEl]) {
+      const row = el.closest<HTMLElement>('.setting');
+      if (row) row.hidden = true;
+    }
+    onlineHeadingEl.hidden = true;
   }
   updatePrivacyNote();
   // Kids edition: no next-word data (adults' chat), so no switch for it.
@@ -736,7 +742,9 @@ function onSpeak(): void {
   }
   const route = speakRoute(hasDeviceVoice(), speakOnlineEl.checked);
   if (route === 'none') {
-    setStatus('This device has no Odia voice. To hear the text, turn on \u201cRead aloud online\u201d in Settings.', false);
+    setStatus(KIDS
+      ? 'This device has no Odia voice, so Listen cannot read here.'
+      : 'This device has no Odia voice. To hear the text, turn on \u201cRead aloud online\u201d in Settings.', false);
     return;
   }
   setStatus(cut ? 'Reading the first part (500 letters).' : '', false);
