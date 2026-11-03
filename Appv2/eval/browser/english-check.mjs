@@ -20,11 +20,18 @@ try {
   // One unified search box (2026-10-12): no direction to choose.
   const search = page.locator('.dict-search');
   await search.fill('meeting');
-  await page.waitForFunction(() => document.querySelectorAll('.dict-english-entry').length === 2);
+  await page.waitForFunction(() => document.querySelectorAll('.dict-english-entry').length >= 3);
   const text = await page.locator('.dict-body').innerText();
+  // Curated entries first (2026-11-03: the AI list and the meanings read backwards follow, labelled).
+  const notes = await page.$$eval('.dict-english-entry', (es) => es.map((e) => e.textContent));
+  check(notes.slice(0, 2).every((t) => t.includes('awaiting native-speaker review')), 'meeting: the two curated entries come first');
+  check(notes.slice(2).every((t) => t.includes('AI-written')), 'meeting: every later entry is labelled AI-written');
   check(text.includes('Translation') && text.includes('English loan spelling'), 'meeting distinguishes translation and loan spelling');
   check(text.includes('\u0b2c\u0b48\u0b20\u0b15') && text.includes('\u0b2e\u0b3f\u0b1f\u0b3f\u0b02'), 'meeting has the two proposed Odia forms');
   check(text.includes('awaiting native-speaker review'), 'seed status is visible');
+  await search.fill('cow');
+  await page.waitForFunction(() => document.querySelector('.dict-english-entry .dict-word')?.textContent === '\u0b17\u0b3e\u0b08');
+  check(true, 'cow finds \u0b17\u0b3e\u0b08 first (AI-written English list)');
   await search.fill('  PHONE   CALL  ');
   await page.waitForFunction(() => document.querySelector('.dict-english-entry')?.textContent.includes('call: telephone call'));
   check(await page.locator('.dict-english-entry').count() === 1, 'phrase alias uses exact lookup');
@@ -81,7 +88,7 @@ try {
   await fallback.route('**/*.bin', route => route.abort());
   await fallback.goto(url);
   await fallback.locator('.dict-search').fill('office');
-  await fallback.waitForFunction(() => document.querySelectorAll('.dict-english-entry').length === 2);
+  await fallback.waitForFunction(() => document.querySelectorAll('.dict-english-entry').length >= 2);
   check(true, 'English lookup survives blocked historical payloads');
   await fallback.evaluate(() => Object.defineProperty(navigator, 'clipboard', { configurable: true, value: { writeText: () => Promise.reject(new Error('Permission denied')) } }));
   await fallback.locator('.dict-english-entry .dict-copy').first().click();
@@ -93,7 +100,7 @@ try {
   check(await fallback.locator('.dict-state').isVisible(),
     'an Odia search with the historical dictionary unavailable clears English results and keeps the failure status');
   await fallback.locator('.dict-search').fill('office');
-  await fallback.waitForFunction(() => document.querySelectorAll('.dict-english-entry').length === 2);
+  await fallback.waitForFunction(() => document.querySelectorAll('.dict-english-entry').length >= 2);
   check(true, 'English lookup is usable again after an Odia search, with payloads failed');
   await degraded.close();
   console.log(`ALL PASS (${checks} browser checks)`);

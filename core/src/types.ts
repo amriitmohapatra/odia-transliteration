@@ -33,6 +33,8 @@ export type CandidateSource =
   | 'converter'
   | 'completion'
   | 'prediction'
+  /** An Odia word for an English word typed after "=" (web app, english-index.ts). */
+  | 'english'
   | 'rule'
   | 'verbatim';
 

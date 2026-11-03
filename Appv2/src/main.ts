@@ -34,6 +34,7 @@ import { casual } from './romanize.js';
 import { Editor } from './editor.js';
 import { hasDeviceVoice, record, speak, speakRoute, speakable, stopSpeaking, type Recording } from './speech.js';
 import { providerName, translatable, translateOnline } from './translate.js';
+import { englishIndex } from './dictionary/english-data.js';
 import { canonical } from '@odia/core/normalize';
 import {
   DEFAULT_PROFILE,
@@ -157,6 +158,8 @@ const TOPK = 8;
 /** Word completions in the bar, and the place of the first one (0-based). */
 const COMPLETIONS = 2;
 const COMPLETION_SLOT = 2;
+/** Odia words shown for "=english" (the ninth place is Keep). */
+const ENGLISH_SHOWN = 8;
 /** Next-word suggestions shown after a space. */
 const PREDICTIONS = 5;
 
@@ -273,14 +276,16 @@ async function boot(): Promise<void> {
     numberKeysPick: () => numberPickEl.checked,
     // The Odia word just before the caret word gives context (word pairs, V2.2),
     // so a word the user picked from the bar informs the next suggestion.
-    candidates: (roman) =>
-      guard(() => withCompletions(handle?.engine, roman, handle?.engine.transliterateWord(roman, 9, { prev: previousOdiaWord(roman) }) ?? []), []),
+    candidates: (roman) => roman.startsWith('=')
+      ? guard(() => englishCandidates(roman.slice(1)), [])
+      : guard(() => withCompletions(handle?.engine, roman, handle?.engine.transliterateWord(roman, 9, { prev: previousOdiaWord(roman) }) ?? []), []),
     predictions: () => (nextWordEl.checked && !strictEl.checked && profileId !== 'sloka'
       ? guard(() => handle?.engine.predictNext?.(previousWordsAtCaret(), PREDICTIONS) ?? [], [])
       : []),
     onCommit: (roman, text) => {
-      // A next-word suggestion has no typed roman: nothing to learn or map.
-      if (roman !== '') {
+      // A next-word suggestion has no typed roman: nothing to learn or map. An
+      // English lookup (=cow) is not a spelling: it never teaches the ranker.
+      if (roman !== '' && !roman.startsWith('=')) {
         guard(() => handle?.engine.learn(roman, text), undefined);
         commitKeys.set(text, roman);
       }
@@ -432,6 +437,25 @@ function withCompletions(engine: EngineLike | undefined, roman: string, ranked: 
   if (extra.length === 0) return ranked;
   const at = Math.min(COMPLETION_SLOT, ranked.filter((c) => c.source !== 'verbatim').length);
   return [...ranked.slice(0, at), ...extra, ...ranked.slice(at)];
+}
+
+/**
+ * "=cow": Odia words for an English word (dictionary/english-index.ts), the typed
+ * English last so it can be kept. Rude words follow the same switch as typing.
+ */
+function englishCandidates(english: string): Candidate[] {
+  const engine = handle?.engine;
+  const hide = (word: string): boolean => {
+    const labels = engine?.labelsOf?.(word);
+    const rude = labels !== undefined && (labels.has('offensive') || labels.has('coarse'));
+    return rude && (KIDS || familySafeEl.checked);
+  };
+  const words = englishIndex().odiaFor(english, hide, ENGLISH_SHOWN, (w) => engine?.wordFrequency?.(w) ?? 0);
+  if (words.length === 0) return [];
+  return [
+    ...words.map((text, i) => ({ text, score: words.length - i, source: 'english' as const })),
+    { text: english, score: 0, source: 'verbatim' as const },
+  ];
 }
 
 function previousOdiaWord(roman: string): string | undefined {

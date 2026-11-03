@@ -62,7 +62,8 @@ try {
     await page.waitForFunction(() => document.querySelectorAll('.dict-phrase-entry').length === 0);
     check(await page.locator('.dict-spelled-entry').count() >= 1, 'a search with no phrase still lists the Odia spellings');
     await page.locator('.dict-search').fill('meeting');
-    await page.waitForFunction(() => document.querySelectorAll('.dict-english-entry').length === 2);
+    // English results: the curated two, then AI-written ones (2026-11-03); none is a phrase.
+    await page.waitForFunction(() => document.querySelectorAll('.dict-english-entry').length >= 2);
     check(await page.locator('.dict-phrase-entry').count() === 0, 'a search with no matching phrase shows no phrase blocks');
     await page.locator('.dict-search').fill('kemiti');
     await page.waitForFunction(() => document.querySelectorAll('.dict-phrase-entry').length >= 2);

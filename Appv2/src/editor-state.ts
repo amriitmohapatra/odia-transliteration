@@ -12,6 +12,8 @@ export interface PendingRoman extends Span { roman: string; tailEnd: number }
 /** Only a complete ordinary Roman word can be implicitly committed.
  * Looking at the whole whitespace-delimited token prevents converting an email
  * suffix, URL segment or identifier after the caret bar has already opened.
+ * A word typed after "=" is an English word to look up (=cow -> ଗାଈ): `roman`
+ * then keeps the "=", so the page can tell, and the commit replaces it too.
  */
 export function pendingRoman(state: EditState): PendingRoman | undefined {
   const { value, start: caret, end } = state;
@@ -22,10 +24,10 @@ export function pendingRoman(state: EditState): PendingRoman | undefined {
   if (!token || state.literals.some((span) => span.start < caret && span.end > tokenStart)) return;
   if (/@|:\/\/|^www\.|[A-Za-z]\.[A-Za-z]{2,}/i.test(token) ||
       (/[A-Za-z]/.test(token) && /[0-9]/.test(token))) return;
-  const match = /^([("'\[{\u2018\u2019\u201C\u201D]*)([A-Za-z_~]+)([.,!?;:)"'\]}\u2018\u2019\u201C\u201D\u0964\u0965\u2026]*)$/.exec(token);
+  const match = /^([("'\[{\u2018\u2019\u201C\u201D]*)(=?[A-Za-z_~]+)([.,!?;:)"'\]}\u2018\u2019\u201C\u201D\u0964\u0965\u2026]*)$/.exec(token);
   if (!match) return;
   const roman = match[2]!;
-  if (/^[A-Z]{2,}$/.test(roman)) return;
+  if (/^[A-Z]{2,}$/.test(roman) || roman === '=') return;
   const start = tokenStart + match[1]!.length;
   return { roman, start, end: start + roman.length, tailEnd: caret };
 }

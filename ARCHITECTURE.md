@@ -150,6 +150,22 @@ and supports Copy Odia and undoable insertion into the editor. It applies the sa
 works independently of the historical binary payloads, and does not feed engine
 ranking. See `Appv2/src/dictionary/PROVENANCE.md` for coverage and review limits.
 
+**English → Odia for everyday words (2026-11-03, owner: type "cow", get ଗାଈ).**
+`english-index.ts` (built once, on first use, by `english-data.ts`) answers an English
+word from three layers, each Odia word once: (1) `english.tsv` (curated); (2)
+`english-ai.tsv`, 2,263 everyday English words with 3,961 Odia options written by Claude,
+every Odia word checked against the word lists (`tools/eval/english-words-check.py`);
+(3) the owner and AI meanings read backwards (`glosses.tsv`, `meanings.tsv`: a sense that
+is exactly the English word; at most two of these when a list already answers, ordered by
+the engine's word counts). Fallbacks: "to go" → go, cows → cow, went → go, looking →
+look. The same index serves the dictionary search (each result labelled with its source)
+and **`=word` in the text box**: `pendingRoman()` accepts a leading `=` and keeps it in
+`roman`, `main.ts` answers such a word from the index (the English last, as Keep), the
+commit replaces the `=` too, and `learn()` never sees these picks. Rude words follow the
+typing switch (always hidden in the kids edition). Coverage of wordfreq's top 1,000 English
+words: 4.7% → 96.1% (`tools/eval/english-coverage.ts`). Browser checks:
+`english-check.mjs`, `english-typing-check.mjs`.
+
 "-web" files are the pruned versions the browser loads (phone memory budget).
 
 ## 5. The V1 web app (`Appv2/`)

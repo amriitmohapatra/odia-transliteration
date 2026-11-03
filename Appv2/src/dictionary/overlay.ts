@@ -79,8 +79,9 @@ import {
   type ModernEntry,
 } from './lookup.js';
 import { originChipLabel, originLabel, parseOrigin } from './origin.js';
-import { parseEnglishEntries, searchEnglish, type EnglishEntry } from './english.js';
-import englishTsv from './english.tsv?raw';
+import type { EnglishEntry } from './english.js';
+import { englishIndex } from './english-data.js';
+import type { EnglishHit, EnglishSource } from './english-index.js';
 import { LANGUAGE_LABEL, parseLoans, type Loan } from './loans.js';
 import loansTsv from './loans.tsv?raw';
 import { CATEGORY_LABEL, parsePhrases, searchPhrases, type Phrase } from './phrases.js';
@@ -88,7 +89,6 @@ import phrasesTsv from '../../../core/data/phrases.tsv?raw';
 import { DOCK_QUERY } from '../inline.js';
 import './overlay.css';
 
-const ENGLISH = parseEnglishEntries(englishTsv);
 const LOANS = parseLoans(loansTsv);
 /** The phrase table. A broken file shows no phrases rather than breaking the panel. */
 const PHRASES: Phrase[] = (() => {
@@ -755,14 +755,18 @@ function groupHeading(text: string): HTMLElement {
 }
 
 /**
- * English word -> Odia: the hand-made starter list first, then the loan-word
- * list (English loans, and Persian / Arabic / Hindi words by English meaning).
+ * English word -> Odia (english-index.ts): the curated starter list, then the
+ * AI-written list of everyday words, then the app's own meanings read backwards; then
+ * the loan-word list (English loans, and Persian / Arabic / Hindi words by meaning).
  */
-function englishSection(query: string): HTMLElement[] {
+function englishHits(query: string): EnglishHit[] {
+  return englishIndex().search(query, hidden, 10, wordFrequency);
+}
+
+function englishSection(query: string, hits = englishHits(query)): HTMLElement[] {
   const out: HTMLElement[] = [];
-  const results = searchEnglish(ENGLISH, query, hidden);
-  for (const { entry, exact } of results) out.push(englishBlock(entry, exact));
-  const shown = new Set(results.map((r) => canonical(r.entry.odia)));
+  for (const hit of hits) out.push(hit.entry ? englishBlock(hit.entry, hit.exact) : englishHitBlock(hit));
+  const shown = new Set(hits.map((h) => h.odia));
   const q = query.trim().toLowerCase().replace(/\s+/g, ' ');
   for (const loan of (LOANS.byEnglish.get(q) ?? []).slice(0, 4)) {
     if (shown.has(loan.odia) || hidden(loan.odia)) continue;
@@ -770,6 +774,39 @@ function englishSection(query: string): HTMLElement[] {
     out.push(loanBlock(loan));
   }
   return out;
+}
+
+const HIT_SOURCE: Record<Exclude<EnglishSource, 'curated'>, string> = {
+  'ai-list': 'AI-written English \u2192 Odia list, not yet checked by a native speaker.',
+  'owner-meaning': 'From your own meaning of this word.',
+  'ai-meaning': 'From this word\u2019s AI-written meaning, not yet checked.',
+};
+
+/** One Odia word for an English query, from the AI list or a meaning read backwards. */
+function englishHitBlock(hit: EnglishHit): HTMLElement {
+  const block = document.createElement('section');
+  block.className = 'dict-entry dict-english-entry';
+  const head = document.createElement('div');
+  head.className = 'dict-entry-head';
+  const word = document.createElement('span');
+  word.className = 'dict-word odia';
+  word.lang = 'or';
+  word.textContent = hit.odia;
+  const tag = document.createElement('span');
+  tag.className = 'dict-tag';
+  tag.textContent = 'Translation';
+  head.append(word, tag);
+  const sense = document.createElement('p');
+  sense.className = 'dict-hint';
+  // The Odia word's own one-line meaning tells the options apart (cow: ଗାଈ cow, ଗୋରୁ cattle).
+  const own = hit.odia.includes(' ') ? null : chipFor(hit.odia);
+  sense.textContent = own && own.toLowerCase() !== hit.english ? `${hit.english}: ${own}` : hit.english;
+  const source = document.createElement('p');
+  source.className = 'dict-hint';
+  source.textContent = HIT_SOURCE[hit.source as Exclude<EnglishSource, 'curated'>];
+  const [actions, feedback] = odiaActions(hit.odia, `${hit.english}, ${hit.odia}`);
+  block.append(head, sense, source, actions, feedback);
+  return block;
 }
 
 /** "English loan word: phone" under an Odia word that is in the loan list. */
@@ -1042,9 +1079,10 @@ function onSearch(): void {
   } else {
     // An English word with an exact entry (water, phone) shows its Odia word
     // first; otherwise the spellings of what was typed (kemiti) come first.
-    const english = englishSection(q);
+    const hits = englishHits(q);
+    const english = englishSection(q, hits);
     const spelled = spelledSection(q.toLowerCase());
-    const englishExact = searchEnglish(ENGLISH, q, hidden).some((r) => r.exact) ||
+    const englishExact = hits.some((h) => h.exact) ||
       english.some((b) => b.classList.contains('dict-loan-entry'));
     if (englishExact) add('English word → Odia', english);
     add(`Odia spellings of "${q}"`, spelled);
