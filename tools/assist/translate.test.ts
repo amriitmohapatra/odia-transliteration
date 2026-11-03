@@ -3,7 +3,7 @@
 import { describe, expect, it } from 'vitest';
 
 import { canonical as coreCanonical } from '../../core/src/normalize.js';
-import { MAX_CHARS, allowedOrigin, canonical, translate } from '../../api/_lib/translate.js';
+import { MAX_CHARS, SYSTEM_PROMPT, TYPED_PROMPT, allowedOrigin, canonical, textSource, translate } from '../../api/_lib/translate.js';
 
 const ODISHA_PRECOMPOSED = '\u0b13\u0b5c\u0b3f\u0b36\u0b3e';
 const ODISHA = '\u0b13\u0b21\u0b3c\u0b3f\u0b36\u0b3e';
@@ -75,5 +75,27 @@ describe('translate', () => {
   it('a provider error is reported, not cached', async () => {
     const { f } = fakeFetch({}, 529);
     expect(await translate('\u0b2c\u0b3e\u0b1c\u0b3e\u0b30', { ANTHROPIC_API_KEY: 'k' }, f)).toMatchObject({ ok: false, status: 502 });
+  });
+});
+
+describe('source: typed (web app) or ocr (lens)', () => {
+  it('reads anything but "typed" as the lens\'s OCR text', () => {
+    expect(textSource('typed')).toBe('typed');
+    for (const v of ['ocr', undefined, null, 'TYPED', 3]) expect(textSource(v)).toBe('ocr');
+  });
+
+  it('picks the prompt by source and caches the two apart', async () => {
+    const { f, calls } = fakeFetch({ content: [{ type: 'text', text: 'How are you?' }] });
+    const env = { ANTHROPIC_API_KEY: 'k' };
+    const howAreYou = '\u0b15\u0b47\u0b2e\u0b3f\u0b24\u0b3f \u0b05\u0b1b';
+    await translate(howAreYou, env, f);
+    await translate(howAreYou, env, f, 'typed');
+    expect(calls).toHaveLength(2);
+    expect(calls[0]?.body.system).toBe(SYSTEM_PROMPT);
+    expect(calls[1]?.body.system).toBe(TYPED_PROMPT);
+    expect(TYPED_PROMPT).not.toMatch(/OCR/);
+    const again = await translate(howAreYou, env, f, 'typed');
+    expect(again).toMatchObject({ ok: true, cached: true });
+    expect(calls).toHaveLength(2);
   });
 });

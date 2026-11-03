@@ -33,6 +33,7 @@ import { buildSlots, hasWords, readbackText, type Slot } from './readback.js';
 import { casual } from './romanize.js';
 import { Editor } from './editor.js';
 import { hasDeviceVoice, record, speak, speakRoute, speakable, stopSpeaking, type Recording } from './speech.js';
+import { providerName, translatable, translateOnline } from './translate.js';
 import { canonical } from '@odia/core/normalize';
 import {
   DEFAULT_PROFILE,
@@ -94,6 +95,12 @@ const voiceLabelEl = must<HTMLSpanElement>('voice-label');
 const speakOnlineEl = must<HTMLInputElement>('toggle-speak-online');
 const listenOnlineEl = must<HTMLInputElement>('toggle-listen-online');
 const privacyNoteEl = must<HTMLParagraphElement>('privacy-note');
+const onlineHeadingEl = must<HTMLHeadingElement>('settings-online');
+const translateEl = must<HTMLButtonElement>('translate');
+const translateOnlineEl = must<HTMLInputElement>('toggle-translate-online');
+const translationRowEl = must<HTMLDivElement>('translation-row');
+const translationEl = must<HTMLParagraphElement>('translation');
+const translationNoteEl = must<HTMLParagraphElement>('translation-note');
 
 function must<T extends HTMLElement>(id: string): T {
   const element = document.getElementById(id);
@@ -113,6 +120,10 @@ const PREF_NEXT_WORD = 'odia.pref.nextWord';
 /** Settings > Read aloud online / Voice typing (V3). OFF by default: a missing key reads as off (D-2). */
 const PREF_SPEAK_ONLINE = 'odia.pref.speakOnline';
 const PREF_LISTEN_ONLINE = 'odia.pref.listenOnline';
+/** Settings > Translate online (V3, translate.ts). OFF by default, like the two above. */
+const PREF_TRANSLATE_ONLINE = 'odia.pref.translateOnline';
+/** The text box's whole value when the shown English was asked for (declared before boot() runs). */
+let translatedFrom: string | null = null;
 /** "Hide rude words". ON by default: a missing key reads as on. */
 const PREF_FAMILY_SAFE = 'odia.pref.familySafe';
 /**
@@ -217,9 +228,21 @@ async function boot(): Promise<void> {
   strictEl.checked = readPref(PREF_STRICT);
   numberPickEl.checked = readPref(PREF_NUMBER_PICK, true);
   nextWordEl.checked = readPref(PREF_NEXT_WORD, true);
-  speakOnlineEl.checked = readPref(PREF_SPEAK_ONLINE);
-  listenOnlineEl.checked = readPref(PREF_LISTEN_ONLINE);
+  // Kids edition (owner, 2026-11-03): no online features. The assist layer answers
+  // only the adult site, so the three switches are not shown and are never on.
+  // Listen stays: it uses the device's own Odia voice, offline.
+  speakOnlineEl.checked = !KIDS && readPref(PREF_SPEAK_ONLINE);
+  listenOnlineEl.checked = !KIDS && readPref(PREF_LISTEN_ONLINE);
   voiceEl.hidden = !listenOnlineEl.checked;
+  translateOnlineEl.checked = !KIDS && readPref(PREF_TRANSLATE_ONLINE);
+  translateEl.hidden = !translateOnlineEl.checked;
+  if (KIDS) {
+    for (const el of [speakOnlineEl, listenOnlineEl, translateOnlineEl]) {
+      const row = el.closest<HTMLElement>('.setting');
+      if (row) row.hidden = true;
+    }
+    onlineHeadingEl.hidden = true;
+  }
   updatePrivacyNote();
   // Kids edition: no next-word data (adults' chat), so no switch for it.
   if (KIDS) {
@@ -460,6 +483,8 @@ function render(): void {
   // URL or kept word must never acquire a different invisible Copy rendition.
   slots = buildSlots(romanEl.value, [], romanEl.selectionEnd);
   renderReadback();
+  // The English describes the text it was made from; once that changes, it goes.
+  if (!translationRowEl.hidden && romanEl.value !== translatedFrom) hideTranslation();
 }
 
 function renderReadback(): void {
@@ -717,21 +742,69 @@ function onSpeak(): void {
   }
   const route = speakRoute(hasDeviceVoice(), speakOnlineEl.checked);
   if (route === 'none') {
-    setStatus('This device has no Odia voice. To hear the text, turn on \u201cRead aloud online\u201d in Settings.', false);
+    setStatus(KIDS
+      ? 'This device has no Odia voice, so Listen cannot read here.'
+      : 'This device has no Odia voice. To hear the text, turn on \u201cRead aloud online\u201d in Settings.', false);
     return;
   }
   setStatus(cut ? 'Reading the first part (500 letters).' : '', false);
   speak(text, route).catch((error: unknown) => setStatus(error instanceof Error ? error.message : String(error), true));
 }
 
-/** The promise under the page stays true: it names what goes online once a switch is on. */
+/** The promise under the page stays true: it names what goes online, and to whom, once a switch is on. */
 function updatePrivacyNote(): void {
   const parts: string[] = [];
-  if (speakOnlineEl.checked) parts.push('Listen sends the text when this device has no Odia voice.');
-  if (listenOnlineEl.checked) parts.push('Speak sends your recording.');
+  if (speakOnlineEl.checked) parts.push('Listen sends the text to Sarvam AI (India) when this device has no Odia voice.');
+  if (listenOnlineEl.checked) parts.push('Speak sends your recording to Sarvam AI (India).');
+  if (translateOnlineEl.checked) parts.push('In English sends the text to Anthropic (USA).');
   privacyNoteEl.textContent = parts.length === 0
     ? 'Everything runs on this device. Nothing you type is sent anywhere.'
-    : `Typing runs on this device. Online (Sarvam AI, India), only when you press the button: ${parts.join(' ')} Turn this off in Settings.`;
+    : `Typing runs on this device. Online, only when you press the button: ${parts.join(' ')} Turn this off in Settings.`;
+}
+
+/* ------------------------------------------------------------------ *
+ * In English (V3, translate.ts)
+ * ------------------------------------------------------------------ */
+
+function hideTranslation(): void {
+  translatedFrom = null;
+  translationRowEl.hidden = true;
+  translationEl.textContent = '';
+  translationNoteEl.textContent = '';
+}
+
+/** In English: the selected text, else the whole text box, translated online. */
+async function onTranslate(): Promise<void> {
+  if (!translateOnlineEl.checked) return;
+  const start = romanEl.selectionStart ?? 0;
+  const end = romanEl.selectionEnd ?? start;
+  const chosen = end > start ? romanEl.value.slice(start, end) : romanEl.value;
+  const { text, cut } = translatable(chosen);
+  if (!/[\u0B01-\u0B77]/.test(text)) {
+    setStatus('Nothing in Odia to translate yet.', false);
+    return;
+  }
+  const asked = romanEl.value;
+  translateEl.disabled = true;
+  setStatus('Translating\u2026', false);
+  try {
+    const result = await translateOnline(text);
+    // Typed on while it was away: this English no longer matches the box.
+    if (romanEl.value !== asked) {
+      setStatus('', false);
+      return;
+    }
+    translatedFrom = asked;
+    translationEl.textContent = result.english;
+    translationNoteEl.textContent =
+      `Machine translation by ${providerName(result.provider)}${cut ? ', of the first part' : ''}${end > start ? ', of the selected text' : ''}. Check it before you rely on it.`;
+    translationRowEl.hidden = false;
+    setStatus('', false);
+  } catch (error) {
+    setStatus(error instanceof Error ? error.message : String(error), true);
+  } finally {
+    translateEl.disabled = false;
+  }
 }
 
 let recording: Recording | null = null;
@@ -1566,6 +1639,13 @@ function bindEvents(): void {
     voiceEl.hidden = !listenOnlineEl.checked;
     updatePrivacyNote();
   });
+  translateOnlineEl.addEventListener('change', () => {
+    writePref(PREF_TRANSLATE_ONLINE, translateOnlineEl.checked);
+    translateEl.hidden = !translateOnlineEl.checked;
+    if (!translateOnlineEl.checked) hideTranslation();
+    updatePrivacyNote();
+  });
+  translateEl.addEventListener('click', () => void onTranslate());
   speakEl.addEventListener('click', onSpeak);
   voiceEl.addEventListener('click', () => void onVoice());
 

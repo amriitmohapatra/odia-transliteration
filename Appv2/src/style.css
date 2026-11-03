@@ -453,9 +453,16 @@ textarea:focus {
   font-size: var(--fs-sm);
 }
 
-/* Listen (V3, speech.ts): at the end of the "Reads as" head. */
-.readback-head .readback-speak {
+/* Listen (V3, speech.ts) and In English (translate.ts): together at the end of the "Reads as" head. */
+.readback-actions {
   margin-left: auto;
+  display: inline-flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 6px;
+  align-self: center;
+}
+.readback-head .readback-speak {
   display: inline-flex;
   align-items: center;
   gap: 4px;
@@ -464,6 +471,22 @@ textarea:focus {
 /* With a mouse the row stays one line high; touch keeps the 44px target. */
 @media (pointer: fine) {
   .readback-head .readback-speak { min-height: 30px; padding: 0 0.7rem; font-size: var(--fs-sm); }
+}
+
+/* The English under "Reads as": plain prose, marked as machine-made by the note under it. */
+.translation {
+  margin-top: var(--space-2);
+}
+.translation-text {
+  margin: 2px 0 0;
+  font-size: var(--fs-input);
+  line-height: 1.5;
+  overflow-wrap: break-word;
+}
+.translation-note {
+  margin: 2px 0 0;
+  color: var(--muted);
+  font-size: var(--fs-sm);
 }
 
 /* Speak (voice typing) while recording: the button says so in colour as well as words. */
@@ -1639,6 +1662,7 @@ code {
 .phone-layout.phone-editing .segmented,
 .phone-layout.phone-editing #intro,
 .phone-layout.phone-editing #readback-row,
+.phone-layout.phone-editing #translation-row,
 .phone-layout.phone-editing #profile-hint,
 .phone-layout.phone-editing #palette,
 .phone-layout.phone-editing #shortcuts,
