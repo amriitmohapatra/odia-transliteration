@@ -1,0 +1,67 @@
+# 60 random English words from Appv2/src/dictionary/english-api.tsv (generated with the Claude API, V2.21, 2026-11-09).
+# Owner check (C-17): add a last column: ok | wrong | better: <Odia>. One line per sense; "phrase" = Odia says it with a phrase.
+# english<TAB>kind<TAB>sense<TAB>odia options (everyday first)<TAB>your verdict
+admirer	word		ପ୍ରଶଂସକ|ଅନୁରାଗୀ	
+barbed	word		କଣ୍ଟାଯୁକ୍ତ|କଣ୍ଟିଆ	
+biologist	word		ଜୀବବିଜ୍ଞାନୀ	
+blameless	word		ନିର୍ଦ୍ଦୋଷ|ନିରପରାଧ	
+candlelight	word		ମହମବତୀ ଆଲୁଅ	
+caving	phrase		ଗୁମ୍ଫା ଭ୍ରମଣ	
+christianity	word		ଖ୍ରୀଷ୍ଟଧର୍ମ	
+crudely	phrase		ଅଶୋଭନ ଭାବରେ|ଅମାର୍ଜିତ ଭାବେ	
+dabble	phrase		ଟିକେ ଟିକେ କରିବା	
+dauntless	word		ନିର୍ଭୀକ|ନିର୍ଭୟ|ସାହସୀ	
+deflate	phrase		ପବନ ବାହାର କରିବା	
+destabilize	phrase		ଅସ୍ଥିର କରିବା	
+disconnect	word		ବିଚ୍ଛିନ୍ନ କରିବା|ସଂଯୋଗ କାଟିବା	
+dismay	word		ହତାଶା|ନିରାଶା	
+dismissal	word		ବରଖାସ୍ତ	
+effigy	word		ପ୍ରତିମୂର୍ତ୍ତି|କୁଶପୁତ୍ତଳିକା	
+emigrate	phrase		ବିଦେଶରେ ବସବାସ କରିବା|ପ୍ରବାସ କରିବା	
+empress	word		ସମ୍ରାଜ୍ଞୀ|ମହାରାଣୀ	
+end up	phrase		ଶେଷରେ ହେବା|ଶେଷରେ ପହଞ୍ଚିବା	
+entertain	word		ମନୋରଞ୍ଜନ କରିବା|ଆପ୍ୟାୟିତ କରିବା	
+entirely	word		ସମ୍ପୂର୍ଣ୍ଣ|ପୂରାପୂରି	
+farrow	phrase		ଘୁଷୁରି ଛୁଆ ଦେବା	
+fit	word	healthy	ସୁସ୍ଥ|ଫିଟ	
+fit	word	suitable	ଉପଯୁକ୍ତ|ଯୋଗ୍ୟ	
+fit	word	to fit size	ଲାଗିବା|ଖାପ ଖାଇବା	
+fluctuation	word		ଅସ୍ଥିରତା	
+glimpse	word		ଝଲକ|ଝଲକ ଦେଖିବା	
+gravitation	word		ମାଧ୍ୟାକର୍ଷଣ	
+handicraft	word		ହସ୍ତଶିଳ୍ପ|କାରୁକାର୍ଯ୍ୟ	
+headlight	word		ହେଡଲାଇଟ	
+inhabit	word		ବାସ କରିବା|ରହିବା	
+interconnected	word		ପରସ୍ପର ସଂଯୁକ୍ତ	
+irrationality	word		ଅଯୌକ୍ତିକତା	
+irritate	word		ବିରକ୍ତ କରିବା|ଚିଡ଼ାଇବା	
+laparoscopic	word		ଲାପ୍ରୋସ୍କୋପିକ	
+laxative	word		ରେଚକ	
+lump	word		ଗୁଣ୍ଡା|ଢେଲା|ପିଣ୍ଡ	
+misinterpretation	word		ଭୁଲ ବ୍ୟାଖ୍ୟା	
+nationalist	word		ଜାତୀୟତାବାଦୀ	
+navigate	phrase		ବାଟ ଖୋଜି ଯିବା|ଦିଗ ନିର୍ଣ୍ଣୟ କରିବା	
+negotiable	word		ଦରଦାମ ହୋଇପାରିବ	
+optionally	phrase		ଇଚ୍ଛାନୁସାରେ|ଐଚ୍ଛିକ ଭାବରେ	
+palatable	word		ସୁସ୍ୱାଦୁ|ରୁଚିକର	
+pitch	word	sports field	ପିଚ|ପଡ଼ିଆ	
+pitch	word	sound level	ସ୍ୱରର ଉଚ୍ଚତା	
+poised	word	ready	ପ୍ରସ୍ତୁତ	
+poised	word	calm	ସ୍ଥିର|ଶାନ୍ତ	
+police inspector	phrase		ପୋଲିସ ଇନ୍ସପେକ୍ଟର|ଥାନାବାବୁ	
+raven	word		ଡାମରା କାଉ|କାଉ	
+reflex	word		ପ୍ରତିବର୍ତ୍ତ କ୍ରିୟା|ରିଫ୍ଲେକ୍ସ	
+rely	word		ନିର୍ଭର କରିବା|ଭରସା କରିବା	
+rights	word		ଅଧିକାର	
+sawmill	word		କରତ କଳ|ସମିଲ	
+scottish	word		ସ୍କଟିସ	
+skirt	word		ସ୍କର୍ଟ|ଘାଗରା	
+supplier	word		ଯୋଗାଣକାରୀ|ସପ୍ଲାୟର	
+switch on	phrase		ଚାଲୁ କରିବା|ଜଳାଇବା	
+tick	word	check mark	ଟିକ୍ ଚିହ୍ନ|ଟିକ୍	
+trestle	word		ଘୋଡ଼ି	
+vicar	word		ପାଦ୍ରୀ|ଯାଜକ	
+vitally	word		ଅତ୍ୟନ୍ତ	
+wad	word		ବିଡ଼ା|ଗୋଛା|ବଣ୍ଡଲ	
+warbler	phrase		ଗୀତ ଗାଉଥିବା ଛୋଟ ଚଢ଼େଇ	
+xian	word		ସିଆନ	

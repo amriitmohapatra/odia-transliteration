@@ -175,7 +175,8 @@ first English lookup, and adds it to the index (`setApi`); until then the other 
 answer. Rows are `english, kind (word | phrase | form), sense, value`: senses are
 interleaved so a second sense (bank: river side) reaches the bar; a phrase is offered
 whole; a form (ran → run) sends the query to its base word. Order: curated, owner
-meanings, the hand-written list, this list, the AI meanings read backwards.
+meanings, the hand-written list, this list, the AI meanings read backwards. First run
+2026-11-09: 20,864 English words and 12,096 forms; 1.5 MB as text, 367 KB as `english-api.bin`.
 
 "-web" files are the pruned versions the browser loads (phone memory budget).
 

@@ -7,13 +7,16 @@
 //   npx tsx tools/build-data/english_api.ts pilot   LIST OUT.jsonl [FROM] [COUNT] [EFFORT]
 //   npx tsx tools/build-data/english_api.ts submit  LIST STATE.json [EFFORT]
 //   npx tsx tools/build-data/english_api.ts collect STATE.json OUT.jsonl
+//   npx tsx tools/build-data/english_api.ts retry   REPORT.tsv OUT.tsv STATE2.json [EFFORT]  (then collect)
 //   npx tsx tools/build-data/english_api.ts build   OUT.tsv REPORT.tsv RAW.jsonl [RAW2.jsonl ...]
 //   npx tsx tools/build-data/english_api.ts pack    [TSV]   (after a hand edit of the TSV)
 // LIST: tools/build-data/english_wordlist.py. pilot calls the Messages API directly (to tune
 // the prompt and measure cost); submit/collect use the Message Batches API (half price).
 // build checks every Odia word against the app's word lists and writes
 // Appv2/src/dictionary/english-api.tsv and its gzip english-api.bin (the file the app
-// fetches). The raw model output stays outside the repository.
+// fetches). The raw model output of the 2026-11-09 run is kept, gzipped, as
+// tools/build-data/english-api-raw.jsonl.gz (build reads .gz directly), so the file can be
+// rebuilt and a retry needs only the words asked again.
 import { appendFileSync, readFileSync, writeFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { gunzipSync, gzipSync } from 'node:zlib';
@@ -75,13 +78,27 @@ export const SCHEMA = {
 
 type Effort = 'low' | 'medium' | 'high';
 
-export function requestParams(words: readonly string[], effort: Effort): Anthropic.MessageCreateParamsNonStreaming {
+/**
+ * The user turn. A retry (notFound) lists after each word the Odia spellings the build
+ * could not find in any word list, so the model can give the spelling Odia newspapers
+ * print (କେଳେଙ୍କାରି -> କେଳେଙ୍କାରୀ) or another common word.
+ */
+export function userTurn(words: readonly string[], notFound?: ReadonlyMap<string, readonly string[]>): string {
+  if (!notFound) return `English words and expressions, one per line:\n${words.join('\n')}`;
+  return 'English words and expressions, one per line. After "::" are Odia spellings given earlier that were not '
+    + 'found in a large collection of Odia news text and word lists: they may be misspelt, rare or invented. For each '
+    + 'word, give the spelling commonly printed in Odia newspapers, or a different common Odia word or phrase with the '
+    + 'same meaning. Repeat a listed spelling only if you are sure it is the standard one. Copy only the English, '
+    + `without the "::" part, into "english".\n${words.map((w) => `${w} :: ${(notFound.get(w) ?? []).join(', ')}`).join('\n')}`;
+}
+
+export function requestParams(words: readonly string[], effort: Effort, notFound?: ReadonlyMap<string, readonly string[]>): Anthropic.MessageCreateParamsNonStreaming {
   return {
     model: MODEL,
     max_tokens: MAX_TOKENS,
     // The same system prompt on every request: cached after the first.
     system: [{ type: 'text', text: SYSTEM, cache_control: { type: 'ephemeral' } }],
-    messages: [{ role: 'user', content: `English words and expressions, one per line:\n${words.join('\n')}` }],
+    messages: [{ role: 'user', content: userTurn(words, notFound) }],
     output_config: { effort, format: { type: 'json_schema', schema: SCHEMA } },
   };
 }
@@ -152,12 +169,12 @@ async function pilot(list: string, out: string, from = 0, count = 200, effort: E
   console.log(`cost now US$${cost(usages, false).toFixed(3)}; as a batch US$${cost(usages, true).toFixed(3)}; whole list (${total}) as a batch about US$${(perWord * total).toFixed(2)}`);
 }
 
-async function submit(list: string, state: string, effort: Effort = 'low'): Promise<void> {
+async function submit(list: string | string[], state: string, effort: Effort = 'low', notFound?: ReadonlyMap<string, readonly string[]>): Promise<void> {
   const api = client();
-  const parts = chunks(readList(list), CHUNK);
-  const ids = parts.map((_, i) => `c${String(i).padStart(5, '0')}`);
+  const parts = chunks(typeof list === 'string' ? readList(list) : list, CHUNK);
+  const ids = parts.map((_, i) => `${notFound ? 'r' : 'c'}${String(i).padStart(5, '0')}`);
   const batch = await api.messages.batches.create({
-    requests: parts.map((part, i) => ({ custom_id: ids[i]!, params: requestParams(part, effort) })),
+    requests: parts.map((part, i) => ({ custom_id: ids[i]!, params: requestParams(part, effort, notFound) })),
   });
   writeFileSync(state, JSON.stringify({ batch: batch.id, effort, words: Object.fromEntries(ids.map((id, i) => [id, parts[i]])) }, null, 1));
   console.log(`batch ${batch.id}: ${parts.length} requests, status ${batch.processing_status}`);
@@ -193,6 +210,23 @@ async function collect(state: string, out: string): Promise<void> {
     writeFileSync(`${out}.retry.txt`, `${retry.join('\n')}\n`);
     console.log(`${retry.length} words to retry: ${out}.retry.txt (submit it as a new list)`);
   }
+}
+
+/**
+ * retry: the words whose every Odia option the build dropped (REPORT) and that have no row
+ * in TSV, asked again with the spellings that were not found (a second batch; collect it
+ * as usual and pass both raw files to build, the first one first).
+ */
+async function retry(report: string, tsv: string, state: string, effort: Effort = 'low'): Promise<void> {
+  const answered = new Set(readFileSync(tsv, 'utf8').split('\n').filter((l) => l && !l.startsWith('#')).map((l) => l.split('\t')[0]));
+  const notFound = new Map<string, string[]>();
+  for (const line of readFileSync(report, 'utf8').split('\n').slice(1).filter(Boolean)) {
+    const [english, , odia] = line.split('\t') as [string, string, string];
+    if (answered.has(english)) continue;
+    notFound.set(english, [...(notFound.get(english) ?? []), odia]);
+  }
+  console.log(`${notFound.size} words to ask again`);
+  await submit([...notFound.keys()], state, effort, notFound);
 }
 
 /* ------------------------------------------------------------------ *
@@ -241,22 +275,26 @@ function build(out: string, report: string, raws: readonly string[]): void {
   const rows: string[] = [];
   const dropped: string[] = ['english\tsense\todia\twhy'];
   const counts = { asked: 0, word: 0, phrase: 0, form: 0, skip: 0, missing: 0, options: 0, kept: 0, unattested: 0, notOdia: 0 };
+  // A word is settled once it has rows (or is a form or a skip); a word whose options
+  // were all dropped stays open, so a later raw file (a retry) can still fill it.
   const seen = new Set<string>();
+  const asked = new Set<string>();
+  const missing = new Set<string>();
   for (const raw of raws) {
-    for (const line of readFileSync(raw, 'utf8').split('\n').filter(Boolean)) {
+    const text = raw.endsWith('.gz') ? gunzipSync(readFileSync(raw)).toString('utf8') : readFileSync(raw, 'utf8');
+    for (const line of text.split('\n').filter(Boolean)) {
       const r = JSON.parse(line) as RawLine;
       if (!r.entries) continue;
-      const asked = new Set(r.words);
-      counts.asked += r.words.length;
+      const thisRequest = new Set(r.words);
+      for (const w of r.words) asked.add(w);
       for (const e of r.entries as Entry[]) {
         const english = String(e.english ?? '').trim().toLowerCase().replace(/\s+/g, ' ');
         // Only words that were asked, each once (a retry may repeat them).
-        if (!asked.has(english) || seen.has(english) || !/^[a-z][a-z '-]*$/.test(english)) continue;
-        seen.add(english);
-        if (e.kind === 'skip') { counts.skip++; continue; }
+        if (!thisRequest.has(english) || seen.has(english) || !/^[a-z][a-z '-]*$/.test(english)) continue;
+        if (e.kind === 'skip') { if (!missing.has(english)) { seen.add(english); counts.skip++; } continue; }
         if (e.kind === 'form') {
           const base = String(e.base ?? '').trim().toLowerCase();
-          if (/^[a-z][a-z '-]*$/.test(base) && base !== english) { rows.push(`${english}\tform\t\t${base}`); counts.form++; }
+          if (/^[a-z][a-z '-]*$/.test(base) && base !== english) { rows.push(`${english}\tform\t\t${base}`); counts.form++; seen.add(english); missing.delete(english); }
           continue;
         }
         let any = false;
@@ -277,11 +315,13 @@ function build(out: string, report: string, raws: readonly string[]): void {
             rows.push(`${english}\t${e.kind === 'phrase' ? 'phrase' : 'word'}\t${sense}\t${keep.join('|')}`);
           }
         }
-        if (any) counts[e.kind === 'phrase' ? 'phrase' : 'word']++;
-        else counts.missing++;
+        if (any) { counts[e.kind === 'phrase' ? 'phrase' : 'word']++; seen.add(english); missing.delete(english); }
+        else missing.add(english);
       }
     }
   }
+  counts.asked = asked.size;
+  counts.missing = missing.size;
   const head = `# english-api.tsv: English -> Odia, generated with Claude (${MODEL}) through the owner's
 # Anthropic Console key by tools/build-data/english_api.ts (V2.21, 2026-11). Every Odia word
 # was checked against the app's own word lists; the rest were dropped (english_api.ts build).
@@ -316,9 +356,10 @@ if (import.meta.url === `file://${process.argv[1]}`) {
     pilot: () => pilot(args[0]!, args[1]!, Number(args[2] ?? 0), Number(args[3] ?? 200), (args[4] ?? 'low') as Effort),
     submit: () => submit(args[0]!, args[1]!, (args[2] ?? 'low') as Effort),
     collect: () => collect(args[0]!, args[1]!),
+    retry: () => retry(args[0]!, args[1]!, args[2]!, (args[3] ?? 'low') as Effort),
     build: async () => build(args[0]!, args[1]!, args.slice(2)),
     pack: async () => pack(args[0]),
   }[command as 'pilot'];
-  if (!run) throw new Error('usage: english_api.ts pilot|submit|collect|build ... (see the top of the file)');
+  if (!run) throw new Error('usage: english_api.ts pilot|submit|collect|retry|build ... (see the top of the file)');
   await run();
 }
