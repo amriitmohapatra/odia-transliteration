@@ -2,7 +2,7 @@
  * English -> Odia: one search for the dictionary panel and for "=word" in the text box
  * (owner, 2026-11-03: type "cow", get ଗାଈ).
  *
- * Three layers, in this order, each word once:
+ * Layers, in this order, each word once (owner meanings first among the lists):
  *   1. english.tsv       the curated starter list (seed / owner); explained senses
  *   2. english-ai.tsv    about 2,000 everyday English words, written by Claude for
  *                        this project (AI-written, not yet checked)
@@ -10,13 +10,16 @@
  *      the AI meanings (meanings.tsv) whose meaning, or one of its senses, is exactly
  *      the English word ("elephant" -> ହାତୀ). Exact sense only: no prefix, no Praharaj
  *      (its 1930s English is too often an old sense).
+ *   4. english-api.tsv   about 45,000 words and expressions generated with the Claude API
+ *                        (V2.21), loaded lazily (english-data.ts); senses, phrases and
+ *                        inflected forms (ran -> run). Between the AI list and layer 3.
  *
  * Offline and synchronous; nothing here feeds the phonetic ranker (learn()).
  */
 import { canonical } from '../../../core/src/normalize.js';
 import { normalizeEnglish, searchEnglish, type EnglishEntry } from './english.js';
 
-export type EnglishSource = 'curated' | 'ai-list' | 'owner-meaning' | 'ai-meaning';
+export type EnglishSource = 'curated' | 'ai-list' | 'api-list' | 'owner-meaning' | 'ai-meaning';
 
 export interface EnglishHit {
   odia: string;
@@ -27,6 +30,50 @@ export interface EnglishHit {
   exact: boolean;
   /** The curated entry, for its sense note and status. */
   entry?: EnglishEntry;
+  /** english-api.tsv: the sense label when the word has more than one ("river side"). */
+  sense?: string;
+  /** english-api.tsv: an Odia phrase for a word Odia has no single word for. */
+  phrase?: boolean;
+}
+
+/** One sense of a word in english-api.tsv. */
+export interface ApiSense { phrase: boolean; sense: string; odia: string[] }
+/** english-api.tsv parsed: the senses of each English word, and inflected forms -> base word. */
+export interface ApiList { senses: Map<string, ApiSense[]>; forms: Map<string, string> }
+
+const ENGLISH_KEY = /^[a-z][a-z '-]*$/;
+
+/**
+ * english-api.tsv (V2.21, generated with the Claude API by tools/build-data/english_api.ts):
+ * english <TAB> kind (word | phrase | form) <TAB> sense <TAB> Odia options, or the base word
+ * for a form. Strict: a bad row fails loudly, as for the other data files.
+ */
+export function parseEnglishApi(tsv: string, file = 'english-api.tsv'): ApiList {
+  const senses = new Map<string, ApiSense[]>();
+  const forms = new Map<string, string>();
+  for (const [index, line] of tsv.split(/\r?\n/).entries()) {
+    if (!line.trim() || line.startsWith('#')) continue;
+    const fail = (message: string): never => { throw new Error(`${file}:${index + 1}: ${message}`); };
+    const cells = line.split('\t');
+    if (cells.length !== 4) fail('expected four fields: english, kind, sense, value');
+    const [english, kind, sense, value] = cells as [string, string, string, string];
+    if (!ENGLISH_KEY.test(english) || english !== normalizeEnglish(english)) fail(`invalid English "${english}"`);
+    if (kind === 'form') {
+      if (!ENGLISH_KEY.test(value) || sense) fail(`a form needs an English base word and no sense: "${english}"`);
+      forms.set(english, value);
+      continue;
+    }
+    if (kind !== 'word' && kind !== 'phrase') fail(`unknown kind "${kind}"`);
+    const options = value.split('|');
+    for (const word of options) {
+      if (!/^[\u0b00-\u0b7f]+( [\u0b00-\u0b7f]+)*$/.test(word)) fail(`not an Odia word: "${word}"`);
+      if (word !== canonical(word)) fail(`not canonical: "${word}"`);
+    }
+    const list = senses.get(english) ?? [];
+    list.push({ phrase: kind === 'phrase', sense, odia: options });
+    senses.set(english, list);
+  }
+  return { senses, forms };
 }
 
 /** english-ai.tsv: english <TAB> odia|odia|... Strict: a bad row fails loudly. */
@@ -134,7 +181,17 @@ export class EnglishIndex {
     private readonly aiList: ReadonlyMap<string, readonly string[]>,
     private readonly ownerMeanings: ReadonlyMap<string, readonly string[]>,
     private readonly aiMeanings: ReadonlyMap<string, readonly string[]>,
+    private api?: ApiList,
   ) {}
+
+  /** The generated list arrives later (a separate, lazily loaded file). */
+  setApi(api: ApiList): void {
+    this.api = api;
+  }
+
+  get hasApi(): boolean {
+    return this.api !== undefined;
+  }
 
   /**
    * All hits for an English query, best first, each Odia word once; hidden words left
@@ -153,12 +210,27 @@ export class EnglishIndex {
     };
     const variants = englishVariants(query);
     if (!variants[0]) return [];
+    // An inflected form the generated list knows (ran -> run) is tried right after itself.
+    for (let i = 0; i < variants.length; i++) {
+      const base = this.api?.forms.get(variants[i]!);
+      if (base && !variants.includes(base)) variants.splice(i + 1, 0, base);
+    }
     // Curated first, exact headwords and aliases only here (prefix suggestions go last).
     const curated = searchEnglish(this.curated, variants[0], hide, 24);
     for (const { entry, exact } of curated) if (exact) push({ odia: entry.odia, english: entry.english, source: 'curated', exact, entry });
     for (const v of variants) {
       for (const odia of this.ownerMeanings.get(v) ?? []) push({ odia, english: v, source: 'owner-meaning', exact: true });
       for (const odia of this.aiList.get(v) ?? []) push({ odia, english: v, source: 'ai-list', exact: true });
+      // The generated list: the first option of each sense first, so a second sense
+      // (bank: river side) is not pushed out of the bar by the first sense's synonyms.
+      const apiSenses = this.api?.senses.get(v) ?? [];
+      const depth = Math.max(0, ...apiSenses.map((s) => s.odia.length));
+      for (let k = 0; k < depth; k++) {
+        for (const s of apiSenses) {
+          const odia = s.odia[k];
+          if (odia) push({ odia, english: v, source: 'api-list', exact: true, sense: s.sense || undefined, phrase: s.phrase || undefined });
+        }
+      }
       // The meanings read backwards also hold inflected forms (ଯିବାକୁ "to go"): when a
       // list already answers, they add at most two words.
       const room = hits.length > 0 ? 2 : Infinity;

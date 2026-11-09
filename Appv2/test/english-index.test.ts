@@ -5,7 +5,7 @@ import { describe, expect, it } from 'vitest';
 
 import { canonical } from '../../core/src/normalize.js';
 import { parseEnglishEntries } from '../src/dictionary/english.js';
-import { EnglishIndex, englishVariants, meaningKeys, parseEnglishAi, reverseMeanings } from '../src/dictionary/english-index.js';
+import { EnglishIndex, englishVariants, meaningKeys, parseEnglishAi, parseEnglishApi, reverseMeanings } from '../src/dictionary/english-index.js';
 import { pendingRoman, type EditState } from '../src/editor-state.js';
 
 const read = (p: string): string => readFileSync(new URL(p, import.meta.url), 'utf8');
@@ -94,5 +94,56 @@ describe('"=word" in the text box', () => {
   it('a bare "=" or "a=b" is not', () => {
     expect(pendingRoman(state('='))).toBeUndefined();
     expect(pendingRoman(state('a=b'))).toBeUndefined();
+  });
+});
+
+describe('english-api.tsv (generated with the Claude API, V2.21)', () => {
+  const KULA = 'କୂଳ'; // bank of a river
+  const BANK = 'ବ୍ୟାଙ୍କ'; // bank (money)
+  const TATA = 'ତଟ';
+  const fixture = [
+    '# test',
+    `bank\tword\tmoney\t${BANK}|ବାଙ୍କ`,
+    `bank\tword\triver side\t${KULA}|${TATA}`,
+    `babysit\tphrase\t\tପିଲା ଜଗିବା`,
+    'ran\tform\t\trun',
+    `run\tword\t\tଦୌଡ଼ିବା`,
+  ].join('\n');
+
+  it('parses strictly and fails loudly', () => {
+    const api = parseEnglishApi(fixture);
+    expect(api.senses.get('bank')).toHaveLength(2);
+    expect(api.forms.get('ran')).toBe('run');
+    expect(() => parseEnglishApi('cow\tword\t\tgai')).toThrow(/not an Odia word/);
+    expect(() => parseEnglishApi('cow\tnoun\t\tଗାଈ')).toThrow(/unknown kind/);
+    expect(() => parseEnglishApi('ran\tform\tpast\trun')).toThrow(/form/);
+    expect(() => parseEnglishApi('road\tword\t\tସଡ଼କ')).toThrow(/not canonical/);
+    expect(() => parseEnglishApi('cow\tword\tଗାଈ')).toThrow(/four fields/);
+  });
+
+  it('interleaves senses, marks phrases and sends a form to its base word', () => {
+    const ix = new EnglishIndex([], new Map(), new Map(), new Map());
+    expect(ix.hasApi).toBe(false);
+    ix.setApi(parseEnglishApi(fixture));
+    const bank = ix.search('bank');
+    expect(bank.map((h) => h.odia).slice(0, 2)).toEqual([BANK, KULA]);
+    expect(bank[1]).toMatchObject({ source: 'api-list', sense: 'river side' });
+    expect(ix.search('babysit')[0]).toMatchObject({ phrase: true });
+    expect(ix.odiaFor('ran')).toEqual(['ଦୌଡ଼ିବା']);
+  });
+
+  it('keeps the hand-written lists first', () => {
+    const ix = index();
+    ix.setApi(parseEnglishApi(`cow\tword\t\tଗୋମାତା`));
+    expect(ix.odiaFor('cow')[0]).toBe(GAI);
+  });
+
+  it('the shipped file parses, and english-api.bin is the gzip of it', async () => {
+    const tsv = read('../src/dictionary/english-api.tsv');
+    expect(() => parseEnglishApi(tsv)).not.toThrow();
+    expect(tsv).not.toMatch(/[ଡ଼ଢ଼]/);
+    const { gunzipSync } = await import('node:zlib');
+    const bin = readFileSync(new URL('../src/dictionary/english-api.bin', import.meta.url));
+    expect(gunzipSync(bin).toString('utf8')).toBe(tsv);
   });
 });

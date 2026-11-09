@@ -1,0 +1,9 @@
+# english-api.tsv: English -> Odia, generated with Claude (claude-opus-5-5) through the owner's
+# Anthropic Console key by tools/build-data/english_api.ts (V2.21, 2026-11). Every Odia word
+# was checked against the app's own word lists; the rest were dropped (english_api.ts build).
+# AI-written, not yet checked by a native speaker. Licence: MIT (this project).
+# Format: english <TAB> kind <TAB> sense <TAB> value
+#   kind  word | phrase: value = Odia options, "|"-separated, the everyday one first
+#         form: value = the English base word (ran -> run); sense empty
+#   sense a short English label when a word has two or three senses, else empty
+

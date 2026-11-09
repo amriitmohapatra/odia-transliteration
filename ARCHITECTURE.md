@@ -166,6 +166,17 @@ typing switch (always hidden in the kids edition). Coverage of wordfreq's top 1,
 words: 4.7% → 96.1% (`tools/eval/english-coverage.ts`). Browser checks:
 `english-check.mjs`, `english-typing-check.mjs`.
 
+**The wide net (V2.21, 2026-11-09).** A fourth list, `english-api.tsv`, generated with the
+Claude API by `tools/build-data/english_api.ts` (owner's Console key, Batch API) for about
+48,500 English words and expressions, ships as `english-api.bin` (its gzip, a separate
+asset like the dictionary payloads: precached by the service worker, inlined in the
+single-file build). `english-data.ts` fetches it 2.5 s after the page is ready, or on the
+first English lookup, and adds it to the index (`setApi`); until then the other layers
+answer. Rows are `english, kind (word | phrase | form), sense, value`: senses are
+interleaved so a second sense (bank: river side) reaches the bar; a phrase is offered
+whole; a form (ran → run) sends the query to its base word. Order: curated, owner
+meanings, the hand-written list, this list, the AI meanings read backwards.
+
 "-web" files are the pruned versions the browser loads (phone memory budget).
 
 ## 5. The V1 web app (`Appv2/`)
