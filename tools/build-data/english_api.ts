@@ -16,10 +16,11 @@
 // fetches). The raw model output stays outside the repository.
 import { appendFileSync, readFileSync, writeFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
-import { gzipSync } from 'node:zlib';
+import { gunzipSync, gzipSync } from 'node:zlib';
 
 import Anthropic from '@anthropic-ai/sdk';
 
+import { foldKey } from '../../Appv2/src/dictionary/lookup.js';
 import { canonical } from '../../core/src/normalize.js';
 
 const ROOT = fileURLToPath(new URL('../../', import.meta.url));
@@ -34,7 +35,7 @@ For each English word or expression in the list, answer with one entry:
 - kind "word": one or more Odia words for it.
 - kind "phrase": Odia has no single everyday word, so give a short natural phrase (two to six words) the way an Odia speaker would say it. Many English words need this, e.g. "babysit" -> ପିଲା ଜଗିବା, "commute" -> ନିତି ଯିବା ଆସିବା. Prefer a phrase people really use over a coined or bookish single word.
 - kind "form": the English word is only an inflected form (plural, past tense, past participle, -ing, comparative, superlative) with the meaning of its base word; put the base word in "base" and give no senses. If the form has a meaning of its own (news, glasses, savings, belongings, spectacles, earnings), treat it as a word.
-- kind "skip": a person's name or surname, a brand, a non-English word, an abbreviation that is not used as a word, a swear word, a slur or a sexual vulgarity. Give no senses. Place names (cities, countries, rivers, states) are not skipped: give their usual Odia name.
+- kind "skip": a person's name or surname, a brand, a non-English word, an abbreviation that is not used as a word, a swear word, a slur or a sexual vulgarity, or the article "the" (Odia has none). Give no senses. Place names (cities, countries, rivers, states) are not skipped: give their usual Odia name.
 
 Senses: give one sense, or two or three only when the English word has clearly different common meanings that need different Odia words (bank: money / river). Most common sense first. "sense" is a short English label (two to five words) when there is more than one sense, else "".
 
@@ -198,9 +199,12 @@ async function collect(state: string, out: string): Promise<void> {
  * build: validate and write english-api.tsv
  * ------------------------------------------------------------------ */
 
-/** Canonical Odia, joiners removed (ZWJ/ZWNJ are invisible and break exact lookup). */
+/**
+ * Canonical Odia, joiners removed (ZWJ/ZWNJ are invisible and break exact lookup), and
+ * the old letter ଵ (U+0B35) written ବ as modern Odia does (ଜୀଵନ୍ତ -> ଜୀବନ୍ତ).
+ */
 export function cleanOdia(raw: string): string {
-  return canonical(raw.replace(/[‌‍]/g, '').replace(/\s+/g, ' ').trim());
+  return canonical(raw.replace(/[\u200c\u200d]/g, '').replace(/\u0b35/g, '\u0b2c').replace(/\s+/g, ' ').trim());
 }
 const ODIA_PHRASE = /^[ଁ-୷]+( [ଁ-୷]+)*$/;
 
@@ -214,13 +218,26 @@ export function attestedWords(minLogFreq = 0.6): Set<string> {
   for (const [w] of rows('core/data/glosses.tsv')) if (w) words.add(w);
   for (const r of rows('Appv2/src/dictionary/english-ai.tsv')) for (const o of (r[1] ?? '').split('|')) for (const p of o.split(' ')) words.add(p);
   for (const [w, f] of rows('core/data/unigrams.tsv')) if (w && Number(f) >= minLogFreq) words.add(w);
+  // What Desh keyboard users chose for a key, seen at least three times (one-off typos stay out).
+  for (const [, w, n] of rows('core/data/typed.tsv')) if (w && Number(n) >= 3) words.add(w);
+  // English loans in Odia script, each already attested in IndicCorp (build_loans.py).
+  for (const [, w] of rows('Appv2/src/dictionary/loans.tsv')) if (w) words.add(w);
   return words;
+}
+
+/** Praharaj's headwords, in the dictionary's folded spelling (ୟ -> ଯ, ୱ/ଵ -> ବ). */
+export function praharajKeys(): Set<string> {
+  const text = gunzipSync(readFileSync(ROOT + 'Appv2/src/dictionary/praharaj.bin')).toString('utf8');
+  const a = text.indexOf('\u0002');
+  return new Set(text.slice(a + 1, text.indexOf('\u0002', a + 1)).split('\n'));
 }
 
 interface Entry { english: string; kind: string; base: string; senses: { sense: string; odia: string[] }[] }
 
 function build(out: string, report: string, raws: readonly string[]): void {
-  const known = attestedWords();
+  const words = attestedWords();
+  const praharaj = praharajKeys();
+  const known = (w: string): boolean => words.has(w) || praharaj.has(foldKey(w));
   const rows: string[] = [];
   const dropped: string[] = ['english\tsense\todia\twhy'];
   const counts = { asked: 0, word: 0, phrase: 0, form: 0, skip: 0, missing: 0, options: 0, kept: 0, unattested: 0, notOdia: 0 };
@@ -251,7 +268,7 @@ function build(out: string, report: string, raws: readonly string[]): void {
             const odia = cleanOdia(String(o));
             if (!ODIA_PHRASE.test(odia)) { counts.notOdia++; dropped.push(`${english}\t${sense}\t${o}\tnot Odia`); continue; }
             // A word must be known; a phrase must be made of known words.
-            if (!odia.split(' ').every((p) => known.has(p))) { counts.unattested++; dropped.push(`${english}\t${sense}\t${odia}\tnot in the word lists`); continue; }
+            if (!odia.split(' ').every(known)) { counts.unattested++; dropped.push(`${english}\t${sense}\t${odia}\tnot in the word lists`); continue; }
             if (!keep.includes(odia)) keep.push(odia);
           }
           if (keep.length) {
@@ -274,7 +291,13 @@ function build(out: string, report: string, raws: readonly string[]): void {
 #         form: value = the English base word (ran -> run); sense empty
 #   sense a short English label when a word has two or three senses, else empty
 `;
-  writeFileSync(out, head + rows.sort().join('\n') + '\n');
+  // Sorted by English word only: a word's senses keep the model's order, most common first
+  // (the app offers the first sense's word first; a full-line sort put lot -> "fate" first).
+  const byWord = (r: string): string => r.slice(0, r.indexOf('\t'));
+  const sorted = rows.map((r, i) => [r, i] as const)
+    .sort(([a, i], [b, j]) => (byWord(a) < byWord(b) ? -1 : byWord(a) > byWord(b) ? 1 : i - j))
+    .map(([r]) => r);
+  writeFileSync(out, head + sorted.join('\n') + '\n');
   writeFileSync(report, dropped.join('\n') + '\n');
   if (out.endsWith('.tsv')) pack(out);
   console.log(JSON.stringify(counts));
