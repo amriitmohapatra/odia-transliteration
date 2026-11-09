@@ -34,7 +34,7 @@ import { casual } from './romanize.js';
 import { Editor } from './editor.js';
 import { hasDeviceVoice, record, speak, speakRoute, speakable, stopSpeaking, type Recording } from './speech.js';
 import { providerName, translatable, translateOnline } from './translate.js';
-import { englishIndex } from './dictionary/english-data.js';
+import { englishIndex, loadEnglishApi } from './dictionary/english-data.js';
 import { canonical } from '@odia/core/normalize';
 import {
   DEFAULT_PROFILE,
@@ -363,6 +363,8 @@ async function boot(): Promise<void> {
   // Loading never rewrites text the user already typed or pasted.
   inline.setEnabled(!strictEl.checked);
   render();
+  // The generated English -> Odia list (V2.21) in the background, so "=word" has it.
+  window.setTimeout(() => void loadEnglishApi(), 2500);
   if (exampleWaiting) tryExample();
   startDictionary(
     (s) => {
@@ -450,7 +452,9 @@ function englishCandidates(english: string): Candidate[] {
     const rude = labels !== undefined && (labels.has('offensive') || labels.has('coarse'));
     return rude && (KIDS || familySafeEl.checked);
   };
-  const words = englishIndex().odiaFor(english, hide, ENGLISH_SHOWN, (w) => engine?.wordFrequency?.(w) ?? 0);
+  const index = englishIndex();
+  if (!index.hasApi) void loadEnglishApi(); // the next keystroke sees it
+  const words = index.odiaFor(english, hide, ENGLISH_SHOWN, (w) => engine?.wordFrequency?.(w) ?? 0);
   if (words.length === 0) return [];
   return [
     ...words.map((text, i) => ({ text, score: words.length - i, source: 'english' as const })),

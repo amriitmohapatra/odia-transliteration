@@ -80,7 +80,7 @@ import {
 } from './lookup.js';
 import { originChipLabel, originLabel, parseOrigin } from './origin.js';
 import type { EnglishEntry } from './english.js';
-import { englishIndex } from './english-data.js';
+import { englishIndex, loadEnglishApi } from './english-data.js';
 import type { EnglishHit, EnglishSource } from './english-index.js';
 import { LANGUAGE_LABEL, parseLoans, type Loan } from './loans.js';
 import loansTsv from './loans.tsv?raw';
@@ -760,7 +760,10 @@ function groupHeading(text: string): HTMLElement {
  * the loan-word list (English loans, and Persian / Arabic / Hindi words by meaning).
  */
 function englishHits(query: string): EnglishHit[] {
-  return englishIndex().search(query, hidden, 10, wordFrequency);
+  const index = englishIndex();
+  // The generated list (V2.21) loads in the background; show its words once it is in.
+  if (!index.hasApi) void loadEnglishApi().then((ok) => { if (ok) onSearch(); });
+  return index.search(query, hidden, 10, wordFrequency);
 }
 
 function englishSection(query: string, hits = englishHits(query)): HTMLElement[] {
@@ -778,6 +781,7 @@ function englishSection(query: string, hits = englishHits(query)): HTMLElement[]
 
 const HIT_SOURCE: Record<Exclude<EnglishSource, 'curated'>, string> = {
   'ai-list': 'AI-written English \u2192 Odia list, not yet checked by a native speaker.',
+  'api-list': 'Generated with Claude (AI) for the English \u2192 Odia list, not yet checked by a native speaker.',
   'owner-meaning': 'From your own meaning of this word.',
   'ai-meaning': 'From this word\u2019s AI-written meaning, not yet checked.',
 };
@@ -794,13 +798,15 @@ function englishHitBlock(hit: EnglishHit): HTMLElement {
   word.textContent = hit.odia;
   const tag = document.createElement('span');
   tag.className = 'dict-tag';
-  tag.textContent = 'Translation';
+  tag.textContent = hit.phrase ? 'Phrase' : 'Translation';
   head.append(word, tag);
   const sense = document.createElement('p');
   sense.className = 'dict-hint';
-  // The Odia word's own one-line meaning tells the options apart (cow: ଗାଈ cow, ଗୋରୁ cattle).
+  // The sense when the English word has more than one (bank (river side)); then the Odia
+  // word's own one-line meaning, which tells the options apart (cow: ଗାଈ cow, ଗୋରୁ cattle).
+  const english = hit.sense ? `${hit.english} (${hit.sense})` : hit.english;
   const own = hit.odia.includes(' ') ? null : chipFor(hit.odia);
-  sense.textContent = own && own.toLowerCase() !== hit.english ? `${hit.english}: ${own}` : hit.english;
+  sense.textContent = own && own.toLowerCase() !== hit.english ? `${english}: ${own}` : english;
   const source = document.createElement('p');
   source.className = 'dict-hint';
   source.textContent = HIT_SOURCE[hit.source as Exclude<EnglishSource, 'curated'>];

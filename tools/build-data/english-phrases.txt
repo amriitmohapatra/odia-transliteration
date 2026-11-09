@@ -1,0 +1,709 @@
+# english-phrases.txt: English multiword expressions to translate into Odia (V2.21),
+# written by Claude for this project (MIT). Phrasal verbs, everyday compounds, family
+# terms, Indian English and set expressions: words a reader looks up as one unit and
+# that Odia often says with a phrase. One per line, lowercase.
+# --- phrasal verbs
+add up
+ask for
+ask out
+back up
+blow up
+break down
+break up
+break into
+bring up
+bring back
+burn out
+call back
+call off
+calm down
+carry on
+catch up
+check in
+check out
+cheer up
+clean up
+come across
+come back
+come in
+come on
+come out
+come up
+cool down
+count on
+cut down
+cut off
+deal with
+do without
+dress up
+drop by
+drop off
+drop out
+eat out
+end up
+fall apart
+fall down
+fall in love
+figure out
+fill in
+fill up
+find out
+get along
+get away
+get back
+get by
+get in
+get off
+get on
+get out
+get over
+get rid of
+get together
+get up
+give away
+give back
+give in
+give up
+go ahead
+go away
+go back
+go down
+go on
+go out
+go over
+go through
+go up
+grow up
+hand in
+hand over
+hang on
+hang out
+hang up
+hold on
+hurry up
+keep on
+keep up
+kick off
+knock down
+lay off
+leave out
+let down
+let go
+lie down
+light up
+line up
+log in
+log out
+look after
+look down on
+look for
+look forward to
+look into
+look out
+look up
+look up to
+make fun of
+make out
+make up
+mix up
+move in
+move on
+move out
+pass away
+pass by
+pass out
+pay back
+pick up
+point out
+pull over
+put away
+put off
+put on
+put out
+put up with
+run away
+run into
+run out
+run over
+set off
+set up
+settle down
+show off
+show up
+shut down
+shut up
+sit down
+slow down
+sort out
+speak up
+stand by
+stand up
+stay up
+switch off
+switch on
+take after
+take care
+take care of
+take off
+take on
+take out
+take over
+take part
+tear down
+think over
+throw away
+throw up
+try on
+turn around
+turn down
+turn off
+turn on
+turn up
+wait for
+wake up
+walk out
+warm up
+wash up
+watch out
+wear out
+wipe out
+work out
+write down
+# --- family and people
+in-laws
+father-in-law
+mother-in-law
+brother-in-law
+sister-in-law
+son-in-law
+daughter-in-law
+elder brother's wife
+younger brother's wife
+wife's brother
+wife's sister
+husband's brother
+husband's sister
+husband's elder brother
+husband's younger brother
+sister's husband
+father's sister
+father's sister's husband
+mother's sister
+mother's sister's husband
+mother's brother
+mother's brother's wife
+father's elder brother
+father's younger brother
+father's younger brother's wife
+paternal grandfather
+paternal grandmother
+maternal grandfather
+maternal grandmother
+great-grandfather
+great-grandmother
+step-mother
+stepmother
+stepfather
+stepson
+stepdaughter
+half-brother
+half-sister
+twin brother
+twin sister
+only child
+eldest son
+youngest daughter
+first cousin
+cousin brother
+cousin sister
+co-brother
+family friend
+best friend
+childhood friend
+next-door neighbour
+village elder
+newborn baby
+newlyweds
+house owner
+landlord
+tenant
+house help
+maid
+watchman
+security guard
+delivery boy
+milkman
+vegetable seller
+fish seller
+rickshaw puller
+auto driver
+bus conductor
+ticket collector
+station master
+post man
+school teacher
+head master
+headmaster
+principal
+class teacher
+tuition teacher
+private tutor
+family doctor
+ward member
+block development officer
+police inspector
+fire brigade
+# --- home, food, daily life
+ice cream
+cold drink
+soft drink
+green tea
+black tea
+milk tea
+lemon tea
+sugar candy
+rock salt
+mustard seeds
+cumin seeds
+curry leaves
+bay leaf
+coriander leaves
+fenugreek
+asafoetida
+cardamom
+cinnamon
+cloves
+black pepper
+red chilli powder
+turmeric powder
+garam masala
+cooking oil
+coconut oil
+rice flour
+wheat flour
+gram flour
+semolina
+vermicelli
+puffed rice
+beaten rice
+sprouted gram
+boiled rice
+fried rice
+curd rice
+lemon rice
+mixed vegetable curry
+fish fry
+egg curry
+chicken curry
+mutton curry
+dal fry
+papad
+pickle jar
+lunch box
+tiffin box
+water bottle
+pressure cooker
+gas cylinder
+gas stove
+frying pan
+rolling pin
+grinding stone
+mixer grinder
+washing machine
+refrigerator
+air conditioner
+ceiling fan
+table fan
+tube light
+light bulb
+mosquito net
+mosquito coil
+power cut
+electricity bill
+water tank
+hand pump
+tube well
+bathing ghat
+dining table
+dressing table
+study table
+book shelf
+school bag
+pencil box
+exercise book
+question paper
+answer sheet
+report card
+mark sheet
+admit card
+roll number
+identity card
+aadhaar card
+ration card
+voter card
+bank account
+savings account
+debit card
+credit card
+cash on delivery
+online payment
+phone number
+mobile number
+missed call
+video call
+voice message
+screen shot
+charger cable
+power bank
+internet connection
+password reset
+social media
+news channel
+news paper
+weather report
+rain coat
+sweater
+shawl
+blanket
+bed sheet
+pillow cover
+door mat
+floor mat
+wall clock
+alarm clock
+wrist watch
+spectacles
+sun glasses
+hair oil
+hair band
+bindi
+vermillion
+bangles
+anklet
+nose ring
+toe ring
+wedding ring
+mangalsutra
+kurta
+pyjama
+lungi
+gamchha
+dupatta
+salwar kameez
+blouse
+petticoat
+school uniform
+chappal
+slippers
+socks
+handkerchief
+umbrella stand
+# --- places and travel
+bus stop
+bus stand
+railway station
+railway platform
+railway crossing
+train ticket
+reserved seat
+general compartment
+sleeper class
+waiting room
+waiting list
+ticket counter
+booking counter
+toll gate
+petrol pump
+traffic light
+traffic jam
+zebra crossing
+foot over bridge
+main road
+national highway
+village road
+pucca road
+kutcha road
+post office
+police station
+fire station
+primary health centre
+district hospital
+medical college
+blood bank
+medical shop
+general store
+grocery shop
+sweet shop
+tea stall
+roadside stall
+weekly market
+fish market
+vegetable market
+shopping mall
+cinema hall
+town hall
+community hall
+marriage hall
+bus depot
+village temple
+temple town
+river bank
+sea beach
+sea shore
+paddy field
+mango grove
+coconut grove
+cashew garden
+kitchen garden
+cow shed
+cattle shed
+fish pond
+village pond
+open well
+tea garden
+# --- events, festivals, rites
+birthday party
+wedding reception
+marriage ceremony
+engagement ceremony
+thread ceremony
+naming ceremony
+house warming
+funeral
+last rites
+death anniversary
+wedding anniversary
+annual function
+sports day
+independence day
+republic day
+teachers day
+children's day
+mothers day
+new year's day
+rath yatra
+car festival
+holy dip
+full moon day
+new moon day
+eclipse
+solar eclipse
+lunar eclipse
+fasting day
+pilgrimage
+offering to god
+temple prasad
+# --- health
+common cold
+running nose
+sore throat
+high fever
+body ache
+back pain
+knee pain
+tooth ache
+stomach upset
+loose motion
+food poisoning
+blood pressure
+high blood pressure
+low blood pressure
+sugar test
+blood test
+x-ray
+heart attack
+first aid
+health check up
+check up
+side effect
+mental health
+skin disease
+eye drops
+cough syrup
+pain killer
+sleeping pill
+# --- work, money, government
+part time
+full time
+work from home
+day off
+half day
+sick leave
+casual leave
+salary slip
+pay day
+overtime
+pension
+provident fund
+income tax
+house rent
+advance payment
+down payment
+interest rate
+fixed deposit
+loan amount
+gold loan
+money order
+bank balance
+cash withdrawal
+small change
+job interview
+job application
+resume
+bio data
+appointment letter
+transfer order
+government job
+private job
+daily wage
+minimum wage
+self help group
+below poverty line
+public distribution system
+gram sabha
+gram panchayat
+zilla parishad
+legislative assembly
+member of parliament
+chief minister
+prime minister
+district collector
+sub collector
+tahasildar
+revenue inspector
+land record
+land dispute
+court case
+first information report
+bail
+fine
+traffic police
+# --- Indian English
+prepone
+timepass
+out of station
+do the needful
+revert back
+pass out
+batchmate
+hostel mate
+room mate
+roommate
+godown
+nimbu pani
+kindly adjust
+same to same
+eve teasing
+cousin brother
+good name
+what is your good name
+hotel
+mess
+canteen
+tiffin
+hill station
+foreign return
+non-veg
+pure veg
+veg
+non-vegetarian
+vegetarian
+two wheeler
+four wheeler
+auto rickshaw
+cycle rickshaw
+gas agency
+stepney
+tubelight
+# --- expressions and greetings
+good morning
+good afternoon
+good evening
+good night
+how are you
+i am fine
+what is your name
+my name is
+where are you going
+where do you live
+nice to meet you
+see you soon
+see you tomorrow
+take care
+happy birthday
+happy new year
+happy holi
+happy diwali
+best of luck
+all the best
+congratulations
+get well soon
+thank you very much
+you are welcome
+no problem
+never mind
+excuse me
+i am sorry
+please sit
+please come
+come in
+wait a minute
+just a moment
+one minute
+hurry up
+be careful
+calm down
+don't worry
+i don't know
+i understand
+i love you
+i miss you
+i am hungry
+i am tired
+let's go
+come here
+go there
+what happened
+what time is it
+how much is this
+too expensive
+not at all
+of course
+by the way
+as soon as possible
+once upon a time
+little by little
+day by day
+again and again
+now and then
+here and there
+sooner or later
+more or less
+at once
+at last
+at first
+in the end
+on time
+in time
+on foot
+by bus
+by train
+on purpose
+by mistake
+in front of
+next to
+near by
+far away
+all of a sudden
+in a hurry
+for example
+for ever
+for the first time
+for the last time
+from now on
+up to date
+out of order
+out of stock
+no entry
+no parking
+do not disturb
