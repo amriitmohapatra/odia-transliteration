@@ -2,7 +2,8 @@
 // to Odia word translation powered by the Claude console ... cast the net as wide as
 // possible", including words Odia says with a phrase).
 //
-// Steps (from the repository root; needs ANTHROPIC_API_KEY, the owner's Console key):
+// Steps (from the repository root; needs ODIA_CLAUDE_API_KEY, the owner's Console key; the
+// platform reserves ANTHROPIC_API_KEY for the Claude Code session itself):
 //   npx tsx tools/build-data/english_api.ts pilot   LIST OUT.jsonl [FROM] [COUNT] [EFFORT]
 //   npx tsx tools/build-data/english_api.ts submit  LIST STATE.json [EFFORT]
 //   npx tsx tools/build-data/english_api.ts collect STATE.json OUT.jsonl
@@ -87,11 +88,12 @@ export function requestParams(words: readonly string[], effort: Effort): Anthrop
 /**
  * The owner's Console key, always against the public API. This session sets
  * ANTHROPIC_BASE_URL for its own connection; the SDK would read it, so the base URL is
- * pinned here and the key comes only from ANTHROPIC_API_KEY.
+ * pinned here and the key comes only from ODIA_CLAUDE_API_KEY (the cloud environment
+ * does not pass a variable named ANTHROPIC_API_KEY to the session: that name is reserved).
  */
 function client(): Anthropic {
-  const apiKey = process.env.ANTHROPIC_API_KEY;
-  if (!apiKey) throw new Error('Set ANTHROPIC_API_KEY (the owner’s Console key) in the environment settings.');
+  const apiKey = process.env.ODIA_CLAUDE_API_KEY;
+  if (!apiKey) throw new Error('Set ODIA_CLAUDE_API_KEY (the owner’s Console key) in the environment settings.');
   return new Anthropic({ apiKey, baseURL: 'https://api.anthropic.com' });
 }
 

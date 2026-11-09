@@ -21,10 +21,12 @@ The key must be the owner's Console key, so the cost lands on the Console credit
 session cannot store a key for Anthropic's own host as a network secret (refused by the
 platform), and the session's own `ANTHROPIC_BASE_URL` belongs to Claude Code itself (it
 would bill the owner's Claude plan, not the Console). So the owner adds
-`ANTHROPIC_API_KEY` as an environment variable on the **odia-transliteration** cloud
+`ODIA_CLAUDE_API_KEY` as an environment variable on the **odia-transliteration** cloud
 environment (title bar → environment menu → Edit), and a new session on that
 environment runs the steps. The script pins `https://api.anthropic.com` and reads only
-`ANTHROPIC_API_KEY`.
+`ODIA_CLAUDE_API_KEY`. (2026-11-09: the environment settings refuse to pass
+`ANTHROPIC_API_KEY`, a name reserved for the session's own login, so the script reads
+this name instead.)
 
 ## The run (a new session, from the repository root)
 
