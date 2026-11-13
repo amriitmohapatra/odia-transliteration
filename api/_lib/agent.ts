@@ -15,7 +15,7 @@
  * conversation/token?agent_id=… with header xi-api-key; answer {"token", "conversation_id"}.
  */
 
-import { speechProvider, type SpeechEnv, type SpeechProvider } from './speech.js';
+import type { SpeechEnv } from './speech.js';
 
 const ELEVENLABS = 'https://api.elevenlabs.io';
 
@@ -26,18 +26,6 @@ export interface AgentEnv extends SpeechEnv {
 export type TokenResult = { ok: true; token: string } | { ok: false; status: number; error: string };
 
 type Fetch = (url: string, init: RequestInit) => Promise<Response>;
-
-/** What the server has set up: shown to the user so the line under the page names the right company. */
-export interface VoiceStatus {
-  /** The provider behind Listen and Speak, or null. */
-  speech: SpeechProvider | null;
-  /** True when Talk can start. */
-  agent: boolean;
-}
-
-export function voiceStatus(env: AgentEnv): VoiceStatus {
-  return { speech: speechProvider(env), agent: agentReady(env) };
-}
 
 /** An agent ID as ElevenLabs writes it (agent_…), so a typo fails here, not as a vague 4xx later. */
 export function agentReady(env: AgentEnv): boolean {

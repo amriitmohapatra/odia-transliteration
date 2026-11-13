@@ -2,7 +2,7 @@
 // replaced by a fake fetch. No network.
 import { describe, expect, it } from 'vitest';
 
-import { agentReady, conversationToken, voiceStatus } from '../../api/_lib/agent.js';
+import { agentReady, conversationToken } from '../../api/_lib/agent.js';
 
 const AGENT = 'agent_7101k5zvyjhmfg983brhmhkd98n6';
 
@@ -15,17 +15,12 @@ function fakeFetch(reply: unknown, status = 200) {
   return { f, calls };
 }
 
-describe('voice status', () => {
-  it('reports the speech provider and whether Talk can start', () => {
-    expect(voiceStatus({})).toEqual({ speech: null, agent: false });
-    expect(voiceStatus({ SARVAM_API_KEY: 's' })).toEqual({ speech: 'sarvam', agent: false });
-    expect(voiceStatus({ ELEVENLABS_API_KEY: 'e' })).toEqual({ speech: 'elevenlabs', agent: false });
-    expect(voiceStatus({ ELEVENLABS_API_KEY: 'e', ELEVENLABS_AGENT_ID: AGENT })).toEqual({ speech: 'elevenlabs', agent: true });
-  });
-
-  it('needs a well-formed agent ID', () => {
+describe('agent set-up', () => {
+  it('needs the key and a well-formed agent ID', () => {
+    expect(agentReady({ ELEVENLABS_API_KEY: 'e', ELEVENLABS_AGENT_ID: AGENT })).toBe(true);
     expect(agentReady({ ELEVENLABS_API_KEY: 'e', ELEVENLABS_AGENT_ID: 'my agent' })).toBe(false);
     expect(agentReady({ ELEVENLABS_AGENT_ID: AGENT })).toBe(false);
+    expect(agentReady({ ELEVENLABS_API_KEY: 'e' })).toBe(false);
   });
 });
 

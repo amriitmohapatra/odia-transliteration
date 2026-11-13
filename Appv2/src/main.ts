@@ -35,7 +35,7 @@ import { Editor } from './editor.js';
 import { hasDeviceVoice, record, speak, speakRoute, speakable, stopSpeaking, type Recording } from './speech.js';
 import { providerName, translatable, translateOnline } from './translate.js';
 import { clientTools, typedText, type ToolHost } from './agent-tools.js';
-import { PROVIDER_LABEL, startTalk, stopTalk, talking, voiceStatus, type TalkMode, type VoiceStatus } from './agent.js';
+import { startTalk, stopTalk, talking, type TalkMode } from './agent.js';
 import { englishIndex, loadEnglishApi } from './dictionary/english-data.js';
 import { canonical } from '@odia/core/normalize';
 import {
@@ -130,8 +130,6 @@ const PREF_LISTEN_ONLINE = 'odia.pref.listenOnline';
 const PREF_TRANSLATE_ONLINE = 'odia.pref.translateOnline';
 /** Settings > Voice helper (V3.6, agent.ts). OFF by default, like the others. */
 const PREF_TALK_ONLINE = 'odia.pref.talkOnline';
-/** What the server has set up (/api/voice), asked only once a voice switch is on. */
-let voiceSetup: VoiceStatus | null = null;
 /** The text box's whole value when the shown English was asked for (declared before boot() runs). */
 let translatedFrom: string | null = null;
 /** "Hide rude words". ON by default: a missing key reads as on. */
@@ -258,7 +256,6 @@ async function boot(): Promise<void> {
     onlineHeadingEl.hidden = true;
   }
   updatePrivacyNote();
-  refreshVoiceSetup();
   // Kids edition: no next-word data (adults' chat), so no switch for it.
   if (KIDS) {
     const row = nextWordEl.closest<HTMLElement>('.setting');
@@ -794,10 +791,9 @@ function onSpeak(): void {
 /** The promise under the page stays true: it names what goes online, and to whom, once a switch is on. */
 function updatePrivacyNote(): void {
   const parts: string[] = [];
-  // The speech provider is the server's choice (D-15): ElevenLabs while its key is set, else Sarvam.
-  const speech = voiceSetup?.speech ? PROVIDER_LABEL[voiceSetup.speech] : 'the online speech service';
-  if (speakOnlineEl.checked) parts.push(`Listen sends the text to ${speech} when this device has no Odia voice.`);
-  if (listenOnlineEl.checked) parts.push(`Speak sends your recording to ${speech}.`);
+  // Voice provider: ElevenLabs only (owner, D-15).
+  if (speakOnlineEl.checked) parts.push('Listen sends the text to ElevenLabs (USA) when this device has no Odia voice.');
+  if (listenOnlineEl.checked) parts.push('Speak sends your recording to ElevenLabs (USA).');
   if (translateOnlineEl.checked) parts.push('In English sends the text to Anthropic (USA).');
   if (talkOnlineEl.checked) parts.push('Talk sends your voice, and the text in the box when the helper reads it, to ElevenLabs (USA).');
   privacyNoteEl.textContent = parts.length === 0
@@ -899,15 +895,6 @@ function insertAtCaret(text: string): void {
 /* ------------------------------------------------------------------ *
  * Voice helper (V3.6, agent.ts and agent-tools.ts)
  * ------------------------------------------------------------------ */
-
-/** Ask the server what is set up, once, and only when a voice switch is on (it is an online request). */
-function refreshVoiceSetup(): void {
-  if (KIDS || voiceSetup || !(speakOnlineEl.checked || listenOnlineEl.checked || talkOnlineEl.checked)) return;
-  void voiceStatus().then((setup) => {
-    voiceSetup = setup;
-    updatePrivacyNote();
-  });
-}
 
 /** What the helper's tools may do to the page: read and edit the text box, look words up offline. */
 const toolHost: ToolHost = {
@@ -1758,14 +1745,12 @@ function bindEvents(): void {
   nextWordEl.addEventListener('change', () => writePref(PREF_NEXT_WORD, nextWordEl.checked));
   speakOnlineEl.addEventListener('change', () => {
     writePref(PREF_SPEAK_ONLINE, speakOnlineEl.checked);
-    refreshVoiceSetup();
     updatePrivacyNote();
   });
   listenOnlineEl.addEventListener('change', () => {
     writePref(PREF_LISTEN_ONLINE, listenOnlineEl.checked);
     if (!listenOnlineEl.checked) recording?.cancel();
     voiceEl.hidden = !listenOnlineEl.checked;
-    refreshVoiceSetup();
     updatePrivacyNote();
   });
   translateOnlineEl.addEventListener('change', () => {
@@ -1778,7 +1763,6 @@ function bindEvents(): void {
     writePref(PREF_TALK_ONLINE, talkOnlineEl.checked);
     talkEl.hidden = !talkOnlineEl.checked;
     if (!talkOnlineEl.checked && talking()) void onTalk();
-    refreshVoiceSetup();
     updatePrivacyNote();
   });
   talkEl.addEventListener('click', () => void onTalk());

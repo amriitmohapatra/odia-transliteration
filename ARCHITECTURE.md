@@ -40,7 +40,7 @@ end.
                      ┌───────────▼─────────────┐
                      │ ASSIST LAYER (planned)  │  Vercel functions:
                      │ /api/speak /api/listen  │  keys stay on the server
-                     │ /api/translate          │  → Sarvam, Google/Claude
+                     │ /api/translate          │  → ElevenLabs, Google/Claude
                      └─────────────────────────┘
 
    lens/ (browser extension, V4.1, built) · ime-macos/ (Swift, JavaScriptCore) · Android/iOS (V5): later
@@ -340,9 +340,8 @@ and `dictionary/overlay.css` together.
 
 | Route | Does | Provider (D-3) | Built |
 |---|---|---|---|
-| `/api/speak` | Odia text → MP3 speech | Sarvam Bulbul (`bulbul:v3`, `od-IN`); the device's own Odia voice first | 2026-10-15: web app "Listen" |
-| `/api/listen` | recording (WebM/Ogg/MP4, ≤ 30 s, ≤ 1 MB) → Odia text | Sarvam Saaras (`saaras:v4`, `od-IN`) | 2026-10-15: web app "Speak" |
-| `/api/voice` | GET: which speech provider is set up, and whether Talk can start (no user data) | — | 2026-11-13 (V3.5) |
+| `/api/speak` | Odia text → MP3 speech | ElevenLabs Eleven v4 (`or`); the device's own Odia voice first | 2026-10-15: web app "Listen" (ElevenLabs since 2026-11-13) |
+| `/api/listen` | recording (WebM/Ogg/MP4, ≤ 30 s, ≤ 1 MB) → Odia text | ElevenLabs Scribe v3 (`ori`) | 2026-10-15: web app "Speak" (ElevenLabs since 2026-11-13) |
 | `/api/agent` | POST: a one-conversation WebRTC token for the voice helper; adult site only | ElevenLabs agent (`tools/assist/agent/odia-helper.json`) | 2026-11-13 (V3.6): web app "Talk" |
 | `/api/translate` | Odia text → English; `source` `ocr` (lens, default) or `typed` (web app) picks the prompt | Claude Haiku or Google (100-sentence test decides) | 2026-10-15: lens "Translate"; 2026-11-03: web app "In English" |
 
@@ -370,11 +369,10 @@ edition: there (owner, 2026-11-03) none of the three online switches is shown or
 because the server answers only the adult site; Listen stays, with the device's own voice. Browser check:
 `Appv2/eval/browser/translate-check.mjs` (stand-in route).
 
-**Speech provider (D-15, 2026-11-13):** `/api/speak` and `/api/listen` use ElevenLabs
-(Eleven v4 `or`, Scribe v3 `ori`) while `ELEVENLABS_API_KEY` is set, else Sarvam;
-`SPEECH_PROVIDER` forces one. The app asks `GET /api/voice` (only once a voice switch is
-on) so the line under the page names the real company. The service worker never answers
-`/api/` from its cache.
+**Speech provider (D-15, 2026-11-13):** ElevenLabs only (owner: no Sarvam).
+`/api/speak` uses Eleven v4 (`or`), `/api/listen` Scribe v3 (`ori`); without
+`ELEVENLABS_API_KEY` both say "not set up". The service worker never answers `/api/`
+from its cache.
 
 **Talk** (`Appv2/src/agent.ts`, `agent-tools.ts`; Settings > "Voice helper", off by
 default, not in kids): the page gets a token from `/api/agent`, loads `@elevenlabs/client`
@@ -384,7 +382,7 @@ editor, canonical Odia), `look_up` (the app's dictionary, offline) and `spell` (
 engine). Agent settings are code (`tools/assist/agent/push.mjs`). Browser check:
 `Appv2/eval/browser/talk-check.mjs` (stand-in SDK). Details: `plan/07-voice-agent.md`.
 
-Rules: keys only in Vercel environment variables (`SARVAM_API_KEY`, `ANTHROPIC_API_KEY`,
+Rules: keys only in Vercel environment variables (`ANTHROPIC_API_KEY`,
 `ELEVENLABS_API_KEY`, `ELEVENLABS_AGENT_ID`);
 `.env*` never committed; provider spending limit; hard cap US$20/month (D-4); logs never
 hold user text; every result passes `canonical()`; read-aloud and translation cached by

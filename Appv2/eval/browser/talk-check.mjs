@@ -1,6 +1,6 @@
 // The voice helper "Talk" (V3.6, src/agent.ts and src/agent-tools.ts) against a
-// stand-in for the ElevenLabs SDK (globalThis.__ODIA_TALK_SDK__) and for /api/voice
-// and /api/agent (Playwright routes; no ElevenLabs call, no key). Checks that
+// stand-in for the ElevenLabs SDK (globalThis.__ODIA_TALK_SDK__) and for
+// /api/agent (a Playwright route; no ElevenLabs call, no key). Checks that
 // nothing is sent while the switch is off, that a talk starts with the server's
 // token and the five client tools, and that the tools edit the text box with
 // canonical Odia. Build Appv2 and serve dist first. Usage: node talk-check.mjs [port]
@@ -38,13 +38,9 @@ try {
     };
   });
   const page = await context.newPage();
-  const errors = []; const external = []; const agentCalls = []; const voiceCalls = [];
+  const errors = []; const external = []; const agentCalls = [];
   page.on('pageerror', (e) => errors.push(String(e)));
   page.on('request', (r) => { if (!r.url().startsWith(url) && !r.url().startsWith('data:') && !r.url().startsWith('blob:')) external.push(r.url()); });
-  await page.route('**/api/voice', async (route) => {
-    voiceCalls.push(1);
-    await route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ speech: 'elevenlabs', agent: true }) });
-  });
   await page.route('**/api/agent', async (route) => {
     agentCalls.push(route.request().method());
     await route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ ok: true, token: 'stand-in-token' }) });
@@ -54,7 +50,7 @@ try {
 
   // Switch off (the default): no Talk button, nothing asked or sent.
   check(await page.locator('#talk').isHidden(), 'Talk is hidden while Voice helper is off');
-  check(voiceCalls.length === 0 && agentCalls.length === 0, 'with the switch off, nothing is sent');
+  check(agentCalls.length === 0, 'with the switch off, nothing is sent');
 
   // Switch on: the button shows and the line under the page names ElevenLabs.
   await page.locator('#open-settings').click();

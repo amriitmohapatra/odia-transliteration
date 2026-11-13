@@ -15,11 +15,6 @@ import type { ClientTool } from './agent-tools.js';
 
 export type TalkMode = 'connecting' | 'listening' | 'speaking';
 
-export interface VoiceStatus {
-  speech: 'elevenlabs' | 'sarvam' | null;
-  agent: boolean;
-}
-
 /** The subset of @elevenlabs/client used here, so a stand-in can replace it. */
 export interface TalkSdk {
   Conversation: {
@@ -33,21 +28,6 @@ export interface TalkSdk {
       onError?: (message: string) => void;
     }): Promise<{ endSession(): Promise<void> }>;
   };
-}
-
-export const PROVIDER_LABEL: Record<'elevenlabs' | 'sarvam', string> = {
-  elevenlabs: 'ElevenLabs (USA)',
-  sarvam: 'Sarvam AI (India)',
-};
-
-let status: Promise<VoiceStatus> | null = null;
-
-/** What the server has set up; asked once, and only after a voice switch is on. */
-export function voiceStatus(endpoint = '/api/voice'): Promise<VoiceStatus> {
-  status ??= fetch(endpoint)
-    .then((r) => (r.ok ? (r.json() as Promise<VoiceStatus>) : { speech: null, agent: false }))
-    .catch(() => ({ speech: null, agent: false }));
-  return status;
 }
 
 async function sdk(): Promise<TalkSdk> {

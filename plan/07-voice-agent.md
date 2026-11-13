@@ -14,8 +14,9 @@ Odia and English voice agents. The owner chose:
 | What is the spoken helper for? | **All three**: dictate and fix text; word and meaning help; practice conversation |
 | Plan | Creator (one month, free) |
 
-This adds ElevenLabs (USA) to D-3, the list of providers that may receive user text or
-voice. Sarvam stays as the voice provider when ElevenLabs is not set up.
+**Owner, 2026-11-13 (clarification): "We are not going to use Sarvam AI at all."**
+ElevenLabs (USA) is the only voice provider. It replaces Sarvam in D-3. The Sarvam code
+was removed. The device's own Odia voice stays for Listen: it is offline and free.
 
 ## 2. What ElevenLabs supports for Odia (docs read 2026-11-13)
 
@@ -47,7 +48,7 @@ Facts that shape the design:
 
 | Stage | Content | Done when |
 |---|---|---|
-| **V3.5** Provider switch | `api/_lib/speech.ts`: ElevenLabs for speak and listen when `ELEVENLABS_API_KEY` is set, else Sarvam. `SPEECH_PROVIDER=sarvam\|elevenlabs` forces one. New `GET /api/voice` says which provider is set up and whether the agent is, so the line under the page names the right company | Unit tests with a fake fetch for both providers; browser check still passes |
+| **V3.5** ElevenLabs for Listen and Speak | `api/_lib/speech.ts`: Eleven v4 (`or`) and Scribe v3 (`ori`) only; Sarvam removed. The service worker never caches `/api/` | Unit tests with a fake fetch; browser check passes |
 | **V3.6** Talk | Settings > "Voice helper" (off by default, not in kids). A **Talk** button. `POST /api/agent` returns a conversation token. `Appv2/src/agent.ts` starts the session and runs the client tools. The agent definition is code: `tools/assist/agent/odia-helper.json`, pushed by `tools/assist/agent/push.mjs` | Unit tests for the route and the tools; browser check with a stand-in SDK |
 | **V3.7** Owner test | The owner adds the key, pushes the agent, tries the three uses on a phone and a laptop (A-15) | Owner feedback |
 
@@ -114,11 +115,11 @@ the ElevenLabs dashboard in week 1 and lowers `daily_limit` if needed.
 | U-2 | Does Scribe write Odia speech in Odia script, and English speech in Latin, in one call? | Owner test; else set the agent's language to `or` with an `en` preset |
 | U-3 | Does the agent's LLM write correct Odia? | Owner test; the tools' `canonical()` fixes only the encoding, not the spelling |
 | U-4 | How many credits does one minute of Talk use on Creator? | Dashboard after the first calls |
-| U-5 | Scribe v3 against Sarvam Saaras on the same Odia recordings | Optional: 20 recordings, word error rate |
+| U-5 | Scribe v3's word error rate on everyday Odia sentences, by speaker and dialect | Optional: recordings of `everyday.tsv` sentences |
 
 ## 6. After the month
 
 1. Remove `ELEVENLABS_API_KEY` from Vercel and redeploy.
-2. `/api/voice` then reports no agent: the Talk switch says "not set up". Listen and
-   Speak go back to Sarvam (if its key is set) or say "not set up".
+2. Talk, Listen (when the device has no Odia voice) and Speak then say "not set up".
+   Listen with the device's own Odia voice still works.
 3. No code change is needed. To keep ElevenLabs, pay for a plan and keep the key.
