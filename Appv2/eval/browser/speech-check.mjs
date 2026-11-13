@@ -38,6 +38,12 @@ try {
     speakCalls.push(route.request().postDataJSON());
     await route.fulfill({ status: 200, contentType: 'audio/wav', body: silentWav() });
   });
+  // /api/voice says which provider the server uses (D-15); here, Sarvam.
+  const voiceCalls = [];
+  await page.route('**/api/voice', async (route) => {
+    voiceCalls.push(route.request().url());
+    await route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ speech: 'sarvam', agent: false }) });
+  });
   await page.route('**/api/listen', async (route) => {
     const r = route.request();
     listenCalls.push({ type: r.headers()['content-type'], size: r.postDataBuffer()?.length ?? 0 });
@@ -49,6 +55,7 @@ try {
   console.log(`(this Chromium has ${deviceVoice ? 'an' : 'no'} Odia voice)`);
 
   // Switches off (the default): Listen explains, Speak is hidden, nothing is sent.
+  check(voiceCalls.length === 0, 'with every voice switch off, the app does not even ask which provider is set up');
   check((await page.locator('#privacy-note').innerText()).startsWith('Everything runs on this device'), 'by default the page says nothing is sent');
   await page.locator('#roman').fill(`${BHALA} ${BHALA}`);
   await page.locator('#readback-row').waitFor();
@@ -64,7 +71,9 @@ try {
   await page.locator('#open-settings').click();
   await page.locator('#toggle-speak-online').check();
   check(await page.evaluate(() => localStorage.getItem('odia.pref.speakOnline')) === '1', 'the Read aloud online switch is remembered');
-  check((await page.locator('#privacy-note').innerText()).includes('Sarvam'), 'the line under the page says what goes online');
+  await page.waitForFunction(() => document.getElementById('privacy-note')?.textContent.includes('Sarvam AI (India)'));
+  check(voiceCalls.length === 1, 'the app asks the server which speech provider it uses, once, only after a voice switch is on');
+  check((await page.locator('#privacy-note').innerText()).includes('Sarvam'), 'the line under the page names the provider the server reports');
   await page.locator('#settings .picker-panel [data-settings-close]').click();
   if (!deviceVoice) {
     await page.locator('#speak').click();

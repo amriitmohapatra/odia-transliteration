@@ -305,6 +305,49 @@ function explained_(word: string, entry: Entry | null): { text: string; formatio
   return explainEnding(word, entry, AI, meaningOf) ?? explainVerb(word, entry, VERBS, meaningOf);
 }
 
+/**
+ * Everything the app knows about one Odia word, as plain text for the voice
+ * helper's look_up tool (V3.6, src/agent-tools.ts): the owner's meaning, then
+ * the checked or AI-written meanings, a form explained by its ending, the
+ * modern layer, then the Praharaj senses (1930s). Same gate as chipFor (the
+ * kids filter); runs in the page, nothing is fetched beyond the app's own data.
+ */
+export function describeWord(raw: string): string {
+  const word = canonical(raw.trim());
+  if (!word) return 'Give one Odia word.';
+  if (hidden(word)) return `The app's dictionary has no entry for ${word}.`;
+  if (state === 'idle') loadData();
+  const parts: string[] = [];
+  const own = ownerGloss(word);
+  if (own) parts.push(`Meaning (the app owner's): ${own.meaning}.`);
+  const ai = aiMeaning(word);
+  if (ai) {
+    parts.push(`Meaning (${meaningSource(ai)}): ${ai.senses.slice(0, 4).join('; ')}.`);
+    if (ai.formation) parts.push(`Made of: ${ai.formation}.`);
+  }
+  const number = readNumber(word, AI);
+  if (number) parts.push(`Number: ${number.text}.`);
+  const entry = lookup(word);
+  const explained = explained_(word, entry);
+  if (explained) parts.push(`Form: ${explained.text}${explained.formation ? ` (${explained.formation})` : ''}.`);
+  const mo = lookupModern(word);
+  if (mo) {
+    const lines = mo.lines.slice(0, 3).map((l) => l.gloss).join('; ');
+    if (lines) parts.push(`Modern dictionary${mo.how === 'exact' ? '' : ' (a related word)'}: ${lines}.`);
+  }
+  if (entry && P && entry.how !== 'prefix') {
+    const def = defAt(P, entry.index).replace(/\s+/g, ' ').trim();
+    const cut = def.length > 300 ? `${def.slice(0, 300)}\u2026` : def;
+    parts.push(`Praharaj dictionary (1930s)${entry.how === 'exact' ? '' : `, under ${entry.head}`}: ${cut}`);
+  }
+  if (parts.length === 0) {
+    return state === 'loading'
+      ? `The dictionary is still loading; ask again in a moment. No owner or AI meaning for ${word}.`
+      : `The app's dictionary has no entry for ${word}.`;
+  }
+  return parts.join(' ');
+}
+
 /** Origin suffix for a suggestion ("from Persian"), or null. Same gate as chipFor. */
 function chipOrigin(word: string): string | null {
   if (hidden(word)) return null;

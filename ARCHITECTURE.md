@@ -342,6 +342,8 @@ and `dictionary/overlay.css` together.
 |---|---|---|---|
 | `/api/speak` | Odia text → MP3 speech | Sarvam Bulbul (`bulbul:v3`, `od-IN`); the device's own Odia voice first | 2026-10-15: web app "Listen" |
 | `/api/listen` | recording (WebM/Ogg/MP4, ≤ 30 s, ≤ 1 MB) → Odia text | Sarvam Saaras (`saaras:v4`, `od-IN`) | 2026-10-15: web app "Speak" |
+| `/api/voice` | GET: which speech provider is set up, and whether Talk can start (no user data) | — | 2026-11-13 (V3.5) |
+| `/api/agent` | POST: a one-conversation WebRTC token for the voice helper; adult site only | ElevenLabs agent (`tools/assist/agent/odia-helper.json`) | 2026-11-13 (V3.6): web app "Talk" |
 | `/api/translate` | Odia text → English; `source` `ocr` (lens, default) or `typed` (web app) picks the prompt | Claude Haiku or Google (100-sentence test decides) | 2026-10-15: lens "Translate"; 2026-11-03: web app "In English" |
 
 Each route is a Vercel function in `api/` with Web-standard `POST`/`OPTIONS` handlers;
@@ -368,7 +370,22 @@ edition: there (owner, 2026-11-03) none of the three online switches is shown or
 because the server answers only the adult site; Listen stays, with the device's own voice. Browser check:
 `Appv2/eval/browser/translate-check.mjs` (stand-in route).
 
-Rules: keys only in Vercel environment variables (`SARVAM_API_KEY`, `ANTHROPIC_API_KEY`);
+**Speech provider (D-15, 2026-11-13):** `/api/speak` and `/api/listen` use ElevenLabs
+(Eleven v4 `or`, Scribe v3 `ori`) while `ELEVENLABS_API_KEY` is set, else Sarvam;
+`SPEECH_PROVIDER` forces one. The app asks `GET /api/voice` (only once a voice switch is
+on) so the line under the page names the real company. The service worker never answers
+`/api/` from its cache.
+
+**Talk** (`Appv2/src/agent.ts`, `agent-tools.ts`; Settings > "Voice helper", off by
+default, not in kids): the page gets a token from `/api/agent`, loads `@elevenlabs/client`
+(its own chunk) and talks to the agent over WebRTC. The agent can only call five client
+tools in the page: `read_text`, `type_odia`, `replace_text` (text box only, through the
+editor, canonical Odia), `look_up` (the app's dictionary, offline) and `spell` (the
+engine). Agent settings are code (`tools/assist/agent/push.mjs`). Browser check:
+`Appv2/eval/browser/talk-check.mjs` (stand-in SDK). Details: `plan/07-voice-agent.md`.
+
+Rules: keys only in Vercel environment variables (`SARVAM_API_KEY`, `ANTHROPIC_API_KEY`,
+`ELEVENLABS_API_KEY`, `ELEVENLABS_AGENT_ID`);
 `.env*` never committed; provider spending limit; hard cap US$20/month (D-4); logs never
 hold user text; every result passes `canonical()`; read-aloud and translation cached by
 canonical text (in the function's memory).

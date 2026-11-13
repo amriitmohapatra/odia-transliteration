@@ -1,0 +1,189 @@
+{
+  "_comment": [
+    "The Odia app's voice helper (Talk, V3.6; plan/07-voice-agent.md, decision D-15).",
+    "Pushed to ElevenLabs by push.mjs. Edit here, not in the dashboard, or the next push undoes the change.",
+    "Odia strings are canonical (nukta decomposed); push.mjs checks. The Odia first message is not yet reviewed by a native speaker."
+  ],
+  "name": "Odia Phonetic voice helper",
+  "tags": [
+    "odia-transliteration"
+  ],
+  "tools": [
+    {
+      "type": "client",
+      "name": "read_text",
+      "description": "Read the app's text box: returns the text the person has written so far, and the part they selected, if any. Call before fixing or talking about their text.",
+      "expects_response": true,
+      "response_timeout_secs": 10,
+      "pre_tool_speech": "off",
+      "parameters": {
+        "type": "object",
+        "properties": {}
+      }
+    },
+    {
+      "type": "client",
+      "name": "type_odia",
+      "description": "Type Odia text into the app's text box at the cursor. Use for dictation: exactly the words the person asked to write, in Odia script.",
+      "expects_response": true,
+      "response_timeout_secs": 10,
+      "pre_tool_speech": "off",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "text": {
+            "type": "string",
+            "description": "The Odia text to type, in Odia script. At most 500 characters."
+          }
+        },
+        "required": [
+          "text"
+        ]
+      }
+    },
+    {
+      "type": "client",
+      "name": "replace_text",
+      "description": "Fix the person's text: replace the first place where 'find' appears in the text box with 'replace'. Call read_text first so 'find' matches exactly. Use an empty 'replace' to delete.",
+      "expects_response": true,
+      "response_timeout_secs": 10,
+      "pre_tool_speech": "off",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "find": {
+            "type": "string",
+            "description": "The exact text to find, as it is in the text box."
+          },
+          "replace": {
+            "type": "string",
+            "description": "The new text, in Odia script, or empty to delete."
+          }
+        },
+        "required": [
+          "find",
+          "replace"
+        ]
+      }
+    },
+    {
+      "type": "client",
+      "name": "look_up",
+      "description": "Look up an Odia word in the app's own dictionary (the owner's meanings, then checked and AI-written meanings, then the Praharaj dictionary). Returns the meanings, or says there is no entry.",
+      "expects_response": true,
+      "response_timeout_secs": 10,
+      "pre_tool_speech": "off",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "word": {
+            "type": "string",
+            "description": "One Odia word, in Odia script."
+          }
+        },
+        "required": [
+          "word"
+        ]
+      }
+    },
+    {
+      "type": "client",
+      "name": "spell",
+      "description": "Ask the app which Odia words it gives for a word typed in English letters, best first. Use to answer 'how do I type …'.",
+      "expects_response": true,
+      "response_timeout_secs": 10,
+      "pre_tool_speech": "off",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "roman": {
+            "type": "string",
+            "description": "The word in English letters, as the person would type it, for example 'kemiti' or 'odisha'."
+          }
+        },
+        "required": [
+          "roman"
+        ]
+      }
+    }
+  ],
+  "agent": {
+    "conversation_config": {
+      "agent": {
+        "language": "or",
+        "first_message": "ନମସ୍କାର! ମୁଁ ଆପଣଙ୍କ ପାଇଁ ଲେଖିପାରିବି, ଶବ୍ଦର ଅର୍ଥ କହିପାରିବି, କିମ୍ବା ଓଡ଼ିଆରେ କଥା ହୋଇପାରିବି। Hello! I can write for you, explain words, or practise Odia with you. What would you like?",
+        "max_conversation_duration_message": "Our five minutes are up. Press Talk to start again. ଧନ୍ୟବାଦ!",
+        "prompt": {
+          "prompt": "You are the voice helper inside \"Odia Phonetic\", a free web app for writing Odia (ଓଡ଼ିଆ). The person is talking to you through the microphone, and the app's text box is on their screen. You can read and change that text box only through your tools.\n\nYou help in three ways. Find out which one the person wants from what they say; do not ask them to pick from a menu.\n\n1. Dictate and fix text.\n   - When the person says what to write (\"write …\", \"ଲେଖ …\", or plainly dictates), call type_odia with exactly those words in Odia script. Do not add, translate or improve words unless they ask.\n   - If they dictate in English but want Odia, ask once whether to translate it or to write the English words in Odia letters.\n   - To fix something (\"change X to Y\", \"remove the last word\", \"that word is wrong\"), call read_text first, then replace_text with the exact text to find and its replacement.\n   - After a tool succeeds, confirm in a few words (\"Done.\" / \"ଲେଖିଦେଲି।\"). Do not read the whole text back unless asked.\n\n2. Words and meanings.\n   - For the meaning of an Odia word, call look_up first. Say the app's meaning in simple words. If look_up finds nothing, say the app's dictionary has no entry, then give your own short answer and say it is your guess.\n   - For \"how do I type …\" or \"how do I spell …\", call spell with the word in English letters as the person would type it. Tell them the Odia word and the English letters that give it in this app.\n   - For \"how do I say X in Odia\", give the everyday Odia word or phrase, say it slowly once, and offer to type it.\n\n3. Practice conversation.\n   - Speak simple, everyday Odia: short sentences, common words, a natural spoken style. Ask one question at a time.\n   - Gently correct mistakes by repeating the right form once. Explain in English only when the person asks or seems lost.\n\nRules for every reply:\n- This is a voice conversation. Keep replies short: one to three sentences. No lists, no markdown, no emojis, no URLs.\n- Answer in the language the person speaks. Odia speakers often mix English words; that is fine.\n- Always write Odia in Odia script in tool arguments, never in English letters, except the \"roman\" argument of spell.\n- Be warm, patient and family-friendly. Do not ask for personal details. If asked, say you are an AI helper in the app.\n- If you are not sure what the person said, ask them to say it again rather than guessing.",
+          "llm": "claude-haiku-5-5",
+          "temperature": 0.3,
+          "built_in_tools": {
+            "language_detection": {
+              "type": "system",
+              "name": "language_detection",
+              "description": "Switch between Odia and English when the person clearly changes language.",
+              "params": {
+                "system_tool_type": "language_detection"
+              }
+            },
+            "end_call": {
+              "type": "system",
+              "name": "end_call",
+              "description": "End the conversation when the person says goodbye or asks to stop.",
+              "params": {
+                "system_tool_type": "end_call"
+              }
+            }
+          }
+        }
+      },
+      "language_presets": {
+        "en": {
+          "overrides": {
+            "agent": {
+              "first_message": "Hello! I can write Odia for you, explain words, or practise Odia with you. What would you like to do?"
+            }
+          }
+        }
+      },
+      "tts": {
+        "model_id": "eleven_v4_turbo"
+      },
+      "turn": {
+        "silence_end_call_timeout": 30
+      },
+      "conversation": {
+        "max_duration_seconds": 300
+      }
+    },
+    "platform_settings": {
+      "auth": {
+        "enable_auth": true,
+        "allowlist": [
+          {
+            "hostname": "odia-transliteration-web.vercel.app"
+          }
+        ],
+        "require_origin_header": true
+      },
+      "call_limits": {
+        "agent_concurrency_limit": 2,
+        "daily_limit": 40,
+        "bursting_enabled": false
+      },
+      "privacy": {
+        "record_voice": false,
+        "retention_days": 0,
+        "delete_audio": true,
+        "delete_transcript_and_pii": true
+      },
+      "overrides": {
+        "conversation_config_override": {
+          "agent": {
+            "language": true
+          }
+        }
+      }
+    }
+  }
+}

@@ -2,7 +2,7 @@
 // with the Sarvam calls replaced by a fake fetch. No network.
 import { describe, expect, it } from 'vitest';
 
-import { LISTEN_MAX_BYTES, SPEAK_MAX_CHARS, listen, mediaType, speak } from '../../api/_lib/speech.js';
+import { LISTEN_MAX_BYTES, SPEAK_MAX_CHARS, listen, mediaType, speak, speechProvider } from '../../api/_lib/speech.js';
 
 const ODISHA_PRECOMPOSED = '\u0b13\u0b5c\u0b3f\u0b36\u0b3e';
 const ODISHA = '\u0b13\u0b21\u0b3c\u0b3f\u0b36\u0b3e';
@@ -92,5 +92,67 @@ describe('listen', () => {
   it('says so when no speech was heard', async () => {
     const { f } = fakeFetch({ transcript: '' });
     expect(await listen(audio, 'audio/ogg', { SARVAM_API_KEY: 'k' }, f)).toMatchObject({ ok: false, status: 422 });
+  });
+});
+
+describe('provider choice (D-15)', () => {
+  it('prefers ElevenLabs when its key is set, and SPEECH_PROVIDER forces one', () => {
+    expect(speechProvider({})).toBeNull();
+    expect(speechProvider({ SARVAM_API_KEY: 's' })).toBe('sarvam');
+    expect(speechProvider({ SARVAM_API_KEY: 's', ELEVENLABS_API_KEY: 'e' })).toBe('elevenlabs');
+    expect(speechProvider({ SARVAM_API_KEY: 's', ELEVENLABS_API_KEY: 'e', SPEECH_PROVIDER: 'Sarvam' })).toBe('sarvam');
+    // Forced to a provider without its key: not set up, rather than a silent switch.
+    expect(speechProvider({ SARVAM_API_KEY: 's', SPEECH_PROVIDER: 'elevenlabs' })).toBeNull();
+  });
+});
+
+describe('ElevenLabs', () => {
+  const audio = new Uint8Array([26, 69, 223, 163, 1, 2, 3]);
+
+  function audioFetch(status = 200) {
+    const calls: { url: string; init: RequestInit }[] = [];
+    const f = async (url: string, init: RequestInit) => {
+      calls.push({ url, init });
+      return new Response(status === 200 ? MP3 : '{}', { status });
+    };
+    return { f, calls };
+  }
+
+  it('speak: sends canonical Odia to Eleven v4 as "or", and returns the MP3 as it came', async () => {
+    const { f, calls } = audioFetch();
+    const env = { ELEVENLABS_API_KEY: 'el-secret', ELEVENLABS_VOICE_ID: 'voice1' };
+    const r = await speak(`${ODISHA_PRECOMPOSED} ବାସ`, env, f);
+    expect(r).toMatchObject({ ok: true, type: 'audio/mpeg', cached: false });
+    expect(r.ok && Array.from(r.audio)).toEqual(Array.from(MP3));
+    expect(calls[0]!.url).toBe('https://api.elevenlabs.io/v1/text-to-speech/voice1?output_format=mp3_44100_64');
+    expect((calls[0]!.init.headers as Record<string, string>)['xi-api-key']).toBe('el-secret');
+    expect(JSON.parse(String(calls[0]!.init.body))).toEqual({ text: `${ODISHA} ବାସ`, model_id: 'eleven_v4', language_code: 'or' });
+  });
+
+  it('speak: the cache keeps providers apart', async () => {
+    const el = audioFetch();
+    await speak('ଘର', { ELEVENLABS_API_KEY: 'e' }, el.f);
+    const sv = fakeFetch({ audios: [b64(MP3)] });
+    const r = await speak('ଘର', { SARVAM_API_KEY: 's' }, sv.f);
+    expect(r).toMatchObject({ ok: true, cached: false });
+    expect(sv.calls).toHaveLength(1);
+  });
+
+  it('speak: reports a failure by status only', async () => {
+    const { f } = audioFetch(401);
+    expect(await speak('ନଦୀ', { ELEVENLABS_API_KEY: 'e' }, f)).toEqual({ ok: false, status: 502, error: 'The speech service answered 401.' });
+  });
+
+  it('listen: sends the recording to Scribe v3 as "ori" without audio-event tags, and gives canonical Odia', async () => {
+    const { f, calls } = fakeFetch({ language_code: 'ori', text: ` ${ODISHA_PRECOMPOSED} ` });
+    const r = await listen(audio, 'audio/mp4', { ELEVENLABS_API_KEY: 'e', SARVAM_API_KEY: 's' }, f);
+    expect(r).toEqual({ ok: true, text: ODISHA, model: 'scribe_v3' });
+    expect(calls[0]!.url).toBe('https://api.elevenlabs.io/v1/speech-to-text');
+    expect((calls[0]!.init.headers as Record<string, string>)['xi-api-key']).toBe('e');
+    const form = calls[0]!.init.body as FormData;
+    expect(form.get('model_id')).toBe('scribe_v3');
+    expect(form.get('language_code')).toBe('ori');
+    expect(form.get('tag_audio_events')).toBe('false');
+    expect((form.get('file') as File).name).toBe('speech.m4a');
   });
 });

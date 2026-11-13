@@ -15,7 +15,7 @@ for (const [name, port] of [['adult', process.argv[2] || '4817'], ['kids', proce
   await p.goto(`http://127.0.0.1:${port}/`); await p.waitForTimeout(2500);
   const switchVisible = await p.evaluate(() => { const el = document.getElementById('toggle-family-safe')?.closest('.setting'); return !!el && getComputedStyle(el).display !== 'none'; });
   // Online switches (owner, 2026-11-03): shown on the adult site only; the kids site has no online features.
-  const onlineVisible = await p.evaluate(() => ['toggle-speak-online', 'toggle-listen-online', 'toggle-translate-online', 'settings-online']
+  const onlineVisible = await p.evaluate(() => ['toggle-speak-online', 'toggle-listen-online', 'toggle-translate-online', 'toggle-talk-online', 'settings-online']
     .map((id) => { const el = document.getElementById(id); const row = el?.closest('.setting') ?? el; return !!row && !row.hidden; }));
   const ta = p.locator('textarea').first(); await ta.click();
   const found = [];

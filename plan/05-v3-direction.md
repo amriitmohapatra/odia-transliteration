@@ -428,6 +428,7 @@ their trigger occurs.
 | D-10 | Public or private product (§12) | Decided 2026-10-04 | **Public website.** The repository stays private until the owner says otherwise (a public repo needs a fresh repository without the scraped corpus). |
 | D-11 | Update `CLAUDE.md` stale lines (§12) | Decided 2026-10-04 | Yes |
 | D-12 | Let `j` also give ଯ (§6) | Decided 2026-10-04 | Yes. **Done** 2026-10-04, measured before and after. |
+| D-15 | ElevenLabs as a voice provider (owner's free Creator month) | Decided 2026-11-13 | Yes: Listen/Speak through ElevenLabs while its key is set, and the voice helper Talk. Adds ElevenLabs (USA) to D-3. `plan/07-voice-agent.md` |
 
 ---
 

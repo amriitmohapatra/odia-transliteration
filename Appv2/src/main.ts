@@ -13,7 +13,7 @@
 import './style.css';
 import { badgeElement, DOCK_QUERY, InlineCandidates } from './inline.js';
 // After style.css: the overlay's stylesheet overrides parts of the caret bar.
-import { meaningsOpen, setMeaningsOpen, startDictionary, type DictionaryState } from './dictionary/index.js';
+import { describeWord, meaningsOpen, setMeaningsOpen, startDictionary, type DictionaryState } from './dictionary/index.js';
 
 import { codepoints, LocalStorageLearnStore } from '@odia/core';
 import type { Candidate, DigitMode } from '@odia/core/types';
@@ -34,6 +34,8 @@ import { casual } from './romanize.js';
 import { Editor } from './editor.js';
 import { hasDeviceVoice, record, speak, speakRoute, speakable, stopSpeaking, type Recording } from './speech.js';
 import { providerName, translatable, translateOnline } from './translate.js';
+import { clientTools, typedText, type ToolHost } from './agent-tools.js';
+import { PROVIDER_LABEL, startTalk, stopTalk, talking, voiceStatus, type TalkMode, type VoiceStatus } from './agent.js';
 import { englishIndex, loadEnglishApi } from './dictionary/english-data.js';
 import { canonical } from '@odia/core/normalize';
 import {
@@ -99,6 +101,9 @@ const privacyNoteEl = must<HTMLParagraphElement>('privacy-note');
 const onlineHeadingEl = must<HTMLHeadingElement>('settings-online');
 const translateEl = must<HTMLButtonElement>('translate');
 const translateOnlineEl = must<HTMLInputElement>('toggle-translate-online');
+const talkEl = must<HTMLButtonElement>('talk');
+const talkLabelEl = must<HTMLSpanElement>('talk-label');
+const talkOnlineEl = must<HTMLInputElement>('toggle-talk-online');
 const translationRowEl = must<HTMLDivElement>('translation-row');
 const translationEl = must<HTMLParagraphElement>('translation');
 const translationNoteEl = must<HTMLParagraphElement>('translation-note');
@@ -123,6 +128,10 @@ const PREF_SPEAK_ONLINE = 'odia.pref.speakOnline';
 const PREF_LISTEN_ONLINE = 'odia.pref.listenOnline';
 /** Settings > Translate online (V3, translate.ts). OFF by default, like the two above. */
 const PREF_TRANSLATE_ONLINE = 'odia.pref.translateOnline';
+/** Settings > Voice helper (V3.6, agent.ts). OFF by default, like the others. */
+const PREF_TALK_ONLINE = 'odia.pref.talkOnline';
+/** What the server has set up (/api/voice), asked only once a voice switch is on. */
+let voiceSetup: VoiceStatus | null = null;
 /** The text box's whole value when the shown English was asked for (declared before boot() runs). */
 let translatedFrom: string | null = null;
 /** "Hide rude words". ON by default: a missing key reads as on. */
@@ -239,14 +248,17 @@ async function boot(): Promise<void> {
   voiceEl.hidden = !listenOnlineEl.checked;
   translateOnlineEl.checked = !KIDS && readPref(PREF_TRANSLATE_ONLINE);
   translateEl.hidden = !translateOnlineEl.checked;
+  talkOnlineEl.checked = !KIDS && readPref(PREF_TALK_ONLINE);
+  talkEl.hidden = !talkOnlineEl.checked;
   if (KIDS) {
-    for (const el of [speakOnlineEl, listenOnlineEl, translateOnlineEl]) {
+    for (const el of [speakOnlineEl, listenOnlineEl, translateOnlineEl, talkOnlineEl]) {
       const row = el.closest<HTMLElement>('.setting');
       if (row) row.hidden = true;
     }
     onlineHeadingEl.hidden = true;
   }
   updatePrivacyNote();
+  refreshVoiceSetup();
   // Kids edition: no next-word data (adults' chat), so no switch for it.
   if (KIDS) {
     const row = nextWordEl.closest<HTMLElement>('.setting');
@@ -782,9 +794,12 @@ function onSpeak(): void {
 /** The promise under the page stays true: it names what goes online, and to whom, once a switch is on. */
 function updatePrivacyNote(): void {
   const parts: string[] = [];
-  if (speakOnlineEl.checked) parts.push('Listen sends the text to Sarvam AI (India) when this device has no Odia voice.');
-  if (listenOnlineEl.checked) parts.push('Speak sends your recording to Sarvam AI (India).');
+  // The speech provider is the server's choice (D-15): ElevenLabs while its key is set, else Sarvam.
+  const speech = voiceSetup?.speech ? PROVIDER_LABEL[voiceSetup.speech] : 'the online speech service';
+  if (speakOnlineEl.checked) parts.push(`Listen sends the text to ${speech} when this device has no Odia voice.`);
+  if (listenOnlineEl.checked) parts.push(`Speak sends your recording to ${speech}.`);
   if (translateOnlineEl.checked) parts.push('In English sends the text to Anthropic (USA).');
+  if (talkOnlineEl.checked) parts.push('Talk sends your voice, and the text in the box when the helper reads it, to ElevenLabs (USA).');
   privacyNoteEl.textContent = parts.length === 0
     ? 'Everything runs on this device. Nothing you type is sent anywhere.'
     : `Typing runs on this device. Online, only when you press the button: ${parts.join(' ')} Turn this off in Settings.`;
@@ -879,6 +894,90 @@ function insertAtCaret(text: string): void {
   editor.replace(start, end, text, true);
   romanEl.focus();
   render();
+}
+
+/* ------------------------------------------------------------------ *
+ * Voice helper (V3.6, agent.ts and agent-tools.ts)
+ * ------------------------------------------------------------------ */
+
+/** Ask the server what is set up, once, and only when a voice switch is on (it is an online request). */
+function refreshVoiceSetup(): void {
+  if (KIDS || voiceSetup || !(speakOnlineEl.checked || listenOnlineEl.checked || talkOnlineEl.checked)) return;
+  void voiceStatus().then((setup) => {
+    voiceSetup = setup;
+    updatePrivacyNote();
+  });
+}
+
+/** What the helper's tools may do to the page: read and edit the text box, look words up offline. */
+const toolHost: ToolHost = {
+  read: () => {
+    const start = romanEl.selectionStart ?? 0;
+    const end = romanEl.selectionEnd ?? start;
+    return { text: romanEl.value, selected: romanEl.value.slice(start, end) };
+  },
+  insert: (text) => {
+    const before = romanEl.value.slice(0, romanEl.selectionStart ?? romanEl.value.length);
+    insertAtCaret(typedText(text, before));
+  },
+  replace: (find, replacement) => {
+    const at = romanEl.value.indexOf(find);
+    if (at < 0) return false;
+    editor.replace(at, at + find.length, replacement, true);
+    render();
+    return true;
+  },
+  describe: (word) => describeWord(word),
+  spell: (roman) =>
+    guard(() => (handle?.engine.transliterateWord(roman, 8) ?? []).filter((c) => c.source !== 'verbatim').map((c) => c.text), [] as string[])
+      .filter((w, i, all) => all.indexOf(w) === i),
+};
+
+const TALK_LABEL: Record<TalkMode | 'idle', string> = {
+  idle: 'Talk',
+  connecting: 'Connecting\u2026',
+  listening: 'End talk',
+  speaking: 'End talk',
+};
+
+function setTalkMode(mode: TalkMode | 'idle'): void {
+  talkEl.setAttribute('aria-pressed', String(mode !== 'idle'));
+  talkEl.disabled = mode === 'connecting';
+  talkLabelEl.textContent = TALK_LABEL[mode];
+  // Keep the helper's last line on screen (the user may want to read the Odia); the hint only until it first speaks.
+  if (mode === 'listening' && !helperSpoke) setStatus('Talk: listening\u2026 say what you want, in Odia or English.', false);
+  if (mode === 'idle') helperSpoke = false;
+}
+
+let helperSpoke = false;
+
+/** Talk: first press starts a conversation with the helper, second press ends it. */
+async function onTalk(): Promise<void> {
+  if (talking()) {
+    await stopTalk();
+    setTalkMode('idle');
+    setStatus('', false);
+    return;
+  }
+  stopSpeaking();
+  recording?.cancel();
+  setStatus('Talk: connecting\u2026', false);
+  try {
+    await startTalk(clientTools(toolHost), {
+      onMode: setTalkMode,
+      onAgentLine: (text) => {
+        helperSpoke = true;
+        setStatus(`Helper: ${canonical(text)}`, false);
+      },
+      onEnd: (error) => {
+        setTalkMode('idle');
+        setStatus(error ?? 'Talk ended.', error !== null);
+      },
+    });
+  } catch (error) {
+    setTalkMode('idle');
+    setStatus(error instanceof Error ? error.message : String(error), true);
+  }
 }
 
 function buildShortcutHints(): void {
@@ -1659,12 +1758,14 @@ function bindEvents(): void {
   nextWordEl.addEventListener('change', () => writePref(PREF_NEXT_WORD, nextWordEl.checked));
   speakOnlineEl.addEventListener('change', () => {
     writePref(PREF_SPEAK_ONLINE, speakOnlineEl.checked);
+    refreshVoiceSetup();
     updatePrivacyNote();
   });
   listenOnlineEl.addEventListener('change', () => {
     writePref(PREF_LISTEN_ONLINE, listenOnlineEl.checked);
     if (!listenOnlineEl.checked) recording?.cancel();
     voiceEl.hidden = !listenOnlineEl.checked;
+    refreshVoiceSetup();
     updatePrivacyNote();
   });
   translateOnlineEl.addEventListener('change', () => {
@@ -1673,6 +1774,15 @@ function bindEvents(): void {
     if (!translateOnlineEl.checked) hideTranslation();
     updatePrivacyNote();
   });
+  talkOnlineEl.addEventListener('change', () => {
+    writePref(PREF_TALK_ONLINE, talkOnlineEl.checked);
+    talkEl.hidden = !talkOnlineEl.checked;
+    if (!talkOnlineEl.checked && talking()) void onTalk();
+    refreshVoiceSetup();
+    updatePrivacyNote();
+  });
+  talkEl.addEventListener('click', () => void onTalk());
+  window.addEventListener('pagehide', () => void stopTalk());
   translateEl.addEventListener('click', () => void onTranslate());
   speakEl.addEventListener('click', onSpeak);
   voiceEl.addEventListener('click', () => void onVoice());

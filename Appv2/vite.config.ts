@@ -206,6 +206,8 @@ self.addEventListener('fetch', function (event) {
   var request = event.request;
   if (request.method !== 'GET') return;
   if (new URL(request.url).origin !== self.location.origin) return;
+  // The assist layer (api/) answers live: never from the cache (GET /api/voice, V3.6).
+  if (new URL(request.url).pathname.indexOf('/api/') === 0) return;
 
   if (request.mode === 'navigate') {
     event.respondWith(
