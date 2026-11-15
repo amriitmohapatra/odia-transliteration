@@ -26,6 +26,7 @@
   },
   "devDependencies": {
     "@anthropic-ai/sdk": "^1.6.0",
+    "@elevenlabs/client": "1.32.1",
     "@pdf-lib/fontkit": "1.1.1",
     "@types/node": "^25.9.5",
     "pdf-lib": "1.17.1",

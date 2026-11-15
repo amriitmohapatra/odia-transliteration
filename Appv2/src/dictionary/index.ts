@@ -12,7 +12,7 @@
  */
 
 import { initDictionary, type DictionaryBytes, type DictionaryState } from './overlay.js';
-export { meaningsOpen, setMeaningsOpen } from './overlay.js';
+export { describeWord, meaningsOpen, setMeaningsOpen } from './overlay.js';
 import modernUrl from './modern.bin?url';
 import originUrl from './origin.bin?url';
 import praharajUrl from './praharaj.bin?url';

@@ -3,7 +3,7 @@
  *
  * Read-aloud uses the device's own Odia voice when it has one (no network). If it
  * has none, and only after the user turns on "Read aloud online" in Settings,
- * the text goes to /api/speak (Sarvam AI, decision D-3). Voice typing records up
+ * the text goes to /api/speak (ElevenLabs, decision D-15). Voice typing records up
  * to 30 seconds and sends the recording to /api/listen, again only after the user
  * turns it on. Nothing is sent while the switches are off (decision D-2).
  */
@@ -13,7 +13,7 @@ export const SPEAK_MAX_CHARS = 500;
 /** Longest recording: the server's limit is about 30 seconds. */
 export const LISTEN_MAX_MS = 30_000;
 
-/** A voice for Odia: language "or" (ISO 639-1), "ory" or "od" (Sarvam's code), any region. */
+/** A voice for Odia: language "or" (ISO 639-1), "ory" (ISO 639-3) or "od" (used by some Indian services), any region. */
 export function pickOdiaVoice(voices: readonly Pick<SpeechSynthesisVoice, 'lang'>[]): number {
   return voices.findIndex((v) => /^(or|ory|od)([-_]|$)/i.test(v.lang));
 }
