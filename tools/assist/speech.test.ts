@@ -2,7 +2,8 @@
 // ElevenLabs only (D-15), with its calls replaced by a fake fetch. No network.
 import { describe, expect, it } from 'vitest';
 
-import { LISTEN_MAX_BYTES, SPEAK_MAX_CHARS, listen, mediaType, speak } from '../../api/_lib/speech.js';
+import { canonical } from '../../api/_lib/translate.js';
+import { LISTEN_MAX_BYTES, ODIA_SCRIPT_KEYTERMS, SPEAK_MAX_CHARS, listen, mediaType, speak } from '../../api/_lib/speech.js';
 
 const ODISHA_PRECOMPOSED = 'ଓଡ଼ିଶା';
 const ODISHA = 'ଓଡ଼ିଶା';
@@ -96,6 +97,8 @@ describe('listen', () => {
     expect(form.get('model_id')).toBe('scribe_v3');
     expect(form.get('language_code')).toBe('ori');
     expect(form.get('tag_audio_events')).toBe('false');
+    // Odia-script keyterms make Scribe write Odia letters, not Devanagari (2026-11-15).
+    expect(form.getAll('keyterms')).toEqual([...ODIA_SCRIPT_KEYTERMS]);
     const file = form.get('file') as File;
     expect(file.name).toBe('speech.webm');
     expect(file.type).toBe('audio/webm');
@@ -108,5 +111,17 @@ describe('listen', () => {
   it('says so when no speech was heard, and reports a failure by status only', async () => {
     expect(await listen(audio, 'audio/ogg', KEY, fakeFetch({ text: '' }).f)).toMatchObject({ ok: false, status: 422 });
     expect(await listen(audio, 'audio/ogg', KEY, fakeFetch({ detail: 'x' }, 429).f)).toEqual({ ok: false, status: 502, error: 'The speech service answered 429.' });
+  });
+});
+
+describe('Odia script keyterms', () => {
+  it('are canonical Odia: NFC, nukta decomposed, no Devanagari, within the docs limits', () => {
+    expect(ODIA_SCRIPT_KEYTERMS.length).toBeLessThanOrEqual(100);
+    for (const term of ODIA_SCRIPT_KEYTERMS) {
+      expect(term).toBe(canonical(term));
+      expect(term).toMatch(/^[\u0b01-\u0b77]+$/);
+      expect(term.length).toBeLessThanOrEqual(50);
+    }
+    expect(ODIA_SCRIPT_KEYTERMS[0]).toContain('\u0b21\u0b3c');
   });
 });

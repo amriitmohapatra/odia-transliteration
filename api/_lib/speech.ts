@@ -33,6 +33,25 @@ export const LISTEN_MAX_BYTES = 1_000_000;
 /** Recording formats a browser's MediaRecorder makes. */
 export const LISTEN_TYPES = ['audio/webm', 'audio/ogg', 'audio/mp4', 'audio/mpeg', 'audio/wav', 'audio/x-wav'];
 
+/**
+ * Common Odia words sent to Scribe as keyterms. Without them Scribe hears Odia speech
+ * correctly (language "ori") but often WRITES it in Devanagari (Hindi letters), e.g.
+ * "मोरा नाम छै ...". Even one Odia-script keyterm makes it write Odia letters (tested
+ * 2026-11-15 on a real recording, with words that were not in the sentence). Keyterms
+ * cost 20% more per transcription (docs); keep this list short. Escapes keep the nukta
+ * decomposed (CLAUDE.md): ଓଡ଼ିଆ ନମସ୍କାର ଧନ୍ୟବାଦ କେମିତି ଆପଣ ଭଲ ଘର କଣ.
+ */
+export const ODIA_SCRIPT_KEYTERMS: readonly string[] = [
+  '\u0b13\u0b21\u0b3c\u0b3f\u0b06',
+  '\u0b28\u0b2e\u0b38\u0b4d\u0b15\u0b3e\u0b30',
+  '\u0b27\u0b28\u0b4d\u0b2f\u0b2c\u0b3e\u0b26',
+  '\u0b15\u0b47\u0b2e\u0b3f\u0b24\u0b3f',
+  '\u0b06\u0b2a\u0b23',
+  '\u0b2d\u0b32',
+  '\u0b18\u0b30',
+  '\u0b15\u0b23',
+];
+
 /** Both models list Odia (docs, 2026-11-13). */
 export const DEFAULT_TTS_MODEL = 'eleven_v4';
 export const DEFAULT_STT_MODEL = 'scribe_v3';
@@ -107,6 +126,7 @@ export async function listen(audio: Uint8Array<ArrayBuffer>, contentType: string
   form.append('model_id', model);
   form.append('language_code', ODIA_STT);
   form.append('tag_audio_events', 'false');
+  for (const term of ODIA_SCRIPT_KEYTERMS) form.append('keyterms', term);
   const response = await fetcher(`${ELEVENLABS}/v1/speech-to-text`, {
     method: 'POST',
     headers: { 'xi-api-key': env.ELEVENLABS_API_KEY },

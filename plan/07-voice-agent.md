@@ -112,7 +112,7 @@ the ElevenLabs dashboard in week 1 and lowers `daily_limit` if needed.
 | # | Question | How we find out |
 |---|---|---|
 | U-1 | Is Eleven v4's Odia voice clear to a native speaker? | Owner listens (A-15) |
-| U-2 | Does Scribe write Odia speech in Odia script, and English speech in Latin, in one call? | Owner test; else set the agent's language to `or` with an `en` preset |
+| U-2 | Does Scribe write Odia speech in Odia script, and English speech in Latin, in one call? | **Answered 2026-11-15** (owner's real voice): Scribe v3 hears Odia (`ori`, probability 1.0) but writes it in Devanagari ("मोरा नाम छै ..."). Fix: send a few Odia-script `keyterms` (`ODIA_SCRIPT_KEYTERMS` in `api/_lib/speech.ts`). Even one word flips the output to Odia letters. Two real sentences checked. Latin English words stay Latin ("Singapore"). Not yet checked: the Talk agent's own speech recognition |
 | U-3 | Does the agent's LLM write correct Odia? | Owner test; the tools' `canonical()` fixes only the encoding, not the spelling |
 | U-4 | How many credits does one minute of Talk use on Creator? | Dashboard after the first calls |
 | U-5 | Scribe v3's word error rate on everyday Odia sentences, by speaker and dialect | Optional: recordings of `everyday.tsv` sentences |
