@@ -123,3 +123,28 @@ the ElevenLabs dashboard in week 1 and lowers `daily_limit` if needed.
 2. Talk, Listen (when the device has no Odia voice) and Speak then say "not set up".
    Listen with the device's own Odia voice still works.
 3. No code change is needed. To keep ElevenLabs, pay for a plan and keep the key.
+
+## 7. Handoff: connect ElevenLabs from the owner's Mac (2026-11-15)
+
+The cloud session cannot reach the owner's computer or Chrome. The owner continues in
+a local Claude Code session (`claude --teleport` carries this conversation; this list is
+the backup). The local session guides the owner in their logged-in Chrome
+(`claude --chrome`) and runs the commands on the Mac.
+
+Rules: the API key never goes in the chat, a file in the repository, or a commit. It
+lives only in the shell (`export ELEVENLABS_API_KEY=…` typed by the owner) and in Vercel.
+
+| # | Where | Step | Done when |
+|---|---|---|---|
+| 1 | Mac terminal | `git fetch && git checkout claude/youthful-albattani-niljob && npm ci` | Clean checkout |
+| 2 | ElevenLabs (Chrome) | Developers > API keys > create a key with access to Text to Speech, Speech to Text and Agents (ElevenAgents) read/write. Copy it once | Key copied |
+| 3 | Mac terminal | Owner types `export ELEVENLABS_API_KEY=…`, then `node tools/assist/agent/push.mjs --dry-run`, then `node tools/assist/agent/push.mjs` | Prints `agent created: agent_…` |
+| 4 | ElevenLabs (Chrome) | Open the agent: check language Odia (+ English), LLM `claude-haiku-5-5`, the 5 client tools, Security: authentication on, allowlist `odia-transliteration-web.vercel.app`; Privacy: retention 0, voice not recorded. Pick a voice that reads Odia well and note its voice ID | Settings match `odia-helper.json`; fix the JSON (not the dashboard) and push again if not |
+| 5 | ElevenLabs (Chrome) | Agent page "Test AI agent": say an Odia sentence, ask a meaning. Client tools will not run there (they need the app) | Odia heard and understood |
+| 6 | Mac terminal | Live check of speech: `npx vitest run --root tools/assist` (fake), then one real call: `curl -s -X POST "https://api.elevenlabs.io/v1/text-to-speech/<voice>?output_format=mp3_44100_64" -H "xi-api-key: $ELEVENLABS_API_KEY" -H 'content-type: application/json' -d '{"text":"ଓଡ଼ିଆ","model_id":"eleven_v4","language_code":"or"}' -o odia.mp3 && afplay odia.mp3` | You hear ଓଡ଼ିଆ |
+| 7 | Vercel (Chrome) | Adult project > Settings > Environment Variables (Production): `ELEVENLABS_API_KEY`, `ELEVENLABS_AGENT_ID`, optional `ELEVENLABS_VOICE_ID` | Saved |
+| 8 | GitHub | Owner decides: merge this branch (PR) so Vercel deploys it | Deployed |
+| 9 | The site (Chrome) | Settings > Voice helper on > Talk: dictate, fix a word, ask a meaning, practise. Also Listen and Speak with the online switches | A-15 answered |
+
+Report back to the cloud session (message it, or paste in its chat): the agent ID (not
+secret), what failed with the exact error text, and how the Odia sounded.
