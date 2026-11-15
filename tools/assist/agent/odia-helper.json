@@ -147,7 +147,8 @@
         }
       },
       "tts": {
-        "model_id": "eleven_v4_turbo"
+        "model_id": "eleven_v4_turbo",
+        "voice_id": "CcHmMQ6bJ7E63DL9HqWd"
       },
       "turn": {
         "silence_end_call_timeout": 30
